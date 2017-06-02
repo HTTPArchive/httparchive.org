@@ -26,3 +26,9 @@ python main.py
 ```
 
 4. In your web browser, enter the following address: http://localhost:8080
+
+## Deploy
+
+```
+gcloud app deploy
+```

@@ -15,7 +15,7 @@
 # [START app]
 import logging
 
-from flask import Flask
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
@@ -25,6 +25,10 @@ app = Flask(__name__)
 def hello():
     """Return a friendly HTTP greeting."""
     return 'Hello World!!'
+
+@app.route('/report')
+def report():
+    return render_template('report.html')
 
 
 @app.errorhandler(500)

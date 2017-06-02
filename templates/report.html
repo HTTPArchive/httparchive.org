@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+      <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="http://code.highcharts.com/modules/exporting.js"></script>
+      <script>
+class Bin {
+  constructor(data) {
+    this.client = data.client;
+    this.bin = +data.bin;
+    this.volume = +data.volume;
+    this.pdf = +data.pdf;
+    this.cdf = +data.cdf;
+  }
+  
+  toPoint() {
+    return [this.bin / 1024, this.volume];
+  }
+  
+  toCdfPoint() {
+    return [this.bin / 1024, this.cdf * 100];
+  }
+  
+  add(bin) {
+    this.volume += bin.volume;
+    this.pdf += bin.pdf;
+    this.cdf = Math.max(this.cdf, bin.cdf);
+  }
+  
+  clone() {
+    return new Bin({
+      client: this.client,
+      bin: this.bin,
+      volume: this.volume,
+      pdf: this.pdf,
+      cdf: this.cdf
+    });
+  }
+}
+
+const ranksUrl = 'https://storage.googleapis.com/http-archive-beta.appspot.com/bytesJsHistogram.json';
+fetch(ranksUrl)
+  .then(response => response.text())
+  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`)
+  .then(jsonStr => JSON.parse(jsonStr))
+  .then(data => {
+  data = data.map((data) => new Bin(data));
+  
+  let outliers = null;
+  let desktop = data.filter(({client}) => client=='desktop').reduce((data, current) => {
+    if (current.cdf < 0.95) data.push(current);
+    else if (outliers) outliers.add(current);
+    else outliers = current;
+    return data;
+  }, []);
+  const desktopOutliers = outliers.clone();
+  outliers = null;
+  let mobile = data.filter(({client}) => client=='mobile').reduce((data, current) => {
+    if (current.cdf < 0.95) data.push(current);
+    else if (outliers) outliers.add(current);
+    else outliers = current;
+    return data;
+  }, []);
+  let desktopCDF = desktop.map(data => data.toCdfPoint());
+  desktopCDF.push(desktopOutliers.toCdfPoint());
+  let mobileCDF = mobile.map(data => data.toCdfPoint());
+  mobileCDF.push(outliers.toCdfPoint());
+  const series = [{
+    data: desktop.map((data) => data.toPoint()),
+    pointPadding: 0,
+    groupPadding: 0,
+    pointPlacement: 'between',
+    name: 'Desktop'
+  },{
+    data: mobile.map((data) => data.toPoint()),
+    pointPadding: 0,
+    groupPadding: 0,
+    pointPlacement: 'between',
+    name: 'Mobile'
+  },{
+    data: [desktopOutliers.toPoint()],
+    pointPadding: 0,
+    groupPadding: 0,
+    pointPlacement: 'between',
+    name: 'Desktop Outliers',
+    showInLegend: false
+  },{
+    data: [outliers.toPoint()],
+    pointPadding: 0,
+    groupPadding: 0,
+    pointPlacement: 'between',
+    name: 'Mobile Outliers',
+    showInLegend: false
+  },{
+    data: desktopCDF,
+    type: 'line',
+    marker: {
+      enabled: false
+    },
+    shadow: true,
+    name: 'Desktop CDF',
+    yAxis: 1
+  },{
+    data: mobileCDF,
+    type: 'line',
+    marker: {
+      enabled: false
+    },
+    shadow: true,
+    name: 'Mobile CDF',
+    yAxis: 1
+  }];
+  console.log(series)
+  drawChart(series);
+});
+
+Highcharts.setOptions({
+  colors: ['#04c7fd', '#a62aa4', '#12aef8', '#842486']
+});
+
+function drawChart(series) {
+  Highcharts.chart('container', {
+      chart: {
+          type: 'column',
+          zoomType: 'x',
+          resetZoomButton: {
+            position: {
+              x: 0,
+              y: -50
+            }
+          },
+      },
+      title: {
+          text: 'Histogram of JS Bytes'
+      },
+      subtitle: {
+          text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',
+          useHTML: true
+      },
+      plotOptions: {
+        column: {
+          grouping: false
+        }
+      },
+      tooltip: {
+          formatter: function() {
+            const tooltips = [];
+            this.points.forEach(point => {
+              tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} KB (${(point.y).toFixed(2)})`);
+            });
+            return tooltips.join('<br>');
+          },
+          shared: true
+      },
+      xAxis: {
+          title: {
+              text: 'bytesJS (KB)'
+          }
+      },
+      yAxis: [{
+          title: {
+              text: 'Volume'
+          }
+      }, {
+        title: {
+          text: 'CDF (%)'
+        },
+        max: 100,
+        opposite: true
+      }],
+      series,
+      credits: false
+  });
+}
+        </script>
+    </body>
+</html>
