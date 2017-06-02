@@ -42,7 +42,7 @@ class Bin {
   }
 }
 
-const ranksUrl = 'https://storage.googleapis.com/http-archive-beta.appspot.com/bytesJsHistogram.json';
+const ranksUrl = '/static/json/bytesJsHistogram.json';
 fetch(ranksUrl)
   .then(response => response.text())
   .then(nljson => `[${nljson.replace(/\n/g, ',')}]`)
