@@ -238,7 +238,13 @@ function drawChart(series) {
   Highcharts.chart('container', {
       chart: {
           type: 'column',
-          zoomType: 'x'
+          zoomType: 'x',
+          resetZoomButton: {
+            position: {
+              x: 0,
+              y: -50
+            }
+          },
       },
       title: {
           text: 'Histogram of JS Bytes'
