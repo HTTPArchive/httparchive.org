@@ -40,10 +40,14 @@ td {
   background-color: #a62aa4;
   border-color: #842486;
 }
+
+#logo {
+  height: 100px;
+}
       </style>
     </head>
     <body>
-      <img src="/static/img/http-archive.svg"/>
+      <img id="logo" src="/static/img/ha.svg"/>
 
       <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
@@ -150,7 +154,7 @@ class HistogramTable {
 
 fetch(bytesJsUrl)
   .then(response => response.text())
-  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`)
+  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
   .then(jsonStr => JSON.parse(jsonStr))
   .then(data => {
   data = data.map((data) => new Bin(data));
@@ -278,7 +282,7 @@ function drawChart(series) {
 
 fetch(bytesJsUrl)
   .then(response => response.text())
-  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`)
+  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
   .then(jsonStr => JSON.parse(jsonStr))
   .then(data => {
     const bins = data.map(data => new Bin(data));
