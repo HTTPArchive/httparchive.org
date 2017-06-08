@@ -1,13 +1,66 @@
 <!doctype html>
 <html>
     <head>
+      <title>HTTP Archive | JS Bytes | May 15, 2017</title>
+
+      <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+      <style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  padding: 0 5px;
+}
+
+.volume {
+  display: flex;
+  align-items: center;
+  position: relative;
+  min-width: 300px;
+}
+
+.volume div {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  height: 100%;
+  border: 1px solid #666;
+  background-color: #eee;
+  border-top: none;
+  opacity: 0.5;
+}
+
+.volume div.desktop {
+  background-color: #04c7fd;
+  border-color: #12aef8;
+}
+
+.volume div.mobile {
+  background-color: #a62aa4;
+  border-color: #842486;
+}
+
+#logo {
+  height: 100px;
+}
+      </style>
     </head>
     <body>
+      <img id="logo" src="/static/img/ha.png"/>
+
       <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+      <table id="desktop"></table>
+      <table id="mobile"></table>
 
       <script src="https://code.highcharts.com/highcharts.js"></script>
       <script src="http://code.highcharts.com/modules/exporting.js"></script>
       <script>
+const bytesJsUrl = '/static/json/bytesJsHistogram.json';
+
 class Bin {
   constructor(data) {
     this.client = data.client;
@@ -18,11 +71,31 @@ class Bin {
   }
   
   toPoint() {
-    return [this.bin / 1024, this.volume];
+    return [this.bin, this.pdf * 100];
   }
   
   toCdfPoint() {
-    return [this.bin / 1024, this.cdf * 100];
+    return [this.bin, this.cdf * 100];
+  }
+  
+  toRow(maxPdf) {
+    const tr = document.createElement('tr');
+    this.getSchema().forEach(col => {
+      const td = document.createElement('td');
+      if (col === 'volume') {
+        const bar = document.createElement('div');
+        bar.style.width = (this.pdf * 100 / maxPdf) + '%';
+        bar.classList.add(this.client);
+        td.appendChild(bar);
+        const text = document.createElement('span');
+        text.textContent = this.format(col);
+        td.appendChild(text);
+      }
+      else td.textContent = this.format(col);
+      td.classList.add(col);
+      tr.appendChild(td);
+    })
+    return tr;
   }
   
   add(bin) {
@@ -40,12 +113,52 @@ class Bin {
       cdf: this.cdf
     });
   }
+  
+  format(property) {
+    switch(property) {
+      case 'pdf':
+      case 'cdf':
+        let value = (Math.floor(this[property] * 10000) / 100).toFixed(2);
+        if (value < 10) value = '0' + value;
+        return value + '%';
+      case 'volume':
+        return this[property].toLocaleString();
+      default:
+        return this[property];
+    }
+  }
+  
+  getSchema() {
+    return ['bin', 'volume', 'pdf', 'cdf'];
+  }
 }
 
-const ranksUrl = 'https://storage.googleapis.com/http-archive-beta.appspot.com/bytesJsHistogram.json';
-fetch(ranksUrl)
+class HistogramTable {
+  constructor(id, bins) {
+    this.table = document.getElementById(id);
+    this.bins = bins;
+    this.schema = bins[0].getSchema();
+    this.maxPdf = Math.max.apply(null, this.bins.map(bin => bin.pdf));
+  }
+  
+  draw() {
+    const headerRow = document.createElement('tr');
+    this.schema.forEach(col => {
+      const th = document.createElement('th');
+      th.textContent = col;
+      headerRow.appendChild(th);
+    });
+    this.table.appendChild(headerRow);
+    
+    this.bins.forEach(bin => {
+      this.table.appendChild(bin.toRow(this.maxPdf));
+    });
+  }
+}
+
+fetch(bytesJsUrl)
   .then(response => response.text())
-  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`)
+  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
   .then(jsonStr => JSON.parse(jsonStr))
   .then(data => {
   data = data.map((data) => new Bin(data));
@@ -101,7 +214,6 @@ fetch(ranksUrl)
     marker: {
       enabled: false
     },
-    shadow: true,
     name: 'Desktop CDF',
     yAxis: 1
   },{
@@ -110,16 +222,16 @@ fetch(ranksUrl)
     marker: {
       enabled: false
     },
-    shadow: true,
     name: 'Mobile CDF',
     yAxis: 1
   }];
-  console.log(series)
   drawChart(series);
 });
 
+const OPACITY = 0.4;
 Highcharts.setOptions({
-  colors: ['#04c7fd', '#a62aa4', '#12aef8', '#842486']
+  //colors: ['#04c7fd', '#a62aa4', '#12aef8', '#842486']
+  colors: [`rgba(4,199,253,${OPACITY})`, `rgba(166,42,164,${OPACITY})`, `rgba(18,174,248,${OPACITY})`, `rgba(132,36,134,${OPACITY})`]
 });
 
 function drawChart(series) {
@@ -176,6 +288,18 @@ function drawChart(series) {
       credits: false
   });
 }
+
+fetch(bytesJsUrl)
+  .then(response => response.text())
+  .then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
+  .then(jsonStr => JSON.parse(jsonStr))
+  .then(data => {
+    const bins = data.map(data => new Bin(data));
+    const desktop = bins.filter(data => data.client === 'desktop');
+    const mobile = bins.filter(data => data.client === 'mobile');
+    (new HistogramTable('desktop', desktop)).draw();
+    (new HistogramTable('mobile', mobile)).draw();
+  });
         </script>
     </body>
 </html>

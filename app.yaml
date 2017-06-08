@@ -4,3 +4,10 @@ entrypoint: gunicorn -b :$PORT main:app
 
 runtime_config:
   python_version: 3
+
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /.*
+  script: main.app

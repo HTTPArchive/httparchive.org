@@ -30,5 +30,5 @@ python main.py
 ## Deploy
 
 ```
-gcloud app deploy
+gcloud app deploy --project http-archive-beta
 ```
