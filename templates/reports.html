@@ -11,8 +11,12 @@
 	<h1>Reports</h1>
 
 	<ul>
+		{% for m in metrics %}
 		<li>
-			<a href="/report">JS Bytes</a>
+			<a href="{{ url_for('report', metric=m.id) }}">
+				{{ m.name }}
+			</a>
 		</li>
+		{% endfor %}
 	</ul>
 {% endblock %}

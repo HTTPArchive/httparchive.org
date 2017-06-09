@@ -13,6 +13,7 @@
 # limitations under the License.
 
 # [START app]
+import json
 import logging
 
 from flask import Flask, render_template
@@ -20,6 +21,8 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+with open('config/metrics.json') as metrics_json:
+    metrics = json.load(metrics_json)
 
 @app.route('/')
 def index():
@@ -27,11 +30,11 @@ def index():
 
 @app.route('/reports')
 def reports():
-    return render_template('reports.html')
+    return render_template('reports.html', metrics=metrics)
 
-@app.route('/report')
-def report():
-    return render_template('report.html')
+@app.route('/reports/<metric>')
+def report(metric):
+    return render_template('report.html', metric=metric)
 
 
 @app.errorhandler(500)
