@@ -25,6 +25,10 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/reports')
+def reports():
+    return render_template('reports.html')
+
 @app.route('/report')
 def report():
     return render_template('report.html')
