@@ -1,6 +1,11 @@
 [
 	{
 		"id": "bytesJs",
-		"name": "JS Bytes"
+		"name": "JS Bytes",
+		"viz": "histogram"
+	}, {
+		"id": "bytesJs",
+		"name": "JS Bytes",
+		"viz": "timeseries"
 	}
 ]

@@ -16,11 +16,12 @@
 import json
 import logging
 
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 
 
 app = Flask(__name__)
 
+VIZ_TYPES = ('histogram', 'timeseries')
 with open('config/metrics.json') as metrics_json:
     metrics = json.load(metrics_json)
 
@@ -32,9 +33,12 @@ def index():
 def reports():
     return render_template('reports.html', metrics=metrics)
 
-@app.route('/reports/<metric>')
-def report(metric):
-    return render_template('report.html', metric=metric)
+@app.route('/reports/<viz>/<metric>')
+def report(viz, metric):
+    if viz not in VIZ_TYPES:
+        abort(404)
+
+    return render_template('report/%s.html' % viz, metric=metric)
 
 
 @app.errorhandler(500)

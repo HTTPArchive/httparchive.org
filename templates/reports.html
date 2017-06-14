@@ -13,7 +13,7 @@
 	<ul>
 		{% for m in metrics %}
 		<li>
-			<a href="{{ url_for('report', metric=m.id) }}">
+			<a href="{{ url_for('report', viz=m.viz, metric=m.id) }}">
 				{{ m.name }}
 			</a>
 		</li>
