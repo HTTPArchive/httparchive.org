@@ -1,13 +1,12 @@
-const METRIC = 'JS Bytes';
-const UNIT = 'KB';
+// TODO: Move this to a static JSON file in this repo.
 const changelogUrl = 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
-function drawTimeseries(data, container) {
+function drawTimeseries(data, options) {
 	data = data.map(toNumeric);
 	const desktop = data.filter(isDesktop);
 	const mobile = data.filter(isMobile);
 
 	getFlagSeries().then(flagSeries => {
-		drawChart([
+		drawChart(options, [
 			getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP),
 			getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP),
 			getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE),
@@ -16,17 +15,17 @@ function drawTimeseries(data, container) {
 		]);
 	})
 }
-let redrawTimeseriesTable = null;
-function drawTimeseriesTable(data, container, [start, end]=[-Infinity, Infinity]) {
-	if (!redrawTimeseriesTable) {
+let redrawTimeseriesTable = {};
+function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) {
+	if (!redrawTimeseriesTable[options.metric]) {
 		// Return a curried function to redraw the table given start/end times.
-		redrawTimeseriesTable = debounce((dateRange) => {
-			return drawTimeseriesTable(data, container, dateRange);
+		redrawTimeseriesTable[options.metric] = debounce((dateRange) => {
+			return drawTimeseriesTable(data, options, dateRange);
 		}, 100);
 	}
 
 	Promise.resolve(zip(data)).then(data => {
-		const table = document.getElementById(container);
+		const table = document.getElementById(options.tableId);
 		Array.from(table.children).forEach(child => table.removeChild(child));
 
 		const frag = document.createDocumentFragment();
@@ -113,13 +112,13 @@ const Colors = {
 	MOBILE: '#a62aa4'
 };
 
-function drawChart(series) {
-	Highcharts.stockChart('container', {
+function drawChart(options, series) {
+	Highcharts.stockChart(options.chartId, {
 		chart: {
 			zoomType: 'x'
 		},
 		title: {
-			text: `Timeseries of ${METRIC}`
+			text: `Timeseries of ${options.name}`
 		},
 		subtitle: {
 			text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',
@@ -167,12 +166,12 @@ function drawChart(series) {
 		xAxis: {
 			type: 'datetime',
 			events: {
-				setExtremes: e => redrawTimeseriesTable([e.min, e.max])
+				setExtremes: e => redrawTimeseriesTable[options.metric]([e.min, e.max])
 			}
 		},
 		yAxis: {
 			title: {
-				text: `${METRIC} (${UNIT})`
+				text: `${options.name} (${options.type})`
 			},
 			opposite: false,
 			min: 0

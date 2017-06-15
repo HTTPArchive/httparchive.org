@@ -21,7 +21,10 @@ from flask import Flask, request, render_template, abort
 
 app = Flask(__name__)
 
-VIZ_TYPES = ('histogram', 'timeseries')
+class VizTypes():
+    HISTOGRAM = 'histogram'
+    TIMESERIES = 'timeseries'
+
 with open('config/reports.json') as reports_file:
     reports_json = json.load(reports_file)
 
@@ -29,26 +32,29 @@ with open('config/reports.json') as reports_file:
 def index():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/reports')
 def reports():
-    return render_template('reports.html', reports=reports_json.items())
+    return render_template('reports.html', reports=reports_json)
 
 @app.route('/reports/<report_id>')
 def report(report_id):
-    report_key = report_id
-    date = request.args.get('date')
-    if date:
-        report_key = '%s_%s' % (report_id, date)
-
-    report = reports_json.get(report_key)
+    report = reports_json.get(report_id)
+    
     if not report:
         abort(404)
 
-    viz = report['viz']
-    if viz not in VIZ_TYPES:
+    date = request.args.get('date')
+
+    if date and date not in report.get('dates'):
         abort(404)
 
-    return render_template('report/%s.html' % viz, report=report, metric=report['name'])
+    viz = VizTypes.HISTOGRAM if date else VizTypes.TIMESERIES
+
+    return render_template('report/%s.html' % viz, report=report, date=date)
 
 
 @app.errorhandler(500)

@@ -1,0 +1,14 @@
+{
+	"js": {
+		"name": "JavaScript",
+		"dates": [
+			"2017_05_15"
+		],
+		"metrics": {
+			"bytesJs": {
+				"name": "JS Bytes",
+				"type": "KB"
+			}
+		}
+	}
+}

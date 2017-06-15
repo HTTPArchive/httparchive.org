@@ -1,74 +1,67 @@
-{% extends "base.html" %}
+{% extends "main.html" %}
 
 
-{% block title %}HTTP Archive | {{ metric }} | May 15, 2017{% endblock %}
+{% block title %}{{ super() }} | {{ report.name }} {{ "| " + date if date }}{% endblock %}
 
-{% block head %}
-	{{ super() }}
-	<style>
-	table {
-		border-collapse: collapse;
-		width: 100%;
-	}
+{% block main %}
+	<h1>{{ report.name }}</h1>
+	<button {% if date == report.dates[0] %}disabled{% endif %}>Most Recent</button>
+	<select id="dates">
+		{% for d in report.dates %}
+			<option {% if d == date %}selected{% endif %}>{{ d }}</option>
+		{% endfor %}
+	</select>
 
-	td {
-  		padding: 0 5px;
-	}
+	<h2>Table of Contents</h2>
+	<ul id="TOC">
+	{% for metric, options in report.metrics.items() %}
+		<li>
+			<a href="#{{ metric }}">{{ options.name }}</a>
+			<ul>
+				<li>
+					<a href="#{{ metric }}-chart">Chart</a>
+				</li>
+				<li>
+					<a href="#{{ metric }}-table-desktop">Desktop Table</a>
+				</li>
+				<li>
+					<a href="#{{ metric }}-table-mobile">Mobile Table</a>
+				</li>
+			</ul>
+		</li>
+	{% endfor %}
+	</ul>
 
-	.volume {
-		display: flex;
-		align-items: center;
-		position: relative;
-		min-width: 300px;
-	}
-
-	.volume div {
-		position: absolute;
-		z-index: -1;
-		left: 0;
-		height: 100%;
-		border: 1px solid #666;
-		background-color: #eee;
-		border-top: none;
-		opacity: 0.5;
-	}
-
-	.volume div.desktop {
-		background-color: #04c7fd;
-		border-color: #12aef8;
-	}
-
-	.volume div.mobile {
-		background-color: #a62aa4;
-		border-color: #842486;
-	}
-
-	#logo {
-		height: 100px;
-	}
-	</style>
-{% endblock %}
-
-{% block content %}
-	<img id="logo" src="/static/img/ha.png"/>
-
-	<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-	<table id="desktop"></table>
-	<table id="mobile"></table>
+	{% for metric, options in report.metrics.items() %}
+		<section id="{{ metric }}">
+			<h2>{{ options.name }}</h2>
+			<div id="{{ metric }}-chart" class="chart"></div>
+			<table id="{{ metric }}-table-desktop" class="table"></table>
+			<table id="{{ metric }}-table-mobile" class="table"></table>
+		</section>
+	{% endfor %}
 
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script src="/static/js/histogram.js"></script>
 	<script>
-		const bytesJsUrl = '/static/json/bytesJsHistogram.json';
-		fetch(bytesJsUrl)
-			.then(response => response.text())
-			.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
-			.then(jsonStr => JSON.parse(jsonStr))
-			.then(data => {
-				drawHistogram(data, 'container');
-				drawHistogramTable(data, 'desktop', 'mobile');
-			});
+const dates = document.getElementById('dates');
+dates.addEventListener('change', e => {
+	location.href = `?date=${e.target.value}`;
+});
+function histogram(metric, date, options) {
+	const dataUrl = `/static/json/${date}/${metric}.json`;
+	fetch(dataUrl)
+		.then(response => response.text())
+		.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
+		.then(jsonStr => JSON.parse(jsonStr))
+		.then(data => {
+			drawHistogram(data, `${metric}-chart`);
+			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`);
+		});
+}
+{% for metric, options in report.metrics.items() %}
+	histogram('{{ metric }}', '{{ date }}', {{ options|tojson }});
+{% endfor %}
 	</script>
 {% endblock %}
