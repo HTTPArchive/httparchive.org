@@ -83,22 +83,40 @@ class HistogramTable {
 	}
 
 	draw() {
-		const headerRow = document.createElement('tr');
+		Array.from(this.table.children).forEach(child => this.table.removeChild(child));
+
+		const thead = el('thead');
+		const headerRow = el('tr');
 		this.schema.forEach(col => {
-			const th = document.createElement('th');
+			const th = el('th');
 			th.textContent = col;
 			headerRow.appendChild(th);
 		});
-		this.table.appendChild(headerRow);
+		thead.appendChild(headerRow);
+		this.table.appendChild(thead);
 
+		const tbody = el('tbody');
 		this.bins.forEach(bin => {
-			this.table.appendChild(bin.toRow(this.maxPdf));
+			tbody.appendChild(bin.toRow(this.maxPdf));
 		});
+		this.table.appendChild(tbody);
 	}
 }
 
-function drawHistogramTable(data, desktopId, mobileId) {
-	const bins = data.map(data => new Bin(data));
+
+let redrawHistogramTable = null;
+function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, Infinity]) {
+	if (!redrawHistogramTable) {
+		// Return a curried function to redraw the table given start/end times.
+		redrawHistogramTable = debounce((dateRange) => {
+			return drawHistogramTable(data, desktopId, mobileId, dateRange);
+		}, 100);
+	}
+	
+	const bins = data.filter(data => {
+		return data.bin >= start && data.bin <= end
+	}).map(data => new Bin(data));
+
 	const desktop = bins.filter(data => data.client === 'desktop');
 	const mobile = bins.filter(data => data.client === 'mobile');
 
@@ -186,16 +204,16 @@ Highcharts.setOptions({
 
 function drawChart(series, containerId) {
 	Highcharts.chart(containerId, {
-	  chart: {
-	      type: 'column',
-	      zoomType: 'x',
-	      resetZoomButton: {
-	        position: {
-	          x: 0,
-	          y: -50
-	        }
-	      },
-	  },
+		chart: {
+			type: 'column',
+				zoomType: 'x',
+				resetZoomButton: {
+				position: {
+					x: 0,
+					y: -50
+				}
+			},
+		},
 	  title: {
 	      text: 'Histogram of JS Bytes'
 	  },
@@ -221,7 +239,10 @@ function drawChart(series, containerId) {
 	  xAxis: {
 	      title: {
 	          text: 'bytesJS (KB)'
-	      }
+	      },
+		  events: {
+			setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])
+		  }
 	  },
 	  yAxis: [{
 	      title: {
@@ -237,4 +258,20 @@ function drawChart(series, containerId) {
 	  series,
 	  credits: false
 	});
+}
+
+const el = tagName => document.createElement(tagName);
+
+// https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
+function debounce(callback, wait, context = this) {
+  let timeout = null 
+  let callbackArgs = null
+  
+  const later = () => callback.apply(context, callbackArgs)
+  
+  return function() {
+    callbackArgs = arguments
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
 }

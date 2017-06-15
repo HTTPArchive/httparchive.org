@@ -16,21 +16,39 @@ function drawTimeseries(data, container) {
 		]);
 	})
 }
-function drawTimeseriesTable(data, container) {
+let redrawTimeseriesTable = null;
+function drawTimeseriesTable(data, container, [start, end]=[-Infinity, Infinity]) {
+	if (!redrawTimeseriesTable) {
+		// Return a curried function to redraw the table given start/end times.
+		redrawTimeseriesTable = debounce((dateRange) => {
+			return drawTimeseriesTable(data, container, dateRange);
+		}, 100);
+	}
+
 	Promise.resolve(zip(data)).then(data => {
 		const table = document.getElementById(container);
+		Array.from(table.children).forEach(child => table.removeChild(child));
+
 		const frag = document.createDocumentFragment();
+		const thead = el('thead');
 		const tr = el('tr');
 		cols.map(col => {
 			const th = el('th');
 			th.textContent = col;
 			return th;
 		}).forEach(th => tr.appendChild(th));
-		frag.appendChild(tr);
+		thead.appendChild(tr);
+		frag.appendChild(thead);
 
+		const tbody = el('tbody');
 		data.forEach(([date, arr]) => {
-			arr.forEach((o, i) => frag.appendChild(toRow(o, i, arr.length)));
+			if (date < start || date > end) {
+				return;
+			}
+
+			arr.forEach((o, i) => tbody.appendChild(toRow(o, i, arr.length)));
 		});
+		frag.appendChild(tbody);
 		table.appendChild(frag);
 	});
 }
@@ -147,7 +165,10 @@ function drawChart(series) {
 			}
 		},
 		xAxis: {
-			type: 'datetime'
+			type: 'datetime',
+			events: {
+				setExtremes: e => redrawTimeseriesTable([e.min, e.max])
+			}
 		},
 		yAxis: {
 			title: {
@@ -177,16 +198,16 @@ const formatters = {
 
 const zip = data => {
 	const dates = {};
-  data.forEach(o => {
-  	let row = dates[o.date];
-  	if (row) {
-    	row.push(o);
-      row.sort((a, b) => a.client == 'desktop' ? -1 : 1)
-      return;
-    }
-    dates[o.date] = [o];
-  });
-  return Object.entries(dates).sort(([a], [b]) => a > b ? -1 : 1);
+	data.forEach(o => {
+		let row = dates[o.timestamp];
+		if (row) {
+			row.push(o);
+			row.sort((a, b) => a.client == 'desktop' ? -1 : 1)
+			return;
+		}
+		dates[o.timestamp] = [o];
+	});
+	return Object.entries(dates).sort(([a], [b]) => a > b ? -1 : 1);
 };
 
 const toRow = (o, i, n) => {
@@ -212,3 +233,17 @@ const toRow = (o, i, n) => {
 };
 
 const el = tagName => document.createElement(tagName);
+
+// https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
+function debounce(callback, wait, context = this) {
+  let timeout = null 
+  let callbackArgs = null
+  
+  const later = () => callback.apply(context, callbackArgs)
+  
+  return function() {
+    callbackArgs = arguments
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
+}
