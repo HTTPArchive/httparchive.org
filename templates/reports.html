@@ -11,10 +11,10 @@
 	<h1>Reports</h1>
 
 	<ul>
-		{% for m in metrics %}
+		{% for _,report in reports %}
 		<li>
-			<a href="{{ url_for('report', viz=m.viz, metric=m.id) }}">
-				{{ m.name }}
+			<a href="{{ url_for('report', report_id=report.id, date=report.date) }}">
+				{{ report.name }} {{ report.date if report.date }}
 			</a>
 		</li>
 		{% endfor %}

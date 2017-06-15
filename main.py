@@ -16,14 +16,14 @@
 import json
 import logging
 
-from flask import Flask, render_template, abort
+from flask import Flask, request, render_template, abort
 
 
 app = Flask(__name__)
 
 VIZ_TYPES = ('histogram', 'timeseries')
-with open('config/metrics.json') as metrics_json:
-    metrics = json.load(metrics_json)
+with open('config/reports.json') as reports_file:
+    reports_json = json.load(reports_file)
 
 @app.route('/')
 def index():
@@ -31,14 +31,24 @@ def index():
 
 @app.route('/reports')
 def reports():
-    return render_template('reports.html', metrics=metrics)
+    return render_template('reports.html', reports=reports_json.items())
 
-@app.route('/reports/<viz>/<metric>')
-def report(viz, metric):
+@app.route('/reports/<report_id>')
+def report(report_id):
+    report_key = report_id
+    date = request.args.get('date')
+    if date:
+        report_key = '%s_%s' % (report_id, date)
+
+    report = reports_json.get(report_key)
+    if not report:
+        abort(404)
+
+    viz = report['viz']
     if viz not in VIZ_TYPES:
         abort(404)
 
-    return render_template('report/%s.html' % viz, metric=metric)
+    return render_template('report/%s.html' % viz, report=report, metric=report['name'])
 
 
 @app.errorhandler(500)
