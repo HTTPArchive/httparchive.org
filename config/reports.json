@@ -8,6 +8,10 @@
 			"bytesJs": {
 				"name": "JS Bytes",
 				"type": "KB"
+			},
+			"reqJs": {
+				"name": "JS Requests",
+				"type": "Requests"
 			}
 		}
 	}
