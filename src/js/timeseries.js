@@ -1,3 +1,6 @@
+import { Colors } from './colors.js';
+
+
 // TODO: Move this to a static JSON file in this repo.
 const changelogUrl = 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
 function drawTimeseries(data, options) {
@@ -107,10 +110,6 @@ const getFlagSeries = () => fetch(changelogUrl)
 			y: 25
 		};
 	});
-const Colors = {
-	DESKTOP: '#04c7fd',
-	MOBILE: '#a62aa4'
-};
 
 function drawChart(options, series) {
 	Highcharts.stockChart(options.chartId, {
@@ -246,3 +245,7 @@ function debounce(callback, wait, context = this) {
     timeout = setTimeout(later, wait)
   }
 }
+
+// Export directly to global scope for use by Jinja template.
+window.drawTimeseries = drawTimeseries;
+window.drawTimeseriesTable = drawTimeseriesTable;

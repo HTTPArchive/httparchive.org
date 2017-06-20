@@ -1,3 +1,6 @@
+import { Colors } from './colors.js';
+
+
 class Bin {
 	constructor(data) {
 		this.client = data.client;
@@ -196,10 +199,8 @@ function drawHistogram(data, containerId) {
 	drawChart(series, containerId);
 };
 
-const OPACITY = 0.4;
 Highcharts.setOptions({
-	//colors: ['#04c7fd', '#a62aa4', '#12aef8', '#842486']
-	colors: [`rgba(4,199,253,${OPACITY})`, `rgba(166,42,164,${OPACITY})`, `rgba(18,174,248,${OPACITY})`, `rgba(132,36,134,${OPACITY})`]
+	colors: Colors.getAll({rgba: true})
 });
 
 function drawChart(series, containerId) {
@@ -275,3 +276,7 @@ function debounce(callback, wait, context = this) {
     timeout = setTimeout(later, wait)
   }
 }
+
+// Export directly to global scope for use by Jinja template.
+window.drawHistogram = drawHistogram;
+window.drawHistogramTable = drawHistogramTable;
