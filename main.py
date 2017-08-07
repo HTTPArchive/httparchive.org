@@ -16,25 +16,45 @@
 import json
 import logging
 
-from flask import Flask, render_template
+from flask import Flask, request, render_template, abort
 
 
 app = Flask(__name__)
 
-with open('config/metrics.json') as metrics_json:
-    metrics = json.load(metrics_json)
+class VizTypes():
+    HISTOGRAM = 'histogram'
+    TIMESERIES = 'timeseries'
+
+with open('config/reports.json') as reports_file:
+    reports_json = json.load(reports_file)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/reports')
 def reports():
-    return render_template('reports.html', metrics=metrics)
+    return render_template('reports.html', reports=reports_json)
 
-@app.route('/reports/<metric>')
-def report(metric):
-    return render_template('report.html', metric=metric)
+@app.route('/reports/<report_id>')
+def report(report_id):
+    report = reports_json.get(report_id)
+    
+    if not report:
+        abort(404)
+
+    date = request.args.get('date')
+
+    if date and date not in report.get('dates'):
+        abort(404)
+
+    viz = VizTypes.HISTOGRAM if date else VizTypes.TIMESERIES
+
+    return render_template('report/%s.html' % viz, report=report, date=date)
 
 
 @app.errorhandler(500)

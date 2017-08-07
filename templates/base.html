@@ -2,11 +2,13 @@
 <html>
 	<head>
 		{% block head %}
-		<title>{% block title %}{% endblock %}</title>
+		<title>{% block title %}HTTP Archive{% endblock %}</title>
 		<link rel="shortcut icon" href="/static/img/favicon.ico">
 		{% endblock %}
 	</head>
 	<body>
-		{% block content %}{% endblock %}
+		<div id="content">
+			{% block content %}{% endblock %}
+		</div>
 	</body>
 </html>
