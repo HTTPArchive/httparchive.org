@@ -1,14 +1,15 @@
 <!doctype html>
-<html>
+<html lang="en">
 	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		{% block head %}
 		<title>{% block title %}HTTP Archive{% endblock %}</title>
 		<link rel="shortcut icon" href="/static/img/favicon.ico">
 		{% endblock %}
 	</head>
 	<body>
-		<div id="content">
-			{% block content %}{% endblock %}
-		</div>
+		{% block content %}{% endblock %}
+		{% block scripts %}{% endblock %}
 	</body>
 </html>

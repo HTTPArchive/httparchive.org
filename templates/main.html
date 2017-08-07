@@ -3,30 +3,60 @@
 
 {% block head %}
 	{{ super() }}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
 	<link rel="stylesheet" href="/static/css/styles.css" />
 {% endblock %}
 
 {% block content %}
 	<header>
-		<a href="{{ url_for('index') }}"><img class="logo" src="/static/img/ha.png"/></a>
+		<div class="container">
+			<a href="{{ url_for('index') }}" class="pddl0 col-lg-2 col-md-3 col-sm-3 col-xs-10">
+				<img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/>
+			</a>
 
-		<nav>
-			<a href="{{ url_for('reports') }}">Reports</a>
-			<a href="https://discuss.httparchive.org">Discuss</a>
-			<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">Docs</a>
-		</nav>
+			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-2 clearfix">
+				<nav class="hidden-xs pull-right text-right">
+					<a href="{{ url_for('reports') }}">Reports</a>
+					<a href="https://discuss.httparchive.org">Discuss</a>
+					<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">Docs</a>
+				</nav>
+				<button class="visible-xs hamburger" aria-label="Show navigation">
+					<svg version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+						<path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+					</svg>
+				</button>
+			</div>
+		</div>
 	</header>
+	<nav id="mobile" class="hidden-sm hidden-md hidden-lg"></nav>
 
 	<div id="main">
 		{% block main %}{% endblock %}
 	</div>
 
 	<footer>
-		<a href="{{ url_for('index') }}"><img class="logo" src="/static/img/ha.png"/></a>
-		<div>
-			<p>&copy; HTTP Archive 2017</p>
-			<a href="{{ url_for('about') }}">About</a>
-			<a href="https://github.com/HTTPArchive/beta.httparchive.org">GitHub</a>
+		<div class="container">
+			<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+				<a href="{{ url_for('index') }}">
+					<img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/>
+				</a>
+				<a href="https://archive.org/">
+					<img src="/static/img/ia.png" alt="Internet Archive"/>
+				</a>
+			</div>
+
+			<div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
+				<nav>
+					<a href="{{ url_for('reports') }}">Reports</a>
+					<a href="https://discuss.httparchive.org">Discuss</a>
+					<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">Docs</a>
+				</nav>
+			</div>
 		</div>
 	</footer>
+{% endblock %}
+
+{% block scripts %}
+	<script src="/static/js/main.js"></script>
 {% endblock %}

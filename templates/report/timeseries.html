@@ -2,6 +2,10 @@
 
 
 {% block title %}{{ super() }} | {{ report.name }}{% endblock %}
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="/static/css/report.css" />
+{% endblock %}
 
 {% block main %}
 	<h1>{{ report.name }}</h1>
