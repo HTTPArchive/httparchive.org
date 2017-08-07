@@ -1,21 +1,28 @@
-{% extends "base.html" %}
+{% extends "main.html" %}
 
 
-{% block title %}Reports{% endblock %}
+{% block title %}{{ super() }} | Reports{% endblock %}
 
-{% block head %}
-	{{ super() }}
-{% endblock %}
-
-{% block content %}
+{% block main %}
 	<h1>Reports</h1>
 
 	<ul>
-		{% for m in metrics %}
-		<li>
-			<a href="{{ url_for('report', metric=m.id) }}">
-				{{ m.name }}
+		{% for report_id, report in reports.items() %}
+		<li class="timeseries">
+			<a href="{{ url_for('report', report_id=report_id) }}">
+				{{ report.name }}
 			</a>
+
+			<ul>
+				{% for date in report.dates %}
+				<li class="histogram">
+					<a href="{{ url_for('report', report_id=report_id, date=date) }}">
+						{{ date }}
+					</a>
+				</li>
+				{% endfor %}
+			</ul>
+
 		</li>
 		{% endfor %}
 	</ul>

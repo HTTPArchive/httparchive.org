@@ -19,10 +19,16 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Run the application:
+3. Install the NPM dependencies:
 
 ```
-python main.py
+npm install
+```
+
+4. Run the application:
+
+```
+npm run start
 ```
 
 4. In your web browser, enter the following address: http://localhost:8080
@@ -30,5 +36,5 @@ python main.py
 ## Deploy
 
 ```
-gcloud app deploy --project http-archive-beta
+npm run deploy
 ```
