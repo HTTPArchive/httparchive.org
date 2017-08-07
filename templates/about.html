@@ -4,11 +4,21 @@
 {% block title %}{{ super() }} | About{% endblock %}
 
 {% block main %}
-	<h1>About</h1>
+	<section>
+		<div class="container">
+			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
+				<h2>
+					<small>About</small> Mission
+				</h2>
 
-	<h2>Mission</h2>
+				<p>
+					Successful societies and institutions recognize the need to record their history - this provides a way to review the past, find explanations for current behavior, and spot emerging trends. In 1996 Brewster Kahle realized the cultural significance of the Internet and the need to record its history. As a result he founded the Internet Archive which collects and permanently stores the Web's digitized content.
+				</p>
 
-	<p>Successful societies and institutions recognize the need to record their history - this provides a way to review the past, find explanations for current behavior, and spot emerging trends. In 1996 Brewster Kahle realized the cultural significance of the Internet and the need to record its history. As a result he founded the Internet Archive which collects and permanently stores the Web's digitized content.</p>
-
-	<p>In addition to the content of web pages, it's important to record how this digitized content is constructed and served. The HTTP Archive provides this record. It is a permanent repository of web performance information such as size of pages, failed requests, and technologies utilized. This performance information allows us to see trends in how the Web is built and provides a common data set from which to conduct web performance research.</p>
+				<p>
+					In addition to the content of web pages, it's important to record how this digitized content is constructed and served. The HTTP Archive provides this record. It is a permanent repository of web performance information such as size of pages, failed requests, and technologies utilized. This performance information allows us to see trends in how the Web is built and provides a common data set from which to conduct web performance research.
+				</p>
+			</div>
+		</div>
+	</section>
 {% endblock %}

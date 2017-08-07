@@ -88,6 +88,9 @@ section {
 section.alt {
 	background: linear-gradient(to bottom, #9bb8bb 0%, #d7e0e1 100%);
 }
+section.alt-light {
+	background-color: #e7edee;
+}
 section img {
 	max-width: 100%;
 }

@@ -36,6 +36,10 @@ def index():
 def about():
     return render_template('about.html')
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/reports')
 def reports():
     return render_template('reports.html', reports=reports_json)
