@@ -1,4 +1,5 @@
 body {
+	overflow-x: hidden;
 	background-color: #f4f4f4;
 	font-family: 'Open Sans', sans-serif;
 	color: #555;
@@ -24,22 +25,60 @@ section [class*="col"] {
 }
 
 nav {
-	display: flex;
+	white-space: nowrap;
 	color: #748c8f;
 }
-nav a {
+nav li {
+	position: relative;
 	display: inline-block;
-	padding: 12px 20px;
 	text-transform: uppercase;
 }
-nav a:hover {
+nav li a,
+nav li .dropdown-target {
+	display: inherit;
+	padding: 12px 20px;
+}
+.dropdown-target svg {
+	display: inline-block;
+	vertical-align: sub;
+}
+nav li:hover {
 	text-decoration: none;
 	background-color: #bcced1;
 	color: #fff;
 }
-nav a:not(:last-child) {
+nav li:not(:last-child) {
 	margin-right: 8px;
 }
+nav li ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background-color: #bcced1;
+	text-align: left;
+	z-index: 1;
+}
+nav li:hover ul {
+	display: inherit;
+}
+nav li ul li {
+	display: block;
+}
+nav li ul li:not(:last-child) {
+	margin: 0;
+}
+nav li.user-actions:hover {
+	background-color: initial;
+	color: inherit;
+}
+nav li.user-actions .btn {
+	text-transform: none;
+}
+nav li.user-actions .btn:not(:last-child) {
+	margin: 0;
+}
+
 svg {
 	fill: currentColor;
 }
@@ -57,16 +96,26 @@ svg {
 nav#mobile {
 	display: none;
 }
-nav#mobile.active {
+nav#mobile.active,
+nav#mobile.active nav {
 	display: block;
 }
-nav#mobile a {
+nav#mobile li {
 	display: block;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	margin: 0;
-	padding: 15px;
 	background-color: #748c8f;
 	color: #fff;
+}
+nav#mobile li a {
+	padding: 15px;
+}
+nav#mobile .dropdown-target {
+	display: none;
+}
+nav#mobile li ul {
+	display: block;
+	position: relative;
 }
 
 footer img {
@@ -111,6 +160,13 @@ h2 + p {
 a,
 a:hover {
 	color: inherit;
+}
+
+ol,
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .btn {

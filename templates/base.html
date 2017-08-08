@@ -3,6 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% block meta %}
+		<meta property="og:title" content="{{ self.title() }}">
+		<meta property="og:image" content="/static/img/ha.png">
+		{% endblock %}
 		{% block head %}
 		<title>{% block title %}HTTP Archive{% endblock %}</title>
 		<link rel="shortcut icon" href="/static/img/favicon.ico">
