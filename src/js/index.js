@@ -1,7 +1,5 @@
 import { Discussion } from './discussion.js';
 
-const DISCUSS_ORIGIN = 'https://discuss.httparchive.org';
-
 const section = document.getElementById('discuss');
 const discussions = document.getElementById('discussions');
 
@@ -10,7 +8,7 @@ function getDiscussTopics() {
 		return;
 	}
 
-	fetch(`${DISCUSS_ORIGIN}/top.json`).then(r => r.json()).then(r => {
+	fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
 		const topics = r.topic_list.topics;
 		const allUsers = new Map(r.users.map(user => [user.id, user]));
 
@@ -42,8 +40,6 @@ function drawTopics(topics, allUsers) {
 }
 
 function drawTopic(title, slug, replies, users) {
-	console.log('drawTopic', title, slug, replies, users);
-
 	const discussion = new Discussion(title, slug, replies, users);
 	discussions.appendChild(discussion.toNode());
 }

@@ -4,6 +4,13 @@ const MAX_USERS = 2;
 
 export class Discussion {
 
+	static get CDN() {
+		return DISCUSS_CDN;
+	}
+	static get ORIGIN() {
+		return DISCUSS_ORIGIN;
+	}
+
 	constructor(title, slug, replies, users) {
 		this.title = title;
 		this.slug = slug;
@@ -85,7 +92,7 @@ export class Discussion {
 		title.classList.add('discussion-title');
 
 		const a = document.createElement('a');
-		a.href = `${DISCUSS_ORIGIN}/t/${this.slug}`; 
+		a.href = `${DISCUSS_ORIGIN}/t/${this.slug}`;
 		a.innerText = this.title;
 
 		title.appendChild(a);
@@ -104,7 +111,7 @@ export class Discussion {
 	}
 
 	getUserProfileUrl(user) {
-		return `${DISCUSS_ORIGIN}/u/${user.username}/`; 
+		return `${DISCUSS_ORIGIN}/u/${user.username}/`;
 	}
 
 }
