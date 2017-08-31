@@ -1,7 +1,12 @@
 {% extends "main.html" %}
 
 
-{% block title %}{{ super() }} | Reports{% endblock %}
+{% block title %}Reports{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="/static/css/reports.css" />
+{% endblock %}
 
 {% block main %}
 	<section>
@@ -18,27 +23,18 @@
 
 	<section>
 		{% for report_id, report in reports.items() %}
-		<div class="row">
+		<div class="report row">
 			<div class="container">
 				<div class="pddl0 col-lg-5 col-sm-6 col-md-6 col-xs-12">
 					<img src="/static/img/chart.png" alt="">
 				</div>
 				<div class="pddl0 col-lg-5 col-sm-6 col-md-6 col-xs-12">
-					<h2>
-						<a href="{{ url_for('report', report_id=report_id) }}">
-							{{ report.name }}
-						</a>
-					</h2>
+					<h2>{{ report.name }}</h2>
 
-					<ul>
-						{% for date in report.dates %}
-						<li class="histogram">
-							<a href="{{ url_for('report', report_id=report_id, date=date) }}">
-								{{ date }}
-							</a>
-						</li>
-						{% endfor %}
-					</ul>
+					<p>{{ report.summary }}</p>
+					
+					<a href="{{ url_for('report', report_id=report_id) }}" class="btn">View the Report</a>
+					</h2>
 				</div>
 			</div>
 		</div>

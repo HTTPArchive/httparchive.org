@@ -59,7 +59,8 @@ nav li ul {
 	text-align: left;
 	z-index: 1;
 }
-nav li:hover ul {
+nav li:hover ul,
+nav li .dropdown-target:focus + .dropdown-content {
 	display: inherit;
 }
 nav li ul li {
@@ -142,8 +143,8 @@ footer a:not(:last-child) img {
 }
 
 section {
-	padding-top: 40px;
-	padding-bottom: 40px;
+	margin-top: 40px;
+	margin-bottom: 40px;
 }
 section.alt {
 	background: linear-gradient(to bottom, #9bb8bb 0%, #d7e0e1 100%);
@@ -153,6 +154,9 @@ section.alt-light {
 }
 section img {
 	max-width: 100%;
+}
+#main section:first-child {
+	margin-top: 0;
 }
 
 h2 {
@@ -184,7 +188,7 @@ ul {
 	border: 2px solid #748c8f;
 	border-radius: 5px;
 	padding: 6px 20px;
-	background-color: transparent;
+	background-color: #fff;
 	font-size: 1.3rem;
 	line-height: 1.3rem;
 	text-align: center;
@@ -201,12 +205,24 @@ ul {
 }
 .btn.alt:hover,
 .btn.alt:focus {
-	background-color: transparent;
+	background-color: #fff;
 	border-color: #748c8f;
 	color: #748c8f;
 }
 .btn:not(:last-child) {
 	margin-right: 20px;
+}
+
+select,
+input {
+	background-color: #fff;
+	border-radius: 5px;
+	border: 1px #748c8f solid;
+	color: #748c8f;
+	display: inline-block;
+	font-size: 1.3rem;
+	margin-bottom: 12px;
+	padding: 4px;
 }
 
 

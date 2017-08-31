@@ -15,7 +15,8 @@
   "homepage": "https://github.com/HTTPArchive/beta.httparchive.org#readme",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start": "npm run build && python main.py",
+    "watch": "webpack --config webpack.config.js --watch",
+    "start": "npm run watch & python main.py",
     "deploy": "npm run build && gcloud app deploy --project http-archive-beta"
   },
   "devDependencies": {

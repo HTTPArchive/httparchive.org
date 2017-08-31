@@ -1,8 +1,34 @@
+.report-header {
+	background-color: #e7edee;
+}
+.report-header hr {
+	border-color: #748c8f;
+}
+
+#history {
+	padding: 40px 0;
+}
+#history label {
+	display: block;
+}
+#history select,
+#update,
+#permalink {
+	width: 100%;
+}
+@media (max-width: 767px) {
+	section #update[class*="btn"] {
+		max-width: none;
+	}
+}
+
 table {
 	border-collapse: collapse;
 	width: 100%;
 }
-
+table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
 td {
 	padding: 0 5px;
 }

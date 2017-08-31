@@ -1,7 +1,11 @@
 {
 	"js": {
 		"name": "JavaScript",
+		"summary": "The state of JavaScript, including its contribution to page weight and the number of script files included on pages.",
 		"dates": [
+			"2017_08_15",
+			"2017_07_15",
+			"2017_06_15",
 			"2017_05_15"
 		],
 		"metrics": {
