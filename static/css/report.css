@@ -22,6 +22,14 @@
 	}
 }
 
+#TOC li {
+	list-style-type: initial;
+	list-style-position: inside;
+}
+#TOC li ul {
+	margin-left: 20px;
+}
+
 table {
 	border-collapse: collapse;
 	width: 100%;

@@ -11,7 +11,7 @@
 		"metrics": {
 			"bytesJs": {
 				"name": "JS Bytes",
-				"type": "KB"
+				"type": "bytes"
 			},
 			"reqJs": {
 				"name": "JS Requests",

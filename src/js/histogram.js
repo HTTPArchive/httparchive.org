@@ -1,4 +1,5 @@
 import { Colors } from './colors.js';
+import debounce from './debounce.js';
 
 
 class Bin {
@@ -262,20 +263,6 @@ function drawChart(series, containerId) {
 }
 
 const el = tagName => document.createElement(tagName);
-
-// https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
-function debounce(callback, wait, context = this) {
-  let timeout = null 
-  let callbackArgs = null
-  
-  const later = () => callback.apply(context, callbackArgs)
-  
-  return function() {
-    callbackArgs = arguments
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-  }
-}
 
 // Export directly to global scope for use by Jinja template.
 window.drawHistogram = drawHistogram;

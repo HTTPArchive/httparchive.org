@@ -1,4 +1,5 @@
 import { Colors } from './colors.js';
+import debounce from './debounce.js';
 
 
 // TODO: Move this to a static JSON file in this repo.
@@ -59,9 +60,9 @@ const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
 const toNumeric = o => ({
 	timestamp: +o.timestamp,
-	p25: o.p25 / 1024,
-	p50: o.p50 / 1024,
-	p75: o.p75 / 1024,
+	p25: +o.p25,
+	p50: +o.p50,
+	p75: +o.p75,
 	client: o.client
 });
 const toIQR = o => [o.timestamp, o.p25, o.p75];
@@ -132,6 +133,19 @@ function drawChart(options, series) {
 			useHTML: true,
 			borderColor: 'rgba(247,247,247,0.85)',
 			formatter: function() {
+				function getChangelog(changelog) {
+					if (!changelog) return '';
+					return `<p class="changelog">* ${changelog.title}</p>`;
+				}
+
+				const changelog = flags[this.x];
+				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%A, %b %e, %Y', this.x)}${changelog ? '*' : ''}</p>`;
+
+				// Handle changelog tooltips first.
+				if (!this.points) {
+					return `${tooltip} ${getChangelog(changelog)}`
+				}
+
 				function getRow([median, iqr]) {
 					if (!median || !iqr) return '';
 					return `<tr>
@@ -141,14 +155,9 @@ function drawChart(options, series) {
 						<th>${iqr.point.high.toFixed(1)}</th>
 					</tr>`;
 				}
-				function getChangelog(changelog) {
-					if (!changelog) return '';
-					return `<p class="changelog">* ${changelog.title}</p>`;
-				}
 				const desktop = this.points.filter(o => o.series.name == 'Desktop');
 				const mobile = this.points.filter(o => o.series.name == 'Mobile');
-				const changelog = flags[this.x];
-				return `<p style="font-size: smaller;">${Highcharts.dateFormat('%A, %b %e, %Y', this.x)}${changelog ? '*' : ''}</p>
+				return `${tooltip}
 				<table cellpadding="5">
 					<tr>
 					<td></td>
@@ -181,17 +190,17 @@ function drawChart(options, series) {
 }
 
 const cols = ['timestamp', 'client', 'p10', 'p25', 'p50', 'p75', 'p90'];
-const toKB = bytes => (bytes / 1024).toFixed(1);
+const toFixed = value => parseFloat(value).toFixed(1);
 const formatters = {
 	timestamp: timestamp => {
   	const d = new Date(+timestamp);
     return d.toLocaleDateString(undefined, {month: '2-digit', day: '2-digit', year: 'numeric'});
   },
-  p10: toKB,
-  p25: toKB,
-  p50: toKB,
-  p75: toKB,
-  p90: toKB
+  p10: toFixed,
+  p25: toFixed,
+  p50: toFixed,
+  p75: toFixed,
+  p90: toFixed
 };
 
 const zip = data => {
@@ -231,20 +240,6 @@ const toRow = (o, i, n) => {
 };
 
 const el = tagName => document.createElement(tagName);
-
-// https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
-function debounce(callback, wait, context = this) {
-  let timeout = null 
-  let callbackArgs = null
-  
-  const later = () => callback.apply(context, callbackArgs)
-  
-  return function() {
-    callbackArgs = arguments
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-  }
-}
 
 // Export directly to global scope for use by Jinja template.
 window.drawTimeseries = drawTimeseries;

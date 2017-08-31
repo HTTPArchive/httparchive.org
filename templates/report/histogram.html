@@ -4,26 +4,6 @@
 {% block title %}{{ super() }} {{ "| " + start if start }}{% endblock %}
 
 {% block report %}
-	<h2>Table of Contents</h2>
-	<ul id="TOC">
-	{% for metric, options in report.metrics.items() %}
-		<li>
-			<a href="#{{ metric }}">{{ options.name }}</a>
-			<ul>
-				<li>
-					<a href="#{{ metric }}-chart">Chart</a>
-				</li>
-				<li>
-					<a href="#{{ metric }}-table-desktop">Desktop Table</a>
-				</li>
-				<li>
-					<a href="#{{ metric }}-table-mobile">Mobile Table</a>
-				</li>
-			</ul>
-		</li>
-	{% endfor %}
-	</ul>
-
 	{% for metric, options in report.metrics.items() %}
 		<section id="{{ metric }}">
 			<h2>{{ options.name }}</h2>
