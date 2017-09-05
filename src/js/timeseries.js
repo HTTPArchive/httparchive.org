@@ -1,5 +1,6 @@
 import { Colors } from './colors.js';
 import debounce from './debounce.js';
+import { el } from './utils.js';
 
 
 // TODO: Move this to a static JSON file in this repo.
@@ -219,27 +220,25 @@ const zip = data => {
 
 const toRow = (o, i, n) => {
 	const row = el('tr');
-  cols.map(col => {
-  	const td = el('td');
-    let text = o[col];
-    const formatter = formatters[col];
-    if (formatter) {
-    	text = formatter(o[col]);
-    }
-    td.textContent = text;
-    if (col == 'ztimestamp' && n == 2) {
-    	if (i == 0) {
-        td.setAttribute('rowspan', 2);
-      } else {
-      	return null;
-      }
-    }
-    return td;
-  }).forEach(td => td && row.appendChild(td));
-  return row;
+	cols.map(col => {
+		const td = el('td');
+		let text = o[col];
+		const formatter = formatters[col];
+		if (formatter) {
+			text = formatter(o[col]);
+		}
+		td.textContent = text;
+		if (col == 'ztimestamp' && n == 2) {
+			if (i == 0) {
+		    td.setAttribute('rowspan', 2);
+		  } else {
+		  	return null;
+		  }
+		}
+		return td;
+	}).forEach(td => td && row.appendChild(td));
+	return row;
 };
-
-const el = tagName => document.createElement(tagName);
 
 // Export directly to global scope for use by Jinja template.
 window.drawTimeseries = drawTimeseries;

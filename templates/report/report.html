@@ -77,17 +77,6 @@
 				{% for metric, options in report.metrics.items() %}
 					<li>
 						<a href="#{{ metric }}">{{ options.name }}</a>
-						<ul>
-							<li>
-								<a href="#{{ metric }}-chart">Chart</a>
-							</li>
-							<li>
-								<a href="#{{ metric }}-table-desktop">Desktop Table</a>
-							</li>
-							<li>
-								<a href="#{{ metric }}-table-mobile">Mobile Table</a>
-							</li>
-						</ul>
 					</li>
 				{% endfor %}
 				</ul>
@@ -106,6 +95,8 @@
 
 {% block scripts %}
 	{{ super() }}
+	<script src="https://code.highcharts.com/stock/highstock.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script src="/static/js/report.js"></script>
 	<script>
 		var report = {{ report|tojson }};

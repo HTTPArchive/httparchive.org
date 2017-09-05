@@ -25,6 +25,7 @@
 #TOC li {
 	list-style-type: initial;
 	list-style-position: inside;
+	text-align: left;
 }
 #TOC li ul {
 	margin-left: 20px;
@@ -45,12 +46,9 @@ td {
 	display: flex;
 	align-items: center;
 	position: relative;
-	min-width: 300px;
 }
-
 .volume div {
 	position: absolute;
-	z-index: -1;
 	left: 0;
 	height: 100%;
 	border: 1px solid #666;
@@ -58,15 +56,16 @@ td {
 	border-top: none;
 	opacity: 0.5;
 }
-
 .volume div.desktop {
 	background-color: #04c7fd;
 	border-color: #12aef8;
 }
-
 .volume div.mobile {
 	background-color: #a62aa4;
 	border-color: #842486;
+}
+.volume span {
+	z-index: 1;
 }
 
 .chart {

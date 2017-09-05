@@ -10,8 +10,10 @@ class Report {
 		this.bindChangeListener('startDate');
 		this.bindChangeListener('endDate');
 		this.bindUpdateListener();
+		this.bindTableVisibilityToggle();
 		this.permalink = document.getElementById('permalink');
 
+		this.bindPermalinkClick();
 		this.updatePermalink();
 	}
 
@@ -25,6 +27,20 @@ class Report {
 	bindUpdateListener() {
 		document.getElementById('update').addEventListener('click', _ => {
 			location.href = this.permalink.value;
+		});
+	}
+
+	bindTableVisibilityToggle() {
+		document.body.addEventListener('click', e => {
+			if (!e.target.classList.contains('show-hide')) {
+				return;
+			}
+
+			const isHidden = e.target.innerText.startsWith('Show');
+			Array.from(e.target.parentNode.querySelectorAll('table')).forEach(table => {
+				table.classList.toggle('hidden', !isHidden);
+			});
+			e.target.innerText = e.target.innerText.replace(isHidden ? 'Show' : 'Hide', isHidden ? 'Hide' : 'Show');
 		});
 	}
 
@@ -44,6 +60,12 @@ class Report {
 		}
 
 		return date;
+	}
+
+	bindPermalinkClick() {
+		this.permalink.addEventListener('click', _ => {
+			this.permalink.select();
+		});
 	}
 
 	updatePermalink() {

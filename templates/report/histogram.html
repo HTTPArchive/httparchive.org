@@ -8,13 +8,15 @@
 		<section id="{{ metric }}">
 			<h2>{{ options.name }}</h2>
 			<div id="{{ metric }}-chart" class="chart"></div>
-			<table id="{{ metric }}-table-desktop" class="table"></table>
-			<table id="{{ metric }}-table-mobile" class="table"></table>
+			<button class="btn show-hide">Show Tables</button>
+			<table id="{{ metric }}-table-desktop" class="table hidden"></table>
+			<table id="{{ metric }}-table-mobile" class="table hidden"></table>
 		</section>
 	{% endfor %}
+{% endblock %}
 
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+{% block scripts %}
+	{{ super() }}
 	<script src="/static/js/histogram.js"></script>
 	<script>
 function histogram(metric, date, options) {

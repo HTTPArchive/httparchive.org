@@ -1,5 +1,6 @@
 import { Colors } from './colors.js';
 import debounce from './debounce.js';
+import { el } from './utils.js';
 
 
 class Bin {
@@ -111,7 +112,7 @@ class HistogramTable {
 let redrawHistogramTable = null;
 function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, Infinity]) {
 	if (!redrawHistogramTable) {
-		// Return a curried function to redraw the table given start/end times.
+		// Return a curried function to redraw the table given start/end bins.
 		redrawHistogramTable = debounce((dateRange) => {
 			return drawHistogramTable(data, desktopId, mobileId, dateRange);
 		}, 100);
@@ -261,8 +262,6 @@ function drawChart(series, containerId) {
 	  credits: false
 	});
 }
-
-const el = tagName => document.createElement(tagName);
 
 // Export directly to global scope for use by Jinja template.
 window.drawHistogram = drawHistogram;
