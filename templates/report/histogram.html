@@ -1,12 +1,17 @@
 {% extends "report/report.html" %}
 
 
-{% block title %}{{ super() }} {{ "| " + start if start }}{% endblock %}
+{% block title %}{{ super() }} | {{ start }}{% endblock %}
+
+{% block reportName %}
+	{{ super() }}
+	<small id="report-date">{{ start }}</small>
+{% endblock %}
 
 {% block report %}
 	{% for metric, options in report.metrics.items() %}
 		<section id="{{ metric }}">
-			<h2>{{ options.name }}</h2>
+			<h3>{{ options.name }}</h3>
 			<div id="{{ metric }}-chart" class="chart"></div>
 			<button class="btn show-hide">Show Tables</button>
 			<table id="{{ metric }}-table-desktop" class="table hidden"></table>
@@ -20,13 +25,14 @@
 	<script src="/static/js/histogram.js"></script>
 	<script>
 function histogram(metric, date, options) {
+	options.date = date;
 	const dataUrl = `/static/json/${date}/${metric}.json`;
 	fetch(dataUrl)
 		.then(response => response.text())
 		.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
 		.then(jsonStr => JSON.parse(jsonStr))
 		.then(data => {
-			drawHistogram(data, `${metric}-chart`);
+			drawHistogram(data, `${metric}-chart`, options);
 			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`);
 		});
 }

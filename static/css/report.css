@@ -1,8 +1,17 @@
-.report-header {
+#report-header {
 	background-color: #e7edee;
 }
-.report-header hr {
+#report-header hr {
 	border-color: #748c8f;
+}
+#report-date {
+	color: #748c8f;
+}
+#report-toc {
+	background-color: #f2f5f5;
+}
+#report-metrics {
+	background: linear-gradient(to bottom, #e7eeef 0, white 400px);
 }
 
 #history {

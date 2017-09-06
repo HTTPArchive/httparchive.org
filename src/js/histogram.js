@@ -129,7 +129,7 @@ function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, 
 	(new HistogramTable(mobileId, mobile)).draw();
 }
 
-function drawHistogram(data, containerId) {
+function drawHistogram(data, containerId, options) {
 	data = data.map((data) => new Bin(data));
 
 	let outliers = null;
@@ -198,14 +198,14 @@ function drawHistogram(data, containerId) {
 		yAxis: 1
 	}];
 
-	drawChart(series, containerId);
+	drawChart(series, containerId, options);
 };
 
 Highcharts.setOptions({
 	colors: Colors.getAll({rgba: true})
 });
 
-function drawChart(series, containerId) {
+function drawChart(series, containerId, options) {
 	Highcharts.chart(containerId, {
 		chart: {
 			type: 'column',
@@ -218,10 +218,10 @@ function drawChart(series, containerId) {
 			},
 		},
 	  title: {
-	      text: 'Histogram of JS Bytes'
+	      text: `Histogram of ${options.name}`
 	  },
 	  subtitle: {
-	      text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',
+	      text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${options.date})`,
 	      useHTML: true
 	  },
 	  plotOptions: {
@@ -233,7 +233,7 @@ function drawChart(series, containerId) {
 	      formatter: function() {
 	        const tooltips = [];
 	        this.points.forEach(point => {
-	          tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} KB (${(point.y).toFixed(2)})`);
+	          tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} ${options.type} (${(point.y).toFixed(2)})`);
 	        });
 	        return tooltips.join('<br>');
 	      },
@@ -241,7 +241,7 @@ function drawChart(series, containerId) {
 	  },
 	  xAxis: {
 	      title: {
-	          text: 'bytesJS (KB)'
+	          text: options.type
 	      },
 		  events: {
 			setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])

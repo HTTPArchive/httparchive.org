@@ -4,7 +4,7 @@
 {% block report %}
 	{% for metric, options in report.metrics.items() %}
 		<section id="{{ metric }}">
-			<h2>{{ options.name }}</h2>
+			<h3>{{ options.name }}</h3>
 			<div id="{{ metric }}-chart" class="chart"></div>
 			<button class="btn show-hide" data-metric="{{ metric }}">Show Table</button>
 			<table id="{{ metric }}-table" class="table hidden"></table>

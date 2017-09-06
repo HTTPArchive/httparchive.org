@@ -9,14 +9,14 @@
 {% endblock %}
 
 {% block main %}
-	<section class="report-header">
+	<section id="report-header">
 		<div class="container">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2>
 					<small>
 						Report:
 					</small>
-					{{ report.name }}
+					{% block reportName %}{{ report.name }}{% endblock %}
 				</h2>
 
 				<p>{{ report.summary }}</p>
@@ -69,10 +69,10 @@
 		</div>	
 	</section>
 
-	<section>
+	<section id="report-toc">
 		<div class="container">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<h2>Table of Contents</h2>
+				<h3>Table of Contents</h3>
 				<ul id="TOC">
 				{% for metric, options in report.metrics.items() %}
 					<li>
@@ -84,7 +84,7 @@
 		</div>
 	</section>
 
-	<section>
+	<section id="report-metrics">
 		<div class="container">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				{% block report %}{% endblock %}
