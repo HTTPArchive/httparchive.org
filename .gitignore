@@ -1,4 +1,6 @@
 env/
 node_modules/
+sql/tmpl
 static/js
+*.log
 *.pyc
