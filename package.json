@@ -1,0 +1,28 @@
+{
+  "name": "beta.httparchive.org",
+  "version": "0.0.1",
+  "description": "Track how the web is built.",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HTTPArchive/beta.httparchive.org.git"
+  },
+  "author": "Rick Viscomi",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/HTTPArchive/beta.httparchive.org/issues"
+  },
+  "homepage": "https://github.com/HTTPArchive/beta.httparchive.org#readme",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "npm run build && python main.py",
+    "deploy": "npm run build && gcloud app deploy --project http-archive-beta"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.0",
+    "babel-preset-env": "^1.5.2",
+    "webpack": "^3.0.0"
+  }
+}

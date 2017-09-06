@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="/static/css/styles.css" />
+{% endblock %}
+
+{% block content %}
+	<header>
+		<a href="{{ url_for('index') }}"><img class="logo" src="/static/img/ha.png"/></a>
+
+		<nav>
+			<a href="{{ url_for('reports') }}">Reports</a>
+			<a href="https://discuss.httparchive.org">Discuss</a>
+			<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">Docs</a>
+		</nav>
+	</header>
+
+	<div id="main">
+		{% block main %}{% endblock %}
+	</div>
+
+	<footer>
+		<a href="{{ url_for('index') }}"><img class="logo" src="/static/img/ha.png"/></a>
+		<div>
+			<p>&copy; HTTP Archive 2017</p>
+			<a href="{{ url_for('about') }}">About</a>
+			<a href="https://github.com/HTTPArchive/beta.httparchive.org">GitHub</a>
+		</div>
+	</footer>
+{% endblock %}
