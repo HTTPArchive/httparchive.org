@@ -13,7 +13,7 @@ FROM
 (
   SELECT
     COUNT(0) AS volume,
-    ROUND(FLOOR(pages.bytesJS / 10240) * 10240, 2) AS bin,
+    pages.reqJS AS bin,
     RATIO_TO_REPORT(volume) OVER () AS pdf
   FROM
     [httparchive:runs.${YYYY_MM_DD}_pages] AS pages
@@ -33,7 +33,7 @@ FROM
 (
   SELECT
     COUNT(0) AS volume,
-    ROUND(FLOOR(pages.bytesJS / 10240) * 10240, 2) AS bin,
+    pages.reqJS AS bin,
     RATIO_TO_REPORT(volume) OVER () AS pdf
   FROM
     [httparchive:runs.${YYYY_MM_DD}_pages_mobile] AS pages
