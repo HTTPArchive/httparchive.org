@@ -28,11 +28,31 @@ set -eo pipefail
 
 DATASET=$1
 SUFFIX=$2
+MIN=$3
+MAX=$4
 
 if [ -z "$DATASET" ]; then
   echo "Dataset argument required." >&2
   echo "Example usage: sql/getBigQueryDates.sh har lighthouse" >&2
   exit 1
+fi
+
+having=""
+if [ ! -z "$MIN" ] || [ ! -z "$MAX" ]; then
+  having="HAVING
+"
+  if [ ! -z "$MIN" ]; then
+    having+="  date >= $MIN"
+    if [ ! -z "$MAX" ]; then
+        having+=" AND
+"
+    fi
+  fi
+  if [ ! -z "$MAX" ]; then
+    having+="  date <= $MAX"
+  fi
+  having+="
+"
 fi
 
 query=$(cat <<EOM
@@ -45,7 +65,7 @@ WHERE
   _TABLE_SUFFIX LIKE '%_$SUFFIX%'
 GROUP BY
   date
-ORDER BY
+${having}ORDER BY
   date DESC
 EOM
 )
