@@ -1,0 +1,14 @@
+[
+    {
+      "origin": [
+      	"http://beta.httparchive.org",
+      	"https://beta.httparchive.org",
+      	"http://httparchive.org",
+      	"https://httparchive.org",
+      	"http://127.0.0.1:8080"
+      ],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD"],
+      "maxAgeSeconds": 3600
+    }
+]
