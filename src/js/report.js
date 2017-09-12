@@ -52,6 +52,10 @@ class Report {
 		return this.report.dates[this.report.dates.length - 1] === date;
 	}
 
+	isOneYearAgo(date) {
+		return this.report.dates[23] === date;
+	}
+
 	getDateUrlAlias(date) {
 		if (this.isLatest(date)) {
 			return 'latest';
@@ -69,7 +73,7 @@ class Report {
 	}
 
 	updatePermalink() {
-		if (this.isEarliest(this.startDate) && this.isLatest(this.endDate)) {
+		if (this.isOneYearAgo(this.startDate) && this.isLatest(this.endDate)) {
 			this.permalink.value = this.baseUrl;
 			return;
 		}

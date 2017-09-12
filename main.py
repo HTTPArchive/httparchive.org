@@ -28,6 +28,7 @@ class VizTypes():
 MAX_REPORT_STALENESS = 60 * 60 * 3
 
 last_report_update = 0
+report_dates = []
 reports_json = {}
 
 app = Flask(__name__)
@@ -35,10 +36,15 @@ app = Flask(__name__)
 def update_reports():
     global MAX_REPORT_STALENESS
     global last_report_update
-    global reports_json
 
     if (time() - last_report_update) < MAX_REPORT_STALENESS:
         return
+
+    global report_dates
+    global reports_json
+
+    with open('config/dates.json') as dates_file:
+        report_dates = json.load(dates_file)
 
     with open('config/reports.json') as reports_file:
         reports_json = json.load(reports_file)
@@ -64,15 +70,19 @@ def reports():
 
 @app.route('/reports/<report_id>')
 def report(report_id):
+    global report_dates
+    global reports_json
     update_reports()
 
     report = reports_json.get(report_id)
     if not report:
         abort(404)
 
-    dates = report.get('dates')
+    dates = report_dates
     if not dates:
         abort(500)
+
+    report['dates'] = dates
 
     start = request.args.get('start')
     end = request.args.get('end')
@@ -97,8 +107,8 @@ def report(report_id):
     
     # This is shorthand for the trends (timeseries) view.
     if not start and not end:
-        # TODO: Change the default range from all to most recent 12 months.
-        start = dates[-1]
+        # The default date range is 24 crawls (1 year).
+        start = dates[23]
         end = dates[0]
 
     if start and start not in dates:
