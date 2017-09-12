@@ -50,10 +50,9 @@ dates.addEventListener('change', e => {
 	location.href = `?date=${e.target.value}`;
 });
 function histogram(metric, date, options) {
-	const dataUrl = `/static/json/${date}/${metric}.json`;
+	const dataUrl = `https://storage.googleapis.com/httparchive/reports/${date}/${metric}.json`;
 	fetch(dataUrl)
 		.then(response => response.text())
-		.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
 		.then(jsonStr => JSON.parse(jsonStr))
 		.then(data => {
 			drawHistogram(data, `${metric}-chart`);

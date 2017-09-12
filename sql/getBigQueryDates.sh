@@ -42,14 +42,14 @@ if [ ! -z "$MIN" ] || [ ! -z "$MAX" ]; then
   having="HAVING
 "
   if [ ! -z "$MIN" ]; then
-    having+="  date >= $MIN"
+    having+="  date >= \"$MIN\""
     if [ ! -z "$MAX" ]; then
         having+=" AND
 "
     fi
   fi
   if [ ! -z "$MAX" ]; then
-    having+="  date <= $MAX"
+    having+="  date <= \"$MAX\""
   fi
   having+="
 "
@@ -71,4 +71,4 @@ EOM
 )
 
 # Output only the resulting dates.
-echo "$query" | bq --quiet --format csv --project_id httparchive query | tail -n +2
+echo "$query" | bq --quiet --format csv --project_id httparchive query --max_rows 10000  | tail -n +2

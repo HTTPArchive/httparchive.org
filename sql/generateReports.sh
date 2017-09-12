@@ -12,15 +12,18 @@
 #
 #   -h: Whether to generate histograms. Must be accompanied by the date to query.
 #
-# NOTE: Existing reports will be overwritten.
+#   -f: Whether to force querying and updating even if the data exists.
+#
 
 set -o pipefail
 
+BQ_CMD="bq --format prettyjson --project_id httparchive query --max_rows 1000000"
+FORCE=0
 GENERATE_HISTOGRAM=0
 GENERATE_TIMESERIES=0
 
 # Read the flags.
-while getopts ":th:" opt; do
+while getopts ":fth:" opt; do
 	case "${opt}" in
 		h)
 			GENERATE_HISTOGRAM=1
@@ -28,6 +31,9 @@ while getopts ":th:" opt; do
 			;;
 		t)
 			GENERATE_TIMESERIES=1
+			;;
+		f)
+			FORCE=1
 			;;
 	esac
 done
@@ -38,9 +44,6 @@ if [ $GENERATE_HISTOGRAM -eq 0 -a $GENERATE_TIMESERIES -eq 0 ]; then
 	echo -e "For example: sql/generateReports.sh -t -h 2017_08_01" >&2
 	exit 1
 fi
-
-# The file extension of the report data.
-EXT=".json"
 
 if [ $GENERATE_HISTOGRAM -eq 0 ]; then
 	echo -e "Skipping histograms"
@@ -53,17 +56,25 @@ else
 		# For example, `sql/histograms/foo.sql` will produce `foo`.
 		metric=$(echo $(basename $query) | cut -d"." -f1)
 
+		gs_url="gs://httparchive/reports/$YYYY_MM_DD/${metric}.json"
+		gsutil ls $gs_url &> /dev/null
+		if [ $? -eq 0 ] && [ $FORCE -eq 0 ]; then
+			# The file already exists, so skip the query.
+			echo -e "Skipping $metric histogram"
+			continue
+		fi
+
 		echo -e "Generating $metric histogram"
 
 		# Replace the date template in the query.
 		# Run the query on BigQuery.
 		result=$(sed -e "s/\${YYYY_MM_DD}/$YYYY_MM_DD/" $query \
-			| bq --format prettyjson --project_id httparchive query)
+			| $BQ_CMD)
 		# Make sure the query succeeded.
 		if [ $? -eq 0 ]; then
 			# Upload the response to Google Storage.
 			echo $result \
-				| gsutil cp - gs://httparchive/reports/$YYYY_MM_DD/$metric$EXT
+				| gsutil cp - $gs_url
 		else
 			echo $result >&2
 		fi
@@ -80,16 +91,24 @@ else
 		# Extract the metric name from the file path.
 		metric=$(echo $(basename $query) | cut -d"." -f1)
 
+		gs_url="gs://httparchive/reports/${metric}.json"
+		gsutil ls $gs_url &> /dev/null
+		if [ $? -eq 0 ] && [ $FORCE -eq 0 ]; then
+			# The file already exists, so skip the query.
+			echo -e "Skipping $metric timeseries"
+			continue
+		fi
+
 		echo -e "Generating $metric timeseries"
 
 		# Run the query on BigQuery.
 		result=$(cat $query \
-			| bq --format prettyjson --project_id httparchive query)
+			| $BQ_CMD)
 		# Make sure the query succeeded.
 		if [ $? -eq 0 ]; then
 			# Upload the response to Google Storage.
 			echo $result \
-				| gsutil cp - gs://httparchive/reports/$metric$EXT
+				| gsutil cp - "$gs_url"
 		else
 			echo $result >&2
 		fi

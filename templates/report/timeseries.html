@@ -37,14 +37,13 @@
 	<script src="/static/js/timeseries.js"></script>
 	<script>
 function timeseries(metric, options) {
-	const dataUrl = `/static/json/${metric}.json`;
+	const dataUrl = `https://storage.googleapis.com/httparchive/reports/${metric}.json`;
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
 	options.metric = metric;
 
 	fetch(dataUrl)
 		.then(response => response.text())
-		.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
 		.then(jsonStr => JSON.parse(jsonStr))
 		.then(data => data.sort((a, b) => a.date < b.date ? -1 : 1))
 		.then(data => {

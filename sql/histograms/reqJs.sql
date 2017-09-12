@@ -1,48 +1,23 @@
-#legacySQL
+#standardSQL
 SELECT
-  *
-FROM
-(
-SELECT
-  'desktop' AS client,
-  volume,
-  bin,
-  pdf,
-  SUM(pdf) OVER (ORDER BY bin) AS cdf
-FROM
-(
+  *,
+  SUM(pdf) OVER (PARTITION BY client ORDER BY bin) AS cdf
+FROM (
   SELECT
-    COUNT(0) AS volume,
-    pages.reqJS AS bin,
-    RATIO_TO_REPORT(volume) OVER () AS pdf
-  FROM
-    [httparchive:runs.${YYYY_MM_DD}_pages] AS pages
-  GROUP BY
-    bin
-)
-GROUP BY
-  volume, bin, pdf
-), (
-SELECT
-  'mobile' AS client,
-  volume,
-  bin,
-  pdf,
-  SUM(pdf) OVER (ORDER BY bin) AS cdf
-FROM
-(
-  SELECT
-    COUNT(0) AS volume,
-    pages.reqJS AS bin,
-    RATIO_TO_REPORT(volume) OVER () AS pdf
-  FROM
-    [httparchive:runs.${YYYY_MM_DD}_pages_mobile] AS pages
-  GROUP BY
-    bin
-)
-GROUP BY
-  volume, bin, pdf
-)
+    *,
+    volume / SUM(volume) OVER (PARTITION BY client) AS pdf
+  FROM (
+    SELECT
+      IF(STRPOS(_TABLE_SUFFIX, '_mobile') = 0,
+        'desktop',
+        'mobile') AS client,
+      COUNT(0) AS volume,
+      reqJS AS bin
+    FROM
+      `httparchive.runs.${YYYY_MM_DD}_pages*`
+    GROUP BY
+      bin,
+      client ) )
 ORDER BY
   bin,
   client
