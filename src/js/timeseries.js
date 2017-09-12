@@ -88,7 +88,12 @@ const getAreaSeries = (name, data, color) => ({
 	fillOpacity: 0.1,
 	zIndex: 0,
 	marker: {
-		enabled: false
+		enabled: false,
+		states: {
+			hover: {
+				enabled: false
+			}
+		}
 	}
 });
 const flags = {};
