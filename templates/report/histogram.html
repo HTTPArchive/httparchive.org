@@ -26,10 +26,9 @@
 	<script>
 function histogram(metric, date, options) {
 	options.date = date;
-	const dataUrl = `/static/json/${date}/${metric}.json`;
+	const dataUrl = `https://storage.googleapis.com/httparchive/reports/${date}/${metric}.json`;
 	fetch(dataUrl)
 		.then(response => response.text())
-		.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
 		.then(jsonStr => JSON.parse(jsonStr))
 		.then(data => {
 			drawHistogram(data, `${metric}-chart`, options);
