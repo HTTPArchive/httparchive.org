@@ -18,7 +18,7 @@
 	<script src="/static/js/timeseries.js"></script>
 	<script>
 function timeseries(metric, options) {
-	const dataUrl = `https://storage.googleapis.com/httparchive/reports/${metric}.json`;
+	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
 	options.metric = metric;
