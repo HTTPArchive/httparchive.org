@@ -139,7 +139,7 @@ function drawHistogram(data, containerId, options) {
 		else outliers = current;
 		return data;
 	}, []);
-	const desktopOutliers = outliers.clone();
+	const desktopOutliers = outliers && outliers.clone();
 
 	outliers = null;
 	let mobile = data.filter(({client}) => client=='mobile').reduce((data, current) => {
@@ -150,9 +150,13 @@ function drawHistogram(data, containerId, options) {
 	}, []);
 
 	let desktopCDF = desktop.map(data => data.toCdfPoint());
-	desktopCDF.push(desktopOutliers.toCdfPoint());
+	if (desktopOutliers) {
+		desktopCDF.push(desktopOutliers.toCdfPoint());
+	}
 	let mobileCDF = mobile.map(data => data.toCdfPoint());
-	mobileCDF.push(outliers.toCdfPoint());
+	if (outliers) {
+		mobileCDF.push(outliers.toCdfPoint());
+	}
 
 	const series = [{
 		data: desktop.map((data) => data.toPoint()),
@@ -167,14 +171,14 @@ function drawHistogram(data, containerId, options) {
 		pointPlacement: 'between',
 		name: 'Mobile'
 	},{
-		data: [desktopOutliers.toPoint()],
+		data: [desktopOutliers && desktopOutliers.toPoint()],
 		pointPadding: 0,
 		groupPadding: 0,
 		pointPlacement: 'between',
 		name: 'Desktop Outliers',
 		showInLegend: false
 	},{
-		data: [outliers.toPoint()],
+		data: [outliers &&outliers.toPoint()],
 		pointPadding: 0,
 		groupPadding: 0,
 		pointPlacement: 'between',
