@@ -94,6 +94,8 @@ else
 
 		echo -e "Generating $metric timeseries"
 
+		gs_url="gs://httparchive/reports/${metric}.json"
+
 		# Run the query on BigQuery.
 		result=$(cat $query \
 			| $BQ_CMD)

@@ -125,8 +125,12 @@ function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, 
 	const desktop = bins.filter(data => data.client === 'desktop');
 	const mobile = bins.filter(data => data.client === 'mobile');
 
-	(new HistogramTable(desktopId, desktop)).draw();
-	(new HistogramTable(mobileId, mobile)).draw();
+	if (desktop.length) {
+		(new HistogramTable(desktopId, desktop)).draw();
+	}
+	if (mobile.length) {
+		(new HistogramTable(mobileId, mobile)).draw();
+	}
 }
 
 function drawHistogram(data, containerId, options) {

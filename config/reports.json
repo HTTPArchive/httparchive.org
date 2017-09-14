@@ -12,5 +12,23 @@
 				"type": "Requests"
 			}
 		}
+	},
+	"loading": {
+		"name": "Loading",
+		"summary": "Metrics summarizing the different stages of page loading.",
+		"metrics": {
+			"fmp": {
+				"name": "First Meaningful Paint",
+				"type": "seconds"
+			},
+			"ttci": {
+				"name": "Time to Consistently Interactive",
+				"type": "seconds"
+			},
+			"ttfi": {
+				"name": "Time to First Interactive",
+				"type": "seconds"
+			}
+		}
 	}
 }
