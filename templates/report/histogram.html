@@ -32,7 +32,7 @@ function histogram(metric, date, options) {
 		.then(jsonStr => JSON.parse(jsonStr))
 		.then(data => {
 			drawHistogram(data, `${metric}-chart`, options);
-			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`);
+			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
 		});
 }
 {% for metric, options in report.metrics.items() %}

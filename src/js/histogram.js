@@ -80,9 +80,10 @@ class Bin {
 }
 
 class HistogramTable {
-	constructor(id, bins) {
+	constructor(id, bins, type) {
 		this.table = document.getElementById(id);
 		this.bins = bins;
+		this.type = type;
 		this.schema = bins[0].getSchema();
 		this.maxPdf = Math.max.apply(null, this.bins.map(bin => bin.pdf));
 	}
@@ -94,7 +95,7 @@ class HistogramTable {
 		const headerRow = el('tr');
 		this.schema.forEach(col => {
 			const th = el('th');
-			th.textContent = col;
+			th.textContent = col === 'bin' ? this.type : col;
 			headerRow.appendChild(th);
 		});
 		thead.appendChild(headerRow);
@@ -110,11 +111,11 @@ class HistogramTable {
 
 
 let redrawHistogramTable = null;
-function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, Infinity]) {
+function drawHistogramTable(data, desktopId, mobileId, type, [start, end]=[-Infinity, Infinity]) {
 	if (!redrawHistogramTable) {
 		// Return a curried function to redraw the table given start/end bins.
 		redrawHistogramTable = debounce((dateRange) => {
-			return drawHistogramTable(data, desktopId, mobileId, dateRange);
+			return drawHistogramTable(data, desktopId, mobileId, type, dateRange);
 		}, 100);
 	}
 	
@@ -126,10 +127,10 @@ function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, 
 	const mobile = bins.filter(data => data.client === 'mobile');
 
 	if (desktop.length) {
-		(new HistogramTable(desktopId, desktop)).draw();
+		(new HistogramTable(desktopId, desktop, type)).draw();
 	}
 	if (mobile.length) {
-		(new HistogramTable(mobileId, mobile)).draw();
+		(new HistogramTable(mobileId, mobile, type)).draw();
 	}
 }
 
