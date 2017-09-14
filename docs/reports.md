@@ -122,3 +122,19 @@ The [main.py](../main.py) web server config file loads dates.json and reports.js
 If there is only one distinct date, the server renders the report with the histogram template, otherwise it uses the timeseries template.
 
 The report scripts will build the CDN URL based on the metric name and optional date. After fetching the JSON data, it will be massaged into a consumable format for [Highcharts](https://www.highcharts.com/) and a plain data table.
+
+## What (Should) Happen After Each Crawl
+
+When a crawl finishes, the following things must happen to make the new data available in the reports UI:
+
+1. Run all of the queries with the new crawl date and save results to respective JSON files on Google Storage.
+
+	`sql/generateReports.sh -t -h YYYY_MM_DD`
+
+2. Add the crawl date to the list of report dates.
+
+	`sql/addDate.js YYYY_MM_DD`
+
+_These two commands should be set on a cron job or part of some future pubsub pipeline._
+
+The web server will periodically update its in-memory copies of the config files and serve the latest reports.
