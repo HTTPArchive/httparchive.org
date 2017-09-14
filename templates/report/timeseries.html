@@ -17,23 +17,11 @@
 	<script src="https://code.highcharts.com/stock/highcharts-more.js"></script>
 	<script src="/static/js/timeseries.js"></script>
 	<script>
-function timeseries(metric, options) {
-	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
-	options.chartId = `${metric}-chart`;
-	options.tableId = `${metric}-table`;
-	options.metric = metric;
-
-	fetch(dataUrl)
-		.then(response => response.text())
-		.then(jsonStr => JSON.parse(jsonStr))
-		.then(data => data.sort((a, b) => a.date < b.date ? -1 : 1))
-		.then(data => {
-			drawTimeseries(data, options);
-			drawTimeseriesTable(data, options);
-		});
-}
 {% for metric, options in report.metrics.items() %}
-	timeseries('{{ metric }}', {{ options|tojson }});
+	timeseries({{ metric|tojson }},
+		{{ options|tojson }},
+		{{ start|tojson }},
+		{{ end|tojson }});
 {% endfor %}
 	</script>
 {% endblock %}

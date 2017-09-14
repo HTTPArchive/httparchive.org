@@ -5,6 +5,29 @@ import { el } from './utils.js';
 
 // TODO: Move this to a static JSON file in this repo.
 const changelogUrl = 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
+
+function timeseries(metric, options, start, end) {
+	console.log('timeseries', arguments)
+	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
+	options.chartId = `${metric}-chart`;
+	options.tableId = `${metric}-table`;
+	options.metric = metric;
+
+	fetch(dataUrl)
+		.then(response => response.text())
+		.then(jsonStr => JSON.parse(jsonStr))
+		.then(data => data.sort((a, b) => a.date < b.date ? -1 : 1))
+		.then(data => {
+			let [YYYY, MM, DD] = start.split('_');
+			options.min = Date.UTC(YYYY, MM - 1, DD);
+			[YYYY, MM, DD] = end.split('_');
+			options.max = Date.UTC(YYYY, MM - 1, DD);
+
+			drawTimeseries(data, options);
+			drawTimeseriesTable(data, options, [options.min, options.max]);
+		});
+}
+
 function drawTimeseries(data, options) {
 	data = data.map(toNumeric);
 	const desktop = data.filter(isDesktop);
@@ -181,7 +204,9 @@ function drawChart(options, series) {
 			type: 'datetime',
 			events: {
 				setExtremes: e => redrawTimeseriesTable[options.metric]([e.min, e.max])
-			}
+			},
+			min: options.min,
+			max: options.max
 		},
 		yAxis: {
 			title: {
@@ -195,18 +220,19 @@ function drawChart(options, series) {
 	});
 }
 
-const cols = ['timestamp', 'client', 'p10', 'p25', 'p50', 'p75', 'p90'];
+const cols = ['date', 'client', 'p10', 'p25', 'p50', 'p75', 'p90'];
 const toFixed = value => parseFloat(value).toFixed(1);
 const formatters = {
-	timestamp: timestamp => {
-  	const d = new Date(+timestamp);
-    return d.toLocaleDateString(undefined, {month: '2-digit', day: '2-digit', year: 'numeric'});
-  },
-  p10: toFixed,
-  p25: toFixed,
-  p50: toFixed,
-  p75: toFixed,
-  p90: toFixed
+	date: date => {
+		const [YYYY, MM, DD] = date.split('_');
+		const d = new Date(Date.UTC(YYYY, MM - 1, DD));
+		return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
+	},
+	p10: toFixed,
+	p25: toFixed,
+	p50: toFixed,
+	p75: toFixed,
+	p90: toFixed
 };
 
 const zip = data => {
@@ -233,18 +259,10 @@ const toRow = (o, i, n) => {
 			text = formatter(o[col]);
 		}
 		td.textContent = text;
-		if (col == 'ztimestamp' && n == 2) {
-			if (i == 0) {
-		    td.setAttribute('rowspan', 2);
-		  } else {
-		  	return null;
-		  }
-		}
 		return td;
 	}).forEach(td => td && row.appendChild(td));
 	return row;
 };
 
 // Export directly to global scope for use by Jinja template.
-window.drawTimeseries = drawTimeseries;
-window.drawTimeseriesTable = drawTimeseriesTable;
+window.timeseries = timeseries;
