@@ -101,8 +101,24 @@ Here's an example of a couple of metrics in the JavaScript report:
 
 The crawl dates available to reports are maintained in [config/dates.json](../config/dates.json). This file is simply an array of `YYYY_MM_DD`-format dates, sorted in descending order. Each date corresponds to a subdirectory in the `/reports` directory on the CDN and also the dates in the timeseries.
 
+### Syncing Dates with Google Storage
+
+To force dates.json to reflect the dated subdirectories on Google Storage, run the [sql/syncAvailableDates.js](../sql/syncAvailableDates.js) script. This will grab the contents of the storage bucket, parse out the dates, and update the JSON file with the dates in reverse chronological order.
+
+### Adding One Date at a Time
+
+To add a single date at a time to dates.json, call the [sql/addDate.js](../sql/addDate.js) script with the date in `YYYY_MM_DD` format. For example:
+
+```sh
+sql/addDate.js 2017_09_01
+```
+
+This will update the contents of dates.json with the new date in sorted order.
+
 ## Rendering a Report
 
 The [main.py](../main.py) web server config file loads dates.json and reports.json into memory on startup and refreshes their contents according to the `MAX_REPORT_STALENESS` constant, which is set to 3 hours. This helps to limit file IO on each request.
 
 If there is only one distinct date, the server renders the report with the histogram template, otherwise it uses the timeseries template.
+
+The report scripts will build the CDN URL based on the metric name and optional date. After fetching the JSON data, it will be massaged into a consumable format for [Highcharts](https://www.highcharts.com/) and a plain data table.
