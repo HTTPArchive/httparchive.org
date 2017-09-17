@@ -34,13 +34,13 @@
 							
 							<ul class="dropdown-content">
 								<li>
+									<a href="{{ url_for('about') }}">About</a>
+								</li>
+								<li>
+									<a href="{{ url_for('faq') }}">FAQ</a>
+								</li>
+								<li>
 									<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">GitHub</a>
-								</li>
-								<li>
-									<a href="#">Foo</a>
-								</li>
-								<li>
-									<a href="#">Bar</a>
 								</li>
 							</ul>
 						</li>
@@ -72,8 +72,7 @@
 		<div class="container">
 			<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
 				<a href="{{ url_for('index') }}">
-					<img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/>
-				</a>
+					<img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/></a>
 				<a href="https://archive.org/">
 					<img src="/static/img/ia.png" alt="Internet Archive"/>
 				</a>
@@ -83,7 +82,9 @@
 				<nav>
 					<a href="{{ url_for('reports') }}">Reports</a>
 					<a href="https://discuss.httparchive.org">Discuss</a>
-					<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">Docs</a>
+					<a href="{{ url_for('about') }}">About</a>
+					<a href="{{ url_for('faq') }}">FAQ</a>
+					<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">GitHub</a>
 				</nav>
 			</div>
 		</div>

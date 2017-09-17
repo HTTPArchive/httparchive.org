@@ -23,6 +23,9 @@ section [class*="col"] {
 	margin-right: -4px;
 	vertical-align: middle;
 }
+.container {
+	padding: 15px;
+}
 
 nav {
 	white-space: nowrap;
@@ -137,6 +140,10 @@ footer img {
 }
 footer nav {
 	float: right;
+	text-transform: uppercase;
+}
+footer nav > a:not(:last-child) {
+	margin-right: 15px;
 }
 footer a:not(:last-child) img {
 	margin-right: 70px;
@@ -226,6 +233,10 @@ input {
 	font-size: 1.3rem;
 	margin-bottom: 12px;
 	padding: 4px;
+}
+
+.nowrap {
+	white-space: nowrap;
 }
 
 

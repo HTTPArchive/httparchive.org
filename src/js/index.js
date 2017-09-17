@@ -7,9 +7,17 @@ function getDiscussTopics() {
 	if (!section || !discussions) {
 		return;
 	}
+	fetch(`${Discussion.ORIGIN}/latest.json`).then(r => r.json()).then(r => {
+		const topics = r.topic_list.topics.slice(0, 2);
+		const allUsers = new Map(r.users.map(user => [user.id, user]));
 
-	fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
-		const topics = r.topic_list.topics;
+		if (topics && topics.length && allUsers.size) {
+			drawTopics(topics, allUsers);
+		}
+	}).then(_ => {
+		return fetch(`${Discussion.ORIGIN}/top.json`);
+	}).then(r => r.json()).then(r => {
+		const topics = r.topic_list.topics.slice(0, 3);
 		const allUsers = new Map(r.users.map(user => [user.id, user]));
 
 		if (topics && topics.length && allUsers.size) {
@@ -21,22 +29,14 @@ function getDiscussTopics() {
 }
 
 function drawTopics(topics, allUsers) {
-	const MAX_TOPICS = 5;
-	let i = 0;
-
-	for (const topic of topics) {
-		if (i >= MAX_TOPICS) {
-			break;
-		}
-
+	topics.forEach(topic => {
 		const title = topic.title;
 		const slug = topic.slug;
 		const replies = topic.posts_count;
 		const users = topic.posters.map(poster => allUsers.get(poster.user_id));
 
 		drawTopic(title, slug, replies, users);
-		i++;
-	}
+	});
 }
 
 function drawTopic(title, slug, replies, users) {
