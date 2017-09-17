@@ -53,7 +53,14 @@ update_reports()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    global reports_json
+    update_reports()
+
+    featured_report_id = 'js'
+    featured_report = reports_json.get(featured_report_id)
+    featured_report['id'] = featured_report_id
+
+    return render_template('index.html', featured_report=featured_report)
 
 @app.route('/about')
 def about():
