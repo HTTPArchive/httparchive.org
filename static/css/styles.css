@@ -186,6 +186,10 @@ a,
 a:hover {
 	color: inherit;
 }
+.highlight-anchors a,
+.highlight-anchors a:hover {
+	color: #337ab7;
+}
 
 ol,
 ul {

@@ -41,6 +41,9 @@
 
 					<a href="{{ url_for('report', report_id=featured_report.id) }}" class="btn alt">View The Report</a>
 				</div>
+				<div class="pddl0 col-lg-8 col-sm-7 col-md-8 col-xs-12">
+					<img src="/static/img/chart.png" alt="">
+				</div>
 			</div>
 		</div>
 	</section>
@@ -48,13 +51,15 @@
 	<section id="bigquery">
 		<div class="row">
 			<div class="container">
+				<h2>
+					<small>Public Dataset</small>
+					Google BigQuery
+				</h2>
 				<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-					<h2>
-						<small>Public Dataset</small>
-						Google BigQuery
-					</h2>
 
-					<p>The HTTP Archive data dumps are also available in Google BigQuery thanks to Ilya Grigorik. This means you can create your own custom queries like How many resources return Last-Modified and/or ETag values? and What is the distribution of 1st party vs 3rd party resources?. For more information see Ilya's blog post HTTP Archive + BigQuery = Web Performance Answers and video. And checkout all the custom queries shared on BigQueri.es.</p>
+					<p class="highlight-anchors">
+						The HTTP Archive <a href="http://httparchive.org/downloads.php">data dumps</a> are also available in <a href="https://bigquery.cloud.google.com/" target="_blank">Google BigQuery</a> thanks to <a href="https://twitter.com/igrigorik" target="_blank">Ilya Grigorik</a>. This means you can create your own custom queries like <a href="https://discuss.httparchive.org/t/how-many-resources-return-last-modified-and-or-etag-values/407">How many resources return Last-Modified and/or ETag values?</a> and <a href="https://discuss.httparchive.org/t/what-is-the-distribution-of-1st-party-vs-3rd-party-resources/100">What is the distribution of 1st party vs 3rd party resources?</a>. For more information see Ilya's blog post <a href="https://www.igvita.com/2013/06/20/http-archive-bigquery-web-performance-answers/">HTTP Archive + BigQuery = Web Performance Answers</a> and <a href="https://www.youtube.com/watch?v=TOFgDSqNRz4">video</a>. And checkout all the custom queries shared on <a href="https://discuss.httparchive.org/c/analysis">discuss.httparchive.org</a>.
+					</p>
 
 					<a href="#" class="btn">Learn More</a>
 				</div>
