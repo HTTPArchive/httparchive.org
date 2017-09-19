@@ -1,9 +1,7 @@
 {
 	"js": {
 		"name": "JavaScript",
-		"dates": [
-			"2017_05_15"
-		],
+		"summary": "The state of JavaScript, including its contribution to page weight and the number of script files included on pages.",
 		"metrics": {
 			"bytesJs": {
 				"name": "JS Bytes",
@@ -12,6 +10,26 @@
 			"reqJs": {
 				"name": "JS Requests",
 				"type": "Requests"
+			}
+		}
+	},
+	"loading": {
+		"name": "Loading speed",
+		"summary": "Metrics summarizing the different stages of page loading.",
+		"minDate": "2017_06_01",
+		"maxDate": "2017_08_15",
+		"metrics": {
+			"fmp": {
+				"name": "First Meaningful Paint",
+				"type": "seconds"
+			},
+			"ttci": {
+				"name": "Time to Consistently Interactive",
+				"type": "seconds"
+			},
+			"ttfi": {
+				"name": "Time to First Interactive",
+				"type": "seconds"
 			}
 		}
 	}

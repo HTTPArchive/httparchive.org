@@ -1,59 +1,27 @@
-{% extends "main.html" %}
+{% extends "report/report.html" %}
 
 
-{% block title %}{{ super() }} | {{ report.name }}{% endblock %}
-
-{% block main %}
-	<h1>{{ report.name }}</h1>
-
-	<h2>Table of Contents</h2>
-	<ul id="TOC">
-	{% for metric, options in report.metrics.items() %}
-		<li>
-			<a href="#{{ metric }}">{{ options.name }}</a>
-			<ul>
-				<li>
-					<a href="#{{ metric }}-chart">Chart</a>
-				</li>
-				<li>
-					<a href="#{{ metric }}-table">Table</a>
-				</li>
-			</ul>
-		</li>
-	{% endfor %}
-	</ul>
-
+{% block report %}
 	{% for metric, options in report.metrics.items() %}
 		<section id="{{ metric }}">
-			<h2>{{ options.name }}</h2>
+			<h3>{{ options.name }}</h3>
 			<div id="{{ metric }}-chart" class="chart"></div>
-			<table id="{{ metric }}-table" class="table"></table>
+			<button class="btn show-hide" data-metric="{{ metric }}">Show Table</button>
+			<table id="{{ metric }}-table" class="table hidden"></table>
 		</section>
 	{% endfor %}
+{% endblock %}
 
-	<script src="https://code.highcharts.com/stock/highstock.js"></script>
+{% block scripts %}
+	{{ super() }}
 	<script src="https://code.highcharts.com/stock/highcharts-more.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script src="/static/js/timeseries.js"></script>
 	<script>
-function timeseries(metric, options) {
-	const dataUrl = `/static/json/${metric}.json`;
-	options.chartId = `${metric}-chart`;
-	options.tableId = `${metric}-table`;
-	options.metric = metric;
-
-	fetch(dataUrl)
-		.then(response => response.text())
-		.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
-		.then(jsonStr => JSON.parse(jsonStr))
-		.then(data => data.sort((a, b) => a.date < b.date ? -1 : 1))
-		.then(data => {
-			drawTimeseries(data, options);
-			drawTimeseriesTable(data, options);
-		});
-}
 {% for metric, options in report.metrics.items() %}
-	timeseries('{{ metric }}', {{ options|tojson }});
+	timeseries({{ metric|tojson }},
+		{{ options|tojson }},
+		{{ start|tojson }},
+		{{ end|tojson }});
 {% endfor %}
 	</script>
 {% endblock %}

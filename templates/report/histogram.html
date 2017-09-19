@@ -1,67 +1,31 @@
-{% extends "main.html" %}
+{% extends "report/report.html" %}
 
 
-{% block title %}{{ super() }} | {{ report.name }} {{ "| " + date if date }}{% endblock %}
+{% block title %}{{ super() }} | {{ start }}{% endblock %}
 
-{% block main %}
-	<h1>{{ report.name }}</h1>
-	<button {% if date == report.dates[0] %}disabled{% endif %}>Most Recent</button>
-	<select id="dates">
-		{% for d in report.dates %}
-			<option {% if d == date %}selected{% endif %}>{{ d }}</option>
-		{% endfor %}
-	</select>
+{% block reportName %}
+	{{ super() }}
+	<small id="report-date">{{ start }}</small>
+{% endblock %}
 
-	<h2>Table of Contents</h2>
-	<ul id="TOC">
-	{% for metric, options in report.metrics.items() %}
-		<li>
-			<a href="#{{ metric }}">{{ options.name }}</a>
-			<ul>
-				<li>
-					<a href="#{{ metric }}-chart">Chart</a>
-				</li>
-				<li>
-					<a href="#{{ metric }}-table-desktop">Desktop Table</a>
-				</li>
-				<li>
-					<a href="#{{ metric }}-table-mobile">Mobile Table</a>
-				</li>
-			</ul>
-		</li>
-	{% endfor %}
-	</ul>
-
+{% block report %}
 	{% for metric, options in report.metrics.items() %}
 		<section id="{{ metric }}">
-			<h2>{{ options.name }}</h2>
+			<h3>{{ options.name }}</h3>
 			<div id="{{ metric }}-chart" class="chart"></div>
-			<table id="{{ metric }}-table-desktop" class="table"></table>
-			<table id="{{ metric }}-table-mobile" class="table"></table>
+			<button class="btn show-hide">Show Tables</button>
+			<table id="{{ metric }}-table-desktop" class="table hidden"></table>
+			<table id="{{ metric }}-table-mobile" class="table hidden"></table>
 		</section>
 	{% endfor %}
+{% endblock %}
 
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+{% block scripts %}
+	{{ super() }}
 	<script src="/static/js/histogram.js"></script>
 	<script>
-const dates = document.getElementById('dates');
-dates.addEventListener('change', e => {
-	location.href = `?date=${e.target.value}`;
-});
-function histogram(metric, date, options) {
-	const dataUrl = `/static/json/${date}/${metric}.json`;
-	fetch(dataUrl)
-		.then(response => response.text())
-		.then(nljson => `[${nljson.replace(/\n/g, ',')}]`.replace(',]', ']'))
-		.then(jsonStr => JSON.parse(jsonStr))
-		.then(data => {
-			drawHistogram(data, `${metric}-chart`);
-			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`);
-		});
-}
 {% for metric, options in report.metrics.items() %}
-	histogram('{{ metric }}', '{{ date }}', {{ options|tojson }});
+	histogram('{{ metric }}', '{{ start }}', {{ options|tojson }});
 {% endfor %}
 	</script>
 {% endblock %}

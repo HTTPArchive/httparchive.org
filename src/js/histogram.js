@@ -1,5 +1,28 @@
 import { Colors } from './colors.js';
+import debounce from './debounce.js';
+import { el } from './utils.js';
 
+
+function histogram(metric, date, options) {
+	options.date = date;
+	const dataUrl = `http://cdn.httparchive.org/reports/${date}/${metric}.json`;
+	fetch(dataUrl)
+		.then(response => {
+			if (!response.ok) {
+				console.error('Error loading histogram data', dataUrl, response);
+				return Promise.reject(response.statusText);
+			}
+			return response.text();
+		})
+		.then(jsonStr => JSON.parse(jsonStr))
+		.then(data => {
+			drawHistogram(data, `${metric}-chart`, options);
+			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
+		}).catch(e => {
+			const chart = document.getElementById(`${metric}-chart`);
+			chart.innerText = `Error loading data: ${e}. Try a more recent start date.`;
+		});
+}
 
 class Bin {
 	constructor(data) {
@@ -78,9 +101,10 @@ class Bin {
 }
 
 class HistogramTable {
-	constructor(id, bins) {
+	constructor(id, bins, type) {
 		this.table = document.getElementById(id);
 		this.bins = bins;
+		this.type = type;
 		this.schema = bins[0].getSchema();
 		this.maxPdf = Math.max.apply(null, this.bins.map(bin => bin.pdf));
 	}
@@ -92,7 +116,7 @@ class HistogramTable {
 		const headerRow = el('tr');
 		this.schema.forEach(col => {
 			const th = el('th');
-			th.textContent = col;
+			th.textContent = col === 'bin' ? this.type : col;
 			headerRow.appendChild(th);
 		});
 		thead.appendChild(headerRow);
@@ -108,11 +132,11 @@ class HistogramTable {
 
 
 let redrawHistogramTable = null;
-function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, Infinity]) {
+function drawHistogramTable(data, desktopId, mobileId, type, [start, end]=[-Infinity, Infinity]) {
 	if (!redrawHistogramTable) {
-		// Return a curried function to redraw the table given start/end times.
+		// Return a curried function to redraw the table given start/end bins.
 		redrawHistogramTable = debounce((dateRange) => {
-			return drawHistogramTable(data, desktopId, mobileId, dateRange);
+			return drawHistogramTable(data, desktopId, mobileId, type, dateRange);
 		}, 100);
 	}
 	
@@ -123,11 +147,15 @@ function drawHistogramTable(data, desktopId, mobileId, [start, end]=[-Infinity, 
 	const desktop = bins.filter(data => data.client === 'desktop');
 	const mobile = bins.filter(data => data.client === 'mobile');
 
-	(new HistogramTable(desktopId, desktop)).draw();
-	(new HistogramTable(mobileId, mobile)).draw();
+	if (desktop.length) {
+		(new HistogramTable(desktopId, desktop, type)).draw();
+	}
+	if (mobile.length) {
+		(new HistogramTable(mobileId, mobile, type)).draw();
+	}
 }
 
-function drawHistogram(data, containerId) {
+function drawHistogram(data, containerId, options) {
 	data = data.map((data) => new Bin(data));
 
 	let outliers = null;
@@ -137,7 +165,7 @@ function drawHistogram(data, containerId) {
 		else outliers = current;
 		return data;
 	}, []);
-	const desktopOutliers = outliers.clone();
+	const desktopOutliers = outliers && outliers.clone();
 
 	outliers = null;
 	let mobile = data.filter(({client}) => client=='mobile').reduce((data, current) => {
@@ -148,9 +176,13 @@ function drawHistogram(data, containerId) {
 	}, []);
 
 	let desktopCDF = desktop.map(data => data.toCdfPoint());
-	desktopCDF.push(desktopOutliers.toCdfPoint());
+	if (desktopOutliers) {
+		desktopCDF.push(desktopOutliers.toCdfPoint());
+	}
 	let mobileCDF = mobile.map(data => data.toCdfPoint());
-	mobileCDF.push(outliers.toCdfPoint());
+	if (outliers) {
+		mobileCDF.push(outliers.toCdfPoint());
+	}
 
 	const series = [{
 		data: desktop.map((data) => data.toPoint()),
@@ -165,14 +197,14 @@ function drawHistogram(data, containerId) {
 		pointPlacement: 'between',
 		name: 'Mobile'
 	},{
-		data: [desktopOutliers.toPoint()],
+		data: [desktopOutliers && desktopOutliers.toPoint()],
 		pointPadding: 0,
 		groupPadding: 0,
 		pointPlacement: 'between',
 		name: 'Desktop Outliers',
 		showInLegend: false
 	},{
-		data: [outliers.toPoint()],
+		data: [outliers &&outliers.toPoint()],
 		pointPadding: 0,
 		groupPadding: 0,
 		pointPlacement: 'between',
@@ -196,14 +228,14 @@ function drawHistogram(data, containerId) {
 		yAxis: 1
 	}];
 
-	drawChart(series, containerId);
+	drawChart(series, containerId, options);
 };
 
 Highcharts.setOptions({
 	colors: Colors.getAll({rgba: true})
 });
 
-function drawChart(series, containerId) {
+function drawChart(series, containerId, options) {
 	Highcharts.chart(containerId, {
 		chart: {
 			type: 'column',
@@ -216,10 +248,10 @@ function drawChart(series, containerId) {
 			},
 		},
 	  title: {
-	      text: 'Histogram of JS Bytes'
+	      text: `Histogram of ${options.name}`
 	  },
 	  subtitle: {
-	      text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',
+	      text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${options.date})`,
 	      useHTML: true
 	  },
 	  plotOptions: {
@@ -231,7 +263,7 @@ function drawChart(series, containerId) {
 	      formatter: function() {
 	        const tooltips = [];
 	        this.points.forEach(point => {
-	          tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} KB (${(point.y).toFixed(2)})`);
+	          tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} ${options.type} (${(point.y).toFixed(2)})`);
 	        });
 	        return tooltips.join('<br>');
 	      },
@@ -239,7 +271,7 @@ function drawChart(series, containerId) {
 	  },
 	  xAxis: {
 	      title: {
-	          text: 'bytesJS (KB)'
+	          text: options.type
 	      },
 		  events: {
 			setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])
@@ -261,22 +293,5 @@ function drawChart(series, containerId) {
 	});
 }
 
-const el = tagName => document.createElement(tagName);
-
-// https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
-function debounce(callback, wait, context = this) {
-  let timeout = null 
-  let callbackArgs = null
-  
-  const later = () => callback.apply(context, callbackArgs)
-  
-  return function() {
-    callbackArgs = arguments
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-  }
-}
-
 // Export directly to global scope for use by Jinja template.
-window.drawHistogram = drawHistogram;
-window.drawHistogramTable = drawHistogramTable;
+window.histogram = histogram;

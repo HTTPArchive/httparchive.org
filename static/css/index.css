@@ -1,0 +1,51 @@
+#discussion-table {
+	margin: 15px 0;
+	width: 100%;
+	border: 1px solid #748c8f;
+	text-align: center;
+}
+
+#discussion-table th {
+	color: #81c8c1;
+	text-align: center;
+}
+
+#discussion-table th,
+#discussion-table td {
+	padding: 10px;
+}
+
+#discussion-table tbody tr {
+	border-top: 1px solid #748c8f;
+}
+
+.discussion-users {
+	display: inline-block;
+}
+
+.discussion-users li {
+	display: inline-block;
+}
+
+.discussion-user,
+.discussion-users-remaining {
+	border-radius: 15px;
+	border: 1px solid #f4f4f4;
+}
+.discussion-users li + li {
+	margin-left: -12px;
+	transition: margin-left .8s;
+}
+.discussion-users:hover li + li {
+	margin-left: 0;
+}
+
+.discussion-users-remaining {
+	display: inline-block;
+	height: 32px;
+	width: 32px;
+	line-height: 30px;
+	background-color: #1d8fd7;
+	color: #f4f4f4;
+	text-align: center;
+}

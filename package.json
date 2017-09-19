@@ -15,8 +15,10 @@
   "homepage": "https://github.com/HTTPArchive/beta.httparchive.org#readme",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start": "npm run build && python main.py",
-    "deploy": "npm run build && gcloud app deploy --project http-archive-beta"
+    "watch": "webpack --config webpack.config.js --watch",
+    "start": "npm run watch & python main.py",
+    "deploy": "npm run build && gcloud app deploy --project http-archive-beta",
+    "cors": "gsutil cors set config/storage-cors.json gs://httparchive"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

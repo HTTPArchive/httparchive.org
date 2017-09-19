@@ -1,0 +1,9 @@
+.report h2 {
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+
+.report p {
+	padding: 0;
+	margin-bottom: 15px;
+}

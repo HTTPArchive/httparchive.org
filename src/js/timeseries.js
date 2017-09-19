@@ -1,8 +1,33 @@
 import { Colors } from './colors.js';
+import debounce from './debounce.js';
+import { el } from './utils.js';
 
 
 // TODO: Move this to a static JSON file in this repo.
 const changelogUrl = 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
+
+function timeseries(metric, options, start, end) {
+	console.log('timeseries', arguments)
+	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
+	options.chartId = `${metric}-chart`;
+	options.tableId = `${metric}-table`;
+	options.metric = metric;
+
+	fetch(dataUrl)
+		.then(response => response.text())
+		.then(jsonStr => JSON.parse(jsonStr))
+		.then(data => data.sort((a, b) => a.date < b.date ? -1 : 1))
+		.then(data => {
+			let [YYYY, MM, DD] = start.split('_');
+			options.min = Date.UTC(YYYY, MM - 1, DD);
+			[YYYY, MM, DD] = end.split('_');
+			options.max = Date.UTC(YYYY, MM - 1, DD);
+
+			drawTimeseries(data, options);
+			drawTimeseriesTable(data, options, [options.min, options.max]);
+		});
+}
+
 function drawTimeseries(data, options) {
 	data = data.map(toNumeric);
 	const desktop = data.filter(isDesktop);
@@ -59,9 +84,9 @@ const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
 const toNumeric = o => ({
 	timestamp: +o.timestamp,
-	p25: o.p25 / 1024,
-	p50: o.p50 / 1024,
-	p75: o.p75 / 1024,
+	p25: +o.p25,
+	p50: +o.p50,
+	p75: +o.p75,
 	client: o.client
 });
 const toIQR = o => [o.timestamp, o.p25, o.p75];
@@ -86,7 +111,12 @@ const getAreaSeries = (name, data, color) => ({
 	fillOpacity: 0.1,
 	zIndex: 0,
 	marker: {
-		enabled: false
+		enabled: false,
+		states: {
+			hover: {
+				enabled: false
+			}
+		}
 	}
 });
 const flags = {};
@@ -132,6 +162,19 @@ function drawChart(options, series) {
 			useHTML: true,
 			borderColor: 'rgba(247,247,247,0.85)',
 			formatter: function() {
+				function getChangelog(changelog) {
+					if (!changelog) return '';
+					return `<p class="changelog">* ${changelog.title}</p>`;
+				}
+
+				const changelog = flags[this.x];
+				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%A, %b %e, %Y', this.x)}${changelog ? '*' : ''}</p>`;
+
+				// Handle changelog tooltips first.
+				if (!this.points) {
+					return `${tooltip} ${getChangelog(changelog)}`
+				}
+
 				function getRow([median, iqr]) {
 					if (!median || !iqr) return '';
 					return `<tr>
@@ -141,14 +184,9 @@ function drawChart(options, series) {
 						<th>${iqr.point.high.toFixed(1)}</th>
 					</tr>`;
 				}
-				function getChangelog(changelog) {
-					if (!changelog) return '';
-					return `<p class="changelog">* ${changelog.title}</p>`;
-				}
 				const desktop = this.points.filter(o => o.series.name == 'Desktop');
 				const mobile = this.points.filter(o => o.series.name == 'Mobile');
-				const changelog = flags[this.x];
-				return `<p style="font-size: smaller;">${Highcharts.dateFormat('%A, %b %e, %Y', this.x)}${changelog ? '*' : ''}</p>
+				return `${tooltip}
 				<table cellpadding="5">
 					<tr>
 					<td></td>
@@ -166,7 +204,9 @@ function drawChart(options, series) {
 			type: 'datetime',
 			events: {
 				setExtremes: e => redrawTimeseriesTable[options.metric]([e.min, e.max])
-			}
+			},
+			min: options.min,
+			max: options.max
 		},
 		yAxis: {
 			title: {
@@ -180,18 +220,19 @@ function drawChart(options, series) {
 	});
 }
 
-const cols = ['timestamp', 'client', 'p10', 'p25', 'p50', 'p75', 'p90'];
-const toKB = bytes => (bytes / 1024).toFixed(1);
+const cols = ['date', 'client', 'p10', 'p25', 'p50', 'p75', 'p90'];
+const toFixed = value => parseFloat(value).toFixed(1);
 const formatters = {
-	timestamp: timestamp => {
-  	const d = new Date(+timestamp);
-    return d.toLocaleDateString(undefined, {month: '2-digit', day: '2-digit', year: 'numeric'});
-  },
-  p10: toKB,
-  p25: toKB,
-  p50: toKB,
-  p75: toKB,
-  p90: toKB
+	date: date => {
+		const [YYYY, MM, DD] = date.split('_');
+		const d = new Date(Date.UTC(YYYY, MM - 1, DD));
+		return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
+	},
+	p10: toFixed,
+	p25: toFixed,
+	p50: toFixed,
+	p75: toFixed,
+	p90: toFixed
 };
 
 const zip = data => {
@@ -210,42 +251,18 @@ const zip = data => {
 
 const toRow = (o, i, n) => {
 	const row = el('tr');
-  cols.map(col => {
-  	const td = el('td');
-    let text = o[col];
-    const formatter = formatters[col];
-    if (formatter) {
-    	text = formatter(o[col]);
-    }
-    td.textContent = text;
-    if (col == 'ztimestamp' && n == 2) {
-    	if (i == 0) {
-        td.setAttribute('rowspan', 2);
-      } else {
-      	return null;
-      }
-    }
-    return td;
-  }).forEach(td => td && row.appendChild(td));
-  return row;
+	cols.map(col => {
+		const td = el('td');
+		let text = o[col];
+		const formatter = formatters[col];
+		if (formatter) {
+			text = formatter(o[col]);
+		}
+		td.textContent = text;
+		return td;
+	}).forEach(td => td && row.appendChild(td));
+	return row;
 };
 
-const el = tagName => document.createElement(tagName);
-
-// https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
-function debounce(callback, wait, context = this) {
-  let timeout = null 
-  let callbackArgs = null
-  
-  const later = () => callback.apply(context, callbackArgs)
-  
-  return function() {
-    callbackArgs = arguments
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-  }
-}
-
 // Export directly to global scope for use by Jinja template.
-window.drawTimeseries = drawTimeseries;
-window.drawTimeseriesTable = drawTimeseriesTable;
+window.timeseries = timeseries;
