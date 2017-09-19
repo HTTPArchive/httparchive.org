@@ -24,17 +24,6 @@
 	{{ super() }}
 	<script src="/static/js/histogram.js"></script>
 	<script>
-function histogram(metric, date, options) {
-	options.date = date;
-	const dataUrl = `http://cdn.httparchive.org/reports/${date}/${metric}.json`;
-	fetch(dataUrl)
-		.then(response => response.text())
-		.then(jsonStr => JSON.parse(jsonStr))
-		.then(data => {
-			drawHistogram(data, `${metric}-chart`, options);
-			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
-		});
-}
 {% for metric, options in report.metrics.items() %}
 	histogram('{{ metric }}', '{{ start }}', {{ options|tojson }});
 {% endfor %}

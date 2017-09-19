@@ -14,8 +14,10 @@
 		}
 	},
 	"loading": {
-		"name": "Loading",
+		"name": "Loading speed",
 		"summary": "Metrics summarizing the different stages of page loading.",
+		"minDate": "2017_06_01",
+		"maxDate": "2017_08_15",
 		"metrics": {
 			"fmp": {
 				"name": "First Meaningful Paint",

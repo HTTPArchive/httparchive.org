@@ -3,6 +3,27 @@ import debounce from './debounce.js';
 import { el } from './utils.js';
 
 
+function histogram(metric, date, options) {
+	options.date = date;
+	const dataUrl = `http://cdn.httparchive.org/reports/${date}/${metric}.json`;
+	fetch(dataUrl)
+		.then(response => {
+			if (!response.ok) {
+				console.error('Error loading histogram data', dataUrl, response);
+				return Promise.reject(response.statusText);
+			}
+			return response.text();
+		})
+		.then(jsonStr => JSON.parse(jsonStr))
+		.then(data => {
+			drawHistogram(data, `${metric}-chart`, options);
+			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
+		}).catch(e => {
+			const chart = document.getElementById(`${metric}-chart`);
+			chart.innerText = `Error loading data: ${e}. Try a more recent start date.`;
+		});
+}
+
 class Bin {
 	constructor(data) {
 		this.client = data.client;
@@ -273,5 +294,4 @@ function drawChart(series, containerId, options) {
 }
 
 // Export directly to global scope for use by Jinja template.
-window.drawHistogram = drawHistogram;
-window.drawHistogramTable = drawHistogramTable;
+window.histogram = histogram;

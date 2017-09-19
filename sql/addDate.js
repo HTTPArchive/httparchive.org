@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 /**
  * Adds a single date to dates.json if it doesn't already exist.
+ *
+ * Usage:
+ *
+ *     node sql/addDate.js 2017_09_01
+ *
  */
 
 const fs = require('fs');

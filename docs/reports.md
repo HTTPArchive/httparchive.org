@@ -74,9 +74,7 @@ A whitelist of origins are allowed to access the CDN. This list is maintained in
 
 ## Configuring a Report
 
-Reports are configured in [config/reports.json](../config/reports.json). The format of this JSON file is an object whose properties map report IDs to report configs. A report ID is a short identifier for the report, which is used to construct its URL. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`.  A report config is an object with name, summary, and metrics fields. The name and summary fields are human-readable descriptions that are displayed on the report's page. The metrics field maps metric IDs to an object with name and type fields. The metric ID is used as a page anchor in the report's table of contents. The metric name is used as the title for the corresponding data visualization and the metric type represents the unit of the data and appears on the axis label.
-
-Here's an example of a couple of metrics in the JavaScript report:
+Reports are configured in [config/reports.json](../config/reports.json). Here's an example of a couple of metrics in the JavaScript report:
 
 ```
 "js": {
@@ -96,6 +94,66 @@ Here's an example of a couple of metrics in the JavaScript report:
 ```
 
 *Important:* Metric IDs must match the histogram and timeseries SQL filenames.
+
+### Manifest Structure
+
+ A report config is an object with name, summary, and metrics fields. The name and summary fields are human-readable descriptions that are displayed on the report's page. The metrics field maps metric IDs to an object with name and type fields. The metric ID is used as a page anchor in the report's table of contents. The metric name is used as the title for the corresponding data visualization and the metric type represents the unit of the data and appears on the axis label.
+
+- **reports.json**
+
+	JSON-encoded object mapping report IDs to report configs.
+
+  - **report ID**
+
+  		Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`.
+
+  - **report config**
+
+  		Maps report configuration property names to values. The following properties are available:
+
+  		- **name**
+
+  			Required string. Human-readable title of the report. Must be unique.
+
+  		- **summary**
+
+  			Required string. Human-readable description of the report. Suggested length: 1-5 sentences.
+
+  		- **minDate**
+
+  			Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
+
+  		- **maxDate**
+
+  			Optional string. The latest date at which the report is available. YYYY_MM_DD format.
+
+  		- **metrics**
+
+  			Required object. Describes the metrics included in the report. Maps metric IDs to metric configs.
+
+  			- **metric ID**
+
+  				Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the histogram/timeseries SQL filenames.
+
+  			- **metric config**
+
+  				Maps metric configuration property names to values. The following properties are available:
+
+  				- **name**
+
+  				Required string. Human-readable name of the metric, eg "Time to First Paint". Must be unique to the report. Used in the title of the charts.
+
+  				- **type**
+
+  				Required string. Human-readable units of measurement. Common examples "ms", "KB", "Requests".. Used to label the chart axis and in chart tooltips.
+
+  				- **minDate**
+
+  				Optional string. The earliest date at which the metric is available. YYYY_MM_DD format.
+
+  				- **maxDate**
+
+  				Optional string. The latest date at which the metric is available. YYYY_MM_DD format.
 
 ## Configuring Dates
 

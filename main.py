@@ -89,6 +89,14 @@ def report(report_id):
     if not dates:
         abort(500)
 
+    min_date = report.get('minDate')
+    max_date = report.get('maxDate')
+
+    if min_date:
+        dates = dates[:dates.index(min_date)]
+    if max_date:
+        dates = dates[dates.index(max_date):]
+
     report['dates'] = dates
 
     start = request.args.get('start')
@@ -115,7 +123,8 @@ def report(report_id):
     # This is shorthand for the trends (timeseries) view.
     if not start and not end:
         # The default date range is 24 crawls (1 year).
-        start = dates[23]
+        # May be shorter if the report's minimum date is more recent.
+        start = dates[min(23, len(dates) - 1)]
         end = dates[0]
 
     if start and start not in dates:
