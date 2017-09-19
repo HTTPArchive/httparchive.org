@@ -36,7 +36,7 @@ class Bin {
 	}
 
 	toPoint() {
-		return [this.bin, this.pdf * 100];
+		return [this.bin, this.volume];
 	}
 
 	toCdfPoint() {
@@ -158,13 +158,16 @@ function drawHistogramTable(data, desktopId, mobileId, type, [start, end]=[-Infi
 }
 
 function drawHistogram(data, containerId, options) {
-	// If there are more than this many bins in the dataset, group everything above 95%.
-	const OUTLIER_MIN = 100;
+	// Outliers must be at least this bin index, regardless of CDF.
+	// This guarantees 30 bins worth of non-outlier data.
+	// Important for histograms that are extremely skewed,
+	// eg where the first bin is already 90+% PDF.
+	const OUTLIER_MIN = 30;
 	data = data.map((data) => new Bin(data));
 
 	let outliers = null;
-	let desktop = data.filter(({client}) => client=='desktop').reduce((data, current, i, desktop) => {
-		if (current.cdf < 0.95 || desktop.length < OUTLIER_MIN) data.push(current);
+	let desktop = data.filter(({client}) => client=='desktop').reduce((data, current, i) => {
+		if (current.cdf < 0.95 || i < OUTLIER_MIN) data.push(current);
 		else if (outliers) outliers.add(current);
 		else outliers = current;
 		return data;
@@ -172,8 +175,8 @@ function drawHistogram(data, containerId, options) {
 	const desktopOutliers = outliers && outliers.clone();
 
 	outliers = null;
-	let mobile = data.filter(({client}) => client=='mobile').reduce((data, current, i, mobile) => {
-		if (current.cdf < 0.95 || mobile.length < OUTLIER_MIN) data.push(current);
+	let mobile = data.filter(({client}) => client=='mobile').reduce((data, current, i) => {
+		if (current.cdf < 0.95 || i < OUTLIER_MIN) data.push(current);
 		else if (outliers) outliers.add(current);
 		else outliers = current;
 		return data;
@@ -202,7 +205,7 @@ function drawHistogram(data, containerId, options) {
 			data: desktopCDF,
 			type: 'line',
 			marker: {
-			  enabled: false
+				enabled: false
 			},
 			name: 'Desktop CDF',
 			color: COLOR_DESKTOP_ALT,
@@ -222,7 +225,7 @@ function drawHistogram(data, containerId, options) {
 			data: mobileCDF,
 			type: 'line',
 			marker: {
-			  enabled: false
+				enabled: false
 			},
 			name: 'Mobile CDF',
 			color: COLOR_MOBILE_ALT,

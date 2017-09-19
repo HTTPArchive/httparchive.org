@@ -8,13 +8,37 @@
 		"js"
 	],
 	"_metrics": {
+		"bytesCss": {
+			"name": "CSS Bytes",
+			"type": "KB"
+		},
+		"bytesFont": {
+			"name": "Font Bytes",
+			"type": "KB"
+		},
+		"bytesHtml": {
+			"name": "HTML Bytes",
+			"type": "KB"
+		},
+		"bytesImg": {
+			"name": "Image Bytes",
+			"type": "KB"
+		},
 		"bytesJs": {
 			"name": "JS Bytes",
 			"type": "KB"
 		},
-		"reqJs": {
-			"name": "JS Requests",
-			"type": "Requests"
+		"bytesOther": {
+			"name": "Other Bytes",
+			"type": "KB"
+		},
+		"bytesTotal": {
+			"name": "Total Bytes",
+			"type": "KB"
+		},
+		"bytesVideo": {
+			"name": "Video Bytes",
+			"type": "KB"
 		},
 		"fmp": {
 			"name": "First Meaningful Paint",
@@ -27,6 +51,38 @@
 		"ttfi": {
 			"name": "Time to First Interactive",
 			"type": "seconds"
+		},
+		"reqCss": {
+			"name": "CSS Requests",
+			"type": "Requests"
+		},
+		"reqFont": {
+			"name": "Font Requests",
+			"type": "Requests"
+		},
+		"reqHtml": {
+			"name": "HTML Requests",
+			"type": "Requests"
+		},
+		"reqImg": {
+			"name": "Image Requests",
+			"type": "Requests"
+		},
+		"reqJs": {
+			"name": "JS Requests",
+			"type": "Requests"
+		},
+		"reqOther": {
+			"name": "Other Requests",
+			"type": "Requests"
+		},
+		"reqTotal": {
+			"name": "Total Requests",
+			"type": "Requests"
+		},
+		"reqVideo": {
+			"name": "Video Requests",
+			"type": "Requests"
 		}
 	},
 	"js": {
@@ -38,7 +94,7 @@
 		]
 	},
 	"loading": {
-		"name": "Loading speed",
+		"name": "Loading Speed",
 		"summary": "Metrics summarizing the different stages of page loading.",
 		"minDate": "2017_06_01",
 		"maxDate": "2017_08_15",
@@ -49,11 +105,25 @@
 		]
 	},
 	"weight": {
-		"name": "Page weight",
+		"name": "Page Weight",
 		"summary": "A look at the size and frequency of various resource types.",
 		"metrics": [
+			"bytesCss",
+			"reqCss",
+			"bytesFont",
+			"reqFont",
+			"bytesHtml",
+			"reqHtml",
+			"bytesImg",
+			"reqImg",
 			"bytesJs",
-			"reqJs"
+			"reqJs",
+			"bytesOther",
+			"reqOther",
+			"bytesTotal",
+			"reqTotal",
+			"bytesVideo",
+			"reqVideo"
 		]
 	}
 }
