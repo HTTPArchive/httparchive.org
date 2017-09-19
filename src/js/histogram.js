@@ -3,6 +3,8 @@ import debounce from './debounce.js';
 import { el } from './utils.js';
 
 
+const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
+
 function histogram(metric, date, options) {
 	options.date = date;
 	const dataUrl = `http://cdn.httparchive.org/reports/${date}/${metric}.json`;
@@ -156,11 +158,13 @@ function drawHistogramTable(data, desktopId, mobileId, type, [start, end]=[-Infi
 }
 
 function drawHistogram(data, containerId, options) {
+	// If there are more than this many bins in the dataset, group everything above 95%.
+	const OUTLIER_MIN = 100;
 	data = data.map((data) => new Bin(data));
 
 	let outliers = null;
-	let desktop = data.filter(({client}) => client=='desktop').reduce((data, current) => {
-		if (current.cdf < 0.95) data.push(current);
+	let desktop = data.filter(({client}) => client=='desktop').reduce((data, current, i, desktop) => {
+		if (current.cdf < 0.95 || desktop.length < OUTLIER_MIN) data.push(current);
 		else if (outliers) outliers.add(current);
 		else outliers = current;
 		return data;
@@ -168,8 +172,8 @@ function drawHistogram(data, containerId, options) {
 	const desktopOutliers = outliers && outliers.clone();
 
 	outliers = null;
-	let mobile = data.filter(({client}) => client=='mobile').reduce((data, current) => {
-		if (current.cdf < 0.95) data.push(current);
+	let mobile = data.filter(({client}) => client=='mobile').reduce((data, current, i, mobile) => {
+		if (current.cdf < 0.95 || mobile.length < OUTLIER_MIN) data.push(current);
 		else if (outliers) outliers.add(current);
 		else outliers = current;
 		return data;
@@ -184,56 +188,72 @@ function drawHistogram(data, containerId, options) {
 		mobileCDF.push(outliers.toCdfPoint());
 	}
 
-	const series = [{
-		data: desktop.map((data) => data.toPoint()),
-		pointPadding: 0,
-		groupPadding: 0,
-		pointPlacement: 'between',
-		name: 'Desktop'
-	},{
-		data: mobile.map((data) => data.toPoint()),
-		pointPadding: 0,
-		groupPadding: 0,
-		pointPlacement: 'between',
-		name: 'Mobile'
-	},{
-		data: [desktopOutliers && desktopOutliers.toPoint()],
-		pointPadding: 0,
-		groupPadding: 0,
-		pointPlacement: 'between',
-		name: 'Desktop Outliers',
-		showInLegend: false
-	},{
-		data: [outliers &&outliers.toPoint()],
-		pointPadding: 0,
-		groupPadding: 0,
-		pointPlacement: 'between',
-		name: 'Mobile Outliers',
-		showInLegend: false
-	},{
-		data: desktopCDF,
-		type: 'line',
-		marker: {
-		  enabled: false
-		},
-		name: 'Desktop CDF',
-		yAxis: 1
-	},{
-		data: mobileCDF,
-		type: 'line',
-		marker: {
-		  enabled: false
-		},
-		name: 'Mobile CDF',
-		yAxis: 1
-	}];
+	const series = [];
+	if (desktop.length) {
+		series.push({
+			data: desktop.map((data) => data.toPoint()),
+			pointPadding: 0,
+			groupPadding: 0,
+			pointPlacement: 'between',
+			name: 'Desktop',
+			color: COLOR_DESKTOP
+		});
+		series.push({
+			data: desktopCDF,
+			type: 'line',
+			marker: {
+			  enabled: false
+			},
+			name: 'Desktop CDF',
+			color: COLOR_DESKTOP_ALT,
+			yAxis: 1
+		});
+	}
+	if (mobile.length) {
+		series.push({
+			data: mobile.map((data) => data.toPoint()),
+			pointPadding: 0,
+			groupPadding: 0,
+			pointPlacement: 'between',
+			name: 'Mobile',
+			color: COLOR_MOBILE
+		});
+		series.push({
+			data: mobileCDF,
+			type: 'line',
+			marker: {
+			  enabled: false
+			},
+			name: 'Mobile CDF',
+			color: COLOR_MOBILE_ALT,
+			yAxis: 1
+		});
+	}
+	if (desktopOutliers) {
+		series.push({
+			data: [desktopOutliers.toPoint()],
+			pointPadding: 0,
+			groupPadding: 0,
+			pointPlacement: 'between',
+			name: 'Desktop Outliers',
+			color: COLOR_DESKTOP,
+			showInLegend: false
+		});
+	}
+	if (outliers) {
+		series.push({
+			data: [outliers.toPoint()],
+			pointPadding: 0,
+			groupPadding: 0,
+			pointPlacement: 'between',
+			name: 'Mobile Outliers',
+			color: COLOR_MOBILE,
+			showInLegend: false
+		});
+	}
 
 	drawChart(series, containerId, options);
 };
-
-Highcharts.setOptions({
-	colors: Colors.getAll({rgba: true})
-});
 
 function drawChart(series, containerId, options) {
 	Highcharts.chart(containerId, {

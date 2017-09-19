@@ -7,7 +7,6 @@ import { el } from './utils.js';
 const changelogUrl = 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
 
 function timeseries(metric, options, start, end) {
-	console.log('timeseries', arguments)
 	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
@@ -33,14 +32,24 @@ function drawTimeseries(data, options) {
 	const desktop = data.filter(isDesktop);
 	const mobile = data.filter(isMobile);
 
+	const series = [];
+	if (desktop.length) {
+		series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
+		series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
+	}
+	if (mobile.length) {
+		series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
+		series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
+	}
+
+	if (!series.length) {
+		console.error('No timeseries data to draw', data, options);
+		return;
+	}
+
 	getFlagSeries().then(flagSeries => {
-		drawChart(options, [
-			getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP),
-			getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP),
-			getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE),
-			getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE),
-			flagSeries
-		]);
+		series.push(flagSeries);
+		drawChart(options,series);
 	})
 }
 let redrawTimeseriesTable = {};
@@ -134,7 +143,7 @@ const getFlagSeries = () => fetch(changelogUrl)
 			name: 'Changelog',
 			data: data.map((change, i) => ({
 				x: change.date,
-				title: String.fromCharCode(65 + i)
+				title: String.fromCharCode(65 + (i % 26))
 			})),
 			color: '#90b1b6',
 			y: 25

@@ -20,18 +20,22 @@
 	</section>
 
 	<section>
-		{% for report_id, report in reports.items() %}
+		{% for report in reports %}
 		<div class="report row">
 			<div class="container">
-				<div class="pddl0 col-lg-5 col-sm-6 col-md-6 col-xs-12">
+				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12">
 					<img src="/static/img/chart.png" alt="">
 				</div>
-				<div class="pddl0 col-lg-5 col-sm-6 col-md-6 col-xs-12">
-					<h2>{{ report.name }}</h2>
+				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
+					<h2>
+						<a href="{{ url_for('report', report_id=report.id) }}">
+							{{ report.name }}
+						</a>
+					</h2>
 
 					<p>{{ report.summary }}</p>
 					
-					<a href="{{ url_for('report', report_id=report_id) }}" class="btn">View the Report</a>
+					<a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the Report</a>
 					</h2>
 				</div>
 			</div>

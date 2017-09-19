@@ -9,13 +9,13 @@
 {% endblock %}
 
 {% block report %}
-	{% for metric, options in report.metrics.items() %}
-		<section id="{{ metric }}">
-			<h3>{{ options.name }}</h3>
-			<div id="{{ metric }}-chart" class="chart"></div>
+	{% for metric in report.metrics %}
+		<section id="{{ metric.id }}">
+			<h3>{{ metric.name }}</h3>
+			<div id="{{ metric.id }}-chart" class="chart"></div>
 			<button class="btn show-hide">Show Tables</button>
-			<table id="{{ metric }}-table-desktop" class="table hidden"></table>
-			<table id="{{ metric }}-table-mobile" class="table hidden"></table>
+			<table id="{{ metric.id }}-table-desktop" class="table hidden"></table>
+			<table id="{{ metric.id }}-table-mobile" class="table hidden"></table>
 		</section>
 	{% endfor %}
 {% endblock %}
@@ -24,8 +24,8 @@
 	{{ super() }}
 	<script src="/static/js/histogram.js"></script>
 	<script>
-{% for metric, options in report.metrics.items() %}
-	histogram('{{ metric }}', '{{ start }}', {{ options|tojson }});
+{% for metric in report.metrics %}
+	histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});
 {% endfor %}
 	</script>
 {% endblock %}

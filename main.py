@@ -51,16 +51,32 @@ def update_reports():
         last_report_update = time()
 update_reports()
 
+def get_report(report_id):
+    global reports_json
+    update_reports()
+
+    report = reports_json.get(report_id).copy()
+    report['id'] = report_id
+    report['metrics'] = map(get_metric, report.get('metrics'))
+    return report
+
+def get_metric(metric_id):
+    global reports_json
+    update_reports()
+
+    metrics = reports_json.get('_metrics')
+    metric = metrics.get(metric_id)
+    metric['id'] = metric_id
+    return metric
+
 @app.route('/')
 def index():
     global reports_json
     update_reports()
 
-    featured_report_id = 'js'
-    featured_report = reports_json.get(featured_report_id)
-    featured_report['id'] = featured_report_id
+    featured_reports = map(get_report, reports_json.get('_featured'))
 
-    return render_template('index.html', featured_report=featured_report)
+    return render_template('index.html', featured_reports=featured_reports)
 
 @app.route('/about')
 def about():
@@ -72,8 +88,16 @@ def faq():
 
 @app.route('/reports')
 def reports():
+    global reports_json
     update_reports()
-    return render_template('reports.html', reports=reports_json)
+
+    def map_reports(report_id):
+        report = reports_json.get(report_id)
+        report['id'] = report_id
+        return report
+
+    ordered_reports = map(get_report, reports_json.get('_reports'))
+    return render_template('reports.html', reports=ordered_reports)
 
 @app.route('/reports/<report_id>')
 def report(report_id):
@@ -81,7 +105,7 @@ def report(report_id):
     global reports_json
     update_reports()
 
-    report = reports_json.get(report_id)
+    report = get_report(report_id)
     if not report:
         abort(404)
 
@@ -93,7 +117,7 @@ def report(report_id):
     max_date = report.get('maxDate')
 
     if min_date:
-        dates = dates[:dates.index(min_date)]
+        dates = dates[:dates.index(min_date) + 1]
     if max_date:
         dates = dates[dates.index(max_date):]
 

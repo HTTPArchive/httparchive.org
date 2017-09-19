@@ -29,9 +29,10 @@
 	</section>
 
 	<section class="alt">
+		{% for featured_report in featured_reports %}
 		<div class="row">
 			<div class="container">
-				<div class="col-lg-4 col-sm-5 col-md-4 col-xs-12">
+				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
 					<h2>
 						<small>Featured Report:</small>
 						{{ featured_report.name }}
@@ -41,11 +42,12 @@
 
 					<a href="{{ url_for('report', report_id=featured_report.id) }}" class="btn alt">View The Report</a>
 				</div>
-				<div class="pddl0 col-lg-8 col-sm-7 col-md-8 col-xs-12">
+				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12">
 					<img src="/static/img/chart.png" alt="">
 				</div>
 			</div>
 		</div>
+		{% endfor %}
 	</section>
 
 	<section id="bigquery">

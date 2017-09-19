@@ -74,9 +74,9 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h3>Table of Contents</h3>
 				<ul id="TOC">
-				{% for metric, options in report.metrics.items() %}
+				{% for metric in report.metrics %}
 					<li>
-						<a href="#{{ metric }}">{{ options.name }}</a>
+						<a href="#{{ metric.id }}">{{ metric.name }}</a>
 					</li>
 				{% endfor %}
 				</ul>

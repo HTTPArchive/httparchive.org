@@ -2,12 +2,12 @@
 
 
 {% block report %}
-	{% for metric, options in report.metrics.items() %}
-		<section id="{{ metric }}">
-			<h3>{{ options.name }}</h3>
-			<div id="{{ metric }}-chart" class="chart"></div>
-			<button class="btn show-hide" data-metric="{{ metric }}">Show Table</button>
-			<table id="{{ metric }}-table" class="table hidden"></table>
+	{% for metric in report.metrics %}
+		<section id="{{ metric.id }}">
+			<h3>{{ metric.name }}</h3>
+			<div id="{{ metric.id }}-chart" class="chart"></div>
+			<button class="btn show-hide" data-metric="{{ metric.id }}">Show Table</button>
+			<table id="{{ metric.id }}-table" class="table hidden"></table>
 		</section>
 	{% endfor %}
 {% endblock %}
@@ -17,9 +17,9 @@
 	<script src="https://code.highcharts.com/stock/highcharts-more.js"></script>
 	<script src="/static/js/timeseries.js"></script>
 	<script>
-{% for metric, options in report.metrics.items() %}
-	timeseries({{ metric|tojson }},
-		{{ options|tojson }},
+{% for metric in report.metrics %}
+	timeseries({{ metric.id|tojson }},
+		{{ metric|tojson }},
 		{{ start|tojson }},
 		{{ end|tojson }});
 {% endfor %}
