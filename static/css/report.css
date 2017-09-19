@@ -1,0 +1,84 @@
+#report-header {
+	background-color: #e7edee;
+}
+#report-header hr {
+	border-color: #748c8f;
+}
+#report-date {
+	color: #748c8f;
+}
+#report-toc {
+	background-color: #f2f5f5;
+}
+#report-metrics {
+	background: linear-gradient(to bottom, #e7eeef 0, white 400px);
+}
+
+#history {
+	padding: 40px 0;
+}
+#history label {
+	display: block;
+}
+#history select,
+#update,
+#permalink {
+	width: 100%;
+}
+@media (max-width: 767px) {
+	section #update[class*="btn"] {
+		max-width: none;
+	}
+}
+
+#TOC li {
+	list-style-type: initial;
+	list-style-position: inside;
+	text-align: left;
+}
+#TOC li ul {
+	margin-left: 20px;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+td {
+	padding: 0 5px;
+}
+
+.volume {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+.volume div {
+	position: absolute;
+	left: 0;
+	height: 100%;
+	border: 1px solid #666;
+	background-color: #eee;
+	border-top: none;
+	opacity: 0.5;
+}
+.volume div.desktop {
+	background-color: #04c7fd;
+	border-color: #12aef8;
+}
+.volume div.mobile {
+	background-color: #a62aa4;
+	border-color: #842486;
+}
+.volume span {
+	z-index: 1;
+}
+
+.chart {
+	min-width: 310px;
+	height: 400px;
+	margin: 0 auto;
+}

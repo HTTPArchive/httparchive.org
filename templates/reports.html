@@ -1,29 +1,41 @@
 {% extends "main.html" %}
 
 
-{% block title %}{{ super() }} | Reports{% endblock %}
+{% block title %}Reports{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<link rel="stylesheet" href="/static/css/reports.css" />
+{% endblock %}
 
 {% block main %}
-	<h1>Reports</h1>
+	<section>
+		<div class="container">
+			<h2>Reports</h2>
 
-	<ul>
+			<p>
+				Looking for interesting stats and trends? HTTP Archive metrics are now grouped and organized into reports. Choose from the catalog of reports below to get insights into a particular area of the web.
+			</p>
+		</div>
+	</section>
+
+	<section>
 		{% for report_id, report in reports.items() %}
-		<li class="timeseries">
-			<a href="{{ url_for('report', report_id=report_id) }}">
-				{{ report.name }}
-			</a>
+		<div class="report row">
+			<div class="container">
+				<div class="pddl0 col-lg-5 col-sm-6 col-md-6 col-xs-12">
+					<img src="/static/img/chart.png" alt="">
+				</div>
+				<div class="pddl0 col-lg-5 col-sm-6 col-md-6 col-xs-12">
+					<h2>{{ report.name }}</h2>
 
-			<ul>
-				{% for date in report.dates %}
-				<li class="histogram">
-					<a href="{{ url_for('report', report_id=report_id, date=date) }}">
-						{{ date }}
-					</a>
-				</li>
-				{% endfor %}
-			</ul>
-
-		</li>
+					<p>{{ report.summary }}</p>
+					
+					<a href="{{ url_for('report', report_id=report_id) }}" class="btn">View the Report</a>
+					</h2>
+				</div>
+			</div>
+		</div>
 		{% endfor %}
-	</ul>
+	</section>
 {% endblock %}
