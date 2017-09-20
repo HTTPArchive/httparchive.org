@@ -75,9 +75,11 @@
 				<h3>Table of Contents</h3>
 				<ul id="TOC">
 				{% for metric in report.metrics %}
-					<li>
-						<a href="#{{ metric.id }}">{{ metric.name }}</a>
-					</li>
+					{% if viz === 'histogram' and metric.histogram and metric.histogram.enabled %}
+						<li>
+							<a href="#{{ metric.id }}">{{ metric.name }}</a>
+						</li>
+					{% endif %}
 				{% endfor %}
 				</ul>
 			</div>

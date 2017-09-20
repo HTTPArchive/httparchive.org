@@ -12,8 +12,7 @@
 #
 #   -h: Whether to generate histograms. Must be accompanied by the date to query.
 #
-#   -f: Whether to force histogram querying and updating even if the data exists.
-#       Timeseries are always overwritten.
+#   -f: Whether to force querying and updating even if the data exists.
 #
 
 set -o pipefail
@@ -95,6 +94,12 @@ else
 		echo -e "Generating $metric timeseries"
 
 		gs_url="gs://httparchive/reports/${metric}.json"
+		gsutil ls $gs_url &> /dev/null
+		if [ $? -eq 0 ] && [ $FORCE -eq 0 ]; then
+			# The file already exists, so skip the query.
+			echo -e "Skipping $metric timeseries"
+			continue
+		fi
 
 		# Run the query on BigQuery.
 		result=$(cat $query \

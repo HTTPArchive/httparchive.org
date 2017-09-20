@@ -10,17 +10,19 @@
 
 {% block report %}
 	{% for metric in report.metrics %}
-		<section id="{{ metric.id }}">
-			<h3>{{ metric.name }}</h3>
-			<div id="{{ metric.id }}-chart" class="chart"></div>
-			<button class="btn show-hide">Show Tables</button>
-			<div class="table-wrapper">
-				<table id="{{ metric.id }}-table-desktop" class="table hidden"></table>
-			</div>
-			<div class="table-wrapper">
-				<table id="{{ metric.id }}-table-mobile" class="table hidden"></table>
-			</div>
-		</section>
+		{% if metric.histogram and metric.histogram.enabled %}
+			<section id="{{ metric.id }}">
+				<h3>{{ metric.name }}</h3>
+				<div id="{{ metric.id }}-chart" class="chart"></div>
+				<button class="btn show-hide">Show Tables</button>
+				<div class="table-wrapper">
+					<table id="{{ metric.id }}-table-desktop" class="table hidden"></table>
+				</div>
+				<div class="table-wrapper">
+					<table id="{{ metric.id }}-table-mobile" class="table hidden"></table>
+				</div>
+			</section>
+		{% endif %}
 	{% endfor %}
 {% endblock %}
 
@@ -29,7 +31,9 @@
 	<script src="/static/js/histogram.js"></script>
 	<script>
 {% for metric in report.metrics %}
-	histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});
+	{% if metric.histogram and metric.histogram.enabled %}
+		histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});
+	{% endif %}
 {% endfor %}
 	</script>
 {% endblock %}

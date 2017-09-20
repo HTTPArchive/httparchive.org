@@ -1,5 +1,6 @@
 {
 	"_reports": [
+		"web",
 		"js",
 		"loading",
 		"weight"
@@ -43,6 +44,18 @@
 		"fmp": {
 			"name": "First Meaningful Paint",
 			"type": "seconds"
+		},
+		"pctHttps": {
+			"name": "HTTPS Requests",
+			"type": "%",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"series": [
+					"percent"
+				]
+			}
 		},
 		"ttci": {
 			"name": "Time to Consistently Interactive",
@@ -102,6 +115,15 @@
 			"fmp",
 			"ttci",
 			"ttfi"
+		]
+	},
+	"web": {
+		"name": "State of the Web",
+		"summary": "TODO",
+		"metrics": [
+			"bytesTotal",
+			"reqTotal",
+			"pctHttps"
 		]
 	},
 	"weight": {
