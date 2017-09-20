@@ -64,6 +64,22 @@ sql/getBigQueryDates.sh runs pages | \
 
 `xargs` handles the processing of each date and calls the other script.
 
+### Generating Specific Metrics
+
+Running `generateReports.sh` without the `-f` flag will result in metrics whose JSON results are already on Google Storage to skip being requeried. To regenerate results for specific metrics, the easiest thing to do may be to remove its results from Google Storage first, rather than running with the `-f` flag enabled and waiting for all other metrics to be queried and uploaded.
+
+For example, if a change is made to the `reqTotal.sql` histogram query, then you can "invalidate" all histogram results for this query by deleting all respective JSON files from Google Storage:
+
+```sh
+gsutil rm gs://httparchive/reports/*/reqTotal.json
+```
+
+The wildcard in the YYYY_MM_DD position will instruct `gsutil` to delete all histogram results for this specific metric.
+
+Now you can delete more metric-specific results or rerun `generateReports.sh` without the `-f` flag and only the desired metrics will be requeried.
+
+Note that the cdn.httparchive.org may still contain the old version of the JSON file for the duration of the TTL. See below for more on invalidating the cache.
+
 ## Serving the JSON Files
 
 The Google Storage bucket is behind an App Engine load balancer and CDN, which is aliased as [cdn.httparchive.org](cdn.httparchive.org). Accessing the JSON data follows the same pattern as the `gs://` URL. For example, the public URL for `gs://httparchive/reports/2017_09_01/bytesJS.json` is [http://cdn.httparchive.org/reports/2017_09_01/bytesJS.json](http://cdn.httparchive.org/reports/2017_09_01/bytesJS.json). Each file is configured to be served with `Content-Type: application/json` and `Cache-Control: public, max-age=3600` headers.

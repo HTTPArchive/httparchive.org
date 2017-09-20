@@ -14,8 +14,12 @@
 			<h3>{{ metric.name }}</h3>
 			<div id="{{ metric.id }}-chart" class="chart"></div>
 			<button class="btn show-hide">Show Tables</button>
-			<table id="{{ metric.id }}-table-desktop" class="table hidden"></table>
-			<table id="{{ metric.id }}-table-mobile" class="table hidden"></table>
+			<div class="table-wrapper">
+				<table id="{{ metric.id }}-table-desktop" class="table hidden"></table>
+			</div>
+			<div class"table-wrapper">
+				<table id="{{ metric.id }}-table-mobile" class="table hidden"></table>
+			</div>
 		</section>
 	{% endfor %}
 {% endblock %}

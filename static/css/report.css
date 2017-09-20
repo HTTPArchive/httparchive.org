@@ -40,6 +40,10 @@
 	margin-left: 20px;
 }
 
+.table-wrapper {
+	max-height: 400px;
+	overflow-y: auto;
+}
 table {
 	border-collapse: collapse;
 	width: 100%;
