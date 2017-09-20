@@ -10,7 +10,7 @@
 
 {% block report %}
 	{% for metric in report.metrics %}
-		{% if metric.histogram and metric.histogram.enabled %}
+		{% if not metric.histogram or metric.histogram.enabled %}
 			<section id="{{ metric.id }}">
 				<h3>{{ metric.name }}</h3>
 				<div id="{{ metric.id }}-chart" class="chart"></div>
@@ -31,7 +31,7 @@
 	<script src="/static/js/histogram.js"></script>
 	<script>
 {% for metric in report.metrics %}
-	{% if metric.histogram and metric.histogram.enabled %}
+	{% if not metric.histogram or metric.histogram.enabled %}
 		histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});
 	{% endif %}
 {% endfor %}

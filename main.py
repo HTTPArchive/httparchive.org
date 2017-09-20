@@ -161,7 +161,7 @@ def report(report_id):
     if not request.script_root:
         request.script_root = url_for('report', report_id=report_id, _external=True)
 
-    return render_template('report/%s.html' % viz, report=report, start=start, end=end)
+    return render_template('report/%s.html' % viz, viz=viz, report=report, start=start, end=end)
 
 @app.errorhandler(400)
 def bad_request(e):
