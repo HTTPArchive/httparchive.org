@@ -52,7 +52,7 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"series": [
+				"fields": [
 					"percent"
 				]
 			}

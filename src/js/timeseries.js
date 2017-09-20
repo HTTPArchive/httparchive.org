@@ -1,10 +1,8 @@
-import { Colors } from './colors.js';
-import debounce from './debounce.js';
-import { el } from './utils.js';
+import Changelog from './changelog';
+import { Colors } from './colors';
+import debounce from './debounce';
+import { el } from './utils';
 
-
-// TODO: Move this to a static JSON file in this repo.
-const changelogUrl = 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
 
 function timeseries(metric, options, start, end) {
 	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
@@ -34,12 +32,25 @@ function drawTimeseries(data, options) {
 
 	const series = [];
 	if (desktop.length) {
-		series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
-		series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
+		if (options.timeseries && options.timeseries.fields) {
+			options.timeseries.fields.forEach(field => {
+				series.push(getLineSeries('Desktop', desktop.map(o => [o.timestamp, o[field]]), Colors.DESKTOP));
+				console.log('timeseries', series)
+			});
+		} else {
+			series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
+			series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
+		}
 	}
 	if (mobile.length) {
-		series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
-		series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
+		if (options.timeseries && options.timeseries.fields) {
+			options.timeseries.fields.forEach(field => {
+				series.push(getLineSeries('Mobile', mobile.map(o => [o.timestamp, o[field]]), Colors.MOBILE));
+			});
+		} else {
+			series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
+			series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
+		}
 	}
 
 	if (!series.length) {
@@ -59,6 +70,11 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 		redrawTimeseriesTable[options.metric] = debounce((dateRange) => {
 			return drawTimeseriesTable(data, options, dateRange);
 		}, 100);
+	}
+
+	let cols = DEFAULT_COLS.concat(DEFAULT_FIELDS);
+	if (options.timeseries && options.timeseries.fields) {
+		cols = DEFAULT_COLS.concat(options.timeseries.fields);
 	}
 
 	Promise.resolve(zip(data)).then(data => {
@@ -82,7 +98,7 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 				return;
 			}
 
-			arr.forEach((o, i) => tbody.appendChild(toRow(o, i, arr.length)));
+			arr.forEach((o, i) => tbody.appendChild(toRow(o, i, arr.length, cols)));
 		});
 		frag.appendChild(tbody);
 		table.appendChild(frag);
@@ -96,10 +112,11 @@ const toNumeric = o => ({
 	p25: +o.p25,
 	p50: +o.p50,
 	p75: +o.p75,
+	percent: +o.percent,
 	client: o.client
 });
 const toIQR = o => [o.timestamp, o.p25, o.p75];
-const toLine = o => [o.timestamp, o.p50];  
+const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
 	name,
 	type: 'line',
@@ -129,7 +146,7 @@ const getAreaSeries = (name, data, color) => ({
 	}
 });
 const flags = {};
-const getFlagSeries = () => fetch(changelogUrl)
+const getFlagSeries = () => fetch(Changelog.URL)
 	.then(response => response.json())
 	.then(data => {
 		data.forEach(change => {
@@ -229,7 +246,8 @@ function drawChart(options, series) {
 	});
 }
 
-const cols = ['date', 'client', 'p10', 'p25', 'p50', 'p75', 'p90'];
+const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];
+const DEFAULT_COLS = ['date', 'client'];
 const toFixed = value => parseFloat(value).toFixed(1);
 const formatters = {
 	date: date => {
@@ -258,7 +276,7 @@ const zip = data => {
 	return Object.entries(dates).sort(([a], [b]) => a > b ? -1 : 1);
 };
 
-const toRow = (o, i, n) => {
+const toRow = (o, i, n, cols) => {
 	const row = el('tr');
 	cols.map(col => {
 		const td = el('td');

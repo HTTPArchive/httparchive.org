@@ -180,6 +180,26 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Optional string. The latest date at which the metric is available. YYYY_MM_DD format.
 
+      - **histogram**
+
+        Optional object. Includes histogram-specific configuration options.
+
+        - **enabled**
+
+          Optional boolean. Default `true`. Whether the metric should be included in histogram reports.
+
+      - **timeseries**
+
+        Optional object. Includes timeseries-specific configuration options.
+
+        - **enabled**
+
+          Optional boolean. Default `true`. Whether the metric should be included in timeseres reports.
+
+        - **fields**
+
+          Optional array. Default `["p25", "p50", "p75"]`. Defines the field names of the measurement objects that should be plotted. A measurement object is just an element in the array of JSON-encoded timeseries data, containing client, date, and timestamp info as well as the measurement data.
+
   - **report ID**
 
   		Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`. Changing this value will probably break permalinks.

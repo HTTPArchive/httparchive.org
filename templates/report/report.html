@@ -75,7 +75,7 @@
 				<h3>Table of Contents</h3>
 				<ul id="TOC">
 				{% for metric in report.metrics %}
-					{% if viz == 'histogram' and not metric.histogram or metric.histogram.enabled %}
+					{% if not viz in metric or metric[viz].enabled != False %}
 						<li>
 							<a href="#{{ metric.id }}">{{ metric.name }}</a>
 						</li>

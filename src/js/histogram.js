@@ -1,6 +1,6 @@
-import { Colors } from './colors.js';
-import debounce from './debounce.js';
-import { el } from './utils.js';
+import { Colors } from './colors';
+import debounce from './debounce';
+import { el } from './utils';
 
 
 const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
