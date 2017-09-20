@@ -165,16 +165,20 @@ def report(report_id):
 
 @app.errorhandler(400)
 def bad_request(e):
-    return render_template('400.html', error=e), 400
+    return render_template('error/400.html', error=e), 400
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html', error=e), 404
+    return render_template('error/404.html', error=e), 404
 
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request.')
-    return render_template('500.html', error=e), 500
+    return render_template('error/500.html', error=e), 500
+
+@app.errorhandler(502)
+def server_error(e):
+    return render_template('error/502.html', error=e), 502
 
 
 if __name__ == '__main__':
