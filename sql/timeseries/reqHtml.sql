@@ -11,7 +11,8 @@ SELECT
 FROM
   `httparchive.runs.20*`
 WHERE
-  _TABLE_SUFFIX LIKE '%_pages%'
+  _TABLE_SUFFIX LIKE '%_pages%' AND
+  reqHtml > 0
 GROUP BY
   date,
   timestamp,

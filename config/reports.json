@@ -2,6 +2,7 @@
 	"_reports": [
 		"web",
 		"js",
+		"img",
 		"loading",
 		"weight"
 	],
@@ -128,6 +129,14 @@
 			"type": "Requests"
 		}
 	},
+	"img": {
+		"name": "State of Images",
+		"summary": "The state of image consumption, optimization, and format adoption.",
+		"metrics": [
+			"bytesImg",
+			"reqImg"
+		]
+	},
 	"js": {
 		"name": "State of JavaScript",
 		"summary": "The state of JavaScript, including its contribution to page weight and the number of script files included on pages.",
@@ -159,7 +168,7 @@
 	},
 	"weight": {
 		"name": "Page Weight",
-		"summary": "A look at the size and frequency of various resource types.",
+		"summary": "A look at the size and frequency of various resource types per page.",
 		"metrics": [
 			"bytesCss",
 			"reqCss",
