@@ -170,7 +170,11 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
       - **type**
 
-        Required string. Human-readable units of measurement. Common examples "ms", "KB", "Requests".. Used to label the chart axis and in chart tooltips.
+        Required string. Human-readable units of measurement. Common examples: "ms", "KB", "Requests". Used to label the chart axis and in chart tooltips.
+
+      - **description**
+
+        Optional string. Human-readable explanation of what the metric is measuring and how to interpret the results.
 
       - **histogram**
 

@@ -10,9 +10,12 @@
 
 {% block report %}
 	{% for metric in report.metrics %}
-		{% if not viz in metric or metric[viz].enabled != False %}
+		{% if metric[viz]['enabled'] %}
 			<section id="{{ metric.id }}">
 				<h3>{{ metric.name }}</h3>
+				{% if metric.description %}
+					<p>{{ metric.description }}</p>
+				{% endif %}
 				<div id="{{ metric.id }}-chart" class="chart"></div>
 				<button class="btn show-hide">Show Tables</button>
 				<div class="table-wrapper">
@@ -31,7 +34,7 @@
 	<script src="/static/js/histogram.js"></script>
 	<script>
 {% for metric in report.metrics %}
-	{% if not viz in metric or metric[viz].enabled != False %}
+	{% if metric[viz]['enabled'] %}
 		histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});
 	{% endif %}
 {% endfor %}

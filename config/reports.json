@@ -41,9 +41,20 @@
 			"name": "Video Bytes",
 			"type": "KB"
 		},
+		"dcl": {
+			"name": "DOM Content Loaded",
+			"type": "ms",
+			"histogram": {
+				"minDate": "2013_08_01"
+			}
+		},
 		"fmp": {
 			"name": "First Meaningful Paint",
-			"type": "seconds"
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_06_01",
+				"maxDate": "2017_08_15"
+			}
 		},
 		"pctHttps": {
 			"name": "HTTPS Requests",
@@ -66,11 +77,19 @@
 		},
 		"ttci": {
 			"name": "Time to Consistently Interactive",
-			"type": "seconds"
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_06_01",
+				"maxDate": "2017_08_15"
+			}
 		},
 		"ttfi": {
 			"name": "Time to First Interactive",
-			"type": "seconds"
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_06_01",
+				"maxDate": "2017_08_15"
+			}
 		},
 		"reqCss": {
 			"name": "CSS Requests",
@@ -116,12 +135,11 @@
 	"loading": {
 		"name": "Loading Speed",
 		"summary": "Metrics summarizing the different stages of page loading.",
-		"minDate": "2017_06_01",
-		"maxDate": "2017_08_15",
 		"metrics": [
 			"fmp",
 			"ttci",
-			"ttfi"
+			"ttfi",
+			"dcl"
 		]
 	},
 	"web": {

@@ -116,6 +116,11 @@ def report(report_id):
     min_date = report.get('minDate')
     max_date = report.get('maxDate')
 
+    # TODO: If a report doesn't explicitly have a min/max date,
+    # but all of its metrics do, take the min/max of the metrics
+    # and set that as the report's implicit min/max date.
+
+    # Omit dates for which this report has no data.
     if min_date:
         dates = dates[:dates.index(min_date) + 1]
     if max_date:
@@ -157,6 +162,25 @@ def report(report_id):
         abort(400)
 
     viz = VizTypes.HISTOGRAM if (start and not end) else VizTypes.TIMESERIES
+
+    # Determine which metrics should be enabled for this report.
+    for metric in report['metrics']:
+        metric[viz] = metric.get(viz, {})
+        enabled = metric[viz].get('enabled', True)
+        min_date = metric[viz].get('minDate', start)
+        max_date = metric[viz].get('maxDate', end)
+
+        # Disabled metrics should stay that way.
+        if not enabled:
+            continue
+
+        # Disable the metric if it start/end is outside of the min/max window.
+        enabled = start >= min_date
+        if end and enabled:
+            enabled = end <= max_date
+
+        metric[viz]['enabled'] = enabled
+            
 
     if not request.script_root:
         request.script_root = url_for('report', report_id=report_id, _external=True)

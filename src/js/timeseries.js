@@ -200,7 +200,7 @@ function drawChart(options, series) {
 				}
 
 				const changelog = flags[this.x];
-				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%A, %b %e, %Y', this.x)}${changelog ? '*' : ''}</p>`;
+				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%b %e, %Y', this.x)}${changelog ? '*' : ''}</p>`;
 
 				// Handle changelog tooltips first.
 				if (!this.points) {

@@ -3,12 +3,19 @@
 
 {% block report %}
 	{% for metric in report.metrics %}
-		<section id="{{ metric.id }}">
-			<h3>{{ metric.name }}</h3>
-			<div id="{{ metric.id }}-chart" class="chart"></div>
-			<button class="btn show-hide" data-metric="{{ metric.id }}">Show Table</button>
-			<table id="{{ metric.id }}-table" class="table hidden"></table>
-		</section>
+		{% if metric[viz]['enabled'] %}
+			<section id="{{ metric.id }}">
+				<h3>{{ metric.name }}</h3>
+				{% if metric.description %}
+					<p>{{ metric.description }}</p>
+				{% endif %}
+				<div id="{{ metric.id }}-chart" class="chart"></div>
+				<button class="btn show-hide" data-metric="{{ metric.id }}">Show Table</button>
+				<div class="table-wrapper">
+					<table id="{{ metric.id }}-table" class="table hidden"></table>
+				</div>
+			</section>
+		{% endif %}
 	{% endfor %}
 {% endblock %}
 
@@ -18,10 +25,12 @@
 	<script src="/static/js/timeseries.js"></script>
 	<script>
 {% for metric in report.metrics %}
-	timeseries({{ metric.id|tojson }},
-		{{ metric|tojson }},
-		{{ start|tojson }},
-		{{ end|tojson }});
+	{% if metric[viz]['enabled'] %}
+		timeseries({{ metric.id|tojson }},
+			{{ metric|tojson }},
+			{{ start|tojson }},
+			{{ end|tojson }});
+	{% endif %}
 {% endfor %}
 	</script>
 {% endblock %}
