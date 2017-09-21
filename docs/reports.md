@@ -172,17 +172,17 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Required string. Human-readable units of measurement. Common examples "ms", "KB", "Requests".. Used to label the chart axis and in chart tooltips.
 
-      - **minDate**
-
-        Optional string. The earliest date at which the metric is available. YYYY_MM_DD format.
-
-      - **maxDate**
-
-        Optional string. The latest date at which the metric is available. YYYY_MM_DD format.
-
       - **histogram**
 
         Optional object. Includes histogram-specific configuration options.
+
+        - **minDate**
+
+          Optional string. The earliest date at which the metric is available. YYYY_MM_DD format.
+
+        - **maxDate**
+
+          Optional string. The latest date at which the metric is available. YYYY_MM_DD format.
 
         - **enabled**
 

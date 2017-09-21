@@ -146,26 +146,32 @@ const getAreaSeries = (name, data, color) => ({
 	}
 });
 const flags = {};
-const getFlagSeries = () => fetch(Changelog.URL)
-	.then(response => response.json())
-	.then(data => {
-		data.forEach(change => {
-			flags[+change.date] = {
-				title: change.title,
-				desc: change.desc
-			};
-		});
-		return {
-			type: 'flags',
-			name: 'Changelog',
-			data: data.map((change, i) => ({
-				x: change.date,
-				title: String.fromCharCode(65 + (i % 26))
-			})),
-			color: '#90b1b6',
-			y: 25
+let changelog = null;
+const loadChangelog = () => {
+	if (!changelog) {
+		changelog = fetch(Changelog.URL).then(response => response.json());
+	}
+
+	return changelog;
+};
+const getFlagSeries = () => loadChangelog().then(data => {
+	data.forEach(change => {
+		flags[+change.date] = {
+			title: change.title,
+			desc: change.desc
 		};
 	});
+	return {
+		type: 'flags',
+		name: 'Changelog',
+		data: data.map((change, i) => ({
+			x: change.date,
+			title: String.fromCharCode(65 + (i % 26))
+		})),
+		color: '#90b1b6',
+		y: 25
+	};
+});
 
 function drawChart(options, series) {
 	Highcharts.stockChart(options.chartId, {

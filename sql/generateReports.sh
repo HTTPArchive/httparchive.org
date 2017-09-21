@@ -91,8 +91,6 @@ else
 		# Extract the metric name from the file path.
 		metric=$(echo $(basename $query) | cut -d"." -f1)
 
-		echo -e "Generating $metric timeseries"
-
 		gs_url="gs://httparchive/reports/${metric}.json"
 		gsutil ls $gs_url &> /dev/null
 		if [ $? -eq 0 ] && [ $FORCE -eq 0 ]; then
@@ -100,6 +98,8 @@ else
 			echo -e "Skipping $metric timeseries"
 			continue
 		fi
+
+		echo -e "Generating $metric timeseries"
 
 		# Run the query on BigQuery.
 		result=$(cat $query \

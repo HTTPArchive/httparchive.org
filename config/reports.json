@@ -57,6 +57,13 @@
 				]
 			}
 		},
+		"tcp": {
+			"name": "TCP Connections Per Page",
+			"type": "Connections",
+			"histogram": {
+				"minDate": "2014_05_15"
+			}
+		},
 		"ttci": {
 			"name": "Time to Consistently Interactive",
 			"type": "seconds"
@@ -123,7 +130,8 @@
 		"metrics": [
 			"bytesTotal",
 			"reqTotal",
-			"pctHttps"
+			"pctHttps",
+			"tcp"
 		]
 	},
 	"weight": {
