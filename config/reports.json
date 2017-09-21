@@ -56,6 +56,10 @@
 				"maxDate": "2017_08_15"
 			}
 		},
+		"ol": {
+			"name": "onLoad",
+			"type": "ms"
+		},
 		"pctHttps": {
 			"name": "HTTPS Requests",
 			"type": "%",
@@ -139,7 +143,8 @@
 			"fmp",
 			"ttci",
 			"ttfi",
-			"dcl"
+			"dcl",
+			"ol"
 		]
 	},
 	"web": {
