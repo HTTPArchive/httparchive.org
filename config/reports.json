@@ -40,7 +40,10 @@
 		},
 		"bytesVideo": {
 			"name": "Video Bytes",
-			"type": "KB"
+			"type": "KB",
+			"histogram": {
+				"minDate": "2015_05_01"
+			}
 		},
 		"dcl": {
 			"name": "DOM Content Loaded",
@@ -126,7 +129,10 @@
 		},
 		"reqVideo": {
 			"name": "Video Requests",
-			"type": "Requests"
+			"type": "Requests",
+			"histogram": {
+				"minDate": "2015_05_01"
+			}
 		}
 	},
 	"img": {

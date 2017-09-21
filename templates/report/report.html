@@ -109,7 +109,7 @@
 	</script>
 {% endblock %}
 
-{% macro metric_info(metric) %}
+{% macro metric_info(metric, viz) %}
 	<h3>{{ metric.name }}</h3>
 	{% if metric.description %}
 		<p>{{ metric.description }}</p>

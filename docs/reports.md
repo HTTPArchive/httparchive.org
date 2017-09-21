@@ -182,7 +182,7 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         - **minDate**
 
-          Optional string. The earliest date at which the metric is available. YYYY_MM_DD format.
+          Optional string. The earliest date at which the metric is available. YYYY_MM_DD format. For example, any metric that depends on the `har` dataset must have a `minDate` value of at least 2016_01_01, which is when the first HAR table became available.
 
         - **maxDate**
 

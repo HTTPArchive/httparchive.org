@@ -35,7 +35,6 @@ function drawTimeseries(data, options) {
 		if (options.timeseries && options.timeseries.fields) {
 			options.timeseries.fields.forEach(field => {
 				series.push(getLineSeries('Desktop', desktop.map(o => [o.timestamp, o[field]]), Colors.DESKTOP));
-				console.log('timeseries', series)
 			});
 		} else {
 			series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));

@@ -5,7 +5,7 @@
 	{% for metric in report.metrics %}
 		{% if metric[viz]['enabled'] %}
 			<section id="{{ metric.id }}">
-				{{ metric_info(metric) }}
+				{{ metric_info(metric, viz) }}
 				<div id="{{ metric.id }}-chart" class="chart"></div>
 				<button class="btn show-hide" data-metric="{{ metric.id }}">Show Table</button>
 				<div class="table-wrapper">
