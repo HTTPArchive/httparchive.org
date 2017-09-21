@@ -69,6 +69,22 @@ def get_metric(metric_id):
     metric['id'] = metric_id
     return metric
 
+def get_similar_reports(metric_id, current_report_id):
+    global reports_json
+
+    similar_reports = {}
+    reports = reports_json.get('_reports', [])
+    for report_id in reports:
+        # A report is not similar to itself.
+        if report_id == current_report_id:
+            continue
+
+        report = reports_json.get(report_id, {})
+        # A report is similar if it contains the same metric.
+        if 'metrics' in report and metric_id in report['metrics']:
+            similar_reports[report_id] = report['name']
+    return similar_reports
+
 @app.route('/')
 def index():
     global reports_json
@@ -165,6 +181,9 @@ def report(report_id):
 
     # Determine which metrics should be enabled for this report.
     for metric in report['metrics']:
+        # Get a list of reports that also contain this metric.
+        metric['similar_reports'] = get_similar_reports(metric['id'], report_id)
+
         metric[viz] = metric.get(viz, {})
         enabled = metric[viz].get('enabled', True)
         min_date = metric[viz].get('minDate', start)

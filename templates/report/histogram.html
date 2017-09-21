@@ -12,10 +12,7 @@
 	{% for metric in report.metrics %}
 		{% if metric[viz]['enabled'] %}
 			<section id="{{ metric.id }}">
-				<h3>{{ metric.name }}</h3>
-				{% if metric.description %}
-					<p>{{ metric.description }}</p>
-				{% endif %}
+				{{ metric_info(metric) }}
 				<div id="{{ metric.id }}-chart" class="chart"></div>
 				<button class="btn show-hide">Show Tables</button>
 				<div class="table-wrapper">
