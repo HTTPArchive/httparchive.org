@@ -30,6 +30,9 @@
 		max-width: none;
 	}
 }
+#wpt {
+	width: 100%;
+}
 
 #TOC li {
 	list-style-type: initial;

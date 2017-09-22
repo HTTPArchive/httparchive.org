@@ -1,3 +1,6 @@
+import WPT from './wpt';
+
+
 class Report {
 
 	constructor(report) {
@@ -92,6 +95,19 @@ class Report {
 		}
 
 		this.permalink.value = url.toString();
+	}
+
+	getWPT(wptId) {
+		const wpt = new WPT(wptId);
+		wpt.fetchResults().then(results => {
+			const url = document.getElementById('wpt_url');
+			url.innerText = results.url;
+		}).then(_ => {
+			const metrics = wpt.getMetrics();
+			console.log('Metrics', metrics)
+		}).catch(e => {
+			console.error('Error getting WebPageTest results.', e);
+		});
 	}
 }
 
