@@ -52,7 +52,10 @@ def map_reports(report_id):
 
 def get_report(report_id):
     global reports_json
-    report = reports_json.get(report_id).copy()
+    report = reports_json.get(report_id)
+    if not report:
+        return None
+    report = report.copy()
     report['id'] = report_id
     report['metrics'] = map(get_metric, report.get('metrics'))
     return report
