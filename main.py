@@ -13,119 +13,39 @@
 # limitations under the License.
 
 # [START app]
-import json
 import logging
-from time import time
+import reports as reportutil
 
 from flask import Flask, request, render_template, abort, url_for
 
 
-class VizTypes():
-    HISTOGRAM = 'histogram'
-    TIMESERIES = 'timeseries'
-
-# Ensure reports are updated every 3 hours.
-MAX_REPORT_STALENESS = 60 * 60 * 3
-
-last_report_update = 0
-report_dates = []
-reports_json = {}
-
 app = Flask(__name__)
-
-def update_reports():
-    global MAX_REPORT_STALENESS
-    global last_report_update
-
-    if (time() - last_report_update) < MAX_REPORT_STALENESS:
-        return
-
-    global report_dates
-    global reports_json
-
-    with open('config/dates.json') as dates_file:
-        report_dates = json.load(dates_file)
-
-    with open('config/reports.json') as reports_file:
-        reports_json = json.load(reports_file)
-        last_report_update = time()
-update_reports()
-
-def get_report(report_id):
-    global reports_json
-    update_reports()
-
-    report = reports_json.get(report_id).copy()
-    report['id'] = report_id
-    report['metrics'] = map(get_metric, report.get('metrics'))
-    return report
-
-def get_metric(metric_id):
-    global reports_json
-    update_reports()
-
-    metrics = reports_json.get('_metrics')
-    metric = metrics.get(metric_id)
-    metric['id'] = metric_id
-    return metric
-
-def get_similar_reports(metric_id, current_report_id):
-    global reports_json
-
-    similar_reports = {}
-    reports = reports_json.get('_reports', [])
-    for report_id in reports:
-        # A report is not similar to itself.
-        if report_id == current_report_id:
-            continue
-
-        report = reports_json.get(report_id, {})
-        # A report is similar if it contains the same metric.
-        if 'metrics' in report and metric_id in report['metrics']:
-            similar_reports[report_id] = report['name']
-    return similar_reports
 
 @app.route('/')
 def index():
-    global reports_json
-    update_reports()
-
-    featured_reports = map(get_report, reports_json.get('_featured'))
-
-    return render_template('index.html', featured_reports=featured_reports)
+    return render_template('index.html',
+                           reports=reportutil.get_reports(),
+                           featured_reports=reportutil.get_featured_reports())
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', reports=reportutil.get_reports())
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    return render_template('faq.html', reports=reportutil.get_reports())
 
 @app.route('/reports')
 def reports():
-    global reports_json
-    update_reports()
-
-    def map_reports(report_id):
-        report = reports_json.get(report_id)
-        report['id'] = report_id
-        return report
-
-    ordered_reports = map(get_report, reports_json.get('_reports'))
-    return render_template('reports.html', reports=ordered_reports)
+    return render_template('reports.html', reports=reportutil.get_reports())
 
 @app.route('/reports/<report_id>')
 def report(report_id):
-    global report_dates
-    global reports_json
-    update_reports()
-
-    report = get_report(report_id)
+    report = reportutil.get_report(report_id)
     if not report:
         abort(404)
 
-    dates = report_dates
+    dates = reportutil.get_dates()
     if not dates:
         abort(500)
 
@@ -177,12 +97,12 @@ def report(report_id):
     if end and end not in dates:
         abort(400)
 
-    viz = VizTypes.HISTOGRAM if (start and not end) else VizTypes.TIMESERIES
+    viz = reportutil.VizTypes.HISTOGRAM if (start and not end) else reportutil.VizTypes.TIMESERIES
 
     # Determine which metrics should be enabled for this report.
     for metric in report['metrics']:
         # Get a list of reports that also contain this metric.
-        metric['similar_reports'] = get_similar_reports(metric['id'], report_id)
+        metric['similar_reports'] = reportutil.get_similar_reports(metric['id'], report_id)
 
         metric[viz] = metric.get(viz, {})
         enabled = metric[viz].get('enabled', True)
@@ -204,7 +124,12 @@ def report(report_id):
     if not request.script_root:
         request.script_root = url_for('report', report_id=report_id, _external=True)
 
-    return render_template('report/%s.html' % viz, viz=viz, report=report, start=start, end=end)
+    return render_template('report/%s.html' % viz,
+                           viz=viz,
+                           reports=reportutil.get_reports(),
+                           report=report,
+                           start=start,
+                           end=end)
 
 @app.errorhandler(400)
 def bad_request(e):
