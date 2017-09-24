@@ -52,6 +52,16 @@
 				"minDate": "2013_08_01"
 			}
 		},
+		"evalJs": {
+			"name": "Evaluation Time",
+			"type": "ms",
+			"histogram": {
+				"minDate": "2017_09_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
 		"fmp": {
 			"name": "First Meaningful Paint",
 			"type": "seconds",
@@ -148,7 +158,8 @@
 		"summary": "The state of JavaScript, including its contribution to page weight and the number of script files included on pages.",
 		"metrics": [
 			"bytesJs",
-			"reqJs"
+			"reqJs",
+			"evalJs"
 		]
 	},
 	"loading": {
