@@ -1,6 +1,6 @@
 const Metrics = {
 	'bytesTotal': 'median$firstView$bytesIn',
-	'reqsTotal': 'median$firstView$requests$length',
+	'reqTotal': 'median$firstView$requests$length',
 	'tcp': 'median$firstView$connections'
 };
 const METRICS_DELIM = '$';

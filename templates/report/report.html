@@ -114,7 +114,7 @@
 		report.url = {{ request.script_root|tojson|safe }};
 		report.startDate = {{ start|tojson }};
 		report.endDate = {{ end|tojson }};
-		report = new Report(report);
+		report = new Report(report, {{ viz|tojson }});
 		{% if wpt_id %}
 		var wptId = {{ wpt_id|tojson }};
 		report.getWPT(wptId);
