@@ -45,6 +45,16 @@
 				"minDate": "2015_05_01"
 			}
 		},
+		"compileJs": {
+			"name": "Compile Time",
+			"type": "ms",
+			"histogram": {
+				"minDate": "2017_09_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
 		"dcl": {
 			"name": "DOM Content Loaded",
 			"type": "ms",
@@ -159,7 +169,8 @@
 		"metrics": [
 			"bytesJs",
 			"reqJs",
-			"evalJs"
+			"evalJs",
+			"compileJs"
 		]
 	},
 	"loading": {
