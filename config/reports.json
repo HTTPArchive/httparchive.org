@@ -45,11 +45,31 @@
 				"minDate": "2015_05_01"
 			}
 		},
+		"compileJs": {
+			"name": "Compile Time",
+			"type": "ms",
+			"histogram": {
+				"minDate": "2017_09_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
 		"dcl": {
 			"name": "DOM Content Loaded",
 			"type": "ms",
 			"histogram": {
 				"minDate": "2013_08_01"
+			}
+		},
+		"evalJs": {
+			"name": "Evaluation Time",
+			"type": "ms",
+			"histogram": {
+				"minDate": "2017_09_01"
+			},
+			"timeseries": {
+				"enabled": false
 			}
 		},
 		"fmp": {
@@ -148,7 +168,9 @@
 		"summary": "The state of JavaScript, including its contribution to page weight and the number of script files included on pages.",
 		"metrics": [
 			"bytesJs",
-			"reqJs"
+			"reqJs",
+			"evalJs",
+			"compileJs"
 		]
 	},
 	"loading": {

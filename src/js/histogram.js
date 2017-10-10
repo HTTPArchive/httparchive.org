@@ -259,7 +259,7 @@ function drawHistogram(data, containerId, options) {
 };
 
 function drawChart(series, containerId, options) {
-	Highcharts.chart(containerId, {
+	const chart = Highcharts.chart(containerId, {
 		chart: {
 			type: 'column',
 				zoomType: 'x',
@@ -280,6 +280,24 @@ function drawChart(series, containerId, options) {
 	  plotOptions: {
 	    column: {
 	      grouping: false
+	    },
+	    series: {
+	    	events: {
+	    		// Keep outlier visibility in sync.
+	    		hide: function() {
+	    			const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
+	    			if (outliers) {
+	    				outliers.hide();
+	    			}
+
+	    		},
+	    		show: function() {
+	    			const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
+	    			if (outliers) {
+	    				outliers.show();
+	    			}
+	    		}
+	    	}
 	    }
 	  },
 	  tooltip: {

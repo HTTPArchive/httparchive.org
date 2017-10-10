@@ -16,7 +16,7 @@
 
 	<section>
 		<div class="container">
-			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 				<h2>
 					<small>Error</small> {{ self.error() }}
 				</h2>
@@ -31,6 +31,9 @@
 						<a href="{{ url_for('reports') }}" class="btn alt">Reports</a>
 					</p>
 				{% endblock %}
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+				<img src="/static/img/mag.png" alt=""/>
 			</div>
 		</div>
 	</section>

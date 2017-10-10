@@ -21,7 +21,25 @@
 				<nav class="hidden-xs pull-right text-right">
 					<ul>
 						<li>
-							<a href="{{ url_for('reports') }}">Reports</a>
+							<a class="dropdown-target" aria-haspopup="true" href="{{ url_for('reports') }}">
+								Reports
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+							</a>
+							
+							<ul class="dropdown-content reports">
+								{% for report in reports[:4] %}
+									<li>
+										<a href="{{ url_for('report', report_id=report.id) }}">
+											{{ report.name }}
+										</a>
+									</li>
+								{% endfor %}
+								<li>
+									<a href="{{ url_for('reports') }}">
+										More&hellip;
+									</a>
+								</li>
+							</ul>
 						</li>
 						<li>
 							<a href="https://discuss.httparchive.org">Discuss</a>
