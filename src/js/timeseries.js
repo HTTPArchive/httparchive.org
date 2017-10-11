@@ -5,7 +5,7 @@ import { el } from './utils';
 
 
 function timeseries(metric, options, start, end) {
-	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
+	const dataUrl = `https://cdn.httparchive.org/reports/${metric}.json`;
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
 	options.metric = metric;
