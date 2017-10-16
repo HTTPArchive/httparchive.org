@@ -72,16 +72,6 @@ nav li ul li {
 nav li ul li:not(:last-child) {
 	margin: 0;
 }
-nav li.user-actions:hover {
-	background-color: initial;
-	color: inherit;
-}
-nav li.user-actions .btn {
-	text-transform: none;
-}
-nav li.user-actions .btn:not(:last-child) {
-	margin: 0;
-}
 
 svg {
 	fill: currentColor;
@@ -104,8 +94,7 @@ nav#mobile.active,
 nav#mobile.active nav {
 	display: block;
 }
-nav#mobile li,
-nav#mobile .user-actions a {
+nav#mobile li {
 	display: block;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	margin: 0;
