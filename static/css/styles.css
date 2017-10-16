@@ -111,12 +111,12 @@ nav#mobile li a.btn {
 nav#mobile li a.btn:hover {
 	text-decoration: underline;
 }
-nav#mobile .dropdown-target {
-	display: none;
-}
 nav#mobile li ul {
 	display: block;
 	position: relative;
+}
+nav#mobile li ul a {
+	padding-left: 40px;
 }
 nav#mobile li ul li:last-child {
 	border-bottom: none;

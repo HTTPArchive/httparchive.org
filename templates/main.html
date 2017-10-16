@@ -45,20 +45,20 @@
 							<a href="https://discuss.httparchive.org">Discuss</a>
 						</li>
 						<li>
-							<span class="dropdown-target" aria-haspopup="true" tabindex="0">
-								Docs
+							<a class="dropdown-target" aria-haspopup="true" href="{{ url_for('about') }}">
+								About
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
-							</span>
+							</a>
 							
 							<ul class="dropdown-content">
 								<li>
-									<a href="{{ url_for('about') }}">About</a>
+									<a href="{{ url_for('about') }}">Mission</a>
+								</li>
+								<li>
+									<a href="{{ url_for('about') }}">Contact</a>
 								</li>
 								<li>
 									<a href="{{ url_for('faq') }}">FAQ</a>
-								</li>
-								<li>
-									<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">GitHub</a>
 								</li>
 							</ul>
 						</li>
