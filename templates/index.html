@@ -20,11 +20,10 @@
 			</h2>
 			
 			<p>
-				We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page. We then crunch and analyze this data to identify trends.
+				We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page. We then crunch and analyze this data to identify trends &mdash; <a href="{{ url_for('about') }}">learn more</a> about our methodology.
 			</p>
-			
-			<a href="{{ url_for('about') }}" class="btn">Learn More</a>
-			<a href="{{ url_for('faq') }}" class="btn alt">Read the FAQ</a>
+
+			<a href="{{ url_for('reports') }}" class="btn alt">View Reports</a>
         </div>
 	</section>
 
@@ -34,7 +33,7 @@
 			<div class="container">
 				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
 					<h2>
-						<small>Featured Report:</small>
+						<small>Featured Report</small>
 						{{ featured_report.name }}
 					</h2>
 

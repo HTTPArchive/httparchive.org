@@ -165,7 +165,7 @@
 	},
 	"js": {
 		"name": "State of JavaScript",
-		"summary": "The state of JavaScript, including its contribution to page weight and the number of script files included on pages.",
+		"summary": "JavaScript powers the modern web, enabling rich and interactive web applications. In this report we dive into how JavaScript is used on the web, and its adoption and trends both for mobile and desktop experiences.",
 		"metrics": [
 			"bytesJs",
 			"reqJs",
