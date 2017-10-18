@@ -53,6 +53,7 @@ export class Discussion {
 		const users = document.createElement('ul');
 
 		users.classList.add('discussion-users');
+		users.classList.add('hidden-xs');
 
 		this.users.slice(0, MAX_USERS).map(user => {
 			const li = document.createElement('li');

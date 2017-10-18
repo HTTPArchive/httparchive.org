@@ -10,7 +10,7 @@
 
 {% block main %}
 	<section id="how-web-is-built" class="container">
-		<div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">
+		<div class="col-lg-5 col-sm-5 col-md-5 col-xs-6">
 			<img src="/static/img/web.png" alt=""/>
 		</div>
 
@@ -28,9 +28,9 @@
 	</section>
 
 	<section class="alt">
-		{% for featured_report in featured_reports %}
-		<div class="row">
-			<div class="container">
+		<div class="container">
+			{% for featured_report in featured_reports %}
+			<div class="row">
 				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
 					<h2>
 						<small>Featured Report</small>
@@ -41,59 +41,53 @@
 
 					<a href="{{ url_for('report', report_id=featured_report.id) }}" class="btn alt">View The Report</a>
 				</div>
-				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12">
+				<div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
 					<img src="/static/img/chart.png" alt="">
 				</div>
 			</div>
-		</div>
-		{% endfor %}
-	</section>
-
-	<section id="bigquery">
-		<div class="row">
-			<div class="container">
-				<h2>
-					<small>Public Dataset</small>
-					Google BigQuery
-				</h2>
-				<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-
-					<p class="highlight-anchors">
-						The HTTP Archive <a href="http://httparchive.org/downloads.php">data dumps</a> are also available in <a href="https://bigquery.cloud.google.com/" target="_blank">Google BigQuery</a> thanks to <a href="https://twitter.com/igrigorik" target="_blank">Ilya Grigorik</a>. This means you can create your own custom queries like <a href="https://discuss.httparchive.org/t/how-many-resources-return-last-modified-and-or-etag-values/407">How many resources return Last-Modified and/or ETag values?</a> and <a href="https://discuss.httparchive.org/t/what-is-the-distribution-of-1st-party-vs-3rd-party-resources/100">What is the distribution of 1st party vs 3rd party resources?</a>. For more information see Ilya's blog post <a href="https://www.igvita.com/2013/06/20/http-archive-bigquery-web-performance-answers/">HTTP Archive + BigQuery = Web Performance Answers</a> and <a href="https://www.youtube.com/watch?v=TOFgDSqNRz4">video</a>. And checkout all the custom queries shared on <a href="https://discuss.httparchive.org/c/analysis">discuss.httparchive.org</a>.
-					</p>
-
-					<a href="#" class="btn">Learn More</a>
-				</div>
-
-				<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
-					<img src="/static/img/data.png" alt=""/>
-				</div>
-			</div>
+			{% endfor %}
 		</div>
 	</section>
 
-	<section id="discuss" class="hidden">
+	<section id="bigquery" class="container">
 		<div class="row">
-			<div class="container">
-				<h2>
-					Featured Discussions
-				</h2>
-
-				<table id="discussion-table">
-					<thead>
-						<tr>
-							<th>Topic</th>
-							<th>Replies</th>
-						</tr>
-					</thead>
-					<tbody id="discussions"></tbody>
-				</table>
+			<h2>
+				<small>Public Dataset</small>
+				Google BigQuery
+			</h2>
+			<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 
 				<p>
-					<a href="https://discuss.httparchive.org" class="btn">Read More</a>
+					The HTTP Archive archives and provides access to detailed information about each website it crawls: request and response metadata, response bodies, execution traces, and more. You can download this data for offline analysis, or access it as a public dataset via Google BigQuery for fast and rapid analysis. 
 				</p>
+
+				<a href="{{ url_for('faq') }}" class="btn">Learn More</a>
+			</div>
+
+			<div class="col-lg-6 col-sm-6 col-md-6 hidden-xs">
+				<img src="/static/img/data.png" alt=""/>
 			</div>
 		</div>
+	</section>
+
+	<section id="discuss" class="hidden container">
+		<h2>
+			Featured Discussions
+		</h2>
+
+		<table id="discussion-table">
+			<thead>
+				<tr>
+					<th>Topic</th>
+					<th>Replies</th>
+				</tr>
+			</thead>
+			<tbody id="discussions"></tbody>
+		</table>
+
+		<p class="text-center">
+			<a href="https://discuss.httparchive.org" class="btn">Read More</a>
+		</p>
 	</section>
 {% endblock %}
 

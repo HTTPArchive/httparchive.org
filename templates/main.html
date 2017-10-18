@@ -52,10 +52,10 @@
 							
 							<ul class="dropdown-content">
 								<li>
-									<a href="{{ url_for('about') }}">Mission</a>
+									<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
 								</li>
 								<li>
-									<a href="{{ url_for('about') }}">Contact</a>
+									<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
 								</li>
 								<li>
 									<a href="{{ url_for('faq') }}">FAQ</a>
@@ -94,8 +94,9 @@
 					<a href="{{ url_for('reports') }}">Reports</a>
 					<a href="https://discuss.httparchive.org">Discuss</a>
 					<a href="{{ url_for('about') }}">About</a>
+					<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
+					<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
 					<a href="{{ url_for('faq') }}">FAQ</a>
-					<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">GitHub</a>
 				</nav>
 			</div>
 		</div>

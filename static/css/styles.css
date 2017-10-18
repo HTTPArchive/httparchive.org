@@ -29,13 +29,13 @@ section [class*="col"] {
 }
 
 nav {
-	white-space: nowrap;
 	color: #748c8f;
 }
 nav li {
 	position: relative;
 	display: inline-block;
 	text-transform: uppercase;
+	white-space: nowrap;
 }
 nav li a,
 nav li .dropdown-target {
@@ -125,7 +125,7 @@ nav#mobile li ul li:last-child {
 
 footer img {
 	display: inline-block;
-	max-width: 100%;
+	max-width: 95px;
 	vertical-align: middle;
 }
 footer nav {
@@ -176,8 +176,8 @@ a,
 a:hover {
 	color: inherit;
 }
-.highlight-anchors a,
-.highlight-anchors a:hover {
+p a,
+p a:hover {
 	color: #337ab7;
 }
 

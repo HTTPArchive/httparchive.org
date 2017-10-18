@@ -1,6 +1,7 @@
 #discussion-table {
 	margin: 15px 0;
 	width: 100%;
+	padding: 0 10px;
 	border: 1px solid #748c8f;
 	text-align: center;
 }

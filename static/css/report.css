@@ -39,6 +39,9 @@
 #TOC li ul {
 	margin-left: 20px;
 }
+#TOC a {
+	color: #337ab7;
+}
 
 .table-wrapper {
 	max-height: 400px;

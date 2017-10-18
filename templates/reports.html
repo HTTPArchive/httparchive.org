@@ -10,20 +10,10 @@
 
 {% block main %}
 	<section>
-		<div class="container">
-			<h2>Reports</h2>
-
-			<p>
-				Looking for interesting stats and trends? HTTP Archive metrics are now grouped and organized into reports. Choose from the catalog of reports below to get insights into a particular area of the web.
-			</p>
-		</div>
-	</section>
-
-	<section>
 		{% for report in reports %}
 		<div class="report row">
-			<div class="container">
-				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12">
+			<div class="container {{ loop.cycle('', 'alt') }}">
+				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
 					<img src="/static/img/chart.png" alt="">
 				</div>
 				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
