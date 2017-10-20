@@ -39,6 +39,7 @@ function drawTimeseries(data, options) {
 		} else {
 			series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
 			series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
+			series.push(getAreaSeries('Desktop', desktop.map(toOuts), Colors.DESKTOP, 0.05));
 		}
 	}
 	if (mobile.length) {
@@ -49,6 +50,7 @@ function drawTimeseries(data, options) {
 		} else {
 			series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
 			series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
+			series.push(getAreaSeries('Mobile', mobile.map(toOuts), Colors.MOBILE, 0.05));
 		}
 	}
 
@@ -108,13 +110,16 @@ const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
 const toNumeric = o => ({
 	timestamp: +o.timestamp,
+	p10: +o.p10,
 	p25: +o.p25,
 	p50: +o.p50,
 	p75: +o.p75,
+	p90: +o.p90,
 	percent: +o.percent,
 	client: o.client
 });
 const toIQR = o => [o.timestamp, o.p25, o.p75];
+const toOuts = o => [o.timestamp, o.p10, o.p90];
 const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
 	name,
@@ -126,14 +131,14 @@ const getLineSeries = (name, data, color) => ({
 		enabled: false
 	}
 });
-const getAreaSeries = (name, data, color) => ({
+const getAreaSeries = (name, data, color, opacity=0.1) => ({
 	name,
 	type: 'areasplinerange',
 	linkedTo: ':previous',
 	data,
 	lineWidth: 0,
 	color,
-	fillOpacity: 0.1,
+	fillOpacity: opacity,
 	zIndex: 0,
 	marker: {
 		enabled: false,
@@ -206,24 +211,30 @@ function drawChart(options, series) {
 					return `${tooltip} ${getChangelog(changelog)}`
 				}
 
-				function getRow([median, iqr]) {
+				function getRow([median, iqr, outs]) {
+					console.log('getRow', arguments)
 					if (!median || !iqr) return '';
 					return `<tr>
 						<td><span style="color: ${median.series.color}">&bull;</span> ${median.series.name}</td>
+						<th>${outs.point.low.toFixed(1)}</th>
 						<th>${iqr.point.low.toFixed(1)}</th>
 						<th>${median.point.y.toFixed(1)}</th>
 						<th>${iqr.point.high.toFixed(1)}</th>
+						<th>${outs.point.high.toFixed(1)}</th>
 					</tr>`;
 				}
 				const desktop = this.points.filter(o => o.series.name == 'Desktop');
 				const mobile = this.points.filter(o => o.series.name == 'Mobile');
+				console.log('tooltip desktop', desktop)
 				return `${tooltip}
 				<table cellpadding="5">
 					<tr>
 					<td></td>
+					<td style="font-size: smaller;">10%ile</td>
 					<td style="font-size: smaller;">25%ile</td>
 					<td style="font-size: smaller;">50%ile</td>
 					<td style="font-size: smaller;">75%ile</td>
+					<td style="font-size: smaller;">90%ile</td>
 				</tr>
 				${getRow(desktop)}
 				${getRow(mobile)}
