@@ -2,6 +2,7 @@ body {
 	overflow-x: hidden;
 	background-color: #f4f4f4;
 	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
 	color: #555;
 }
 
@@ -28,13 +29,13 @@ section [class*="col"] {
 }
 
 nav {
-	white-space: nowrap;
 	color: #748c8f;
 }
 nav li {
 	position: relative;
 	display: inline-block;
 	text-transform: uppercase;
+	white-space: nowrap;
 }
 nav li a,
 nav li .dropdown-target {
@@ -72,16 +73,6 @@ nav li ul li {
 nav li ul li:not(:last-child) {
 	margin: 0;
 }
-nav li.user-actions:hover {
-	background-color: initial;
-	color: inherit;
-}
-nav li.user-actions .btn {
-	text-transform: none;
-}
-nav li.user-actions .btn:not(:last-child) {
-	margin: 0;
-}
 
 svg {
 	fill: currentColor;
@@ -104,8 +95,7 @@ nav#mobile.active,
 nav#mobile.active nav {
 	display: block;
 }
-nav#mobile li,
-nav#mobile .user-actions a {
+nav#mobile li {
 	display: block;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	margin: 0;
@@ -122,12 +112,12 @@ nav#mobile li a.btn {
 nav#mobile li a.btn:hover {
 	text-decoration: underline;
 }
-nav#mobile .dropdown-target {
-	display: none;
-}
 nav#mobile li ul {
 	display: block;
 	position: relative;
+}
+nav#mobile li ul a {
+	padding-left: 40px;
 }
 nav#mobile li ul li:last-child {
 	border-bottom: none;
@@ -135,7 +125,7 @@ nav#mobile li ul li:last-child {
 
 footer img {
 	display: inline-block;
-	max-width: 100%;
+	max-width: 95px;
 	vertical-align: middle;
 }
 footer nav {
@@ -170,7 +160,7 @@ section:last-child {
 }
 
 h2 {
-	font-size: 3.4375em;
+	font-size: 2.7em;
 }
 h2 small {
 	display: block;
@@ -179,15 +169,15 @@ h2 b {
 	font-weight: 600;
 }
 h2 + p {
-	padding: 35px 0;
+	padding: 25px 0;
 }
 
 a,
 a:hover {
 	color: inherit;
 }
-.highlight-anchors a,
-.highlight-anchors a:hover {
+p a,
+p a:hover {
 	color: #337ab7;
 }
 
@@ -225,6 +215,10 @@ ul {
 }
 .btn:not(:last-child) {
 	margin-right: 20px;
+}
+
+.figure {
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 select,

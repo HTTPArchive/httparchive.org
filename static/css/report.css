@@ -11,12 +11,20 @@
 	background-color: #f2f5f5;
 }
 #report-metrics {
+	margin-top: -40px;
+	padding-top: 40px;
 	background: linear-gradient(to bottom, #e7eeef 0, white 400px);
 }
-
-#history {
-	padding: 40px 0;
+#report-metrics section {
+	padding-bottom: 40px;
+	border-bottom: 1px solid transparent;
+	border-image: linear-gradient(to right, #fff 0%, #748c8f 50%, #fff 100%);
+	border-image-slice: 1;
 }
+#report-metrics section:last-child {
+	border-bottom: none;
+}
+
 #history label {
 	display: block;
 }
@@ -24,6 +32,11 @@
 #update,
 #permalink {
 	width: 100%;
+}
+@media (max-width: 992px) {
+	#history {
+		margin-top: 40px;
+	}
 }
 @media (max-width: 767px) {
 	section #update[class*="btn"] {
@@ -39,7 +52,14 @@
 #TOC li ul {
 	margin-left: 20px;
 }
+#TOC a {
+	color: #337ab7;
+}
 
+.table-wrapper {
+	max-height: 400px;
+	overflow-y: auto;
+}
 table {
 	border-collapse: collapse;
 	width: 100%;
@@ -47,7 +67,8 @@ table {
 table tbody tr:nth-child(odd) {
     background-color: #f2f2f2;
 }
-td {
+td,
+th {
 	padding: 0 5px;
 }
 
@@ -81,4 +102,8 @@ td {
 	min-width: 310px;
 	height: 400px;
 	margin: 0 auto;
+}
+
+.highcharts-contextbutton {
+	color: red;
 }

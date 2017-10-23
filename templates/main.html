@@ -3,9 +3,9 @@
 
 {% block head %}
 	{{ super() }}
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
-	<link rel="stylesheet" href="/static/css/styles.css" />
+	<link rel="stylesheet" href="/static/css/styles.css">
 {% endblock %}
 
 {% block content %}
@@ -21,35 +21,46 @@
 				<nav class="hidden-xs pull-right text-right">
 					<ul>
 						<li>
-							<a href="{{ url_for('reports') }}">Reports</a>
+							<a class="dropdown-target" aria-haspopup="true" href="{{ url_for('reports') }}">
+								Reports
+								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+							</a>
+							
+							<ul class="dropdown-content reports">
+								{% for report in reports[:4] %}
+									<li>
+										<a href="{{ url_for('report', report_id=report.id) }}">
+											{{ report.name }}
+										</a>
+									</li>
+								{% endfor %}
+								<li>
+									<a href="{{ url_for('reports') }}">
+										More&hellip;
+									</a>
+								</li>
+							</ul>
 						</li>
 						<li>
 							<a href="https://discuss.httparchive.org">Discuss</a>
 						</li>
 						<li>
-							<span class="dropdown-target" aria-haspopup="true" tabindex="0">
-								Docs
+							<a class="dropdown-target" aria-haspopup="true" href="{{ url_for('about') }}">
+								About
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
-							</span>
+							</a>
 							
 							<ul class="dropdown-content">
 								<li>
-									<a href="{{ url_for('about') }}">About</a>
+									<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
+								</li>
+								<li>
+									<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
 								</li>
 								<li>
 									<a href="{{ url_for('faq') }}">FAQ</a>
 								</li>
-								<li>
-									<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">GitHub</a>
-								</li>
 							</ul>
-						</li>
-						<li class="user-actions">
-							<div class="logged-out">
-								<a href="https://discuss.httparchive.org/login" class="btn">Log In</a>
-								<small class="hidden-xs">or</small>
-								<a href="https://discuss.httparchive.org/signup" class="btn alt">Sign Up</a>
-							</div>
 						</li>
 					</ul>
 				</nav>
@@ -83,8 +94,9 @@
 					<a href="{{ url_for('reports') }}">Reports</a>
 					<a href="https://discuss.httparchive.org">Discuss</a>
 					<a href="{{ url_for('about') }}">About</a>
+					<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
+					<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
 					<a href="{{ url_for('faq') }}">FAQ</a>
-					<a href="https://github.com/HTTPArchive/httparchive/tree/master/docs">GitHub</a>
 				</nav>
 			</div>
 		</div>

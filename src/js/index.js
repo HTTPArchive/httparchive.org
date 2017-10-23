@@ -1,4 +1,4 @@
-import { Discussion } from './discussion.js';
+import { Discussion } from './discussion';
 
 const section = document.getElementById('discuss');
 const discussions = document.getElementById('discussions');

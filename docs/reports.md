@@ -64,6 +64,22 @@ sql/getBigQueryDates.sh runs pages | \
 
 `xargs` handles the processing of each date and calls the other script.
 
+### Generating Specific Metrics
+
+Running `generateReports.sh` without the `-f` flag will result in metrics whose JSON results are already on Google Storage to skip being requeried. To regenerate results for specific metrics, the easiest thing to do may be to remove its results from Google Storage first, rather than running with the `-f` flag enabled and waiting for all other metrics to be queried and uploaded.
+
+For example, if a change is made to the `reqTotal.sql` histogram query, then you can "invalidate" all histogram results for this query by deleting all respective JSON files from Google Storage:
+
+```sh
+gsutil rm gs://httparchive/reports/*/reqTotal.json
+```
+
+The wildcard in the YYYY_MM_DD position will instruct `gsutil` to delete all histogram results for this specific metric.
+
+Now you can delete more metric-specific results or rerun `generateReports.sh` without the `-f` flag and only the desired metrics will be requeried.
+
+Note that the cdn.httparchive.org may still contain the old version of the JSON file for the duration of the TTL. See below for more on invalidating the cache.
+
 ## Serving the JSON Files
 
 The Google Storage bucket is behind an App Engine load balancer and CDN, which is aliased as [cdn.httparchive.org](cdn.httparchive.org). Accessing the JSON data follows the same pattern as the `gs://` URL. For example, the public URL for `gs://httparchive/reports/2017_09_01/bytesJS.json` is [http://cdn.httparchive.org/reports/2017_09_01/bytesJS.json](http://cdn.httparchive.org/reports/2017_09_01/bytesJS.json). Each file is configured to be served with `Content-Type: application/json` and `Cache-Control: public, max-age=3600` headers.
@@ -74,38 +90,128 @@ A whitelist of origins are allowed to access the CDN. This list is maintained in
 
 ## Configuring a Report
 
-Reports are configured in [config/reports.json](../config/reports.json). Here's an example of a couple of metrics in the JavaScript report:
+Reports are configured in [config/reports.json](../config/reports.json). Here's a small sample configuration:
 
 ```
-"js": {
-	"name": "JavaScript",
-	"summary": "The state of JavaScript, including its contribution to page weight and the number of script files included on pages.",
-	"metrics": {
-		"bytesJs": {
-			"name": "JS Bytes",
-			"type": "KB"
-		},
-		"reqJs": {
-			"name": "JS Requests",
-			"type": "Requests"
-		}
-	}
+{
+  "_reports": [
+    "foo",
+    "bar"
+  ],
+  "_featured": [
+    "bar"
+  ],
+  "_metrics": {
+    "x": {
+      "name": "X Metric",
+      "type": "KB"
+    },
+    "y": {
+      "name": "Y Metric",
+      "type": "ms"
+    },
+    "z": {
+      "name": "Z Metric",
+      "type": "Requests",
+      "redundant": true
+    }
+  },
+  "foo": {
+    "name": "Foo",
+    "summary": "Lorem ipsum",
+    "metrics": [
+      "x",
+      "y"
+    ]
+  },
+  "bar": {
+    "name": "Bar",
+    "summary": "Lorem ipsum",
+    "minDate": "2017_06_01",
+    "maxDate": "2017_08_15",
+    "metrics": [
+      "x",
+      "z"
+    ]
+  }
 }
 ```
 
-*Important:* Metric IDs must match the histogram and timeseries SQL filenames.
+In this example config, there are two reports: Foo and Bar. They both include X Metric, but only Bar is featured on the home page. The Bar report is also date-capped between June 1, 2017 and August 15, 2017, meaning that the report UI will not allow the user to browse metrics outside of this time window.
 
 ### Manifest Structure
 
- A report config is an object with name, summary, and metrics fields. The name and summary fields are human-readable descriptions that are displayed on the report's page. The metrics field maps metric IDs to an object with name and type fields. The metric ID is used as a page anchor in the report's table of contents. The metric name is used as the title for the corresponding data visualization and the metric type represents the unit of the data and appears on the axis label.
-
 - **reports.json**
 
-	JSON-encoded object mapping report IDs to report configs.
+	JSON-encoded object mapping report IDs to report configs. Also includes metadata whose property names are preceded by an underscore.
+
+  - **\_reports**
+
+    Required array of report IDs. Defines the sequence of reports as they appear on the reports page.
+
+  - **\_featured**
+
+    Required array of report IDs. Defines the sequence of reports as they appear on the home page. This array should only contain 1-3 reports.
+
+  - **\_metrics**
+
+    Required object mapping metric IDs to metric configs.
+
+    - **metric ID**
+
+      Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the histogram/timeseries SQL filenames. May be reused between reports.
+
+    - **metric config**
+
+      Maps metric configuration property names to values. The following properties are available:
+
+      - **name**
+
+        Required string. Human-readable name of the metric, eg "Time to First Paint". Must be unique to the report. Used in the title of the charts.
+
+      - **type**
+
+        Required string. Human-readable units of measurement. Common examples: "ms", "KB", "Requests". Used to label the chart axis and in chart tooltips.
+
+      - **description**
+
+        Optional string. Human-readable explanation of what the metric is measuring and how to interpret the results.
+
+      - **histogram**
+
+        Optional object. Includes histogram-specific configuration options.
+
+        - **minDate**
+
+          Optional string. The earliest date at which the metric is available. YYYY_MM_DD format. For example, any metric that depends on the `har` dataset must have a `minDate` value of at least 2016_01_01, which is when the first HAR table became available.
+
+        - **maxDate**
+
+          Optional string. The latest date at which the metric is available. YYYY_MM_DD format.
+
+        - **enabled**
+
+          Optional boolean. Default `true`. Whether the metric should be included in histogram reports.
+
+      - **timeseries**
+
+        Optional object. Includes timeseries-specific configuration options.
+
+        - **enabled**
+
+          Optional boolean. Default `true`. Whether the metric should be included in timeseres reports.
+
+        - **fields**
+
+          Optional array. Default `["p10", "p25", "p50", "p75", "p90"]`. Defines the field names of the measurement objects that should be plotted. A measurement object is just an element in the array of JSON-encoded timeseries data, containing client, date, and timestamp info as well as the measurement data.
+
+        - **redundant**
+
+          Optional boolean. Default `false`. Whether the metric type is redundant with the metric name. For example, set to `true` when the type is included in the name, like "Total Requests". The type will be omitted anywhere it follows the metric name.
 
   - **report ID**
 
-  		Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`.
+  		Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`. Changing this value will probably break permalinks.
 
   - **report config**
 
@@ -129,31 +235,7 @@ Reports are configured in [config/reports.json](../config/reports.json). Here's 
 
   		- **metrics**
 
-  			Required object. Describes the metrics included in the report. Maps metric IDs to metric configs.
-
-  			- **metric ID**
-
-  				Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the histogram/timeseries SQL filenames.
-
-  			- **metric config**
-
-  				Maps metric configuration property names to values. The following properties are available:
-
-  				- **name**
-
-  				Required string. Human-readable name of the metric, eg "Time to First Paint". Must be unique to the report. Used in the title of the charts.
-
-  				- **type**
-
-  				Required string. Human-readable units of measurement. Common examples "ms", "KB", "Requests".. Used to label the chart axis and in chart tooltips.
-
-  				- **minDate**
-
-  				Optional string. The earliest date at which the metric is available. YYYY_MM_DD format.
-
-  				- **maxDate**
-
-  				Optional string. The latest date at which the metric is available. YYYY_MM_DD format.
+  			Required array. Describes the metrics included in the report.
 
 ## Configuring Dates
 

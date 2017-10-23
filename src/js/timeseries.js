@@ -1,14 +1,11 @@
-import { Colors } from './colors.js';
-import debounce from './debounce.js';
-import { el } from './utils.js';
+import Changelog from './changelog';
+import { Colors } from './colors';
+import debounce from './debounce';
+import { el, prettyDate, chartExportOptions } from './utils';
 
-
-// TODO: Move this to a static JSON file in this repo.
-const changelogUrl = 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
 
 function timeseries(metric, options, start, end) {
-	console.log('timeseries', arguments)
-	const dataUrl = `http://cdn.httparchive.org/reports/${metric}.json`;
+	const dataUrl = `https://cdn.httparchive.org/reports/${metric}.json`;
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
 	options.metric = metric;
@@ -33,14 +30,38 @@ function drawTimeseries(data, options) {
 	const desktop = data.filter(isDesktop);
 	const mobile = data.filter(isMobile);
 
+	const series = [];
+	if (desktop.length) {
+		if (options.timeseries && options.timeseries.fields) {
+			options.timeseries.fields.forEach(field => {
+				series.push(getLineSeries('Desktop', desktop.map(o => [o.timestamp, o[field]]), Colors.DESKTOP));
+			});
+		} else {
+			series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
+			series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
+			series.push(getAreaSeries('Desktop', desktop.map(toOuts), Colors.DESKTOP, 0.05));
+		}
+	}
+	if (mobile.length) {
+		if (options.timeseries && options.timeseries.fields) {
+			options.timeseries.fields.forEach(field => {
+				series.push(getLineSeries('Mobile', mobile.map(o => [o.timestamp, o[field]]), Colors.MOBILE));
+			});
+		} else {
+			series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
+			series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
+			series.push(getAreaSeries('Mobile', mobile.map(toOuts), Colors.MOBILE, 0.05));
+		}
+	}
+
+	if (!series.length) {
+		console.error('No timeseries data to draw', data, options);
+		return;
+	}
+
 	getFlagSeries().then(flagSeries => {
-		drawChart(options, [
-			getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP),
-			getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP),
-			getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE),
-			getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE),
-			flagSeries
-		]);
+		series.push(flagSeries);
+		drawChart(options,series);
 	})
 }
 let redrawTimeseriesTable = {};
@@ -52,12 +73,30 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 		}, 100);
 	}
 
+	let cols = DEFAULT_COLS.concat(DEFAULT_FIELDS);
+	if (options.timeseries && options.timeseries.fields) {
+		cols = DEFAULT_COLS.concat(options.timeseries.fields);
+	}
+
 	Promise.resolve(zip(data)).then(data => {
 		const table = document.getElementById(options.tableId);
 		Array.from(table.children).forEach(child => table.removeChild(child));
 
 		const frag = document.createDocumentFragment();
 		const thead = el('thead');
+
+		const trMeta = el('tr');
+		trMeta.classList.add('meta-row');
+		DEFAULT_COLS.map(col => {
+			return el('th');
+		}).forEach(th => trMeta.appendChild(th));
+		const th = el('th');
+		th.classList.add('text-center');
+		th.setAttribute('colspan', cols.length - DEFAULT_COLS.length);
+		th.textContent = 'Percentile' + (th.colspan === 1 ? '' : 's');
+		trMeta.appendChild(th);
+		thead.appendChild(trMeta);
+
 		const tr = el('tr');
 		cols.map(col => {
 			const th = el('th');
@@ -73,7 +112,7 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 				return;
 			}
 
-			arr.forEach((o, i) => tbody.appendChild(toRow(o, i, arr.length)));
+			arr.forEach((o, i) => tbody.appendChild(toRow(o, i, arr.length, cols)));
 		});
 		frag.appendChild(tbody);
 		table.appendChild(frag);
@@ -84,13 +123,17 @@ const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
 const toNumeric = o => ({
 	timestamp: +o.timestamp,
+	p10: +o.p10,
 	p25: +o.p25,
 	p50: +o.p50,
 	p75: +o.p75,
+	p90: +o.p90,
+	percent: +o.percent,
 	client: o.client
 });
 const toIQR = o => [o.timestamp, o.p25, o.p75];
-const toLine = o => [o.timestamp, o.p50];  
+const toOuts = o => [o.timestamp, o.p10, o.p90];
+const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
 	name,
 	type: 'line',
@@ -101,14 +144,14 @@ const getLineSeries = (name, data, color) => ({
 		enabled: false
 	}
 });
-const getAreaSeries = (name, data, color) => ({
+const getAreaSeries = (name, data, color, opacity=0.1) => ({
 	name,
 	type: 'areasplinerange',
 	linkedTo: ':previous',
 	data,
 	lineWidth: 0,
 	color,
-	fillOpacity: 0.1,
+	fillOpacity: opacity,
 	zIndex: 0,
 	marker: {
 		enabled: false,
@@ -120,29 +163,38 @@ const getAreaSeries = (name, data, color) => ({
 	}
 });
 const flags = {};
-const getFlagSeries = () => fetch(changelogUrl)
-	.then(response => response.json())
-	.then(data => {
-		data.forEach(change => {
-			flags[+change.date] = {
-				title: change.title,
-				desc: change.desc
-			};
-		});
-		return {
-			type: 'flags',
-			name: 'Changelog',
-			data: data.map((change, i) => ({
-				x: change.date,
-				title: String.fromCharCode(65 + i)
-			})),
-			color: '#90b1b6',
-			y: 25
+let changelog = null;
+const loadChangelog = () => {
+	if (!changelog) {
+		changelog = fetch(Changelog.URL).then(response => response.json());
+	}
+
+	return changelog;
+};
+const getFlagSeries = () => loadChangelog().then(data => {
+	data.forEach(change => {
+		flags[+change.date] = {
+			title: change.title,
+			desc: change.desc
 		};
 	});
+	return {
+		type: 'flags',
+		name: 'Changelog',
+		data: data.map((change, i) => ({
+			x: change.date,
+			title: String.fromCharCode(65 + (i % 26))
+		})),
+		color: '#90b1b6',
+		y: 25,
+		showInLegend: false
+	};
+});
 
 function drawChart(options, series) {
 	Highcharts.stockChart(options.chartId, {
+		metric: options.metric,
+		type: 'timeseries',
 		chart: {
 			zoomType: 'x'
 		},
@@ -164,35 +216,40 @@ function drawChart(options, series) {
 			formatter: function() {
 				function getChangelog(changelog) {
 					if (!changelog) return '';
-					return `<p class="changelog">* ${changelog.title}</p>`;
+					return `<p class="changelog">${changelog.title}</p>`;
 				}
 
 				const changelog = flags[this.x];
-				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%A, %b %e, %Y', this.x)}${changelog ? '*' : ''}</p>`;
+				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
 
 				// Handle changelog tooltips first.
 				if (!this.points) {
 					return `${tooltip} ${getChangelog(changelog)}`
 				}
 
-				function getRow([median, iqr]) {
+				function getRow([median, iqr, outs]) {
 					if (!median || !iqr) return '';
 					return `<tr>
 						<td><span style="color: ${median.series.color}">&bull;</span> ${median.series.name}</td>
+						<th>${outs.point.low.toFixed(1)}</th>
 						<th>${iqr.point.low.toFixed(1)}</th>
 						<th>${median.point.y.toFixed(1)}</th>
 						<th>${iqr.point.high.toFixed(1)}</th>
+						<th>${outs.point.high.toFixed(1)}</th>
 					</tr>`;
 				}
 				const desktop = this.points.filter(o => o.series.name == 'Desktop');
 				const mobile = this.points.filter(o => o.series.name == 'Mobile');
+				console.log('tooltip desktop', desktop)
 				return `${tooltip}
 				<table cellpadding="5">
 					<tr>
 					<td></td>
+					<td style="font-size: smaller;">10%ile</td>
 					<td style="font-size: smaller;">25%ile</td>
 					<td style="font-size: smaller;">50%ile</td>
 					<td style="font-size: smaller;">75%ile</td>
+					<td style="font-size: smaller;">90%ile</td>
 				</tr>
 				${getRow(desktop)}
 				${getRow(mobile)}
@@ -210,24 +267,22 @@ function drawChart(options, series) {
 		},
 		yAxis: {
 			title: {
-				text: `${options.name} (${options.type})`
+				text: `${options.name}${options.redundant ? '' : ` (${options.type})`}`
 			},
 			opposite: false,
 			min: 0
 		},
 		series,
-		credits: false
+		credits: false,
+		exporting: chartExportOptions
 	});
 }
 
-const cols = ['date', 'client', 'p10', 'p25', 'p50', 'p75', 'p90'];
+const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];
+const DEFAULT_COLS = ['date', 'client'];
 const toFixed = value => parseFloat(value).toFixed(1);
 const formatters = {
-	date: date => {
-		const [YYYY, MM, DD] = date.split('_');
-		const d = new Date(Date.UTC(YYYY, MM - 1, DD));
-		return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
-	},
+	date: prettyDate,
 	p10: toFixed,
 	p25: toFixed,
 	p50: toFixed,
@@ -249,7 +304,7 @@ const zip = data => {
 	return Object.entries(dates).sort(([a], [b]) => a > b ? -1 : 1);
 };
 
-const toRow = (o, i, n) => {
+const toRow = (o, i, n, cols) => {
 	const row = el('tr');
 	cols.map(col => {
 		const td = el('td');

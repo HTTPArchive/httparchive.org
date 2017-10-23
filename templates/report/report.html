@@ -1,7 +1,7 @@
 {% extends "main.html" %}
 
 
-{% block title %}{{ report.name }} Report{% endblock %}
+{% block title %}{{ report.name }}{% endblock %}
 
 {% block head %}
 	{{ super() }}
@@ -21,67 +21,68 @@
 
 				<p>{{ report.summary }}</p>
 
-				<form id="history" class="row">
-					<div class="col-sm-4 col-sm-offset-2 col-xs-12">
-						<label for="startDate">
-							Start Date
-						</label>
-
-						<select id="startDate">
-							{% for d in report.dates %}
-								<option {% if d == start %}selected{% endif %}>
-									{{ d }}
-								</option>
-							{% endfor %}
-						</select>
-					</div>
-
-					<div class="col-sm-4 col-xs-12">
-						<label for="endDate">
-							End Date (optional)
-						</label>
-						
-						<select id="endDate">
-							<option></option>
-							{% if end == report.dates[0] %}
-								<option value="{{ report.dates[0] }}">
-									Most Recent
-								</option>
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						<ul id="TOC">
+						{% for metric in report.metrics %}
+							{% if metric[viz]['enabled'] %}
+								<li>
+									<a href="#{{ metric.id }}">{{ metric.name }}</a>
+								</li>
 							{% endif %}
-							{% for d in report.dates %}
-								<option {% if d == end %}selected{% endif %}>
-									{{ d }}
-								</option>
-							{% endfor %}
-						</select>
+						{% endfor %}
+						</ul>
 					</div>
 
-					<div class="col-sm-8 col-sm-offset-2 col-xs-12">
-						<button id="update" class="btn alt" type="button">Update</button>
-					</div>
+					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+						<form id="history" class="row">
+							<div class="col-sm-4 col-sm-offset-2 col-xs-12">
+								<label for="startDate">
+									Start Date
+								</label>
 
-					<div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
-						<label for="permalink">Permalink</label>
-						<input id="permalink" type="text" readonly="true">
+								<select id="startDate">
+									{% for d in report.dates %}
+										<option value="{{ d }}" {% if d == start %}selected{% endif %} class="yyyy_mm_dd">
+											{{ d }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+
+							<div class="col-sm-4 col-xs-12">
+								<label for="endDate" title="Optional">
+									End Date
+								</label>
+								
+								<select id="endDate">
+									<option></option>
+									{% if end == report.dates[0] %}
+										<option value="{{ report.dates[0] }}">
+											Most Recent
+										</option>
+									{% endif %}
+									{% for d in report.dates %}
+										<option value="{{ d }}" {% if d == end %}selected{% endif %} class="yyyy_mm_dd">
+											{{ d }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+
+							<div class="col-sm-8 col-sm-offset-2 col-xs-12">
+								<button id="update" class="btn alt" type="button">Update</button>
+							</div>
+
+							<div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
+								<label for="permalink">Permalink</label>
+								<input id="permalink" type="text" readonly="true">
+							</div>
+						</form>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>	
-	</section>
-
-	<section id="report-toc">
-		<div class="container">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<h3>Table of Contents</h3>
-				<ul id="TOC">
-				{% for metric, options in report.metrics.items() %}
-					<li>
-						<a href="#{{ metric }}">{{ options.name }}</a>
-					</li>
-				{% endfor %}
-				</ul>
-			</div>
-		</div>
 	</section>
 
 	<section id="report-metrics">
@@ -95,8 +96,8 @@
 
 {% block scripts %}
 	{{ super() }}
-	<script src="https://code.highcharts.com/stock/highstock.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="/static/js/highstock.js"></script>
+	<script src="/static/js/exporting.js"></script>
 	<script src="/static/js/report.js"></script>
 	<script>
 		var report = {{ report|tojson }};
@@ -106,3 +107,22 @@
 		report = new Report(report);
 	</script>
 {% endblock %}
+
+{% macro metric_info(metric, viz) %}
+	<h3>
+		<a href="#{{ metric.id }}">{{ metric.name }}</a>
+	</h3>
+	{% if metric.description %}
+		<p>{{ metric.description }}</p>
+	{% endif %}
+	{% for report_id, report_name in metric.similar_reports.items() %}
+		<div>
+			<em>
+				See also:
+				<a href="{{ url_for('report', report_id=report_id) }}">
+					{{ report_name }}
+				</a>
+			</em>
+		</div>
+	{% endfor %}
+{% endmacro %}

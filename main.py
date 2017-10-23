@@ -13,87 +13,52 @@
 # limitations under the License.
 
 # [START app]
-import json
 import logging
-from time import time
+import reports as reportutil
 
 from flask import Flask, request, render_template, abort, url_for
 
 
-class VizTypes():
-    HISTOGRAM = 'histogram'
-    TIMESERIES = 'timeseries'
-
-# Ensure reports are updated every 3 hours.
-MAX_REPORT_STALENESS = 60 * 60 * 3
-
-last_report_update = 0
-report_dates = []
-reports_json = {}
-
 app = Flask(__name__)
-
-def update_reports():
-    global MAX_REPORT_STALENESS
-    global last_report_update
-
-    if (time() - last_report_update) < MAX_REPORT_STALENESS:
-        return
-
-    global report_dates
-    global reports_json
-
-    with open('config/dates.json') as dates_file:
-        report_dates = json.load(dates_file)
-
-    with open('config/reports.json') as reports_file:
-        reports_json = json.load(reports_file)
-        last_report_update = time()
-update_reports()
 
 @app.route('/')
 def index():
-    global reports_json
-    update_reports()
-
-    featured_report_id = 'js'
-    featured_report = reports_json.get(featured_report_id)
-    featured_report['id'] = featured_report_id
-
-    return render_template('index.html', featured_report=featured_report)
+    return render_template('index.html',
+                           reports=reportutil.get_reports(),
+                           featured_reports=reportutil.get_featured_reports())
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', reports=reportutil.get_reports())
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    return render_template('faq.html', reports=reportutil.get_reports())
 
 @app.route('/reports')
 def reports():
-    update_reports()
-    return render_template('reports.html', reports=reports_json)
+    return render_template('reports.html', reports=reportutil.get_reports())
 
 @app.route('/reports/<report_id>')
 def report(report_id):
-    global report_dates
-    global reports_json
-    update_reports()
-
-    report = reports_json.get(report_id)
+    report = reportutil.get_report(report_id)
     if not report:
         abort(404)
 
-    dates = report_dates
+    dates = reportutil.get_dates()
     if not dates:
         abort(500)
 
     min_date = report.get('minDate')
     max_date = report.get('maxDate')
 
+    # TODO: If a report doesn't explicitly have a min/max date,
+    # but all of its metrics do, take the min/max of the metrics
+    # and set that as the report's implicit min/max date.
+
+    # Omit dates for which this report has no data.
     if min_date:
-        dates = dates[:dates.index(min_date)]
+        dates = dates[:dates.index(min_date) + 1]
     if max_date:
         dates = dates[dates.index(max_date):]
 
@@ -132,25 +97,56 @@ def report(report_id):
     if end and end not in dates:
         abort(400)
 
-    viz = VizTypes.HISTOGRAM if (start and not end) else VizTypes.TIMESERIES
+    viz = reportutil.VizTypes.HISTOGRAM if (start and not end) else reportutil.VizTypes.TIMESERIES
+
+    # Determine which metrics should be enabled for this report.
+    for metric in report['metrics']:
+        # Get a list of reports that also contain this metric.
+        metric['similar_reports'] = reportutil.get_similar_reports(metric['id'], report_id)
+
+        metric[viz] = metric.get(viz, {})
+        enabled = metric[viz].get('enabled', True)
+        min_date = metric[viz].get('minDate', start)
+        max_date = metric[viz].get('maxDate', end)
+
+        # Disabled metrics should stay that way.
+        if not enabled:
+            continue
+
+        # Disable the metric if it start/end is outside of the min/max window.
+        enabled = start >= min_date
+        if end and enabled:
+            enabled = end <= max_date
+
+        metric[viz]['enabled'] = enabled
+            
 
     if not request.script_root:
         request.script_root = url_for('report', report_id=report_id, _external=True)
 
-    return render_template('report/%s.html' % viz, report=report, start=start, end=end)
+    return render_template('report/%s.html' % viz,
+                           viz=viz,
+                           reports=reportutil.get_reports(),
+                           report=report,
+                           start=start,
+                           end=end)
 
 @app.errorhandler(400)
 def bad_request(e):
-    return render_template('400.html', error=e), 400
+    return render_template('error/400.html', error=e), 400
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html', error=e), 404
+    return render_template('error/404.html', error=e), 404
 
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request.')
-    return render_template('500.html', error=e), 500
+    return render_template('error/500.html', error=e), 500
+
+@app.errorhandler(502)
+def server_error(e):
+    return render_template('error/502.html', error=e), 502
 
 
 if __name__ == '__main__':

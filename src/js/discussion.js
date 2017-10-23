@@ -1,4 +1,4 @@
-const DISCUSS_CDN = 'https://cdn-standard.discourse.org';
+const DISCUSS_CDN = 'https://discourse-cdn-sjc1.com/standard';
 const DISCUSS_ORIGIN = 'https://discuss.httparchive.org';
 const MAX_USERS = 2;
 
@@ -53,6 +53,7 @@ export class Discussion {
 		const users = document.createElement('ul');
 
 		users.classList.add('discussion-users');
+		users.classList.add('hidden-xs');
 
 		this.users.slice(0, MAX_USERS).map(user => {
 			const li = document.createElement('li');
