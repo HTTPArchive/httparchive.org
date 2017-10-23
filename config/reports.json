@@ -36,7 +36,8 @@
 		},
 		"bytesTotal": {
 			"name": "Total Bytes",
-			"type": "KB"
+			"type": "KB",
+			"description": "The sum of all resources loaded over the network per page."
 		},
 		"bytesVideo": {
 			"name": "Video Bytes",
