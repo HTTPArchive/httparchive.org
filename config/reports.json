@@ -1,13 +1,13 @@
 {
 	"_reports": [
-		"web",
-		"js",
-		"img",
-		"loading",
-		"weight"
+		"state-of-the-web",
+		"state-of-javascript",
+		"state-of-images",
+		"loading-speed",
+		"page-weight"
 	],
 	"_featured": [
-		"js"
+		"state-of-javascript"
 	],
 	"_metrics": {
 		"bytesCss": {
@@ -27,7 +27,7 @@
 			"type": "KB"
 		},
 		"bytesJs": {
-			"name": "JS Bytes",
+			"name": "JavaScript Bytes",
 			"type": "KB"
 		},
 		"bytesOther": {
@@ -57,7 +57,7 @@
 		},
 		"dcl": {
 			"name": "DOM Content Loaded",
-			"type": "ms",
+			"type": "seconds",
 			"histogram": {
 				"minDate": "2013_08_01"
 			}
@@ -82,7 +82,7 @@
 		},
 		"ol": {
 			"name": "onLoad",
-			"type": "ms"
+			"type": "seconds"
 		},
 		"pctHttps": {
 			"name": "HTTPS Requests",
@@ -121,49 +121,74 @@
 		},
 		"reqCss": {
 			"name": "CSS Requests",
-			"type": "Requests"
+			"type": "Requests",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"reqFont": {
 			"name": "Font Requests",
-			"type": "Requests"
+			"type": "Requests",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"reqHtml": {
 			"name": "HTML Requests",
-			"type": "Requests"
+			"type": "Requests",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"reqImg": {
 			"name": "Image Requests",
-			"type": "Requests"
+			"type": "Requests",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"reqJs": {
-			"name": "JS Requests",
-			"type": "Requests"
+			"name": "JavaScript Requests",
+			"type": "Requests",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"reqOther": {
 			"name": "Other Requests",
-			"type": "Requests"
+			"type": "Requests",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"reqTotal": {
 			"name": "Total Requests",
-			"type": "Requests"
+			"type": "Requests",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"reqVideo": {
 			"name": "Video Requests",
 			"type": "Requests",
+			"redundant": true,
 			"histogram": {
 				"minDate": "2015_05_01"
+			},
+			"timeseries": {
+				"redundant": true
 			}
 		}
 	},
-	"img": {
+	"state-of-images": {
 		"name": "State of Images",
-		"summary": "The state of image consumption, optimization, and format adoption.",
+		"summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
 		"metrics": [
 			"bytesImg",
 			"reqImg"
 		]
 	},
-	"js": {
+	"state-of-javascript": {
 		"name": "State of JavaScript",
 		"summary": "JavaScript powers the modern web, enabling rich and interactive web applications. In this report we dive into how JavaScript is used on the web, and its adoption and trends both for mobile and desktop experiences.",
 		"metrics": [
@@ -173,9 +198,9 @@
 			"compileJs"
 		]
 	},
-	"loading": {
+	"loading-speed": {
 		"name": "Loading Speed",
-		"summary": "Metrics summarizing the different stages of page loading.",
+		"summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
 		"metrics": [
 			"fmp",
 			"ttci",
@@ -184,9 +209,9 @@
 			"ol"
 		]
 	},
-	"web": {
+	"state-of-the-web": {
 		"name": "State of the Web",
-		"summary": "TODO",
+		"summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
 		"metrics": [
 			"bytesTotal",
 			"reqTotal",
@@ -194,9 +219,9 @@
 			"tcp"
 		]
 	},
-	"weight": {
+	"page-weight": {
 		"name": "Page Weight",
-		"summary": "A look at the size and frequency of various resource types per page.",
+		"summary": "This report tracks the size and quantity of many popular web page resources.",
 		"metrics": [
 			"bytesCss",
 			"reqCss",

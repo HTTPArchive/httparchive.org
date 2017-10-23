@@ -9,9 +9,8 @@ SELECT
   APPROX_QUANTILES(_connections, 1001)[OFFSET(751)] AS p75,
   APPROX_QUANTILES(_connections, 1001)[OFFSET(901)] AS p90
 FROM
-  `httparchive.runs.20*`
+  `httparchive.summary_pages.20*`
 WHERE
-  _TABLE_SUFFIX LIKE '%_pages%' AND
   _connections > 0
 GROUP BY
   date,

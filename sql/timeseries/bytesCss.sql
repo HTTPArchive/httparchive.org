@@ -9,9 +9,8 @@ SELECT
   ROUND(APPROX_QUANTILES(bytesCSS, 1001)[OFFSET(751)] / 1024, 2) AS p75,
   ROUND(APPROX_QUANTILES(bytesCSS, 1001)[OFFSET(901)] / 1024, 2) AS p90
 FROM
-  `httparchive.runs.20*`
+  `httparchive.summary_pages.20*`
 WHERE
-  _TABLE_SUFFIX LIKE '%_pages%' AND
   bytesCSS > 0
 GROUP BY
   date,

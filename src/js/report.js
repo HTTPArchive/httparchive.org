@@ -1,3 +1,6 @@
+import { prettyDate } from './utils';
+
+
 class Report {
 
 	constructor(report) {
@@ -15,6 +18,7 @@ class Report {
 
 		this.bindPermalinkClick();
 		this.updatePermalink();
+		this.makeDatesPretty();
 	}
 
 	bindChangeListener(id) {
@@ -92,6 +96,13 @@ class Report {
 		}
 
 		this.permalink.value = url.toString();
+	}
+
+	makeDatesPretty() {
+		Array.from(document.querySelectorAll('#history .yyyy_mm_dd')).forEach(option => {
+			const date = prettyDate(option.innerText.trim());
+			option.innerText = date;
+		});
 	}
 }
 

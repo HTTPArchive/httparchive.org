@@ -1,7 +1,7 @@
 import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
-import { el } from './utils';
+import { el, prettyDate, chartExportOptions } from './utils';
 
 
 function timeseries(metric, options, start, end) {
@@ -84,6 +84,19 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 
 		const frag = document.createDocumentFragment();
 		const thead = el('thead');
+
+		const trMeta = el('tr');
+		trMeta.classList.add('meta-row');
+		DEFAULT_COLS.map(col => {
+			return el('th');
+		}).forEach(th => trMeta.appendChild(th));
+		const th = el('th');
+		th.classList.add('text-center');
+		th.setAttribute('colspan', cols.length - DEFAULT_COLS.length);
+		th.textContent = 'Percentile' + (th.colspan === 1 ? '' : 's');
+		trMeta.appendChild(th);
+		thead.appendChild(trMeta);
+
 		const tr = el('tr');
 		cols.map(col => {
 			const th = el('th');
@@ -173,12 +186,15 @@ const getFlagSeries = () => loadChangelog().then(data => {
 			title: String.fromCharCode(65 + (i % 26))
 		})),
 		color: '#90b1b6',
-		y: 25
+		y: 25,
+		showInLegend: false
 	};
 });
 
 function drawChart(options, series) {
 	Highcharts.stockChart(options.chartId, {
+		metric: options.metric,
+		type: 'timeseries',
 		chart: {
 			zoomType: 'x'
 		},
@@ -212,7 +228,6 @@ function drawChart(options, series) {
 				}
 
 				function getRow([median, iqr, outs]) {
-					console.log('getRow', arguments)
 					if (!median || !iqr) return '';
 					return `<tr>
 						<td><span style="color: ${median.series.color}">&bull;</span> ${median.series.name}</td>
@@ -252,13 +267,14 @@ function drawChart(options, series) {
 		},
 		yAxis: {
 			title: {
-				text: `${options.name} (${options.type})`
+				text: `${options.name}${options.redundant ? '' : ` (${options.type})`}`
 			},
 			opposite: false,
 			min: 0
 		},
 		series,
-		credits: false
+		credits: false,
+		exporting: chartExportOptions
 	});
 }
 
@@ -266,11 +282,7 @@ const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];
 const DEFAULT_COLS = ['date', 'client'];
 const toFixed = value => parseFloat(value).toFixed(1);
 const formatters = {
-	date: date => {
-		const [YYYY, MM, DD] = date.split('_');
-		const d = new Date(Date.UTC(YYYY, MM - 1, DD));
-		return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
-	},
+	date: prettyDate,
 	p10: toFixed,
 	p25: toFixed,
 	p50: toFixed,

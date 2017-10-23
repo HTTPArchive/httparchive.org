@@ -1,6 +1,6 @@
 import { Colors } from './colors';
 import debounce from './debounce';
-import { el } from './utils';
+import { el, prettyDate } from './utils';
 
 
 const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
@@ -274,7 +274,7 @@ function drawChart(series, containerId, options) {
 	      text: `Histogram of ${options.name}`
 	  },
 	  subtitle: {
-	      text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${options.date})`,
+	      text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
 	      useHTML: true
 	  },
 	  plotOptions: {

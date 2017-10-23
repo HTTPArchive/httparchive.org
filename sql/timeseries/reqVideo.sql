@@ -9,9 +9,8 @@ SELECT
   ROUND(APPROX_QUANTILES(reqVideo, 1001)[OFFSET(751)], 2) AS p75,
   ROUND(APPROX_QUANTILES(reqVideo, 1001)[OFFSET(901)], 2) AS p90
 FROM
-  `httparchive.runs.20*`
+  `httparchive.summary_pages.20*`
 WHERE
-  _TABLE_SUFFIX LIKE '%_pages%' AND
   reqVideo > 0
 GROUP BY
   date,

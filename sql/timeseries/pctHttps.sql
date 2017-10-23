@@ -5,9 +5,7 @@ SELECT
   IF(STRPOS(_TABLE_SUFFIX, '_mobile') = 0, 'desktop', 'mobile') AS client,
   ROUND(SUM(IF(STARTS_WITH(url, 'https'), 1, 0)) * 100 / COUNT(0), 2) AS percent
 FROM
-  `httparchive.runs.20*`
-WHERE
-  _TABLE_SUFFIX LIKE '%_requests%'
+  `httparchive.summary_requests.20*`
 GROUP BY
   date,
   timestamp,

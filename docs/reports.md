@@ -112,7 +112,8 @@ Reports are configured in [config/reports.json](../config/reports.json). Here's 
     },
     "z": {
       "name": "Z Metric",
-      "type": "Requests"
+      "type": "Requests",
+      "redundant": true
     }
   },
   "foo": {
@@ -202,7 +203,11 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         - **fields**
 
-          Optional array. Default `["p25", "p50", "p75"]`. Defines the field names of the measurement objects that should be plotted. A measurement object is just an element in the array of JSON-encoded timeseries data, containing client, date, and timestamp info as well as the measurement data.
+          Optional array. Default `["p10", "p25", "p50", "p75", "p90"]`. Defines the field names of the measurement objects that should be plotted. A measurement object is just an element in the array of JSON-encoded timeseries data, containing client, date, and timestamp info as well as the measurement data.
+
+        - **redundant**
+
+          Optional boolean. Default `false`. Whether the metric type is redundant with the metric name. For example, set to `true` when the type is included in the name, like "Total Requests". The type will be omitted anywhere it follows the metric name.
 
   - **report ID**
 
