@@ -284,3 +284,14 @@ input {
 		width: 100%;
 	}
 }
+
+#sponsor-logos {
+	background-color: #fff;
+	border: 1px solid #748c8f;
+	border-radius: 15px;
+	margin-bottom: 40px;
+	padding: 40px;
+}
+#sponsor-logos * {
+	padding: 5px;
+}
