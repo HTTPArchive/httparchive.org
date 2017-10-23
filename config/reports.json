@@ -179,6 +179,16 @@
 			"timeseries": {
 				"redundant": true
 			}
+		},
+		"cruxFcp": {
+			"name": "First Contentful Paint",
+			"type": "ms",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
 		}
 	},
 	"state-of-images": {
@@ -240,6 +250,13 @@
 			"reqTotal",
 			"bytesVideo",
 			"reqVideo"
+		]
+	},
+	"crux": {
+		"name": "Chrome User Experience Report",
+		"summary": "Insights from the RUM data in the Chrome UX report.",
+		"metrics": [
+			"cruxFcp"
 		]
 	}
 }
