@@ -291,6 +291,7 @@
 			"cruxFcp",
 			"cruxDcl",
 			"cruxOl"
-		]
+		],
+		"minDate": "2017_10_01"
 	}
 }
