@@ -77,11 +77,13 @@ export class Discussion {
 		if (this.users.length > MAX_USERS) {
 			const li = document.createElement('li');
 
-			const remainingUsers = document.createElement('span');
-			remainingUsers.classList.add('discussion-users-remaining');
-			remainingUsers.innerText = this.users.length - MAX_USERS;
+			const remainingUsersEl = document.createElement('span');
+			const remainingUsers = this.users.length - MAX_USERS;
+			remainingUsersEl.classList.add('discussion-users-remaining');
+			remainingUsersEl.innerText = remainingUsers;
+			remainingUsersEl.title = `${remainingUsers} more user${remainingUsers === 1 ? '' : 's'}`;
 
-			li.appendChild(remainingUsers);
+			li.appendChild(remainingUsersEl);
 			users.appendChild(li);
 		}
 
