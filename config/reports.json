@@ -4,7 +4,8 @@
 		"state-of-javascript",
 		"state-of-images",
 		"loading-speed",
-		"page-weight"
+		"page-weight",
+		"crux"
 	],
 	"_featured": [
 		"state-of-javascript"
@@ -180,9 +181,39 @@
 				"redundant": true
 			}
 		},
+		"cruxFp": {
+			"name": "First Paint",
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
 		"cruxFcp": {
 			"name": "First Contentful Paint",
-			"type": "ms",
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
+		"cruxDcl": {
+			"name": "DOM Content Loaded",
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
+		"cruxOl": {
+			"name": "Onload",
+			"type": "seconds",
 			"histogram": {
 				"minDate": "2017_10_01"
 			},
@@ -256,7 +287,10 @@
 		"name": "Chrome User Experience Report",
 		"summary": "Insights from the RUM data in the Chrome UX report.",
 		"metrics": [
-			"cruxFcp"
+			"cruxFp",
+			"cruxFcp",
+			"cruxDcl",
+			"cruxOl"
 		]
 	}
 }

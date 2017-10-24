@@ -19,23 +19,6 @@ function histogram(metric, date, options) {
 		})
 		.then(jsonStr => JSON.parse(jsonStr))
 		.then(data => {
-			if (data[0].density) {
-				// Hack to get CrUX histograms to work.
-				let desktopCdf = 0;
-				let mobileCdf = 0;
-				data = data.map(o => {
-					o.volume = o.pdf = o.density;
-					o.bin = o.start;
-					if (o.client === 'desktop') {
-						desktopCdf += parseFloat(o.density);
-						o.cdf = desktopCdf;
-					} else {
-						mobileCdf += parseFloat(o.density);
-						o.cdf = mobileCdf;
-					}
-					return o;
-				});
-			}
 			drawHistogram(data, `${metric}-chart`, options);
 			drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
 		}).catch(e => {
