@@ -1,20 +1,13 @@
 import { Colors } from './colors';
 import debounce from './debounce';
-<<<<<<< HEAD
 import { el, prettyDate, chartExportOptions } from './utils';
-=======
-import { el, prettyDate } from './utils';
->>>>>>> babf8c52e3dd5590f5477db0cb76551ee30e27e3
 
 
 const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
 
 function histogram(metric, date, options) {
 	options.date = date;
-<<<<<<< HEAD
 	options.metric = metric;
-=======
->>>>>>> babf8c52e3dd5590f5477db0cb76551ee30e27e3
 	const dataUrl = `https://cdn.httparchive.org/reports/${date}/${metric}.json`;
 	fetch(dataUrl)
 		.then(response => {
@@ -268,12 +261,9 @@ function drawHistogram(data, containerId, options) {
 
 function drawChart(series, containerId, options) {
 	const chart = Highcharts.chart(containerId, {
-<<<<<<< HEAD
 		metric: options.metric,
 		type: 'histogram',
 		date: options.date,
-=======
->>>>>>> babf8c52e3dd5590f5477db0cb76551ee30e27e3
 		chart: {
 			type: 'column',
 				zoomType: 'x',
