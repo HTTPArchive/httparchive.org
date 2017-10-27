@@ -99,6 +99,10 @@ def report(report_id):
 
     viz = reportutil.VizTypes.HISTOGRAM if (start and not end) else reportutil.VizTypes.TIMESERIES
 
+    if viz == reportutil.VizTypes.TIMESERIES and report['timeseries'] and not report['timeseries']['enabled']:
+        end = None
+        viz = reportutil.VizTypes.HISTOGRAM
+
     # Determine which metrics should be enabled for this report.
     for metric in report['metrics']:
         # Get a list of reports that also contain this metric.

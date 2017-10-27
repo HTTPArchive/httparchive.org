@@ -292,6 +292,9 @@
 			"cruxDcl",
 			"cruxOl"
 		],
-		"minDate": "2017_10_01"
+		"minDate": "2017_10_01",
+		"timeseries": {
+			"enabled": false
+		}
 	}
 }
