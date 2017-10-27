@@ -1,4 +1,23 @@
 #standardSQL
+CREATE TEMPORARY FUNCTION spreadBins(bins ARRAY<STRUCT<start INT64, `end` INT64, density FLOAT64>>)
+RETURNS ARRAY<STRUCT<client STRING, start INT64, density FLOAT64>>
+LANGUAGE js AS """
+  // Convert into 100ms bins and spread the density around.
+  const WIDTH = 100;
+  return (bins || []).reduce((bins, bin) => {
+    bin.start = +bin.start;
+    bin.end = Math.min(bin.end, bin.start + 5000);
+    const binWidth = bin.end - bin.start;
+    for (let start = bin.start; start < bin.end; start += WIDTH) {
+      bins.push({
+        start,
+        density: bin.density / (binWidth / WIDTH)
+      });
+    }
+    return bins;
+  }, []);
+""";
+
 SELECT
   *,
   SUM(pdf) OVER (PARTITION BY client ORDER BY bin) AS cdf
@@ -14,7 +33,7 @@ FROM (
     FROM (
       SELECT
         form_factor,
-        dom_content_loaded.histogram.bin AS bins
+        spreadBins(dom_content_loaded.histogram.bin) AS bins
       FROM
         `chrome-ux-report.chrome_ux_report.201710`)
     CROSS JOIN
