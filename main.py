@@ -99,7 +99,7 @@ def report(report_id):
 
     viz = reportutil.VizTypes.HISTOGRAM if (start and not end) else reportutil.VizTypes.TIMESERIES
 
-    if viz == reportutil.VizTypes.TIMESERIES and report['timeseries'] and not report['timeseries']['enabled']:
+    if viz == reportutil.VizTypes.TIMESERIES and report.get('timeseries') and not report.get('timeseries').get('enabled'):
         end = None
         viz = reportutil.VizTypes.HISTOGRAM
 
