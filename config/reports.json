@@ -5,7 +5,7 @@
 		"state-of-images",
 		"loading-speed",
 		"page-weight",
-		"crux"
+		"chrome-ux-report"
 	],
 	"_featured": [
 		"state-of-javascript"
@@ -36,9 +36,12 @@
 			"type": "KB"
 		},
 		"bytesTotal": {
-			"name": "Total Bytes",
+			"name": "Total Kiloytes",
 			"type": "KB",
-			"description": "The sum of all resources loaded over the network per page."
+			"description": "The sum of <a href=\"https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize\">transfer size</a> kilobytes of all resources requested by the page.",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"bytesVideo": {
 			"name": "Video Bytes",
@@ -58,7 +61,7 @@
 			}
 		},
 		"dcl": {
-			"name": "DOM Content Loaded",
+			"name": "DOMContentLoaded",
 			"type": "seconds",
 			"histogram": {
 				"minDate": "2013_08_01"
@@ -202,7 +205,7 @@
 			}
 		},
 		"cruxDcl": {
-			"name": "DOM Content Loaded",
+			"name": "DOMContentLoaded",
 			"type": "seconds",
 			"histogram": {
 				"minDate": "2017_10_01"
@@ -283,9 +286,9 @@
 			"reqVideo"
 		]
 	},
-	"crux": {
-		"name": "Chrome User Experience Report",
-		"summary": "Insights from the RUM data in the Chrome UX report.",
+	"chrome-ux-report": {
+		"name": "Chrome User Experience Report: Loading",
+		"summary": "Loading performance as experienced by real-world Chrome users across a diverse set of real-world hardware and network conditions. The provided data is powered by real user measurement (RUM) of key loading user experience metrics across the public web, provided by the <a href=\"https://developers.google.com/web/tools/chrome-user-experience-report/\">Chrome User Experience Report</a>.",
 		"metrics": [
 			"cruxFp",
 			"cruxFcp",
