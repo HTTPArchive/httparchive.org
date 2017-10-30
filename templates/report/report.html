@@ -6,6 +6,7 @@
 {% block head %}
 	{{ super() }}
 	<link rel="stylesheet" href="/static/css/report.css" />
+	<link rel="dns-prefetch" href="https://cdn.httparchive.org" />
 {% endblock %}
 
 {% block main %}
@@ -96,8 +97,8 @@
 
 {% block scripts %}
 	{{ super() }}
-	<script src="/static/js/highstock.js"></script>
-	<script src="/static/js/exporting.js"></script>
+	<script src="https://cdn.httparchive.org/reports/highstock.js"></script>
+	<script src="https://cdn.httparchive.org/reports/exporting.js"></script>
 	<script src="/static/js/report.js"></script>
 	<script>
 		var report = {{ report|tojson }};
