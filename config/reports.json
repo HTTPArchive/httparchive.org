@@ -36,7 +36,7 @@
 			"type": "KB"
 		},
 		"bytesTotal": {
-			"name": "Total Kiloytes",
+			"name": "Total Kilobytes",
 			"type": "KB",
 			"description": "The sum of <a href=\"https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize\">transfer size</a> kilobytes of all resources requested by the page.",
 			"timeseries": {
