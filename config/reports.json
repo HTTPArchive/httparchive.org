@@ -4,7 +4,8 @@
 		"state-of-javascript",
 		"state-of-images",
 		"loading-speed",
-		"page-weight"
+		"page-weight",
+		"chrome-ux-report"
 	],
 	"_featured": [
 		"state-of-javascript"
@@ -35,8 +36,12 @@
 			"type": "KB"
 		},
 		"bytesTotal": {
-			"name": "Total Bytes",
-			"type": "KB"
+			"name": "Total Kilobytes",
+			"type": "KB",
+			"description": "The sum of <a href=\"https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize\">transfer size</a> kilobytes of all resources requested by the page.",
+			"timeseries": {
+				"redundant": true
+			}
 		},
 		"bytesVideo": {
 			"name": "Video Bytes",
@@ -56,7 +61,7 @@
 			}
 		},
 		"dcl": {
-			"name": "DOM Content Loaded",
+			"name": "DOMContentLoaded",
 			"type": "seconds",
 			"histogram": {
 				"minDate": "2013_08_01"
@@ -178,6 +183,46 @@
 			"timeseries": {
 				"redundant": true
 			}
+		},
+		"cruxFp": {
+			"name": "First Paint",
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
+		"cruxFcp": {
+			"name": "First Contentful Paint",
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
+		"cruxDcl": {
+			"name": "DOMContentLoaded",
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
+		},
+		"cruxOl": {
+			"name": "Onload",
+			"type": "seconds",
+			"histogram": {
+				"minDate": "2017_10_01"
+			},
+			"timeseries": {
+				"enabled": false
+			}
 		}
 	},
 	"state-of-images": {
@@ -240,5 +285,19 @@
 			"bytesVideo",
 			"reqVideo"
 		]
+	},
+	"chrome-ux-report": {
+		"name": "Chrome User Experience Report: Loading",
+		"summary": "Loading performance as experienced by real-world Chrome users across a diverse set of real-world hardware and network conditions. The provided data is powered by real user measurement (RUM) of key loading user experience metrics across the public web, provided by the <a href=\"https://developers.google.com/web/tools/chrome-user-experience-report/\">Chrome User Experience Report</a>.",
+		"metrics": [
+			"cruxFp",
+			"cruxFcp",
+			"cruxDcl",
+			"cruxOl"
+		],
+		"minDate": "2017_10_01",
+		"timeseries": {
+			"enabled": false
+		}
 	}
 }

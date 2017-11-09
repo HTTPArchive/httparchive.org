@@ -6,6 +6,7 @@
 {% block head %}
 	{{ super() }}
 	<link rel="stylesheet" href="/static/css/report.css" />
+	<link rel="preconnect" href="https://cdn.httparchive.org" />
 {% endblock %}
 
 {% block main %}
@@ -19,7 +20,7 @@
 					{% block reportName %}{{ report.name }}{% endblock %}
 				</h2>
 
-				<p>{{ report.summary }}</p>
+				<p>{{ report.summary | safe }}</p>
 
 				<div class="row">
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -96,8 +97,8 @@
 
 {% block scripts %}
 	{{ super() }}
-	<script src="/static/js/highstock.js"></script>
-	<script src="/static/js/exporting.js"></script>
+	<script src="https://cdn.httparchive.org/reports/highstock.js"></script>
+	<script src="https://cdn.httparchive.org/reports/exporting.js"></script>
 	<script src="/static/js/report.js"></script>
 	<script>
 		var report = {{ report|tojson }};
@@ -113,7 +114,7 @@
 		<a href="#{{ metric.id }}">{{ metric.name }}</a>
 	</h3>
 	{% if metric.description %}
-		<p>{{ metric.description }}</p>
+		<p>{{ metric.description | safe }}</p>
 	{% endif %}
 	{% for report_id, report_name in metric.similar_reports.items() %}
 		<div>

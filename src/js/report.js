@@ -99,7 +99,7 @@ class Report {
 	}
 
 	makeDatesPretty() {
-		Array.from(document.querySelectorAll('#history .yyyy_mm_dd')).forEach(option => {
+		Array.from(document.querySelectorAll('.yyyy_mm_dd')).forEach(option => {
 			const date = prettyDate(option.innerText.trim());
 			option.innerText = date;
 		});

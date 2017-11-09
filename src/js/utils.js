@@ -6,43 +6,17 @@ export const prettyDate = YYYY_MM_DD => {
 	return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
 };
 
-export const chartExportOptions2 = {
-        menuItemDefinitions: {
-            // Custom definition
-            label: {
-                onclick: function () {
-                    this.renderer.label(
-                        'You just clicked a custom menu item',
-                        100,
-                        100
-                    )
-                    .attr({
-                        fill: '#a4edba',
-                        r: 5,
-                        padding: 10,
-                        zIndex: 10
-                    })
-                    .css({
-                        fontSize: '1.5em'
-                    })
-                    .add();
-                },
-                text: 'Show label'
-            }
-        },
-        buttons: {
-            contextButton: {
-                menuItems: ['downloadPNG', 'downloadSVG', 'separator', 'label']
-            }
-        }
-    };
-
 export const chartExportOptions = {
 	menuItemDefinitions: {
 		showQuery: {
 			onclick: function() {
 				const {metric, type} = this.options;
-				console.log('Show query for', metric, type);
+				const url = getQueryUrl(metric, type);
+				if (!url) {
+					console.warn(`Unable to get query URL for metric "${metric}" and chart type "${type}".`)
+					return;
+				}
+				window.open(url, '_blank');
 			},
 			text: 'Show Query'
 		}
@@ -51,5 +25,15 @@ export const chartExportOptions = {
 		contextButton: {
 			menuItems: ['showQuery', 'downloadPNG']
 		}
+	}
+};
+
+const getQueryUrl = (metric, type) => {
+	const URL_BASE = 'https://raw.githubusercontent.com/HTTPArchive/beta.httparchive.org/master/sql';
+	if (type === 'timeseries') {
+		return `${URL_BASE}/timeseries/${metric}.sql`;
+	}
+	if (type === 'histogram') {
+		return `${URL_BASE}/histograms/${metric}.sql`;
 	}
 };
