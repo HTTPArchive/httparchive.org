@@ -7,7 +7,8 @@ SELECT
 FROM
   `httparchive.lighthouse.20*`
 WHERE
-  report IS NOT NULL
+  report IS NOT NULL AND
+  JSON_EXTRACT(report, '$.audits.no-vulnerable-libraries.score') IS NOT NULL
 GROUP BY
   date,
   timestamp,
