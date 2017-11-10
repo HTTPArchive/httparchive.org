@@ -33,6 +33,20 @@
 #permalink {
 	width: 100%;
 }
+#update {
+	margin-bottom: 12px;
+}
+#permalink-icon {
+	position: absolute;
+	left: 21px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #748c8f;
+}
+#permalink {
+	padding-left: 20px;
+	margin: 0;
+}
 @media (max-width: 992px) {
 	#history {
 		margin-top: 40px;

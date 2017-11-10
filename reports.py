@@ -1,5 +1,6 @@
 import json
 import logging
+from copy import deepcopy
 from time import time
 
 
@@ -55,7 +56,7 @@ def get_report(report_id):
     report = reports_json.get(report_id)
     if not report:
         return None
-    report = report.copy()
+    report = deepcopy(report)
     report['id'] = report_id
     report['metrics'] = map(get_metric, report.get('metrics'))
     return report
@@ -63,7 +64,7 @@ def get_report(report_id):
 def get_metric(metric_id):
     global reports_json
     metrics = reports_json.get('_metrics')
-    metric = metrics.get(metric_id)
+    metric = deepcopy(metrics.get(metric_id))
     metric['id'] = metric_id
     return metric
 
