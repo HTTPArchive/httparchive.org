@@ -37,7 +37,7 @@ class Bin {
 	}
 
 	toPoint() {
-		return [this.bin, this.volume];
+		return [this.bin, this.pdf * 100];
 	}
 
 	toCdfPoint() {
@@ -268,74 +268,73 @@ function drawChart(series, containerId, options) {
 			type: 'column',
 				zoomType: 'x',
 				resetZoomButton: {
-				position: {
-					x: 0,
-					y: -50
-				}
+					position: {
+						x: 0,
+						y: -50
+					}
+				},
 			},
+			title: {
+				text: `Histogram of ${options.name}`
+			},
+			subtitle: {
+				text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
+				useHTML: true
+			},
+			plotOptions: {
+				column: {
+					grouping: false
+				},
+				series: {
+					events: {
+					// Keep outlier visibility in sync.
+					hide: function() {
+						const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
+						if (outliers) {
+							outliers.hide();
+						}
+					},
+					show: function() {
+						const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
+						if (outliers) {
+							outliers.show();
+						}
+					}
+				}
+			}
 		},
-	  title: {
-	      text: `Histogram of ${options.name}`
-	  },
-	  subtitle: {
-	      text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
-	      useHTML: true
-	  },
-	  plotOptions: {
-	    column: {
-	      grouping: false
-	    },
-	    series: {
-	    	events: {
-	    		// Keep outlier visibility in sync.
-	    		hide: function() {
-	    			const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
-	    			if (outliers) {
-	    				outliers.hide();
-	    			}
-
-	    		},
-	    		show: function() {
-	    			const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
-	    			if (outliers) {
-	    				outliers.show();
-	    			}
-	    		}
-	    	}
-	    }
-	  },
-	  tooltip: {
-	      formatter: function() {
-	        const tooltips = [];
-	        this.points.forEach(point => {
-	          tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} ${options.type} (${(point.y).toFixed(2)})`);
-	        });
-	        return tooltips.join('<br>');
-	      },
-	      shared: true
-	  },
-	  xAxis: {
-	      title: {
-	          text: options.type
-	      },
-		  events: {
-			setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])
-		  }
-	  },
-	  yAxis: [{
-	      title: {
-	          text: 'Volume'
-	      }
-	  }, {
-	    title: {
-	      text: 'CDF (%)'
-	    },
-	    max: 100,
-	    opposite: true
-	  }],
-	  series,
-	  credits: false,
-	  exporting: chartExportOptions
+		tooltip: {
+			formatter: function() {
+				const tooltips = [];
+				this.points.forEach(point => {
+					tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} ${options.type} (${(point.y).toFixed(2)})`);
+				});
+				return tooltips.join('<br>');
+			},
+			shared: true
+		},
+		xAxis: {
+			title: {
+				text: options.type
+			},
+			events: {
+				setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])
+			}
+		},
+		yAxis: [{
+			title: {
+				text: 'Percent'
+			}
+		}, {
+			title: {
+				text: 'Cumulative Distribution (%)'
+			},
+			max: 100,
+			opposite: true
+		}],
+		series,
+		credits: false,
+		exporting: chartExportOptions
 	});
 }
 

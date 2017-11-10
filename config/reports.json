@@ -101,6 +101,18 @@
 				]
 			}
 		},
+		"pctVuln": {
+			"name": "Pages with Vulnerable JS",
+			"type": "%",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"tcp": {
 			"name": "TCP Connections Per Page",
 			"type": "Connections",
@@ -223,6 +235,16 @@
 			"timeseries": {
 				"enabled": false
 			}
+		},
+		"vulnJs": {
+			"name": "Vulnerable JavaScript Libraries Per Page",
+			"type": "libraries",
+			"histogram": {
+				"minDate": "2017_10_15"
+			},
+			"timeseries": {
+				"enabled": false
+			}
 		}
 	},
 	"state-of-images": {
@@ -261,7 +283,9 @@
 			"bytesTotal",
 			"reqTotal",
 			"pctHttps",
-			"tcp"
+			"pctVuln",
+			"tcp",
+			"vulnJs"
 		]
 	},
 	"page-weight": {
