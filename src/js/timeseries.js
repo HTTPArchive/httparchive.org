@@ -85,17 +85,19 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 		const frag = document.createDocumentFragment();
 		const thead = el('thead');
 
-		const trMeta = el('tr');
-		trMeta.classList.add('meta-row');
-		DEFAULT_COLS.map(col => {
-			return el('th');
-		}).forEach(th => trMeta.appendChild(th));
-		const th = el('th');
-		th.classList.add('text-center');
-		th.setAttribute('colspan', cols.length - DEFAULT_COLS.length);
-		th.textContent = 'Percentile' + (th.colspan === 1 ? '' : 's');
-		trMeta.appendChild(th);
-		thead.appendChild(trMeta);
+		if (!options.timeseries || !options.timeseries.fields) {
+			const trMeta = el('tr');
+			trMeta.classList.add('meta-row');
+			DEFAULT_COLS.map(col => {
+				return el('th');
+			}).forEach(th => trMeta.appendChild(th));
+			const th = el('th');
+			th.classList.add('text-center');
+			th.setAttribute('colspan', cols.length - DEFAULT_COLS.length);
+			th.textContent = 'Percentile' + (th.colspan === 1 ? '' : 's');
+			trMeta.appendChild(th);
+			thead.appendChild(trMeta);
+		}
 
 		const tr = el('tr');
 		cols.map(col => {
@@ -227,8 +229,17 @@ function drawChart(options, series) {
 					return `${tooltip} ${getChangelog(changelog)}`
 				}
 
-				function getRow([median, iqr, outs]) {
-					if (!median || !iqr) return '';
+				function getRow(points) {
+					if (!points.length) return '';
+					if (options.timeseries && options.timeseries.fields) {
+						return `<tr>
+							<td><span style="color: ${points[0].series.color}">&bull;</span> ${points[0].series.name}</td>
+							${points.map(point => {
+								return `<th>${point.point.y.toFixed(1)}</th>`;
+							})}
+						</tr>`;
+					}
+					const [median, iqr, outs] = points;
 					return `<tr>
 						<td><span style="color: ${median.series.color}">&bull;</span> ${median.series.name}</td>
 						<th>${outs.point.low.toFixed(1)}</th>
@@ -240,16 +251,21 @@ function drawChart(options, series) {
 				}
 				const desktop = this.points.filter(o => o.series.name == 'Desktop');
 				const mobile = this.points.filter(o => o.series.name == 'Mobile');
-				console.log('tooltip desktop', desktop)
 				return `${tooltip}
 				<table cellpadding="5">
 					<tr>
 					<td></td>
-					<td style="font-size: smaller;">10%ile</td>
-					<td style="font-size: smaller;">25%ile</td>
-					<td style="font-size: smaller;">50%ile</td>
-					<td style="font-size: smaller;">75%ile</td>
-					<td style="font-size: smaller;">90%ile</td>
+					${
+						(options.timeseries && options.timeseries.fields) ?
+						options.timeseries.fields.map(field => {
+							return `<td style="font-size: smaller;">${field}</td>`;
+						}) : 
+						`<td style="font-size: smaller;">10%ile</td>
+						<td style="font-size: smaller;">25%ile</td>
+						<td style="font-size: smaller;">50%ile</td>
+						<td style="font-size: smaller;">75%ile</td>
+						<td style="font-size: smaller;">90%ile</td>`
+					}
 				</tr>
 				${getRow(desktop)}
 				${getRow(mobile)}
