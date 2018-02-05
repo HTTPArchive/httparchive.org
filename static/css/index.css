@@ -32,6 +32,8 @@
 .discussion-users-remaining {
 	border-radius: 15px;
 	border: 1px solid #f4f4f4;
+	height: 32px;
+	width: 32px;
 }
 .discussion-users li + li {
 	margin-left: -12px;
