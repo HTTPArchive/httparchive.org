@@ -36,7 +36,7 @@ if [ $DESTINATION == 0 ]; then
 fi
 
 metric=$(echo $(basename $DESTINATION) | cut -d"." -f1)
-gs_url=gs://httparchive/reports/$1
+gs_url=gs://httparchive/reports/$DESTINATION
 YYYY_MM_DD=$(echo $DESTINATION | cut -d"/" -f1)
 YYYYMM=0
 
