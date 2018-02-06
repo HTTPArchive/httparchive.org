@@ -23,7 +23,7 @@
 						</a>
 					</h2>
 
-					<p>{{ report.summary }}</p>
+					<p>{{ report.summary | safe }}</p>
 					
 					<a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the Report</a>
 					</h2>
