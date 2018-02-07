@@ -28,6 +28,8 @@ while getopts ":fth:" opt; do
 		h)
 			GENERATE_HISTOGRAM=1
 			YYYY_MM_DD=${OPTARG}
+			dateParts=(`echo ${OPTARG} | tr "_" "\\n"`)
+			YYYYMM=${dateParts[0]}${dateParts[1]}
 			;;
 		t)
 			GENERATE_TIMESERIES=1
@@ -69,6 +71,7 @@ else
 		# Replace the date template in the query.
 		# Run the query on BigQuery.
 		result=$(sed -e "s/\${YYYY_MM_DD}/$YYYY_MM_DD/" $query \
+			| sed  -e "s/\${YYYYMM}/$YYYYMM/" \
 			| $BQ_CMD)
 		# Make sure the query succeeded.
 		if [ $? -eq 0 ]; then

@@ -1,12 +1,8 @@
-const DISCUSS_CDN = 'https://discourse-cdn-sjc1.com/standard';
 const DISCUSS_ORIGIN = 'https://discuss.httparchive.org';
 const MAX_USERS = 2;
 
 export class Discussion {
 
-	static get CDN() {
-		return DISCUSS_CDN;
-	}
 	static get ORIGIN() {
 		return DISCUSS_ORIGIN;
 	}
@@ -107,7 +103,7 @@ export class Discussion {
 
 		// URL may be relative. Prepend CDN origin if so. Return as is if not.
 		if (url[0] === '/') {
-			return DISCUSS_CDN + url;
+			return DISCUSS_ORIGIN + url;
 		}
 
 		return url;

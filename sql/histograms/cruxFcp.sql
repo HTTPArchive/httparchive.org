@@ -35,7 +35,7 @@ FROM (
         form_factor,
         spreadBins(first_contentful_paint.histogram.bin) AS bins
       FROM
-        `chrome-ux-report.chrome_ux_report.201710`)
+        `chrome-ux-report.all.${YYYYMM}`)
     CROSS JOIN
       UNNEST(bins) AS bin
     GROUP BY
