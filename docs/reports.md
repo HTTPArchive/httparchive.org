@@ -143,7 +143,7 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
 - **reports.json**
 
-	JSON-encoded object mapping report IDs to report configs. Also includes metadata whose property names are preceded by an underscore.
+  JSON-encoded object mapping report IDs to report configs. Also includes metadata whose property names are preceded by an underscore.
 
   - **\_reports**
 
@@ -211,23 +211,23 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
   - **report ID**
 
-  		Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`. Changing this value will probably break permalinks.
+      Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`. Changing this value will probably break permalinks.
 
   - **report config**
 
-  		Maps report configuration property names to values. The following properties are available:
+      Maps report configuration property names to values. The following properties are available:
 
-  		- **name**
+      - **name**
 
-  			Required string. Human-readable title of the report. Must be unique.
+        Required string. Human-readable title of the report. Must be unique.
 
-  		- **summary**
+      - **summary**
 
-  			Required string. Human-readable description of the report. Suggested length: 1-5 sentences.
+        Required string. Human-readable description of the report. Suggested length: 1-5 sentences.
 
-  		- **minDate**
+      - **minDate**
 
-  			Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
+        Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
 
       - **maxDate**
 
@@ -237,9 +237,9 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
 
-  		- **metrics**
+      - **metrics**
 
-  			Required array. Describes the metrics included in the report.
+        Required array. Describes the metrics included in the report.
 
 ## Configuring Dates
 
@@ -273,11 +273,11 @@ When a crawl finishes, the following things must happen to make the new data ava
 
 1. Run all of the queries with the new crawl date and save results to respective JSON files on Google Storage.
 
-	`sql/generateReports.sh -t -h YYYY_MM_DD`
+  `sql/generateReports.sh -t -h YYYY_MM_DD`
 
 2. Add the crawl date to the list of report dates.
 
-	`sql/addDate.js YYYY_MM_DD`
+  `sql/addDate.js YYYY_MM_DD`
 
 _These two commands should be set on a cron job or part of some future pubsub pipeline._
 
