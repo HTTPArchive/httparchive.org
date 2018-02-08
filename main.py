@@ -14,6 +14,7 @@
 
 # [START app]
 import logging
+import re
 import reports as reportutil
 
 from flask import Flask, request, render_template, abort, url_for
@@ -51,6 +52,7 @@ def report(report_id):
 
     min_date = report.get('minDate')
     max_date = report.get('maxDate')
+    date_pattern = report.get('datePattern')
 
     # TODO: If a report doesn't explicitly have a min/max date,
     # but all of its metrics do, take the min/max of the metrics
@@ -61,6 +63,9 @@ def report(report_id):
         dates = dates[:dates.index(min_date) + 1]
     if max_date:
         dates = dates[dates.index(max_date):]
+    if date_pattern:
+        date_pattern = re.compile(date_pattern)
+        dates = [d for d in dates if date_pattern.match(d)]
 
     report['dates'] = dates
 

@@ -229,9 +229,13 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
   			Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
 
-  		- **maxDate**
+      - **maxDate**
 
-  			Optional string. The latest date at which the report is available. YYYY_MM_DD format.
+        Optional string. The latest date at which the report is available. YYYY_MM_DD format.
+
+      - **datePattern**
+
+        Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
 
   		- **metrics**
 
