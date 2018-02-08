@@ -12,7 +12,7 @@ FROM (
         'desktop',
         'mobile') AS client,
       COUNT(0) AS volume,
-      FLOOR(onLoad / 200) * 200 AS bin
+      FLOOR(onLoad / 1000) AS bin
     FROM
       `httparchive.runs.${YYYY_MM_DD}_pages*`
     WHERE
