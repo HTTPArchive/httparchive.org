@@ -1,4 +1,3 @@
-
 #standardSQL
 SELECT
   *,
@@ -9,22 +8,13 @@ FROM (
     volume / SUM(volume) OVER (PARTITION BY client) AS pdf
   FROM (
     SELECT
-      client,
+      IF(STRPOS(_TABLE_SUFFIX, '_mobile') = 0,
+        'desktop',
+        'mobile') AS client,
       COUNT(0) AS volume,
       CAST(CAST(JSON_EXTRACT(payload, "$['_cpu.EvaluateScript']") AS FLOAT64) / 20 AS INT64) * 20 AS bin
-    FROM ((
-      SELECT
-        'desktop' AS client,
-        payload
-      FROM
-        `httparchive.har.${YYYY_MM_DD}_chrome_requests`
-    ) UNION ALL (
-      SELECT
-        'mobile' AS client,
-        payload
-      FROM
-        `httparchive.har.${YYYY_MM_DD}_android_requests`
-    ))
+    FROM
+      `httparchive.requests.${YYYY_MM_DD}*`
     GROUP BY
       bin,
       client
