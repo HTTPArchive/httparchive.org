@@ -14,7 +14,7 @@ FROM (
       COUNT(0) AS volume,
       reqOther AS bin
     FROM
-      `httparchive.runs.${YYYY_MM_DD}_pages*`
+      `httparchive.summary_pages.${YYYY_MM_DD}*`
     GROUP BY
       bin,
       client ) )
