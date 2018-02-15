@@ -14,7 +14,7 @@ FROM (
       COUNT(0) AS volume,
       FLOOR(onLoad / 200) * 200 AS bin
     FROM
-      `httparchive.runs.${YYYY_MM_DD}_pages*`
+      `httparchive.summary_pages.${YYYY_MM_DD}*`
     WHERE
       onLoad > 0
     GROUP BY
