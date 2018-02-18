@@ -70,6 +70,37 @@
 	color: #337ab7;
 }
 
+.metric-summaries {
+	display: flex;
+	justify-content: center;
+}
+.metric-summary {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 15px;
+}
+.metric-summary .client {
+	font-size: 10px;
+	text-transform: uppercase;
+}
+.metric-summary .primary {
+	font-size: 30px;
+	line-height: 36px;
+}
+.metric-summary.desktop .primary {
+	color: #04c7fd;
+}
+.metric-summary.mobile .primary {
+	color: #a62aa4;
+}
+.change.good {
+	color: #090;
+}
+.change.bad {
+	color: #f00;
+}
+
 .table-wrapper {
 	max-height: 400px;
 	overflow-y: auto;

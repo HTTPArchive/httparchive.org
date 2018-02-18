@@ -177,6 +177,14 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Optional string. Human-readable explanation of what the metric is measuring and how to interpret the results.
 
+      - **downIsBad**
+
+        Optional boolean. Indicates that the metric going down is a bad thing. Defaults to false. For example all timing metrics should be as low (fast) as possible. Other metrics, like percent of HTTPS adoption, should be increasing, so this config should be set to `true`.
+
+      - **downIsNeutral**
+
+        Optional boolean. Indicates that the metric going down is not necessarily either good nor bad. Defaults to false.
+
       - **histogram**
 
         Optional object. Includes histogram-specific configuration options.

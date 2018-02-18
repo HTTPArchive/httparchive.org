@@ -92,6 +92,7 @@
 		"pctHttps": {
 			"name": "HTTPS Requests",
 			"type": "%",
+			"downIsBad": true,
 			"histogram": {
 				"enabled": false
 			},
