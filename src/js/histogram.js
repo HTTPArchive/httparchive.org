@@ -27,6 +27,35 @@ function histogram(metric, date, options) {
 		});
 }
 
+function drawClientSummary(data, options, client) {
+	if (!data.length) {
+		return;
+	}
+
+	const summary = getSummaryElement(options.id, client);
+	summary.classList.remove('hidden');
+
+	summary.querySelector('.primary').innerText = getSummary(data, options);
+}
+
+function getSummaryElement(metric, client) {
+	return document.querySelector(`#${metric} .metric-summary.${client}`);
+}
+
+function getSummary(data, options) {
+	const summary = getPrimaryMetric(data, options);
+	
+	return `${summary}${options.type === '%' ? '' : ' '}${options.type}`;
+}
+
+function getPrimaryMetric(data, options) {
+	data = data.filter(o => +o.cdf > 0.5);
+	if (!data.length) {
+		return '?';
+	}
+	return data[0].bin;
+}
+
 class Bin {
 	constructor(data) {
 		this.client = data.client;
@@ -191,6 +220,10 @@ function drawHistogram(data, containerId, options) {
 	if (outliers) {
 		mobileCDF.push(outliers.toCdfPoint());
 	}
+
+	// Draw summary metrics (derived median).
+	drawClientSummary(desktop, options, 'desktop');
+	drawClientSummary(mobile, options, 'mobile');
 
 	const series = [];
 	if (desktop.length) {
