@@ -1,6 +1,8 @@
 {% extends "main.html" %}
 
 
+{% set wpt_id = request.args.get('wptid') %}
+
 {% block title %}{{ report.name }}{% endblock %}
 
 {% block head %}
@@ -36,6 +38,12 @@
 					</div>
 
 					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+						{% if wpt_id %}
+							<h4 id="wpt_url"></h4>
+						{% endif %}
+						<form>
+							<input id="wpt" name="wptid" placeholder="Enter the ID of your WebPageTest results to compare..." value="{{ wpt_id or '' }}" />
+						</form>
 						<form id="history" class="row">
 							<div class="col-sm-4 col-sm-offset-2 col-xs-12">
 								<label for="startDate">
@@ -109,7 +117,11 @@
 		report.url = {{ request.script_root|tojson|safe }};
 		report.startDate = {{ start|tojson }};
 		report.endDate = {{ end|tojson }};
-		report = new Report(report);
+		report = new Report(report, {{ viz|tojson }});
+		{% if wpt_id %}
+		var wptId = {{ wpt_id|tojson }};
+		report.getWPT(wptId);
+		{% endif %}
 	</script>
 {% endblock %}
 

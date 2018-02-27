@@ -4,6 +4,8 @@ import debounce from './debounce';
 import { el, prettyDate, chartExportOptions } from './utils';
 
 
+window.charts = {};
+
 function timeseries(metric, options, start, end) {
 	const dataUrl = `https://cdn.httparchive.org/reports/${metric}.json`;
 	options.chartId = `${metric}-chart`;
@@ -144,7 +146,7 @@ function drawTimeseries(data, options) {
 
 	getFlagSeries().then(flagSeries => {
 		series.push(flagSeries);
-		drawChart(options,series);
+		drawChart(options, series);
 	})
 }
 let redrawTimeseriesTable = {};
@@ -281,7 +283,7 @@ const getFlagSeries = () => loadChangelog().then(data => {
 });
 
 function drawChart(options, series) {
-	Highcharts.stockChart(options.chartId, {
+	const chart = Highcharts.stockChart(options.chartId, {
 		metric: options.metric,
 		type: 'timeseries',
 		chart: {
@@ -379,6 +381,8 @@ function drawChart(options, series) {
 		credits: false,
 		exporting: chartExportOptions
 	});
+
+	charts[options.id] = chart;
 }
 
 const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];

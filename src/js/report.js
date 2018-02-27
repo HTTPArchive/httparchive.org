@@ -1,11 +1,13 @@
-import { prettyDate } from './utils';
+import { el, prettyDate } from './utils';
+import WPT from './wpt';
 
 
 class Report {
 
-	constructor(report) {
-		console.log('Report', report);
+	constructor(report, viz) {
+		console.log('Report', report, viz);
 		this.report = report;
+		this.viz = viz;
 		this.baseUrl = report.url;
 		this.startDate = report.startDate;
 		this.endDate = report.endDate;
@@ -102,6 +104,34 @@ class Report {
 		Array.from(document.querySelectorAll('.yyyy_mm_dd')).forEach(option => {
 			const date = prettyDate(option.innerText.trim());
 			option.innerText = date;
+		});
+	}
+
+	renderWPTMetric(metric, value) {
+		console.log('renderWPTMetric', metric, value)
+		const metricSection = document.getElementById(metric);
+		const chart = document.getElementById(`${metric}-chart`);
+		if (!metricSection || !chart) {
+			return;
+		}
+
+		const div = el('div');
+		div.innerText = value;
+		metricSection.insertBefore(div, chart);
+	}
+
+	getWPT(wptId) {
+		const wpt = new WPT(wptId);
+		wpt.fetchResults().then(results => {
+			const url = document.getElementById('wpt_url');
+			url.innerText = results.url;
+		}).then(_ => {
+			const metrics = wpt.getMetrics();
+			Object.entries(metrics).forEach(([metric, value]) => {
+				this.renderWPTMetric(metric, value);
+			});
+		}).catch(e => {
+			console.error('Error getting WebPageTest results.', e);
 		});
 	}
 }

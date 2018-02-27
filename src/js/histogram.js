@@ -4,6 +4,7 @@ import { el, prettyDate, chartExportOptions } from './utils';
 
 
 const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
+window.charts = {};
 
 function histogram(metric, date, options) {
 	options.date = date;
@@ -372,6 +373,8 @@ function drawChart(series, containerId, options) {
 		credits: false,
 		exporting: chartExportOptions
 	});
+
+	charts[options.id] = chart;
 }
 
 // Export directly to global scope for use by Jinja template.
