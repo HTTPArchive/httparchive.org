@@ -353,6 +353,9 @@ function drawChart(series, containerId, options) {
 			events: {
 				setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])
 			}
+			// TODO: Set the x-axis maximum to the max of desktop/mobile 95%iles.
+			// Graph all bins and remove the special outlier bin. By changing the
+			// default zoom, we can achieve the same effect without the confusion.
 		},
 		yAxis: [{
 			title: {
