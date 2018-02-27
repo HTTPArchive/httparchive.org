@@ -16,7 +16,6 @@
 import logging
 import re
 import reports as reportutil
-import wpt
 
 from flask import Flask, request, render_template, abort, url_for
 

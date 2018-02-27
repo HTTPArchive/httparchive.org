@@ -41,7 +41,8 @@
 			"description": "The sum of <a href=\"https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize\">transfer size</a> kilobytes of all resources requested by the page.",
 			"timeseries": {
 				"redundant": true
-			}
+			},
+			"wpt": "median$firstView$bytesIn"
 		},
 		"bytesVideo": {
 			"name": "Video Bytes",
@@ -119,7 +120,8 @@
 			"type": "Connections",
 			"histogram": {
 				"minDate": "2014_05_15"
-			}
+			},
+			"wpt": "median$firstView$connections"
 		},
 		"ttci": {
 			"name": "Time to Consistently Interactive",
@@ -184,7 +186,8 @@
 			"type": "Requests",
 			"timeseries": {
 				"redundant": true
-			}
+			},
+			"wpt": "median$firstView$requests$length"
 		},
 		"reqVideo": {
 			"name": "Video Requests",

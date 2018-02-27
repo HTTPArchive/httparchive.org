@@ -217,6 +217,10 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
           Optional boolean. Default `false`. Whether the metric type is redundant with the metric name. For example, set to `true` when the type is included in the name, like "Total Requests". The type will be omitted anywhere it follows the metric name.
 
+      - **wpt**
+
+        Optional string. The '$'-delimited object path indicating where to find the metric in raw WebPageTest results.
+
   - **report ID**
 
       Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`. Changing this value will probably break permalinks.

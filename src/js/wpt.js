@@ -1,8 +1,4 @@
-const Metrics = {
-	'bytesTotal': 'median$firstView$bytesIn',
-	'reqTotal': 'median$firstView$requests$length',
-	'tcp': 'median$firstView$connections'
-};
+const CONFIG_KEY = 'wpt';
 const METRICS_DELIM = '$';
 
 export default class WPT {
@@ -26,20 +22,20 @@ export default class WPT {
 		});
 	}
 
-	getMetrics() {
-		if (!this.results) {
-			return;
-		}
+	getMetrics(report) {
+		return report.metrics.reduce((o, metric) => {
+			const wptPath = metric[CONFIG_KEY];
+			if (!wptPath) {
+				return o;
+			}
 
-		return Object.keys(Metrics).reduce((o, metric) => {
-			o[metric] = this.extractMetric(metric);
+			o[metric.id] = this.extractMetric(wptPath);
 			return o;
 		}, {});
 	}
 
-	extractMetric(metric) {
-		const path = Metrics[metric];
-		const properties = path.split(METRICS_DELIM);
+	extractMetric(wptPath) {
+		const properties = wptPath.split(METRICS_DELIM);
 		return properties.reduce((results, property) => {
 			return results[property];
 		}, this.results);

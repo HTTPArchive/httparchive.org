@@ -126,7 +126,7 @@ class Report {
 			const url = document.getElementById('wpt_url');
 			url.innerText = results.url;
 		}).then(_ => {
-			const metrics = wpt.getMetrics();
+			const metrics = wpt.getMetrics(this.report);
 			Object.entries(metrics).forEach(([metric, value]) => {
 				this.renderWPTMetric(metric, value);
 			});
