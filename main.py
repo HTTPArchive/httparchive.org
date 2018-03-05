@@ -15,11 +15,14 @@
 # [START app]
 import logging
 import reports as reportutil
+import faq as faqutil
 
 from flask import Flask, request, render_template, abort, url_for
+from flaskext.markdown import Markdown
 
 
 app = Flask(__name__)
+Markdown(app)
 
 @app.route('/')
 def index():
@@ -33,7 +36,9 @@ def about():
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html', reports=reportutil.get_reports())
+    return render_template('faq.html',
+                           reports=reportutil.get_reports(),
+                           faq=faqutil)
 
 @app.route('/reports')
 def reports():

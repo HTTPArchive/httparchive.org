@@ -11,24 +11,30 @@
 					FAQ
 				</h2>
 
-				<p>Coming soon ^_^</p>
+				<ul>
+					{% for question, answer in faq.FAQ.items() %}
+						<li>
+							<a href="#{{ faq.get_anchor(question) }}">
+								{{ question }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</div>
-	</section>
 
-<!--
-	<section class="alt">
+		{% for question, answer in faq.FAQ.items() %}
 		<div class="container">
 			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
-				<h2>
-					Question
-				</h2>
+				<h3 id="{{ faq.get_anchor(question) }}">
+					{{ question }}
+				</h3>
 
 				<p>
-					Answer
+					{{ answer | markdown }}
 				</p>
 			</div>
 		</div>
+		{% endfor %}
 	</section>
--->
 {% endblock %}
