@@ -23,7 +23,7 @@
 {% block main %}
 	<section id="FAQ" class="alt-light">
 		<div class="container">
-			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2>
 					<small>Frequently Asked Questions</small>
 					FAQ
@@ -43,7 +43,7 @@
 
 		{% for question, answer in faq.FAQ.items() %}
 		<div class="container">
-			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h3 id="{{ faq.get_anchor(question) }}">
 					<a href="#{{ faq.get_anchor(question) }}">
 						{{ question }}
