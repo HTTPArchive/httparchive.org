@@ -3,8 +3,12 @@ export const el = tagName => document.createElement(tagName);
 export const prettyDate = YYYY_MM_DD => {
 	const [YYYY, MM, DD] = YYYY_MM_DD.split('_');
 	const d = new Date(Date.UTC(YYYY, MM - 1, DD));
-	return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
+	return getFullDate(d);
 };
+
+export const getFullDate = d => {
+	return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
+}
 
 export const chartExportOptions = {
 	menuItemDefinitions: {

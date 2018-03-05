@@ -1,19 +1,37 @@
 {% extends "main.html" %}
 
 
-{% block title %}FAQ{% endblock %}
+{% block title %}HTTP Archive FAQ{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<style>
+#FAQ h2 {
+	margin-bottom: 20px;
+}
+#FAQ li {
+	list-style: inside disc;
+	margin-bottom: 1em;
+}
+#FAQ p,
+#FAQ dd {
+	margin-bottom: 30px;
+}
+	</style>
+{% endblock %}
 
 {% block main %}
-	<section class="alt-light">
+	<section id="FAQ" class="alt-light">
 		<div class="container">
 			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
 				<h2>
+					<small>Frequently Asked Questions</small>
 					FAQ
 				</h2>
 
-				<ul>
+				<ul id="questions">
 					{% for question, answer in faq.FAQ.items() %}
-						<li>
+						<li class="question">
 							<a href="#{{ faq.get_anchor(question) }}">
 								{{ question }}
 							</a>
@@ -27,14 +45,24 @@
 		<div class="container">
 			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
 				<h3 id="{{ faq.get_anchor(question) }}">
-					{{ question }}
+					<a href="#{{ faq.get_anchor(question) }}">
+						{{ question }}
+					</a>
 				</h3>
 
-				<p>
-					{{ answer | markdown }}
-				</p>
+				{{ answer | markdown }}
 			</div>
 		</div>
 		{% endfor %}
 	</section>
+{% endblock %}
+
+
+
+{% block scripts %}
+	{{ super() }}
+	<script src="/static/js/faq.js"></script>
+	<script>
+		generateChangelog({{ faq.get_anchor(faq.CHANGELOG_QUESTION) | tojson }})
+	</script>
 {% endblock %}
