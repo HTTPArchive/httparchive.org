@@ -19,10 +19,24 @@ function generateChangelog(anchor) {
 			date.innerText = `${fullDate}: ${change.title}`;
 			dl.appendChild(date);
 			const desc = el('dd');
-			// This description may contain URLs.
-			// We are intentionally NOT converting them to clickable anchors
-			// to avoid an entire class of XSS attacks.
 			desc.innerText = change.desc;
+			if (change.more) {
+				const more = el('p');
+				const text = document.createTextNode('See also: ');
+				more.appendChild(text);
+				change.more.forEach((o, i) => {
+					const [[label, url]] = Object.entries(o);
+					const a = el('a');
+					a.href = url;
+					a.innerText = label;
+					more.appendChild(a);
+					if (i < change.more.length - 1) {
+						const text = document.createTextNode(', ');
+						more.appendChild(text);
+					}
+				});
+				desc.appendChild(more);
+			}
 			dl.appendChild(desc);
 		});
 		root.appendChild(dl);
