@@ -103,7 +103,7 @@ FAQ['Who maintains the HTTP Archive?'] = \
 '''[Steve Souders](https://twitter.com/Souders) created the HTTP Archive in 2010.
 It's built on the shoulders of [Pat Meenan](https://twitter.com/patmeenan)'s 
 [WebPageTest](https://webpagetest.org/) system. 
-We've received patches from several individuals including Jonathan Klein, Yusuke Tsutsumi, Carson McDonald, James Byers, Ido Green, Charlie Clark, Jared Hirsch, and Mike Pfirrmann. 
+See the [Contributors](https://github.com/HTTPArchive/httparchive/graphs/contributors) page for a list of people who have contributed code.
 Guy Leech helped early on with the design. Many thanks to Stephen Hay who created the logo.
 
 In March 2017, [Ilya Grigorik](https://twitter.com/igrigorik), 
