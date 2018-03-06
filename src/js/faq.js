@@ -1,8 +1,26 @@
 import Changelog from './changelog';
 import { el, getFullDate } from './utils';
 
-function generateChangelog(anchor) {
-	const root = document.querySelector(`#${anchor} + p`);
+function generateQuestionAnchors(anchors) {
+	const answers = document.getElementById('answers');
+	const questions = Array.from(answers.querySelectorAll('h1,h2,h3,h4,h5,h6'));
+	questions.forEach(heading => {
+		const anchor = anchors[heading.innerText];
+		if (!anchor) {
+			return;
+		}
+		heading.id = anchor;
+	});
+	anchors = new Set(Object.values(anchors).map(a => `#${a}`));
+	addEventListener('load', () => maybeScrollToAnchor(anchors));
+}
+
+function generateChangelog() {
+	const changelogLink = document.querySelector('a[href$="changelog.json"]');
+	if (!changelogLink) {
+		return;
+	}
+	const root = changelogLink.parentElement;
 	fetch(Changelog.URL).then(response => response.json()).then(log => {
 		// Reset the content of the changelog root.
 		root.innerHTML = '';
@@ -40,15 +58,14 @@ function generateChangelog(anchor) {
 			dl.appendChild(desc);
 		});
 		root.appendChild(dl);
-		// The browser seems to wait to set the default scroll position until after load.
-		addEventListener('load', () => maybeScrollToChange(anchors));
+		addEventListener('load', () => maybeScrollToAnchor(anchors));
 	});
 }
 
-// Because the changelog is loaded asynchronously, URL anchors will not
-// automatically jump to the scroll position of the change. This function
-// manually scrolls to the change if it is a known changelog anchor.
-function maybeScrollToChange(anchors) {
+// Because the anchors are assigned asynchronously, URL anchors will not
+// automatically jump to the scroll position of the anchor. This function
+// manually scrolls to the anchor if it is a known anchor.
+function maybeScrollToAnchor(anchors) {
 	if (!location.hash) {
 		return;
 	}
@@ -63,4 +80,5 @@ function maybeScrollToChange(anchors) {
 }
 
 // Expose to global scope for access in jinja template.
+window.generateQuestionAnchors = generateQuestionAnchors;
 window.generateChangelog = generateChangelog;

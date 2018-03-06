@@ -30,9 +30,9 @@
 				</h2>
 
 				<ul id="questions">
-					{% for question, answer in faq.FAQ.items() %}
+					{% for question, anchor in faq.anchors.items() %}
 						<li class="question">
-							<a href="#{{ faq.get_anchor(question) }}">
+							<a href="#{{ anchor }}">
 								{{ question }}
 							</a>
 						</li>
@@ -41,19 +41,11 @@
 			</div>
 		</div>
 
-		{% for question, answer in faq.FAQ.items() %}
 		<div class="container">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<h3 id="{{ faq.get_anchor(question) }}">
-					<a href="#{{ faq.get_anchor(question) }}">
-						{{ question }}
-					</a>
-				</h3>
-
-				{{ answer | markdown }}
+			<div id="answers" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				{{ faq.FAQ | markdown }}
 			</div>
 		</div>
-		{% endfor %}
 	</section>
 {% endblock %}
 
@@ -63,6 +55,9 @@
 	{{ super() }}
 	<script src="/static/js/faq.js"></script>
 	<script>
-		generateChangelog({{ faq.get_anchor(faq.CHANGELOG_QUESTION) | tojson }})
+addEventListener('DOMContentLoaded', function() {
+	generateQuestionAnchors({{ faq.anchors|tojson }});
+});
+generateChangelog();
 	</script>
 {% endblock %}
