@@ -237,6 +237,24 @@ input {
 	white-space: nowrap;
 }
 
+.report-graphic {
+	position: relative;
+	height: 230px;
+	width: 400px;
+	background-color: #eee;
+}
+.report-graphic .primary-icon,
+.default-report::after {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	font: bold 120px/1 monospace;
+}
+.default-report::after {
+	content: '</>';
+	color: #b7cdcf;
+}
+
 
 @media (max-width: 992px) {
 	footer {
