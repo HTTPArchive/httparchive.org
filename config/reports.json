@@ -8,37 +8,43 @@
 		"chrome-ux-report"
 	],
 	"_featured": [
-		"state-of-javascript"
+		"state-of-the-web"
 	],
 	"_metrics": {
 		"bytesCss": {
 			"name": "CSS Bytes",
-			"type": "KB"
+			"type": "KB",
+			"description": "The sum of transfer size kilobytes of all external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`."
 		},
 		"bytesFont": {
 			"name": "Font Bytes",
-			"type": "KB"
+			"type": "KB",
+			"description": "The sum of transfer size kilobytes of all fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`."
 		},
 		"bytesHtml": {
 			"name": "HTML Bytes",
-			"type": "KB"
+			"type": "KB",
+			"description": "The sum of transfer size kilobytes of all HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`."
 		},
 		"bytesImg": {
 			"name": "Image Bytes",
-			"type": "KB"
+			"type": "KB",
+			"description": "The sum of transfer size kilobytes of all external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`."
 		},
 		"bytesJs": {
 			"name": "JavaScript Bytes",
-			"type": "KB"
+			"type": "KB",
+			"description": "The sum of transfer size kilobytes of all external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`."
 		},
 		"bytesOther": {
 			"name": "Other Bytes",
-			"type": "KB"
+			"type": "KB",
+			"description": "The sum of transfer size kilobytes of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file."
 		},
 		"bytesTotal": {
 			"name": "Total Kilobytes",
 			"type": "KB",
-			"description": "The sum of <a href=\"https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize\">transfer size</a> kilobytes of all resources requested by the page.",
+			"description": "The sum of [transfer size](https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize) kilobytes of all resources requested by the page.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -46,13 +52,15 @@
 		"bytesVideo": {
 			"name": "Video Bytes",
 			"type": "KB",
+			"description": "The sum of transfer size kilobytes of all videos requested by the page. A video is identified as a resource with the `mp4`, `swf`, `f4v`, or `flv` file extensions or a MIME type containing `flash`.",
 			"histogram": {
 				"minDate": "2015_05_01"
 			}
 		},
 		"compileJs": {
-			"name": "Compile Time",
+			"name": "JS Compile Time",
 			"type": "ms",
+			"description": "The number of milliseconds spent compiling each JavaScript resource.",
 			"histogram": {
 				"minDate": "2017_09_01"
 			},
@@ -63,13 +71,15 @@
 		"dcl": {
 			"name": "DOMContentLoaded",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the initial HTML document has been completely loaded and parsed. See the [DOMContentLoaded event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded) for more info.",
 			"histogram": {
 				"minDate": "2013_08_01"
 			}
 		},
 		"evalJs": {
-			"name": "Evaluation Time",
+			"name": "JS Evaluation Time",
 			"type": "ms",
+			"description": "The number of milliseconds spent evaluating each JavaScript resource.",
 			"histogram": {
 				"minDate": "2017_09_01"
 			},
@@ -80,18 +90,20 @@
 		"fmp": {
 			"name": "First Meaningful Paint",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the page's primary content appears on the screen. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint) as is only available in mobile tests.",
 			"histogram": {
-				"minDate": "2017_06_01",
-				"maxDate": "2017_08_15"
+				"minDate": "2017_06_01"
 			}
 		},
 		"ol": {
 			"name": "onLoad",
-			"type": "seconds"
+			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. See the [load event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/load) for more info."
 		},
 		"pctHttps": {
 			"name": "HTTPS Requests",
 			"type": "%",
+			"description": "The percent of all requests in the crawl whose URLs are prefixed with `https`.",
 			"histogram": {
 				"enabled": false
 			},
@@ -104,6 +116,7 @@
 		"pctVuln": {
 			"name": "Pages with Vulnerable JS",
 			"type": "%",
+			"description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
 			"histogram": {
 				"enabled": false
 			},
@@ -116,6 +129,7 @@
 		"tcp": {
 			"name": "TCP Connections Per Page",
 			"type": "Connections",
+			"description": "The number of TCP connections per page.",
 			"histogram": {
 				"minDate": "2014_05_15"
 			}
@@ -123,22 +137,23 @@
 		"ttci": {
 			"name": "Time to Consistently Interactive",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
 			"histogram": {
-				"minDate": "2017_06_01",
-				"maxDate": "2017_08_15"
+				"minDate": "2017_06_01"
 			}
 		},
 		"ttfi": {
 			"name": "Time to First Interactive",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
 			"histogram": {
-				"minDate": "2017_06_01",
-				"maxDate": "2017_08_15"
+				"minDate": "2017_06_01"
 			}
 		},
 		"reqCss": {
 			"name": "CSS Requests",
 			"type": "Requests",
+			"description": "The number of external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -146,6 +161,7 @@
 		"reqFont": {
 			"name": "Font Requests",
 			"type": "Requests",
+			"description": "The number of fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -153,6 +169,7 @@
 		"reqHtml": {
 			"name": "HTML Requests",
 			"type": "Requests",
+			"description": "The number of HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -160,6 +177,7 @@
 		"reqImg": {
 			"name": "Image Requests",
 			"type": "Requests",
+			"description": "The number of external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -167,6 +185,7 @@
 		"reqJs": {
 			"name": "JavaScript Requests",
 			"type": "Requests",
+			"description": "The number of external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -174,6 +193,7 @@
 		"reqOther": {
 			"name": "Other Requests",
 			"type": "Requests",
+			"description": "The number of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -181,6 +201,7 @@
 		"reqTotal": {
 			"name": "Total Requests",
 			"type": "Requests",
+			"description": "The number of resources requested by the page.",
 			"timeseries": {
 				"redundant": true
 			}
@@ -188,6 +209,7 @@
 		"reqVideo": {
 			"name": "Video Requests",
 			"type": "Requests",
+			"description": "The number of videos requested by the page. A video is identified as a resource with the `mp4`, `swf`, `f4v`, or `flv` file extensions or a MIME type containing `flash`.",
 			"redundant": true,
 			"histogram": {
 				"minDate": "2015_05_01"
@@ -199,6 +221,7 @@
 		"cruxFp": {
 			"name": "First Paint",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"histogram": {
 				"minDate": "2017_10_01"
 			},
@@ -209,6 +232,7 @@
 		"cruxFcp": {
 			"name": "First Contentful Paint",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"histogram": {
 				"minDate": "2017_10_01"
 			},
@@ -219,6 +243,7 @@
 		"cruxDcl": {
 			"name": "DOMContentLoaded",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-contentful-paint) for more info.",
 			"histogram": {
 				"minDate": "2017_10_01"
 			},
@@ -229,6 +254,7 @@
 		"cruxOl": {
 			"name": "Onload",
 			"type": "seconds",
+			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"histogram": {
 				"minDate": "2017_10_01"
 			},
@@ -239,6 +265,7 @@
 		"vulnJs": {
 			"name": "Vulnerable JavaScript Libraries Per Page",
 			"type": "libraries",
+			"description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
 			"histogram": {
 				"minDate": "2017_10_15"
 			},
@@ -312,7 +339,7 @@
 	},
 	"chrome-ux-report": {
 		"name": "Chrome User Experience Report: Loading",
-		"summary": "Loading performance as experienced by real-world Chrome users across a diverse set of real-world hardware and network conditions. The provided data is powered by real user measurement (RUM) of key loading user experience metrics across the public web, provided by the <a href=\"https://developers.google.com/web/tools/chrome-user-experience-report/\">Chrome User Experience Report</a>.",
+		"summary": "Loading performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
 		"metrics": [
 			"cruxFp",
 			"cruxFcp",

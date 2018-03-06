@@ -17,9 +17,11 @@ import logging
 import reports as reportutil
 
 from flask import Flask, request, render_template, abort, url_for
+from flaskext.markdown import Markdown
 
 
 app = Flask(__name__)
+Markdown(app)
 
 @app.route('/')
 def index():

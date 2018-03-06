@@ -20,7 +20,7 @@
 					{% block reportName %}{{ report.name }}{% endblock %}
 				</h2>
 
-				<p>{{ report.summary | safe }}</p>
+				{{ report.summary | markdown }}
 
 				<div class="row">
 					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -118,7 +118,7 @@
 		<a href="#{{ metric.id }}">{{ metric.name }}</a>
 	</h3>
 	{% if metric.description %}
-		<p>{{ metric.description | safe }}</p>
+		{{ metric.description | markdown }}
 	{% endif %}
 	{% for report_id, report_name in metric.similar_reports.items() %}
 		<div>
