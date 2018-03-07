@@ -15,7 +15,7 @@
 			<div class="container {{ loop.cycle('', 'alt') }}">
 				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
 					<a href="{{ url_for('report', report_id=report.id) }}">
-						<div class="figure report-graphic default-report"></div>
+						{{ report_graphic(report) }}
 					</a>
 				</div>
 				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">

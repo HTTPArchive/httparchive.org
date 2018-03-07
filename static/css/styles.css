@@ -218,7 +218,9 @@ ul {
 }
 
 .figure {
-	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+				0 6px 6px rgba(0, 0, 0, 0.23),
+				inset 0px 10px 50px 0px rgba(0, 0, 0, 0.15)
 }
 
 select,
@@ -240,8 +242,18 @@ input {
 .report-graphic {
 	position: relative;
 	height: 230px;
-	width: 400px;
+	width: 100%;
+	max-width: 400px;
 	background-color: #eee;
+	color: #b7cdcf;
+}
+.report-graphic .secondary-icon,
+.default-report::before {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font: bold 120px/1 monospace;
+	color: rgba(0, 0, 0, 0.1);
 }
 .report-graphic .primary-icon,
 .default-report::after {
@@ -252,7 +264,6 @@ input {
 }
 .default-report::after {
 	content: '</>';
-	color: #b7cdcf;
 }
 
 

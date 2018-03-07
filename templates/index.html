@@ -43,7 +43,7 @@
 				</div>
 				<div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
 					<a href="{{ url_for('report', report_id=featured_report.id) }}">
-						<div class="figure report-graphic default-report"></div>
+						{{ report_graphic(featured_report) }}
 					</a>
 				</div>
 			</div>
