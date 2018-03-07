@@ -350,6 +350,8 @@
 		"name": "Page Weight",
 		"summary": "This report tracks the size and quantity of many popular web page resources.",
 		"metrics": [
+			"bytesTotal",
+			"reqTotal",
 			"bytesCss",
 			"reqCss",
 			"bytesFont",
@@ -362,8 +364,6 @@
 			"reqJs",
 			"bytesOther",
 			"reqOther",
-			"bytesTotal",
-			"reqTotal",
 			"bytesVideo",
 			"reqVideo"
 		],
