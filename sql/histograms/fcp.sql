@@ -12,9 +12,9 @@ FROM (
         'desktop',
         'mobile') AS client,
       COUNT(0) AS volume,
-      CAST(FLOOR(CAST(JSON_EXTRACT(report, "$.audits.first-meaningful-paint.rawValue") AS FLOAT64) / 1000) AS INT64) AS bin
+      CAST(FLOOR(CAST(JSON_EXTRACT(payload, "$['_chromeUserTiming.firstContentfulPaint']") AS FLOAT64) / 1000) AS INT64) AS bin
     FROM
-      `httparchive.lighthouse.${YYYY_MM_DD}*`
+      `httparchive.pages.${YYYY_MM_DD}*`
     GROUP BY
       bin,
       client
