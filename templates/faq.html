@@ -1,34 +1,63 @@
 {% extends "main.html" %}
 
 
-{% block title %}FAQ{% endblock %}
+{% block title %}HTTP Archive FAQ{% endblock %}
+
+{% block head %}
+	{{ super() }}
+	<style>
+#FAQ h2 {
+	margin-bottom: 20px;
+}
+#FAQ li {
+	list-style: inside disc;
+	margin-bottom: 1em;
+}
+#FAQ p,
+#FAQ dd {
+	margin-bottom: 30px;
+}
+	</style>
+{% endblock %}
 
 {% block main %}
-	<section class="alt-light">
+	<section id="FAQ" class="alt-light">
 		<div class="container">
-			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2>
+					<small>Frequently Asked Questions</small>
 					FAQ
 				</h2>
 
-				<p>Coming soon ^_^</p>
+				<ul id="questions">
+					{% for question, anchor in faq.anchors.items() %}
+						<li class="question">
+							<a href="#{{ anchor }}">
+								{{ question }}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</div>
-	</section>
 
-<!--
-	<section class="alt">
 		<div class="container">
-			<div class="col-lg-9 col-md-9 col-sm-10 col-xs-12">
-				<h2>
-					Question
-				</h2>
-
-				<p>
-					Answer
-				</p>
+			<div id="answers" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				{{ faq.FAQ | markdown }}
 			</div>
 		</div>
 	</section>
--->
+{% endblock %}
+
+
+
+{% block scripts %}
+	{{ super() }}
+	<script src="/static/js/faq.js"></script>
+	<script>
+addEventListener('DOMContentLoaded', function() {
+	generateQuestionAnchors({{ faq.anchors|tojson }});
+});
+generateChangelog();
+	</script>
 {% endblock %}
