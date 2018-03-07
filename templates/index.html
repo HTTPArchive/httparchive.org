@@ -42,7 +42,9 @@
 					<a href="{{ url_for('report', report_id=featured_report.id) }}" class="btn alt">View The Report</a>
 				</div>
 				<div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
-					<img src="/static/img/chart.png" alt="">
+					<a href="{{ url_for('report', report_id=featured_report.id) }}">
+						{{ report_graphic(featured_report) }}
+					</a>
 				</div>
 			</div>
 			{% endfor %}

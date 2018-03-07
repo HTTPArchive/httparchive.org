@@ -253,7 +253,14 @@
 		"metrics": [
 			"bytesImg",
 			"reqImg"
-		]
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "far fa-file-image"
+			}
+		}
 	},
 	"state-of-javascript": {
 		"name": "State of JavaScript",
@@ -263,7 +270,17 @@
 			"reqJs",
 			"evalJs",
 			"compileJs"
-		]
+		],
+		"graphic": {
+			"bgcolor": "#f7df1e",
+			"primary": {
+				"text": "JS",
+				"color": "#555"
+			},
+			"secondary": {
+				"text": ")};"
+			}
+		}
 	},
 	"loading-speed": {
 		"name": "Loading Speed",
@@ -274,7 +291,14 @@
 			"ttfi",
 			"dcl",
 			"ol"
-		]
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fas fa-stopwatch"
+			}
+		}
 	},
 	"state-of-the-web": {
 		"name": "State of the Web",
@@ -286,7 +310,14 @@
 			"pctVuln",
 			"tcp",
 			"vulnJs"
-		]
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fab fa-connectdevelop"
+			}
+		}
 	},
 	"page-weight": {
 		"name": "Page Weight",
@@ -308,7 +339,14 @@
 			"reqTotal",
 			"bytesVideo",
 			"reqVideo"
-		]
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fas fa-weight"
+			}
+		}
 	},
 	"chrome-ux-report": {
 		"name": "Chrome User Experience Report: Loading",
@@ -322,6 +360,17 @@
 		"minDate": "2017_10_01",
 		"timeseries": {
 			"enabled": false
+		},
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fas fa-users"
+			},
+			"secondary": {
+				"color": "rgba(255, 255, 255, 0.3)",
+				"icon": "fas fa-stopwatch"
+			}
 		}
 	}
 }
