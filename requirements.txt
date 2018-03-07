@@ -1,2 +1,3 @@
 Flask==0.12.1
+Flask-Markdown==0.3
 gunicorn==19.7.1
