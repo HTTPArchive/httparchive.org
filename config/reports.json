@@ -243,7 +243,7 @@
 		"cruxDcl": {
 			"name": "DOMContentLoaded",
 			"type": "seconds",
-			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-contentful-paint) for more info.",
+			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
 			"histogram": {
 				"minDate": "2017_10_01"
 			},
@@ -254,7 +254,7 @@
 		"cruxOl": {
 			"name": "Onload",
 			"type": "seconds",
-			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
+			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
 			"histogram": {
 				"minDate": "2017_10_01"
 			},
