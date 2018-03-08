@@ -6,6 +6,24 @@
 		{% if metric[viz]['enabled'] %}
 			<section id="{{ metric.id }}">
 				{{ metric_info(metric, viz) }}
+				<div class="metric-summaries">
+					<div class="metric-summary desktop hidden">
+						<span class="client">
+							<span class="metric">Median</span>
+							Desktop
+						</span>
+						<span class="primary"></span>
+						<span class="change"></span>
+					</div>
+					<div class="metric-summary mobile hidden">
+						<span class="client">
+							<span class="metric">Median</span>
+							Mobile
+						</span>
+						<span class="primary"></span>
+						<span class="change"></span>
+					</div>
+				</div>
 				<div id="{{ metric.id }}-chart" class="chart"></div>
 				<button class="btn show-hide" data-metric="{{ metric.id }}">Show Table</button>
 				<div class="table-wrapper">

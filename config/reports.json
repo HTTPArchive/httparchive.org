@@ -104,6 +104,7 @@
 			"name": "HTTPS Requests",
 			"type": "%",
 			"description": "The percent of all requests in the crawl whose URLs are prefixed with `https`.",
+			"downIsBad": true,
 			"histogram": {
 				"enabled": false
 			},
@@ -385,6 +386,8 @@
 			"cruxOl"
 		],
 		"minDate": "2017_10_01",
+		"maxDate": "2017_12_01",
+		"datePattern": ".*_01$",
 		"timeseries": {
 			"enabled": false
 		},

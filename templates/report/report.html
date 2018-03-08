@@ -121,13 +121,13 @@
 		{{ metric.description | markdown }}
 	{% endif %}
 	{% for report_id, report_name in metric.similar_reports.items() %}
-		<div>
+		<p>
 			<em>
 				See also:
 				<a href="{{ url_for('report', report_id=report_id) }}">
 					{{ report_name }}
 				</a>
 			</em>
-		</div>
+		</p>
 	{% endfor %}
 {% endmacro %}

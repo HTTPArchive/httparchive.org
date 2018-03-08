@@ -25,6 +25,89 @@ function timeseries(metric, options, start, end) {
 		});
 }
 
+function drawSummary(data, options, start, end) {
+	const desktop = data.filter(o => isDesktop(o) && o.timestamp >= start && o.timestamp <= end).map(toNumeric);
+	const mobile = data.filter(o => isMobile(o) && o.timestamp >= start && o.timestamp <= end).map(toNumeric);
+
+	drawClientSummary(desktop, options, 'desktop');
+	drawClientSummary(mobile, options, 'mobile');
+}
+
+function drawClientSummary(data, options, client) {
+	if (!data.length) {
+		return;
+	}
+
+	const summary = getSummaryElement(options.id, client);
+	summary.classList.remove('hidden');
+
+	if (options.timeseries && options.timeseries.fields) {
+		// Show "MEDIAN" when it's the median. Otherwise hide it.
+		summary.querySelector('.metric').classList.add('hidden');
+	}
+
+	summary.querySelector('.primary').innerText = getSummary(data, options);
+
+	const change = getChange(data, options);
+	const changeEl = summary.querySelector('.change');
+	changeEl.innerText = formatChange(change);
+	changeEl.classList.remove('good', 'bad', 'neutral'); // Reset the classes.
+	changeEl.classList.add(getChangeSentiment(change, options));
+}
+
+function getSummaryElement(metric, client) {
+	return document.querySelector(`#${metric} .metric-summary.${client}`);
+}
+
+function getSummary(data, options) {
+	const o = data[data.length - 1];
+	const summary = getPrimaryMetric(o, options);
+	
+	return `${summary}${options.type === '%' ? '' : ' '}${options.type}`;
+}
+
+function getChange(data, options) {
+	if (data.length < 2) {
+		return;
+	}
+
+	const oldest = getPrimaryMetric(data[0], options);
+	const latest = getPrimaryMetric(data[data.length - 1], options);
+
+	return (latest - oldest) * 100 / oldest;
+}
+
+function formatChange(change) {
+	return `${change >= 0 ? '\u25B2' : '\u25BC'}${Math.abs(change).toFixed(1)}%`
+}
+
+function getChangeSentiment(change, options) {
+	// If a metric goes down, is that good or bad?
+	let sentiments = ['good', 'bad'];
+	if (options.downIsBad) {
+		sentiments.reverse();
+	} else if (options.downIsNeutral) {
+		sentiments = ['neutral', 'neutral'];
+	}
+
+	change = +change.toFixed(1);
+	if (change < 0) {
+		return sentiments[0];
+	}
+	if (change > 0) {
+		return sentiments[1];
+	}
+	return 'neutral';
+}
+
+function getPrimaryMetric(o, options) {
+	if (options.timeseries && options.timeseries.fields) {
+		return o[options.timeseries.fields[0]].toFixed(1);
+	}
+
+	return o.p50.toFixed(1);
+}
+
 function drawTimeseries(data, options) {
 	data = data.map(toNumeric);
 	const desktop = data.filter(isDesktop);
@@ -66,12 +149,16 @@ function drawTimeseries(data, options) {
 }
 let redrawTimeseriesTable = {};
 function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) {
+	start = Math.floor(start);
+	end = Math.floor(end);
 	if (!redrawTimeseriesTable[options.metric]) {
 		// Return a curried function to redraw the table given start/end times.
 		redrawTimeseriesTable[options.metric] = debounce((dateRange) => {
 			return drawTimeseriesTable(data, options, dateRange);
 		}, 100);
 	}
+
+	drawSummary(data, options, start, end);
 
 	let cols = DEFAULT_COLS.concat(DEFAULT_FIELDS);
 	if (options.timeseries && options.timeseries.fields) {

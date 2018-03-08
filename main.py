@@ -14,6 +14,7 @@
 
 # [START app]
 import logging
+import re
 import reports as reportutil
 import faq as faqutil
 
@@ -57,6 +58,7 @@ def report(report_id):
 
     min_date = report.get('minDate')
     max_date = report.get('maxDate')
+    date_pattern = report.get('datePattern')
 
     # TODO: If a report doesn't explicitly have a min/max date,
     # but all of its metrics do, take the min/max of the metrics
@@ -67,6 +69,9 @@ def report(report_id):
         dates = dates[:dates.index(min_date) + 1]
     if max_date:
         dates = dates[dates.index(max_date):]
+    if date_pattern:
+        date_pattern = re.compile(date_pattern)
+        dates = [d for d in dates if date_pattern.match(d)]
 
     report['dates'] = dates
 
@@ -95,7 +100,7 @@ def report(report_id):
     if not start and not end:
         # The default date range is 24 crawls (1 year).
         # May be shorter if the report's minimum date is more recent.
-        start = dates[min(23, len(dates) - 1)]
+        start = dates[min(24, len(dates) - 1)]
         end = dates[0]
 
     if start and start not in dates:
