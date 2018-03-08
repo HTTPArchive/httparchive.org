@@ -103,8 +103,8 @@
 		"pctHttps": {
 			"name": "HTTPS Requests",
 			"type": "%",
-			"downIsBad": true,
 			"description": "The percent of all requests in the crawl whose URLs are prefixed with `https`.",
+			"downIsBad": true,
 			"histogram": {
 				"enabled": false
 			},

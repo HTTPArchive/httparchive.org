@@ -29,7 +29,8 @@ Markdown(app)
 def index():
     return render_template('index.html',
                            reports=reportutil.get_reports(),
-                           featured_reports=reportutil.get_featured_reports())
+                           featured_reports=reportutil.get_featured_reports(),
+                           faq=faqutil)
 
 @app.route('/about')
 def about():
