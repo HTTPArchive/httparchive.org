@@ -6,7 +6,8 @@
       	"http://httparchive.org",
       	"https://httparchive.org",
       	"http://127.0.0.1:8080",
-        "https://http-archive-beta.appspot.com"
+        "http://httparchive.appspot.com",
+        "https://httparchive.appspot.com"
       ],
       "responseHeader": ["Content-Type"],
       "method": ["GET", "HEAD"],
