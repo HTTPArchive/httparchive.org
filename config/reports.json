@@ -71,6 +71,7 @@
 		"dcl": {
 			"name": "DOMContentLoaded",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the initial HTML document has been completely loaded and parsed. See the [DOMContentLoaded event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded) for more info.",
 			"histogram": {
 				"minDate": "2013_08_01"
@@ -90,6 +91,7 @@
 		"fcp": {
 			"name": "First Contentful Paint",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the page's primary content appears on the screen.",
 			"histogram": {
 				"minDate": "2016_12_15"
@@ -98,6 +100,7 @@
 		"ol": {
 			"name": "onLoad",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. See the [load event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/load) for more info."
 		},
 		"pctHttps": {
@@ -130,6 +133,7 @@
 		"tcp": {
 			"name": "TCP Connections Per Page",
 			"type": "Connections",
+			"singular": "Connection",
 			"description": "The number of TCP connections per page.",
 			"histogram": {
 				"minDate": "2014_05_15"
@@ -138,6 +142,7 @@
 		"ttci": {
 			"name": "Time to Consistently Interactive",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
 			"histogram": {
 				"minDate": "2017_06_01"
@@ -146,6 +151,7 @@
 		"ttfi": {
 			"name": "Time to First Interactive",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
 			"histogram": {
 				"minDate": "2017_06_01"
@@ -154,6 +160,7 @@
 		"reqCss": {
 			"name": "CSS Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
 			"timeseries": {
 				"redundant": true
@@ -162,6 +169,7 @@
 		"reqFont": {
 			"name": "Font Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
 			"timeseries": {
 				"redundant": true
@@ -170,6 +178,7 @@
 		"reqHtml": {
 			"name": "HTML Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
 			"timeseries": {
 				"redundant": true
@@ -178,6 +187,7 @@
 		"reqImg": {
 			"name": "Image Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
 			"timeseries": {
 				"redundant": true
@@ -186,6 +196,7 @@
 		"reqJs": {
 			"name": "JavaScript Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
 			"timeseries": {
 				"redundant": true
@@ -194,6 +205,7 @@
 		"reqOther": {
 			"name": "Other Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
 			"timeseries": {
 				"redundant": true
@@ -202,6 +214,7 @@
 		"reqTotal": {
 			"name": "Total Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of resources requested by the page.",
 			"timeseries": {
 				"redundant": true
@@ -210,6 +223,7 @@
 		"reqVideo": {
 			"name": "Video Requests",
 			"type": "Requests",
+			"singular": "Request",
 			"description": "The number of videos requested by the page. A video is identified as a resource with the `mp4`, `swf`, `f4v`, or `flv` file extensions or a MIME type containing `flash`.",
 			"redundant": true,
 			"histogram": {
@@ -222,6 +236,7 @@
 		"cruxFp": {
 			"name": "First Paint",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"timeseries": {
 				"enabled": false
@@ -230,6 +245,7 @@
 		"cruxFcp": {
 			"name": "First Contentful Paint",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"timeseries": {
 				"enabled": false
@@ -238,6 +254,7 @@
 		"cruxDcl": {
 			"name": "DOMContentLoaded",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
 			"timeseries": {
 				"enabled": false
@@ -246,6 +263,7 @@
 		"cruxOl": {
 			"name": "Onload",
 			"type": "seconds",
+			"singular": "second",
 			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
 			"timeseries": {
 				"enabled": false
@@ -254,6 +272,7 @@
 		"vulnJs": {
 			"name": "Vulnerable JavaScript Libraries Per Page",
 			"type": "libraries",
+			"singular": "library",
 			"description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
 			"histogram": {
 				"minDate": "2017_10_15"

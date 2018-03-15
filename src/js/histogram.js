@@ -1,5 +1,6 @@
 import { Colors } from './colors';
 import debounce from './debounce';
+import { Metric } from './metric';
 import { el, prettyDate, chartExportOptions } from './utils';
 
 
@@ -44,8 +45,9 @@ function getSummaryElement(metric, client) {
 
 function getSummary(data, options) {
 	const summary = getPrimaryMetric(data, options);
+	const metric = new Metric(options, summary);
 	
-	return `${summary}${options.type === '%' ? '' : ' '}${options.type}`;
+	return metric.toString();
 }
 
 function getPrimaryMetric(data, options) {
@@ -195,31 +197,18 @@ function drawHistogram(data, containerId, options) {
 	const OUTLIER_MIN = 30;
 	data = data.map((data) => new Bin(data));
 
-	let outliers = null;
-	let desktop = data.filter(({client}) => client=='desktop').reduce((data, current, i) => {
-		if (current.cdf < 0.95 || i < OUTLIER_MIN) data.push(current);
-		else if (outliers) outliers.add(current);
-		else outliers = current;
-		return data;
-	}, []);
-	const desktopOutliers = outliers && outliers.clone();
+	let desktop = data.filter(({client}) => client=='desktop');
+	let mobile = data.filter(({client}) => client=='mobile')
 
-	outliers = null;
-	let mobile = data.filter(({client}) => client=='mobile').reduce((data, current, i) => {
-		if (current.cdf < 0.95 || i < OUTLIER_MIN) data.push(current);
-		else if (outliers) outliers.add(current);
-		else outliers = current;
-		return data;
-	}, []);
+	const max = Math.max(OUTLIER_MIN,
+		desktop.filter(current => current.cdf < 0.95).length,
+		mobile.filter(current => current.cdf < 0.95).length);
+
+	desktop = desktop.filter((_, i) => i < max);
+	mobile = mobile.filter((_, i) => i < max);
 
 	let desktopCDF = desktop.map(data => data.toCdfPoint());
-	if (desktopOutliers) {
-		desktopCDF.push(desktopOutliers.toCdfPoint());
-	}
 	let mobileCDF = mobile.map(data => data.toCdfPoint());
-	if (outliers) {
-		mobileCDF.push(outliers.toCdfPoint());
-	}
 
 	// Draw summary metrics (derived median).
 	drawClientSummary(desktop, options, 'desktop');
@@ -239,11 +228,17 @@ function drawHistogram(data, containerId, options) {
 			data: desktopCDF,
 			type: 'line',
 			marker: {
-				enabled: false
+				enabled: false,
+				states: {
+					hover: {
+						enabled: false
+					}
+				}
 			},
 			name: 'Desktop CDF',
 			color: COLOR_DESKTOP_ALT,
-			yAxis: 1
+			yAxis: 1,
+			showInLegend: false
 		});
 	}
 	if (mobile.length) {
@@ -259,32 +254,16 @@ function drawHistogram(data, containerId, options) {
 			data: mobileCDF,
 			type: 'line',
 			marker: {
-				enabled: false
+				enabled: false,
+				states: {
+					hover: {
+						enabled: false
+					}
+				}
 			},
 			name: 'Mobile CDF',
 			color: COLOR_MOBILE_ALT,
-			yAxis: 1
-		});
-	}
-	if (desktopOutliers) {
-		series.push({
-			data: [desktopOutliers.toPoint()],
-			pointPadding: 0,
-			groupPadding: 0,
-			pointPlacement: 'between',
-			name: 'Desktop Outliers',
-			color: COLOR_DESKTOP,
-			showInLegend: false
-		});
-	}
-	if (outliers) {
-		series.push({
-			data: [outliers.toPoint()],
-			pointPadding: 0,
-			groupPadding: 0,
-			pointPlacement: 'between',
-			name: 'Mobile Outliers',
-			color: COLOR_MOBILE,
+			yAxis: 1,
 			showInLegend: false
 		});
 	}
@@ -299,52 +278,54 @@ function drawChart(series, containerId, options) {
 		date: options.date,
 		chart: {
 			type: 'column',
-				zoomType: 'x',
-				resetZoomButton: {
-					position: {
-						x: 0,
-						y: -50
-					}
-				},
-			},
-			title: {
-				text: `Histogram of ${options.name}`
-			},
-			subtitle: {
-				text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
-				useHTML: true
-			},
-			plotOptions: {
-				column: {
-					grouping: false
-				},
-				series: {
-					events: {
-					// Keep outlier visibility in sync.
-					hide: function() {
-						const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
-						if (outliers) {
-							outliers.hide();
-						}
-					},
-					show: function() {
-						const outliers = chart.series.find(s => s.name === `${this.name} Outliers`);
-						if (outliers) {
-							outliers.show();
-						}
-					}
+			zoomType: 'x',
+			resetZoomButton: {
+				position: {
+					x: 0,
+					y: -50
 				}
 			}
 		},
+		title: {
+			text: `Histogram of ${options.name}`
+		},
+		subtitle: {
+			text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
+			useHTML: true
+		},
+		plotOptions: {
+			column: {
+				grouping: false
+			}
+		},
 		tooltip: {
+			shared: true,
+			useHTML: true,
+			borderColor: 'rgba(247,247,247,0.85)',
 			formatter: function() {
+				const metric = new Metric(options, Math.round(this.points[0].x * 100) / 100);
 				const tooltips = [];
-				this.points.forEach(point => {
-					tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} ${options.type} (${(point.y).toFixed(2)})`);
+				console.log('tooltip', this, series)
+				this.points.filter(p => !p.series.name.includes('CDF')).forEach(point => {
+					tooltips.push(`<td>
+						<p style="text-transform: uppercase; font-size: 10px;">
+							${point.series.name}
+						</p>
+						<p style="color: ${point.color.replace('0.4', '1')}; font-size: 20px;">
+							${(point.y).toFixed(2)}%
+						</p>
+					</td>`);
+					//tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} ${options.type} (${(point.y).toFixed(2)})`);
 				});
-				return tooltips.join('<br>');
-			},
-			shared: true
+				return `<p style="text-align: center;">
+					${metric.toString()}
+				</p>
+				<table cellpadding="5" style="text-align: center;">
+					<tr>
+						${tooltips.join('')}
+					</tr>
+				</table>`;
+			}
 		},
 		xAxis: {
 			title: {
@@ -356,11 +337,17 @@ function drawChart(series, containerId, options) {
 		},
 		yAxis: [{
 			title: {
-				text: 'Percent'
+				text: 'Density'
+			},
+			labels: {
+				format: '{value}%'
 			}
 		}, {
 			title: {
-				text: 'Cumulative Distribution (%)'
+				text: 'Cumulative Density'
+			},
+			labels: {
+				format: '{value}%'
 			},
 			max: 100,
 			opposite: true

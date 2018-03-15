@@ -1,6 +1,7 @@
 import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
+import { Metric } from './metric';
 import { el, prettyDate, chartExportOptions } from './utils';
 
 
@@ -62,8 +63,9 @@ function getSummaryElement(metric, client) {
 function getSummary(data, options) {
 	const o = data[data.length - 1];
 	const summary = getPrimaryMetric(o, options);
+	const metric = new Metric(options, summary);
 	
-	return `${summary}${options.type === '%' ? '' : ' '}${options.type}`;
+	return metric.toString();
 }
 
 function getChange(data, options) {
@@ -328,12 +330,13 @@ function drawChart(options, series) {
 						label = `Median ${median.series.name}`;
 						data = median.point.y.toFixed(1);
 					}
+					const metric = new Metric(options, data);
 					return `<td>
 						<p style="text-transform: uppercase; font-size: 10px;">
 							${label}
 						</p>
 						<p style="color: ${points[0].series.color}; font-size: 20px;">
-							${data}${options.type != '%' ? ` ${options.type}` : '%'}
+							${metric.toString()}
 						</p>
 					</td>`;
 				}
