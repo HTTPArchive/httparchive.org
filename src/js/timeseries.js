@@ -309,7 +309,7 @@ function drawChart(options, series) {
 				}
 
 				const changelog = flags[this.x];
-				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
+				const tooltip = `<p style="font-size: smaller; text-align: center;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
 
 				// Handle changelog tooltips first.
 				if (!this.points) {
@@ -318,44 +318,33 @@ function drawChart(options, series) {
 
 				function getRow(points) {
 					if (!points.length) return '';
+					let label;
+					let data;
 					if (options.timeseries && options.timeseries.fields) {
-						return `<tr>
-							<td><span style="color: ${points[0].series.color}">&bull;</span> ${points[0].series.name}</td>
-							${points.map(point => {
-								return `<th>${point.point.y.toFixed(1)}</th>`;
-							})}
-						</tr>`;
+						label = points[0].series.name;
+						data = points[0].point.y.toFixed(1);
+					} else {
+						const [median] = points;
+						label = `Median ${median.series.name}`;
+						data = median.point.y.toFixed(1);
 					}
-					const [median, iqr, outs] = points;
-					return `<tr>
-						<td><span style="color: ${median.series.color}">&bull;</span> ${median.series.name}</td>
-						<th>${outs.point.low.toFixed(1)}</th>
-						<th>${iqr.point.low.toFixed(1)}</th>
-						<th>${median.point.y.toFixed(1)}</th>
-						<th>${iqr.point.high.toFixed(1)}</th>
-						<th>${outs.point.high.toFixed(1)}</th>
-					</tr>`;
+					return `<td>
+						<p style="text-transform: uppercase; font-size: 10px;">
+							${label}
+						</p>
+						<p style="color: ${points[0].series.color}; font-size: 20px;">
+							${data}${options.type != '%' ? ` ${options.type}` : '%'}
+						</p>
+					</td>`;
 				}
 				const desktop = this.points.filter(o => o.series.name == 'Desktop');
 				const mobile = this.points.filter(o => o.series.name == 'Mobile');
 				return `${tooltip}
-				<table cellpadding="5">
+				<table cellpadding="5" style="text-align: center;">
 					<tr>
-					<td></td>
-					${
-						(options.timeseries && options.timeseries.fields) ?
-						options.timeseries.fields.map(field => {
-							return `<td style="font-size: smaller;">${field}</td>`;
-						}) : 
-						`<td style="font-size: smaller;">10%ile</td>
-						<td style="font-size: smaller;">25%ile</td>
-						<td style="font-size: smaller;">50%ile</td>
-						<td style="font-size: smaller;">75%ile</td>
-						<td style="font-size: smaller;">90%ile</td>`
-					}
-				</tr>
-				${getRow(desktop)}
-				${getRow(mobile)}
+						${getRow(desktop)}
+						${getRow(mobile)}
+					</tr>
 				</table>
 				${getChangelog(changelog)}`;
 			}
