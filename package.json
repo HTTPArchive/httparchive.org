@@ -16,7 +16,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
-    "start": "npm run watch & python main.py",
+    "start": "npm run watch & python main.py --log_level=debug",
+    "stage": "npm run build && gcloud app deploy --project httparchive-staging --stop-previous-version",
     "deploy": "npm run build && gcloud app deploy --project httparchive --stop-previous-version",
     "cors": "gsutil cors set config/storage-cors.json gs://httparchive"
   },
