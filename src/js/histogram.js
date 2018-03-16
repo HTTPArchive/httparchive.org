@@ -296,6 +296,23 @@ function drawChart(series, containerId, options) {
 		plotOptions: {
 			column: {
 				grouping: false
+			},
+			series: {
+				events: {
+					// Keep CDF visibility in sync.
+					hide: function() {
+						const cdf = chart.series.find(s => s.name === `${this.name} CDF`);
+						if (cdf) {
+							cdf.hide();
+						}
+					},
+					show: function() {
+						const cdf = chart.series.find(s => s.name === `${this.name} CDF`);
+						if (cdf) {
+							cdf.show();
+						}
+					}
+				}
 			}
 		},
 		tooltip: {
@@ -305,7 +322,6 @@ function drawChart(series, containerId, options) {
 			formatter: function() {
 				const metric = new Metric(options, Math.round(this.points[0].x * 100) / 100);
 				const tooltips = [];
-				console.log('tooltip', this, series)
 				this.points.filter(p => !p.series.name.includes('CDF')).forEach(point => {
 					tooltips.push(`<td>
 						<p style="text-transform: uppercase; font-size: 10px;">
