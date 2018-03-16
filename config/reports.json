@@ -62,7 +62,8 @@
 			"type": "ms",
 			"description": "The number of milliseconds spent compiling each JavaScript resource.",
 			"histogram": {
-				"minDate": "2017_09_01"
+				"minDate": "2017_09_01",
+				"maxDate": "2018_01_15"
 			},
 			"timeseries": {
 				"enabled": false

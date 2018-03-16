@@ -136,6 +136,8 @@ def report(report_id):
 
         # Disable the metric if it start/end is outside of the min/max window.
         enabled = start >= min_date
+        if max_date and enabled:
+            enabled = start <= max_date
         if end and enabled:
             enabled = end <= max_date
 
