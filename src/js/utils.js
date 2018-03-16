@@ -33,7 +33,7 @@ export const chartExportOptions = {
 };
 
 const getQueryUrl = (metric, type) => {
-	const URL_BASE = 'https://raw.githubusercontent.com/HTTPArchive/beta.httparchive.org/master/sql';
+	const URL_BASE = 'https://raw.githubusercontent.com/HTTPArchive/bigquery/master/sql';
 	if (type === 'timeseries') {
 		return `${URL_BASE}/timeseries/${metric}.sql`;
 	}
