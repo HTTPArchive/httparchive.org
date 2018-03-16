@@ -21,6 +21,9 @@ function timeseries(metric, options, start, end) {
 			[YYYY, MM, DD] = end.split('_');
 			options.max = Date.UTC(YYYY, MM - 1, DD);
 
+			// Ensure null values are filtered out.
+			data = data.filter(o => getUnformattedPrimaryMetric(o, options) !== null);
+
 			drawTimeseries(data, options);
 			drawTimeseriesTable(data, options, [options.min, options.max]);
 		});
@@ -103,11 +106,15 @@ function getChangeSentiment(change, options) {
 }
 
 function getPrimaryMetric(o, options) {
+	return getUnformattedPrimaryMetric(o, options).toFixed(1);
+}
+
+function getUnformattedPrimaryMetric(o, options) {
 	if (options.timeseries && options.timeseries.fields) {
-		return o[options.timeseries.fields[0]].toFixed(1);
+		return o[options.timeseries.fields[0]];
 	}
 
-	return o.p50.toFixed(1);
+	return o.p50;
 }
 
 function drawTimeseries(data, options) {
@@ -124,7 +131,6 @@ function drawTimeseries(data, options) {
 		} else {
 			series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
 			series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
-			series.push(getAreaSeries('Desktop', desktop.map(toOuts), Colors.DESKTOP, 0.05));
 		}
 	}
 	if (mobile.length) {
@@ -135,7 +141,6 @@ function drawTimeseries(data, options) {
 		} else {
 			series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
 			series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
-			series.push(getAreaSeries('Mobile', mobile.map(toOuts), Colors.MOBILE, 0.05));
 		}
 	}
 
@@ -223,7 +228,6 @@ const toNumeric = o => ({
 	client: o.client
 });
 const toIQR = o => [o.timestamp, o.p25, o.p75];
-const toOuts = o => [o.timestamp, o.p10, o.p90];
 const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
 	name,
