@@ -392,7 +392,7 @@
 	},
 	"search-engine-optimization": {
 		"name": "SEO",
-		"summary": "The state of Search Engine Optimization (SEO) on the web.",
+		"summary": "How websites are built can affect their ranking in search results. This report tracks the adoption of several key Search Engine Optimization (SEO) techniques.",
 		"metrics": [
 			"canonical",
 			"legible",
