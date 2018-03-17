@@ -110,6 +110,20 @@
 				"minDate": "2016_12_15"
 			}
 		},
+		"hreflang": {
+			"name": "hreflang",
+			"type": "%",
+			"description": "The percent of pages with a valid `hreflang` attribute, which allows crawlers to discover alternate translations of the page content. Validity is measured by Lighthouse. This metric is only available in mobile tests.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"legible": {
 			"name": "Legible Text",
 			"type": "%",
@@ -394,9 +408,10 @@
 		"name": "SEO",
 		"summary": "How websites are built can affect their ranking in search results. This report tracks the adoption of several key Search Engine Optimization (SEO) techniques.",
 		"metrics": [
-			"canonical",
 			"legible",
-			"linkText"
+			"hreflang",
+			"linkText",
+			"canonical"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
