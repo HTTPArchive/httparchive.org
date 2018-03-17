@@ -4,6 +4,7 @@
 		"state-of-javascript",
 		"state-of-images",
 		"loading-speed",
+		"search-engine-optimization",
 		"page-weight",
 		"chrome-ux-report"
 	],
@@ -57,6 +58,20 @@
 				"minDate": "2015_05_01"
 			}
 		},
+		"canonical": {
+			"name": "rel=canonical",
+			"type": "%",
+			"description": "The percent of pages with a valid canonical link. Canonical pages are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/canonical). This metric is only available in mobile tests.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"compileJs": {
 			"name": "JS Compile Time",
 			"type": "ms",
@@ -93,6 +108,34 @@
 			"description": "The number of seconds from the time the navigation started until the page's primary content appears on the screen.",
 			"histogram": {
 				"minDate": "2016_12_15"
+			}
+		},
+		"legible": {
+			"name": "Legible Text",
+			"type": "%",
+			"description": "The percent of pages with legible text. Legibility is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/font-sizes). This metric is only available in mobile tests.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"linkText": {
+			"name": "Descriptive Link Text",
+			"type": "%",
+			"description": "The percent of pages with descriptive link text. Descriptiveness is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/link-text). This metric is only available in mobile tests.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"ol": {
@@ -344,6 +387,26 @@
 			"primary": {
 				"color": "#eee",
 				"icon": "fab fa-connectdevelop"
+			}
+		}
+	},
+	"search-engine-optimization": {
+		"name": "SEO",
+		"summary": "How websites are built can affect their ranking in search results. This report tracks the adoption of several key Search Engine Optimization (SEO) techniques.",
+		"metrics": [
+			"canonical",
+			"legible",
+			"linkText"
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fab fa-searchengin"
+			},
+			"secondary": {
+				"color": "rgba(255, 255, 255, 0.3)",
+				"text": "SEO"
 			}
 		}
 	},
