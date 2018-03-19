@@ -16,6 +16,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
+    "stage": "npm run build && gcloud app deploy --project httparchive-staging --stop-previous-version",
     "start": "npm run watch & python main.py",
     "deploy": "npm run build && gcloud app deploy --project httparchive --stop-previous-version"
   },

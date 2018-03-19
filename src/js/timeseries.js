@@ -1,6 +1,7 @@
 import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
+import { Metric } from './metric';
 import { el, prettyDate, chartExportOptions } from './utils';
 
 
@@ -19,6 +20,9 @@ function timeseries(metric, options, start, end) {
 			options.min = Date.UTC(YYYY, MM - 1, DD);
 			[YYYY, MM, DD] = end.split('_');
 			options.max = Date.UTC(YYYY, MM - 1, DD);
+
+			// Ensure null values are filtered out.
+			data = data.filter(o => getUnformattedPrimaryMetric(o, options) !== null);
 
 			drawTimeseries(data, options);
 			drawTimeseriesTable(data, options, [options.min, options.max]);
@@ -62,8 +66,9 @@ function getSummaryElement(metric, client) {
 function getSummary(data, options) {
 	const o = data[data.length - 1];
 	const summary = getPrimaryMetric(o, options);
+	const metric = new Metric(options, summary);
 	
-	return `${summary}${options.type === '%' ? '' : ' '}${options.type}`;
+	return metric.toString();
 }
 
 function getChange(data, options) {
@@ -101,11 +106,15 @@ function getChangeSentiment(change, options) {
 }
 
 function getPrimaryMetric(o, options) {
+	return getUnformattedPrimaryMetric(o, options).toFixed(1);
+}
+
+function getUnformattedPrimaryMetric(o, options) {
 	if (options.timeseries && options.timeseries.fields) {
-		return o[options.timeseries.fields[0]].toFixed(1);
+		return o[options.timeseries.fields[0]];
 	}
 
-	return o.p50.toFixed(1);
+	return o.p50;
 }
 
 function drawTimeseries(data, options) {
@@ -122,7 +131,6 @@ function drawTimeseries(data, options) {
 		} else {
 			series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
 			series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
-			series.push(getAreaSeries('Desktop', desktop.map(toOuts), Colors.DESKTOP, 0.05));
 		}
 	}
 	if (mobile.length) {
@@ -133,7 +141,6 @@ function drawTimeseries(data, options) {
 		} else {
 			series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
 			series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
-			series.push(getAreaSeries('Mobile', mobile.map(toOuts), Colors.MOBILE, 0.05));
 		}
 	}
 
@@ -221,7 +228,6 @@ const toNumeric = o => ({
 	client: o.client
 });
 const toIQR = o => [o.timestamp, o.p25, o.p75];
-const toOuts = o => [o.timestamp, o.p10, o.p90];
 const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
 	name,
@@ -309,7 +315,7 @@ function drawChart(options, series) {
 				}
 
 				const changelog = flags[this.x];
-				const tooltip = `<p style="font-size: smaller;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
+				const tooltip = `<p style="font-size: smaller; text-align: center;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
 
 				// Handle changelog tooltips first.
 				if (!this.points) {
@@ -318,44 +324,34 @@ function drawChart(options, series) {
 
 				function getRow(points) {
 					if (!points.length) return '';
+					let label;
+					let data;
 					if (options.timeseries && options.timeseries.fields) {
-						return `<tr>
-							<td><span style="color: ${points[0].series.color}">&bull;</span> ${points[0].series.name}</td>
-							${points.map(point => {
-								return `<th>${point.point.y.toFixed(1)}</th>`;
-							})}
-						</tr>`;
+						label = points[0].series.name;
+						data = points[0].point.y.toFixed(1);
+					} else {
+						const [median] = points;
+						label = `Median ${median.series.name}`;
+						data = median.point.y.toFixed(1);
 					}
-					const [median, iqr, outs] = points;
-					return `<tr>
-						<td><span style="color: ${median.series.color}">&bull;</span> ${median.series.name}</td>
-						<th>${outs.point.low.toFixed(1)}</th>
-						<th>${iqr.point.low.toFixed(1)}</th>
-						<th>${median.point.y.toFixed(1)}</th>
-						<th>${iqr.point.high.toFixed(1)}</th>
-						<th>${outs.point.high.toFixed(1)}</th>
-					</tr>`;
+					const metric = new Metric(options, data);
+					return `<td>
+						<p style="text-transform: uppercase; font-size: 10px;">
+							${label}
+						</p>
+						<p style="color: ${points[0].series.color}; font-size: 20px;">
+							${metric.toString()}
+						</p>
+					</td>`;
 				}
 				const desktop = this.points.filter(o => o.series.name == 'Desktop');
 				const mobile = this.points.filter(o => o.series.name == 'Mobile');
 				return `${tooltip}
-				<table cellpadding="5">
+				<table cellpadding="5" style="text-align: center;">
 					<tr>
-					<td></td>
-					${
-						(options.timeseries && options.timeseries.fields) ?
-						options.timeseries.fields.map(field => {
-							return `<td style="font-size: smaller;">${field}</td>`;
-						}) : 
-						`<td style="font-size: smaller;">10%ile</td>
-						<td style="font-size: smaller;">25%ile</td>
-						<td style="font-size: smaller;">50%ile</td>
-						<td style="font-size: smaller;">75%ile</td>
-						<td style="font-size: smaller;">90%ile</td>`
-					}
-				</tr>
-				${getRow(desktop)}
-				${getRow(mobile)}
+						${getRow(desktop)}
+						${getRow(mobile)}
+					</tr>
 				</table>
 				${getChangelog(changelog)}`;
 			}

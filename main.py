@@ -15,15 +15,21 @@
 # [START app]
 import logging
 import re
+
+from csp import csp
 import reports as reportutil
 import faq as faqutil
 
 from flask import Flask, request, render_template, abort, url_for
 from flaskext.markdown import Markdown
+from flask_talisman import Talisman
 
 
 app = Flask(__name__)
 Markdown(app)
+Talisman(app,
+    content_security_policy=csp,
+    content_security_policy_nonce_in=['script-src'])
 
 @app.route('/')
 def index():
@@ -130,6 +136,8 @@ def report(report_id):
 
         # Disable the metric if it start/end is outside of the min/max window.
         enabled = start >= min_date
+        if max_date and enabled:
+            enabled = start <= max_date
         if end and enabled:
             enabled = end <= max_date
 

@@ -45,7 +45,7 @@
 {% block scripts %}
 	{{ super() }}
 	<script src="/static/js/histogram.js"></script>
-	<script>
+	<script nonce="{{ csp_nonce() }}">
 {% for metric in report.metrics %}
 	{% if metric[viz]['enabled'] %}
 		histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});

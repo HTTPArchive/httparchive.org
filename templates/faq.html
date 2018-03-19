@@ -54,7 +54,7 @@
 {% block scripts %}
 	{{ super() }}
 	<script src="/static/js/faq.js"></script>
-	<script>
+	<script nonce="{{ csp_nonce() }}">
 addEventListener('DOMContentLoaded', function() {
 	generateQuestionAnchors({{ faq.anchors|tojson }});
 });
