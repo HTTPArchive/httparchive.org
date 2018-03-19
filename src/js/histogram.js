@@ -321,17 +321,23 @@ function drawChart(series, containerId, options) {
 			borderColor: 'rgba(247,247,247,0.85)',
 			formatter: function() {
 				const metric = new Metric(options, Math.round(this.points[0].x * 100) / 100);
-				const tooltips = [];
-				this.points.filter(p => !p.series.name.includes('CDF')).forEach(point => {
-					tooltips.push(`<td>
+				const tooltips = this.points.filter(p => !p.series.name.includes('CDF')).map((point, points) => {
+					const cdf = this.points.find(p => p.series.name == `${point.series.name} CDF`);
+					return `<td>
 						<p style="text-transform: uppercase; font-size: 10px;">
 							${point.series.name}
 						</p>
 						<p style="color: ${point.color.replace('0.4', '1')}; font-size: 20px;">
 							${(point.y).toFixed(2)}%
 						</p>
-					</td>`);
-					//tooltips.push(`<span style="color: ${point.color};">■</span> <b>${point.series.name}:</b> ${Math.round(point.x * 100) / 100} ${options.type} (${(point.y).toFixed(2)})`);
+						${cdf ? 
+						`<p style="text-transform: uppercase; font-size: 8px; color: #777;">
+							Cumulative
+						</p>
+						<p style="color: ${point.color.replace('0.4', '1')}; font-size: 14px;">
+							${(cdf.y).toFixed(2)}%
+						</p>` : ''}
+					</td>`;
 				});
 				return `<p style="text-align: center;">
 					${metric.toString()}
