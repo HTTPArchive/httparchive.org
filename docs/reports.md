@@ -167,24 +167,6 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Required array. Describes the metrics included in the report.
 
-## Configuring Dates
-
-The crawl dates available to reports are maintained in [config/dates.json](../config/dates.json). This file is simply an array of `YYYY_MM_DD`-format dates, sorted in descending order. Each date corresponds to a subdirectory in the `/reports` directory on the CDN and also the dates in the timeseries.
-
-### Syncing Dates with Google Storage
-
-To force dates.json to reflect the dated subdirectories on Google Storage, run the [sql/syncAvailableDates.js](../sql/syncAvailableDates.js) script. This will grab the contents of the storage bucket, parse out the dates, and update the JSON file with the dates in reverse chronological order.
-
-### Adding One Date at a Time
-
-To add a single date at a time to dates.json, call the [sql/addDate.js](../sql/addDate.js) script with the date in `YYYY_MM_DD` format. For example:
-
-```sh
-sql/addDate.js 2017_09_01
-```
-
-This will update the contents of dates.json with the new date in sorted order.
-
 ## Rendering a Report
 
 The [main.py](../main.py) web server config file loads dates.json and reports.json into memory on startup and refreshes their contents according to the `MAX_REPORT_STALENESS` constant, which is set to 3 hours. This helps to limit file IO on each request.
@@ -192,19 +174,3 @@ The [main.py](../main.py) web server config file loads dates.json and reports.js
 If there is only one distinct date, the server renders the report with the histogram template, otherwise it uses the timeseries template.
 
 The report scripts will build the CDN URL based on the metric name and optional date. After fetching the JSON data, it will be massaged into a consumable format for [Highcharts](https://www.highcharts.com/) and a plain data table.
-
-## What (Should) Happen After Each Crawl
-
-When a crawl finishes, the following things must happen to make the new data available in the reports UI:
-
-1. Run all of the queries with the new crawl date and save results to respective JSON files on Google Storage.
-
-  `sql/generateReports.sh -t -h YYYY_MM_DD`
-
-2. Add the crawl date to the list of report dates.
-
-  `sql/addDate.js YYYY_MM_DD`
-
-_These two commands should be set on a cron job or part of some future pubsub pipeline._
-
-The web server will periodically update its in-memory copies of the config files and serve the latest reports.
