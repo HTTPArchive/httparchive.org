@@ -17,7 +17,6 @@ import logging
 import re
 
 from csp import csp
-import dates as dateutil
 import reports as reportutil
 import faq as faqutil
 
