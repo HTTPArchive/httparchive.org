@@ -38,7 +38,7 @@
 	{{ super() }}
 	<script src="https://cdn.httparchive.org/reports/highcharts-more.js"></script>
 	<script src="/static/js/timeseries.js"></script>
-	<script>
+	<script nonce="{{ csp_nonce() }}">
 {% for metric in report.metrics %}
 	{% if metric[viz]['enabled'] %}
 		timeseries({{ metric.id|tojson }},

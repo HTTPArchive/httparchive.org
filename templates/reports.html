@@ -14,7 +14,9 @@
 		<div class="report row">
 			<div class="container {{ loop.cycle('', 'alt') }}">
 				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
-					<img src="/static/img/chart.png" alt="">
+					<a href="{{ url_for('report', report_id=report.id) }}">
+						{{ report_graphic(report) }}
+					</a>
 				</div>
 				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
 					<h2>
@@ -23,7 +25,7 @@
 						</a>
 					</h2>
 
-					<p>{{ report.summary | safe }}</p>
+					{{ report.summary | markdown }}
 					
 					<a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the Report</a>
 					</h2>

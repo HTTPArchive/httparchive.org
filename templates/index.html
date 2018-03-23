@@ -11,7 +11,9 @@
 {% block main %}
 	<section id="how-web-is-built" class="container">
 		<div class="col-lg-5 col-sm-5 col-md-5 col-xs-6">
-			<img src="/static/img/web.png" alt=""/>
+			<a href="{{ url_for('reports') }}">
+				<img src="/static/img/web.png" alt="" aria-label="HTTP Archive reports"/>
+			</a>
 		</div>
 
 		<div class="col-lg-7 col-sm-7 col-md-7 col-xs-12">
@@ -42,7 +44,9 @@
 					<a href="{{ url_for('report', report_id=featured_report.id) }}" class="btn alt">View The Report</a>
 				</div>
 				<div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
-					<img src="/static/img/chart.png" alt="">
+					<a href="{{ url_for('report', report_id=featured_report.id) }}">
+						{{ report_graphic(featured_report) }}
+					</a>
 				</div>
 			</div>
 			{% endfor %}
@@ -61,11 +65,13 @@
 					The HTTP Archive archives and provides access to detailed information about each website it crawls: request and response metadata, response bodies, execution traces, and more. You can download this data for offline analysis, or access it as a public dataset via Google BigQuery for fast and rapid analysis. 
 				</p>
 
-				<a href="{{ url_for('faq') }}" class="btn">Learn More</a>
+				<a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}" class="btn">Learn More</a>
 			</div>
 
 			<div class="col-lg-6 col-sm-6 col-md-6 hidden-xs">
-				<img src="/static/img/data.png" alt=""/>
+				<a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}">
+					<img src="/static/img/data.png" alt="" aria-label="Learn more about HTTP Archive on BigQuery"/>
+				</a>
 			</div>
 		</div>
 	</section>
