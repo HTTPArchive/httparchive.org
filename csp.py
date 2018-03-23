@@ -19,7 +19,8 @@ csp = {
 		'\'self\'',
 		'cdn.httparchive.org',
 		'discuss.httparchive.org',
-		'raw.githubusercontent.com'
+		'raw.githubusercontent.com',
+		'www.webpagetest.org'
 	],
 	'img-src': [
 		'\'self\'',
