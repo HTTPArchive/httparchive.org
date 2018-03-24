@@ -1,5 +1,6 @@
-import { el, prettyDate } from './utils';
-import WPT from './wpt';
+import { Metric } from './metric';
+import { el, prettyDate, drawMetricSummary } from './utils';
+import WPT from './webpagetest';
 
 
 class Report {
@@ -107,28 +108,15 @@ class Report {
 		});
 	}
 
-	renderWPTMetric(metric, value) {
-		console.log('renderWPTMetric', metric, value)
-		const metricSection = document.getElementById(metric);
-		const chart = document.getElementById(`${metric}-chart`);
-		if (!metricSection || !chart) {
-			return;
-		}
-
-		const div = el('div');
-		div.innerText = value;
-		metricSection.insertBefore(div, chart);
-	}
-
 	getWPT(wptId) {
 		const wpt = new WPT(wptId);
 		wpt.fetchResults().then(results => {
-			const url = document.getElementById('wpt_url');
-			url.innerText = results.url;
-		}).then(_ => {
 			const metrics = wpt.getMetrics(this.report);
 			Object.entries(metrics).forEach(([metric, value]) => {
-				this.renderWPTMetric(metric, value);
+				const options = this.report.metrics.find(m => m.id === metric);
+				options.metric = metric;
+				const m = new Metric(options, value.toFixed(1));
+				drawMetricSummary(options, 'webpagetest', m.toString());
 			});
 		}).catch(e => {
 			console.error('Error getting WebPageTest results.', e);

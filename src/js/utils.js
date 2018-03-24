@@ -32,6 +32,32 @@ export const chartExportOptions = {
 	}
 };
 
+// Summarizes a metric by highlighting its primary value, usually the median.
+// This function may be called multiple times after page load, for example if the
+// visualization range changes the summary value will be updated.
+export const drawMetricSummary = (options, client, value, isMedian=true, change=null) => {
+	const metric = options.metric;
+	const summary = getSummaryElement(metric, client);
+	if (!summary) {
+		return;
+	}
+	summary.classList.remove('hidden');
+
+	if (!isMedian) {
+		const metric = summary.querySelector('.metric')
+		metric && metric.classList.add('hidden');
+	}
+
+	summary.querySelector('.primary').innerText = value;
+
+	if (change) {
+		const changeEl = summary.querySelector('.change');
+		changeEl.innerText = formatChange(change);
+		changeEl.classList.remove('good', 'bad', 'neutral'); // Reset the classes.
+		changeEl.classList.add(getChangeSentiment(change, options));
+	}
+};
+
 const getQueryUrl = (metric, type) => {
 	const URL_BASE = 'https://raw.githubusercontent.com/HTTPArchive/bigquery/master/sql';
 	if (type === 'timeseries') {
@@ -40,4 +66,32 @@ const getQueryUrl = (metric, type) => {
 	if (type === 'histogram') {
 		return `${URL_BASE}/histograms/${metric}.sql`;
 	}
+};
+
+const getSummaryElement = (metric, client) => {
+	return document.querySelector(`#${metric} .metric-summary.${client}`);
+};
+
+const formatChange = change => {
+	// Up for non-negative, down for negative.
+	return `${change >= 0 ? '\u25B2' : '\u25BC'}${Math.abs(change).toFixed(1)}%`
+};
+
+const getChangeSentiment = (change, options) => {
+	// If a metric goes down, is that good or bad?
+	let sentiments = ['good', 'bad'];
+	if (options.downIsBad) {
+		sentiments.reverse();
+	} else if (options.downIsNeutral) {
+		sentiments = ['neutral', 'neutral'];
+	}
+
+	change = +change.toFixed(1);
+	if (change < 0) {
+		return sentiments[0];
+	}
+	if (change > 0) {
+		return sentiments[1];
+	}
+	return 'neutral';
 };

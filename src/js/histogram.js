@@ -1,11 +1,10 @@
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions } from './utils';
+import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
 
 
 const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
-window.charts = {};
 
 function histogram(metric, date, options) {
 	options.date = date;
@@ -34,17 +33,8 @@ function drawClientSummary(data, options, client) {
 		return;
 	}
 
-	const summary = getSummaryElement(options.id, client);
-	if (!summary) {
-		return;
-	}
-	summary.classList.remove('hidden');
-
-	summary.querySelector('.primary').innerText = getSummary(data, options);
-}
-
-function getSummaryElement(metric, client) {
-	return document.querySelector(`#${metric} .metric-summary.${client}`);
+	const value = getSummary(data, options);
+	drawMetricSummary(options, client, value);
 }
 
 function getSummary(data, options) {
@@ -360,9 +350,6 @@ function drawChart(series, containerId, options) {
 			events: {
 				setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])
 			}
-			// TODO: Set the x-axis maximum to the max of desktop/mobile 95%iles.
-			// Graph all bins and remove the special outlier bin. By changing the
-			// default zoom, we can achieve the same effect without the confusion.
 		},
 		yAxis: [{
 			title: {
@@ -385,8 +372,6 @@ function drawChart(series, containerId, options) {
 		credits: false,
 		exporting: chartExportOptions
 	});
-
-	charts[options.id] = chart;
 }
 
 // Export directly to global scope for use by Jinja template.

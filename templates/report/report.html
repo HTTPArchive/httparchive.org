@@ -38,12 +38,6 @@
 					</div>
 
 					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-						{% if wpt_id %}
-							<h4 id="wpt_url"></h4>
-						{% endif %}
-						<form>
-							<input id="wpt" name="wptid" placeholder="Enter the ID of your WebPageTest results to compare..." value="{{ wpt_id or '' }}" />
-						</form>
 						<form id="history" class="row">
 							<div class="col-sm-4 col-sm-offset-2 col-xs-12">
 								<label for="startDate">
@@ -142,4 +136,34 @@
 			</em>
 		</p>
 	{% endfor %}
+	<div class="metric-summaries">
+		<div class="metric-summary desktop hidden">
+			<span class="client">
+				<span class="metric">Median</span>
+				Desktop
+			</span>
+			<span class="primary"></span>
+			{% if viz == 'timeseries' %}
+			<span class="change"></span>
+			{% endif %}
+		</div>
+		{% if wpt_id %}
+		<div class="metric-summary webpagetest hidden">
+			<span class="client">
+				WebPageTest
+			</span>
+			<span class="primary"></span>
+		</div>
+		{% endif %}
+		<div class="metric-summary mobile hidden">
+			<span class="client">
+				<span class="metric">Median</span>
+				Mobile
+			</span>
+			<span class="primary"></span>
+			{% if viz == 'timeseries' %}
+			<span class="change"></span>
+			{% endif %}
+		</div>
+	</div>
 {% endmacro %}

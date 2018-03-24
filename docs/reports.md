@@ -137,7 +137,15 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
       - **wpt**
 
-        Optional string. The '$'-delimited object path indicating where to find the metric in raw WebPageTest results.
+        Optional object. Includes config info for extracting WebPageTest results.
+
+        - **path**
+
+          Required string. The '$'-delimited object path indicating where to find the metric in raw WebPageTest results.
+
+        - **scale**
+
+          Optional number. Multiplier for scaling a WebPageTest result to match the units used by HTTP Archive. For example, to convert bytes to KB, a scale of `0.001` divides the value by 1000.
 
   - **report ID**
 

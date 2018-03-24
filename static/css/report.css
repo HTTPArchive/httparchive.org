@@ -88,6 +88,7 @@
 	text-transform: uppercase;
 }
 .metric-summary .primary {
+	text-align: center;
 	font-size: 30px;
 	line-height: 36px;
 }

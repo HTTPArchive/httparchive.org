@@ -2,10 +2,8 @@ import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions } from './utils';
+import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
 
-
-window.charts = {};
 
 function timeseries(metric, options, start, end) {
 	const dataUrl = `https://cdn.httparchive.org/reports/${metric}.json`;
@@ -44,28 +42,12 @@ function drawClientSummary(data, options, client) {
 		return;
 	}
 
-	const summary = getSummaryElement(options.id, client);
-	if (!summary) {
-		return;
-	}
-	summary.classList.remove('hidden');
-
-	if (options.timeseries && options.timeseries.fields) {
-		// Show "MEDIAN" when it's the median. Otherwise hide it.
-		summary.querySelector('.metric').classList.add('hidden');
-	}
-
-	summary.querySelector('.primary').innerText = getSummary(data, options);
-
+	const value = getSummary(data, options);
+	// Assume the metric is not the median if the options have custom fields.
+	const isMedian = !(options.timeseries && options.timeseries.fields);
 	const change = getChange(data, options);
-	const changeEl = summary.querySelector('.change');
-	changeEl.innerText = formatChange(change);
-	changeEl.classList.remove('good', 'bad', 'neutral'); // Reset the classes.
-	changeEl.classList.add(getChangeSentiment(change, options));
-}
 
-function getSummaryElement(metric, client) {
-	return document.querySelector(`#${metric} .metric-summary.${client}`);
+	drawMetricSummary(options, client, value, isMedian, change);
 }
 
 function getSummary(data, options) {
@@ -85,29 +67,6 @@ function getChange(data, options) {
 	const latest = getPrimaryMetric(data[data.length - 1], options);
 
 	return (latest - oldest) * 100 / oldest;
-}
-
-function formatChange(change) {
-	return `${change >= 0 ? '\u25B2' : '\u25BC'}${Math.abs(change).toFixed(1)}%`
-}
-
-function getChangeSentiment(change, options) {
-	// If a metric goes down, is that good or bad?
-	let sentiments = ['good', 'bad'];
-	if (options.downIsBad) {
-		sentiments.reverse();
-	} else if (options.downIsNeutral) {
-		sentiments = ['neutral', 'neutral'];
-	}
-
-	change = +change.toFixed(1);
-	if (change < 0) {
-		return sentiments[0];
-	}
-	if (change > 0) {
-		return sentiments[1];
-	}
-	return 'neutral';
 }
 
 function getPrimaryMetric(o, options) {
@@ -292,7 +251,7 @@ const getFlagSeries = () => loadChangelog().then(data => {
 });
 
 function drawChart(options, series) {
-	const chart = Highcharts.stockChart(options.chartId, {
+	Highcharts.stockChart(options.chartId, {
 		metric: options.metric,
 		type: 'timeseries',
 		chart: {
@@ -380,8 +339,6 @@ function drawChart(options, series) {
 		credits: false,
 		exporting: chartExportOptions
 	});
-
-	charts[options.id] = chart;
 }
 
 const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];

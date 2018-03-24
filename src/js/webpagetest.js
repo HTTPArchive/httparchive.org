@@ -24,21 +24,33 @@ export default class WPT {
 
 	getMetrics(report) {
 		return report.metrics.reduce((o, metric) => {
-			const wptPath = metric[CONFIG_KEY];
-			if (!wptPath) {
+			const wptConfig = metric[CONFIG_KEY];
+			if (!wptConfig) {
 				return o;
 			}
 
-			o[metric.id] = this.extractMetric(wptPath);
+			try {
+				o[metric.id] = this.extractMetric(wptConfig);
+			} catch (e) {
+				console.error(e);
+			}
 			return o;
 		}, {});
 	}
 
-	extractMetric(wptPath) {
-		const properties = wptPath.split(METRICS_DELIM);
-		return properties.reduce((results, property) => {
+	extractMetric({path, scale}) {
+		const properties = path.split(METRICS_DELIM);
+		let value = properties.reduce((results, property) => {
+			if (!(property in results)) {
+				throw `Unable to parse ${path} in WebPageTest results`;
+			}
+
 			return results[property];
 		}, this.results);
+		if (scale) {
+			value = +value * scale;
+		}
+		return value;
 	}
 
 }
