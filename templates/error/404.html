@@ -2,3 +2,14 @@
 
 
 {% block error %}Page Not Found{% endblock %}
+
+{% block custom %}
+<p>
+	Sorry for the inconvenience!
+	<br><br>
+	We've recently updated our website and some links may be broken.<br>
+	If you meant to visit the old website, try this link:
+	<br><br>
+	<a href="//legacy.httparchive.org{{ path }}">legacy.httparchive.org{{ path }}</a>
+</p>
+{% endblock %}

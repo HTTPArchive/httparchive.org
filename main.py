@@ -15,6 +15,7 @@
 # [START app]
 import logging
 import re
+from urlparse import urlparse
 
 from csp import csp
 import reports as reportutil
@@ -160,7 +161,8 @@ def bad_request(e):
 
 @app.errorhandler(404)
 def page_not_found(e):
-	return render_template('error/404.html', error=e), 404
+	url = urlparse(request.url)
+	return render_template('error/404.html', error=e, path=url.path), 404
 
 @app.errorhandler(500)
 def server_error(e):

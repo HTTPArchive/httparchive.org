@@ -28,6 +28,10 @@ section [class*="col"] {
 	padding: 15px;
 }
 
+.logo {
+	max-height: 57px;
+}
+
 nav {
 	color: #748c8f;
 }
