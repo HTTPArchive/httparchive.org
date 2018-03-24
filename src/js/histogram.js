@@ -35,6 +35,9 @@ function drawClientSummary(data, options, client) {
 	}
 
 	const summary = getSummaryElement(options.id, client);
+	if (!summary) {
+		return;
+	}
 	summary.classList.remove('hidden');
 
 	summary.querySelector('.primary').innerText = getSummary(data, options);
@@ -210,10 +213,6 @@ function drawHistogram(data, containerId, options) {
 
 	let desktopCDF = desktop.map(data => data.toCdfPoint());
 	let mobileCDF = mobile.map(data => data.toCdfPoint());
-
-	// Draw summary metrics (derived median).
-	drawClientSummary(desktop, options, 'desktop');
-	drawClientSummary(mobile, options, 'mobile');
 
 	// Draw summary metrics (derived median).
 	drawClientSummary(desktop, options, 'desktop');

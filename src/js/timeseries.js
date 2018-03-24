@@ -45,6 +45,9 @@ function drawClientSummary(data, options, client) {
 	}
 
 	const summary = getSummaryElement(options.id, client);
+	if (!summary) {
+		return;
+	}
 	summary.classList.remove('hidden');
 
 	if (options.timeseries && options.timeseries.fields) {
