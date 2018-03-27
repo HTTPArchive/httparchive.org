@@ -21,7 +21,7 @@ from urlparse import urlparse
 from csp import csp
 import reports as report_util
 import faq as faq_util
-import legacy as legacy_util
+from legacy import Legacy
 
 from flask import Flask, request, make_response, render_template, redirect, abort, url_for
 from flaskext.markdown import Markdown
@@ -33,6 +33,7 @@ Markdown(app)
 Talisman(app,
 	content_security_policy=csp,
 	content_security_policy_nonce_in=['script-src'])
+legacy_util = Legacy(faq_util)
 
 @app.route('/')
 def index():
