@@ -1,6 +1,8 @@
 {% extends "main.html" %}
 
 
+{% set wpt_id = request.args.get('wptid') %}
+
 {% block title %}{{ report.name }}{% endblock %}
 
 {% block head %}
@@ -109,7 +111,11 @@
 		report.url = {{ request.script_root|tojson|safe }};
 		report.startDate = {{ start|tojson }};
 		report.endDate = {{ end|tojson }};
-		report = new Report(report);
+		report = new Report(report, {{ viz|tojson }});
+		{% if wpt_id %}
+		var wptId = {{ wpt_id|tojson }};
+		report.getWPT(wptId);
+		{% endif %}
 	</script>
 {% endblock %}
 
@@ -130,4 +136,34 @@
 			</em>
 		</p>
 	{% endfor %}
+	<div class="metric-summaries">
+		<div class="metric-summary desktop hidden">
+			<span class="client">
+				<span class="metric">Median</span>
+				Desktop
+			</span>
+			<span class="primary"></span>
+			{% if viz == 'timeseries' %}
+			<span class="change"></span>
+			{% endif %}
+		</div>
+		{% if wpt_id %}
+		<div class="metric-summary webpagetest hidden">
+			<span class="client">
+				WebPageTest
+			</span>
+			<span class="primary"></span>
+		</div>
+		{% endif %}
+		<div class="metric-summary mobile hidden">
+			<span class="client">
+				<span class="metric">Median</span>
+				Mobile
+			</span>
+			<span class="primary"></span>
+			{% if viz == 'timeseries' %}
+			<span class="change"></span>
+			{% endif %}
+		</div>
+	</div>
 {% endmacro %}

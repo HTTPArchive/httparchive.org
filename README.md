@@ -1,4 +1,4 @@
-# HTTPArchive.org
+# HTTPArchive.org Web Server on App Engine
 New and improved version of [HTTP Archive](https://httparchive.org). This replaces the [legacy version](https://legacy.httparchive.org), the source code for which is still available at [HTTPArchive/legacy.httparchive.org](https://github.com/HTTPArchive/legacy.httparchive.org).
 
 ## Run Locally
@@ -25,15 +25,33 @@ pip install -r requirements.txt
 npm install
 ```
 
-4. Run the application:
+4. Authenticate with Google Cloud
+
+This is necessary because the App Engine server uses Cloud APIs.
+
+```
+gcloud auth application-default login
+```
+
+5. Run the application:
 
 ```
 npm run start
 ```
 
-4. In your web browser, enter the following address: http://localhost:8080
+6. In your web browser, enter the following address: http://localhost:8080
+
+## Staging
+
+To test changes on a GCP App Engine server without deploying to the production instance, use the staging app at https://httparchive-staging.appspot.com.
+
+```
+npm run stage
+```
 
 ## Deploy
+
+To push changes live to the production instance, use the deployment script. Changes will be available on https://beta.httparchive.org.
 
 ```
 npm run deploy

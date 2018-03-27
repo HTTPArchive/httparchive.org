@@ -1,7 +1,7 @@
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions } from './utils';
+import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
 
 
 const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
@@ -33,14 +33,8 @@ function drawClientSummary(data, options, client) {
 		return;
 	}
 
-	const summary = getSummaryElement(options.id, client);
-	summary.classList.remove('hidden');
-
-	summary.querySelector('.primary').innerText = getSummary(data, options);
-}
-
-function getSummaryElement(metric, client) {
-	return document.querySelector(`#${metric} .metric-summary.${client}`);
+	const value = getSummary(data, options);
+	drawMetricSummary(options, client, value);
 }
 
 function getSummary(data, options) {

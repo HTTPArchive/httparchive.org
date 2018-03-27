@@ -135,6 +135,18 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
           Optional boolean. Default `false`. Whether the metric type is redundant with the metric name. For example, set to `true` when the type is included in the name, like "Total Requests". The type will be omitted anywhere it follows the metric name.
 
+      - **wpt**
+
+        Optional object. Includes config info for extracting WebPageTest results.
+
+        - **path**
+
+          Required string. The '$'-delimited object path indicating where to find the metric in raw WebPageTest results.
+
+        - **scale**
+
+          Optional number. Multiplier for scaling a WebPageTest result to match the units used by HTTP Archive. For example, to convert bytes to KB, a scale of `0.001` divides the value by 1000.
+
   - **report ID**
 
       Short identifier string for the report. Used as the URL fragment for the report page. For example, the JavaScript report with ID `js` would be accessed at `/reports/js`. Changing this value will probably break permalinks.
@@ -150,6 +162,22 @@ In this example config, there are two reports: Foo and Bar. They both include X 
       - **summary**
 
         Required string. Human-readable description of the report. Suggested length: 1-5 sentences.
+
+      - **minDate**
+
+        Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
+
+      - **maxDate**
+
+        Optional string. The latest date at which the report is available. YYYY_MM_DD format.
+
+      - **datePattern**
+
+        Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
+
+      - **metrics**
+
+        Required array. Describes the metrics included in the report.
 
       - **minDate**
 

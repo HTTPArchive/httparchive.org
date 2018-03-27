@@ -1,11 +1,14 @@
-import { prettyDate } from './utils';
+import { Metric } from './metric';
+import { el, prettyDate, drawMetricSummary } from './utils';
+import WPT from './webpagetest';
 
 
 class Report {
 
-	constructor(report) {
-		console.log('Report', report);
+	constructor(report, viz) {
+		console.log('Report', report, viz);
 		this.report = report;
+		this.viz = viz;
 		this.baseUrl = report.url;
 		this.startDate = report.startDate;
 		this.endDate = report.endDate;
@@ -102,6 +105,21 @@ class Report {
 		Array.from(document.querySelectorAll('.yyyy_mm_dd')).forEach(option => {
 			const date = prettyDate(option.innerText.trim());
 			option.innerText = date;
+		});
+	}
+
+	getWPT(wptId) {
+		const wpt = new WPT(wptId);
+		wpt.fetchResults().then(results => {
+			const metrics = wpt.getMetrics(this.report);
+			Object.entries(metrics).forEach(([metric, value]) => {
+				const options = this.report.metrics.find(m => m.id === metric);
+				options.metric = metric;
+				const m = new Metric(options, value.toFixed(1));
+				drawMetricSummary(options, 'webpagetest', m.toString());
+			});
+		}).catch(e => {
+			console.error('Error getting WebPageTest results.', e);
 		});
 	}
 }
