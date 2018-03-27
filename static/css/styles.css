@@ -278,6 +278,14 @@ input {
 	width: 95%;
 	z-index: 1;
 }
+.alert strong a {
+	border-bottom: 1px dashed #000;
+	border-color: inherit;
+}
+.alert strong a:hover {
+	text-decoration: none;
+	border-bottom-style: solid;
+}
 
 
 @media (max-width: 992px) {
