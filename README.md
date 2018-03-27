@@ -1,5 +1,5 @@
-# beta
-Beta version of https://github.com/HTTPArchive/httparchive at https://beta.httparchive.org
+# HTTPArchive.org
+New and improved version of [HTTP Archive](https://httparchive.org). This replaces the [legacy version](https://legacy.httparchive.org), the source code for which is still available at [HTTPArchive/legacy.httparchive.org](https://github.com/HTTPArchive/legacy.httparchive.org).
 
 ## Run Locally
 
