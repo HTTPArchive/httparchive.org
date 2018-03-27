@@ -7,6 +7,7 @@ class Page:
 
 
 LEGACY_PATH_MAP = {
+	'/index.php': Page('index'),
 	'/about.php': Page('about'),
 	'/trends.php': Page('report', report_id='state-of-the-web'),
 	'/interesting.php': Page('report', report_id='state-of-the-web', start='latest')

@@ -10,6 +10,15 @@
 {% endblock %}
 
 {% block content %}
+	{% if 'legacy_welcome' in request.cookies %}
+		<div class="alert alert-warning alert-dismissable" role="alert">
+			<strong>Welcome to the new HTTP Archive!</strong>
+			We hope you enjoy the new and improved experience.
+			<button type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	{% endif %}
 	<header>
 		<div class="container">
 			<div class="pddl0 col-lg-2 col-md-3 col-sm-3 col-xs-10">

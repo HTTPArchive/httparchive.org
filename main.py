@@ -15,6 +15,7 @@
 # [START app]
 import logging
 import re
+from time import time
 from urlparse import urlparse
 
 from csp import csp
@@ -22,7 +23,7 @@ import reports as report_util
 import faq as faq_util
 import legacy as legacy_util
 
-from flask import Flask, request, render_template, redirect, abort, url_for
+from flask import Flask, request, make_response, render_template, redirect, abort, url_for
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
@@ -167,7 +168,14 @@ def page_not_found(e):
 	if legacy_util.should_redirect(path):
 		page = legacy_util.get_redirect_page(path)
 		redirect_url = url_for(page.name, **page.kwargs)
-		return redirect(redirect_url, code=301)
+		response = make_response(redirect(redirect_url, code=301))
+		# Set a cookie that expires 5 seconds after page load, 
+		# to ensure that it is only shown once per redirect.
+		# Since the redirects are permanent (301) this should only be
+		# shown to users the first time they hit each legacy URL.
+		expiration = time() + 5
+		response.set_cookie('legacy_welcome', '1', expires=expiration)
+		return response
 
 	return render_template('error/404.html', error=e, path=path), 404
 

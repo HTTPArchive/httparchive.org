@@ -270,6 +270,15 @@ input {
 	content: '</>';
 }
 
+.alert {
+	position: absolute;
+	top: 5px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 95%;
+	z-index: 1;
+}
+
 
 @media (max-width: 992px) {
 	footer {
