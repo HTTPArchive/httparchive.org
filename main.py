@@ -15,12 +15,15 @@
 # [START app]
 import logging
 import re
+from time import time
+from urlparse import urlparse
 
 from csp import csp
-import reports as reportutil
-import faq as faqutil
+import reports as report_util
+import faq as faq_util
+from legacy import Legacy
 
-from flask import Flask, request, render_template, abort, url_for
+from flask import Flask, request, make_response, render_template, redirect, abort, url_for
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
@@ -30,35 +33,36 @@ Markdown(app)
 Talisman(app,
 	content_security_policy=csp,
 	content_security_policy_nonce_in=['script-src'])
+legacy_util = Legacy(faq_util)
 
 @app.route('/')
 def index():
 	return render_template('index.html',
-						   reports=reportutil.get_reports(),
-						   featured_reports=reportutil.get_featured_reports(),
-						   faq=faqutil)
+						   reports=report_util.get_reports(),
+						   featured_reports=report_util.get_featured_reports(),
+						   faq=faq_util)
 
 @app.route('/about')
 def about():
-	return render_template('about.html', reports=reportutil.get_reports())
+	return render_template('about.html', reports=report_util.get_reports())
 
 @app.route('/faq')
 def faq():
 	return render_template('faq.html',
-						   reports=reportutil.get_reports(),
-						   faq=faqutil)
+						   reports=report_util.get_reports(),
+						   faq=faq_util)
 
 @app.route('/reports')
 def reports():
-	return render_template('reports.html', reports=reportutil.get_reports())
+	return render_template('reports.html', reports=report_util.get_reports())
 
 @app.route('/reports/<report_id>')
 def report(report_id):
-	report = reportutil.get_report(report_id)
+	report = report_util.get_report(report_id)
 	if not report:
 		abort(404)
 
-	dates = reportutil.get_dates()
+	dates = report_util.get_dates()
 	if not dates:
 		abort(500)
 
@@ -114,16 +118,16 @@ def report(report_id):
 	if end and end not in dates:
 		abort(400)
 
-	viz = reportutil.VizTypes.HISTOGRAM if (start and not end) else reportutil.VizTypes.TIMESERIES
+	viz = report_util.VizTypes.HISTOGRAM if (start and not end) else report_util.VizTypes.TIMESERIES
 
-	if viz == reportutil.VizTypes.TIMESERIES and report.get('timeseries') and not report.get('timeseries').get('enabled'):
+	if viz == report_util.VizTypes.TIMESERIES and report.get('timeseries') and not report.get('timeseries').get('enabled'):
 		end = None
-		viz = reportutil.VizTypes.HISTOGRAM
+		viz = report_util.VizTypes.HISTOGRAM
 
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:
 		# Get a list of reports that also contain this metric.
-		metric['similar_reports'] = reportutil.get_similar_reports(metric['id'], report_id)
+		metric['similar_reports'] = report_util.get_similar_reports(metric['id'], report_id)
 
 		metric[viz] = metric.get(viz, {})
 		enabled = metric[viz].get('enabled', True)
@@ -149,7 +153,7 @@ def report(report_id):
 
 	return render_template('report/%s.html' % viz,
 						   viz=viz,
-						   reports=reportutil.get_reports(),
+						   reports=report_util.get_reports(),
 						   report=report,
 						   start=start,
 						   end=end)
@@ -160,7 +164,21 @@ def bad_request(e):
 
 @app.errorhandler(404)
 def page_not_found(e):
-	return render_template('error/404.html', error=e), 404
+	url = urlparse(request.url)
+	path = url.path
+	if legacy_util.should_redirect(path):
+		page = legacy_util.get_redirect_page(path)
+		redirect_url = url_for(page.name, **page.kwargs)
+		response = make_response(redirect(redirect_url, code=301))
+		# Set a cookie that expires 5 seconds after page load, 
+		# to ensure that it is only shown once per redirect.
+		# Since the redirects are permanent (301) this should only be
+		# shown to users the first time they hit each legacy URL.
+		expiration = time() + 5
+		response.set_cookie('legacy_welcome', '1', expires=expiration)
+		return response
+
+	return render_template('error/404.html', error=e, path=path), 404
 
 @app.errorhandler(500)
 def server_error(e):

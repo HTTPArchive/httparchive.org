@@ -7,3 +7,12 @@ hamburger.addEventListener('click', (e) => {
 });
 
 mobileNav.innerHTML = nav.innerHTML;
+
+const closeBtn = document.querySelector('.alert .close');
+if (closeBtn) {
+	closeBtn.addEventListener('click', (e) => {
+		// Remove the alert.
+		const parent = e.currentTarget.parentElement;
+		parent.parentElement.removeChild(parent);
+	});
+}

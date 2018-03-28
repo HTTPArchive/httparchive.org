@@ -28,6 +28,10 @@ section [class*="col"] {
 	padding: 15px;
 }
 
+.logo {
+	max-height: 57px;
+}
+
 nav {
 	color: #748c8f;
 }
@@ -264,6 +268,23 @@ input {
 }
 .default-report::after {
 	content: '</>';
+}
+
+.alert {
+	position: fixed;
+	top: 5px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 95%;
+	z-index: 1;
+}
+.alert strong a {
+	border-bottom: 1px dashed #000;
+	border-color: inherit;
+}
+.alert strong a:hover {
+	text-decoration: none;
+	border-bottom-style: solid;
 }
 
 
