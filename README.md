@@ -51,7 +51,7 @@ npm run stage
 
 ## Deploy
 
-To push changes live to the production instance, use the deployment script. Changes will be available on https://beta.httparchive.org.
+To push changes live to the production instance, use the deployment script. Changes will be available on https://httparchive.org.
 
 ```
 npm run deploy
