@@ -125,6 +125,15 @@
 				"scale": 0.001
 			}
 		},
+		"gzipSavings": {
+			"name": "gzip Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could have been saved with gzip optimization.",
+			"wpt": {
+				"path": "median$firstView$gzip_savings",
+				"scale": 0.0009765625
+			}
+		},
 		"hreflang": {
 			"name": "hreflang",
 			"type": "%",
@@ -491,6 +500,7 @@
 		"metrics": [
 			"bytesTotal",
 			"reqTotal",
+			"gzipSavings",
 			"bytesCss",
 			"reqCss",
 			"bytesFont",
