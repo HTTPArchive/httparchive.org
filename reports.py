@@ -87,3 +87,11 @@ def get_similar_reports(metric_id, current_report_id):
 def get_dates():
 	global report_dates
 	return report_dates
+
+def get_lenses():
+	global reports_json
+	return reports_json.get('_lens', {})
+
+def is_valid_lens(lens):
+	lenses = get_lenses()
+	return lens in lenses

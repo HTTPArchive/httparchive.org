@@ -124,13 +124,16 @@ def report(report_id):
 		end = None
 		viz = report_util.VizTypes.HISTOGRAM
 
+	lens = request.args.get('lens')
+
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:
 		# Get a list of reports that also contain this metric.
 		metric['similar_reports'] = report_util.get_similar_reports(metric['id'], report_id)
 
 		# Mark the lens used for this metric, if applicable.
-		metric['lens'] = request.args.get('lens')
+		if lens and report_util.is_valid_lens(lens):
+			metric['lens'] = lens
 
 		metric[viz] = metric.get(viz, {})
 		enabled = metric[viz].get('enabled', True)
