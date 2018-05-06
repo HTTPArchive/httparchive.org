@@ -335,6 +335,16 @@
 				"redundant": true
 			}
 		},
+		"speedIndex": {
+			"name": "SpeedIndex",
+			"type": "seconds",
+			"singular": "second",
+			"description": "The average number of seconds for the page to become visually complete. See the [WebPageTest documentation](https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index) for more info.",
+			"wpt": {
+				"path": "median$firstView$SpeedIndex",
+				"scale": 0.001
+			}
+		},
 		"cruxFp": {
 			"name": "First Paint",
 			"type": "seconds",
@@ -441,6 +451,7 @@
 		"summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
 		"metrics": [
 			"fcp",
+			"speedIndex",
 			"ttci",
 			"ttfi",
 			"dcl",
