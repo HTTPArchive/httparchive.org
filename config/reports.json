@@ -139,6 +139,15 @@
 				]
 			}
 		},
+		"imgSavings": {
+			"name": "Image Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could have been saved with image optimization.",
+			"wpt": {
+				"path": "median$firstView$image_savings",
+				"scale": 0.0009765625
+			}
+		},
 		"legible": {
 			"name": "Legible Text",
 			"type": "%",
@@ -387,7 +396,8 @@
 		"summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
 		"metrics": [
 			"bytesImg",
-			"reqImg"
+			"reqImg",
+			"imgSavings"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
