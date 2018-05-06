@@ -129,6 +129,9 @@ def report(report_id):
 		# Get a list of reports that also contain this metric.
 		metric['similar_reports'] = report_util.get_similar_reports(metric['id'], report_id)
 
+		# Mark the lens used for this metric, if applicable.
+		metric['lens'] = request.args.get('lens')
+
 		metric[viz] = metric.get(viz, {})
 		enabled = metric[viz].get('enabled', True)
 		min_date = metric[viz].get('minDate', start)
