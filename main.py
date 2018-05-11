@@ -124,6 +124,10 @@ def report(report_id):
 		end = None
 		viz = report_util.VizTypes.HISTOGRAM
 
+		# The default for histograms should be the latest date.
+		if not request.args.get('start'):
+			start = dates[0]
+
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:
 		# Get a list of reports that also contain this metric.
