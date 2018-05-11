@@ -9,7 +9,9 @@ csp = {
 		'\'self\'',
 		'cdn.httparchive.org',
 		'www.google-analytics.com',
-		'use.fontawesome.com'
+		'use.fontawesome.com',
+		'cdn.speedcurve.com',
+		'spdcrv.global.ssl.fastly.net'
 	],
 	'font-src': [
 		'\'self\'',
@@ -25,6 +27,8 @@ csp = {
 	'img-src': [
 		'\'self\'',
 		'discuss.httparchive.org',
-		'www.google-analytics.com'
+		'www.google-analytics.com',
+		's.g.doubleclick.net',
+		'stats.g.doubleclick.net'
 	]
 }
