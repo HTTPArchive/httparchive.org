@@ -92,6 +92,10 @@ def get_lenses():
 	global reports_json
 	return reports_json.get('_lens', {})
 
+def get_lens(lens):
+	lenses = get_lenses()
+	return lenses.get(lens, {})
+
 def is_valid_lens(lens):
 	lenses = get_lenses()
 	return lens in lenses

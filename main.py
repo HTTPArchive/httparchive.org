@@ -23,7 +23,7 @@ import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, render_template, redirect, abort, url_for
+from flask import Flask, request, make_response, render_template, redirect, abort, url_for as flask_url_for
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
@@ -34,6 +34,18 @@ Talisman(app,
 	content_security_policy=csp,
 	content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
+
+# Overwrite the built-in method.
+def url_for(endpoint, **kwargs):
+	# Persist the lens parameter across navigations.
+	lens = request.args.get('lens')
+	if report_util.is_valid_lens(lens):
+		kwargs['lens'] = lens
+
+	# Pass through to the built-in method.
+	return flask_url_for(endpoint, **kwargs)
+
+app.jinja_env.globals['url_for'] = url_for
 
 @app.route('/')
 def index():
@@ -125,6 +137,9 @@ def report(report_id):
 		viz = report_util.VizTypes.HISTOGRAM
 
 	lens = request.args.get('lens')
+
+	if report_util.is_valid_lens(lens):
+		report['lens'] = report_util.get_lens(lens)
 
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:

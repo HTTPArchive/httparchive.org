@@ -3,7 +3,7 @@
 
 {% set wpt_id = request.args.get('wptid') %}
 
-{% block title %}{{ report.name }}{% endblock %}
+{% block title %}{{ (report.lens and '%s: ' % report.lens.name or '') +report.name }}{% endblock %}
 
 {% block head %}
 	{{ super() }}
@@ -17,7 +17,7 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2>
 					<small>
-						Report:
+						{{ report.lens and report.lens.name or 'Report' }}:
 					</small>
 					{% block reportName %}{{ report.name }}{% endblock %}
 				</h2>
