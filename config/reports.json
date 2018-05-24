@@ -550,7 +550,6 @@
 			"cruxOl"
 		],
 		"minDate": "2017_10_01",
-		"maxDate": "2018_02_01",
 		"datePattern": ".*_01$",
 		"timeseries": {
 			"enabled": false

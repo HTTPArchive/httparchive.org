@@ -136,6 +136,10 @@ def report(report_id):
 		end = None
 		viz = report_util.VizTypes.HISTOGRAM
 
+		# The default for histograms should be the latest date.
+		if not request.args.get('start'):
+			start = dates[0]
+
 	lens = request.args.get('lens')
 
 	if report_util.is_valid_lens(lens):
