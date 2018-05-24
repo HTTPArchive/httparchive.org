@@ -27,6 +27,7 @@ csp = {
 	'img-src': [
 		'\'self\'',
 		'discuss.httparchive.org',
+		'avatars.discourse.org',
 		'www.google-analytics.com',
 		's.g.doubleclick.net',
 		'stats.g.doubleclick.net'
