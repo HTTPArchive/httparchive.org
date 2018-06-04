@@ -140,7 +140,7 @@ def report(report_id):
 		if not request.args.get('start'):
 			start = dates[0]
 
-	lens = request.args.get('lens')
+	lens = get_lens(request)
 
 	if report_util.is_valid_lens(lens):
 		report['lens'] = report_util.get_lens(lens)
@@ -182,6 +182,11 @@ def report(report_id):
 						   report=report,
 						   start=start,
 						   end=end)
+
+def get_lens(request):
+	host = request.host.split('.')
+	subdomain = len(host) > 2 and host[0] or ''
+	return request.args.get('lens') or subdomain
 
 @app.errorhandler(400)
 def bad_request(e):
