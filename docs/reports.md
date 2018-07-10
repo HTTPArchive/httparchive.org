@@ -73,7 +73,7 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
     - **metric ID**
 
-      Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the histogram/timeseries SQL filenames. May be reused between reports.
+      Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the [histogram/timeseries SQL filenames](https://github.com/HTTPArchive/bigquery/tree/master/sql). May be reused between reports.
 
     - **metric config**
 
