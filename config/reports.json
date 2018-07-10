@@ -1,581 +1,598 @@
 {
-	"_reports": [
-		"state-of-the-web",
-		"state-of-javascript",
-		"state-of-images",
-		"loading-speed",
-		"search-engine-optimization",
-		"page-weight",
-		"chrome-ux-report"
-	],
-	"_featured": [
-		"state-of-the-web"
-	],
-	"_metrics": {
-		"bytesCss": {
-			"name": "CSS Bytes",
-			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
-			"wpt": {
-				"path": "median$firstView$breakdown$css$bytes",
-				"scale": 0.0009765625
-			}
-		},
-		"bytesFont": {
-			"name": "Font Bytes",
-			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
-			"wpt": {
-				"path": "median$firstView$breakdown$font$bytes",
-				"scale": 0.0009765625
-			}
-		},
-		"bytesHtml": {
-			"name": "HTML Bytes",
-			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
-			"wpt": {
-				"path": "median$firstView$breakdown$html$bytes",
-				"scale": 0.0009765625
-			}
-		},
-		"bytesImg": {
-			"name": "Image Bytes",
-			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
-			"wpt": {
-				"path": "median$firstView$breakdown$image$bytes",
-				"scale": 0.0009765625
-			}
-		},
-		"bytesJs": {
-			"name": "JavaScript Bytes",
-			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
-			"wpt": {
-				"path": "median$firstView$breakdown$js$bytes",
-				"scale": 0.0009765625
-			}
-		},
-		"bytesOther": {
-			"name": "Other Bytes",
-			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
-			"wpt": {
-				"path": "median$firstView$breakdown$other$bytes",
-				"scale": 0.0009765625
-			}
-		},
-		"bytesTotal": {
-			"name": "Total Kilobytes",
-			"type": "KB",
-			"description": "The sum of [transfer size](https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize) kilobytes of all resources requested by the page.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$bytesIn",
-				"scale": 0.0009765625
-			}
-		},
-		"bytesVideo": {
-			"name": "Video Bytes",
-			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all videos requested by the page. A video is identified as a resource with the `mp4`, `swf`, `f4v`, or `flv` file extensions or a MIME type containing `flash`.",
-			"histogram": {
-				"minDate": "2015_05_01"
-			}
-		},
-		"canonical": {
-			"name": "rel=canonical",
-			"type": "%",
-			"description": "The percent of pages with a valid canonical link. Canonical pages are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/canonical). This metric is only available in mobile tests.",
-			"downIsBad": true,
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"compileJs": {
-			"name": "JS Compile Time",
-			"type": "ms",
-			"description": "The number of milliseconds spent compiling each JavaScript resource.",
-			"histogram": {
-				"minDate": "2017_09_01",
-				"maxDate": "2018_01_15"
-			},
-			"timeseries": {
-				"enabled": false
-			}
-		},
-		"dcl": {
-			"name": "DOMContentLoaded",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the initial HTML document has been completely loaded and parsed. See the [DOMContentLoaded event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded) for more info.",
-			"histogram": {
-				"minDate": "2013_08_01"
-			},
-			"wpt": {
-				"path": "median$firstView$domContentLoadedEventStart",
-				"scale": 0.001
-			}
-		},
-		"evalJs": {
-			"name": "JS Evaluation Time",
-			"type": "ms",
-			"description": "The number of milliseconds spent evaluating each JavaScript resource.",
-			"histogram": {
-				"minDate": "2017_09_01"
-			},
-			"timeseries": {
-				"enabled": false
-			}
-		},
-		"fcp": {
-			"name": "First Contentful Paint",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the page's primary content appears on the screen.",
-			"histogram": {
-				"minDate": "2016_12_15"
-			},
-			"wpt": {
-				"path": "median$firstView$firstContentfulPaint",
-				"scale": 0.001
-			}
-		},
-		"hreflang": {
-			"name": "hreflang",
-			"type": "%",
-			"description": "The percent of pages with a valid `hreflang` attribute, which allows crawlers to discover alternate translations of the page content. Validity is measured by Lighthouse. This metric is only available in mobile tests.",
-			"downIsBad": true,
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"legible": {
-			"name": "Legible Text",
-			"type": "%",
-			"description": "The percent of pages with legible text. Legibility is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/font-sizes). This metric is only available in mobile tests.",
-			"downIsBad": true,
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"linkText": {
-			"name": "Descriptive Link Text",
-			"type": "%",
-			"description": "The percent of pages with descriptive link text. Descriptiveness is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/link-text). This metric is only available in mobile tests.",
-			"downIsBad": true,
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"ol": {
-			"name": "onLoad",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. See the [load event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/load) for more info.",
-			"wpt": {
-				"path": "median$firstView$loadTime",
-				"scale": 0.001
-			}
-		},
-		"pctHttps": {
-			"name": "HTTPS Requests",
-			"type": "%",
-			"description": "The percent of all requests in the crawl whose URLs are prefixed with `https`.",
-			"downIsBad": true,
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"pctVuln": {
-			"name": "Pages with Vulnerable JS",
-			"type": "%",
-			"description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"tcp": {
-			"name": "TCP Connections Per Page",
-			"type": "Connections",
-			"singular": "Connection",
-			"description": "The number of TCP connections per page.",
-			"histogram": {
-				"minDate": "2014_05_15"
-			},
-			"wpt": {
-				"path": "median$firstView$connections"
-			}
-		},
-		"ttci": {
-			"name": "Time to Consistently Interactive",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
-			"histogram": {
-				"minDate": "2017_06_01"
-			}
-		},
-		"ttfi": {
-			"name": "Time to First Interactive",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
-			"histogram": {
-				"minDate": "2017_06_01"
-			},
-			"wpt": {
-				"path": "median$firstView$FirstInteractive",
-				"scale": 0.001
-			}
-		},
-		"reqCss": {
-			"name": "CSS Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$breakdown$css$requests",
-				"scale": 0.0009765625
-			}
-		},
-		"reqFont": {
-			"name": "Font Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$breakdown$font$requests",
-				"scale": 0.0009765625
-			}
-		},
-		"reqHtml": {
-			"name": "HTML Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$breakdown$html$requests",
-				"scale": 0.0009765625
-			}
-		},
-		"reqImg": {
-			"name": "Image Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$breakdown$image$requests",
-				"scale": 0.0009765625
-			}
-		},
-		"reqJs": {
-			"name": "JavaScript Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$breakdown$js$requests",
-				"scale": 0.0009765625
-			}
-		},
-		"reqOther": {
-			"name": "Other Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$breakdown$other$requests",
-				"scale": 0.0009765625
-			}
-		},
-		"reqTotal": {
-			"name": "Total Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of resources requested by the page.",
-			"timeseries": {
-				"redundant": true
-			},
-			"wpt": {
-				"path": "median$firstView$requests$length"
-			}
-		},
-		"reqVideo": {
-			"name": "Video Requests",
-			"type": "Requests",
-			"singular": "Request",
-			"description": "The number of videos requested by the page. A video is identified as a resource with the `mp4`, `swf`, `f4v`, or `flv` file extensions or a MIME type containing `flash`.",
-			"redundant": true,
-			"histogram": {
-				"minDate": "2015_05_01"
-			},
-			"timeseries": {
-				"redundant": true
-			}
-		},
-		"cruxFp": {
-			"name": "First Paint",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
-			"timeseries": {
-				"enabled": false
-			},
-			"wpt": {
-				"path": "median$firstView$firstPaint",
-				"scale": 0.001
-			}
-		},
-		"cruxFcp": {
-			"name": "First Contentful Paint",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
-			"timeseries": {
-				"enabled": false
-			},
-			"wpt": {
-				"path": "median$firstView$firstContentfulPaint",
-				"scale": 0.001
-			}
-		},
-		"cruxDcl": {
-			"name": "DOMContentLoaded",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
-			"timeseries": {
-				"enabled": false
-			},
-			"wpt": {
-				"path": "median$firstView$domContentLoadedEventStart",
-				"scale": 0.001
-			}
-		},
-		"cruxOl": {
-			"name": "Onload",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
-			"timeseries": {
-				"enabled": false
-			},
-			"wpt": {
-				"path": "median$firstView$loadTime",
-				"scale": 0.001
-			}
-		},
-		"vulnJs": {
-			"name": "Vulnerable JavaScript Libraries Per Page",
-			"type": "libraries",
-			"singular": "library",
-			"description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
-			"histogram": {
-				"minDate": "2017_10_15"
-			},
-			"timeseries": {
-				"enabled": false
-			}
-		}
-	},
-	"state-of-images": {
-		"name": "State of Images",
-		"summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
-		"metrics": [
-			"bytesImg",
-			"reqImg"
-		],
-		"graphic": {
-			"bgcolor": "#97b5b9",
-			"primary": {
-				"color": "#eee",
-				"icon": "far fa-file-image"
-			}
-		}
-	},
-	"state-of-javascript": {
-		"name": "State of JavaScript",
-		"summary": "JavaScript powers the modern web, enabling rich and interactive web applications. In this report we dive into how JavaScript is used on the web, and its adoption and trends both for mobile and desktop experiences.",
-		"metrics": [
-			"bytesJs",
-			"reqJs",
-			"evalJs",
-			"compileJs"
-		],
-		"graphic": {
-			"bgcolor": "#f7df1e",
-			"primary": {
-				"text": "JS",
-				"color": "#555"
-			},
-			"secondary": {
-				"text": ")};"
-			}
-		}
-	},
-	"loading-speed": {
-		"name": "Loading Speed",
-		"summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
-		"metrics": [
-			"fcp",
-			"ttci",
-			"ttfi",
-			"dcl",
-			"ol"
-		],
-		"graphic": {
-			"bgcolor": "#97b5b9",
-			"primary": {
-				"color": "#eee",
-				"icon": "fas fa-stopwatch"
-			}
-		}
-	},
-	"state-of-the-web": {
-		"name": "State of the Web",
-		"summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
-		"metrics": [
-			"bytesTotal",
-			"reqTotal",
-			"pctHttps",
-			"pctVuln",
-			"tcp",
-			"vulnJs"
-		],
-		"graphic": {
-			"bgcolor": "#97b5b9",
-			"primary": {
-				"color": "#eee",
-				"icon": "fab fa-connectdevelop"
-			}
-		}
-	},
-	"search-engine-optimization": {
-		"name": "SEO",
-		"summary": "How websites are built can affect their ranking in search results. This report tracks the adoption of several key Search Engine Optimization (SEO) techniques.",
-		"metrics": [
-			"canonical",
-			"hreflang",
-			"legible",
-			"linkText"
-		],
-		"graphic": {
-			"bgcolor": "#97b5b9",
-			"primary": {
-				"color": "#eee",
-				"icon": "fab fa-searchengin"
-			},
-			"secondary": {
-				"color": "rgba(255, 255, 255, 0.3)",
-				"text": "SEO"
-			}
-		}
-	},
-	"page-weight": {
-		"name": "Page Weight",
-		"summary": "This report tracks the size and quantity of many popular web page resources.",
-		"metrics": [
-			"bytesTotal",
-			"reqTotal",
-			"bytesCss",
-			"reqCss",
-			"bytesFont",
-			"reqFont",
-			"bytesHtml",
-			"reqHtml",
-			"bytesImg",
-			"reqImg",
-			"bytesJs",
-			"reqJs",
-			"bytesOther",
-			"reqOther",
-			"bytesVideo",
-			"reqVideo"
-		],
-		"graphic": {
-			"bgcolor": "#97b5b9",
-			"primary": {
-				"color": "#eee",
-				"icon": "fas fa-weight"
-			}
-		}
-	},
-	"chrome-ux-report": {
-		"name": "Chrome User Experience Report: Loading",
-		"summary": "Loading performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
-		"metrics": [
-			"cruxFp",
-			"cruxFcp",
-			"cruxDcl",
-			"cruxOl"
-		],
-		"minDate": "2017_10_01",
-		"datePattern": ".*_01$",
-		"timeseries": {
-			"enabled": false
-		},
-		"graphic": {
-			"bgcolor": "#97b5b9",
-			"primary": {
-				"color": "#eee",
-				"icon": "fas fa-users"
-			},
-			"secondary": {
-				"color": "rgba(255, 255, 255, 0.3)",
-				"icon": "fas fa-stopwatch"
-			}
-		}
-	}
+  "_reports": [
+    "state-of-the-web",
+    "state-of-javascript",
+    "state-of-images",
+    "loading-speed",
+    "search-engine-optimization",
+    "page-weight",
+    "chrome-ux-report",
+    "progressive-web-apps"
+  ],
+  "_featured": [
+    "state-of-the-web",
+    "progressive-web-apps"
+  ],
+  "_metrics": {
+    "bytesCss": {
+      "name": "CSS Bytes",
+      "type": "KB",
+      "description": "The sum of transfer size kilobytes of all external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
+      "wpt": {
+        "path": "median$firstView$breakdown$css$bytes",
+        "scale": 0.0009765625
+      }
+    },
+    "bytesFont": {
+      "name": "Font Bytes",
+      "type": "KB",
+      "description": "The sum of transfer size kilobytes of all fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
+      "wpt": {
+        "path": "median$firstView$breakdown$font$bytes",
+        "scale": 0.0009765625
+      }
+    },
+    "bytesHtml": {
+      "name": "HTML Bytes",
+      "type": "KB",
+      "description": "The sum of transfer size kilobytes of all HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
+      "wpt": {
+        "path": "median$firstView$breakdown$html$bytes",
+        "scale": 0.0009765625
+      }
+    },
+    "bytesImg": {
+      "name": "Image Bytes",
+      "type": "KB",
+      "description": "The sum of transfer size kilobytes of all external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
+      "wpt": {
+        "path": "median$firstView$breakdown$image$bytes",
+        "scale": 0.0009765625
+      }
+    },
+    "bytesJs": {
+      "name": "JavaScript Bytes",
+      "type": "KB",
+      "description": "The sum of transfer size kilobytes of all external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
+      "wpt": {
+        "path": "median$firstView$breakdown$js$bytes",
+        "scale": 0.0009765625
+      }
+    },
+    "bytesOther": {
+      "name": "Other Bytes",
+      "type": "KB",
+      "description": "The sum of transfer size kilobytes of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
+      "wpt": {
+        "path": "median$firstView$breakdown$other$bytes",
+        "scale": 0.0009765625
+      }
+    },
+    "bytesTotal": {
+      "name": "Total Kilobytes",
+      "type": "KB",
+      "description": "The sum of [transfer size](https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize) kilobytes of all resources requested by the page.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$bytesIn",
+        "scale": 0.0009765625
+      }
+    },
+    "bytesVideo": {
+      "name": "Video Bytes",
+      "type": "KB",
+      "description": "The sum of transfer size kilobytes of all videos requested by the page. A video is identified as a resource with the `mp4`, `swf`, `f4v`, or `flv` file extensions or a MIME type containing `flash`.",
+      "histogram": {
+        "minDate": "2015_05_01"
+      }
+    },
+    "canonical": {
+      "name": "rel=canonical",
+      "type": "%",
+      "description": "The percent of pages with a valid canonical link. Canonical pages are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/canonical). This metric is only available in mobile tests.",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "compileJs": {
+      "name": "JS Compile Time",
+      "type": "ms",
+      "description": "The number of milliseconds spent compiling each JavaScript resource.",
+      "histogram": {
+        "minDate": "2017_09_01",
+        "maxDate": "2018_01_15"
+      },
+      "timeseries": {
+        "enabled": false
+      }
+    },
+    "dcl": {
+      "name": "DOMContentLoaded",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the initial HTML document has been completely loaded and parsed. See the [DOMContentLoaded event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded) for more info.",
+      "histogram": {
+        "minDate": "2013_08_01"
+      },
+      "wpt": {
+        "path": "median$firstView$domContentLoadedEventStart",
+        "scale": 0.001
+      }
+    },
+    "evalJs": {
+      "name": "JS Evaluation Time",
+      "type": "ms",
+      "description": "The number of milliseconds spent evaluating each JavaScript resource.",
+      "histogram": {
+        "minDate": "2017_09_01"
+      },
+      "timeseries": {
+        "enabled": false
+      }
+    },
+    "fcp": {
+      "name": "First Contentful Paint",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the page's primary content appears on the screen.",
+      "histogram": {
+        "minDate": "2016_12_15"
+      },
+      "wpt": {
+        "path": "median$firstView$firstContentfulPaint",
+        "scale": 0.001
+      }
+    },
+    "hreflang": {
+      "name": "hreflang",
+      "type": "%",
+      "description": "The percent of pages with a valid `hreflang` attribute, which allows crawlers to discover alternate translations of the page content. Validity is measured by Lighthouse. This metric is only available in mobile tests.",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "legible": {
+      "name": "Legible Text",
+      "type": "%",
+      "description": "The percent of pages with legible text. Legibility is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/font-sizes). This metric is only available in mobile tests.",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "linkText": {
+      "name": "Descriptive Link Text",
+      "type": "%",
+      "description": "The percent of pages with descriptive link text. Descriptiveness is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/link-text). This metric is only available in mobile tests.",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "ol": {
+      "name": "onLoad",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. See the [load event on MDN](https://developer.mozilla.org/en-US/docs/Web/Events/load) for more info.",
+      "wpt": {
+        "path": "median$firstView$loadTime",
+        "scale": 0.001
+      }
+    },
+    "pctHttps": {
+      "name": "HTTPS Requests",
+      "type": "%",
+      "description": "The percent of all requests in the crawl whose URLs are prefixed with `https`.",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "pctVuln": {
+      "name": "Pages with Vulnerable JS",
+      "type": "%",
+      "description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "tcp": {
+      "name": "TCP Connections Per Page",
+      "type": "Connections",
+      "singular": "Connection",
+      "description": "The number of TCP connections per page.",
+      "histogram": {
+        "minDate": "2014_05_15"
+      },
+      "wpt": {
+        "path": "median$firstView$connections"
+      }
+    },
+    "ttci": {
+      "name": "Time to Consistently Interactive",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+      "histogram": {
+        "minDate": "2017_06_01"
+      }
+    },
+    "ttfi": {
+      "name": "Time to First Interactive",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+      "histogram": {
+        "minDate": "2017_06_01"
+      },
+      "wpt": {
+        "path": "median$firstView$FirstInteractive",
+        "scale": 0.001
+      }
+    },
+    "reqCss": {
+      "name": "CSS Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$breakdown$css$requests",
+        "scale": 0.0009765625
+      }
+    },
+    "reqFont": {
+      "name": "Font Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$breakdown$font$requests",
+        "scale": 0.0009765625
+      }
+    },
+    "reqHtml": {
+      "name": "HTML Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$breakdown$html$requests",
+        "scale": 0.0009765625
+      }
+    },
+    "reqImg": {
+      "name": "Image Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$breakdown$image$requests",
+        "scale": 0.0009765625
+      }
+    },
+    "reqJs": {
+      "name": "JavaScript Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$breakdown$js$requests",
+        "scale": 0.0009765625
+      }
+    },
+    "reqOther": {
+      "name": "Other Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$breakdown$other$requests",
+        "scale": 0.0009765625
+      }
+    },
+    "reqTotal": {
+      "name": "Total Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of resources requested by the page.",
+      "timeseries": {
+        "redundant": true
+      },
+      "wpt": {
+        "path": "median$firstView$requests$length"
+      }
+    },
+    "reqVideo": {
+      "name": "Video Requests",
+      "type": "Requests",
+      "singular": "Request",
+      "description": "The number of videos requested by the page. A video is identified as a resource with the `mp4`, `swf`, `f4v`, or `flv` file extensions or a MIME type containing `flash`.",
+      "redundant": true,
+      "histogram": {
+        "minDate": "2015_05_01"
+      },
+      "timeseries": {
+        "redundant": true
+      }
+    },
+    "cruxFp": {
+      "name": "First Paint",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
+      "timeseries": {
+        "enabled": false
+      },
+      "wpt": {
+        "path": "median$firstView$firstPaint",
+        "scale": 0.001
+      }
+    },
+    "cruxFcp": {
+      "name": "First Contentful Paint",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
+      "timeseries": {
+        "enabled": false
+      },
+      "wpt": {
+        "path": "median$firstView$firstContentfulPaint",
+        "scale": 0.001
+      }
+    },
+    "cruxDcl": {
+      "name": "DOMContentLoaded",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+      "timeseries": {
+        "enabled": false
+      },
+      "wpt": {
+        "path": "median$firstView$domContentLoadedEventStart",
+        "scale": 0.001
+      }
+    },
+    "cruxOl": {
+      "name": "Onload",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+      "timeseries": {
+        "enabled": false
+      },
+      "wpt": {
+        "path": "median$firstView$loadTime",
+        "scale": 0.001
+      }
+    },
+    "vulnJs": {
+      "name": "Vulnerable JavaScript Libraries Per Page",
+      "type": "libraries",
+      "singular": "library",
+      "description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
+      "histogram": {
+        "minDate": "2017_10_15"
+      },
+      "timeseries": {
+        "enabled": false
+      }
+    },
+    "workboxAdoption": {
+      "name": "Workbox Adoption",
+      "type": "Unique PWA URLs",
+      "description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This report shows the number of unique PWA URLs that use them.",
+      "histogram": {
+        "minDate": "2016_01_01"
+      }
+    }
+  },
+  "state-of-images": {
+    "name": "State of Images",
+    "summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
+    "metrics": [
+      "bytesImg",
+      "reqImg"
+    ],
+    "graphic": {
+      "bgcolor": "#97b5b9",
+      "primary": {
+        "color": "#eee",
+        "icon": "far fa-file-image"
+      }
+    }
+  },
+  "state-of-javascript": {
+    "name": "State of JavaScript",
+    "summary": "JavaScript powers the modern web, enabling rich and interactive web applications. In this report we dive into how JavaScript is used on the web, and its adoption and trends both for mobile and desktop experiences.",
+    "metrics": [
+      "bytesJs",
+      "reqJs",
+      "evalJs",
+      "compileJs"
+    ],
+    "graphic": {
+      "bgcolor": "#f7df1e",
+      "primary": {
+        "text": "JS",
+        "color": "#555"
+      },
+      "secondary": {
+        "text": ")};"
+      }
+    }
+  },
+  "loading-speed": {
+    "name": "Loading Speed",
+    "summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
+    "metrics": [
+      "fcp",
+      "ttci",
+      "ttfi",
+      "dcl",
+      "ol"
+    ],
+    "graphic": {
+      "bgcolor": "#97b5b9",
+      "primary": {
+        "color": "#eee",
+        "icon": "fas fa-stopwatch"
+      }
+    }
+  },
+  "state-of-the-web": {
+    "name": "State of the Web",
+    "summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
+    "metrics": [
+      "bytesTotal",
+      "reqTotal",
+      "pctHttps",
+      "pctVuln",
+      "tcp",
+      "vulnJs"
+    ],
+    "graphic": {
+      "bgcolor": "#97b5b9",
+      "primary": {
+        "color": "#eee",
+        "icon": "fab fa-connectdevelop"
+      }
+    }
+  },
+  "search-engine-optimization": {
+    "name": "SEO",
+    "summary": "How websites are built can affect their ranking in search results. This report tracks the adoption of several key Search Engine Optimization (SEO) techniques.",
+    "metrics": [
+      "canonical",
+      "hreflang",
+      "legible",
+      "linkText"
+    ],
+    "graphic": {
+      "bgcolor": "#97b5b9",
+      "primary": {
+        "color": "#eee",
+        "icon": "fab fa-searchengin"
+      },
+      "secondary": {
+        "color": "rgba(255, 255, 255, 0.3)",
+        "text": "SEO"
+      }
+    }
+  },
+  "page-weight": {
+    "name": "Page Weight",
+    "summary": "This report tracks the size and quantity of many popular web page resources.",
+    "metrics": [
+      "bytesTotal",
+      "reqTotal",
+      "bytesCss",
+      "reqCss",
+      "bytesFont",
+      "reqFont",
+      "bytesHtml",
+      "reqHtml",
+      "bytesImg",
+      "reqImg",
+      "bytesJs",
+      "reqJs",
+      "bytesOther",
+      "reqOther",
+      "bytesVideo",
+      "reqVideo"
+    ],
+    "graphic": {
+      "bgcolor": "#97b5b9",
+      "primary": {
+        "color": "#eee",
+        "icon": "fas fa-weight"
+      }
+    }
+  },
+  "chrome-ux-report": {
+    "name": "Chrome User Experience Report: Loading",
+    "summary": "Loading performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+    "metrics": [
+      "cruxFp",
+      "cruxFcp",
+      "cruxDcl",
+      "cruxOl"
+    ],
+    "minDate": "2017_10_01",
+    "datePattern": ".*_01$",
+    "timeseries": {
+      "enabled": false
+    },
+    "graphic": {
+      "bgcolor": "#97b5b9",
+      "primary": {
+        "color": "#eee",
+        "icon": "fas fa-users"
+      },
+      "secondary": {
+        "color": "rgba(255, 255, 255, 0.3)",
+        "icon": "fas fa-stopwatch"
+      }
+    }
+  },
+  "progressive-web-apps": {
+    "name": "Progressive Web Apps",
+    "summary": "This report examines the state of Progressive Web Apps (PWA) according to the HTTP Archive.",
+    "metrics": [
+      "workboxAdoption"
+    ]
+  }
 }
