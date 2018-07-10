@@ -73,7 +73,7 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
     - **metric ID**
 
-      Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the histogram/timeseries SQL filenames. May be reused between reports.
+      Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the [histogram/timeseries SQL filenames](https://github.com/HTTPArchive/bigquery/tree/master/sql). May be reused between reports.
 
     - **metric config**
 
@@ -163,18 +163,6 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Required string. Human-readable description of the report. Suggested length: 1-5 sentences.
 
-      - **minDate**
-
-        Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
-
-      - **maxDate**
-
-        Optional string. The latest date at which the report is available. YYYY_MM_DD format.
-
-      - **datePattern**
-
-        Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
-
       - **metrics**
 
         Required array. Describes the metrics included in the report.
@@ -191,9 +179,17 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
 
-      - **metrics**
+      - **minDate**
 
-        Required array. Describes the metrics included in the report.
+        Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
+
+      - **maxDate**
+
+        Optional string. The latest date at which the report is available. YYYY_MM_DD format.
+
+      - **datePattern**
+
+        Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
 
 ## Rendering a Report
 
