@@ -446,7 +446,15 @@
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
-		}		
+		},
+		"lighthousePWAs": {
+			"name": "PWAs tested with Lighthouse",
+			"type": "Tested PWAs",
+			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This report shows how many PWAs have been tested with the tool.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		}
 	},
 	"state-of-images": {
 		"name": "State of Images",
@@ -601,7 +609,8 @@
 		"summary": "This report examines the state of Progressive Web Apps (PWA) according to the HTTP Archive.",
 		"metrics": [
 			"workboxAdoption",
-			"lighthouseScore"
+			"lighthouseScore",
+			"lighthousePWAs"
 		]
 	}
 }
