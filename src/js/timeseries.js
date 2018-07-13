@@ -6,7 +6,8 @@ import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
 
 
 function timeseries(metric, options, start, end) {
-	const dataUrl = `https://cdn.httparchive.org/reports/${metric}.json`;
+	// TODO: remove cache buster
+	const dataUrl = `https://cdn.httparchive.org/reports/${metric}.json?random=${Math.random().toString().substr(2)}`;
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
 	options.metric = metric;
@@ -54,7 +55,7 @@ function getSummary(data, options) {
 	const o = data[data.length - 1];
 	const summary = getPrimaryMetric(o, options);
 	const metric = new Metric(options, summary);
-	
+
 	return metric.toString();
 }
 
