@@ -454,6 +454,14 @@
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
+		},
+		"usecounterPWAs": {
+			"name": "Pages controlled by a service worker",
+			"type": "Service worker controlled pages",
+			"description": "The ```ServiceWorkerControlledPage``` [use counters](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) triggers whenever a page is controlled by a service worker. This report shows how many PWAs have triggered this use counter.",
+			"histogram": {
+				"minDate": "2016_12_01"
+			}
 		}
 	},
 	"state-of-images": {
@@ -610,7 +618,8 @@
 		"metrics": [
 			"workboxAdoption",
 			"lighthouseScore",
-			"lighthousePWAs"
+			"lighthousePWAs",
+			"usecounterPWAs"
 		]
 	}
 }
