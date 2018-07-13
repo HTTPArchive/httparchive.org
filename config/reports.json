@@ -438,7 +438,15 @@
 			"histogram": {
 				"minDate": "2016_01_01"
 			}
-		}
+		},
+		"lighthouseScore": {
+			"name": "Lighthouse PWA Score",
+			"type": "Average PWA Score",
+			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This report shows the average Lighthouse PWA score.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		}		
 	},
 	"state-of-images": {
 		"name": "State of Images",
@@ -592,7 +600,8 @@
 		"name": "Progressive Web Apps",
 		"summary": "This report examines the state of Progressive Web Apps (PWA) according to the HTTP Archive.",
 		"metrics": [
-			"workboxAdoption"
+			"workboxAdoption",
+			"lighthouseScore"
 		]
 	}
 }
