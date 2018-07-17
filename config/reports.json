@@ -433,8 +433,8 @@
 		},
 		"workboxAdoption": {
 			"name": "Workbox Adoption",
-			"type": "Unique PWA URLs",
-			"description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This report shows the number of unique PWA URLs that use them.",
+			"type": "PWA URLs",
+			"description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This report shows the number of PWA URLs that use them.",
 			"histogram": {
 				"minDate": "2016_01_01"
 			}
