@@ -25,13 +25,10 @@ pip install -r requirements.txt
 npm install
 ```
 
-4. Authenticate with Google Cloud and export the Google Cloud project environment variable:
-
-This is necessary because the App Engine server uses Cloud APIs.
+ 4. Initialize the Google Cloud CLI (this is necessary because the App Engine server uses Google Cloud APIs):
 
 ```
-gcloud auth application-default login
-export GCLOUD_PROJECT=http-archive
+gcloud init
 ```
 
 5. Run the application:
