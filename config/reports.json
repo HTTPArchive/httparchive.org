@@ -563,6 +563,7 @@
 		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
+		"maxDateMetric": "cruxFcp",
 		"timeseries": {
 			"enabled": false
 		},

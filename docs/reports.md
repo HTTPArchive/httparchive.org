@@ -179,17 +179,9 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
 
-      - **minDate**
+      - **maxDateMetric**
 
-        Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
-
-      - **maxDate**
-
-        Optional string. The latest date at which the report is available. YYYY_MM_DD format.
-
-      - **datePattern**
-
-        Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
+        Optional string. Metric ID used to query the GCS bucket. The maxDate for the report will be the most recent date-bucket that contains this metric's JSON results.
 
 ## Rendering a Report
 

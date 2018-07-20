@@ -69,12 +69,15 @@ def report(report_id):
 	min_date = report.get('minDate')
 	max_date = report.get('maxDate')
 	date_pattern = report.get('datePattern')
+	max_date_metric = report.get('maxDateMetric')
 
 	# TODO: If a report doesn't explicitly have a min/max date,
 	# but all of its metrics do, take the min/max of the metrics
 	# and set that as the report's implicit min/max date.
 
 	# Omit dates for which this report has no data.
+	if max_date_metric:
+		max_date = report_util.get_latest_date(max_date_metric)
 	if min_date:
 		dates = dates[:dates.index(min_date) + 1]
 	if max_date:
