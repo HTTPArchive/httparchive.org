@@ -484,6 +484,78 @@
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
+		},
+		"installEvents": {
+			"name": "\"Install\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```install``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
+		},
+		"activateEvents": {
+			"name": "\"Activate\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```activate``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
+		},
+		"fetchEvents": {
+			"name": "\"Fetch\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```fetch``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
+		},
+		"messageEvents": {
+			"name": "\"Message\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```message``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
+		},
+		"pushEvents": {
+			"name": "\"Push\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```push``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
+		},
+		"notificationclickEvents": {
+			"name": "\"Notificationclick\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```notificationclick``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
+		},
+		"notificationcloseEvents": {
+			"name": "\"Notificationclose\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```notificationclose``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
+		},
+		"syncEvents": {
+			"name": "\"Sync\" Events",
+			"type": "Service Workers",
+			"downIsBad": true,
+			"description": "This report shows how many Service Workers listen for the ```sync``` event.",
+			"histogram": {
+				"minDate": "2017_03_01"
+			}
 		}
 	},
 	"state-of-images": {
@@ -643,7 +715,15 @@
 			"usecounterPWAs",
 			"responseBodiesPWAs",
 			"workboxAdoption",
-			"medianLighthouseScore"
+			"medianLighthouseScore",
+			"installEvents",
+			"activateEvents",
+			"fetchEvents",
+			"pushEvents",
+			"notificationclickEvents",
+			"notificationcloseEvents",
+			"messageEvents",
+			"syncEvents"
 		]
 	}
 }
