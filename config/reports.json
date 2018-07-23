@@ -433,34 +433,56 @@
 		},
 		"workboxAdoption": {
 			"name": "Workbox Adoption",
-			"type": "PWA URLs",
+			"type": "URLs",
+			"downIsBad": true,
 			"description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This report shows the number of PWA URLs that use them.",
 			"histogram": {
 				"minDate": "2016_01_01"
 			}
 		},
-		"lighthouseScore": {
-			"name": "Lighthouse PWA Score",
-			"type": "Average PWA Score",
+		"medianLighthouseScore": {
+			"name": "Lighthouse Scores",
+			"type": "PWA Score",
+			"downIsBad": true,
 			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This report shows the average Lighthouse PWA score.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
 		},
 		"lighthousePWAs": {
-			"name": "PWAs tested with Lighthouse",
-			"type": "Tested PWAs",
-			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This report shows how many PWAs have been tested with the tool.",
+			"name": "PWAs Tested with Lighthouse",
+			"type": "URLs",
+			"downIsBad": true,
+			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This report shows how many PWAs have been tested with the tool and have achieved a PWA score of 75 and higher.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
 		},
 		"usecounterPWAs": {
-			"name": "Pages controlled by a service worker",
-			"type": "Service worker controlled pages",
+			"name": "Pages Controlled by a Service Worker",
+			"type": "URLs",
+			"downIsBad": true,
 			"description": "The ```ServiceWorkerControlledPage``` [use counters](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) triggers whenever a page is controlled by a service worker. This report shows how many PWAs have triggered this use counter.",
 			"histogram": {
 				"minDate": "2016_12_01"
+			}
+		},
+		"responseBodiesPWAs": {
+			"name": "Pages with Service Worker and Manifest",
+			"type": "URLs",
+			"downIsBad": true,
+			"description": "This report shows how many pages register a Service Worker and have a Web App Manifest.",
+			"histogram": {
+				"minDate": "2016_01_01"
+			}
+		},
+		"stateOfTheUnionPWAs": {
+			"name": "All known PWAs",
+			"type": "URLs",
+			"downIsBad": true,
+			"description": "This report shows how many pages either register a Service Worker and have a Web App Manifest, trigger the ```ServiceWorkerControlledPage``` use counter, or were successfully tested with Lighthouse.",
+			"histogram": {
+				"minDate": "2017_06_01"
 			}
 		}
 	},
@@ -616,10 +638,12 @@
 		"name": "Progressive Web Apps",
 		"summary": "This report examines the state of Progressive Web Apps (PWA) according to the HTTP Archive.",
 		"metrics": [
-			"workboxAdoption",
-			"lighthouseScore",
+			"stateOfTheUnionPWAs",
 			"lighthousePWAs",
-			"usecounterPWAs"
+			"usecounterPWAs",
+			"responseBodiesPWAs",
+			"workboxAdoption",
+			"medianLighthouseScore"
 		]
 	}
 }
