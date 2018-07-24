@@ -11,6 +11,11 @@
 	"_featured": [
 		"state-of-the-web"
 	],
+	"_lens": {
+		"wordpress": {
+			"name": "WordPress"
+		}
+	},
 	"_metrics": {
 		"bytesCss": {
 			"name": "CSS Bytes",

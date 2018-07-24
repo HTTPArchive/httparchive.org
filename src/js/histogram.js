@@ -9,7 +9,7 @@ const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Color
 function histogram(metric, date, options) {
 	options.date = date;
 	options.metric = metric;
-	const dataUrl = `https://cdn.httparchive.org/reports/${date}/${metric}.json`;
+	const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens}/` : ''}${date}/${metric}.json`;
 	fetch(dataUrl)
 		.then(response => {
 			if (!response.ok) {

@@ -12,6 +12,11 @@ Reports are configured in [config/reports.json](../config/reports.json). Here's 
     "foo",
     "bar"
   ],
+  "_lens": {
+    "wordpress": {
+      "name": "WordPress"
+    }
+  },
   "_featured": [
     "bar"
   ],
@@ -66,6 +71,22 @@ In this example config, there are two reports: Foo and Bar. They both include X 
   - **\_featured**
 
     Required array of report IDs. Defines the sequence of reports as they appear on the home page. This array should only contain 1-3 reports.
+
+  - **\_lens**
+
+    Optional object mapping lens IDs to lens configs. Defines the available lenses as they appear on the report pages.
+
+    - **lens ID**
+
+      Short identifier string for the lens. Used as the URL value of the "lens" querystring parameter on report pages. Must be unique and match the lens/* SQL filenames, eg "wordpress".
+
+    - **lens config**
+
+      Maps lens configuration property names to values. The following properties are available:
+
+      - **name**
+
+        Required string. Human-readable name of the lens, eg "WordPress". Used in the report filtering UI.
 
   - **\_metrics**
 

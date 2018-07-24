@@ -23,7 +23,7 @@ import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, render_template, redirect, abort, url_for
+from flask import Flask, request, make_response, render_template, redirect, abort, url_for as flask_url_for
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
@@ -34,6 +34,18 @@ Talisman(app,
 	content_security_policy=csp,
 	content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
+
+# Overwrite the built-in method.
+def url_for(endpoint, **kwargs):
+	# Persist the lens parameter across navigations.
+	lens = request.args.get('lens')
+	if report_util.is_valid_lens(lens):
+		kwargs['lens'] = lens
+
+	# Pass through to the built-in method.
+	return flask_url_for(endpoint, **kwargs)
+
+app.jinja_env.globals['url_for'] = url_for
 
 @app.route('/')
 def index():
@@ -131,10 +143,19 @@ def report(report_id):
 		if not request.args.get('start'):
 			start = dates[0]
 
+	lens = get_lens(request)
+
+	if report_util.is_valid_lens(lens):
+		report['lens'] = report_util.get_lens(lens)
+
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:
 		# Get a list of reports that also contain this metric.
 		metric['similar_reports'] = report_util.get_similar_reports(metric['id'], report_id)
+
+		# Mark the lens used for this metric, if applicable.
+		if lens and report_util.is_valid_lens(lens):
+			metric['lens'] = lens
 
 		metric[viz] = metric.get(viz, {})
 		enabled = metric[viz].get('enabled', True)
@@ -164,6 +185,11 @@ def report(report_id):
 						   report=report,
 						   start=start,
 						   end=end)
+
+def get_lens(request):
+	host = request.host.split('.')
+	subdomain = len(host) > 2 and host[0] or ''
+	return request.args.get('lens') or subdomain
 
 @app.errorhandler(400)
 def bad_request(e):

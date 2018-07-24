@@ -100,3 +100,15 @@ def get_latest_date(metric_id):
 	latest_date = dateutil.get_latest_date(report_dates, metric_id)
 	latest_metric_dates[metric_id] = latest_date
 	return latest_date
+
+def get_lenses():
+	global reports_json
+	return reports_json.get('_lens', {})
+
+def get_lens(lens):
+	lenses = get_lenses()
+	return lenses.get(lens, {})
+
+def is_valid_lens(lens):
+	lenses = get_lenses()
+	return lens in lenses
