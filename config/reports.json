@@ -444,7 +444,7 @@
 			"name": "Lighthouse Scores",
 			"type": "PWA Score",
 			"downIsBad": true,
-			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This metric shows the average Lighthouse PWA score.",
+			"description": "This metric shows the average Lighthouse PWA score.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -453,7 +453,7 @@
 			"name": "PWAs Tested with Lighthouse",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This metric shows how many PWAs have been tested with the tool and have achieved a PWA score of 75 and higher.",
+			"description": "This metric shows how many PWAs have been tested with the Lighthouse tool and have achieved a PWA score of 75 and higher.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -708,7 +708,7 @@
 	},
 	"progressive-web-apps": {
 		"name": "Progressive Web Apps",
-		"summary": "This report examines the state of Progressive Web Apps (PWA) according to the HTTP Archive.",
+		"summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWA). PWAs are a new class of web applications, enabled for the most part by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading by intercepting network requests to deliver programmatic or cached responses, service workers can receive push notifications and synchronize data in the background even when the corresponding app is not running, and service workers — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs to their devices’ home screens. A popular automated tool for improving the quality of PWAs (and web pages in general) is [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Some reports below are based on Lighthouse data.",
 		"metrics": [
 			"stateOfTheUnionPWAs",
 			"lighthousePWAs",
