@@ -432,11 +432,16 @@
 		},
 		"workboxAdoption": {
 			"name": "Workbox Adoption",
-			"type": "URLs",
+			"type": "%",
 			"downIsBad": true,
 			"description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This metric shows the number of PWA URLs that use them.",
 			"histogram": {
-				"minDate": "2016_01_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"medianLighthouseScore": {
@@ -486,74 +491,114 @@
 		},
 		"installEvents": {
 			"name": "`install` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `install` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"activateEvents": {
 			"name": "`activate` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `activate` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"fetchEvents": {
 			"name": "`fetch` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `fetch` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"messageEvents": {
 			"name": "`message` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `message` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"pushEvents": {
 			"name": "`push` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `push` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"notificationclickEvents": {
 			"name": "`notificationclick` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `notificationclick` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"notificationcloseEvents": {
 			"name": "`notificationclose` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `notificationclose` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"syncEvents": {
 			"name": "`sync` Events",
-			"type": "Service Workers",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `sync` event.",
 			"histogram": {
-				"minDate": "2017_03_01"
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		}
 	},
