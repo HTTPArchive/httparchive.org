@@ -154,15 +154,6 @@
 				"scale": 0.001
 			}
 		},
-		"gzipSavings": {
-			"name": "gzip Savings",
-			"type": "KB",
-			"description": "The number of kilobytes that could have been saved with gzip optimization.",
-			"wpt": {
-				"path": "median$firstView$gzip_savings",
-				"scale": 0.0009765625
-			}
-		},
 		"hreflang": {
 			"name": "hreflang",
 			"type": "%",
@@ -175,15 +166,6 @@
 				"fields": [
 					"percent"
 				]
-			}
-		},
-		"imgSavings": {
-			"name": "Image Savings",
-			"type": "KB",
-			"description": "The number of kilobytes that could have been saved with image optimization.",
-			"wpt": {
-				"path": "median$firstView$image_savings",
-				"scale": 0.0009765625
 			}
 		},
 		"legible": {
@@ -388,16 +370,6 @@
 				"redundant": true
 			}
 		},
-		"speedIndex": {
-			"name": "SpeedIndex",
-			"type": "seconds",
-			"singular": "second",
-			"description": "The average number of seconds for the page to become visually complete. See the [WebPageTest documentation](https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index) for more info.",
-			"wpt": {
-				"path": "median$firstView$SpeedIndex",
-				"scale": 0.001
-			}
-		},
 		"cruxFp": {
 			"name": "First Paint",
 			"type": "seconds",
@@ -468,8 +440,7 @@
 		"summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
 		"metrics": [
 			"bytesImg",
-			"reqImg",
-			"imgSavings"
+			"reqImg"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
@@ -504,7 +475,6 @@
 		"summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
 		"metrics": [
 			"fcp",
-			"speedIndex",
 			"ttci",
 			"ttfi",
 			"dcl",
@@ -564,7 +534,6 @@
 		"metrics": [
 			"bytesTotal",
 			"reqTotal",
-			"gzipSavings",
 			"bytesCss",
 			"reqCss",
 			"bytesFont",
