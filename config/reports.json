@@ -485,73 +485,73 @@
 			}
 		},
 		"installEvents": {
-			"name": "\"Install\" Events",
+			"name": "`install` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```install``` event.",
+			"description": "This metric shows how many Service Workers listen for the `install` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
 		},
 		"activateEvents": {
-			"name": "\"Activate\" Events",
+			"name": "`activate` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```activate``` event.",
+			"description": "This metric shows how many Service Workers listen for the `activate` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
 		},
 		"fetchEvents": {
-			"name": "\"Fetch\" Events",
+			"name": "`fetch` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```fetch``` event.",
+			"description": "This metric shows how many Service Workers listen for the `fetch` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
 		},
 		"messageEvents": {
-			"name": "\"Message\" Events",
+			"name": "`message` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```message``` event.",
+			"description": "This metric shows how many Service Workers listen for the `message` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
 		},
 		"pushEvents": {
-			"name": "\"Push\" Events",
+			"name": "`push` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```push``` event.",
+			"description": "This metric shows how many Service Workers listen for the `push` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
 		},
 		"notificationclickEvents": {
-			"name": "\"Notificationclick\" Events",
+			"name": "`notificationclick` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```notificationclick``` event.",
+			"description": "This metric shows how many Service Workers listen for the `notificationclick` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
 		},
 		"notificationcloseEvents": {
-			"name": "\"Notificationclose\" Events",
+			"name": "`notificationclose` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```notificationclose``` event.",
+			"description": "This metric shows how many Service Workers listen for the `notificationclose` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
 		},
 		"syncEvents": {
-			"name": "\"Sync\" Events",
+			"name": "`sync` Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This metric shows how many Service Workers listen for the ```sync``` event.",
+			"description": "This metric shows how many Service Workers listen for the `sync` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
