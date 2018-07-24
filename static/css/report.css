@@ -72,6 +72,9 @@
 #TOC a {
 	color: #337ab7;
 }
+#TOC p {
+  display: inline;
+}
 
 .metric-summaries {
 	display: flex;

@@ -30,7 +30,7 @@
 						{% for metric in report.metrics %}
 							{% if metric[viz]['enabled'] %}
 								<li>
-									<a href="#{{ metric.id }}">{{ metric.name }}</a>
+									<a href="#{{ metric.id }}">{{ metric.name | markdown }}</a>
 								</li>
 							{% endif %}
 						{% endfor %}
@@ -57,7 +57,7 @@
 								<label for="endDate" title="Optional">
 									End Date
 								</label>
-								
+
 								<select id="endDate">
 									<option></option>
 									{% if end == report.dates[0] %}
@@ -89,7 +89,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</section>
 
 	<section id="report-metrics">
@@ -121,7 +121,7 @@
 
 {% macro metric_info(metric, viz) %}
 	<h3>
-		<a href="#{{ metric.id }}">{{ metric.name }}</a>
+		<a href="#{{ metric.id }}">{{ metric.name | markdown}}</a>
 	</h3>
 	{% if metric.description %}
 		{{ metric.description | markdown }}

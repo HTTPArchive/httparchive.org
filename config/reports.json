@@ -4,6 +4,7 @@
 		"state-of-javascript",
 		"state-of-images",
 		"loading-speed",
+		"progressive-web-apps",
 		"search-engine-optimization",
 		"page-weight",
 		"chrome-ux-report"
@@ -428,6 +429,177 @@
 			"timeseries": {
 				"enabled": false
 			}
+		},
+		"workboxAdoption": {
+			"name": "Workbox Adoption",
+			"type": "%",
+			"downIsBad": true,
+			"description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This metric shows the number of PWA URLs that use them.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"medianLighthouseScore": {
+			"name": "Lighthouse Scores",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows the median Lighthouse PWA score of [baseline PWAs](https://developers.google.com/web/progressive-web-apps/checklist#baseline), i.e., PWAs with a minimum score of 75.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		},
+		"lighthousePWAs": {
+			"name": "PWAs Tested with Lighthouse",
+			"type": "URLs",
+			"downIsBad": true,
+			"description": "This metric shows how many PWAs have been tested with the Lighthouse tool and have achieved a PWA score of 75 and higher.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		},
+		"usecounterPWAs": {
+			"name": "Pages Controlled by a Service Worker",
+			"type": "URLs",
+			"downIsBad": true,
+			"description": "The ```ServiceWorkerControlledPage``` [use counters](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) triggers whenever a page is controlled by a service worker. This metric shows how many PWAs have triggered this use counter.",
+			"histogram": {
+				"minDate": "2016_12_01"
+			}
+		},
+		"responseBodiesPWAs": {
+			"name": "Pages with Service Worker and Manifest",
+			"type": "URLs",
+			"downIsBad": true,
+			"description": "This metric shows how many pages register a Service Worker and have a Web App Manifest.",
+			"histogram": {
+				"minDate": "2016_01_01"
+			}
+		},
+		"stateOfTheUnionPWAs": {
+			"name": "All known PWAs",
+			"type": "URLs",
+			"downIsBad": true,
+			"description": "This metric shows how many pages either register a Service Worker and have a Web App Manifest, trigger the ```ServiceWorkerControlledPage``` use counter, or were successfully tested with Lighthouse.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		},
+		"installEvents": {
+			"name": "`install` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `install` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"activateEvents": {
+			"name": "`activate` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `activate` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"fetchEvents": {
+			"name": "`fetch` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `fetch` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"messageEvents": {
+			"name": "`message` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `message` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"pushEvents": {
+			"name": "`push` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `push` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"notificationclickEvents": {
+			"name": "`notificationclick` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `notificationclick` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"notificationcloseEvents": {
+			"name": "`notificationclose` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `notificationclose` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"syncEvents": {
+			"name": "`sync` Events",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric shows how many Service Workers listen for the `sync` event.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
 		}
 	},
 	"state-of-images": {
@@ -578,5 +750,25 @@
 				"icon": "fas fa-stopwatch"
 			}
 		}
+	},
+	"progressive-web-apps": {
+		"name": "Progressive Web Apps",
+		"summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWA). PWAs are a new class of web applications, enabled for the most part by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading by intercepting network requests to deliver programmatic or cached responses, service workers can receive push notifications and synchronize data in the background even when the corresponding app is not running, and service workers — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs to their devices’ home screens. A popular automated tool for improving the quality of PWAs (and web pages in general) is [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Some reports below are based on Lighthouse data.",
+		"metrics": [
+			"stateOfTheUnionPWAs",
+			"lighthousePWAs",
+			"usecounterPWAs",
+			"responseBodiesPWAs",
+			"workboxAdoption",
+			"medianLighthouseScore",
+			"installEvents",
+			"activateEvents",
+			"fetchEvents",
+			"pushEvents",
+			"notificationclickEvents",
+			"notificationcloseEvents",
+			"messageEvents",
+			"syncEvents"
+		]
 	}
 }
