@@ -435,7 +435,7 @@
 			"name": "Workbox Adoption",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This report shows the number of PWA URLs that use them.",
+			"description": "[Workbox](https://developers.google.com/web/tools/workbox/) is a set of libraries and Node.js modules that make it easy to cache assets and take full advantage of features used to build Progressive Web Apps. This metric shows the number of PWA URLs that use them.",
 			"histogram": {
 				"minDate": "2016_01_01"
 			}
@@ -444,7 +444,7 @@
 			"name": "Lighthouse Scores",
 			"type": "PWA Score",
 			"downIsBad": true,
-			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This report shows the average Lighthouse PWA score.",
+			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This metric shows the average Lighthouse PWA score.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -453,7 +453,7 @@
 			"name": "PWAs Tested with Lighthouse",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This report shows how many PWAs have been tested with the tool and have achieved a PWA score of 75 and higher.",
+			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is an open-source, automated tool for improving the quality of web pages. This metric shows how many PWAs have been tested with the tool and have achieved a PWA score of 75 and higher.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -462,7 +462,7 @@
 			"name": "Pages Controlled by a Service Worker",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "The ```ServiceWorkerControlledPage``` [use counters](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) triggers whenever a page is controlled by a service worker. This report shows how many PWAs have triggered this use counter.",
+			"description": "The ```ServiceWorkerControlledPage``` [use counters](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) triggers whenever a page is controlled by a service worker. This metric shows how many PWAs have triggered this use counter.",
 			"histogram": {
 				"minDate": "2016_12_01"
 			}
@@ -471,7 +471,7 @@
 			"name": "Pages with Service Worker and Manifest",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "This report shows how many pages register a Service Worker and have a Web App Manifest.",
+			"description": "This metric shows how many pages register a Service Worker and have a Web App Manifest.",
 			"histogram": {
 				"minDate": "2016_01_01"
 			}
@@ -480,7 +480,7 @@
 			"name": "All known PWAs",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "This report shows how many pages either register a Service Worker and have a Web App Manifest, trigger the ```ServiceWorkerControlledPage``` use counter, or were successfully tested with Lighthouse.",
+			"description": "This metric shows how many pages either register a Service Worker and have a Web App Manifest, trigger the ```ServiceWorkerControlledPage``` use counter, or were successfully tested with Lighthouse.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -489,7 +489,7 @@
 			"name": "\"Install\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```install``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```install``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
@@ -498,7 +498,7 @@
 			"name": "\"Activate\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```activate``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```activate``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
@@ -507,7 +507,7 @@
 			"name": "\"Fetch\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```fetch``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```fetch``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
@@ -516,7 +516,7 @@
 			"name": "\"Message\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```message``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```message``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
@@ -525,7 +525,7 @@
 			"name": "\"Push\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```push``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```push``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
@@ -534,7 +534,7 @@
 			"name": "\"Notificationclick\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```notificationclick``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```notificationclick``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
@@ -543,7 +543,7 @@
 			"name": "\"Notificationclose\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```notificationclose``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```notificationclose``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
@@ -552,7 +552,7 @@
 			"name": "\"Sync\" Events",
 			"type": "Service Workers",
 			"downIsBad": true,
-			"description": "This report shows how many Service Workers listen for the ```sync``` event.",
+			"description": "This metric shows how many Service Workers listen for the ```sync``` event.",
 			"histogram": {
 				"minDate": "2017_03_01"
 			}
