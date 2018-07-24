@@ -448,7 +448,7 @@
 			"name": "Lighthouse Scores",
 			"type": "%",
 			"downIsBad": true,
-			"description": "This metric shows the median Lighthouse PWA score.",
+			"description": "This metric shows the median Lighthouse PWA score of [baseline PWAs](https://developers.google.com/web/progressive-web-apps/checklist#baseline), i.e., PWAs with a minimum score of 75.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
