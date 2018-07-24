@@ -14,6 +14,7 @@ class VizTypes():
 MAX_REPORT_STALENESS = 60 * 60 * 3
 
 last_report_update = 0
+latest_metric_dates = {}
 report_dates = []
 reports_json = {}
 
@@ -28,6 +29,7 @@ def update_reports():
 	global reports_json
 
 	report_dates = dateutil.get_dates()
+	latest_metric_dates = {}
 
 	with open('config/reports.json') as reports_file:
 		reports_json = json.load(reports_file)
@@ -87,6 +89,17 @@ def get_similar_reports(metric_id, current_report_id):
 def get_dates():
 	global report_dates
 	return report_dates
+
+def get_latest_date(metric_id):
+	global report_dates
+	global latest_metric_dates
+	# Check the cache before hitting GCS.
+	latest_date = latest_metric_dates.get(metric_id)
+	if latest_date:
+		return latest_date
+	latest_date = dateutil.get_latest_date(report_dates, metric_id)
+	latest_metric_dates[metric_id] = latest_date
+	return latest_date
 
 def get_lenses():
 	global reports_json

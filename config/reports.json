@@ -20,32 +20,56 @@
 		"bytesCss": {
 			"name": "CSS Bytes",
 			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`."
+			"description": "The sum of transfer size kilobytes of all external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
+			"wpt": {
+				"path": "median$firstView$breakdown$css$bytes",
+				"scale": 0.0009765625
+			}
 		},
 		"bytesFont": {
 			"name": "Font Bytes",
 			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`."
+			"description": "The sum of transfer size kilobytes of all fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
+			"wpt": {
+				"path": "median$firstView$breakdown$font$bytes",
+				"scale": 0.0009765625
+			}
 		},
 		"bytesHtml": {
 			"name": "HTML Bytes",
 			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`."
+			"description": "The sum of transfer size kilobytes of all HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
+			"wpt": {
+				"path": "median$firstView$breakdown$html$bytes",
+				"scale": 0.0009765625
+			}
 		},
 		"bytesImg": {
 			"name": "Image Bytes",
 			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`."
+			"description": "The sum of transfer size kilobytes of all external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
+			"wpt": {
+				"path": "median$firstView$breakdown$image$bytes",
+				"scale": 0.0009765625
+			}
 		},
 		"bytesJs": {
 			"name": "JavaScript Bytes",
 			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`."
+			"description": "The sum of transfer size kilobytes of all external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
+			"wpt": {
+				"path": "median$firstView$breakdown$js$bytes",
+				"scale": 0.0009765625
+			}
 		},
 		"bytesOther": {
 			"name": "Other Bytes",
 			"type": "KB",
-			"description": "The sum of transfer size kilobytes of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file."
+			"description": "The sum of transfer size kilobytes of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
+			"wpt": {
+				"path": "median$firstView$breakdown$other$bytes",
+				"scale": 0.0009765625
+			}
 		},
 		"bytesTotal": {
 			"name": "Total Kilobytes",
@@ -268,6 +292,10 @@
 			"description": "The number of external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
 			"timeseries": {
 				"redundant": true
+			},
+			"wpt": {
+				"path": "median$firstView$breakdown$css$requests",
+				"scale": 0.0009765625
 			}
 		},
 		"reqFont": {
@@ -277,6 +305,10 @@
 			"description": "The number of fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
 			"timeseries": {
 				"redundant": true
+			},
+			"wpt": {
+				"path": "median$firstView$breakdown$font$requests",
+				"scale": 0.0009765625
 			}
 		},
 		"reqHtml": {
@@ -286,6 +318,10 @@
 			"description": "The number of HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
 			"timeseries": {
 				"redundant": true
+			},
+			"wpt": {
+				"path": "median$firstView$breakdown$html$requests",
+				"scale": 0.0009765625
 			}
 		},
 		"reqImg": {
@@ -295,6 +331,10 @@
 			"description": "The number of external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
 			"timeseries": {
 				"redundant": true
+			},
+			"wpt": {
+				"path": "median$firstView$breakdown$image$requests",
+				"scale": 0.0009765625
 			}
 		},
 		"reqJs": {
@@ -304,6 +344,10 @@
 			"description": "The number of external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
 			"timeseries": {
 				"redundant": true
+			},
+			"wpt": {
+				"path": "median$firstView$breakdown$js$requests",
+				"scale": 0.0009765625
 			}
 		},
 		"reqOther": {
@@ -313,6 +357,10 @@
 			"description": "The number of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
 			"timeseries": {
 				"redundant": true
+			},
+			"wpt": {
+				"path": "median$firstView$breakdown$other$requests",
+				"scale": 0.0009765625
 			}
 		},
 		"reqTotal": {
@@ -551,6 +599,7 @@
 		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
+		"maxDateMetric": "cruxFcp",
 		"timeseries": {
 			"enabled": false
 		},
