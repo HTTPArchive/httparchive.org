@@ -4,10 +4,10 @@
 		"state-of-javascript",
 		"state-of-images",
 		"loading-speed",
+		"progressive-web-apps",
 		"search-engine-optimization",
 		"page-weight",
-		"chrome-ux-report",
-		"progressive-web-apps"
+		"chrome-ux-report"
 	],
 	"_featured": [
 		"state-of-the-web"
