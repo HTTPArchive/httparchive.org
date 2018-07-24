@@ -448,7 +448,7 @@
 			"name": "Lighthouse Scores",
 			"type": "%",
 			"downIsBad": true,
-			"description": "This metric shows the average Lighthouse PWA score.",
+			"description": "This metric shows the median Lighthouse PWA score.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
