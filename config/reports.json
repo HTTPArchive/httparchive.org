@@ -441,7 +441,7 @@
 		},
 		"medianLighthouseScore": {
 			"name": "Lighthouse Scores",
-			"type": "PWA Score",
+			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows the average Lighthouse PWA score.",
 			"histogram": {
