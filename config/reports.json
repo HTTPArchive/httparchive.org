@@ -448,7 +448,7 @@
 			"name": "Lighthouse Scores",
 			"type": "%",
 			"downIsBad": true,
-			"description": "This metric shows the median Lighthouse PWA score of [baseline PWAs](https://developers.google.com/web/progressive-web-apps/checklist#baseline), i.e., PWAs with a minimum score of 75.",
+			"description": "A popular automated tool for improving the quality of PWAs (and web pages in general) is [Lighthouse](https://developers.google.com/web/tools/lighthouse/). This metric shows the median Lighthouse PWA score of [baseline PWAs](https://developers.google.com/web/progressive-web-apps/checklist#baseline), *i.e.*, PWAs with a minimum score of 75.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -457,7 +457,7 @@
 			"name": "PWAs Tested with Lighthouse",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "This metric shows how many PWAs have been tested with the Lighthouse tool and have achieved a PWA score of 75 and higher.",
+			"description": "This metric shows how many PWAs have been tested with the [Lighthouse](https://developers.google.com/web/tools/lighthouse/) tool and qualify as [baseline PWAs](https://developers.google.com/web/progressive-web-apps/checklist#baseline), *i.e.*, PWAs with a minimum score of 75.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -484,7 +484,7 @@
 			"name": "All known PWAs",
 			"type": "URLs",
 			"downIsBad": true,
-			"description": "This metric shows how many pages either register a Service Worker and have a Web App Manifest, trigger the ```ServiceWorkerControlledPage``` use counter, or were successfully tested with Lighthouse.",
+			"description": "This metric shows how many pages either register a Service Worker and have a Web App Manifest, trigger the ```ServiceWorkerControlledPage``` use counter, or were successfully tested with [Lighthouse](https://developers.google.com/web/tools/lighthouse/).",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
@@ -752,7 +752,7 @@
 	},
 	"progressive-web-apps": {
 		"name": "Progressive Web Apps",
-		"summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWA). PWAs are a new class of web applications, enabled for the most part by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading by intercepting network requests to deliver programmatic or cached responses, service workers can receive push notifications and synchronize data in the background even when the corresponding app is not running, and service workers — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs to their devices’ home screens. A popular automated tool for improving the quality of PWAs (and web pages in general) is [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Some reports below are based on Lighthouse data.",
+		"summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWAs). PWAs are a new class of web applications, enabled by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading, to receive push notifications and synchronize data in the background, and — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs.",
 		"metrics": [
 			"stateOfTheUnionPWAs",
 			"lighthousePWAs",
