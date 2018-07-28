@@ -37,7 +37,7 @@ gcloud init
 npm run start
 ```
 
-6. In your web browser, enter the following address: http://localhost:8080
+6. In your web browser, enter the following address: http://127.0.0.1:8080
 
 ## Staging
 
