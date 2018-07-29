@@ -245,6 +245,20 @@
 				"path": "median$firstView$connections"
 			}
 		},
+		"h2": {
+			"name": "HTTP/2 Requests",
+			"type": "%",
+			"description": "The percent of all requests in the crawl using HTTP/2.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"ttci": {
 			"name": "Time to Consistently Interactive",
 			"type": "seconds",
@@ -497,6 +511,7 @@
 			"pctHttps",
 			"pctVuln",
 			"tcp",
+			"h2",
 			"vulnJs"
 		],
 		"graphic": {
