@@ -54,7 +54,7 @@ function getSummary(data, options) {
 	const o = data[data.length - 1];
 	const summary = getPrimaryMetric(o, options);
 	const metric = new Metric(options, summary);
-	
+
 	return metric.toString();
 }
 
@@ -63,7 +63,16 @@ function getChange(data, options) {
 		return;
 	}
 
-	const oldest = getPrimaryMetric(data[0], options);
+	let oldestIndex;
+
+	for (let i = 0; i < data.length; i++) {
+		if (getPrimaryMetric(data[i], options) > 0) {
+			oldestIndex = i;
+			break;
+		}
+	}
+
+	const oldest = getPrimaryMetric(data[oldestIndex], options);
 	const latest = getPrimaryMetric(data[data.length - 1], options);
 
 	return (latest - oldest) * 100 / oldest;
