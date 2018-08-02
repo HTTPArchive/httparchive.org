@@ -439,7 +439,7 @@
 		"cruxFid": {
 			"name": "First Input Delay",
 			"type": "ms",
-			"description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds.",
+			"description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
 			"timeseries": {
 				"enabled": false
 			},
@@ -506,7 +506,7 @@
 		"cruxFastFid": {
 			"name": "Fast First Input Delay",
 			"type": "%",
-			"description": "The percent of \"fast\" FID experiences less than 100 ms.",
+			"description": "The percent of \"fast\" FID experiences less than 100 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
 			"downIsBad": true,
 			"histogram": {
 				"enabled": false
