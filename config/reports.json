@@ -436,6 +436,17 @@
 				"scale": 0.001
 			}
 		},
+		"cruxFid": {
+			"name": "First Input Delay",
+			"type": "ms",
+			"description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+			"timeseries": {
+				"enabled": false
+			},
+			"histogram": {
+				"minDate": "2018_06_01"
+			}
+		},
 		"vulnJs": {
 			"name": "Vulnerable JavaScript Libraries Per Page",
 			"type": "libraries",
@@ -579,7 +590,8 @@
 			"cruxFp",
 			"cruxFcp",
 			"cruxDcl",
-			"cruxOl"
+			"cruxOl",
+			"cruxFid"
 		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
