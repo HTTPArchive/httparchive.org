@@ -388,7 +388,7 @@
 			"name": "First Paint",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
+			"description": "The number of seconds from the time the navigation started until the browser first renders. See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"timeseries": {
 				"enabled": false
 			},
@@ -401,7 +401,7 @@
 			"name": "First Contentful Paint",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
+			"description": "The number of seconds from the time the navigation started until the browser first renders. See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"timeseries": {
 				"enabled": false
 			},
@@ -414,7 +414,7 @@
 			"name": "DOMContentLoaded",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics.",
 			"timeseries": {
 				"enabled": false
 			},
@@ -427,7 +427,7 @@
 			"name": "Onload",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading.",
 			"timeseries": {
 				"enabled": false
 			},
@@ -439,12 +439,82 @@
 		"cruxFid": {
 			"name": "First Input Delay",
 			"type": "ms",
-			"description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+			"description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds.",
 			"timeseries": {
 				"enabled": false
 			},
 			"histogram": {
 				"minDate": "2018_06_01"
+			}
+		},
+		"cruxFastFcp": {
+			"name": "Fast First Contentful Paint",
+			"type": "%",
+			"description": "The percent of \"fast\" FCP experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastFp": {
+			"name": "Fast First Paint",
+			"type": "%",
+			"description": "The percent of \"fast\" FP experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastDcl": {
+			"name": "Fast DOM Content Loaded",
+			"type": "%",
+			"description": "The percent of \"fast\" DCL experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastOl": {
+			"name": "Fast Onload",
+			"type": "%",
+			"description": "The percent of \"fast\" OL experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastFid": {
+			"name": "Fast First Input Delay",
+			"type": "%",
+			"description": "The percent of \"fast\" FID experiences less than 100 ms.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"vulnJs": {
@@ -584,21 +654,23 @@
 		}
 	},
 	"chrome-ux-report": {
-		"name": "Chrome User Experience Report: Loading",
-		"summary": "Loading performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+		"name": "Chrome User Experience Report",
+		"summary": "Loading and interactivity performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
 		"metrics": [
 			"cruxFp",
 			"cruxFcp",
 			"cruxDcl",
 			"cruxOl",
-			"cruxFid"
+			"cruxFid",
+			"cruxFastFp",
+			"cruxFastFcp",
+			"cruxFastDcl",
+			"cruxFastOl",
+			"cruxFastFid"
 		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
 		"maxDateMetric": "cruxFcp",
-		"timeseries": {
-			"enabled": false
-		},
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
