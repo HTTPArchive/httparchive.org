@@ -71,6 +71,10 @@ function getChange(data, options) {
 			break;
 		}
 	}
+	
+	if (oldestIndex === undefined) {
+		return;
+	}
 
 	const oldest = getPrimaryMetric(data[oldestIndex], options);
 	const latest = getPrimaryMetric(data[data.length - 1], options);
