@@ -17,6 +17,15 @@
 		}
 	},
 	"_metrics": {
+		"bootupJs": {
+			"name": "JavaScript Boot-up Time",
+			"type": "seconds",
+			"singular": "second",
+			"description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		},
 		"bytesCss": {
 			"name": "CSS Bytes",
 			"type": "KB",
@@ -168,6 +177,20 @@
 				]
 			}
 		},
+		"fontDisplay": {
+			"name": "Font Display",
+			"type": "%",
+			"description": "The percent of pages that avoid the flash of invisible text (FOIT) during web font loading by using the `font-display` CSS property. This metric is measured by [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#all_text_remains_visible_during_web_font_loads) and is only available in mobile tests.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"legible": {
 			"name": "Legible Text",
 			"type": "%",
@@ -292,6 +315,38 @@
 			"wpt": {
 				"path": "median$firstView$breakdown$css$requests",
 				"scale": 0.0009765625
+			}
+		},
+		"offscreenImages": {
+			"name": "Offscreen Image Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images) and is only available in mobile tests.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		},
+		"optimizedImages": {
+			"name": "Optimized Image Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		},
+		"responsiveImages": {
+			"name": "Responsive Image Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could be saved per page by using response images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/oversized-images) and is only available in mobile tests.",
+			"histogram": {
+				"minDate": "2017_06_01"
+			}
+		},
+		"videoAnimations": {
+			"name": "Animated Video Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could be saved per page by using video for animations rather than GIFs. This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#use_video_formats_for_animated_content) and is only available in mobile tests.",
+			"histogram": {
+				"minDate": "2018_07_01"
 			}
 		},
 		"reqFont": {
@@ -535,7 +590,11 @@
 		"summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
 		"metrics": [
 			"bytesImg",
-			"reqImg"
+			"reqImg",
+			"offscreenImages",
+			"optimizedImages",
+			"responsiveImages",
+			"videoAnimations"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
@@ -552,7 +611,8 @@
 			"bytesJs",
 			"reqJs",
 			"evalJs",
-			"compileJs"
+			"compileJs",
+			"bootupJs"
 		],
 		"graphic": {
 			"bgcolor": "#f7df1e",
@@ -573,7 +633,8 @@
 			"ttci",
 			"ttfi",
 			"dcl",
-			"ol"
+			"ol",
+			"bootupJs"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
@@ -593,7 +654,8 @@
 			"pctVuln",
 			"tcp",
 			"h2",
-			"vulnJs"
+			"vulnJs",
+			"fontDisplay"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
