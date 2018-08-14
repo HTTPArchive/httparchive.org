@@ -23,7 +23,7 @@ import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, render_template, redirect, abort, url_for as flask_url_for
+from flask import Flask, request, make_response, jsonify, render_template, redirect, abort, url_for as flask_url_for
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
@@ -64,9 +64,33 @@ def faq():
 						   reports=report_util.get_reports(),
 						   faq=faq_util)
 
+# A public JSON endpoint to get info about a given metric.
+@app.route('/metric.json')
+def metric():
+	metric_id = request.args.get('id')
+	if not metric_id:
+		abort(jsonify(status=400, message='id parameter required'))
+
+	metric = report_util.get_metric(metric_id)
+	# A metric has a histogram if it is not explicitly disabled.
+	has_histogram = metric and metric.get('histogram', {}).get('enabled', True)
+	latest = report_util.get_latest_date(metric_id) if metric and has_histogram else None
+
+	return jsonify(
+		status=200,
+		metric=metric,
+		latest=latest
+	)
+
 @app.route('/reports')
 def reports():
-	return render_template('reports.html', reports=report_util.get_reports())
+	reports = report_util.get_reports()
+
+	# Return as JSON if requested.
+	if get_format(request) == 'json':
+		return jsonify(status=200, reports=reports)
+
+	return render_template('reports.html', reports=reports)
 
 @app.route('/reports/<report_id>')
 def report(report_id):
@@ -120,7 +144,7 @@ def report(report_id):
 	# This is longhand for the snapshot (histogram) view.
 	if start == end:
 		end = None
-	
+
 	# This is shorthand for the trends (timeseries) view.
 	if not start and not end:
 		# The default date range is 24 crawls (1 year).
@@ -174,10 +198,14 @@ def report(report_id):
 			enabled = end <= max_date
 
 		metric[viz]['enabled'] = enabled
-			
+
 
 	if not request.script_root:
 		request.script_root = url_for('report', report_id=report_id, _external=True)
+
+	# Return as JSON if requested.
+	if get_format(request) == 'json':
+		return jsonify(status=200, report=report, start=start, end=end, viz=viz)
 
 	return render_template('report/%s.html' % viz,
 						   viz=viz,
@@ -191,6 +219,9 @@ def get_lens(request):
 	subdomain = len(host) > 2 and host[0] or ''
 	return request.args.get('lens') or subdomain
 
+def get_format(request):
+	return request.args.get('f')
+
 @app.errorhandler(400)
 def bad_request(e):
 	return render_template('error/400.html', error=e), 400
@@ -203,7 +234,7 @@ def page_not_found(e):
 		page = legacy_util.get_redirect_page(path)
 		redirect_url = url_for(page.name, **page.kwargs)
 		response = make_response(redirect(redirect_url, code=301))
-		# Set a cookie that expires 5 seconds after page load, 
+		# Set a cookie that expires 5 seconds after page load,
 		# to ensure that it is only shown once per redirect.
 		# Since the redirects are permanent (301) this should only be
 		# shown to users the first time they hit each legacy URL.
