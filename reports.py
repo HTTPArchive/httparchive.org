@@ -68,6 +68,8 @@ def get_metric(metric_id):
 	global reports_json
 	metrics = reports_json.get('_metrics')
 	metric = deepcopy(metrics.get(metric_id))
+	if not metric:
+		return None
 	metric['id'] = metric_id
 	return metric
 
