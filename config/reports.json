@@ -12,6 +12,12 @@
 		"state-of-the-web"
 	],
 	"_lens": {
+		"drupal": {
+			"name": "Drupal"
+		},
+		"magento": {
+			"name": "Magento"
+		},
 		"wordpress": {
 			"name": "WordPress"
 		}
