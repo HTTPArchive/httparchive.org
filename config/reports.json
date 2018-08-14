@@ -341,14 +341,6 @@
 				"minDate": "2017_06_01"
 			}
 		},
-		"videoAnimations": {
-			"name": "Animated Video Savings",
-			"type": "KB",
-			"description": "The number of kilobytes that could be saved per page by using video for animations rather than GIFs. This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#use_video_formats_for_animated_content) and is only available in mobile tests.",
-			"histogram": {
-				"minDate": "2018_07_01"
-			}
-		},
 		"reqFont": {
 			"name": "Font Requests",
 			"type": "Requests",
@@ -593,8 +585,7 @@
 			"reqImg",
 			"offscreenImages",
 			"optimizedImages",
-			"responsiveImages",
-			"videoAnimations"
+			"responsiveImages"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
