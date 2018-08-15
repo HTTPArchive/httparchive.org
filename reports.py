@@ -3,7 +3,7 @@ import logging
 from copy import deepcopy
 from time import time
 
-import dates as dateutil
+import dates as date_util
 
 
 class VizTypes():
@@ -28,7 +28,7 @@ def update_reports():
 	global report_dates
 	global reports_json
 
-	report_dates = dateutil.get_dates()
+	report_dates = date_util.get_dates()
 	latest_metric_dates = {}
 
 	with open('config/reports.json') as reports_file:
@@ -99,17 +99,22 @@ def get_latest_date(metric_id):
 	latest_date = latest_metric_dates.get(metric_id)
 	if latest_date:
 		return latest_date
-	latest_date = dateutil.get_latest_date(report_dates, metric_id)
+	latest_date = date_util.get_latest_date(report_dates, metric_id)
 	latest_metric_dates[metric_id] = latest_date
 	return latest_date
 
 def get_lenses():
 	global reports_json
+	# TODO: Consider sorting the lenses by name.
 	return reports_json.get('_lens', {})
 
-def get_lens(lens):
+def get_lens(lens_id):
 	lenses = get_lenses()
-	return lenses.get(lens, {})
+	lens = deepcopy(lenses.get(lens_id))
+	if not lens:
+		return None
+	lens['id'] = lens_id
+	return lens
 
 def is_valid_lens(lens):
 	lenses = get_lenses()

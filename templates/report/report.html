@@ -2,6 +2,7 @@
 
 
 {% set wpt_id = request.args.get('wptid') %}
+{% set enabled_lens_id = report.lens.id if report.lens else '' %}
 
 {% block title %}{{ (report.lens and '%s: ' % report.lens.name or '') +report.name }}{% endblock %}
 
@@ -39,6 +40,24 @@
 
 					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 						<form id="history" class="row">
+							<div class="col-sm-8 col-sm-offset-2 col-xs-12">
+								<label for="lens">
+									Lens
+										<i
+											class="hidden-xs help-tooltip fa fa-info-circle"
+											title="A lens shows a report for a particular subset of websites."></i>
+								</label>
+
+								<select id="lens">
+									<option></option>
+									{% for (lens_id, l) in report.lenses.items() %}
+										<option value="{{ lens_id }}" {% if lens_id == enabled_lens_id %}selected{% endif %}>
+											{{ l.name }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+
 							<div class="col-sm-4 col-sm-offset-2 col-xs-12">
 								<label for="startDate">
 									Start Date
@@ -57,14 +76,9 @@
 								<label for="endDate" title="Optional">
 									End Date
 								</label>
-								
+
 								<select id="endDate">
 									<option></option>
-									{% if end == report.dates[0] %}
-										<option value="{{ report.dates[0] }}">
-											Most Recent
-										</option>
-									{% endif %}
 									{% for d in report.dates %}
 										<option value="{{ d }}" {% if d == end %}selected{% endif %} class="yyyy_mm_dd">
 											{{ d }}
@@ -89,7 +103,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</section>
 
 	<section id="report-metrics">

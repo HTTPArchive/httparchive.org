@@ -9,7 +9,7 @@ const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Color
 function histogram(metric, date, options) {
 	options.date = date;
 	options.metric = metric;
-	const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens}/` : ''}${date}/${metric}.json`;
+	const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens.id}/` : ''}${date}/${metric}.json`;
 	fetch(dataUrl)
 		.then(response => {
 			if (!response.ok) {
@@ -40,7 +40,7 @@ function drawClientSummary(data, options, client) {
 function getSummary(data, options) {
 	const summary = getPrimaryMetric(data, options);
 	const metric = new Metric(options, summary);
-	
+
 	return metric.toString();
 }
 
@@ -167,7 +167,7 @@ function drawHistogramTable(data, desktopId, mobileId, type, [start, end]=[-Infi
 			return drawHistogramTable(data, desktopId, mobileId, type, dateRange);
 		}, 100);
 	}
-	
+
 	const bins = data.filter(data => {
 		return data.bin >= start && data.bin <= end
 	}).map(data => new Bin(data));
@@ -281,7 +281,7 @@ function drawChart(series, containerId, options) {
 			}
 		},
 		title: {
-			text: `Histogram of ${options.name}`
+			text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Histogram of ${options.name}`
 		},
 		subtitle: {
 			text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
@@ -324,7 +324,7 @@ function drawChart(series, containerId, options) {
 						<p style="color: ${point.color.replace('0.4', '1')}; font-size: 20px;">
 							${(point.y).toFixed(2)}%
 						</p>
-						${cdf ? 
+						${cdf ?
 						`<p style="text-transform: uppercase; font-size: 8px; color: #777;">
 							Cumulative
 						</p>
