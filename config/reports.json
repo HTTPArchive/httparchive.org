@@ -90,9 +90,7 @@
 			"name": "Total Kilobytes",
 			"type": "KB",
 			"description": "The sum of [transfer size](https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize) kilobytes of all resources requested by the page.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$bytesIn",
 				"scale": 0.0009765625
@@ -235,6 +233,20 @@
 				"scale": 0.001
 			}
 		},
+		"numUrls": {
+			"name": "Sample Size",
+			"type": "URLs",
+			"singular": "URL",
+			"description": "The number of URLs analyzed in this report.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"urls"
+				]
+			}
+		},
 		"pctHttps": {
 			"name": "HTTPS Requests",
 			"type": "%",
@@ -315,9 +327,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$css$requests",
 				"scale": 0.0009765625
@@ -352,9 +362,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$font$requests",
 				"scale": 0.0009765625
@@ -365,9 +373,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$html$requests",
 				"scale": 0.0009765625
@@ -378,9 +384,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$image$requests",
 				"scale": 0.0009765625
@@ -391,9 +395,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$js$requests",
 				"scale": 0.0009765625
@@ -404,9 +406,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$other$requests",
 				"scale": 0.0009765625
@@ -417,9 +417,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of resources requested by the page.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$requests$length"
 			}
@@ -432,9 +430,6 @@
 			"redundant": true,
 			"histogram": {
 				"minDate": "2015_05_01"
-			},
-			"timeseries": {
-				"redundant": true
 			}
 		},
 		"cruxFp": {
@@ -645,6 +640,7 @@
 		"name": "State of the Web",
 		"summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
 		"metrics": [
+			"numUrls",
 			"bytesTotal",
 			"reqTotal",
 			"pctHttps",
