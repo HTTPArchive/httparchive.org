@@ -71,7 +71,7 @@ function getChange(data, options) {
 			break;
 		}
 	}
-	
+
 	if (oldestIndex === undefined) {
 		return;
 	}
@@ -83,15 +83,26 @@ function getChange(data, options) {
 }
 
 function getPrimaryMetric(o, options) {
-	return getUnformattedPrimaryMetric(o, options).toFixed(1);
+	const field = getPrimaryFieldName(o, options);
+	const primaryMetric = getUnformattedPrimaryMetric(o, options);
+	const formatter = formatters[field];
+	if (formatter) {
+		return formatter(primaryMetric);
+	}
+	return primaryMetric;
+}
+
+function getPrimaryFieldName(o, options) {
+	if (options.timeseries && options.timeseries.fields) {
+		return options.timeseries.fields[0];
+	}
+
+	return 'p50';
 }
 
 function getUnformattedPrimaryMetric(o, options) {
-	if (options.timeseries && options.timeseries.fields) {
-		return o[options.timeseries.fields[0]];
-	}
-
-	return o.p50;
+	const field = getPrimaryFieldName(o, options);
+	return o[field];
 }
 
 function drawTimeseries(data, options) {
@@ -194,16 +205,12 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 
 const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
-const toNumeric = o => ({
-	timestamp: +o.timestamp,
-	p10: +o.p10,
-	p25: +o.p25,
-	p50: +o.p50,
-	p75: +o.p75,
-	p90: +o.p90,
-	percent: +o.percent,
-	client: o.client
-});
+const toNumeric = ({client, date, ...other}) => {
+	return Object.entries(other).reduce((o, [k, v]) => {
+		o[k] = +v;
+		return o;
+	}, {client});
+};
 const toIQR = o => [o.timestamp, o.p25, o.p75];
 const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
@@ -305,7 +312,12 @@ function drawChart(options, series) {
 					let data;
 					if (options.timeseries && options.timeseries.fields) {
 						label = points[0].series.name;
-						data = points[0].point.y.toFixed(1);
+						const formatter = formatters[options.timeseries.fields[0]];
+						if (formatter) {
+							data = formatter(points[0].point.y);
+						} else {
+							data = points[0].point.y.toFixed(1);
+						}
 					} else {
 						const [median] = points;
 						label = `Median ${median.series.name}`;
@@ -363,7 +375,9 @@ const formatters = {
 	p25: toFixed,
 	p50: toFixed,
 	p75: toFixed,
-	p90: toFixed
+	p90: toFixed,
+	percent: toFixed,
+	urls: value => parseInt(value).toLocaleString()
 };
 
 const zip = data => {

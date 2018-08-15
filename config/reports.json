@@ -235,6 +235,21 @@
 				"scale": 0.001
 			}
 		},
+		"numUrls": {
+			"name": "Sample Size",
+			"type": "URLs",
+			"singular": "URL",
+			"description": "The number of URLs analyzed in this report.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"redundant": true,
+				"fields": [
+					"urls"
+				]
+			}
+		},
 		"pctHttps": {
 			"name": "HTTPS Requests",
 			"type": "%",
@@ -645,6 +660,7 @@
 		"name": "State of the Web",
 		"summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
 		"metrics": [
+			"numUrls",
 			"bytesTotal",
 			"reqTotal",
 			"pctHttps",
