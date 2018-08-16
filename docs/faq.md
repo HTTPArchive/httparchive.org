@@ -56,6 +56,13 @@ The HTTP Archive examines each URL in the list, but does not crawl the website's
 Most websites are comprised of many separate web pages. The landing page may not be representative of the overall site. Some websites, such as [facebook.com](http://www.facebook.com/), require logging in to see typical content. Some websites, such as [googleusercontent.com](http://www.googleusercontent.com/), don't have a landing page. Instead, they are used for hosting other URLs and resources. In this case googleusercontent.com is the domain path used for resources inserted by users into Google documents, etc. Because of these issues and more, it's possible that the actual HTML document analyzed is not representative of the website.
 
 
+### What is a lens?
+
+A lens focuses on a specific subset of websites. Through a lens, you'll see data about those particular websites only. For example, the [WordPress lens](https://wordpress.httparchive.org) focuses only on websites that are detected as being built with WordPress. We use [Wappalayzer](https://www.wappalyzer.com/) to detect over 1,000 web technologies and choose a few interesting ones to become lenses.
+
+Lenses can be enabled  at the top of any report, or by visiting the respective subdomain, for example [`wordpress.httparchive.org`](https://wordpress.httparchive.org).
+
+
 ### Who sponsors the HTTP Archive?
 
 The HTTP Archive is sponsored by companies large and small in the web industry who are dedicated to moving the web forward. Our sponsors make it possible for this non-profit project to continue operating and tracking how the web is built.

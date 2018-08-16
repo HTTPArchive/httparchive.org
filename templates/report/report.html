@@ -43,9 +43,11 @@
 							<div class="col-sm-8 col-sm-offset-2 col-xs-12">
 								<label for="lens">
 									Lens
-										<i
-											class="hidden-xs help-tooltip fa fa-info-circle"
-											title="A lens shows a report for a particular subset of websites."></i>
+										<a href="{{ url_for('faq', _anchor='what-is-a-lens') }}">
+											<i
+												class="hidden-xs help-tooltip fa fa-info-circle"
+												title="A lens shows a report for a particular subset of websites."></i>
+										</a>
 								</label>
 
 								<select id="lens">
