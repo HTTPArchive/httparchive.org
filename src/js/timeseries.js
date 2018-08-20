@@ -6,7 +6,7 @@ import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
 
 
 function timeseries(metric, options, start, end) {
-	const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens}/` : ''}${metric}.json`;
+	const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
 	options.metric = metric;
@@ -278,7 +278,7 @@ function drawChart(options, series) {
 			zoomType: 'x'
 		},
 		title: {
-			text: `Timeseries of ${options.name}`
+			text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Timeseries of ${options.name}`
 		},
 		subtitle: {
 			text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',

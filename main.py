@@ -123,6 +123,7 @@ def report(report_id):
 		dates = [d for d in dates if date_pattern.match(d)]
 
 	report['dates'] = dates
+	report['lenses'] = report_util.get_lenses()
 
 	start = request.args.get('start')
 	end = request.args.get('end')
@@ -167,10 +168,10 @@ def report(report_id):
 		if not request.args.get('start'):
 			start = dates[0]
 
-	lens = get_lens(request)
-
-	if report_util.is_valid_lens(lens):
-		report['lens'] = report_util.get_lens(lens)
+	lens_id = get_lens_id(request)
+	lens = report_util.get_lens(lens_id)
+	if lens:
+		report['lens'] = lens
 
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:
@@ -178,7 +179,7 @@ def report(report_id):
 		metric['similar_reports'] = report_util.get_similar_reports(metric['id'], report_id)
 
 		# Mark the lens used for this metric, if applicable.
-		if lens and report_util.is_valid_lens(lens):
+		if lens:
 			metric['lens'] = lens
 
 		metric[viz] = metric.get(viz, {})
@@ -214,7 +215,7 @@ def report(report_id):
 						   start=start,
 						   end=end)
 
-def get_lens(request):
+def get_lens_id(request):
 	host = request.host.split('.')
 	subdomain = len(host) > 2 and host[0] or ''
 	return request.args.get('lens') or subdomain

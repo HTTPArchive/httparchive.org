@@ -10,9 +10,11 @@ class Report {
 		this.report = report;
 		this.viz = viz;
 		this.baseUrl = report.url;
+		this.lens = report.lens && report.lens.id;
 		this.startDate = report.startDate;
 		this.endDate = report.endDate;
 
+		this.bindChangeListener('lens');
 		this.bindChangeListener('startDate');
 		this.bindChangeListener('endDate');
 		this.bindUpdateListener();
@@ -80,12 +82,21 @@ class Report {
 	}
 
 	updatePermalink() {
+		const url = new URL(this.baseUrl);
+		const lens = this.lens;
+
+		// TODO: Change subdomain.
+		if (lens) {
+			url.searchParams.set('lens', lens);
+		} else {
+			url.searchParams.delete('lens');
+		}
+
 		if (this.isOneYearAgo(this.startDate) && this.isLatest(this.endDate)) {
-			this.permalink.value = this.baseUrl;
+			this.permalink.value = url.toString();
 			return;
 		}
 
-		const url = new URL(this.baseUrl);
 		const start = this.getDateUrlAlias(this.startDate);
 		const end = this.getDateUrlAlias(this.endDate);
 
