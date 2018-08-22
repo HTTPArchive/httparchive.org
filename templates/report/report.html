@@ -101,6 +101,16 @@
 								</i>
 								<input id="permalink" type="text" readonly="true">
 							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
+								<div class="btn-group pull-right">
+									<button id="grid-view" class="btn {% if report.view == 'grid' %}alt{% endif %}" title="Grid view" type="button">
+										<i class="fa fa-th"></i>
+									</button>
+									<button id="list-view" class="btn {% if report.view == 'list' %}alt{% endif %}" title="List view" type="button">
+										<i class="fa fa-list"></i>
+									</button>
+								</div>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -108,9 +118,9 @@
 		</div>
 	</section>
 
-	<section id="report-metrics">
+	<section id="report-metrics" {% if report.view == 'grid' %}class="grid-view"{% endif %}>
 		<div class="container">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="report-metrics-inner-wrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				{% block report %}{% endblock %}
 			</div>
 		</div>
@@ -136,8 +146,12 @@
 {% endblock %}
 
 {% macro metric_info(metric, viz) %}
-	<h3>
+	<h3 class="metric-header">
 		<a href="#{{ metric.id }}">{{ metric.name }}</a>
+		<button class="grid-expansion" data-metric="{{ metric.id }}" type="button">
+			<i class="fas fa-expand" title="Expand metric"></i>
+			<i class="fas fa-compress" title="Collapse metric"></i>
+		</button>
 	</h3>
 	{% if metric.description %}
 		{{ metric.description | markdown }}

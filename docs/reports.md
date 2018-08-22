@@ -204,6 +204,10 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Optional string. Metric ID used to query the GCS bucket. The maxDate for the report will be the most recent date-bucket that contains this metric's JSON results.
 
+      - **view**
+
+        Optional string. Specifies the layout of metrics. For example, setting this to `"grid"` will force the report into grid view by default. The default value is `"list"`.
+
 ## Rendering a Report
 
 The [main.py](../main.py) web server config file loads dates.json and reports.json into memory on startup and refreshes their contents according to the `MAX_REPORT_STALENESS` constant, which is set to 3 hours. This helps to limit file IO on each request.
