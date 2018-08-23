@@ -175,7 +175,8 @@ class Report {
 	}
 
 	bindGridExpansion() {
-		Array.from(document.querySelectorAll('.grid-expansion')).forEach(btn => {
+		const gridExpanderSelector = '.grid-expansion, .metric-header a';
+		Array.from(document.querySelectorAll(gridExpanderSelector)).forEach(btn => {
 			const metricId = btn.dataset.metric;
 			btn.addEventListener('click', e => {
 				this.toggleMetricExpansion(metricId);

@@ -199,6 +199,7 @@ th {
 	font-size: 0.7em;
 	z-index: 1;
 }
+.metric-header a:hover + .grid-expansion,
 .grid-expansion:hover,
 .grid-expansion:focus {
 	color: #337ab7;

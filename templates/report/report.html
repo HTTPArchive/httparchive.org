@@ -148,7 +148,7 @@
 
 {% macro metric_info(metric, viz) %}
 	<h3 class="metric-header">
-		<a href="#{{ metric.id }}">{{ metric.name }}</a>
+		<a href="#{{ metric.id }}" data-metric="{{ metric.id }}">{{ metric.name }}</a>
 		<button class="grid-expansion" data-metric="{{ metric.id }}" type="button">
 			<i class="fas fa-expand" title="Expand metric"></i>
 			<i class="fas fa-compress" title="Collapse metric"></i>
