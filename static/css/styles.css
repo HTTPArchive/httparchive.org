@@ -191,6 +191,18 @@ ul {
 	padding: 0;
 	margin: 0;
 }
+ul.bulleted li {
+	list-style-type: initial;
+	list-style-position: outside;
+	margin: 0 0 1em 20px;
+	text-align: left;
+}
+ul.bulleted li ul {
+	margin-left: 20px;
+}
+.bulleted a {
+	color: #337ab7;
+}
 
 .btn {
 	border: 2px solid #748c8f;
@@ -294,7 +306,6 @@ input {
 .help-tooltip:hover {
 	opacity: 1.0;
 }
-
 
 @media (max-width: 992px) {
 	footer {
