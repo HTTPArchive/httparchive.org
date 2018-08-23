@@ -173,6 +173,8 @@ def report(report_id):
 	if lens:
 		report['lens'] = lens
 
+	report['view'] = get_report_view(report, request)
+
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:
 		# Get a list of reports that also contain this metric.
@@ -219,6 +221,10 @@ def get_lens_id(request):
 	host = request.host.split('.')
 	subdomain = len(host) > 2 and host[0] or ''
 	return request.args.get('lens') or subdomain
+
+def get_report_view(report, request):
+	view = request.args.get('view')
+	return view if view in ('list', 'grid') else report.get('view', 'list')
 
 def get_format(request):
 	return request.args.get('f')

@@ -220,6 +220,28 @@ ul {
 .btn:not(:last-child) {
 	margin-right: 20px;
 }
+.btn-group .btn {
+	margin-right: 0;
+}
+.btn-group .btn + .btn {
+	border-left: none;
+}
+.btn-group .btn:not(:last-child) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.btn-group .btn:not(:first-child) {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.btn-group:hover .btn.alt {
+	background-color: #fff;
+	color: #748c8f;
+}
+.btn-group:hover .btn.alt:hover {
+	background-color: #748c8f;
+	color: #fff;
+}
 
 .figure {
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
@@ -340,6 +362,15 @@ input {
 		max-width: 85%;
 		padding: 10px 15px;
 		width: 100%;
+	}
+	section .btn-group {
+		max-width: 100%;
+		margin: 0 !important;
+		padding: 0;
+	}
+	.btn-group .btn {
+		display: inline-block;
+		width: 50%;
 	}
 }
 
