@@ -9,7 +9,7 @@
 
 ### How does the HTTP Archive decide which URLs to test?
 
-HTTP Archive crawls 500,000 URLs on both desktop and mobile twice a month. The URLs come from the most popular 500,000 sites in the [Alexa Top 1,000,000](http://www.alexa.com/topsites) list.
+The HTTP Archive crawls [~1.3 million URLs](https://httparchive.org/reports/state-of-the-web#numUrls) on both desktop and mobile twice a month. The URLs come from the Chrome User Experience Report, a monthly dataset of real user performance data of the most popular websites. Only the URLs whose domain is in the [Alexa Top 1,000,000](http://www.alexa.com/topsites) ranked list are included.
 
 
 ### How is the data gathered?
@@ -77,9 +77,9 @@ The HTTP Archive is part of the Internet Archive, a 501(c)(3) non-profit. Donati
 
 ### Who maintains the HTTP Archive?
 
-[Steve Souders](https://twitter.com/Souders) created the HTTP Archive in 2010. It's built on the shoulders of [Pat Meenan](https://twitter.com/patmeenan)'s [WebPageTest](https://webpagetest.org/) system. See the [Contributors](https://github.com/HTTPArchive/httparchive/graphs/contributors) page for a list of people who have contributed code. Guy Leech helped early on with the design. Many thanks to Stephen Hay who created the logo.
+The current core maintainers are [Ilya Grigorik](https://twitter.com/igrigorik), [Pat Meenan](https://twitter.com/patmeenan), [Rick Viscomi](https://twitter.com/rick_viscomi), and [Paul Calvano](https://twitter.com/paulcalvano).
 
-In March 2017, [Ilya Grigorik](https://twitter.com/igrigorik), [Pat Meenan](https://twitter.com/patmeenan), and [Rick Viscomi](https://twitter.com/rick_viscomi) assumed leadership of the project.
+Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://twitter.com/Souders), who started the project in 2010, [Pat Meenan](https://twitter.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, and Guy Leech and Stephen Hay for design help along the way.
 
 
 ### Who do I contact for more information?

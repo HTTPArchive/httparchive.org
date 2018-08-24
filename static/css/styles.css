@@ -364,3 +364,22 @@ input {
 #sponsor-logos * {
 	padding: 5px;
 }
+
+
+#FAQ h2 {
+	margin-bottom: 20px;
+}
+#FAQ li {
+	list-style: inside disc;
+	margin-bottom: 1em;
+}
+#FAQ p,
+#FAQ dd {
+	margin-bottom: 30px;
+}
+#answers h3 {
+	margin-top: 100px;
+}
+#answers h3:first-child {
+	margin-top: 0;
+}
