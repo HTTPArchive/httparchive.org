@@ -1,6 +1,17 @@
 {
-	"_reports": ["state-of-the-web", "state-of-javascript", "state-of-images", "loading-speed", "progressive-web-apps", "search-engine-optimization", "page-weight", "chrome-ux-report"],
-	"_featured": ["state-of-the-web"],
+	"_reports": [
+		"state-of-the-web",
+		"state-of-javascript",
+		"state-of-images",
+		"loading-speed",
+		"progressive-web-apps",
+		"search-engine-optimization",
+		"page-weight",
+		"chrome-ux-report"
+	],
+	"_featured": [
+		"state-of-the-web"
+	],
 	"_lens": {
 		"drupal": {
 			"name": "Drupal"
@@ -17,7 +28,7 @@
 			"name": "JavaScript Boot-up Time",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The amount of CPU time each script consumes per page.	This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
+			"description": "The amount of CPU time each script consumes per page. This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
 			"histogram": {
 				"enabled": false
 			}
@@ -103,7 +114,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"compileJs": {
@@ -164,7 +177,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"fontDisplay": {
@@ -176,7 +191,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"legible": {
@@ -188,7 +205,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"linkText": {
@@ -200,7 +219,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"ol": {
@@ -222,7 +243,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["urls"]
+				"fields": [
+					"urls"
+				]
 			}
 		},
 		"pctHttps": {
@@ -234,7 +257,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"pctVuln": {
@@ -245,7 +270,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"tcp": {
@@ -269,7 +296,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"ttci": {
@@ -476,7 +505,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"cruxFastFp": {
@@ -488,7 +519,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"cruxFastDcl": {
@@ -500,7 +533,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"cruxFastOl": {
@@ -512,7 +547,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"cruxFastFid": {
@@ -524,7 +561,9 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"vulnJs": {
@@ -557,14 +596,22 @@
 				"enabled": false
 			},
 			"timeseries": {
-				"fields": ["percent"]
+				"fields": [
+					"percent"
+				]
 			}
 		}
 	},
 	"state-of-images": {
 		"name": "State of Images",
 		"summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
-		"metrics": ["bytesImg", "reqImg", "offscreenImages", "optimizedImages", "responsiveImages"],
+		"metrics": [
+			"bytesImg",
+			"reqImg",
+			"offscreenImages",
+			"optimizedImages",
+			"responsiveImages"
+		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
@@ -576,7 +623,13 @@
 	"state-of-javascript": {
 		"name": "State of JavaScript",
 		"summary": "JavaScript powers the modern web, enabling rich and interactive web applications. In this report we dive into how JavaScript is used on the web, and its adoption and trends both for mobile and desktop experiences.",
-		"metrics": ["bytesJs", "reqJs", "evalJs", "compileJs", "bootupJs"],
+		"metrics": [
+			"bytesJs",
+			"reqJs",
+			"evalJs",
+			"compileJs",
+			"bootupJs"
+		],
 		"graphic": {
 			"bgcolor": "#f7df1e",
 			"primary": {
@@ -591,7 +644,14 @@
 	"loading-speed": {
 		"name": "Loading Speed",
 		"summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
-		"metrics": ["fcp", "ttci", "ttfi", "dcl", "ol", "bootupJs"],
+		"metrics": [
+			"fcp",
+			"ttci",
+			"ttfi",
+			"dcl",
+			"ol",
+			"bootupJs"
+		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
@@ -603,7 +663,17 @@
 	"state-of-the-web": {
 		"name": "State of the Web",
 		"summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
-		"metrics": ["numUrls", "bytesTotal", "reqTotal", "pctHttps", "pctVuln", "tcp", "h2", "vulnJs", "fontDisplay"],
+		"metrics": [
+			"numUrls",
+			"bytesTotal",
+			"reqTotal",
+			"pctHttps",
+			"pctVuln",
+			"tcp",
+			"h2",
+			"vulnJs",
+			"fontDisplay"
+		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
@@ -615,7 +685,12 @@
 	"search-engine-optimization": {
 		"name": "SEO",
 		"summary": "How websites are built can affect their ranking in search results. This report tracks the adoption of several key Search Engine Optimization (SEO) techniques.",
-		"metrics": ["canonical", "hreflang", "legible", "linkText"],
+		"metrics": [
+			"canonical",
+			"hreflang",
+			"legible",
+			"linkText"
+		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
@@ -631,7 +706,24 @@
 	"page-weight": {
 		"name": "Page Weight",
 		"summary": "This report tracks the size and quantity of many popular web page resources.",
-		"metrics": ["bytesTotal", "reqTotal", "bytesCss", "reqCss", "bytesFont", "reqFont", "bytesHtml", "reqHtml", "bytesImg", "reqImg", "bytesJs", "reqJs", "bytesOther", "reqOther", "bytesVideo", "reqVideo"],
+		"metrics": [
+			"bytesTotal",
+			"reqTotal",
+			"bytesCss",
+			"reqCss",
+			"bytesFont",
+			"reqFont",
+			"bytesHtml",
+			"reqHtml",
+			"bytesImg",
+			"reqImg",
+			"bytesJs",
+			"reqJs",
+			"bytesOther",
+			"reqOther",
+			"bytesVideo",
+			"reqVideo"
+		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
@@ -643,7 +735,18 @@
 	"chrome-ux-report": {
 		"name": "Chrome User Experience Report",
 		"summary": "Loading and interactivity performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
-		"metrics": ["cruxFp", "cruxFcp", "cruxDcl", "cruxOl", "cruxFid", "cruxFastFp", "cruxFastFcp", "cruxFastDcl", "cruxFastOl", "cruxFastFid"],
+		"metrics": [
+			"cruxFp",
+			"cruxFcp",
+			"cruxDcl",
+			"cruxOl",
+			"cruxFid",
+			"cruxFastFp",
+			"cruxFastFcp",
+			"cruxFastDcl",
+			"cruxFastOl",
+			"cruxFastFid"
+		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
 		"maxDateMetric": "cruxFcp",
