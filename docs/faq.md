@@ -9,7 +9,7 @@
 
 ### How does the HTTP Archive decide which URLs to test?
 
-The HTTP Archive crawls [~1.3 million URLs](https://httparchive.org/reports/state-of-the-web#numUrls) on both desktop and mobile twice a month. The URLs come from the Chrome User Experience Report, a monthly dataset of real user performance data of the most popular websites. Only the URLs whose domain is in the [Alexa Top 1,000,000](http://www.alexa.com/topsites) ranked list are included.
+The HTTP Archive crawls [1M+ URLs](https://httparchive.org/reports/state-of-the-web#numUrls) on both desktop and mobile twice a month. The URLs come from the Chrome User Experience Report, a monthly dataset of real user performance data of the most popular websites. Only the URLs whose domain is in the [Alexa Top 1,000,000](http://www.alexa.com/topsites) ranked list are included.
 
 
 ### How is the data gathered?
