@@ -28,7 +28,7 @@
 			"name": "JavaScript Boot-up Time",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The amount of CPU time each script consumes per page. This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
+			"description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
 			"histogram": {
 				"enabled": false
 			}
@@ -579,19 +579,19 @@
 			}
 		},
 		"pwaScores": {
-			"name": "Lighthouse PWA Scores",
+			"name": "PWA Scores",
 			"type": "%",
 			"downIsBad": true,
-			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is popular automated tool for improving the quality of PWAs (and web pages in general). This metric shows the median [PWA score](https://developers.google.com/web/tools/lighthouse/v3/scoring#pwa).",
+			"description": "This metric tracks the median [PWA score](https://developers.google.com/web/tools/lighthouse/v3/scoring#pwa) in [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Lighthouse is popular automated tool for improving the quality of web pages.",
 			"histogram": {
-				"minDate": "2017_06_01"
+				"enabled": false
 			}
 		},
 		"swControlledPages": {
 			"name": "Service Worker Controlled Pages",
 			"type": "%",
 			"downIsBad": true,
-			"description": "The ```ServiceWorkerControlledPage``` [use counter](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) triggers whenever a page is controlled by a service worker. This metric shows the percentage of pages that have triggered this use counter.",
+			"description": "This metric tracks the percentage of pages that have triggered the ```ServiceWorkerControlledPage``` [use counter](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) that fires whenever a page is controlled by a service worker.",
 			"histogram": {
 				"enabled": false
 			},
@@ -768,6 +768,17 @@
 		"metrics": [
 			"pwaScores",
 			"swControlledPages"
-		]
+		],
+		"graphic": {
+			"bgcolor": "#fff",
+			"primary": {
+				"text": "PWA",
+				"color": "#6800cb"
+			},
+			"secondary": {
+				"color": "rgba(0, 0, 0, 0.3)",
+				"icon": "fas fa-cogs"
+			}
+		}
 	}
 }
