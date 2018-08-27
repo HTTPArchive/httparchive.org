@@ -146,7 +146,7 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         - **enabled**
 
-          Optional boolean. Default `true`. Whether the metric should be included in timeseres reports.
+          Optional boolean. Default `true`. Whether the metric should be included in timeseries reports.
 
         - **fields**
 
