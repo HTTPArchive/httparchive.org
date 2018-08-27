@@ -579,12 +579,12 @@
 			}
 		},
 		"pwaScores": {
-			"name": "Lighthouse PWA Scores",
+			"name": "PWA Scores",
 			"type": "%",
 			"downIsBad": true,
-			"description": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) is popular automated tool for improving the quality of PWAs (and web pages in general). This metric shows the median [PWA score](https://developers.google.com/web/tools/lighthouse/v3/scoring#pwa).",
+			"description": "This metric tracks the median [PWA score](https://developers.google.com/web/tools/lighthouse/v3/scoring#pwa) in [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Lighthouse is popular automated tool for improving the quality of web pages.",
 			"histogram": {
-				"minDate": "2017_06_01"
+				"enabled": false
 			}
 		}
 	},
@@ -753,6 +753,17 @@
 		"summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWAs). PWAs are a new class of web applications, enabled by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading, to receive push notifications as well as to synchronize data in the background, and — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs.",
 		"metrics": [
 			"pwaScores"
-		]
+		],
+		"graphic": {
+			"bgcolor": "#fff",
+			"primary": {
+				"text": "PWA",
+				"color": "#6800cb"
+			},
+			"secondary": {
+				"color": "rgba(0, 0, 0, 0.3)",
+				"icon": "fas fa-cogs"
+			}
+		}
 	}
 }
