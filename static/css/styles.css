@@ -191,6 +191,18 @@ ul {
 	padding: 0;
 	margin: 0;
 }
+ul.bulleted li {
+	list-style-type: initial;
+	list-style-position: outside;
+	margin: 0 0 1em 20px;
+	text-align: left;
+}
+ul.bulleted li ul {
+	margin-left: 20px;
+}
+.bulleted a {
+	color: #337ab7;
+}
 
 .btn {
 	border: 2px solid #748c8f;
@@ -317,7 +329,6 @@ input {
 	opacity: 1.0;
 }
 
-
 @media (max-width: 992px) {
 	footer {
 		text-align: center;
@@ -383,4 +394,23 @@ input {
 }
 #sponsor-logos * {
 	padding: 5px;
+}
+
+
+#FAQ h2 {
+	margin-bottom: 20px;
+}
+#FAQ li {
+	list-style: inside disc;
+	margin-bottom: 1em;
+}
+#FAQ p,
+#FAQ dd {
+	margin-bottom: 30px;
+}
+#answers h3 {
+	margin-top: 100px;
+}
+#answers h3:first-child {
+	margin-top: 0;
 }
