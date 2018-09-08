@@ -19,9 +19,6 @@ footer {
 header [class*="col"],
 footer [class*="col"],
 section [class*="col"] {
-	display: inline-block;
-	float: none;
-	margin-right: -4px;
 	vertical-align: middle;
 }
 .container {
