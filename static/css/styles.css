@@ -382,6 +382,16 @@ input {
 	}
 }
 
+@media (min-width: 768px) {
+	.container-flex {
+		display: flex;
+	}
+
+	.container-flex.align-middle {
+		align-items: center;
+	}
+}
+
 #sponsor-logos {
 	background-color: #fff;
 	border: 1px solid #748c8f;
