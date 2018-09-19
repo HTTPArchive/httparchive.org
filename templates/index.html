@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block main %}
-	<section id="how-web-is-built" class="container container-flex align-middle">
+	<section id="how-web-is-built" class="container flex-container flex-align-middle">
 		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-6 col-xs-offset-3 col-sm-offset-0">
 			<a href="{{ url_for('reports') }}">
 				<img src="/static/img/web.png" alt="" aria-label="HTTP Archive reports"/>
@@ -54,11 +54,11 @@
 	</section>
 
 	<section id="bigquery" class="container">
-		<div class="row">
-			<h2>
-				<small>Public Dataset</small>
-				Google BigQuery
-			</h2>
+		<h2>
+			<small>Public Dataset</small>
+			Google BigQuery
+		</h2>
+		<div class="row flex-container flex-align-middle">
 			<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 
 				<p>
