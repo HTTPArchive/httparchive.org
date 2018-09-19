@@ -16,7 +16,10 @@
 import logging
 import re
 from time import time
-from urlparse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 from csp import csp
 import reports as report_util
