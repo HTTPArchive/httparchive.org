@@ -137,10 +137,12 @@ function drawTimeseries(data, options) {
 		return;
 	}
 
-	getFlagSeries().then(flagSeries => {
-		series.push(flagSeries);
-		drawChart(options, series);
-	})
+	getFlagSeries()
+		.then(flagSeries => series.push(flagSeries))
+		// If the getFlagSeries request fails (503), catch so we can still draw the chart
+		.catch(console.error)
+		.then(_ => drawChart(options, series));
+
 }
 let redrawTimeseriesTable = {};
 function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) {
