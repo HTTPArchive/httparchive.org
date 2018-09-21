@@ -21,7 +21,7 @@ csp = {
 		'\'self\'',
 		'cdn.httparchive.org',
 		'discuss.httparchive.org',
-		'raw.githubusercontent.com',
+		'cdn.rawgit.com',
 		'www.webpagetest.org',
 		'www.google-analytics.com',
 		'stats.g.doubleclick.net'
