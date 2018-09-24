@@ -33,7 +33,9 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 6. In order to add the HTTP Archive tables to your project, follow this link to automatically add the HTTP Archive tables to your project: [https://console.cloud.google.com/bigquery?p=httparchive](https://console.cloud.google.com/bigquery?p=httparchive) 
 
-
+   *Note: If you want to pin the httparchive project to your account so that you do not have to use the above link every time, then you can switch to the classic UI and follow the instructions below
+   ![Adding HTTP Archive Tables - Classic UI](images/adding_httparchive_to_bigquery_classic_UI.jpg)*
+   
 7. At this point you should see the httparchive tables in your BigQuery dashboard.   If you expand the httparchive project, you'll see folders for . In the next section, we'll explore the structure of these tables so you can start digging in!
 	![Setup Complete](images/httparchive_setup_complete.jpg)
 
@@ -101,7 +103,7 @@ BigQuery supports two SQL dialects: standard SQL and legacy SQL.  Legacy SQL is 
 
 If you have existing Legacy SQL that you are trying to migrate to Standard SQL, then you may want to read the [migration guide.](https://cloud.google.com/bigquery/docs/reference/standard-sql/migrating-from-legacy-sql)
 
-When you are ready to start writing queries, make sure that the SQL dialect option selected matches what you are writing your query in.   The current default is Legacy SQL, but de-selecting this will switch to Standard SQL
+When you are ready to start writing queries, make sure that the SQL dialect option selected matches what you are writing your query in.   The classig UI defaults to Legacy SQL, but de-selecting this will switch to Standard SQL.  The new UI defaults to Standard SQL.
 ![SQL Dialect](images/standard_or_legacy_sql.jpg)
 
 The [HTTP Archive Discuss section](https://discuss.httparchive.org/) has lots of useful examples and discussion on how to analyze this data.
