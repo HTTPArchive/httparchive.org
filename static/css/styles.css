@@ -386,6 +386,10 @@ input {
 }
 
 #sponsor-logos {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
 	background-color: #fff;
 	border: 1px solid #748c8f;
 	border-radius: 15px;
@@ -394,6 +398,10 @@ input {
 }
 #sponsor-logos * {
 	padding: 5px;
+}
+#sponsor-logos img {
+	max-height: 115px;
+	max-width: 250px;
 }
 
 
