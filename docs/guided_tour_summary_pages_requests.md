@@ -109,7 +109,7 @@ In Google Sheets, we can creat a pivot table to cross tabulate the results. For 
 
 If we graph this, we can see an interesting pattern. The larger the image weight, the further the distribution moves to the left. This seems to indicate that sites with a very large image weight tend to have multiple large images rather than 1 poorly configured large image.
 
-![example results](./images/guided_tour_summary_requests_pages_join_example6.jpg)
+![example results](./images/guided_tour_summary_requests_pages_join_example7.jpg)
 
 You can see another example of JOINing the `summary_requests` and `summary_pages` tables in [this post about the distribution of 1st and 3rd party resources](https://discuss.httparchive.org/t/what-is-the-distribution-of-1st-party-vs-3rd-party-resources/100/14). In this example, we are using the `summary_pages` url column to classify whether the `summary_requests` data is first or third party content. The result of that query is then used as a subquery and aggregated by the percentage of third party content.
 
