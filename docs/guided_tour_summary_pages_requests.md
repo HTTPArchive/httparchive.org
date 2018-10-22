@@ -36,7 +36,7 @@ ORDER BY bytesImg DESC
 ```
 ![example results](./images/guided_tour_summary_requests_pages_join_example2.jpg)
 
-Some of these image weights seems quite extreme, but these represent the most image heavy sites in the archive. If you want to validate this, you can load one of the pages view DevTools or WebPageTest and see for yourself.  For example based on the results above,  http://thaliahallchicago.com/ has 80 images totaling 117MB. WebPageTest confirms that this is accurate (although the image weight likley changed slightly between when the HTTP Archive saw the page vs when this manual test was performed.
+Some of these image weights seem quite extreme, but these represent the most image heavy sites in the archive. If you want to validate this, you can load one of the pages in DevTools or WebPageTest and see for yourself.  For example based on the results above,  http://thaliahallchicago.com/ has 80 images totaling 117MB. WebPageTest confirms that this is accurate (although the image weight likely changed slightly between when the HTTP Archive saw the page vs when this manual test was performed.
 
 ![example results](./images/guided_tour_summary_requests_pages_join_example2_wpt.jpg)
 
