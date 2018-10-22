@@ -1,7 +1,7 @@
 Part 3 - Joining Summary Page and Requests tables
 -------------------
 
-In [Part 1](https://github.com/paulcalvano/httparchive.org/blob/master/docs/guided_tour_summary_pages.md) we examined the `summary_pages` tables. Then in [Part 2](https://github.com/paulcalvano/httparchive.org/blob/master/docs/guided_tour_summary_pages.md) we worked with the `summary_requests` tables. Now let's look at how we can combine both the summary_requests and summary_pages tables to perform a deeper analysis. In the following example, we're going to investigate the following question: 
+In [Part 1](./guided_tour_summary_pages.md) we examined the `summary_pages` tables. Then in [Part 2](./guided_tour_summary_pages.md) we worked with the `summary_requests` tables. Now let's look at how we can combine both the summary_requests and summary_pages tables to perform a deeper analysis. In the following example, we're going to investigate the following question: 
        "is image weight more commonly a factor of 1 large image, or many smaller images?".
 
 Let's start with a simple query against the pages table. This is a simple query that just selects the URL, the number of images and the bytes of those images.
