@@ -49,7 +49,7 @@ ORDER BY requests DESC
 
 ![example results](./images/guided_tour_summary_requests-count_reqtype_perc.jpg)
 
-As we leaned in Part 1, we can use the ROUND() function to trim the result to 2 decimal points for readability.
+As we learned in Part 1, we can use the ROUND() function to trim the result to 2 decimal points for readability.
 
 ```
 SELECT type, 
