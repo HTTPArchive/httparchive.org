@@ -64,7 +64,7 @@ ORDER BY requests DESC
 ![example results](./images/guided_tour_summary_requests-count_reqtype_perc_rounded.jpg)
 
 
-Graphing this we can see both the distribution of content types across all requests in the archive as well as the popularity of certain types of content on each site.  For example, 100% of sites contained images and HTML.  96% contains JavaScript and CSS. 67% contain custom webfonts and 4% contain video files.
+Graphing this we can see both the distribution of content types across all requests in the archive as well as the popularity of certain types of content on each site.  For example, 100% of sites contained images and HTML.  96% contain JavaScript and CSS. 67% contain custom webfonts and 4% contain video files.
 
 ![example results](./images/guided_tour_summary_requests-type-graph.jpg)
 
