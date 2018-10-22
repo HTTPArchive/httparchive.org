@@ -56,7 +56,7 @@ ORDER BY bytesImg DESC
 ```
 ![example results](./images/guided_tour_summary_requests_pages_join_example3.jpg)
 
-Now let's add a simple formula to look at the relationship of the largest image on a page to the image weight:  largestImg/bytesImg. However seen we can't reference the aggregate names in the query, we'll include the function calls. `MAX(respBodySize)/SUM(respBodySize)`.
+Now let's add a simple formula to look at the relationship of the largest image on a page to the image weight:  largestImg/bytesImg. However since we can't reference the aggregate names in the query, we'll include the function calls. `MAX(respBodySize)/SUM(respBodySize)`.
 
 We'll use the ROUND function to clean up some of this data and make it more readable. The query below converts the bytes to KB by dividing by 1024.  And then rounds all the numbers.
 
