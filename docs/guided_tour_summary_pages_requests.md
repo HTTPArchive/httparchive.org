@@ -103,7 +103,7 @@ GROUP BY largestImgKBPercent, imageweightbin
 
 This resultset has 6863 rows, which is easier to work with. Let's export it to Google Sheets and then see what we can learn from it. 
 
-In Google Sheets, we can creat a pivot table to cross tabulate the results. For example we can look at the Largest Image % vs the Image Weight Bin by using `largestImgKBPercent` as the rows, `imageweightbin` as the columns, and `pages` as the values. Now instead of 6863 rows, we have 100 rows and a large number of colums. We can also limit the number of columns using a filter, and in this example I've configured a filter on imageweightbin so that we're looking at pages with less than 5MB of images (this accounts for 90% of sites in the HTTPArchive that load images).
+In Google Sheets, we can create a pivot table to cross tabulate the results. For example we can look at the Largest Image % vs the Image Weight Bin by using `largestImgKBPercent` as the rows, `imageweightbin` as the columns, and `pages` as the values. Now instead of 6863 rows, we have 100 rows and a large number of columns. We can also limit the number of columns using a filter, and in this example I've configured a filter on imageweightbin so that we're looking at pages with less than 5MB of images (this accounts for 90% of sites in the HTTP Archive that load images).
 
 ![example results](./images/guided_tour_summary_requests_pages_join_example6.jpg)
 
