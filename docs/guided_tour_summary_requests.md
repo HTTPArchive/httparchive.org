@@ -9,7 +9,7 @@ FROM `httparchive.summary_requests.2018_09_01_desktop`
 
 ![example results](./images/guided_tour_summary_requests-count.jpg)
 
-In [Part 1](https://github.com/paulcalvano/httparchive.org/blob/master/docs/guided_tour_summary_pages.md) we looked at a sample of what the `summary_pages` table data looked like. The following table shows a sample of a row from the `summary_requests` table.   The first two columns contain a requestid and pageid.  The requestid is a unique identifier for each request.  The pageid corresponds to the pageid column in the `summary_pages` table, and can be used to relate the two datasets. There are also numerous other columns for collecting information from request and response headers, types of objects, and even a partial dump of HTTP response headers in the respOtherHeaders column.
+In [Part 1](./guided_tour_summary_pages.md) we looked at a sample of what the `summary_pages` table data looked like. The following table shows a sample of a row from the `summary_requests` table.   The first two columns contain a requestid and pageid.  The requestid is a unique identifier for each request.  The pageid corresponds to the pageid column in the `summary_pages` table, and can be used to relate the two datasets. There are also numerous other columns for collecting information from request and response headers, types of objects, and even a partial dump of HTTP response headers in the respOtherHeaders column.
 ![summary_requests table](./images/guided_tour_summary_requests-tabledetails.jpg)
 
 Since each page tracked by the HTTP Archive has a unique pageid, we can also summarize these results by the number of distinct pageid's.  For example, the following query tells us that there are 129,629,152 requests in this dataset and that there loaded from 1,271,631 pages. 
@@ -126,4 +126,4 @@ You can find many examples of working with the `summary_requests` table in the [
 
 If you want to explore the Google Sheets that these examples were graphed in, the file is available [here](https://docs.google.com/spreadsheets/d/15Hie8J0XRHcG6OGTRx14p2cAouQcxiq73Hu2dpsgvxM/edit?usp=sharing). You can also make a copy of the workbook and experiment with some of your own visualization ideas for the data as well.
 
-In [Part 3](https://github.com/paulcalvano/httparchive.org/blob/master/docs/guided_tour_summary_pages_requests.md) we'll look at how you can use SQL JOINs to analyze both the `summary_pages` and `summary_requests` datasets.
+In [Part 3](./guided_tour_summary_pages_requests.md) we'll look at how you can use SQL JOINs to analyze both the `summary_pages` and `summary_requests` datasets.
