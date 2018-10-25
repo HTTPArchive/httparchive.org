@@ -152,7 +152,7 @@ ORDER BY total_requests DESC
 
 Now things are starting to get interesting.
 
-![Simple JOIN Example](images/mimeType_summary_example.jpg)
+![Simple JOIN Example](images/mimeType_summary_example_query.jpg)
 
 So let's try to learn something from this basic example.   We know from the first example that there are 1.2 million URLs in the latest HTTP Archive dataset. Let's calculate the percent of pages that have each mimeType. To do this, we'll divide the number of pages by the total pages (using our first query as a subquery). Then we'll use a `ROUND()` function to trim the result to 2 decimal points.
 
@@ -170,7 +170,7 @@ ORDER BY total_requests DESC
 
 When analyzing the results from this, you can see the % of websites that use different Content-Types for their JavaScript, you can see that 93% of sites have at least one PNG image, 89% have at least 1 GIF, 48% use JSON, and 3% of sites have MP4 videos on their homepage, etc.  
 
-![Simple JOIN Example](images/mimeType_summary_example2.jpg)
+![Simple JOIN Example](images/mimeType_summary_example_query2.jpg)
 
 
 If you want to explore deeper you have everything you need - infrastructure, documentation, community. Enjoy exploring this data and feel free to share your results and ask questions on the [HTTP Archive Discuss section](https://discuss.httparchive.org/).
