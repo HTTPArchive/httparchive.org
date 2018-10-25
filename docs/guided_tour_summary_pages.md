@@ -17,7 +17,7 @@ FROM `httparchive.summary_pages.2018_09_01_desktop`
 ```
 ![example results](./images/guided_tour_summary_pages-count.jpg)
 
-Next let's calculate the average number of requests per page across all 1.3 million pages. In the table example showed earlier, the `reqTotal` column contained the total number of requests on the page and Google's homepage had 18 requests. In order to calculate the average, we'll use SQL's [AVG()](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#avg) function.
+Next let's calculate the average number of requests per page across all 1.3 million pages. In the table example shown earlier, the `reqTotal` column contained the total number of requests on the page and Google's homepage had 18 requests. In order to calculate the average, we'll use SQL's [AVG()](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#avg) function.
 
 ```
 SELECT COUNT(*) pages,
@@ -54,7 +54,7 @@ FROM `httparchive.summary_pages.2018_09_01_desktop`
 
 When we look at the results from this query, the median number of requests per page was 73. The average was in fact skewed by outliers. Also, since the 25th percentile is 39 requests and the 75th percentile is 126 requests, that tells us that 50% of the 1.3 million pages tracked by the HTTP Archive have between 39 and 126 requests. This is also known as the [interquartile range](https://en.wikipedia.org/wiki/Interquartile_range).
 
-Now let's add another dimension to this query. The numDomains column counts the number of unique domain names a page was served from. If we add numDomains to the query, and GROUP BY it then we can see these stats broken down by the number of domains per page. In this next example, we'll use the `HAVING` clause to limit the results to domain counts that have at least 1000 pages.
+Now let's add another dimension to this query. The numDomains column counts the number of unique domain names used across all the page's requests. If we add numDomains to the query, and GROUP BY it then we can see these stats broken down by the number of domains per page. In this next example, we'll use the `HAVING` clause to limit the results to domain counts that have at least 1000 pages.
 
 ```
 SELECT numDomains,
@@ -71,7 +71,7 @@ ORDER BY numDomains ASC
 ```
 ![example results](./images/guided_tour_summary_pages-numDomains_percentiles.jpg)
 
-The result contained 90 rows of data.  Now that we're dealing with larger results sets, it's time to start graphing them!
+The result contained 90 rows of data.  Now that we're dealing with larger result sets, it's time to start graphing them!
 In BigQuery you can save your query results to a CSV file, to a Google Sheet or export to Data Studio for visualization. In this guide, we'll save the output to a Google Sheet and then visualize some of this data. 
 
 When we look at the relationship between the number of domains and the pages it looks like a fair numbers of sites load content from less than 20 unique domains. Using the same technique we practiced above, we can validate this by calculating the percentiles for the number of domains.
@@ -93,7 +93,7 @@ When we put all of this together, we can see some interesting patterns. For exam
 ![example results](./images/guided_tour_summary_pages-numDomains_requests_graph.jpg)
 
 
-Let's step back and look at another example. In the `summary_pages` table, there are columns named `num_scripts_sync` and `num_scripts_async`, which indicate the number of async and sync scripts per page. We can run a simple query using the techniques you learned above to see how they related to each other.
+Let's step back and look at another example. In the `summary_pages` table, there are columns named `num_scripts_sync` and `num_scripts_async`, which indicate the number of async and sync scripts per page. We can run a simple query using the techniques you learned above to see how they relate to each other.
 
 ```
 SELECT num_scripts_async, num_scripts_sync, COUNT(*) pages

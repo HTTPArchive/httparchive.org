@@ -12,7 +12,7 @@ FROM `httparchive.summary_requests.2018_09_01_desktop`
 In [Part 1](./guided_tour_summary_pages.md) we looked at a sample of what the `summary_pages` table data looked like. The following table shows a sample of a row from the `summary_requests` table.   The first two columns contain a requestid and pageid.  The requestid is a unique identifier for each request.  The pageid corresponds to the pageid column in the `summary_pages` table, and can be used to relate the two datasets. There are also numerous other columns for collecting information from request and response headers, types of objects, and even a partial dump of HTTP response headers in the respOtherHeaders column.
 ![summary_requests table](./images/guided_tour_summary_requests-tabledetails.jpg)
 
-Since each page tracked by the HTTP Archive has a unique pageid, we can also summarize these results by the number of distinct pageid's.  For example, the following query tells us that there are 129,629,152 requests in this dataset and that there loaded from 1,271,631 pages. 
+Since each page tracked by the HTTP Archive has a unique pageid, we can also summarize these results by the number of distinct pageid's.  For example, the following query tells us that there are 129,629,152 requests in this dataset and that they're loaded from 1,271,631 pages. 
 
 ```
 SELECT COUNT(*) requests,

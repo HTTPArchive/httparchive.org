@@ -40,7 +40,7 @@ Some of these image weights seem quite extreme, but these represent the most ima
 
 ![example results](./images/guided_tour_summary_requests_pages_join_example2_wpt.jpg)
 
-If this was all the information we needed, then JOINING the table would have been unecessary. However we want to look at the relationship between the largest image and the overall image weight. In the query below you can add added `MAX(responseBodySize)` to look for the size of the largest image.
+If this was all the information we needed, then JOINING the table would have been unecessary. However we want to look at the relationship between the largest image and the overall image weight. In the query below you can add `MAX(responseBodySize)` to look for the size of the largest image.
 
 ```
 SELECT pages.url pageUrl,
@@ -98,6 +98,7 @@ FROM (
     ORDER BY imgKB DESC
 ) 
 GROUP BY largestImgKBPercent, imageweightbin
+ORDER BY largestImgKBPercent
 ```
 ![example results](./images/guided_tour_summary_requests_pages_join_example5.jpg)
 
