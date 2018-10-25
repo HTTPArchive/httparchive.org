@@ -172,6 +172,7 @@ When analyzing the results from this, you can see the % of websites that use dif
 
 ![Simple JOIN Example](images/mimeType_summary_example_query2.jpg)
 
+To explore more interactive examples, read the [HTTP Archive Guided Tour](./guided_tour.md).
 
 If you want to explore deeper you have everything you need - infrastructure, documentation, community. Enjoy exploring this data and feel free to share your results and ask questions on the [HTTP Archive Discuss section](https://discuss.httparchive.org/).
 
