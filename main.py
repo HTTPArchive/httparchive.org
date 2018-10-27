@@ -151,9 +151,9 @@ def report(report_id):
 
 	# This is shorthand for the trends (timeseries) view.
 	if not start and not end:
-		# The default date range is 24 crawls (1 year).
+		# The default date range is 72 crawls (3 years).
 		# May be shorter if the report's minimum date is more recent.
-		start = dates[min(24, len(dates) - 1)]
+		start = dates[min(72, len(dates) - 1)]
 		end = dates[0]
 
 	if start and start not in dates:
