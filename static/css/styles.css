@@ -43,7 +43,6 @@ nav li {
 }
 nav li a,
 nav li .dropdown-target {
-	cursor: pointer;
 	display: inherit;
 	padding: 12px 20px;
 }
