@@ -566,6 +566,32 @@
 				]
 			}
 		},
+		"cruxSlowFcp": {
+			"name": "Slow First Contentful Paint",
+			"type": "%",
+			"description": "The percent of \"slow\" FCP experiences, which are 2.5 seconds or greater.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxSlowFid": {
+			"name": "Slow First Input Delay",
+			"type": "%",
+			"description": "The percent of \"slow\" FID experiences, which are 250 ms or greater. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"vulnJs": {
 			"name": "Vulnerable JavaScript Libraries Per Page",
 			"type": "libraries",
@@ -745,7 +771,9 @@
 			"cruxFastFcp",
 			"cruxFastDcl",
 			"cruxFastOl",
-			"cruxFastFid"
+			"cruxFastFid",
+			"cruxSlowFcp",
+			"cruxSlowFid"
 		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
