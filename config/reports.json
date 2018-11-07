@@ -28,10 +28,7 @@
 			"name": "JavaScript Boot-up Time",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
+			"description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests."
 		},
 		"bytesCss": {
 			"name": "CSS Bytes",
@@ -337,26 +334,12 @@
 		"offscreenImages": {
 			"name": "Offscreen Image Savings",
 			"type": "KB",
-			"description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
+			"description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images) and is only available in mobile tests."
 		},
 		"optimizedImages": {
 			"name": "Optimized Image Savings",
 			"type": "KB",
-			"description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
-		},
-		"responsiveImages": {
-			"name": "Responsive Image Savings",
-			"type": "KB",
-			"description": "The number of kilobytes that could be saved per page by using response images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/oversized-images) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
+			"description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests."
 		},
 		"reqFont": {
 			"name": "Font Requests",
@@ -635,8 +618,7 @@
 			"bytesImg",
 			"reqImg",
 			"offscreenImages",
-			"optimizedImages",
-			"responsiveImages"
+			"optimizedImages"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
