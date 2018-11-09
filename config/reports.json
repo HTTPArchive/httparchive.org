@@ -298,20 +298,20 @@
 				]
 			}
 		},
-		"ttci": {
-			"name": "Time to Consistently Interactive",
+		"tti": {
+			"name": "Time to Interactive",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+			"description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
 		},
-		"ttfi": {
-			"name": "Time to First Interactive",
+		"firstCPUIdle": {
+			"name": "First CPU Idle",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+			"description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests.",
 			"histogram": {
 				"minDate": "2017_06_01"
 			},
@@ -654,8 +654,8 @@
 		"summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
 		"metrics": [
 			"fcp",
-			"ttci",
-			"ttfi",
+			"tti",
+			"firstCPUIdle",
 			"dcl",
 			"ol",
 			"bootupJs"
