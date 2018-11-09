@@ -302,7 +302,7 @@
 			"name": "Time to Interactive",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the last long task happened before 5 seconds window where network is mostly quiet. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
+			"description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
