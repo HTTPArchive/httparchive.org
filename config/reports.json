@@ -298,7 +298,7 @@
 				]
 			}
 		},
-		"tti": {
+		"ttci": {
 			"name": "Time to Interactive",
 			"type": "seconds",
 			"singular": "second",
@@ -307,7 +307,7 @@
 				"minDate": "2017_06_01"
 			}
 		},
-		"firstCPUIdle": {
+		"ttfi": {
 			"name": "First CPU Idle",
 			"type": "seconds",
 			"singular": "second",
@@ -654,8 +654,8 @@
 		"summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
 		"metrics": [
 			"fcp",
-			"tti",
-			"firstCPUIdle",
+			"ttci",
+			"ttfi",
 			"dcl",
 			"ol",
 			"bootupJs"
