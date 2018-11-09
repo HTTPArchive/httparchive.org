@@ -5,6 +5,7 @@
 		"state-of-images",
 		"loading-speed",
 		"progressive-web-apps",
+		"accessibility",
 		"search-engine-optimization",
 		"page-weight",
 		"chrome-ux-report"
@@ -609,6 +610,85 @@
 					"percent"
 				]
 			}
+		},
+		"a11yScores": {
+			"name": "Accessibility Scores",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the distribution of Accessibility category scores in Lighthouse.",
+			"histogram": {
+				"enabled": false
+			}
+		},
+		"a11yButtonName": {
+			"name": "Button Name",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://developers.google.com/web/tools/lighthouse/audits/button-name) that checks if buttons have an accessible name.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yBypass": {
+			"name": "Bypass",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/bypass) that checks if pages provide a way to bypass repeated blocks of content.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yImageAlt": {
+			"name": "Image Alt",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/image-alt) that checks if all images have alternate text.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yLabel": {
+			"name": "Label",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/label) that checks if all form elements have associated labels.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yLinkName": {
+			"name": "Link Name",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/link-name) that checks if all links have discernable text.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
 		}
 	},
 	"state-of-images": {
@@ -788,6 +868,29 @@
 			"secondary": {
 				"color": "rgba(0, 0, 0, 0.3)",
 				"icon": "fas fa-cogs"
+			}
+		}
+	},
+	"accessibility": {
+		"name": "Accessibility",
+		"summary": "This report tracks accessibility of pages as measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Metrics in this report are only available for mobile.",
+		"metrics": [
+			"a11yScores",
+			"a11yButtonName",
+			"a11yBypass",
+			"a11yImageAlt",
+			"a11yLabel",
+			"a11yLinkName"
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fas fa-users"
+			},
+			"secondary": {
+				"color": "rgba(255, 255, 255, 0.3)",
+				"text": "A11Y"
 			}
 		}
 	}
