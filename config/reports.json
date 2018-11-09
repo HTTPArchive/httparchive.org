@@ -300,19 +300,19 @@
 			}
 		},
 		"ttci": {
-			"name": "Time to Consistently Interactive",
+			"name": "Time to Interactive",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+			"description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
 		},
 		"ttfi": {
-			"name": "Time to First Interactive",
+			"name": "First CPU Idle",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+			"description": "The number of seconds from the time the navigation started until the page is minimally interactive. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/first-cpu-idle) as is only available in mobile tests. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.d06i5ycfxaow).",
 			"histogram": {
 				"minDate": "2017_06_01"
 			},
