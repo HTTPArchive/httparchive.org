@@ -113,7 +113,8 @@ nav#mobile li a.btn {
 	text-align: left;
 	text-transform: uppercase;
 }
-nav#mobile li a.btn:hover {
+nav#mobile li a.btn:hover,
+nav#mobile li a.btn:focus {
 	text-decoration: underline;
 }
 nav#mobile li ul {
@@ -177,11 +178,13 @@ h2 + p {
 }
 
 a,
-a:hover {
+a:hover,
+a:focus {
 	color: inherit;
 }
 p a,
-p a:hover {
+p a:hover,
+p a:focus {
 	color: #3174ae;
 }
 
@@ -316,7 +319,8 @@ input {
 	border-bottom: 1px dashed #000;
 	border-color: inherit;
 }
-.alert strong a:hover {
+.alert strong a:hover,
+.alert strong a:focus {
 	text-decoration: none;
 	border-bottom-style: solid;
 }
