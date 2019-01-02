@@ -3,7 +3,7 @@ body {
 	background-color: #f4f4f4;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
-	color: #555;
+	color: #444;
 }
 
 header {
@@ -33,7 +33,7 @@ section [class*="col"] {
 }
 
 nav {
-	color: #748c8f;
+	color: #667a7d;
 }
 nav li {
 	position: relative;
@@ -90,7 +90,7 @@ svg {
 .hamburger:focus,
 .hamburger:hover {
 	outline: none;
-	color: #555;
+	color: #444;
 }
 nav#mobile {
 	display: none;
@@ -103,7 +103,7 @@ nav#mobile li {
 	display: block;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	margin: 0;
-	background-color: #748c8f;
+	background-color: #667a7d;
 	color: #fff;
 }
 nav#mobile li a {
@@ -182,7 +182,7 @@ a:hover {
 }
 p a,
 p a:hover {
-	color: #337ab7;
+	color: #3174ae;
 }
 
 ol,
@@ -201,33 +201,33 @@ ul.bulleted li ul {
 	margin-left: 20px;
 }
 .bulleted a {
-	color: #337ab7;
+	color: #3174ae;
 }
 
 .btn {
-	border: 2px solid #748c8f;
+	border: 2px solid #667a7d;
 	border-radius: 5px;
 	padding: 6px 20px;
 	background-color: #fff;
 	font-size: 1.3rem;
 	line-height: 1.3rem;
 	text-align: center;
-	color: #748c8f;
+	color: #667a7d;
 }
 .btn:hover,
 .btn:focus {
-	background-color: #748c8f;
+	background-color: #667a7d;
 	color: #fff;
 }
 .btn.alt {
-	background-color: #748c8f;
+	background-color: #667a7d;
 	color: #fff;
 }
 .btn.alt:hover,
 .btn.alt:focus {
 	background-color: #fff;
-	border-color: #748c8f;
-	color: #748c8f;
+	border-color: #667a7d;
+	color: #667a7d;
 }
 .btn:not(:last-child) {
 	margin-right: 20px;
@@ -248,10 +248,10 @@ ul.bulleted li ul {
 }
 .btn-group:hover .btn.alt {
 	background-color: #fff;
-	color: #748c8f;
+	color: #667a7d;
 }
 .btn-group:hover .btn.alt:hover {
-	background-color: #748c8f;
+	background-color: #667a7d;
 	color: #fff;
 }
 
@@ -265,8 +265,8 @@ select,
 input {
 	background-color: #fff;
 	border-radius: 5px;
-	border: 1px #748c8f solid;
-	color: #748c8f;
+	border: 1px #667a7d solid;
+	color: #667a7d;
 	display: inline-block;
 	font-size: 1.3rem;
 	margin-bottom: 12px;
@@ -391,7 +391,7 @@ input {
 	align-items: center;
 	justify-content: space-between;
 	background-color: #fff;
-	border: 1px solid #748c8f;
+	border: 1px solid #667a7d;
 	border-radius: 15px;
 	margin-bottom: 40px;
 	padding: 40px;
