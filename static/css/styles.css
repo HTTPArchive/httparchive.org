@@ -52,7 +52,7 @@ nav li .dropdown-target {
 }
 nav li:hover {
 	text-decoration: none;
-	background-color: #bcced1;
+	background-color: #667a7d;
 	color: #fff;
 }
 nav li:not(:last-child) {
@@ -63,7 +63,7 @@ nav li ul {
 	position: absolute;
 	top: 100%;
 	right: 0;
-	background-color: #bcced1;
+	background-color: #667a7d;
 	text-align: left;
 	z-index: 1;
 }
@@ -283,7 +283,7 @@ input {
 	width: 100%;
 	max-width: 400px;
 	background-color: #eee;
-	color: #b7cdcf;
+	color: #667a7d;
 }
 .report-graphic .secondary-icon,
 .default-report::before {
