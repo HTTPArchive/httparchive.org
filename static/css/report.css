@@ -1,5 +1,5 @@
 #report-header {
-	background-color: #e7edee;
+	background-color: #eee;
 }
 #report-header hr {
 	border-color: #748c8f;
@@ -8,12 +8,12 @@
 	color: #748c8f;
 }
 #report-toc {
-	background-color: #f2f5f5;
+	background-color: #f4f4f4;
 }
 #report-metrics {
 	margin-top: -40px;
 	padding-top: 40px;
-	background: linear-gradient(to bottom, #e7eeef 0, white 400px);
+	background: linear-gradient(to bottom, #eee 0, #fff 400px);
 }
 #report-metrics .report-metric {
 	padding-bottom: 40px;
@@ -108,7 +108,7 @@ table {
 	width: 100%;
 }
 table tbody tr:nth-child(odd) {
-    background-color: #f2f2f2;
+	background-color: #f4f4f4;
 }
 td,
 th {
