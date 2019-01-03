@@ -722,7 +722,7 @@
 			"bgcolor": "#f7df1e",
 			"primary": {
 				"text": "JS",
-				"color": "#555"
+				"color": "#444"
 			},
 			"secondary": {
 				"text": ")};"
