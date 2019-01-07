@@ -273,7 +273,7 @@ const getFlagSeries = () => loadChangelog().then(data => {
 });
 
 function drawChart(options, series) {
-	Highcharts.stockChart(options.chartId, {
+	const chart = Highcharts.stockChart(options.chartId, {
 		metric: options.metric,
 		type: 'timeseries',
 		chart: {
@@ -395,6 +395,21 @@ function drawChart(options, series) {
 		credits: false,
 		exporting: chartExportOptions
 	});
+	chart.drawBenchmark = (name, value, color) => {
+		chart.yAxis[0].update({
+			plotLines: [{
+				value,
+				color,
+				dashStyle: 'dash',
+				width: 2,
+				label: {
+					text: name
+				}
+			}]
+		});
+	};
+	window.charts = window.charts || {};
+	window.charts[options.metric] = chart;
 }
 
 const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];

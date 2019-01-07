@@ -1,3 +1,4 @@
+import { Colors } from './colors';
 import { Metric } from './metric';
 import { prettyDate, drawMetricSummary } from './utils';
 import WPT from './webpagetest';
@@ -213,6 +214,10 @@ class Report {
 				options.metric = metric;
 				const m = new Metric(options, value.toFixed(1));
 				drawMetricSummary(options, 'webpagetest', m.toString());
+				if (window.charts && charts[metric]) {
+					const chart = charts[metric];
+					chart.drawBenchmark('WebPageTest', value, Colors.WEBPAGETEST);
+				}
 			});
 		}).catch(e => {
 			console.error('Error getting WebPageTest results.', e);

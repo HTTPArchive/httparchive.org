@@ -83,7 +83,7 @@ const getChangeSentiment = (change, options) => {
 	if (options.downIsBad) {
 		sentiments.reverse();
 	} else if (options.downIsNeutral) {
-		sentiments = ['neutral', 'neutral'];
+		return 'neutral';
 	}
 
 	change = +change.toFixed(1);
