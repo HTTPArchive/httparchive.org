@@ -11,7 +11,8 @@ csp = {
 		'www.google-analytics.com',
 		'use.fontawesome.com',
 		'cdn.speedcurve.com',
-		'spdcrv.global.ssl.fastly.net'
+		'spdcrv.global.ssl.fastly.net',
+		'lux.speedcurve.com'
 	],
 	'font-src': [
 		'\'self\'',
