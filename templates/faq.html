@@ -15,9 +15,7 @@
 				<ul id="questions">
 					{% for question, anchor in faq.anchors.items() %}
 						<li class="question">
-							<a href="#{{ anchor }}">
-								{{ question }}
-							</a>
+							<a href="#{{ anchor }}">{{ question }}</a>
 						</li>
 					{% endfor %}
 				</ul>

@@ -5,6 +5,7 @@
 		"state-of-images",
 		"loading-speed",
 		"progressive-web-apps",
+		"accessibility",
 		"search-engine-optimization",
 		"page-weight",
 		"chrome-ux-report"
@@ -28,10 +29,7 @@
 			"name": "JavaScript Boot-up Time",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
+			"description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests."
 		},
 		"bytesCss": {
 			"name": "CSS Bytes",
@@ -302,19 +300,19 @@
 			}
 		},
 		"ttci": {
-			"name": "Time to Consistently Interactive",
+			"name": "Time to Interactive",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the page is fully interactive and the network is idle. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+			"description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
 			"histogram": {
 				"minDate": "2017_06_01"
 			}
 		},
 		"ttfi": {
-			"name": "Time to First Interactive",
+			"name": "First CPU Idle",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the layout is stabilized, web fonts are visible, and the page is responsive to user input. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/consistently-interactive) as is only available in mobile tests.",
+			"description": "The number of seconds from the time the navigation started until the page is minimally interactive. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/first-cpu-idle) as is only available in mobile tests. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.d06i5ycfxaow).",
 			"histogram": {
 				"minDate": "2017_06_01"
 			},
@@ -337,26 +335,12 @@
 		"offscreenImages": {
 			"name": "Offscreen Image Savings",
 			"type": "KB",
-			"description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
+			"description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images) and is only available in mobile tests."
 		},
 		"optimizedImages": {
 			"name": "Optimized Image Savings",
 			"type": "KB",
-			"description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
-		},
-		"responsiveImages": {
-			"name": "Responsive Image Savings",
-			"type": "KB",
-			"description": "The number of kilobytes that could be saved per page by using response images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/oversized-images) and is only available in mobile tests.",
-			"histogram": {
-				"enabled": false
-			}
+			"description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests."
 		},
 		"reqFont": {
 			"name": "Font Requests",
@@ -566,6 +550,32 @@
 				]
 			}
 		},
+		"cruxSlowFcp": {
+			"name": "Slow First Contentful Paint",
+			"type": "%",
+			"description": "The percent of \"slow\" FCP experiences, which are 2.5 seconds or greater.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxSlowFid": {
+			"name": "Slow First Input Delay",
+			"type": "%",
+			"description": "The percent of \"slow\" FID experiences, which are 250 ms or greater. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"vulnJs": {
 			"name": "Vulnerable JavaScript Libraries Per Page",
 			"type": "libraries",
@@ -765,6 +775,85 @@
 					"percent"
 				]
 			}
+		},
+		"a11yScores": {
+			"name": "Accessibility Scores",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the distribution of Accessibility category scores in Lighthouse.",
+			"histogram": {
+				"enabled": false
+			}
+		},
+		"a11yButtonName": {
+			"name": "Button Name",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://developers.google.com/web/tools/lighthouse/audits/button-name) that checks if buttons have an accessible name.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yBypass": {
+			"name": "Bypass",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/bypass) that checks if pages provide a way to bypass repeated blocks of content.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yImageAlt": {
+			"name": "Image Alt",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/image-alt) that checks if all images have alternate text.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yLabel": {
+			"name": "Label",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/label) that checks if all form elements have associated labels.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"a11yLinkName": {
+			"name": "Link Name",
+			"type": "%",
+			"downIsBad": true,
+			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/link-name) that checks if all links have discernable text.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
 		}
 	},
 	"state-of-images": {
@@ -774,8 +863,7 @@
 			"bytesImg",
 			"reqImg",
 			"offscreenImages",
-			"optimizedImages",
-			"responsiveImages"
+			"optimizedImages"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
@@ -799,7 +887,7 @@
 			"bgcolor": "#f7df1e",
 			"primary": {
 				"text": "JS",
-				"color": "#555"
+				"color": "#444"
 			},
 			"secondary": {
 				"text": ")};"
@@ -910,7 +998,9 @@
 			"cruxFastFcp",
 			"cruxFastDcl",
 			"cruxFastOl",
-			"cruxFastFid"
+			"cruxFastFid",
+			"cruxSlowFcp",
+			"cruxSlowFid"
 		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
@@ -964,6 +1054,32 @@
 				"icon": "fas fa-cogs"
 			}
 		}
+<<<<<<< HEAD
 >>>>>>> master
+=======
+	},
+	"accessibility": {
+		"name": "Accessibility",
+		"summary": "This report tracks accessibility of pages as measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Metrics in this report are only available for mobile.",
+		"metrics": [
+			"a11yScores",
+			"a11yButtonName",
+			"a11yBypass",
+			"a11yImageAlt",
+			"a11yLabel",
+			"a11yLinkName"
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fas fa-users"
+			},
+			"secondary": {
+				"color": "rgba(255, 255, 255, 0.3)",
+				"text": "A11Y"
+			}
+		}
+>>>>>>> upstream/master
 	}
 }

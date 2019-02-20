@@ -25,4 +25,8 @@ export class Colors {
 		return HEX[1];
 	}
 
+	static get WEBPAGETEST() {
+		return '#000000';
+	}
+
 }

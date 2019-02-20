@@ -372,6 +372,21 @@ function drawChart(series, containerId, options) {
 		credits: false,
 		exporting: chartExportOptions
 	});
+	chart.drawBenchmark = (name, value, color) => {
+		chart.xAxis[0].update({
+			plotLines: [{
+				value,
+				color,
+				dashStyle: 'dash',
+				width: 2,
+				label: {
+					text: name
+				}
+			}]
+		});
+	};
+	window.charts = window.charts || {};
+	window.charts[options.metric] = chart;
 }
 
 // Export directly to global scope for use by Jinja template.

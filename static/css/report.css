@@ -1,24 +1,24 @@
 #report-header {
-	background-color: #e7edee;
+	background-color: #eee;
 }
 #report-header hr {
-	border-color: #748c8f;
+	border-color: #667a7d;
 }
 #report-date {
-	color: #748c8f;
+	color: #667a7d;
 }
 #report-toc {
-	background-color: #f2f5f5;
+	background-color: #f4f4f4;
 }
 #report-metrics {
 	margin-top: -40px;
 	padding-top: 40px;
-	background: linear-gradient(to bottom, #e7eeef 0, white 400px);
+	background: linear-gradient(to bottom, #eee 0, #fff 400px);
 }
 #report-metrics .report-metric {
 	padding-bottom: 40px;
 	border-bottom: 1px solid transparent;
-	border-image: linear-gradient(to right, #fff 0%, #748c8f 50%, #fff 100%);
+	border-image: linear-gradient(to right, #fff 0%, #667a7d 50%, #fff 100%);
 	border-image-slice: 1;
 }
 #report-metrics .report-metric:last-child {
@@ -41,7 +41,7 @@
 	left: 21px;
 	top: 50%;
 	transform: translateY(-50%);
-	color: #748c8f;
+	color: #667a7d;
 }
 #permalink {
 	padding-left: 20px;
@@ -64,7 +64,7 @@
 	margin-left: 20px;
 }
 #TOC a {
-	color: #337ab7;
+	color: #3174ae;
 }
 #TOC p {
   display: inline;
@@ -111,7 +111,7 @@ table {
 	width: 100%;
 }
 table tbody tr:nth-child(odd) {
-    background-color: #f2f2f2;
+	background-color: #f4f4f4;
 }
 td,
 th {
@@ -205,7 +205,7 @@ th {
 .metric-header a:hover + .grid-expansion,
 .grid-expansion:hover,
 .grid-expansion:focus {
-	color: #337ab7;
+	color: #3174ae;
 }
 #report-metrics.grid-view .report-metric .fa-compress {
 	display: none;
