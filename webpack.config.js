@@ -26,7 +26,8 @@ module.exports = {
 							"targets": {
 								"browsers": [">2%"]
 							}
-						}]]
+						}]],
+						plugins: ["transform-object-rest-spread"]
 					}
 				}
 			}

@@ -12,7 +12,27 @@
 	"_featured": [
 		"state-of-the-web"
 	],
+	"_lens": {
+		"drupal": {
+			"name": "Drupal"
+		},
+		"magento": {
+			"name": "Magento"
+		},
+		"wordpress": {
+			"name": "WordPress"
+		}
+	},
 	"_metrics": {
+		"bootupJs": {
+			"name": "JavaScript Boot-up Time",
+			"type": "seconds",
+			"singular": "second",
+			"description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests.",
+			"histogram": {
+				"enabled": false
+			}
+		},
 		"bytesCss": {
 			"name": "CSS Bytes",
 			"type": "KB",
@@ -71,9 +91,7 @@
 			"name": "Total Kilobytes",
 			"type": "KB",
 			"description": "The sum of [transfer size](https://www.w3.org/TR/resource-timing-2/#dom-performanceresourcetiming-transfersize) kilobytes of all resources requested by the page.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$bytesIn",
 				"scale": 0.0009765625
@@ -164,6 +182,20 @@
 				]
 			}
 		},
+		"fontDisplay": {
+			"name": "Font Display",
+			"type": "%",
+			"description": "The percent of pages that avoid the flash of invisible text (FOIT) during web font loading by using the `font-display` CSS property. This metric is measured by [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#all_text_remains_visible_during_web_font_loads) and is only available in mobile tests.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"legible": {
 			"name": "Legible Text",
 			"type": "%",
@@ -200,6 +232,20 @@
 			"wpt": {
 				"path": "median$firstView$loadTime",
 				"scale": 0.001
+			}
+		},
+		"numUrls": {
+			"name": "Sample Size",
+			"type": "URLs",
+			"singular": "URL",
+			"description": "The number of URLs analyzed in this report.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"urls"
+				]
 			}
 		},
 		"pctHttps": {
@@ -241,6 +287,20 @@
 				"path": "median$firstView$connections"
 			}
 		},
+		"h2": {
+			"name": "HTTP/2 Requests",
+			"type": "%",
+			"description": "The percent of all requests in the crawl using HTTP/2.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"ttci": {
 			"name": "Time to Consistently Interactive",
 			"type": "seconds",
@@ -268,12 +328,34 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of external stylesheets requested by the page. An external stylesheets is identified as a resource with the `css` file extension or a MIME type containing `css`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$css$requests",
 				"scale": 0.0009765625
+			}
+		},
+		"offscreenImages": {
+			"name": "Offscreen Image Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images) and is only available in mobile tests.",
+			"histogram": {
+				"enabled": false
+			}
+		},
+		"optimizedImages": {
+			"name": "Optimized Image Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests.",
+			"histogram": {
+				"enabled": false
+			}
+		},
+		"responsiveImages": {
+			"name": "Responsive Image Savings",
+			"type": "KB",
+			"description": "The number of kilobytes that could be saved per page by using response images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/oversized-images) and is only available in mobile tests.",
+			"histogram": {
+				"enabled": false
 			}
 		},
 		"reqFont": {
@@ -281,9 +363,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of fonts requested by the page. A font is identified as a resource with the `eot`, `ttf`, `woff`, `woff2`, or `otf` file extensions or a MIME type containing `font`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$font$requests",
 				"scale": 0.0009765625
@@ -294,9 +374,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of HTML documents requested by the page. An HTML document is identified as a resource with the `html` or `html` file extensions or a MIME type containing `html`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$html$requests",
 				"scale": 0.0009765625
@@ -307,9 +385,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of external images requested by the page. An external image is identified as a resource with the `png`, `gif`, `jpg`, `jpeg`, `webp`, `ico`, or `svg` file extensions or a MIME type containing `image`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$image$requests",
 				"scale": 0.0009765625
@@ -320,9 +396,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of external scripts requested by the page. An external script is identified as a resource with the `js` or `json` file extensions or a MIME type containing `script` or `json`.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$js$requests",
 				"scale": 0.0009765625
@@ -333,9 +407,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of all unidentified resources requested by the page. An unidentified resource is one that does not match a known script, font, image, stylesheet, XML file, video, HTML document, or plaintext file.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$breakdown$other$requests",
 				"scale": 0.0009765625
@@ -346,9 +418,7 @@
 			"type": "Requests",
 			"singular": "Request",
 			"description": "The number of resources requested by the page.",
-			"timeseries": {
-				"redundant": true
-			},
+			"redundant": true,
 			"wpt": {
 				"path": "median$firstView$requests$length"
 			}
@@ -361,16 +431,13 @@
 			"redundant": true,
 			"histogram": {
 				"minDate": "2015_05_01"
-			},
-			"timeseries": {
-				"redundant": true
 			}
 		},
 		"cruxFp": {
 			"name": "First Paint",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
+			"description": "The number of seconds from the time the navigation started until the browser first renders. See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"timeseries": {
 				"enabled": false
 			},
@@ -383,7 +450,7 @@
 			"name": "First Contentful Paint",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/). See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
+			"description": "The number of seconds from the time the navigation started until the browser first renders. See the [Paint Timing API](https://w3c.github.io/paint-timing/#first-paint) for more info.",
 			"timeseries": {
 				"enabled": false
 			},
@@ -396,7 +463,7 @@
 			"name": "DOMContentLoaded",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+			"description": "The number of seconds from the time the navigation started until the browser first renders any text or graphics.",
 			"timeseries": {
 				"enabled": false
 			},
@@ -409,13 +476,94 @@
 			"name": "Onload",
 			"type": "seconds",
 			"singular": "second",
-			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading. This metric comes from real user data in the [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+			"description": "The number of seconds from the time the navigation started until the document and all of its dependent resources have finished loading.",
 			"timeseries": {
 				"enabled": false
 			},
 			"wpt": {
 				"path": "median$firstView$loadTime",
 				"scale": 0.001
+			}
+		},
+		"cruxFid": {
+			"name": "First Input Delay",
+			"type": "ms",
+			"description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+			"timeseries": {
+				"enabled": false
+			},
+			"histogram": {
+				"minDate": "2018_06_01"
+			}
+		},
+		"cruxFastFcp": {
+			"name": "Fast First Contentful Paint",
+			"type": "%",
+			"description": "The percent of \"fast\" FCP experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastFp": {
+			"name": "Fast First Paint",
+			"type": "%",
+			"description": "The percent of \"fast\" FP experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastDcl": {
+			"name": "Fast DOM Content Loaded",
+			"type": "%",
+			"description": "The percent of \"fast\" DCL experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastOl": {
+			"name": "Fast Onload",
+			"type": "%",
+			"description": "The percent of \"fast\" OL experiences less than 1 second.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"cruxFastFid": {
+			"name": "Fast First Input Delay",
+			"type": "%",
+			"description": "The percent of \"fast\" FID experiences less than 100 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
 			}
 		},
 		"vulnJs": {
@@ -430,6 +578,7 @@
 				"enabled": false
 			}
 		},
+<<<<<<< HEAD
 		"workboxAdoption": {
 			"name": "Workbox Adoption",
 			"type": "%",
@@ -592,6 +741,22 @@
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric shows how many Service Workers listen for the `sync` event.",
+=======
+		"pwaScores": {
+			"name": "PWA Scores",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the median [PWA score](https://developers.google.com/web/tools/lighthouse/v3/scoring#pwa) in [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Lighthouse is popular automated tool for improving the quality of web pages.",
+			"histogram": {
+				"enabled": false
+			}
+		},
+		"swControlledPages": {
+			"name": "Service Worker Controlled Pages",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that have triggered the ```ServiceWorkerControlledPage``` [use counter](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) that fires whenever a page is controlled by a service worker.",
+>>>>>>> master
 			"histogram": {
 				"enabled": false
 			},
@@ -607,7 +772,10 @@
 		"summary": "Images are the most popular resource type on the web. In this report we analyze how images are being used across the web.",
 		"metrics": [
 			"bytesImg",
-			"reqImg"
+			"reqImg",
+			"offscreenImages",
+			"optimizedImages",
+			"responsiveImages"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
@@ -624,7 +792,8 @@
 			"bytesJs",
 			"reqJs",
 			"evalJs",
-			"compileJs"
+			"compileJs",
+			"bootupJs"
 		],
 		"graphic": {
 			"bgcolor": "#f7df1e",
@@ -645,7 +814,8 @@
 			"ttci",
 			"ttfi",
 			"dcl",
-			"ol"
+			"ol",
+			"bootupJs"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
@@ -659,12 +829,15 @@
 		"name": "State of the Web",
 		"summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
 		"metrics": [
+			"numUrls",
 			"bytesTotal",
 			"reqTotal",
 			"pctHttps",
 			"pctVuln",
 			"tcp",
-			"vulnJs"
+			"h2",
+			"vulnJs",
+			"fontDisplay"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
@@ -725,19 +898,23 @@
 		}
 	},
 	"chrome-ux-report": {
-		"name": "Chrome User Experience Report: Loading",
-		"summary": "Loading performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+		"name": "Chrome User Experience Report",
+		"summary": "Loading and interactivity performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
 		"metrics": [
 			"cruxFp",
 			"cruxFcp",
 			"cruxDcl",
-			"cruxOl"
+			"cruxOl",
+			"cruxFid",
+			"cruxFastFp",
+			"cruxFastFcp",
+			"cruxFastDcl",
+			"cruxFastOl",
+			"cruxFastFid"
 		],
 		"minDate": "2017_10_01",
 		"datePattern": ".*_01$",
-		"timeseries": {
-			"enabled": false
-		},
+		"maxDateMetric": "cruxFcp",
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
@@ -752,6 +929,7 @@
 	},
 	"progressive-web-apps": {
 		"name": "Progressive Web Apps",
+<<<<<<< HEAD
 		"summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWAs). PWAs are a new class of web applications, enabled by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading, to receive push notifications and synchronize data in the background, and — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs.",
 		"metrics": [
 			"stateOfTheUnionPWAs",
@@ -769,5 +947,23 @@
 			"messageEvents",
 			"syncEvents"
 		]
+=======
+		"summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWAs). PWAs are a new class of web applications, enabled by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading, to receive push notifications as well as to synchronize data in the background, and — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs.",
+		"metrics": [
+			"pwaScores",
+			"swControlledPages"
+		],
+		"graphic": {
+			"bgcolor": "#fff",
+			"primary": {
+				"text": "PWA",
+				"color": "#6800cb"
+			},
+			"secondary": {
+				"color": "rgba(0, 0, 0, 0.3)",
+				"icon": "fas fa-cogs"
+			}
+		}
+>>>>>>> master
 	}
 }

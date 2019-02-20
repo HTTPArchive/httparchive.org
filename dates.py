@@ -16,3 +16,11 @@ def get_dates():
 			dates.append(match.group(0))
 	dates.sort(reverse=True)
 	return dates
+
+def get_latest_date(dates, metric_id):
+	gcs = storage.Client()
+	bucket = gcs.get_bucket(GCS_BUCKET)
+	for date in dates:
+		response = bucket.get_blob('reports/%s/%s.json' % (date, metric_id))
+		if response:
+			return date

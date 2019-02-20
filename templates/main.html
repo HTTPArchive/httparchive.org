@@ -42,18 +42,13 @@
 							</a>
 							
 							<ul class="dropdown-content reports">
-								{% for report in reports[:4] %}
+								{% for report in reports %}
 									<li>
 										<a href="{{ url_for('report', report_id=report.id) }}">
 											{{ report.name }}
 										</a>
 									</li>
 								{% endfor %}
-								<li>
-									<a href="{{ url_for('reports') }}">
-										More&hellip;
-									</a>
-								</li>
 							</ul>
 						</li>
 						<li>
@@ -68,6 +63,9 @@
 							<ul class="dropdown-content">
 								<li>
 									<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
+								</li>
+								<li>
+									<a href="{{ url_for('about', _anchor='contribute') }}">Contribute</a>
 								</li>
 								<li>
 									<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>

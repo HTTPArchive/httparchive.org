@@ -191,6 +191,18 @@ ul {
 	padding: 0;
 	margin: 0;
 }
+ul.bulleted li {
+	list-style-type: initial;
+	list-style-position: outside;
+	margin: 0 0 1em 20px;
+	text-align: left;
+}
+ul.bulleted li ul {
+	margin-left: 20px;
+}
+.bulleted a {
+	color: #337ab7;
+}
 
 .btn {
 	border: 2px solid #748c8f;
@@ -219,6 +231,28 @@ ul {
 }
 .btn:not(:last-child) {
 	margin-right: 20px;
+}
+.btn-group .btn {
+	margin-right: 0;
+}
+.btn-group .btn + .btn {
+	border-left: none;
+}
+.btn-group .btn:not(:last-child) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.btn-group .btn:not(:first-child) {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.btn-group:hover .btn.alt {
+	background-color: #fff;
+	color: #748c8f;
+}
+.btn-group:hover .btn.alt:hover {
+	background-color: #748c8f;
+	color: #fff;
 }
 
 .figure {
@@ -287,6 +321,13 @@ input {
 	border-bottom-style: solid;
 }
 
+.help-tooltip {
+	opacity: 0.7;
+	transition: all 0.2s;
+}
+.help-tooltip:hover {
+	opacity: 1.0;
+}
 
 @media (max-width: 992px) {
 	footer {
@@ -333,9 +374,22 @@ input {
 		padding: 10px 15px;
 		width: 100%;
 	}
+	section .btn-group {
+		max-width: 100%;
+		margin: 0 !important;
+		padding: 0;
+	}
+	.btn-group .btn {
+		display: inline-block;
+		width: 50%;
+	}
 }
 
 #sponsor-logos {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
 	background-color: #fff;
 	border: 1px solid #748c8f;
 	border-radius: 15px;
@@ -344,4 +398,27 @@ input {
 }
 #sponsor-logos * {
 	padding: 5px;
+}
+#sponsor-logos img {
+	max-height: 115px;
+	max-width: 250px;
+}
+
+
+#FAQ h2 {
+	margin-bottom: 20px;
+}
+#FAQ li {
+	list-style: inside disc;
+	margin-bottom: 1em;
+}
+#FAQ p,
+#FAQ dd {
+	margin-bottom: 30px;
+}
+#answers h3 {
+	margin-top: 100px;
+}
+#answers h3:first-child {
+	margin-top: 0;
 }

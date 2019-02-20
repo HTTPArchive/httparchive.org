@@ -1,7 +1,7 @@
 export default class Changelog {
 
 	static get URL() {
-		return 'https://raw.githubusercontent.com/HTTPArchive/httparchive/master/docs/changelog.json';
+		return 'https://cdn.rawgit.com/HTTPArchive/httparchive/master/docs/changelog.json';
 	}
 
 }

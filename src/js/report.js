@@ -1,5 +1,5 @@
 import { Metric } from './metric';
-import { el, prettyDate, drawMetricSummary } from './utils';
+import { prettyDate, drawMetricSummary } from './utils';
 import WPT from './webpagetest';
 
 
@@ -10,9 +10,12 @@ class Report {
 		this.report = report;
 		this.viz = viz;
 		this.baseUrl = report.url;
+		this.lens = report.lens && report.lens.id;
 		this.startDate = report.startDate;
 		this.endDate = report.endDate;
+		this.view = report.view;
 
+		this.bindChangeListener('lens');
 		this.bindChangeListener('startDate');
 		this.bindChangeListener('endDate');
 		this.bindUpdateListener();
@@ -22,6 +25,9 @@ class Report {
 		this.bindPermalinkClick();
 		this.updatePermalink();
 		this.makeDatesPretty();
+		this.bindViewToggle();
+		this.bindGridExpansion();
+		this.expandPreselectedMetric();
 	}
 
 	bindChangeListener(id) {
@@ -33,6 +39,7 @@ class Report {
 
 	bindUpdateListener() {
 		document.getElementById('update').addEventListener('click', _ => {
+			// TODO: Consider using history.replaceState on field changes instead.
 			location.href = this.permalink.value;
 		});
 	}
@@ -80,12 +87,21 @@ class Report {
 	}
 
 	updatePermalink() {
+		const url = new URL(this.baseUrl);
+		const lens = this.lens;
+
+		// TODO: Change subdomain.
+		if (lens) {
+			url.searchParams.set('lens', lens);
+		} else {
+			url.searchParams.delete('lens');
+		}
+
 		if (this.isOneYearAgo(this.startDate) && this.isLatest(this.endDate)) {
-			this.permalink.value = this.baseUrl;
+			this.permalink.value = url.toString();
 			return;
 		}
 
-		const url = new URL(this.baseUrl);
 		const start = this.getDateUrlAlias(this.startDate);
 		const end = this.getDateUrlAlias(this.endDate);
 
@@ -98,6 +114,8 @@ class Report {
 			}
 		}
 
+		url.searchParams.set('view', this.view);
+
 		this.permalink.value = url.toString();
 	}
 
@@ -106,6 +124,84 @@ class Report {
 			const date = prettyDate(option.innerText.trim());
 			option.innerText = date;
 		});
+	}
+
+	bindViewToggle() {
+		const reportMetrics = document.getElementById('report-metrics');
+		const gridBtn = document.getElementById('grid-view');
+		const listBtn = document.getElementById('list-view');
+
+		const toggleView = (view) => {
+			if (view === this.view) {
+				return;
+			}
+
+			const url = new URL(location.href);
+			this.view = view;
+
+			reportMetrics.classList.toggle('grid-view', view === 'grid');
+			gridBtn.classList.toggle('alt', view === 'grid');
+			listBtn.classList.toggle('alt', view !== 'grid');
+
+			url.searchParams.set('view', view);
+
+			if (view === 'list') {
+				// The viz will need to be repainted to maximize the width.
+				// We can trigger this with a window resize event.
+				this.triggerResize();
+			} else {
+				// Expand any metric whose ID is in the URL hash.
+				this.expandPreselectedMetric({scrollIntoView: false});
+			}
+			window.history.replaceState({}, '', url.toString());
+			this.updatePermalink();
+		};
+
+		gridBtn.addEventListener('click', () => toggleView('grid'));
+		listBtn.addEventListener('click', () => toggleView('list'));
+	}
+
+	triggerResize() {
+		window.dispatchEvent(new Event('resize'));
+	}
+
+	toggleMetricExpansion(metricId) {
+		const metric = document.getElementById(metricId);
+		if (!metric) {
+			return;
+		}
+		metric.classList.toggle('expanded');
+		this.triggerResize();
+	}
+
+	bindGridExpansion() {
+		const gridExpanderSelector = '.grid-expansion, .metric-header a';
+		Array.from(document.querySelectorAll(gridExpanderSelector)).forEach(btn => {
+			const metricId = btn.dataset.metric;
+			btn.addEventListener('click', e => {
+				this.toggleMetricExpansion(metricId);
+			});
+		});
+	}
+
+	expandPreselectedMetric(options={scrollIntoView:true}) {
+		if (this.view !== 'grid') {
+			return;
+		}
+
+		const anchorMetricId = location.hash.substr(1);
+		if (!anchorMetricId) {
+			return;
+		}
+
+		const metric = document.getElementById(anchorMetricId);
+		if (!metric) {
+			return;
+		}
+		this.toggleMetricExpansion(anchorMetricId);
+		if (options.scrollIntoView) {
+			requestAnimationFrame(() => metric.scrollIntoView());
+		}
 	}
 
 	getWPT(wptId) {

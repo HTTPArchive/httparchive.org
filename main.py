@@ -16,14 +16,17 @@
 import logging
 import re
 from time import time
-from urlparse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 from csp import csp
 import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, render_template, redirect, abort, url_for
+from flask import Flask, request, make_response, jsonify, render_template, redirect, abort, url_for as flask_url_for
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
@@ -34,6 +37,18 @@ Talisman(app,
 	content_security_policy=csp,
 	content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
+
+# Overwrite the built-in method.
+def url_for(endpoint, **kwargs):
+	# Persist the lens parameter across navigations.
+	lens = request.args.get('lens')
+	if report_util.is_valid_lens(lens):
+		kwargs['lens'] = lens
+
+	# Pass through to the built-in method.
+	return flask_url_for(endpoint, **kwargs)
+
+app.jinja_env.globals['url_for'] = url_for
 
 @app.route('/')
 def index():
@@ -52,9 +67,33 @@ def faq():
 						   reports=report_util.get_reports(),
 						   faq=faq_util)
 
+# A public JSON endpoint to get info about a given metric.
+@app.route('/metric.json')
+def metric():
+	metric_id = request.args.get('id')
+	if not metric_id:
+		abort(jsonify(status=400, message='id parameter required'))
+
+	metric = report_util.get_metric(metric_id)
+	# A metric has a histogram if it is not explicitly disabled.
+	has_histogram = metric and metric.get('histogram', {}).get('enabled', True)
+	latest = report_util.get_latest_date(metric_id) if metric and has_histogram else None
+
+	return jsonify(
+		status=200,
+		metric=metric,
+		latest=latest
+	)
+
 @app.route('/reports')
 def reports():
-	return render_template('reports.html', reports=report_util.get_reports())
+	reports = report_util.get_reports()
+
+	# Return as JSON if requested.
+	if get_format(request) == 'json':
+		return jsonify(status=200, reports=reports)
+
+	return render_template('reports.html', reports=reports)
 
 @app.route('/reports/<report_id>')
 def report(report_id):
@@ -69,12 +108,15 @@ def report(report_id):
 	min_date = report.get('minDate')
 	max_date = report.get('maxDate')
 	date_pattern = report.get('datePattern')
+	max_date_metric = report.get('maxDateMetric')
 
 	# TODO: If a report doesn't explicitly have a min/max date,
 	# but all of its metrics do, take the min/max of the metrics
 	# and set that as the report's implicit min/max date.
 
 	# Omit dates for which this report has no data.
+	if max_date_metric:
+		max_date = report_util.get_latest_date(max_date_metric)
 	if min_date:
 		dates = dates[:dates.index(min_date) + 1]
 	if max_date:
@@ -84,6 +126,7 @@ def report(report_id):
 		dates = [d for d in dates if date_pattern.match(d)]
 
 	report['dates'] = dates
+	report['lenses'] = report_util.get_lenses()
 
 	start = request.args.get('start')
 	end = request.args.get('end')
@@ -105,12 +148,12 @@ def report(report_id):
 	# This is longhand for the snapshot (histogram) view.
 	if start == end:
 		end = None
-	
+
 	# This is shorthand for the trends (timeseries) view.
 	if not start and not end:
-		# The default date range is 24 crawls (1 year).
+		# The default date range is 72 crawls (3 years).
 		# May be shorter if the report's minimum date is more recent.
-		start = dates[min(24, len(dates) - 1)]
+		start = dates[min(72, len(dates) - 1)]
 		end = dates[0]
 
 	if start and start not in dates:
@@ -128,10 +171,21 @@ def report(report_id):
 		if not request.args.get('start'):
 			start = dates[0]
 
+	lens_id = get_lens_id(request)
+	lens = report_util.get_lens(lens_id)
+	if lens:
+		report['lens'] = lens
+
+	report['view'] = get_report_view(report, request)
+
 	# Determine which metrics should be enabled for this report.
 	for metric in report['metrics']:
 		# Get a list of reports that also contain this metric.
 		metric['similar_reports'] = report_util.get_similar_reports(metric['id'], report_id)
+
+		# Mark the lens used for this metric, if applicable.
+		if lens:
+			metric['lens'] = lens
 
 		metric[viz] = metric.get(viz, {})
 		enabled = metric[viz].get('enabled', True)
@@ -150,10 +204,14 @@ def report(report_id):
 			enabled = end <= max_date
 
 		metric[viz]['enabled'] = enabled
-			
+
 
 	if not request.script_root:
 		request.script_root = url_for('report', report_id=report_id, _external=True)
+
+	# Return as JSON if requested.
+	if get_format(request) == 'json':
+		return jsonify(status=200, report=report, start=start, end=end, viz=viz)
 
 	return render_template('report/%s.html' % viz,
 						   viz=viz,
@@ -161,6 +219,18 @@ def report(report_id):
 						   report=report,
 						   start=start,
 						   end=end)
+
+def get_lens_id(request):
+	host = request.host.split('.')
+	subdomain = len(host) > 2 and host[0] or ''
+	return request.args.get('lens') or subdomain
+
+def get_report_view(report, request):
+	view = request.args.get('view')
+	return view if view in ('list', 'grid') else report.get('view', 'list')
+
+def get_format(request):
+	return request.args.get('f')
 
 @app.errorhandler(400)
 def bad_request(e):
@@ -174,7 +244,7 @@ def page_not_found(e):
 		page = legacy_util.get_redirect_page(path)
 		redirect_url = url_for(page.name, **page.kwargs)
 		response = make_response(redirect(redirect_url, code=301))
-		# Set a cookie that expires 5 seconds after page load, 
+		# Set a cookie that expires 5 seconds after page load,
 		# to ensure that it is only shown once per redirect.
 		# Since the redirects are permanent (301) this should only be
 		# shown to users the first time they hit each legacy URL.

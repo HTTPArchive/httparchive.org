@@ -17,14 +17,15 @@
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
     "start": "npm run watch & python main.py",
-    "stage": "npm run build && gcloud app deploy --project httparchive-staging --stop-previous-version",
-    "deploy": "npm run build && gcloud app deploy --project httparchive --stop-previous-version"
+    "stage": "npm run build && echo \"Y\" | gcloud app deploy --project httparchive-staging --stop-previous-version",
+    "deploy": "npm run build && echo \"Y\" | gcloud app deploy --project httparchive --stop-previous-version"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.5.2",
-    "webpack": "^3.0.0"
+    "webpack": "^3.12.0"
   }
 }

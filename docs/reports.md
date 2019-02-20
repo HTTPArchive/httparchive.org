@@ -12,6 +12,11 @@ Reports are configured in [config/reports.json](../config/reports.json). Here's 
     "foo",
     "bar"
   ],
+  "_lens": {
+    "wordpress": {
+      "name": "WordPress"
+    }
+  },
   "_featured": [
     "bar"
   ],
@@ -67,13 +72,29 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
     Required array of report IDs. Defines the sequence of reports as they appear on the home page. This array should only contain 1-3 reports.
 
+  - **\_lens**
+
+    Optional object mapping lens IDs to lens configs. Defines the available lenses as they appear on the report pages.
+
+    - **lens ID**
+
+      Short identifier string for the lens. Used as the URL value of the "lens" querystring parameter on report pages. Must be unique and match the lens/* SQL filenames, eg "wordpress".
+
+    - **lens config**
+
+      Maps lens configuration property names to values. The following properties are available:
+
+      - **name**
+
+        Required string. Human-readable name of the lens, eg "WordPress". Used in the report filtering UI.
+
   - **\_metrics**
 
     Required object mapping metric IDs to metric configs.
 
     - **metric ID**
 
-      Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the histogram/timeseries SQL filenames. May be reused between reports.
+      Short identifier string for the metric. Used as the URL search fragment for the chart on the report page. Must be unique and match the [histogram/timeseries SQL filenames](https://github.com/HTTPArchive/bigquery/tree/master/sql). May be reused between reports.
 
     - **metric config**
 
@@ -125,7 +146,7 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         - **enabled**
 
-          Optional boolean. Default `true`. Whether the metric should be included in timeseres reports.
+          Optional boolean. Default `true`. Whether the metric should be included in timeseries reports.
 
         - **fields**
 
@@ -163,18 +184,6 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Required string. Human-readable description of the report. Suggested length: 1-5 sentences.
 
-      - **minDate**
-
-        Optional string. The earliest date at which the report is available. YYYY_MM_DD format.
-
-      - **maxDate**
-
-        Optional string. The latest date at which the report is available. YYYY_MM_DD format.
-
-      - **datePattern**
-
-        Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
-
       - **metrics**
 
         Required array. Describes the metrics included in the report.
@@ -191,9 +200,13 @@ In this example config, there are two reports: Foo and Bar. They both include X 
 
         Optional string. Regular expression pattern of dates for which the report is available. For example, `".*_01$"` matches only the first crawl of the month.
 
-      - **metrics**
+      - **maxDateMetric**
 
-        Required array. Describes the metrics included in the report.
+        Optional string. Metric ID used to query the GCS bucket. The maxDate for the report will be the most recent date-bucket that contains this metric's JSON results.
+
+      - **view**
+
+        Optional string. Specifies the layout of metrics. For example, setting this to `"grid"` will force the report into grid view by default. The default value is `"list"`.
 
 ## Rendering a Report
 

@@ -37,7 +37,7 @@
 }
 .discussion-users li + li {
 	margin-left: -12px;
-	transition: margin-left .8s;
+	transition: margin-left .2s;
 }
 .discussion-users:hover li + li {
 	margin-left: 0;

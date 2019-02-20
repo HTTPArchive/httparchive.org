@@ -2,8 +2,9 @@
 
 
 {% set wpt_id = request.args.get('wptid') %}
+{% set enabled_lens_id = report.lens.id if report.lens else '' %}
 
-{% block title %}{{ report.name }}{% endblock %}
+{% block title %}{{ (report.lens and '%s: ' % report.lens.name or '') +report.name }}{% endblock %}
 
 {% block head %}
 	{{ super() }}
@@ -17,7 +18,7 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2>
 					<small>
-						Report:
+						{{ report.lens and report.lens.name or 'Report' }}:
 					</small>
 					{% block reportName %}{{ report.name }}{% endblock %}
 				</h2>
@@ -39,6 +40,27 @@
 
 					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 						<form id="history" class="row">
+							<div class="col-sm-8 col-sm-offset-2 col-xs-12">
+								<label for="lens">
+									Lens
+										<a href="{{ url_for('faq', _anchor='what-is-a-lens') }}" aria-label="FAQ: What is a lens?">
+											<i
+												class="hidden-xs help-tooltip fa fa-info-circle"
+												title="A lens shows a report for a particular subset of websites."
+												aria-hidden></i>
+										</a>
+								</label>
+
+								<select id="lens">
+									<option></option>
+									{% for (lens_id, l) in report.lenses.items() %}
+										<option value="{{ lens_id }}" {% if lens_id == enabled_lens_id %}selected{% endif %}>
+											{{ l.name }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+
 							<div class="col-sm-4 col-sm-offset-2 col-xs-12">
 								<label for="startDate">
 									Start Date
@@ -60,11 +82,6 @@
 
 								<select id="endDate">
 									<option></option>
-									{% if end == report.dates[0] %}
-										<option value="{{ report.dates[0] }}">
-											Most Recent
-										</option>
-									{% endif %}
 									{% for d in report.dates %}
 										<option value="{{ d }}" {% if d == end %}selected{% endif %} class="yyyy_mm_dd">
 											{{ d }}
@@ -83,7 +100,17 @@
 										<path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/>
 									</svg>
 								</i>
-								<input id="permalink" type="text" readonly="true">
+								<input id="permalink" type="text" readonly="true" aria-label="Permalink">
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
+								<div class="btn-group pull-right">
+									<button id="grid-view" class="btn {% if report.view == 'grid' %}alt{% endif %}" title="Grid view" type="button">
+										<i class="fa fa-th"></i>
+									</button>
+									<button id="list-view" class="btn {% if report.view == 'list' %}alt{% endif %}" title="List view" type="button">
+										<i class="fa fa-list"></i>
+									</button>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -92,9 +119,9 @@
 		</div>
 	</section>
 
-	<section id="report-metrics">
+	<section id="report-metrics" {% if report.view == 'grid' %}class="grid-view"{% endif %}>
 		<div class="container">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="report-metrics-inner-wrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				{% block report %}{% endblock %}
 			</div>
 		</div>
@@ -120,8 +147,17 @@
 {% endblock %}
 
 {% macro metric_info(metric, viz) %}
+<<<<<<< HEAD
 	<h3>
 		<a href="#{{ metric.id }}">{{ metric.name | markdown}}</a>
+=======
+	<h3 class="metric-header">
+		<a href="#{{ metric.id }}" data-metric="{{ metric.id }}">{{ metric.name }}</a>
+		<button class="grid-expansion" data-metric="{{ metric.id }}" type="button">
+			<i class="fas fa-expand" title="Expand metric"></i>
+			<i class="fas fa-compress" title="Collapse metric"></i>
+		</button>
+>>>>>>> master
 	</h3>
 	{% if metric.description %}
 		{{ metric.description | markdown }}

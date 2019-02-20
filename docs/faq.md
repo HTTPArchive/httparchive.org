@@ -9,7 +9,7 @@
 
 ### How does the HTTP Archive decide which URLs to test?
 
-HTTP Archive crawls 500,000 URLs on both desktop and mobile twice a month. The URLs come from the most popular 500,000 sites in the [Alexa Top 1,000,000](http://www.alexa.com/topsites) list.
+The HTTP Archive crawls [1M+ URLs](https://httparchive.org/reports/state-of-the-web#numUrls) on both desktop and mobile twice a month. The URLs come from the Chrome User Experience Report, a monthly dataset of real user performance data of the most popular websites. Only the URLs whose domain is in the [Alexa Top 1,000,000](http://www.alexa.com/topsites) ranked list are included.
 
 
 ### How is the data gathered?
@@ -37,7 +37,7 @@ Given these conditions it's virtually impossible to compare WebPagetest.org's ti
 
 ### How do I use BigQuery to write custom queries over the data?
 
-Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://github.com/HTTPArchive/httparchive/blob/master/docs/bigquery-gettingstarted.md), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
+Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://github.com/HTTPArchive/httparchive.org/blob/master/docs/gettingstarted_bigquery.md), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
 
 For a guided walkthrough of the project, watch this in-depth [30 minute video](https://www.youtube.com/watch?v=00f9kza3BJ0) featuring HTTP Archive maintainer [Rick Viscomi](https://twitter.com/rick_viscomi).
 
@@ -56,6 +56,13 @@ The HTTP Archive examines each URL in the list, but does not crawl the website's
 Most websites are comprised of many separate web pages. The landing page may not be representative of the overall site. Some websites, such as [facebook.com](http://www.facebook.com/), require logging in to see typical content. Some websites, such as [googleusercontent.com](http://www.googleusercontent.com/), don't have a landing page. Instead, they are used for hosting other URLs and resources. In this case googleusercontent.com is the domain path used for resources inserted by users into Google documents, etc. Because of these issues and more, it's possible that the actual HTML document analyzed is not representative of the website.
 
 
+### What is a lens?
+
+A lens focuses on a specific subset of websites. Through a lens, you'll see data about those particular websites only. For example, the [WordPress lens](https://wordpress.httparchive.org) focuses only on websites that are detected as being built with WordPress. We use [Wappalayzer](https://www.wappalyzer.com/) to detect over 1,000 web technologies and choose a few interesting ones to become lenses.
+
+Lenses can be enabled  at the top of any report, or by visiting the respective subdomain, for example [`wordpress.httparchive.org`](https://wordpress.httparchive.org).
+
+
 ### Who sponsors the HTTP Archive?
 
 The HTTP Archive is sponsored by companies large and small in the web industry who are dedicated to moving the web forward. Our sponsors make it possible for this non-profit project to continue operating and tracking how the web is built.
@@ -70,9 +77,9 @@ The HTTP Archive is part of the Internet Archive, a 501(c)(3) non-profit. Donati
 
 ### Who maintains the HTTP Archive?
 
-[Steve Souders](https://twitter.com/Souders) created the HTTP Archive in 2010. It's built on the shoulders of [Pat Meenan](https://twitter.com/patmeenan)'s [WebPageTest](https://webpagetest.org/) system. See the [Contributors](https://github.com/HTTPArchive/httparchive/graphs/contributors) page for a list of people who have contributed code. Guy Leech helped early on with the design. Many thanks to Stephen Hay who created the logo.
+The current core maintainers are [Ilya Grigorik](https://twitter.com/igrigorik), [Pat Meenan](https://twitter.com/patmeenan), [Rick Viscomi](https://twitter.com/rick_viscomi), and [Paul Calvano](https://twitter.com/paulcalvano).
 
-In March 2017, [Ilya Grigorik](https://twitter.com/igrigorik), [Pat Meenan](https://twitter.com/patmeenan), and [Rick Viscomi](https://twitter.com/rick_viscomi) assumed leadership of the project.
+Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://twitter.com/Souders), who started the project in 2010, [Pat Meenan](https://twitter.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, and Guy Leech and Stephen Hay for design help along the way.
 
 
 ### Who do I contact for more information?

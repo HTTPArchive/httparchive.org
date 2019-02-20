@@ -25,12 +25,10 @@ pip install -r requirements.txt
 npm install
 ```
 
-4. Authenticate with Google Cloud
-
-This is necessary because the App Engine server uses Cloud APIs.
+ 4. Initialize the Google Cloud CLI (this is necessary because the App Engine server uses Google Cloud APIs):
 
 ```
-gcloud auth application-default login
+gcloud init
 ```
 
 5. Run the application:
@@ -39,7 +37,7 @@ gcloud auth application-default login
 npm run start
 ```
 
-6. In your web browser, enter the following address: http://localhost:8080
+6. In your web browser, enter the following address: http://127.0.0.1:8080
 
 ## Staging
 

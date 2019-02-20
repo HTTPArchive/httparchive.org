@@ -6,8 +6,12 @@ import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
 
 
 function timeseries(metric, options, start, end) {
+<<<<<<< HEAD
 	// TODO: remove cache buster
 	const dataUrl = `https://cdn.httparchive.org/reports/${metric}.json?random=${Math.random().toString().substr(2)}`;
+=======
+	const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
+>>>>>>> master
 	options.chartId = `${metric}-chart`;
 	options.tableId = `${metric}-table`;
 	options.metric = metric;
@@ -64,22 +68,46 @@ function getChange(data, options) {
 		return;
 	}
 
-	const oldest = getPrimaryMetric(data[0], options);
+	let oldestIndex;
+
+	for (let i = 0; i < data.length; i++) {
+		if (getPrimaryMetric(data[i], options) > 0) {
+			oldestIndex = i;
+			break;
+		}
+	}
+
+	if (oldestIndex === undefined) {
+		return;
+	}
+
+	const oldest = getPrimaryMetric(data[oldestIndex], options);
 	const latest = getPrimaryMetric(data[data.length - 1], options);
 
 	return (latest - oldest) * 100 / oldest;
 }
 
 function getPrimaryMetric(o, options) {
-	return getUnformattedPrimaryMetric(o, options).toFixed(1);
+	const field = getPrimaryFieldName(o, options);
+	const primaryMetric = getUnformattedPrimaryMetric(o, options);
+	const formatter = formatters[field];
+	if (formatter) {
+		return formatter(primaryMetric);
+	}
+	return primaryMetric;
+}
+
+function getPrimaryFieldName(o, options) {
+	if (options.timeseries && options.timeseries.fields) {
+		return options.timeseries.fields[0];
+	}
+
+	return 'p50';
 }
 
 function getUnformattedPrimaryMetric(o, options) {
-	if (options.timeseries && options.timeseries.fields) {
-		return o[options.timeseries.fields[0]];
-	}
-
-	return o.p50;
+	const field = getPrimaryFieldName(o, options);
+	return o[field];
 }
 
 function drawTimeseries(data, options) {
@@ -114,10 +142,12 @@ function drawTimeseries(data, options) {
 		return;
 	}
 
-	getFlagSeries().then(flagSeries => {
-		series.push(flagSeries);
-		drawChart(options, series);
-	})
+	getFlagSeries()
+		.then(flagSeries => series.push(flagSeries))
+		// If the getFlagSeries request fails (503), catch so we can still draw the chart
+		.catch(console.error)
+		.then(_ => drawChart(options, series));
+
 }
 let redrawTimeseriesTable = {};
 function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) {
@@ -182,16 +212,12 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 
 const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
-const toNumeric = o => ({
-	timestamp: +o.timestamp,
-	p10: +o.p10,
-	p25: +o.p25,
-	p50: +o.p50,
-	p75: +o.p75,
-	p90: +o.p90,
-	percent: +o.percent,
-	client: o.client
-});
+const toNumeric = ({client, date, ...other}) => {
+	return Object.entries(other).reduce((o, [k, v]) => {
+		o[k] = +v;
+		return o;
+	}, {client});
+};
 const toIQR = o => [o.timestamp, o.p25, o.p75];
 const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
@@ -259,7 +285,7 @@ function drawChart(options, series) {
 			zoomType: 'x'
 		},
 		title: {
-			text: `Timeseries of ${options.name}`
+			text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Timeseries of ${options.name}`
 		},
 		subtitle: {
 			text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',
@@ -293,7 +319,12 @@ function drawChart(options, series) {
 					let data;
 					if (options.timeseries && options.timeseries.fields) {
 						label = points[0].series.name;
-						data = points[0].point.y.toFixed(1);
+						const formatter = formatters[options.timeseries.fields[0]];
+						if (formatter) {
+							data = formatter(points[0].point.y);
+						} else {
+							data = points[0].point.y.toFixed(1);
+						}
 					} else {
 						const [median] = points;
 						label = `Median ${median.series.name}`;
@@ -320,6 +351,35 @@ function drawChart(options, series) {
 				</table>
 				${getChangelog(changelog)}`;
 			}
+		},
+		rangeSelector: {
+			buttons: [{
+				type: 'month',
+				count: 1,
+				text: '1m'
+			}, {
+				type: 'month',
+				count: 3,
+				text: '3m'
+			}, {
+				type: 'month',
+				count: 6,
+				text: '6m'
+			}, {
+				type: 'ytd',
+				text: 'YTD'
+			}, {
+				type: 'year',
+				count: 1,
+				text: '1y'
+			}, {
+				type: 'year',
+				count: 3,
+				text: '3y'
+			}, {
+				type: 'all',
+				text: 'All'
+			}]
 		},
 		xAxis: {
 			type: 'datetime',
@@ -351,7 +411,9 @@ const formatters = {
 	p25: toFixed,
 	p50: toFixed,
 	p75: toFixed,
-	p90: toFixed
+	p90: toFixed,
+	percent: toFixed,
+	urls: value => parseInt(value).toLocaleString()
 };
 
 const zip = data => {

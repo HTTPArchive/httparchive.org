@@ -3,7 +3,7 @@ import logging
 from copy import deepcopy
 from time import time
 
-import dates as dateutil
+import dates as date_util
 
 
 class VizTypes():
@@ -14,6 +14,7 @@ class VizTypes():
 MAX_REPORT_STALENESS = 60 * 60 * 3
 
 last_report_update = 0
+latest_metric_dates = {}
 report_dates = []
 reports_json = {}
 
@@ -27,7 +28,8 @@ def update_reports():
 	global report_dates
 	global reports_json
 
-	report_dates = dateutil.get_dates()
+	report_dates = date_util.get_dates()
+	latest_metric_dates = {}
 
 	with open('config/reports.json') as reports_file:
 		reports_json = json.load(reports_file)
@@ -66,6 +68,8 @@ def get_metric(metric_id):
 	global reports_json
 	metrics = reports_json.get('_metrics')
 	metric = deepcopy(metrics.get(metric_id))
+	if not metric:
+		return None
 	metric['id'] = metric_id
 	return metric
 
@@ -87,3 +91,31 @@ def get_similar_reports(metric_id, current_report_id):
 def get_dates():
 	global report_dates
 	return report_dates
+
+def get_latest_date(metric_id):
+	global report_dates
+	global latest_metric_dates
+	# Check the cache before hitting GCS.
+	latest_date = latest_metric_dates.get(metric_id)
+	if latest_date:
+		return latest_date
+	latest_date = date_util.get_latest_date(report_dates, metric_id)
+	latest_metric_dates[metric_id] = latest_date
+	return latest_date
+
+def get_lenses():
+	global reports_json
+	# TODO: Consider sorting the lenses by name.
+	return reports_json.get('_lens', {})
+
+def get_lens(lens_id):
+	lenses = get_lenses()
+	lens = deepcopy(lenses.get(lens_id))
+	if not lens:
+		return None
+	lens['id'] = lens_id
+	return lens
+
+def is_valid_lens(lens):
+	lenses = get_lenses()
+	return lens in lenses
