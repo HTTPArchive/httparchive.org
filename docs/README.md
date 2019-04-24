@@ -2,7 +2,7 @@
 
 ## Changelog
 
-The `changelog.json` file chronicles significant changes to the test environment that may affect the data.
+The `changelog.json` file (static/json/changelog.json) chronicles significant changes to the test environment that may affect the data.
 
 * `date`: the Unix timestamp of the event date (at midnight)
 * `title`: brief description of the event

@@ -85,6 +85,22 @@ def metric():
 		latest=latest
 	)
 
+# A public JSON endpoint to get the metric changelog.
+@app.route('/changelog.json')
+def changelog():
+	# TODO: Memcache?
+	with open('docs/changelog.json') as changelog_file:
+		changelog_contents = changelog_file.read()
+		response = app.response_class(
+			response=changelog_contents,
+			status=200,
+			mimetype='application/json'
+		)
+		# Cache the changelog for 30 days.
+		response.cache_control.max_age = 2592000
+		response.cache_control.public = True
+		return response
+
 @app.route('/reports')
 def reports():
 	reports = report_util.get_reports()
