@@ -68,5 +68,15 @@
         "date": 1496289600000,
         "title": "Lighthouse integration",
         "desc": "Lighthouse testing was enabled on mobile websites, which gives us access to many new modern web metrics like time to interactive and first meaningful paint, as well as audit results in categories like PWA, SEO, mobile, and more."
+    },
+    {
+        "date": 1530417600000,
+        "title": "Switched to 1.3M CrUX URLs",
+        "desc": ""
+    },
+    {
+        "date": 1544850000000,
+        "title": "Synced URLs with entire CrUX corpus",
+        "desc": ""
     }
 ]
