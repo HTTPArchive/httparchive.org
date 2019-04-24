@@ -1,0 +1,72 @@
+[
+    {
+        "date": 1331784000000,
+        "title": "Change agents from IE 8 to IE 9",
+        "desc": "Switch from IE 8 to IE 9."
+    },
+    {
+        "date": 1335844800000,
+        "title": "Increase number of URLs",
+        "desc": "The number of URLs tested increased from 100K to 200K for IE."
+    },
+    {
+        "date": 1341115200000,
+        "title": "Use WPT for mobile testing",
+        "desc": "The HTTP Archive Mobile switched from running on the Blaze.io framework to WebPagetest. This involved several changes including new iPhone hardware (although both used iOS5) and a new geo location (from Toronto to Redwood City)."
+    },
+    {
+        "date": 1346472000000,
+        "title": "Increase number of URLs",
+        "desc": "The number of URLs tested increased from 200K to 300K for IE, and from 2K to 5K for iPhone."
+    },
+    {
+        "date": 1349064000000,
+        "title": "Stop tests at network idle",
+        "desc": "The web10 parameter in the WebPagetest API determines whether the test should stop at document complete (window.onload) as opposed to later once network activity has subsided. Prior to Oct 1 2012 the tests were configured to stop at document complete. However, lazy loading resources (loading them dynamically after window.onload) has grown in popularity. Therefore, this setting was changed so that these post-onload requests would be captured. This resulted in more HTTP requests being recorded with a subsequent bump in transfer size."
+    },
+    {
+        "date": 1363665600000,
+        "title": "Desktop speed increased to Cable",
+        "desc": "The default connection speed was increased from DSL (1.5 mbps) to Cable (5.0 mbps). This only affects IE (not iPhone)."
+    },
+    {
+        "date": 1372046400000,
+        "title": "Mobile speed decreased to 3G",
+        "desc": "The default connection speed for mobile was decreased to an emulated 3G network."
+    },
+    {
+        "date": 1384491600000,
+        "title": "Accidental IE 11 update",
+        "desc": "Normally we use IE9 as our test agent, but sometime around Nov 15 2013 our test agents started auto-updating to IE11. In the Nov 15 2013 crawl about 7.5% of websites were tested with IE11. Although this affected some results, the impact was judged to be minimal so we left the data intact. In the Dec 1 2013 crawl about 47% of websites were tested with IE11. This had a dramatic affect on results with a 10x increase in failures and a drop from 71% to 34% in responses gzipped. (We are not sure what produced that change.) Because the results changed so significantly the data from the Dec 1 2013 crawl was removed."
+    },
+    {
+        "date": 1456808400000,
+        "title": "Change agents from IE to Chrome",
+        "desc": "As of March 1 2016, the tests are performed on Chrome for desktop and emulated Android (on Chrome) for mobile. Prior to that, IE 8&9 were used for desktop, and iPhone was used for mobile."
+    },
+    {
+        "date": 1483246800000,
+        "title": "Desktop data loss",
+        "desc": "",
+        "more": [
+            {
+                "#74": "https://github.com/HTTPArchive/httparchive/issues/74"
+            }
+        ]
+    },
+    {
+        "date": 1493611200000,
+        "title": "Switch to Linux test agents",
+        "desc": "",
+        "more": [
+            {
+                "#98": "https://github.com/HTTPArchive/httparchive/issues/98"
+            }
+        ]
+    },
+    {
+        "date": 1496289600000,
+        "title": "Lighthouse integration",
+        "desc": "Lighthouse testing was enabled on mobile websites, which gives us access to many new modern web metrics like time to interactive and first meaningful paint, as well as audit results in categories like PWA, SEO, mobile, and more."
+    }
+]
