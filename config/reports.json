@@ -539,7 +539,7 @@
 		"cruxFastFid": {
 			"name": "Fast First Input Delay",
 			"type": "%",
-			"description": "The percent of \"fast\" FID experiences less than 100 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+			"description": "The percent of \"fast\" FID experiences less than 50 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
 			"downIsBad": true,
 			"histogram": {
 				"enabled": false
