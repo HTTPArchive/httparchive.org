@@ -99,7 +99,7 @@ export class Discussion {
 	}
 
 	getUserImgUrl(user) {
-		const url = user.avatar_template.replace('{size}', 30);
+		const url = user.avatar_template.replace('{size}', 50);
 
 		// URL may be relative. Prepend CDN origin if so. Return as is if not.
 		if (url[0] === '/') {
