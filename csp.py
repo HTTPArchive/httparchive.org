@@ -33,6 +33,7 @@ csp = {
 		'avatars.discourse.org',
 		'www.google-analytics.com',
 		's.g.doubleclick.net',
-		'stats.g.doubleclick.net'
+		'stats.g.doubleclick.net',
+		'sjc3.discourse-cdn.com'
 	]
 }
