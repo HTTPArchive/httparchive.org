@@ -21,7 +21,6 @@ function getDiscussTopics() {
 				if(!idList.includes(topic.id)) topics.push(topic);
 				if(topics.length > 2) break;
 			}
-			console.log(topics);
 			drawTopics(topics, r.users);
 		})
 	).then(_ => section.classList.remove('hidden'))
