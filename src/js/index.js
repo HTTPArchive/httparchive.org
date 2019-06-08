@@ -8,24 +8,24 @@ function getDiscussTopics() {
 		return;
 	}
 	let idList = [];
-	fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
-		const topics = r.topic_list.topics.slice(0, 3);
+	fetch(`${Discussion.ORIGIN}/latest.json`).then(r => r.json()).then(r => {
+		const topics = r.topic_list.topics.slice(0, 2);
 		topics.map((topic) => idList.push(topic.id));
 		const allUsers = new Map(r.users.map(user => [user.id, user]));
 		if (topics && topics.length && allUsers.size) {
 			drawTopics(topics, allUsers);
 		}
 	}).then(_ =>
-		fetch(`${Discussion.ORIGIN}/latest.json`).then(r => r.json()).then(r => {
-			let latest = [];
+		fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
+			let top = [];
 			let count = 0;
 			r.topic_list.topics.map((topic) => {
-				if(!idList.includes(topic.id) && count < 2) {
-					latest.push(topic);
+				if(!idList.includes(topic.id) && count < 3) {
+					top.push(topic);
 					count++;
 				};
 			})
-			const topics = latest;
+			const topics = top;
 			const allUsers = new Map(r.users.map(user => [user.id, user]));
 			if (topics && topics.length && allUsers.size) {
 				drawTopics(topics, allUsers);
