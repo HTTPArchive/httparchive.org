@@ -16,11 +16,12 @@ function getDiscussTopics() {
 		fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
 			const rTopics = r.topic_list.topics;
 			let topics = [];
-			for (var i = 0; i < topics.length; i++) {
-				const topic = topics[i];
-				if(!idList.includes(topic.id)) topics.push(topic.id);
-				if(topics.length > 1) break;
+			for (var i = 0; i < rTopics.length; i++) {
+				const topic = rTopics[i];
+				if(!idList.includes(topic.id)) topics.push(topic);
+				if(topics.length > 2) break;
 			}
+			console.log(topics);
 			drawTopics(topics, r.users);
 		})
 	).then(_ => section.classList.remove('hidden'))
