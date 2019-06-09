@@ -31,7 +31,7 @@ npm install
 gcloud init
 ```
 
-5. Run the application
+5. Run the application:
 
 ```
 npm run start
