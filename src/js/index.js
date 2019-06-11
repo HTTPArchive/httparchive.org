@@ -13,10 +13,10 @@ function getDiscussTopics() {
 		topics.forEach(topic => latestTopicIds.add(topic.id));
 		drawTopics(topics, r.users);
 	}).then(_ => {
-		fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
-			const topics = r.topic_list.topics.filter(topic => !latestTopicIds.has(topic.id)).slice(0, 3);
-			drawTopics(topics, r.users);
-		})
+    return fetch(`${Discussion.ORIGIN}/top.json`);
+  }).then(r => r.json()).then(r => {
+		const topics = r.topic_list.topics.filter(topic => !latestTopicIds.has(topic.id)).slice(0, 3);
+		drawTopics(topics, r.users);
 	}).then(_ => section.classList.remove('hidden'))
 }
 
