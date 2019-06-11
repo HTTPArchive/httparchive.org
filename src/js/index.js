@@ -7,7 +7,7 @@ function getDiscussTopics() {
 	if (!section || !discussions) {
 		return;
 	}
-	let idList = [];
+	let latestTopicIds = new Set();
 	fetch(`${Discussion.ORIGIN}/latest.json`).then(r => r.json()).then(r => {
 		const topics = r.topic_list.topics.slice(0, 2);
 		topics.map((topic) => idList.push(topic.id));
