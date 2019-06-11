@@ -10,7 +10,7 @@ function getDiscussTopics() {
 	let latestTopicIds = new Set();
 	fetch(`${Discussion.ORIGIN}/latest.json`).then(r => r.json()).then(r => {
 		const topics = r.topic_list.topics.slice(0, 2);
-		topics.map((topic) => idList.push(topic.id));
+		topics.forEach(topic => latestTopicIds.add(topic.id));
 		drawTopics(topics, r.users);
 	}).then(_ =>
 		fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
