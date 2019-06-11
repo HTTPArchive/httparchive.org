@@ -12,17 +12,12 @@ function getDiscussTopics() {
 		const topics = r.topic_list.topics.slice(0, 2);
 		topics.forEach(topic => latestTopicIds.add(topic.id));
 		drawTopics(topics, r.users);
-	}).then(_ =>
-		fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
-			const rTopics = r.topic_list.topics;
-			let topics = [];
-			for (var i = 0; i < rTopics.length; i++) {
-				const topic = rTopics[i];
-				if(!idList.includes(topic.id)) topics.push(topic);
-				if(topics.length > 2) break;
-			}
-			drawTopics(topics, r.users);
-		})
+	}).then(_ => {
+			fetch(`${Discussion.ORIGIN}/top.json`).then(r => r.json()).then(r => {
+				const topics = r.topic_list.topics.filter(topic => !latestTopicIds.has(topic.id)).slice(0, 3);
+				drawTopics(topics, r.users);
+			})
+		}
 	).then(_ => section.classList.remove('hidden'))
 }
 
