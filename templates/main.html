@@ -40,7 +40,7 @@
 								Reports
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
 							</span>
-							
+
 							<ul class="dropdown-content reports">
 								<li><a href="{{ url_for('reports') }}">All Reports</a></li>
 								{% for report in reports %}
@@ -63,7 +63,7 @@
 								About
 								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
 							</span>
-							
+
 							<ul class="dropdown-content">
 								<li>
 									<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
@@ -110,6 +110,7 @@
 				<nav>
 					<a href="{{ url_for('reports') }}">Reports</a>
 					<a href="https://discuss.httparchive.org">Discuss</a>
+					<a href="https://almanac.httparchive.org/">Almanac</a>
 					<a href="{{ url_for('about') }}">About</a>
 					<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
 					<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
