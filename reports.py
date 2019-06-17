@@ -61,7 +61,7 @@ def get_report(report_id):
 		return None
 	report = deepcopy(report)
 	report['id'] = report_id
-	report['metrics'] = map(get_metric, report.get('metrics'))
+	report['metrics'] = list(map(get_metric, report.get('metrics')))
 	return report
 
 def get_metric(metric_id):
