@@ -793,7 +793,7 @@
 	},
 	"page-weight": {
 		"name": "Page Weight",
-		"summary": "This report tracks the size and quantity of many popular web page resources.",
+		"summary": "This report tracks the size and quantity of many popular web page resources. Sizes represent the number of bytes sent over the network, which may be compressed.",
 		"metrics": [
 			"bytesTotal",
 			"reqTotal",
