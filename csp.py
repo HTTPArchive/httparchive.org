@@ -32,6 +32,7 @@ csp = {
 		'discuss.httparchive.org',
 		'avatars.discourse.org',
 		'www.google-analytics.com',
+		'www.google.com',
 		's.g.doubleclick.net',
 		'stats.g.doubleclick.net',
 		'sjc3.discourse-cdn.com'
