@@ -40,7 +40,7 @@ def get_reports():
 	global reports_json
 	update_reports()
 
-	return map(get_report, reports_json.get('_reports'))
+	return list(map(get_report, reports_json.get('_reports')))
 
 def get_featured_reports():
 	global reports_json
