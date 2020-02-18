@@ -25,15 +25,20 @@
 .blog-post-content {
 	display: flex;
 	flex-direction: column;
+	align-items: start;
 }
 
 .blog-post-title {
+	text-align: left;
 	font-size: 22px;
 	margin-bottom: 7px
 }
 
 .blog-post-tag {
 	margin-right: 10px;
+}
+.blog-post-tag:last-child {
+	margin-right: 0;
 }
 
 .blog-post-reaction {
