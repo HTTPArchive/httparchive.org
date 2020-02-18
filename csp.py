@@ -22,6 +22,7 @@ csp = {
 		'\'self\'',
 		'cdn.httparchive.org',
 		'discuss.httparchive.org',
+		'dev.to',
 		'cdn.rawgit.com',
 		'www.webpagetest.org',
 		'www.google-analytics.com',
@@ -35,6 +36,7 @@ csp = {
 		'www.google.com',
 		's.g.doubleclick.net',
 		'stats.g.doubleclick.net',
-		'sjc3.discourse-cdn.com'
+		'sjc3.discourse-cdn.com',
+		'res.cloudinary.com'
 	]
 }
