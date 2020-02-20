@@ -1,10 +1,25 @@
+import { BlogRenderer } from './blog';
 import { Discussion } from './discussion';
 
-const section = document.getElementById('discuss');
+const discuss_section = document.getElementById('discuss');
 const discussions = document.getElementById('discussions');
 
+function renderBlogPosts() {
+	const blog_section = document.getElementById('blog');
+	const blog_posts = document.getElementById('blog-posts');
+	const template = document.getElementById('blog-post-template');
+
+	if (!blog_section || !blog_posts) {
+		console.error('no blog sections', blog_section, blog_posts)
+		return;
+	}
+
+	const blog = new BlogRenderer();
+	blog.renderPosts(blog_posts, template).then(_ => blog_section.classList.remove('hidden'));
+}
+
 function getDiscussTopics() {
-	if (!section || !discussions) {
+	if (!discuss_section || !discussions) {
 		return;
 	}
 	let latestTopicIds = new Set();
@@ -17,7 +32,7 @@ function getDiscussTopics() {
 	}).then(r => r.json()).then(r => {
 		const topics = r.topic_list.topics.filter(topic => !latestTopicIds.has(topic.id)).slice(0, 3);
 		drawTopics(topics, r.users);
-	}).then(_ => section.classList.remove('hidden'))
+	}).then(_ => discuss_section.classList.remove('hidden'));
 }
 
 function drawTopics(topics, rUsers) {
@@ -39,4 +54,5 @@ function drawTopic(title, slug, replies, users) {
 	discussions.appendChild(discussion.toNode());
 }
 
+renderBlogPosts();
 getDiscussTopics();
