@@ -25,8 +25,6 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
     *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
 
-	*Also: If you need additional credits, Google is generously offering $50 BigQuery credits for HTTP Archive related analysis. You can [apply for a credit here](https://t.co/gyWOHT7ssO)*
-
 5. Navigate to the [Big Query console](https://bigquery.cloud.google.com).  Note that if you see "Beta" then you are using the new UI which is currently in Beta. You can easily switch between the Beta and Classic UIs as needed.
 
 	![BigQuery Console](images/bigquery_console.jpg)
