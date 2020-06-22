@@ -8,7 +8,8 @@
 		"accessibility",
 		"search-engine-optimization",
 		"page-weight",
-		"chrome-ux-report"
+		"chrome-ux-report",
+		"project-fugu"
 	],
 	"_featured": [
 		"state-of-the-web"
@@ -881,6 +882,24 @@
 			"a11yImageAlt",
 			"a11yLabel",
 			"a11yLinkName"
+		],
+		"graphic": {
+			"bgcolor": "#97b5b9",
+			"primary": {
+				"color": "#eee",
+				"icon": "fas fa-users"
+			},
+			"secondary": {
+				"color": "rgba(255, 255, 255, 0.3)",
+				"text": "A11Y"
+			}
+		}
+	},
+	"project-fugu": {
+		"name": "Capabilities",
+		"summary": "The [Capabilities Project](https://web.dev/fugu-status/) (aka. Project Fugu 🐡) is a cross-company effort at Google to make it possible for web apps to do anything native apps can, by exposing the capabilities of native platforms to the web platform, while maintaining user security, privacy, trust, and other core tenets of the web.",
+		"metrics": [
+			"swControlledPages"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
