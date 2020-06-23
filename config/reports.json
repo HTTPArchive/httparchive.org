@@ -602,7 +602,7 @@
 			"name": "Service Worker Controlled Pages",
 			"type": "%",
 			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that have triggered the ```ServiceWorkerControlledPage``` [use counter](https://cs.chromium.org/chromium/src/third_party/blink/public/platform/web_feature.mojom) that fires whenever a page is controlled by a service worker.",
+			"description": "This metric tracks the percentage of pages that have triggered the ```ServiceWorkerControlledPage``` [use counter](https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/public/mojom/web_feature/web_feature.mojom) that fires whenever a page is controlled by a service worker.",
 			"histogram": {
 				"enabled": false
 			},
@@ -682,6 +682,90 @@
 			"type": "%",
 			"downIsBad": true,
 			"description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/link-name) that checks if all links have discernable text.",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"asyncClipboardRead": {
+			"name": "Async Clipboard Read",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that *read* data from the system clipboard via the [Async Clipboard API](https://web.dev/image-support-for-async-clipboard/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"asyncClipboardWrite": {
+			"name": "Async Clipboard Write",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that *write* data to the system clipboard via the [Async Clipboard API](https://web.dev/image-support-for-async-clipboard/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"badgeSet": {
+			"name": "Badge Set",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that *set* a badge via the [Badging API](https://web.dev/badging-api/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"badgeClear": {
+			"name": "Badge Clear",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that *clear* a badge via the [Badging API](https://web.dev/badging-api/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"contactPicker": {
+			"name": "Contact Picker",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that access contacts via the [Contact Picker API](https://web.dev/contact-picker/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"getInstalledRelatedApps": {
+			"name": "Get Installed Related Apps",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that get the installed related apps via the [Get Installed Related Apps API](https://web.dev/get-installed-related-apps/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -897,19 +981,24 @@
 	},
 	"project-fugu": {
 		"name": "Capabilities",
-		"summary": "The [Capabilities Project](https://web.dev/fugu-status/) (aka. Project Fugu 🐡) is a cross-company effort at Google to make it possible for web apps to do anything native apps can, by exposing the capabilities of native platforms to the web platform, while maintaining user security, privacy, trust, and other core tenets of the web.",
+		"summary": "The [Capabilities Project](https://web.dev/fugu-status/) (aka. Project Fugu&nbsp;🐡) is a cross-company effort at Google to make it possible for web apps to do anything native apps can, by exposing the capabilities of native platforms to the web platform, while maintaining user security, privacy, trust, and other core tenets of the web.",
 		"metrics": [
-			"swControlledPages"
+			"asyncClipboardRead",
+			"asyncClipboardWrite",
+			"badgeSet",
+			"badgeClear",
+			"contactPicker",
+			"getInstalledRelatedApps"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
 			"primary": {
 				"color": "#eee",
-				"icon": "fas fa-users"
+				"text": "🐡"
 			},
 			"secondary": {
 				"color": "rgba(255, 255, 255, 0.3)",
-				"text": "A11Y"
+				"text": "Fugu"
 			}
 		}
 	}
