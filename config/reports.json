@@ -692,7 +692,7 @@
 			}
 		},
 		"asyncClipboardRead": {
-			"name": "Async Clipboard Read",
+			"name": "(🐡 Launched) Async Clipboard Read",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *read* data from the system clipboard via the [Async Clipboard API](https://web.dev/image-support-for-async-clipboard/).",
@@ -706,7 +706,7 @@
 			}
 		},
 		"asyncClipboardWrite": {
-			"name": "Async Clipboard Write",
+			"name": "(🐡 Launched) Async Clipboard Write",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *write* data to the system clipboard via the [Async Clipboard API](https://web.dev/image-support-for-async-clipboard/).",
@@ -720,7 +720,7 @@
 			}
 		},
 		"badgeSet": {
-			"name": "Badge Set",
+			"name": "(🐡 Launched) Badge Set",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *set* a badge via the [Badging API](https://web.dev/badging-api/).",
@@ -734,7 +734,7 @@
 			}
 		},
 		"badgeClear": {
-			"name": "Badge Clear",
+			"name": "(🐡 Launched) Badge Clear",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *clear* a badge via the [Badging API](https://web.dev/badging-api/).",
@@ -748,7 +748,7 @@
 			}
 		},
 		"contactPicker": {
-			"name": "Contact Picker",
+			"name": "(🐡 Launched) Contact Picker",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that access contacts via the [Contact Picker API](https://web.dev/contact-picker/).",
@@ -762,10 +762,136 @@
 			}
 		},
 		"getInstalledRelatedApps": {
-			"name": "Get Installed Related Apps",
+			"name": "(🐡 Launched) Get Installed Related Apps",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that get the installed related apps via the [Get Installed Related Apps API](https://web.dev/get-installed-related-apps/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"periodicBackgroundSync": {
+			"name": "(🐡 Launched) Periodic Background Sync",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that observe a `periodicsync` event that was registered via the [Periodic Background Sync API](https://web.dev/periodic-background-sync/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"periodicBackgroundSyncRegister": {
+			"name": "(🐡 Launched) Periodic Background Sync Register",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that register a `periodicsync` event via the [Periodic Background Sync API](https://web.dev/periodic-background-sync/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"shapeDetectionBarcode": {
+			"name": "(🐡 Launched) Shape Detection (Barcode)",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that use the barcode detector via the [Shape Detection API](https://web.dev/shape-detection/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"shapeDetectionFace": {
+			"name": "(🏁 Behind flag) Shape Detection (Face)",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that use the face detector via the [Shape Detection API](https://web.dev/shape-detection/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"shapeDetectionText": {
+			"name": "(🏁 Behind flag) Shape Detection (Text)",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that use the text detector via the [Shape Detection API](https://web.dev/shape-detection/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webOTP": {
+			"name": "(🐡 Launched) Web OTP",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that receive a one-time password (OTP) via the [Web OTP API](https://web.dev/sms-receiver-api-announcement/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webShareContainingFiles": {
+			"name": "(🐡 Launched) Web Share (Containing Files)",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that share files via the [Web Share API](https://web.dev/web-share/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webShareNoFiles": {
+			"name": "(🐡 Launched) Web Share (No Files)",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that share text via the [Web Share API](https://web.dev/web-share/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"notificationTriggers": {
+			"name": "(🏁 Behind flag) Notification Triggers",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that use scheduled notifications via the [Notification Triggers API](https://web.dev/notification-triggers/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -988,7 +1114,16 @@
 			"badgeSet",
 			"badgeClear",
 			"contactPicker",
-			"getInstalledRelatedApps"
+			"getInstalledRelatedApps",
+			"periodicBackgroundSyncRegister",
+			"periodicBackgroundSync",
+			"shapeDetectionBarcode",
+			"shapeDetectionFace",
+			"shapeDetectionText",
+			"webOTP",
+			"webShareContainingFiles",
+			"webShareNoFiles",
+			"notificationTriggers"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
