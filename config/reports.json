@@ -859,6 +859,48 @@
 				]
 			}
 		},
+		"webUSB": {
+			"name": "(🐡 Launched) Web USB",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that connect to USB devices via the [Web USB API](https://developers.google.com/web/updates/2016/03/access-usb-devices-on-the-web).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webBluetooth": {
+			"name": "(🐡 Launched) Web Bluetooth",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that connect to Bluetooth devices via the [Web Bluetooth API](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webMIDI": {
+			"name": "(🐡 Launched) Web MIDI",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that connect to MIDI devices via the [Web MIDI API](https://developers.google.com/web/shows/google-io/2014/making-music-with-the-web-platform).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"webShareContainingFiles": {
 			"name": "(🐡 Launched) Web Share (Containing Files)",
 			"type": "%",
@@ -888,7 +930,7 @@
 			}
 		},
 		"notificationTriggers": {
-			"name": "(🚩 Behind flag) Notification Triggers",
+			"name": "(🧪 Origin trial) Notification Triggers",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that use scheduled notifications via the [Notification Triggers API](https://web.dev/notification-triggers/).",
@@ -902,7 +944,7 @@
 			}
 		},
 		"webNFCRead": {
-			"name": "(🧪 Origin trial) Web NFC",
+			"name": "(🧪 Origin trial) Web NFC (Read)",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *read* NFC tags via the [Web NFC API](https://web.dev/nfc/).",
@@ -916,7 +958,7 @@
 			}
 		},
 		"webNFCWrite": {
-			"name": "(🧪 Origin trial) Web NFC",
+			"name": "(🧪 Origin trial) Web NFC (Write)",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *write* NFC tags via the [Web NFC API](https://web.dev/nfc/).",
@@ -934,6 +976,104 @@
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that acquire a screen wake lock via the [Screen Wake Lock API](https://web.dev/wakelock/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webSerial": {
+			"name": "(🧪 Origin trial) Web Serial",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that request a serial port via the [Web Serial API](https://wicg.github.io/serial/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"nativeFileSystem": {
+			"name": "(🧪 Origin trial) Native File System",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that access files via the [Native File System API](https://web.dev/native-file-system/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"contentIndex": {
+			"name": "(🧪 Origin trial) Content Indexing",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that add content to the content index via the [Content Indexing API](https://web.dev/content-indexing-api/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"quicTransport": {
+			"name": "(🧪 Origin trial) QuicTransport",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that add transmit messages via the [QuicTransport API](https://web.dev/quictransport/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"textFragment": {
+			"name": "(🐡 Launched) Text Fragment",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that load with a matched [Text Fragment URL](https://web.dev/text-fragments/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"idleDetection": {
+			"name": "(🧪 Origin trial) Idle Detection",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that detect when the user is idle via the [Idle Detection API](https://web.dev/idle-detection/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webSocketStream": {
+			"name": "(🧪 Origin trial) WebSocketStream",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that transmit messages via the [WebSocketStream API](https://web.dev/websocketstream/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -1160,15 +1300,25 @@
 			"periodicBackgroundSyncRegister",
 			"periodicBackgroundSync",
 			"shapeDetectionBarcode",
-			"shapeDetectionFace",
-			"shapeDetectionText",
 			"webOTP",
+			"webUSB",
+			"webBluetooth",
+			"webMIDI",
+			"screenWakeLock",
+			"textFragment",
 			"webShareContainingFiles",
 			"webShareNoFiles",
 			"notificationTriggers",
 			"webNFCRead",
 			"webNFCWrite",
-			"screenWakeLock"
+			"webSerial",
+			"nativeFileSystem",
+			"contentIndex",
+			"quicTransport",
+			"idleDetection",
+			"webSocketStream",
+			"shapeDetectionFace",
+			"shapeDetectionText"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
