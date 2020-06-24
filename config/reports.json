@@ -818,7 +818,7 @@
 			}
 		},
 		"shapeDetectionFace": {
-			"name": "(🏁 Behind flag) Shape Detection (Face)",
+			"name": "(🚩 Behind flag) Shape Detection (Face)",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that use the face detector via the [Shape Detection API](https://web.dev/shape-detection/).",
@@ -832,7 +832,7 @@
 			}
 		},
 		"shapeDetectionText": {
-			"name": "(🏁 Behind flag) Shape Detection (Text)",
+			"name": "(🚩 Behind flag) Shape Detection (Text)",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that use the text detector via the [Shape Detection API](https://web.dev/shape-detection/).",
@@ -888,10 +888,52 @@
 			}
 		},
 		"notificationTriggers": {
-			"name": "(🏁 Behind flag) Notification Triggers",
+			"name": "(🚩 Behind flag) Notification Triggers",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that use scheduled notifications via the [Notification Triggers API](https://web.dev/notification-triggers/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webNFCRead": {
+			"name": "(🧪 Origin trial) Web NFC",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that *read* NFC tags via the [Web NFC API](https://web.dev/nfc/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webNFCWrite": {
+			"name": "(🧪 Origin trial) Web NFC",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that *write* NFC tags via the [Web NFC API](https://web.dev/nfc/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"screenWakeLock": {
+			"name": "(🐡 Launched) Screen Wake Lock",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that acquire a screen wake lock via the [Screen Wake Lock API](https://web.dev/wakelock/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -1123,7 +1165,10 @@
 			"webOTP",
 			"webShareContainingFiles",
 			"webShareNoFiles",
-			"notificationTriggers"
+			"notificationTriggers",
+			"webNFCRead",
+			"webNFCWrite",
+			"screenWakeLock"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
