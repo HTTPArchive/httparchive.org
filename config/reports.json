@@ -817,6 +817,34 @@
 				]
 			}
 		},
+		"storageEstimate": {
+			"name": "(🐡 Launched) Storage Estimation",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that estimate available storage via the [Shape Detection API](https://web.dev/shape-detection/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"storagePersist": {
+			"name": "(🐡 Launched) Persistent Storage",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that ask for their data to be stored in persisted storage via the [Storage API](https://web.dev/persistent-storage/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"shapeDetectionFace": {
 			"name": "(🚩 Behind flag) Shape Detection (Face)",
 			"type": "%",
@@ -1300,6 +1328,8 @@
 			"periodicBackgroundSyncRegister",
 			"periodicBackgroundSync",
 			"shapeDetectionBarcode",
+			"storageEstimate",
+			"storagePersist",
 			"webOTP",
 			"webUSB",
 			"webBluetooth",
