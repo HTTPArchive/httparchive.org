@@ -821,7 +821,7 @@
 			"name": "(🐡 Launched) Storage Estimation",
 			"type": "%",
 			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that estimate available storage via the [Shape Detection API](https://web.dev/shape-detection/).",
+			"description": "This metric tracks the percentage of pages that estimate available storage via the [Storage API](https://web.dev/persistent-storage/).",
 			"histogram": {
 				"enabled": false
 			},
