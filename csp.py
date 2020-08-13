@@ -30,6 +30,7 @@ csp = {
 	],
 	'img-src': [
 		'\'self\'',
+		'almanac.httparchive.org',
 		'discuss.httparchive.org',
 		'avatars.discourse.org',
 		'www.google-analytics.com',
