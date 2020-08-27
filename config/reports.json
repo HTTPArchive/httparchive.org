@@ -343,6 +343,20 @@
 			"type": "KB",
 			"description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests."
 		},
+		"imgLazy": {
+			"name": "Native Image Lazy Loading",
+			"type": "%",
+			"description": "The percent of pages that have the `loading=lazy` attribute on `img` elements.",
+			"downIsBad": true,
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"reqFont": {
 			"name": "Font Requests",
 			"type": "Requests",
@@ -1119,7 +1133,8 @@
 			"bytesImg",
 			"reqImg",
 			"offscreenImages",
-			"optimizedImages"
+			"optimizedImages",
+			"imgLazy"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
