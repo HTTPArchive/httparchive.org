@@ -1013,22 +1013,8 @@
 				]
 			}
 		},
-		"webSerial": {
-			"name": "(🧪 Origin trial) Web Serial",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that request a serial port via the [Web Serial API](https://wicg.github.io/serial/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
 		"fileSystemAccess": {
-			"name": "(🧪 Origin trial) File System Access",
+			"name": "(🐡 Launched) File System Access",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that access files via the [File System Access API](https://web.dev/file-system-access/).",
@@ -1042,10 +1028,24 @@
 			}
 		},
 		"contentIndex": {
-			"name": "(🧪 Origin trial) Content Indexing",
+			"name": "(🐡 Launched) Content Indexing",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that add content to the content index via the [Content Indexing API](https://web.dev/content-indexing-api/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
+		"webSerial": {
+			"name": "(🧪 Origin trial) Web Serial",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that request a serial port via the [Web Serial API](https://wicg.github.io/serial/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -1332,7 +1332,7 @@
 			"contentIndex",
 			"quicTransport",
 			"idleDetection",
-			"webSocketStream",
+			"webSocketStream"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
