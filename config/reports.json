@@ -1027,11 +1027,11 @@
 				]
 			}
 		},
-		"nativeFileSystem": {
-			"name": "(🧪 Origin trial) Native File System",
+		"fileSystemAccess": {
+			"name": "(🧪 Origin trial) File System Access",
 			"type": "%",
 			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that access files via the [Native File System API](https://web.dev/native-file-system/).",
+			"description": "This metric tracks the percentage of pages that access files via the [File System Access API](https://web.dev/file-system-access/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -1317,38 +1317,22 @@
 	},
 	"project-fugu": {
 		"name": "Capabilities",
-		"summary": "The [Capabilities Project](https://web.dev/fugu-status/) (aka. Project Fugu&nbsp;🐡) is a cross-company effort at Google to make it possible for web apps to do anything native apps can, by exposing the capabilities of native platforms to the web platform, while maintaining user security, privacy, trust, and other core tenets of the web.",
+		"summary": "The [Capabilities Project](https://web.dev/fugu-status/) (aka. Project Fugu&nbsp;🐡) is a cross-company effort at Google to make it possible for web apps to do anything native apps can, by exposing the capabilities of the operating system platform to the web platform, while maintaining user security, privacy, trust, and other core tenets of the web.",
 		"metrics": [
 			"asyncClipboardRead",
-			"asyncClipboardWrite",
 			"badgeSet",
 			"badgeClear",
-			"contactPicker",
 			"getInstalledRelatedApps",
 			"periodicBackgroundSyncRegister",
 			"periodicBackgroundSync",
-			"shapeDetectionBarcode",
 			"storageEstimate",
 			"storagePersist",
-			"webOTP",
-			"webUSB",
-			"webBluetooth",
-			"webMIDI",
 			"screenWakeLock",
-			"textFragment",
-			"webShareContainingFiles",
-			"webShareNoFiles",
 			"notificationTriggers",
-			"webNFCRead",
-			"webNFCWrite",
-			"webSerial",
-			"nativeFileSystem",
 			"contentIndex",
 			"quicTransport",
 			"idleDetection",
 			"webSocketStream",
-			"shapeDetectionFace",
-			"shapeDetectionText"
 		],
 		"graphic": {
 			"bgcolor": "#97b5b9",
