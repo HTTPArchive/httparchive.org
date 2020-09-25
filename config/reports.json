@@ -705,20 +705,6 @@
 				]
 			}
 		},
-		"asyncClipboardWrite": {
-			"name": "(🐡 Launched) Async Clipboard Write",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that *write* data to the system clipboard via the [Async Clipboard API](https://web.dev/image-support-for-async-clipboard/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
 		"badgeSet": {
 			"name": "(🐡 Launched) Badge Set",
 			"type": "%",
@@ -738,20 +724,6 @@
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *clear* a badge via the [Badging API](https://web.dev/badging-api/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"contactPicker": {
-			"name": "(🐡 Launched) Contact Picker",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that access contacts via the [Contact Picker API](https://web.dev/contact-picker/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -803,20 +775,6 @@
 				]
 			}
 		},
-		"shapeDetectionBarcode": {
-			"name": "(🐡 Launched) Shape Detection (Barcode)",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that use the barcode detector via the [Shape Detection API](https://web.dev/shape-detection/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
 		"storageEstimate": {
 			"name": "(🐡 Launched) Storage Estimation",
 			"type": "%",
@@ -845,151 +803,11 @@
 				]
 			}
 		},
-		"shapeDetectionFace": {
-			"name": "(🚩 Behind flag) Shape Detection (Face)",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that use the face detector via the [Shape Detection API](https://web.dev/shape-detection/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"shapeDetectionText": {
-			"name": "(🚩 Behind flag) Shape Detection (Text)",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that use the text detector via the [Shape Detection API](https://web.dev/shape-detection/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webOTP": {
-			"name": "(🐡 Launched) Web OTP",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that receive a one-time password (OTP) via the [Web OTP API](https://web.dev/sms-receiver-api-announcement/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webUSB": {
-			"name": "(🐡 Launched) Web USB",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that connect to USB devices via the [Web USB API](https://developers.google.com/web/updates/2016/03/access-usb-devices-on-the-web).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webBluetooth": {
-			"name": "(🐡 Launched) Web Bluetooth",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that connect to Bluetooth devices via the [Web Bluetooth API](https://developers.google.com/web/updates/2015/07/interact-with-ble-devices-on-the-web).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webMIDI": {
-			"name": "(🐡 Launched) Web MIDI",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that connect to MIDI devices via the [Web MIDI API](https://developers.google.com/web/shows/google-io/2014/making-music-with-the-web-platform).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webShareContainingFiles": {
-			"name": "(🐡 Launched) Web Share (Containing Files)",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that share files via the [Web Share API](https://web.dev/web-share/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webShareNoFiles": {
-			"name": "(🐡 Launched) Web Share (No Files)",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that share text via the [Web Share API](https://web.dev/web-share/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
 		"notificationTriggers": {
 			"name": "(🧪 Origin trial) Notification Triggers",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that use scheduled notifications via the [Notification Triggers API](https://web.dev/notification-triggers/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webNFCRead": {
-			"name": "(🧪 Origin trial) Web NFC (Read)",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that *read* NFC tags via the [Web NFC API](https://web.dev/nfc/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webNFCWrite": {
-			"name": "(🧪 Origin trial) Web NFC (Write)",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that *write* NFC tags via the [Web NFC API](https://web.dev/nfc/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -1013,39 +831,11 @@
 				]
 			}
 		},
-		"fileSystemAccess": {
-			"name": "(🐡 Launched) File System Access",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that access files via the [File System Access API](https://web.dev/file-system-access/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
 		"contentIndex": {
 			"name": "(🐡 Launched) Content Indexing",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that add content to the content index via the [Content Indexing API](https://web.dev/content-indexing-api/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webSerial": {
-			"name": "(🧪 Origin trial) Web Serial",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that request a serial port via the [Web Serial API](https://wicg.github.io/serial/).",
 			"histogram": {
 				"enabled": false
 			},
@@ -1069,39 +859,11 @@
 				]
 			}
 		},
-		"textFragment": {
-			"name": "(🐡 Launched) Text Fragment",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that load with a matched [Text Fragment URL](https://web.dev/text-fragments/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
 		"idleDetection": {
 			"name": "(🧪 Origin trial) Idle Detection",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that detect when the user is idle via the [Idle Detection API](https://web.dev/idle-detection/).",
-			"histogram": {
-				"enabled": false
-			},
-			"timeseries": {
-				"fields": [
-					"percent"
-				]
-			}
-		},
-		"webSocketStream": {
-			"name": "(🧪 Origin trial) WebSocketStream",
-			"type": "%",
-			"downIsBad": true,
-			"description": "This metric tracks the percentage of pages that transmit messages via the [WebSocketStream API](https://web.dev/websocketstream/).",
 			"histogram": {
 				"enabled": false
 			},
