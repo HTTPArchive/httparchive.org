@@ -831,6 +831,20 @@
 				]
 			}
 		},
+		"webSocketStream": {
+			"name": "(🧪 Origin trial) WebSocketStream",
+			"type": "%",
+			"downIsBad": true,
+			"description": "This metric tracks the percentage of pages that transmit messages via the [WebSocketStream API](https://web.dev/websocketstream/).",
+			"histogram": {
+				"enabled": false
+			},
+			"timeseries": {
+				"fields": [
+					"percent"
+				]
+			}
+		},
 		"screenWakeLock": {
 			"name": "(🐡 Launched) Screen Wake Lock",
 			"type": "%",
