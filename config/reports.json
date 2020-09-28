@@ -1119,8 +1119,8 @@
 			"storageEstimate",
 			"storagePersist",
 			"screenWakeLock",
-			"notificationTriggers",
 			"contentIndex",
+			"notificationTriggers",
 			"quicTransport",
 			"idleDetection",
 			"webSocketStream"
