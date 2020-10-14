@@ -111,7 +111,7 @@ Now that you are all set up, let's run some queries!  Most HTTP Archive users st
 
 ```
 SELECT COUNT(*) total_pages
-FROM `httparchive.summary_pages.2018_09_01_desktop
+FROM `httparchive.summary_pages.2018_09_01_desktop`
 ```
 
 ![Simple Aggregate Query](images/simple_agg_query_example.jpg)
