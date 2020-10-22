@@ -706,7 +706,7 @@
 			}
 		},
 		"asyncClipboardRead": {
-			"name": "(🐡 Launched) Async Clipboard Read",
+			"name": "Async Clipboard Read",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *read* data from the system clipboard via the [Async Clipboard API](https://web.dev/image-support-for-async-clipboard/).",
@@ -720,7 +720,7 @@
 			}
 		},
 		"badgeSet": {
-			"name": "(🐡 Launched) Badge Set",
+			"name": "Badge Set",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *set* a badge via the [Badging API](https://web.dev/badging-api/).",
@@ -734,7 +734,7 @@
 			}
 		},
 		"badgeClear": {
-			"name": "(🐡 Launched) Badge Clear",
+			"name": "Badge Clear",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that *clear* a badge via the [Badging API](https://web.dev/badging-api/).",
@@ -748,7 +748,7 @@
 			}
 		},
 		"getInstalledRelatedApps": {
-			"name": "(🐡 Launched) Get Installed Related Apps",
+			"name": "Get Installed Related Apps",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that get the installed related apps via the [Get Installed Related Apps API](https://web.dev/get-installed-related-apps/).",
@@ -762,7 +762,7 @@
 			}
 		},
 		"periodicBackgroundSync": {
-			"name": "(🐡 Launched) Periodic Background Sync",
+			"name": "Periodic Background Sync",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that observe a `periodicsync` event that was registered via the [Periodic Background Sync API](https://web.dev/periodic-background-sync/).",
@@ -776,7 +776,7 @@
 			}
 		},
 		"periodicBackgroundSyncRegister": {
-			"name": "(🐡 Launched) Periodic Background Sync Register",
+			"name": "Periodic Background Sync Register",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that register a `periodicsync` event via the [Periodic Background Sync API](https://web.dev/periodic-background-sync/).",
@@ -790,7 +790,7 @@
 			}
 		},
 		"storageEstimate": {
-			"name": "(🐡 Launched) Storage Estimation",
+			"name": "Storage Estimation",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that estimate available storage via the [Storage API](https://web.dev/persistent-storage/).",
@@ -804,7 +804,7 @@
 			}
 		},
 		"storagePersist": {
-			"name": "(🐡 Launched) Persistent Storage",
+			"name": "Persistent Storage",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that ask for their data to be stored in persisted storage via the [Storage API](https://web.dev/persistent-storage/).",
@@ -818,7 +818,7 @@
 			}
 		},
 		"notificationTriggers": {
-			"name": "(🧪 Origin trial) Notification Triggers",
+			"name": "Notification Triggers",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that use scheduled notifications via the [Notification Triggers API](https://web.dev/notification-triggers/).",
@@ -832,7 +832,7 @@
 			}
 		},
 		"webSocketStream": {
-			"name": "(🧪 Origin trial) WebSocketStream",
+			"name": "WebSocketStream",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that transmit messages via the [WebSocketStream API](https://web.dev/websocketstream/).",
@@ -846,7 +846,7 @@
 			}
 		},
 		"screenWakeLock": {
-			"name": "(🐡 Launched) Screen Wake Lock",
+			"name": "Screen Wake Lock",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that acquire a screen wake lock via the [Screen Wake Lock API](https://web.dev/wakelock/).",
@@ -860,7 +860,7 @@
 			}
 		},
 		"contentIndex": {
-			"name": "(🐡 Launched) Content Indexing",
+			"name": "Content Indexing",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that add content to the content index via the [Content Indexing API](https://web.dev/content-indexing-api/).",
@@ -874,7 +874,7 @@
 			}
 		},
 		"quicTransport": {
-			"name": "(🧪 Origin trial) QuicTransport",
+			"name": "QuicTransport",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that add transmit messages via the [QuicTransport API](https://web.dev/quictransport/).",
@@ -888,7 +888,7 @@
 			}
 		},
 		"idleDetection": {
-			"name": "(🧪 Origin trial) Idle Detection",
+			"name": "Idle Detection",
 			"type": "%",
 			"downIsBad": true,
 			"description": "This metric tracks the percentage of pages that detect when the user is idle via the [Idle Detection API](https://web.dev/idle-detection/).",
