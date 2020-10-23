@@ -37,9 +37,7 @@ gcloud init
 npm run start
 ```
 
-```
-* Windows users may need to run npm run watch & python main.py separately
-```
+Note: Windows users may need to run `npm run watch` and `python main.py` separately.
 
 6. In your web browser, enter the following address: http://127.0.0.1:8080
 
