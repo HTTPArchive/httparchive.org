@@ -82,6 +82,11 @@
     {
         "date": 1596254400000,
         "title": "Faster mobile CPU throttling",
-        "desc": "WebPageTest changed its mobile CPU throttling from cgroups to Chrome's built-in throttling"
+        "desc": "WebPageTest changed its mobile CPU throttling from cgroups to Chrome's built-in throttling. The cgroups had more overhead than expected when running in VMs and switching to Chrome's built-in throttling eliminated the extra overhead and resulted in more accurate throttling, which led to slightly faster performance.",
+        "more": [
+            {
+                "wptagent#366": "https://github.com/WPO-Foundation/wptagent/pull/366"
+            }
+        ]
     }
 ]
