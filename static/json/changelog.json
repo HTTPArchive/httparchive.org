@@ -78,5 +78,15 @@
         "date": 1544850000000,
         "title": "Synced URLs with entire CrUX corpus",
         "desc": ""
+    },
+    {
+        "date": 1596254400000,
+        "title": "Mobile CPU throttling changed (faster performance)",
+        "desc": "WebPageTest changed its mobile CPU throttling from cgroups to Chrome's built-in throttling. The cgroups had more overhead than expected when running in VMs and switching to Chrome's built-in throttling eliminated the extra overhead and resulted in more accurate throttling, which led to slightly faster performance.",
+        "more": [
+            {
+                "wptagent#366": "https://github.com/WPO-Foundation/wptagent/pull/366"
+            }
+        ]
     }
 ]
