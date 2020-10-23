@@ -78,5 +78,10 @@
         "date": 1544850000000,
         "title": "Synced URLs with entire CrUX corpus",
         "desc": ""
+    },
+    {
+        "date": 1596254400000,
+        "title": "Faster mobile CPU throttling",
+        "desc": "WebPageTest changed its mobile CPU throttling from cgroups to Chrome's built-in throttling"
     }
 ]
