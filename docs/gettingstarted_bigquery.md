@@ -29,7 +29,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 	![BigQuery Console](images/bigquery_console.jpg)
 
-6. In order to add the HTTP Archive tables to your project, follow this link: [https://console.cloud.google.com/bigquery?p=httparchive](https://console.cloud.google.com/bigquery?p=httparchive) 
+6. In order to add the HTTP Archive tables to your project, follow this link: [https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset](https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset) 
 
    *Note: If you want to pin the httparchive project to your account so that you do not have to use the above link every time, then you can switch to the classic UI and follow the instructions below
    ![Adding HTTP Archive Tables - Classic UI](images/adding_httparchive_to_bigquery_classic_UI.jpg)*
