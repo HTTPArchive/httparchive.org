@@ -1,5 +1,6 @@
 .idea/
 env/
+.venv/
 node_modules/
 static/js
 *.log
