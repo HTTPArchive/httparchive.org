@@ -14,8 +14,8 @@ sudo pip install virtualenv
 2. Create an isolated Python environment, and install dependencies:
 
 ```
-virtualenv --python python3 env
-source env/bin/activate
+virtualenv --python python3 .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
