@@ -3,5 +3,6 @@ env/
 .venv/
 node_modules/
 static/js
+templates/sitemap.xml
 *.log
 *.pyc

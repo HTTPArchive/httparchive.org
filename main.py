@@ -26,7 +26,7 @@ import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, jsonify, render_template, redirect, abort, url_for as flask_url_for
+from flask import Flask, request, make_response, jsonify, render_template, redirect, abort, url_for as flask_url_for, send_from_directory
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
@@ -262,6 +262,17 @@ def server_error(e):
 @app.errorhandler(502)
 def server_error(e):
 	return render_template('error/502.html', error=e), 502
+
+@app.route('/robots.txt')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
+
+@app.route('/sitemap.xml')
+def sitemap():
+    xml = render_template('sitemap.xml')
+    resp = app.make_response(xml)
+    resp.mimetype = "text/xml"
+    return resp
 
 
 if __name__ == '__main__':
