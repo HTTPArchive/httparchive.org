@@ -44,7 +44,7 @@ export const drawMetricSummary = (options, client, value, isMedian=true, change=
   summary.classList.remove('hidden');
 
   if (!isMedian) {
-    const metric = summary.querySelector('.metric')
+    const metric = summary.querySelector('.metric');
     metric && metric.classList.add('hidden');
   }
 

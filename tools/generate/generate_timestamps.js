@@ -107,11 +107,11 @@ const write_files_dates_file = async () => {
 
 const generate_timestamps = async () => {
 
-  const file_dates = await get_last_update_json();
+  file_dates = await get_last_update_json();
 
   now = new Date(Date.now());
   now = new Date (Date.UTC(now.getFullYear(),now.getMonth(), now.getDate())).toISOString();
-  
+
   await get_template_pages_dates();
   await get_reports_dates();
   await get_asset_file_dates();

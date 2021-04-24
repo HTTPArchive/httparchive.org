@@ -192,7 +192,7 @@ function drawHistogram(data, containerId, options) {
   data = data.map((data) => new Bin(data));
 
   let desktop = data.filter(({client}) => client=='desktop');
-  let mobile = data.filter(({client}) => client=='mobile')
+  let mobile = data.filter(({client}) => client=='mobile');
 
   const max = Math.max(OUTLIER_MIN,
     desktop.filter(current => current.cdf < 0.95).length,
