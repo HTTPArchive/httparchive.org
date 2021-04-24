@@ -26,7 +26,8 @@ import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, jsonify, render_template, redirect, abort, url_for as flask_url_for, send_from_directory
+from flask import Flask, request, make_response, jsonify, render_template, redirect, \
+                  abort, url_for as flask_url_for, send_from_directory
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 
