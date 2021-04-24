@@ -1,0 +1,132 @@
+{
+  "/static/css/bootstrap.min.css": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "ec3bb52a00e176a7181d454dffaea219"
+  },
+  "/static/css/index.css": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "5282f345dc96371ef7059fec64af06f9"
+  },
+  "/static/css/report.css": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "233b76f5e298f51fa8c9e9f3763ffc04"
+  },
+  "/static/css/reports.css": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "303625f56ae8fcdd4e1dd25decdf80d0"
+  },
+  "/static/css/styles.css": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "712728dff4907ec31f3b302e5cf75557"
+  },
+  "/static/js/faq.js": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "1c7a9126bbee0e1c9792756eeaead69c"
+  },
+  "/static/js/histogram.js": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "a190c42489fa2ea93e1bbd1f7630c2e0"
+  },
+  "/static/js/index.js": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "97fde5a5e6514525592471bbb09ee494"
+  },
+  "/static/js/main.js": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "4926051d9a7ad4ae7b7029358ffea5de"
+  },
+  "/static/js/report.js": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "1744cb5b7b3741a03fa0a8de2379bb52"
+  },
+  "/static/js/timeseries.js": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "598dd9aadf615ae335886e5bda23c46e"
+  },
+  "about.html": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "b2a467370dfb4ed7d5f622637727778e"
+  },
+  "faq.html": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "583a8b1b0c0f5f265ee4cc0bb0bc8c27"
+  },
+  "index.html": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "858b94b3ed87e66bbc8bc041abf9ba45"
+  },
+  "main.html": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "bb3710d6adbccee48ac8a9c65701fd78"
+  },
+  "reports.html": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "fbf7633351768e68fea326a812eb5148"
+  },
+  "reports/accessibility": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "942d0d92d36501186349cd3b0866d5b2"
+  },
+  "reports/chrome-ux-report": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "9ef5833114e90b95c43aedfdadeec02d"
+  },
+  "reports/loading-speed": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "133dab1f1b207e4ed70243cb42526576"
+  },
+  "reports/page-weight": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "b0f8af74a38c8afb27a07cfcf8d6cc26"
+  },
+  "reports/progressive-web-apps": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "1423e1ac221866cd1d664ca8bf20d2a7"
+  },
+  "reports/project-fugu": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "66c919b24eba7647f5cfb81e6d01f13e"
+  },
+  "reports/search-engine-optimization": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "3ea330c0ebfb6d17c76baa45928db117"
+  },
+  "reports/state-of-images": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "3e4226bd3a208a4e6e8f57d2cf9ae62d"
+  },
+  "reports/state-of-javascript": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "d2e2b3b64d6f0b0b285828b69b738217"
+  },
+  "reports/state-of-the-web": {
+    "date_published": "2021-04-23T00:00:00.000Z",
+    "date_modified": "2021-04-23T00:00:00.000Z",
+    "hash": "c00b2a6f221ea99bbc53817108250182"
+  }
+}

@@ -16,9 +16,11 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
+    "generate": "node ./tools/generate",
     "start": "npm run watch & python main.py",
     "stage": "npm run build && echo \"Y\" | gcloud app deploy --project httparchive-staging --stop-previous-version",
-    "deploy": "npm run build && echo \"Y\" | gcloud app deploy --project httparchive --stop-previous-version",
+    "deploy": "npm run build && npm run timestamp && npm run generate && echo \"Y\" | gcloud app deploy --project httparchive --stop-previous-version",
+    "timestamps": "node ./tools/generate/generate_timestamps",
     "lint": "run-script-os",
     "lint:darwin:linux": "docker container run -it --rm -v \"$PWD\":/app -w /app --entrypoint=./tools/scripts/run_linter_locally.sh github/super-linter",
     "lint:win32": "docker container run --rm -v \"%cd%\":/app -w /app/ --entrypoint=./tools/scripts/run_linter_locally.sh github/super-linter"
@@ -29,6 +31,10 @@
     "babel-loader": "^7.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.5.2",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.6",
+    "fs-extra": "^9.1.0",
+    "recursive-readdir": "^2.2.2",
     "run-script-os": "^1.1.6",
     "webpack": "^3.12.0"
   }
