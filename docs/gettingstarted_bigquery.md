@@ -4,7 +4,7 @@ The [HTTP Archive ](https://httparchive.org)is an open source project that track
 
 There are over 1 million pages tracked on desktop and emulated mobile in the most recent HTTP Archive data, and the historical data goes back to 2010. While the HTTP Archive website makes a lot of information available via [curated reports](https://httparchive.org/reports), analyzing the raw data is a powerful way of answering your questions about the web.
 
-All of the data collected by the HTTP Archive is available via [Google BigQuery](https://cloud.google.com/bigquery/). This makes analyzing the data easy because all of the storage and indexing is taken care of for you. And with the processing power behind BigQuery, even some of the most complex queries runs in seconds. 
+All of the data collected by the HTTP Archive is available via [Google BigQuery](https://cloud.google.com/bigquery/). This makes analyzing the data easy because all of the storage and indexing is taken care of for you. And with the processing power behind BigQuery, even some of the most complex queries runs in seconds.
 
 This document is an update to [Ilya Grigorik's 2013 introduction](https://www.igvita.com/2013/06/20/http-archive-bigquery-web-performance-answers/), and walks you through everything you need to get started accessing BigQuery and analyzing the data.
 
@@ -13,35 +13,35 @@ This document is an update to [Ilya Grigorik's 2013 introduction](https://www.ig
 
 In order to access the HTTP Archive via BigQuery, you'll need a Google account.  To document this process for new visitors, this example uses a new Google account that has never logged into any Google Cloud services.
 
-1. Navigate to the [Google Cloud Projects Page](https://console.cloud.google.com/start) and log in with your Google account if prompted.  If this is your first time accessing Google Cloud, you may be prompted to accept the terms of service. Once you are logged in, you'll see a page like this - 
+1. Navigate to the [Google Cloud Projects Page](https://console.cloud.google.com/start) and log in with your Google account if prompted.  If this is your first time accessing Google Cloud, you may be prompted to accept the terms of service. Once you are logged in, you'll see a page like this -
    ![Getting Started](images/google_cloud_gettingstarted.jpg)
 
 2. Click `Select a project` and then "New Project".   This takes you to a New Project page.
 
 3. Give your project a name and then click the `Create` button.
-	![Create a Project](images/create_a_project.jpg)
+  ![Create a Project](images/create_a_project.jpg)
 
-4. Optional: Enable Billing by clicking on the Billing menu item and adding your billing information.   
+4. Optional: Enable Billing by clicking on the Billing menu item and adding your billing information.
 
     *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
 
 5. Navigate to the [Big Query console](https://bigquery.cloud.google.com).  Note that if you see "Beta" then you are using the new UI which is currently in Beta. You can easily switch between the Beta and Classic UIs as needed.
 
-	![BigQuery Console](images/bigquery_console.jpg)
+  ![BigQuery Console](images/bigquery_console.jpg)
 
-6. In order to add the HTTP Archive tables to your project, follow this link: [https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset](https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset) 
+6. In order to add the HTTP Archive tables to your project, follow this link: [https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset](https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset)
 
    *Note: If you want to pin the httparchive project to your account so that you do not have to use the above link every time, then you can switch to the classic UI and follow the instructions below
    ![Adding HTTP Archive Tables - Classic UI](images/adding_httparchive_to_bigquery_classic_UI.jpg)*
-   
+
 7. At this point you should see the httparchive tables in your BigQuery dashboard.   If you expand the httparchive project, you'll see folders for all the different tables. In the next section, we explore the structure of these tables so you can start digging in!
-	![Setup Complete](images/httparchive_setup_complete.jpg)
+  ![Setup Complete](images/httparchive_setup_complete.jpg)
 
 
 ## Understanding how the tables are structured
 So, now you have access! But what do you have access to?
 
-The table below outlines what some of the different grouping of tables includes. You'll find summaries of page views and HTTP requests. There are also JSON encoded HAR files for pages, requests, lighthouse reports and even response bodies! 
+The table below outlines what some of the different grouping of tables includes. You'll find summaries of page views and HTTP requests. There are also JSON encoded HAR files for pages, requests, lighthouse reports and even response bodies!
 
 ![HTTP Archive Table Summary](images/httparchive_table_summary.jpg)
 
@@ -54,7 +54,7 @@ In order to understand what each of these tables contain, you can click on the t
 Some of the types of tables you'll find useful when getting started are described below. These table names all follow the format `yyyy_mm_dd_desktop` and `yyyy_mm_dd_mobile`.
 
 ### Summary Tables:
-* `summary_pages` tables: 
+* `summary_pages` tables:
     * Each row contains details about a single page including timings, # of requests, types of requests and sizes.
     * Information about the page load such # of domains, redirects, errors, https requests, CDN, etc.
     * Summary of different caching parameters.
@@ -65,15 +65,15 @@ Some of the types of tables you'll find useful when getting started are describe
     * Each object has a requestid and a pageid.  The pageid can be used to JOIN the corresponding summary_pages table.
     * Information about the object, and how it was loaded.
     * Contains some response headers for each object.
-    
+
 ### HAR Tables:
-The HTTP Archive stores detailed information about each page load in [HAR (HTTP Archive) files](https://en.wikipedia.org/wiki/.har). Each HAR file is JSON formatted and contains detailed performance data about a web page.  The [specification for this format](https://w3c.github.io/web-performance/specs/HAR/Overview.html) is produced by the Web Performance Working Group of the W3C. The HTTP Archive splits each HAR file into multiple BigQuery tables, which are described below.  
+The HTTP Archive stores detailed information about each page load in [HAR (HTTP Archive) files](https://en.wikipedia.org/wiki/.har). Each HAR file is JSON formatted and contains detailed performance data about a web page.  The [specification for this format](https://w3c.github.io/web-performance/specs/HAR/Overview.html) is produced by the Web Performance Working Group of the W3C. The HTTP Archive splits each HAR file into multiple BigQuery tables, which are described below.
 
 * `pages` tables
-	* HAR extract for each page url.
+    * HAR extract for each page url.
     * Table contains a url and a JSON-encoded HAR file for the document.
     * These tables are large (~13GB as of Aug 2018).
-    
+
 * `requests` tables:
     * HAR extract for each resource.
     * Table contains a document url, resource url and a JSON-encoded HAR extract for each resource.
@@ -81,7 +81,7 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
 
 * `response_bodies` tables:
     * HAR extract containing response bodies for each request.
-    * Table contains a document url, resource url and a JSON-encoded HAR extract containing the first 2MB of each response body.   
+    * Table contains a document url, resource url and a JSON-encoded HAR extract containing the first 2MB of each response body.
     * Payloads are truncated at 2MB, and there is a column to indicate whether the payload was truncated.
     * These tables are extremely large (2.5TB as of Aug 2018).
 
@@ -90,7 +90,7 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
     * Table contains a url, and a JSON-encoded copy of the lighthouse report.
     * Lighthouse only runs on mobile pages. The chrome_lighthouse table contains null data and can be ignored.
     * These tables are very large (200GB as of Aug 2018)
-    
+
 
 ## Useful Links for BigQuery SQL Reference
 BigQuery supports two SQL dialects: standard SQL and legacy SQL.  Legacy SQL is a non-standard SQL dialect that BigQuery started out using.   Standard SQL is a a SQL2011 compliant dialect that has many more features and functions.  Standard SQL is the preferred dialect for querying data via BigQuery, but both are supported.
@@ -119,7 +119,7 @@ FROM `httparchive.summary_pages.2018_09_01_desktop`
 Perhaps you want to JOIN the pages and requests tables together, and see how many page URLs and request URLs are in this data set.
 
 ```
-SELECT COUNT(distinct pages.url) total_pages, 
+SELECT COUNT(distinct pages.url) total_pages,
        COUNT(*) total_requests
 FROM `httparchive.summary_pages.2018_09_01_desktop` pages
 INNER JOIN `httparchive.summary_requests.2018_09_01_desktop`requests
@@ -132,7 +132,7 @@ When we look at the results of this, you can see how much data was processed dur
 
 If you look closely, you'll notice that this particular query could actually be written without the JOIN. For example, we can count `distinct pageid` from the `summary_requests` table instead of JOINing the `summary_pages` table. If you run this query, you'll notice that the results are the same as the previous query, and the processed bytes are less.
 ```
-SELECT COUNT(distinct pageid) total_pages, 
+SELECT COUNT(distinct pageid) total_pages,
        COUNT(*) total_requests
 FROM `httparchive.summary_requests.2018_09_01_desktop`requests
 ```
@@ -141,7 +141,7 @@ Next let's summarize  all of the HTTP requests by mime type, and the number of p
 
 ```
 SELECT mimeType,
-       COUNT(distinct pageid) total_pages, 
+       COUNT(distinct pageid) total_pages,
        COUNT(*) total_requests
 FROM `httparchive.summary_requests.2018_09_01_desktop`requests
 GROUP BY mimeType
@@ -156,17 +156,17 @@ So let's try to learn something from this basic example.   We know from the firs
 
 ```
 SELECT mimeType,
-       COUNT(distinct pageid) total_pages, 
+       COUNT(distinct pageid) total_pages,
        COUNT(*) total_requests,
        ROUND(
-          COUNT(distinct pageid) / (SELECT COUNT(*) FROM `httparchive.summary_pages.2018_09_01_desktop`) 
-          ,2) percent_pages        
+          COUNT(distinct pageid) / (SELECT COUNT(*) FROM `httparchive.summary_pages.2018_09_01_desktop`)
+          ,2) percent_pages
 FROM `httparchive.summary_requests.2018_09_01_desktop`requests
 GROUP BY mimeType
 ORDER BY total_requests DESC
 ```
 
-When analyzing the results from this, you can see the % of websites that use different Content-Types for their JavaScript, you can see that 93% of sites have at least one PNG image, 89% have at least 1 GIF, 48% use JSON, and 3% of sites have MP4 videos on their homepage, etc.  
+When analyzing the results from this, you can see the % of websites that use different Content-Types for their JavaScript, you can see that 93% of sites have at least one PNG image, 89% have at least 1 GIF, 48% use JSON, and 3% of sites have MP4 videos on their homepage, etc.
 
 ![Simple JOIN Example](images/mimeType_summary_example_query2.jpg)
 
