@@ -7,3 +7,4 @@ static/html
 templates/sitemap.xml
 *.log
 *.pyc
+**/.DS_Store

@@ -30,6 +30,7 @@ csp = {
     ],
     'img-src': [
         '\'self\'',
+        'lux.speedcurve.com',
         'almanac.httparchive.org',
         'discuss.httparchive.org',
         'avatars.discourse.org',
