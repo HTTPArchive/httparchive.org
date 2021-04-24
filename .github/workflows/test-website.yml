@@ -1,0 +1,46 @@
+########################################
+## Custom HTTP Archive GitHub action ##
+#######################################
+#
+# This generates snd tests the website when a pull request is
+# opened (or added to) on the original repo
+#
+name: Test Website
+on:
+  workflow_dispatch:
+  pull_request:
+jobs:
+  build:
+    name: Build and Test Website
+    runs-on: ubuntu-20.04
+    if: github.repository == 'HTTPArchive/httparchive.org'
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2.3.4
+      with:
+        # Full git history is needed to get a proper list of changed files within `super-linter`
+        fetch-depth: 0
+    - name: Setup Node.js for use with actions
+      uses: actions/setup-node@v2.1.5
+      with:
+        node-version:  '15'
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2.2.2
+      with:
+        python-version: '3.8'
+    - name: Run the website
+      run: ./tools/scripts/run_and_test_website.sh
+    - name: Remove node modules to avoid linting errors
+      run: rm -rf node_modules
+    - name: Use more complete checks for generated HTML linting
+      run: cp -f .github/linters/.htmlhintrc_morechecks .github/linters/.htmlhintrc
+    - name: Lint Generated HTML
+      # Run older version of super-linter to allow linting of generated files
+      # (see https://github.com/github/super-linter/issues/1289)
+      uses: docker://github/super-linter:v3.14.0
+      #uses: github/super-linter@v3.15.3
+      env:
+        DEFAULT_BRANCH: main
+        FILTER_REGEX_INCLUDE: static/html/.*
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VALIDATE_HTML: true

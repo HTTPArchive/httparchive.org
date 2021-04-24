@@ -5,7 +5,6 @@ const static_pages = [
   'index.html',
   'faq.html',
   'about.html',
-  'main.html',
   'reports.html'
 ];
 
@@ -47,7 +46,7 @@ const get_report_config = async () => {
   }
 
   return report_config;
-}  
+}
 
 module.exports = {
   get_static_pages,

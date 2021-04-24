@@ -17,13 +17,16 @@
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
     "generate": "node ./tools/generate",
-    "start": "npm run watch & python main.py",
+    "start": "run-script-os",
+    "start:darwin:linux": "./tools/scripts/run_and_test_website.sh -d",
+    "start:win32": "call tools/scripts/run_and_test_website.bat",
     "stage": "npm run build && echo \"Y\" | gcloud app deploy --project httparchive-staging --stop-previous-version",
     "deploy": "npm run build && npm run timestamp && npm run generate && echo \"Y\" | gcloud app deploy --project httparchive --stop-previous-version",
     "timestamps": "node ./tools/generate/generate_timestamps",
     "lint": "run-script-os",
     "lint:darwin:linux": "docker container run -it --rm -v \"$PWD\":/app -w /app --entrypoint=./tools/scripts/run_linter_locally.sh github/super-linter",
-    "lint:win32": "docker container run --rm -v \"%cd%\":/app -w /app/ --entrypoint=./tools/scripts/run_linter_locally.sh github/super-linter"
+    "lint:win32": "docker container run --rm -v \"%cd%\":/app -w /app/ --entrypoint=./tools/scripts/run_linter_locally.sh github/super-linter",
+    "test": "node ./tools/test"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -34,8 +37,10 @@
     "crypto": "^1.0.1",
     "ejs": "^3.1.6",
     "fs-extra": "^9.1.0",
+    "node-fetch": "^2.6.1",
     "recursive-readdir": "^2.2.2",
     "run-script-os": "^1.1.6",
-    "webpack": "^3.12.0"
+    "webpack": "^3.12.0",
+    "xml-js": "^1.6.11"
   }
 }
