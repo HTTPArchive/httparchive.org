@@ -291,8 +291,16 @@ def default_favicon():
     return send_from_directory(app.static_folder, 'img/favicon.ico')
 
 
-@app.route('/sitemap.xml')
+@app.route('/sitemap.xml')# Chrome and Safari use inline styles to display XMLs files.
+# https://bugs.chromium.org/p/chromium/issues/detail?id=924962
+# Override default CSP (including turning off nonce) to allow sitemap to display
+@talisman(
+    content_security_policy={'default-src': ['\'self\''], 'script-src': ['\'self\''],
+                             'style-src': ['\'unsafe-inline\''], 'img-src': ['\'self\'', 'data:']},
+    content_security_policy_nonce_in=['script-src']
+)
 def sitemap():
+    delattr(request, 'csp_nonce')
     xml = render_template('sitemap.xml')
     resp = app.make_response(xml)
     resp.mimetype = "text/xml"
