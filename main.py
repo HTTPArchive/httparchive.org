@@ -35,7 +35,7 @@ from flask_talisman import Talisman
 
 app = Flask(__name__)
 Markdown(app)
-Talisman(app,
+talisman = Talisman(app,
          content_security_policy=csp,
          content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
@@ -309,7 +309,7 @@ if __name__ == '__main__':
     # but debug mode is useful in general (as auto reloads on change)
     if len(sys.argv) > 1 and sys.argv[1] == 'background':
         # Turn off HTTPS redirects (automatically turned off for debug)
-        Talisman.force_https = False
+        talisman.force_https = False
         app.run(host='0.0.0.0', port=8080)
     else:
         app.run(host='0.0.0.0', port=8080, debug=True)

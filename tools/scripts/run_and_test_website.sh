@@ -41,11 +41,6 @@ while getopts "h?d" opt; do
 done
 shift "$((OPTIND-1))" # Discard the options and sentinel --
 
-# This script must be run from src directory
-if [ -d "src" ]; then
-  cd src
-fi
-
 if [ "$(pgrep -f 'python main.py')" ]; then
   echo "Killing existing server to run a fresh version"
   pkill -9 -f "python main.py"
