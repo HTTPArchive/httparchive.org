@@ -285,6 +285,11 @@ def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
 
+@app.route('/favicon.ico')
+def default_favicon():
+    return send_from_directory(app.static_folder, 'img/favicon.ico')
+
+
 @app.route('/sitemap.xml')
 def sitemap():
     xml = render_template('sitemap.xml')
@@ -296,5 +301,16 @@ def sitemap():
 if __name__ == '__main__':
     # This is used when running locally. Gunicorn is used to run the
     # application on Google App Engine. See entrypoint in app.yaml.
-    app.run(host='127.0.0.1', port=8080, debug=True)
+
+    # If the 'background' command line argument is given:
+    #    python main.py background &
+    # then run in non-debug mode, as debug mode can't be backgrounded
+    # but debug mode is useful in general (as auto reloads on change)
+    if len(sys.argv) > 1 and sys.argv[1] == 'background':
+        # Turn off HTTPS redirects (automatically turned off for debug)
+        talisman.force_https = False
+        app.run(host='0.0.0.0', port=8080)
+    else:
+        app.run(host='0.0.0.0', port=8080, debug=True)
+
 # [END app]

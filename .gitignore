@@ -3,6 +3,7 @@ env/
 .venv/
 node_modules/
 static/js
+static/html
 templates/sitemap.xml
 *.log
 *.pyc
