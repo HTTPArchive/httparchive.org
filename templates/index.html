@@ -4,129 +4,129 @@
 {% block title %}HTTP Archive{% endblock %}
 
 {% block head %}
-	{{ super() }}
-	<link rel="stylesheet" href="/static/css/index.css" />
+  {{ super() }}
+  <link rel="stylesheet" href="/static/css/index.css" />
 {% endblock %}
 
 {% block main %}
-	<section id="how-web-is-built" class="container">
-		<div class="col-lg-5 col-sm-5 col-md-5 col-xs-6">
-			<a href="{{ url_for('reports') }}">
-				<img src="/static/img/web.png" alt="" aria-label="HTTP Archive reports"/>
-			</a>
-		</div>
+  <section id="how-web-is-built" class="container">
+    <div class="col-lg-5 col-sm-5 col-md-5 col-xs-6">
+      <a href="{{ url_for('reports') }}">
+        <img src="/static/img/web.png" alt="" aria-label="HTTP Archive reports"/>
+      </a>
+    </div>
 
-		<div class="col-lg-7 col-sm-7 col-md-7 col-xs-12">
-			<h2>
-				The <b class="nowrap">HTTP Archive</b> Tracks How the <b>Web is Built</b>.
-			</h2>
+    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-12">
+      <h2>
+        The <b class="nowrap">HTTP Archive</b> Tracks How the <b>Web is Built</b>.
+      </h2>
 
-			<p>
-				We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page. We then crunch and analyze this data to identify trends &mdash; <a href="{{ url_for('about') }}">learn more</a> about our methodology.
-			</p>
+      <p>
+        We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page. We then crunch and analyze this data to identify trends &mdash; <a href="{{ url_for('about') }}">learn more</a> about our methodology.
+      </p>
 
-			<a href="{{ url_for('reports') }}" class="btn alt">View Reports</a>
-		</div>
-	</section>
+      <a href="{{ url_for('reports') }}" class="btn alt">View Reports</a>
+    </div>
+  </section>
 
-	<section class="alt" style="padding: 60px 15px;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
-					<h2>
-						<small>Web Almanac</small>
-						2020 State of the Web Report
-					</h2>
+  <section class="alt" style="padding: 60px 15px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
+          <h2>
+            <small>Web Almanac</small>
+            2020 State of the Web Report
+          </h2>
 
-					<p>The Web Almanac combines the raw stats and trends of the HTTP Archive with the expertise of the web community. The 2020 edition is a comprehensive report on the state of the web, backed by real data and trusted web experts, and comprised of 20+ chapters spanning aspects of page content, user experience, publishing, and distribution.</p>
+          <p>The Web Almanac combines the raw stats and trends of the HTTP Archive with the expertise of the web community. The 2020 edition is a comprehensive report on the state of the web, backed by real data and trusted web experts, and comprised of 20+ chapters spanning aspects of page content, user experience, publishing, and distribution.</p>
 
-					<a href="https://almanac.httparchive.org/en/2020/" class="btn alt">Read The 2020 Web Almanac</a>
-				</div>
-				<div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
-					<a href="https://almanac.httparchive.org/en/2020/">
-						<img src="https://almanac.httparchive.org/static/images/home-hero.png" alt=""/>
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
+          <a href="https://almanac.httparchive.org/en/2020/" class="btn alt">Read The 2020 Web Almanac</a>
+        </div>
+        <div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
+          <a href="https://almanac.httparchive.org/en/2020/">
+            <img src="https://almanac.httparchive.org/static/images/home-hero.png" alt=""/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<section id="bigquery" class="container">
-		<div class="row">
-			<h2>
-				<small>Public Dataset</small>
-				Google BigQuery
-			</h2>
-			<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+  <section id="bigquery" class="container">
+    <div class="row">
+      <h2>
+        <small>Public Dataset</small>
+        Google BigQuery
+      </h2>
+      <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 
-				<p>
-					The HTTP Archive archives and provides access to detailed information about each website it crawls: request and response metadata, response bodies, execution traces, and more. You can download this data for offline analysis, or access it as a public dataset via Google BigQuery for fast and rapid analysis.
-				</p>
+        <p>
+          The HTTP Archive archives and provides access to detailed information about each website it crawls: request and response metadata, response bodies, execution traces, and more. You can download this data for offline analysis, or access it as a public dataset via Google BigQuery for fast and rapid analysis.
+        </p>
 
-				<a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}" class="btn">Learn More</a>
-			</div>
+        <a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}" class="btn">Learn More</a>
+      </div>
 
-			<div class="col-lg-6 col-sm-6 col-md-6 hidden-xs">
-				<a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}">
-					<img src="/static/img/data.png" alt="" aria-label="Learn more about HTTP Archive on BigQuery"/>
-				</a>
-			</div>
-		</div>
-	</section>
+      <div class="col-lg-6 col-sm-6 col-md-6 hidden-xs">
+        <a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}">
+          <img src="/static/img/data.png" alt="" aria-label="Learn more about HTTP Archive on BigQuery"/>
+        </a>
+      </div>
+    </div>
+  </section>
 
-	<section id="blog" class="hidden container">
-		<h2>
-			Recent blog posts
-		</h2>
+  <section id="blog" class="hidden container">
+    <h2>
+      Recent blog posts
+    </h2>
 
-		<div id="blog-posts">
-			<template id="blog-post-template">
-				<div class="blog-post">
-					<a class="blog-post-author-avatar hidden-xs"><img height="50" width="50" loading="lazy"></a>
-					<div class="blog-post-content">
-						<a class="blog-post-title"></a>
-						<div class="blog-post-byline">
-							<a class="blog-post-author"></a>・<span class="blog-post-publication-date"></span>
-						</div>
-						<div class="blog-post-tags">
-							<a class="blog-post-tag"></a>
-						</div>
-						<div class="blog-post-reactions">
-							<a class="blog-post-reaction blog-post-likes"><img src="/static/img/blog-likes.png" height="20" alt="likes" loading="lazy"><span></span></a>
-							<a class="blog-post-reaction blog-post-comments"><img src="/static/img/blog-comments.png" height="20" alt="comments" loading="lazy"><span></span></a>
-						</div>
-					</div>
-				</div>
-			</template>
-		</div>
+    <div id="blog-posts">
+      <template id="blog-post-template">
+        <div class="blog-post">
+          <a class="blog-post-author-avatar hidden-xs"><img height="50" width="50" loading="lazy" alt=""></a>
+          <div class="blog-post-content">
+            <a class="blog-post-title"></a>
+            <div class="blog-post-byline">
+              <a class="blog-post-author"></a>・<span class="blog-post-publication-date"></span>
+            </div>
+            <div class="blog-post-tags">
+              <a class="blog-post-tag"></a>
+            </div>
+            <div class="blog-post-reactions">
+              <a class="blog-post-reaction blog-post-likes"><img src="/static/img/blog-likes.png" height="20" alt="likes" loading="lazy"><span></span></a>
+              <a class="blog-post-reaction blog-post-comments"><img src="/static/img/blog-comments.png" height="20" alt="comments" loading="lazy"><span></span></a>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
 
-		<p class="text-center">
-			<a href="https://dev.to/httparchive" class="btn">Read More</a>
-		</p>
-	</section>
+    <p class="text-center">
+      <a href="https://dev.to/httparchive" class="btn">Read More</a>
+    </p>
+  </section>
 
-	<section id="discuss" class="hidden container">
-		<h2>
-			Featured Discussions
-		</h2>
+  <section id="discuss" class="hidden container">
+    <h2>
+      Featured Discussions
+    </h2>
 
-		<table id="discussion-table">
-			<thead>
-				<tr>
-					<th>Topic</th>
-					<th>Replies</th>
-				</tr>
-			</thead>
-			<tbody id="discussions"></tbody>
-		</table>
+    <table id="discussion-table">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Replies</th>
+        </tr>
+      </thead>
+      <tbody id="discussions"></tbody>
+    </table>
 
-		<p class="text-center">
-			<a href="https://discuss.httparchive.org" class="btn">Read More</a>
-		</p>
-	</section>
+    <p class="text-center">
+      <a href="https://discuss.httparchive.org" class="btn">Read More</a>
+    </p>
+  </section>
 {% endblock %}
 
 {% block scripts %}
-	{{ super() }}
-	<script src="/static/js/index.js"></script>
+  {{ super() }}
+  <script src="/static/js/index.js"></script>
 {% endblock %}

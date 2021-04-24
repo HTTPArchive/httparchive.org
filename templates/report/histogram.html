@@ -4,36 +4,36 @@
 {% block title %}{{ super() }} | {{ start }}{% endblock %}
 
 {% block reportName %}
-	{{ super() }}
-	<small id="report-date" class="yyyy_mm_dd">{{ start }}</small>
+  {{ super() }}
+  <small id="report-date" class="yyyy_mm_dd">{{ start }}</small>
 {% endblock %}
 
 {% block report %}
-	{% for metric in report.metrics %}
-		{% if metric[viz]['enabled'] %}
-			<section id="{{ metric.id }}" class="report-metric">
-				{{ metric_info(metric, viz) }}
-				<div id="{{ metric.id }}-chart" class="chart"></div>
-				<button class="btn show-hide">Show Tables</button>
-				<div class="table-wrapper">
-					<table id="{{ metric.id }}-table-desktop" class="table hidden"></table>
-				</div>
-				<div class="table-wrapper">
-					<table id="{{ metric.id }}-table-mobile" class="table hidden"></table>
-				</div>
-			</section>
-		{% endif %}
-	{% endfor %}
+  {% for metric in report.metrics %}
+    {% if metric[viz]['enabled'] %}
+      <section id="{{ metric.id }}" class="report-metric">
+        {{ metric_info(metric, viz) }}
+        <div id="{{ metric.id }}-chart" class="chart"></div>
+        <button class="btn show-hide">Show Tables</button>
+        <div class="table-wrapper">
+          <table id="{{ metric.id }}-table-desktop" class="table hidden"></table>
+        </div>
+        <div class="table-wrapper">
+          <table id="{{ metric.id }}-table-mobile" class="table hidden"></table>
+        </div>
+      </section>
+    {% endif %}
+  {% endfor %}
 {% endblock %}
 
 {% block scripts %}
-	{{ super() }}
-	<script src="/static/js/histogram.js"></script>
-	<script nonce="{{ csp_nonce() }}">
+  {{ super() }}
+  <script src="/static/js/histogram.js"></script>
+  <script nonce="{{ csp_nonce() }}">
 {% for metric in report.metrics %}
-	{% if metric[viz]['enabled'] %}
-		histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});
-	{% endif %}
+  {% if metric[viz]['enabled'] %}
+    histogram({{ metric.id|tojson }}, {{ start|tojson }}, {{ metric|tojson }});
+  {% endif %}
 {% endfor %}
-	</script>
+  </script>
 {% endblock %}

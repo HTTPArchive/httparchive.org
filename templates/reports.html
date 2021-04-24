@@ -4,34 +4,34 @@
 {% block title %}Reports{% endblock %}
 
 {% block head %}
-	{{ super() }}
-	<link rel="stylesheet" href="/static/css/reports.css" />
+  {{ super() }}
+  <link rel="stylesheet" href="/static/css/reports.css" />
 {% endblock %}
 
 {% block main %}
-	<section>
-		{% for report in reports %}
-		<div class="report row">
-			<div class="container {{ loop.cycle('', 'alt') }}">
-				<div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
-					<a href="{{ url_for('report', report_id=report.id) }}">
-						{{ report_graphic(report) }}
-					</a>
-				</div>
-				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
-					<h2>
-						<a href="{{ url_for('report', report_id=report.id) }}">
-							{{ report.name }}
-						</a>
-					</h2>
+  <section>
+    {% for report in reports %}
+    <div class="report row">
+      <div class="container {{ loop.cycle('', 'alt') }}">
+        <div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
+          <a href="{{ url_for('report', report_id=report.id) }}">
+            {{ report_graphic(report) }}
+          </a>
+        </div>
+        <div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
+          <h2>
+            <a href="{{ url_for('report', report_id=report.id) }}">
+              {{ report.name }}
+            </a>
+          </h2>
 
-					{{ report.summary | markdown }}
+          {{ report.summary | markdown }}
 
-					<a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the Report</a>
-					</h2>
-				</div>
-			</div>
-		</div>
-		{% endfor %}
-	</section>
+          <a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the Report</a>
+
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
 {% endblock %}

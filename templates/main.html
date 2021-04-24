@@ -2,167 +2,167 @@
 
 
 {% block head %}
-	{{ super() }}
-	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
-	<link rel="stylesheet" href="/static/css/styles.css">
-	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-	<script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>
-	<script async defer src="https://cdn.speedcurve.com/js/lux.js?id=104609804"></script>
+  {{ super() }}
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>
+  <script async defer src="https://cdn.speedcurve.com/js/lux.js?id=104609804"></script>
 {% endblock %}
 
 {% block content %}
-	{% if 'legacy_welcome' in request.cookies %}
-		<div class="alert alert-warning alert-dismissable" role="alert">
-			<strong>
-				Welcome to the
-				<a href="https://discuss.httparchive.org/t/announcing-the-new-http-archive/1294">new HTTP Archive</a>!
-			</strong>
-			We hope you enjoy the new and improved experience.
-			<button type="button" class="close" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-	{% endif %}
-	<header>
-		<div class="container">
-			<div class="pddl0 col-lg-2 col-md-3 col-sm-3 col-xs-10">
-				<a href="{{ url_for('index') }}">
-					<img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/>
-				</a>
-			</div>
+  {% if 'legacy_welcome' in request.cookies %}
+    <div class="alert alert-warning alert-dismissable" role="alert">
+      <strong>
+        Welcome to the
+        <a href="https://discuss.httparchive.org/t/announcing-the-new-http-archive/1294">new HTTP Archive</a>!
+      </strong>
+      We hope you enjoy the new and improved experience.
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endif %}
+  <header>
+    <div class="container">
+      <div class="pddl0 col-lg-2 col-md-3 col-sm-3 col-xs-10">
+        <a href="{{ url_for('index') }}">
+          <img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/>
+        </a>
+      </div>
 
-			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-2 clearfix">
-				<nav class="hidden-xs pull-right text-right">
-					<ul>
-						<li>
-							<span class="dropdown-target" aria-haspopup="true">
-								Reports
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
-							</span>
+      <div class="col-lg-10 col-md-9 col-sm-9 col-xs-2 clearfix">
+        <nav class="hidden-xs pull-right text-right">
+          <ul>
+            <li>
+              <span class="dropdown-target" aria-haspopup="true">
+                Reports
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+              </span>
 
-							<ul class="dropdown-content reports">
-								<li><a href="{{ url_for('reports') }}">All Reports</a></li>
-								{% for report in reports %}
-									<li>
-										<a href="{{ url_for('report', report_id=report.id) }}">
-											{{ report.name }}
-										</a>
-									</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li>
-							<a href="https://discuss.httparchive.org">Discuss</a>
-						</li>
-						<li>
-							<span class="dropdown-target" aria-haspopup="true">
-								Web Almanac
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
-							</span>
+              <ul class="dropdown-content reports">
+                <li><a href="{{ url_for('reports') }}">All Reports</a></li>
+                {% for report in reports %}
+                  <li>
+                    <a href="{{ url_for('report', report_id=report.id) }}">
+                      {{ report.name }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li>
+              <a href="https://discuss.httparchive.org">Discuss</a>
+            </li>
+            <li>
+              <span class="dropdown-target" aria-haspopup="true">
+                Web Almanac
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+              </span>
 
-							<ul class="dropdown-content">
-								<li>
-									<a href="https://almanac.httparchive.org/en/2020/">2020</a>
-								</li>
-								<li>
-									<a href="https://almanac.httparchive.org/en/2019/">2019</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<span class="dropdown-target" aria-haspopup="true">
-								About
-								<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
-							</span>
+              <ul class="dropdown-content">
+                <li>
+                  <a href="https://almanac.httparchive.org/en/2020/">2020</a>
+                </li>
+                <li>
+                  <a href="https://almanac.httparchive.org/en/2019/">2019</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="dropdown-target" aria-haspopup="true">
+                About
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+              </span>
 
-							<ul class="dropdown-content">
-								<li>
-									<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
-								</li>
-								<li>
-									<a href="{{ url_for('about', _anchor='contribute') }}">Contribute</a>
-								</li>
-								<li>
-									<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
-								</li>
-								<li>
-									<a href="{{ url_for('faq') }}">FAQ</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</nav>
+              <ul class="dropdown-content">
+                <li>
+                  <a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
+                </li>
+                <li>
+                  <a href="{{ url_for('about', _anchor='contribute') }}">Contribute</a>
+                </li>
+                <li>
+                  <a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
+                </li>
+                <li>
+                  <a href="{{ url_for('faq') }}">FAQ</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
 
-				<button class="visible-xs hamburger" aria-label="Show navigation">
-					<svg version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-						<path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
-					</svg>
-				</button>
-			</div>
-		</div>
-	</header>
-	<nav id="mobile" class="hidden-sm hidden-md hidden-lg"></nav>
+        <button class="visible-xs hamburger" aria-label="Show navigation">
+          <svg version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav id="mobile" class="hidden-sm hidden-md hidden-lg"></nav>
 
-	<div id="main">
-		{% block main %}{% endblock %}
-	</div>
+  <div id="main">
+    {% block main %}{% endblock %}
+  </div>
 
-	<footer>
-		<div class="container">
-			<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
-				<a href="{{ url_for('index') }}">
-					<img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/></a>
-				<a href="https://archive.org/">
-					<img src="/static/img/ia.png" alt="Internet Archive"/>
-				</a>
-			</div>
+  <footer>
+    <div class="container">
+      <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+        <a href="{{ url_for('index') }}">
+          <img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/></a>
+        <a href="https://archive.org/">
+          <img src="/static/img/ia.png" alt="Internet Archive"/>
+        </a>
+      </div>
 
-			<div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
-				<nav>
-					<a href="{{ url_for('reports') }}">Reports</a>
-					<a href="https://discuss.httparchive.org">Discuss</a>
-					<a href="https://almanac.httparchive.org/">Web Almanac</a>
-					<a href="{{ url_for('about') }}">About</a>
-					<a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
-					<a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
-					<a href="{{ url_for('faq') }}">FAQ</a>
-				</nav>
-			</div>
-		</div>
-	</footer>
+      <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
+        <nav>
+          <a href="{{ url_for('reports') }}">Reports</a>
+          <a href="https://discuss.httparchive.org">Discuss</a>
+          <a href="https://almanac.httparchive.org/">Web Almanac</a>
+          <a href="{{ url_for('about') }}">About</a>
+          <a href="{{ url_for('about', _anchor='mission') }}">Mission</a>
+          <a href="{{ url_for('about', _anchor='contact') }}">Contact</a>
+          <a href="{{ url_for('faq') }}">FAQ</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
 {% endblock %}
 
 {% block scripts %}
-	{{ super() }}
-	<script src="/static/js/main.js"></script>
+  {{ super() }}
+  <script src="/static/js/main.js"></script>
 {% endblock %}
 
 {% macro report_graphic(report) %}
-	{% if report.graphic %}
-		{% set style = report.graphic.bgcolor and 'style="background-color: %s"' % report.graphic.bgcolor or '' %}
-		<div class="figure report-graphic" {{ style | safe }}>
-			{% if report.graphic.secondary %}
-				{% set style = report.graphic.secondary.color and 'style="color: %s"' % report.graphic.secondary.color or '' %}
-				{% if report.graphic.secondary.icon %}
-					<i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }}></i>
-				{% else %}
-					<div class="secondary-icon" {{ style | safe }}>
-						{{ report.graphic.secondary.text }}
-					</div>
-				{% endif %}
-			{% endif %}
+  {% if report.graphic %}
+    {% set style = report.graphic.bgcolor and 'style="background-color: %s"' % report.graphic.bgcolor or '' %}
+    <div class="figure report-graphic" {{ style | safe }}>
+      {% if report.graphic.secondary %}
+        {% set style = report.graphic.secondary.color and 'style="color: %s"' % report.graphic.secondary.color or '' %}
+        {% if report.graphic.secondary.icon %}
+          <i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }}></i>
+        {% else %}
+          <div class="secondary-icon" {{ style | safe }}>
+            {{ report.graphic.secondary.text }}
+          </div>
+        {% endif %}
+      {% endif %}
 
-			{% set style = report.graphic.primary.color and 'style="color: %s"' % report.graphic.primary.color or '' %}
-			{% if report.graphic.primary.icon %}
-				<i class="primary-icon {{ report.graphic.primary.icon }}" {{ style | safe }}></i>
-			{% else %}
-				<div class="primary-icon" {{ style | safe }}>
-					{{ report.graphic.primary.text }}
-				</div>
-			{% endif %}
-		</div>
-	{% else %}
-		<div class="figure report-graphic default-report"></div>
-	{% endif %}
+      {% set style = report.graphic.primary.color and 'style="color: %s"' % report.graphic.primary.color or '' %}
+      {% if report.graphic.primary.icon %}
+        <i class="primary-icon {{ report.graphic.primary.icon }}" {{ style | safe }}></i>
+      {% else %}
+        <div class="primary-icon" {{ style | safe }}>
+          {{ report.graphic.primary.text }}
+        </div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="figure report-graphic default-report"></div>
+  {% endif %}
 {% endmacro %}
