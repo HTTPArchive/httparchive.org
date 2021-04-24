@@ -36,8 +36,8 @@ from flask_talisman import Talisman
 app = Flask(__name__)
 Markdown(app)
 talisman = Talisman(app,
-         content_security_policy=csp,
-         content_security_policy_nonce_in=['script-src'])
+                    content_security_policy=csp,
+                    content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
 
 
@@ -291,7 +291,8 @@ def default_favicon():
     return send_from_directory(app.static_folder, 'img/favicon.ico')
 
 
-@app.route('/sitemap.xml')# Chrome and Safari use inline styles to display XMLs files.
+@app.route('/sitemap.xml')
+# Chrome and Safari use inline styles to display XMLs files.
 # https://bugs.chromium.org/p/chromium/issues/detail?id=924962
 # Override default CSP (including turning off nonce) to allow sitemap to display
 @talisman(
