@@ -37,7 +37,7 @@ Given these conditions it's virtually impossible to compare WebPagetest.org's ti
 
 ### How do I use BigQuery to write custom queries over the data?
 
-Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://github.com/HTTPArchive/httparchive.org/blob/master/docs/gettingstarted_bigquery.md), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
+Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://github.com/HTTPArchive/httparchive.org/blob/main/docs/gettingstarted_bigquery.md), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
 
 For a guided walkthrough of the project, watch this in-depth [30 minute video](https://www.youtube.com/watch?v=00f9kza3BJ0) featuring HTTP Archive maintainer [Rick Viscomi](https://twitter.com/rick_viscomi).
 
@@ -46,7 +46,7 @@ If you have any questions about using BigQuery, reach out to the HTTP Archive co
 
 ### What changes have been made to the test environment that might affect the data?
 
-See [changelog.json](https://github.com/HTTPArchive/httparchive/blob/master/docs/changelog.json)
+See [changelog.json](https://github.com/HTTPArchive/httparchive/blob/main/docs/changelog.json)
 
 
 ### What are the limitations of this testing methodology?
