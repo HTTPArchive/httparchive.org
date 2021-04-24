@@ -13,7 +13,7 @@
   "head-script-disabled": false,
   "href-abs-or-rel": false,
   "id-class-ad-disabled": true,
-  "inline-style-disabled": true,
+  "inline-style-disabled": false,
   "inline-script-disabled": true,
   "space-tab-mixed-disabled": "space",
   "spec-char-escape": false,
