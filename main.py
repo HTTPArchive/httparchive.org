@@ -13,6 +13,7 @@
 # limitations under the License.
 
 # [START app]
+import sys
 import logging
 import re
 from time import time
@@ -308,7 +309,7 @@ if __name__ == '__main__':
     # but debug mode is useful in general (as auto reloads on change)
     if len(sys.argv) > 1 and sys.argv[1] == 'background':
         # Turn off HTTPS redirects (automatically turned off for debug)
-        talisman.force_https = False
+        Talisman.force_https = False
         app.run(host='0.0.0.0', port=8080)
     else:
         app.run(host='0.0.0.0', port=8080, debug=True)
