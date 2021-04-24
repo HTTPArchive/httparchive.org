@@ -6,78 +6,78 @@
   },
   "/static/css/index.css": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "5282f345dc96371ef7059fec64af06f9"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "c9d02fdf5e2bbd380b09217a13e72b72"
   },
   "/static/css/report.css": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "233b76f5e298f51fa8c9e9f3763ffc04"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "a35ccc6dd3249e1cb741ba52f8648fba"
   },
   "/static/css/reports.css": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "303625f56ae8fcdd4e1dd25decdf80d0"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "f6c0204af5b5e600573fa356a5bdb177"
   },
   "/static/css/styles.css": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "712728dff4907ec31f3b302e5cf75557"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "a03dbabed734fa1c959db7ab60edce5c"
   },
   "/static/js/faq.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "1c7a9126bbee0e1c9792756eeaead69c"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "5bc2618142425563220637230860819b"
   },
   "/static/js/histogram.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "a190c42489fa2ea93e1bbd1f7630c2e0"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "6e2dd6bd9225fef73d39dae61266ef54"
   },
   "/static/js/index.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "97fde5a5e6514525592471bbb09ee494"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "a0a314679e309097a846ba1b0e564ccd"
   },
   "/static/js/main.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "4926051d9a7ad4ae7b7029358ffea5de"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "0cdf8c90903538261c0a17731232f49a"
   },
   "/static/js/report.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "1744cb5b7b3741a03fa0a8de2379bb52"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "1d301cb131adb646d6c38158df67da4b"
   },
   "/static/js/timeseries.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "598dd9aadf615ae335886e5bda23c46e"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "e450388c085063fed90a76904c86b312"
   },
   "about.html": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "b2a467370dfb4ed7d5f622637727778e"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "190e748a7c108dd6ca2748e7bc20652e"
   },
   "faq.html": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "583a8b1b0c0f5f265ee4cc0bb0bc8c27"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "ca5e733b80090921af16402617aeaa2f"
   },
   "index.html": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "858b94b3ed87e66bbc8bc041abf9ba45"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "db83e15d5e15c7e4b4a41de9010b031a"
   },
   "main.html": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "bb3710d6adbccee48ac8a9c65701fd78"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "d5c8fe3e769e1d677cb0210c653eeac9"
   },
   "reports.html": {
     "date_published": "2021-04-23T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "fbf7633351768e68fea326a812eb5148"
+    "date_modified": "2021-04-24T00:00:00.000Z",
+    "hash": "423630c50cd3977fdeed91747cd93124"
   },
   "reports/accessibility": {
     "date_published": "2021-04-23T00:00:00.000Z",

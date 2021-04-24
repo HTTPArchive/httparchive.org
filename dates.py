@@ -81,3 +81,6 @@ def get_latest_date(dates, metric_id):
         response = bucket.get_blob('reports/%s/%s.json' % (date, metric_id))
         if response:
             return date
+
+    logger.warning('Could not load any dates Google Cloud Storage, using mock_get_latest_date')
+    return mock_dates[0]
