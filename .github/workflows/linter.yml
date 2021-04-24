@@ -31,7 +31,7 @@ jobs:
         #uses: docker://github/super-linter:v3.15.3
         uses: github/super-linter@v3.15.5
         env:
-          DEFAULT_BRANCH: main
+          DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILTER_REGEX_EXCLUDE: .*\.min\..*
           VALIDATE_BASH: true
