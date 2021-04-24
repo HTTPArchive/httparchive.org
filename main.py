@@ -278,9 +278,11 @@ def server_error_500(e):
 def server_error_502(e):
     return render_template('error/502.html', error=e), 502
 
+
 @app.route('/robots.txt')
 def static_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
+
 
 @app.route('/sitemap.xml')
 def sitemap():
