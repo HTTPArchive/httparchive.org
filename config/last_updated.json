@@ -27,32 +27,32 @@
   "/static/js/faq.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "5bc2618142425563220637230860819b"
+    "hash": "14ba894ead819c322cf8a67e9d01dbff"
   },
   "/static/js/histogram.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "6e2dd6bd9225fef73d39dae61266ef54"
+    "hash": "804469446aa0cff5aaab9c29b270c3da"
   },
   "/static/js/index.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "a0a314679e309097a846ba1b0e564ccd"
+    "hash": "e2b398737bf92ae635be1f606d455d16"
   },
   "/static/js/main.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "0cdf8c90903538261c0a17731232f49a"
+    "hash": "36da1f8970107c2d3feb46fa51f5e9f0"
   },
   "/static/js/report.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "1d301cb131adb646d6c38158df67da4b"
+    "hash": "66d2e6fcafe639dc80e5e05745468a8a"
   },
   "/static/js/timeseries.js": {
     "date_published": "2021-04-23T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "e450388c085063fed90a76904c86b312"
+    "hash": "0dffeb46e328a59a696fbd200b1e47ec"
   },
   "about.html": {
     "date_published": "2021-04-23T00:00:00.000Z",

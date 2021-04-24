@@ -23,3 +23,5 @@ env/
 node_modules/
 
 static/html
+.DS_Store
+**/.DS_Store
