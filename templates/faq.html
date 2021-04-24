@@ -4,41 +4,41 @@
 {% block title %}HTTP Archive FAQ{% endblock %}
 
 {% block main %}
-	<section id="FAQ" class="alt-light">
-		<div class="container">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<h2>
-					<small>Frequently Asked Questions</small>
-					FAQ
-				</h2>
+  <section id="FAQ" class="alt-light">
+    <div class="container">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2>
+          <small>Frequently Asked Questions</small>
+          FAQ
+        </h2>
 
-				<ul id="questions">
-					{% for question, anchor in faq.anchors.items() %}
-						<li class="question">
-							<a href="#{{ anchor }}">{{ question }}</a>
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
+        <ul id="questions">
+          {% for question, anchor in faq.anchors.items() %}
+            <li class="question">
+              <a href="#{{ anchor }}">{{ question }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
-		<div class="container">
-			<div id="answers" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				{{ faq.FAQ | markdown }}
-			</div>
-		</div>
-	</section>
+    <div class="container">
+      <div id="answers" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        {{ faq.FAQ | markdown }}
+      </div>
+    </div>
+  </section>
 {% endblock %}
 
 
 
 {% block scripts %}
-	{{ super() }}
-	<script src="/static/js/faq.js"></script>
-	<script nonce="{{ csp_nonce() }}">
+  {{ super() }}
+  <script src="/static/js/faq.js"></script>
+  <script nonce="{{ csp_nonce() }}">
 addEventListener('DOMContentLoaded', function() {
-	generateQuestionAnchors({{ faq.anchors|tojson }});
+  generateQuestionAnchors({{ faq.anchors|tojson }});
 });
 generateChangelog();
-	</script>
+  </script>
 {% endblock %}

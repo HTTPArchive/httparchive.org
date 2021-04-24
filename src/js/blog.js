@@ -70,6 +70,7 @@ class BlogPostRenderer {
     const authorAvatar = author.querySelector('img');
     authorAvatar.src = this.post.user.profile_image_90;
     authorAvatar.title = this.post.user.name;
+    authorAvatar.alt = this.post.user.name;
   }
 
   renderTags() {

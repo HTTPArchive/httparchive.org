@@ -1,7 +1,7 @@
 export default class Changelog {
 
-	static get URL() {
-		return '/static/json/changelog.json';
-	}
+  static get URL() {
+    return '/static/json/changelog.json';
+  }
 
 }

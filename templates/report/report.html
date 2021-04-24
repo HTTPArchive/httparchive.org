@@ -7,194 +7,212 @@
 {% block title %}{{ (report.lens and '%s: ' % report.lens.name or '') +report.name }}{% endblock %}
 
 {% block head %}
-	{{ super() }}
-	<link rel="stylesheet" href="/static/css/report.css" />
-	<link rel="preconnect" href="https://cdn.httparchive.org" />
+  {{ super() }}
+  <link rel="stylesheet" href="/static/css/report.css" />
+  <link rel="preconnect" href="https://cdn.httparchive.org" />
 {% endblock %}
 
 {% block main %}
-	<section id="report-header">
-		<div class="container">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<h2>
-					<small>
-						{{ report.lens and report.lens.name or 'Report' }}:
-					</small>
-					{% block reportName %}{{ report.name }}{% endblock %}
-				</h2>
+  <section id="report-header">
+    <div class="container">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2>
+          <small>
+            {{ report.lens and report.lens.name or 'Report' }}:
+          </small>
+          {% block reportName %}{{ report.name }}{% endblock %}
+        </h2>
 
-				{{ report.summary | markdown }}
+        {{ report.summary | markdown }}
 
-				<div class="row">
-					<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						<ul id="TOC">
-						{% for metric in report.metrics %}
-							{% if metric[viz]['enabled'] %}
-								<li>
-									<a href="#{{ metric.id }}">{{ metric.name }}</a>
-								</li>
-							{% endif %}
-						{% endfor %}
-						</ul>
-					</div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <ul id="TOC">
+            {% for metric in report.metrics %}
+              {% if metric[viz]['enabled'] %}
+                <li>
+                  <a href="#{{ metric.id }}">{{ metric.name }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+            </ul>
+          </div>
 
-					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-						<form id="history" class="row">
-							<div class="col-sm-8 col-sm-offset-2 col-xs-12">
-								<label for="lens">
-									Lens
-										<a href="{{ url_for('faq', _anchor='what-is-a-lens') }}" aria-label="FAQ: What is a lens?">
-											<i
-												class="hidden-xs help-tooltip fa fa-info-circle"
-												title="A lens shows a report for a particular subset of websites."
-												aria-hidden></i>
-										</a>
-								</label>
+          <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <form id="history" class="row">
+              <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+                <label for="lens">
+                  Lens
+                    <a href="{{ url_for('faq', _anchor='what-is-a-lens') }}" aria-label="FAQ: What is a lens?">
+                      <i
+                        class="hidden-xs help-tooltip fa fa-info-circle"
+                        title="A lens shows a report for a particular subset of websites."
+                        aria-hidden></i>
+                    </a>
+                </label>
 
-								<select id="lens">
-									<option></option>
-									{% for (lens_id, l) in report.lenses.items() %}
-										<option value="{{ lens_id }}" {% if lens_id == enabled_lens_id %}selected{% endif %}>
-											{{ l.name }}
-										</option>
-									{% endfor %}
-								</select>
-							</div>
+                <select id="lens">
+                  <option></option>
+                  {% for (lens_id, l) in report.lenses.items() %}
+                    {% if lens_id == enabled_lens_id %}
+                    <option value="{{ lens_id }}" selected>
+                      {{ l.name }}
+                    </option>
+                    {% else %}
+                    <option value="{{ lens_id }}">
+                      {{ l.name }}
+                    </option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
 
-							<div class="col-sm-4 col-sm-offset-2 col-xs-12">
-								<label for="startDate">
-									Start Date
-								</label>
+              <div class="col-sm-4 col-sm-offset-2 col-xs-12">
+                <label for="startDate">
+                  Start Date
+                </label>
 
-								<select id="startDate">
-									{% for d in report.dates %}
-										<option value="{{ d }}" {% if d == start %}selected{% endif %} class="yyyy_mm_dd">
-											{{ d }}
-										</option>
-									{% endfor %}
-								</select>
-							</div>
+                <select id="startDate">
+                  {% for d in report.dates %}
+                    {% if d == start %}
+                    <option value="{{ d }}" selected class="yyyy_mm_dd">
+                      {{ d }}
+                    </option>
+                    {% else %}
+                    <option value="{{ d }}" class="yyyy_mm_dd">
+                      {{ d }}
+                    </option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
 
-							<div class="col-sm-4 col-xs-12">
-								<label for="endDate" title="Optional">
-									End Date
-								</label>
+              <div class="col-sm-4 col-xs-12">
+                <label for="endDate" title="Optional">
+                  End Date
+                </label>
 
-								<select id="endDate">
-									<option></option>
-									{% for d in report.dates %}
-										<option value="{{ d }}" {% if d == end %}selected{% endif %} class="yyyy_mm_dd">
-											{{ d }}
-										</option>
-									{% endfor %}
-								</select>
-							</div>
+                <select id="endDate">
+                  <option></option>
+                  {% for d in report.dates %}
+                  {% if d == end %}
+                  <option value="{{ d }}" selected class="yyyy_mm_dd">
+                    {{ d }}
+                  </option>
+                  {% else %}
+                  <option value="{{ d }}" class="yyyy_mm_dd">
+                    {{ d }}
+                  </option>
+                  {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
 
-							<div class="col-sm-8 col-sm-offset-2 col-xs-12">
-								<button id="update" class="btn alt" type="button">Update</button>
-							</div>
+              <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+                <button id="update" class="btn alt" type="button">Update</button>
+              </div>
 
-							<div id="permalink-wrapper" class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
-								<i id="permalink-icon" title="Permalink" aria-label="permalink">
-									<svg  width="12" height="12" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-										<path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/>
-									</svg>
-								</i>
-								<input id="permalink" type="text" readonly="true" aria-label="Permalink">
-							</div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
-								<div class="btn-group pull-right">
-									<button id="grid-view" class="btn {% if report.view == 'grid' %}alt{% endif %}" title="Grid view" type="button">
-										<i class="fa fa-th"></i>
-									</button>
-									<button id="list-view" class="btn {% if report.view == 'list' %}alt{% endif %}" title="List view" type="button">
-										<i class="fa fa-list"></i>
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+              <div id="permalink-wrapper" class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
+                <i id="permalink-icon" title="Permalink" aria-label="permalink">
+                  <svg  width="12" height="12" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/>
+                  </svg>
+                </i>
+                <input id="permalink" type="text" readonly="true" aria-label="Permalink">
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="btn-group pull-right">
+                  <button id="grid-view" class="btn {% if report.view == 'grid' %}alt{% endif %}" title="Grid view" type="button">
+                    <i class="fa fa-th"></i>
+                  </button>
+                  <button id="list-view" class="btn {% if report.view == 'list' %}alt{% endif %}" title="List view" type="button">
+                    <i class="fa fa-list"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<section id="report-metrics" {% if report.view == 'grid' %}class="grid-view"{% endif %}>
-		<div class="container">
-			<div class="report-metrics-inner-wrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				{% block report %}{% endblock %}
-			</div>
-		</div>
-	</section>
+  <section id="report-metrics" class="{% if report.view == 'grid' %}grid-view{% endif %}">
+    <div class="container">
+      <div class="report-metrics-inner-wrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        {% block report %}{% endblock %}
+      </div>
+    </div>
+  </section>
 {% endblock %}
 
 {% block scripts %}
-	{{ super() }}
-	<script src="https://cdn.httparchive.org/reports/highstock.js"></script>
-	<script src="https://cdn.httparchive.org/reports/exporting.js"></script>
-	<script src="/static/js/report.js"></script>
-	<script nonce="{{ csp_nonce() }}">
-		var report = {{ report|tojson }};
-		report.url = {{ request.script_root|tojson|safe }};
-		report.startDate = {{ start|tojson }};
-		report.endDate = {{ end|tojson }};
-		report = new Report(report, {{ viz|tojson }});
-		{% if wpt_id %}
-		var wptId = {{ wpt_id|tojson }};
-		report.getWPT(wptId);
-		{% endif %}
-	</script>
+  {{ super() }}
+  <script src="https://cdn.httparchive.org/reports/highstock.js"></script>
+  <script src="https://cdn.httparchive.org/reports/exporting.js"></script>
+  <script src="/static/js/report.js"></script>
+  <script nonce="{{ csp_nonce() }}">
+    var report = {{ report|tojson }};
+    report.url = {{ request.script_root|tojson|safe }};
+    report.startDate = {{ start|tojson }};
+    report.endDate = {{ end|tojson }};
+    report = new Report(report, {{ viz|tojson }});
+    {% if wpt_id %}
+    var wptId = {{ wpt_id|tojson }};
+    report.getWPT(wptId);
+    {% endif %}
+  </script>
 {% endblock %}
 
 {% macro metric_info(metric, viz) %}
-	<h3 class="metric-header">
-		<a href="#{{ metric.id }}" data-metric="{{ metric.id }}">{{ metric.name }}</a>
-		<button class="grid-expansion" data-metric="{{ metric.id }}" type="button">
-			<i class="fas fa-expand" title="Expand metric"></i>
-			<i class="fas fa-compress" title="Collapse metric"></i>
-		</button>
-	</h3>
-	{% if metric.description %}
-		{{ metric.description | markdown }}
-	{% endif %}
-	{% for report_id, report_name in metric.similar_reports.items() %}
-		<p>
-			<em>
-				See also:
-				<a href="{{ url_for('report', report_id=report_id) }}">
-					{{ report_name }}
-				</a>
-			</em>
-		</p>
-	{% endfor %}
-	<div class="metric-summaries">
-		<div class="metric-summary desktop hidden">
-			<span class="client">
-				<span class="metric">Median</span>
-				Desktop
-			</span>
-			<span class="primary"></span>
-			{% if viz == 'timeseries' %}
-			<span class="change"></span>
-			{% endif %}
-		</div>
-		{% if wpt_id %}
-		<div class="metric-summary webpagetest hidden">
-			<span class="client">
-				WebPageTest
-			</span>
-			<span class="primary"></span>
-		</div>
-		{% endif %}
-		<div class="metric-summary mobile hidden">
-			<span class="client">
-				<span class="metric">Median</span>
-				Mobile
-			</span>
-			<span class="primary"></span>
-			{% if viz == 'timeseries' %}
-			<span class="change"></span>
-			{% endif %}
-		</div>
-	</div>
+  <h3 class="metric-header">
+    <a href="#{{ metric.id }}" data-metric="{{ metric.id }}">{{ metric.name }}</a>
+    <button class="grid-expansion" data-metric="{{ metric.id }}" type="button">
+      <i class="fas fa-expand" title="Expand metric"></i>
+      <i class="fas fa-compress" title="Collapse metric"></i>
+    </button>
+  </h3>
+  {% if metric.description %}
+    {{ metric.description | markdown }}
+  {% endif %}
+  {% for report_id, report_name in metric.similar_reports.items() %}
+    <p>
+      <em>
+        See also:
+        <a href="{{ url_for('report', report_id=report_id) }}">
+          {{ report_name }}
+        </a>
+      </em>
+    </p>
+  {% endfor %}
+  <div class="metric-summaries">
+    <div class="metric-summary desktop hidden">
+      <span class="client">
+        <span class="metric">Median</span>
+        Desktop
+      </span>
+      <span class="primary"></span>
+      {% if viz == 'timeseries' %}
+      <span class="change"></span>
+      {% endif %}
+    </div>
+    {% if wpt_id %}
+    <div class="metric-summary webpagetest hidden">
+      <span class="client">
+        WebPageTest
+      </span>
+      <span class="primary"></span>
+    </div>
+    {% endif %}
+    <div class="metric-summary mobile hidden">
+      <span class="client">
+        <span class="metric">Median</span>
+        Mobile
+      </span>
+      <span class="primary"></span>
+      {% if viz == 'timeseries' %}
+      <span class="change"></span>
+      {% endif %}
+    </div>
+  </div>
 {% endmacro %}
