@@ -27,10 +27,12 @@ import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, jsonify, render_template, redirect, \
-                  abort, url_for as flask_url_for, send_from_directory
+from flask import Flask, request, make_response, jsonify, render_template as flask_render_template, \
+                  redirect, abort, url_for as flask_url_for, send_from_directory
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
+import json
+import datetime
 
 
 app = Flask(__name__)
@@ -39,6 +41,37 @@ talisman = Talisman(app,
                     content_security_policy=csp,
                     content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
+timestamps_json = {}
+
+
+def update_config():
+    timestamps_json = json.load('/config/last-update.json')
+
+
+def get_timestamps_config():
+    global timestamps_json
+    return timestamps_json
+
+
+def get_file_date_info(file, type):
+    timestamps_config = get_timestamps_config()
+    # Default Published and Last Updated to today
+    today = datetime.datetime.utcnow().isoformat()
+    if type == 'date_published' or type == 'date_modified':
+        return timestamps_config.get(file, {}).get(type, today)
+    else:
+        return timestamps_config.get(file, {}).get(type)
+
+
+# Overwrite the built-in method.
+def render_template(template, *args, **kwargs):
+
+    date_published = get_file_date_info(template, "date_published")
+    date_modified = get_file_date_info(template, "date_modified")
+
+    kwargs.update(date_published=date_published,
+                  date_modified=date_modified)
+    return flask_render_template(template, *args, **kwargs)
 
 
 # Overwrite the built-in method.
@@ -317,10 +350,12 @@ if __name__ == '__main__':
     # then run in non-debug mode, as debug mode can't be backgrounded
     # but debug mode is useful in general (as auto reloads on change)
     if len(sys.argv) > 1 and sys.argv[1] == 'background':
+        logging.debug('Running in background mode')
         # Turn off HTTPS redirects (automatically turned off for debug)
         talisman.force_https = False
         app.run(host='0.0.0.0', port=8080)
     else:
+        logging.debug('Running in debug mode')
         app.run(host='0.0.0.0', port=8080, debug=True)
 
 # [END app]

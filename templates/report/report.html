@@ -5,11 +5,14 @@
 {% set enabled_lens_id = report.lens.id if report.lens else '' %}
 
 {% block title %}{{ (report.lens and '%s: ' % report.lens.name or '') +report.name }}{% endblock %}
+{% block description %}{{ report.summary }}{% endblock %}
+{% block page_url %}https://httparchive.org{{ url_for(request.endpoint, **request.view_args) }}{% endblock %}
 
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="/static/css/report.css" />
   <link rel="preconnect" href="https://cdn.httparchive.org" />
+  <link rel="canonical" href="https://httparchive.org{{ request.path }}" />
 {% endblock %}
 
 {% block main %}
