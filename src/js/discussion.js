@@ -64,6 +64,7 @@ export class Discussion {
       img.title = user.username;
       img.width = "32";
       img.height = "32";
+      img.loading = "lazy";
 
       a.appendChild(img);
 
