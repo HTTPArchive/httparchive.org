@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LIGHTHOUSE_CONFIG_FILE="../.github/lighthouse/lighthouse-config-dev.json"
-LIGHTHOUSE_PROD_CONFIG_FILE="../.github/lighthouse/lighthouse-config-prod.json"
+LIGHTHOUSE_CONFIG_FILE="./.github/lighthouse/lighthouse-config-dev.json"
+LIGHTHOUSE_PROD_CONFIG_FILE="./.github/lighthouse/lighthouse-config-prod.json"
 
 # Usage info
 show_help() {
