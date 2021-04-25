@@ -26,7 +26,6 @@
 <meta name="twitter:site" content="@HTTPArchive">
 <meta name="twitter:title" content="{{ self.title() }}">
 <meta name="twitter:image" content="{{ self.image_url() }}">
-<meta name="twitter:image:alt" content="{{ self.image_alt() }}" />
 <meta name="twitter:description" content="{{ self.description() }}">
 {% block structured_data %}
 <script type="application/ld+json">
@@ -70,7 +69,7 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap">
   <link rel="stylesheet" href="/static/css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
   <script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>
@@ -94,7 +93,7 @@
     <div class="container">
       <div class="pddl0 col-lg-2 col-md-3 col-sm-3 col-xs-10">
         <a href="{{ url_for('index') }}">
-          <img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/>
+          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
         </a>
       </div>
 
@@ -178,14 +177,14 @@
     <div class="container">
       <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
         <a href="{{ url_for('index') }}">
-          <img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/></a>
+          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/></a>
         <a href="https://archive.org/">
-          <img src="/static/img/ia.png" alt="Internet Archive"/>
+          <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive"/>
         </a>
       </div>
 
       <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
-        <nav>
+        <nav id="footer-links">
           <a href="{{ url_for('reports') }}">Reports</a>
           <a href="https://discuss.httparchive.org">Discuss</a>
           <a href="https://almanac.httparchive.org/">Web Almanac</a>

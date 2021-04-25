@@ -923,6 +923,7 @@
   "state-of-javascript": {
     "name": "State of JavaScript",
     "summary": "JavaScript powers the modern web, enabling rich and interactive web applications. In this report we dive into how JavaScript is used on the web, and its adoption and trends both for mobile and desktop experiences.",
+    "image": "/static/img/reports/state-of-javascript-report.png",
     "metrics": [
       "bytesJs",
       "reqJs",
@@ -944,6 +945,7 @@
   "loading-speed": {
     "name": "Loading Speed",
     "summary": "Web performance can directly impact business metrics like conversion and user happiness. This report analyzes various performance metrics in the lifecycle of a loading page including those used by many modern progressive web apps.",
+    "image": "/static/img/reports/loading-speed-report.png",
     "metrics": [
       "fcp",
       "ttci",
@@ -963,6 +965,7 @@
   "state-of-the-web": {
     "name": "State of the Web",
     "summary": "This report captures a long view of the web, including the adoption of techniques for efficient network utilization and usage of web standards like HTTPS.",
+    "image": "/static/img/reports/state-of-the-web-report.png",
     "metrics": [
       "numUrls",
       "bytesTotal",
@@ -985,6 +988,7 @@
   "search-engine-optimization": {
     "name": "SEO",
     "summary": "How websites are built can affect their ranking in search results. This report tracks the adoption of several key Search Engine Optimization (SEO) techniques.",
+    "image": "/static/img/reports/search-engine-optimization-report.png",
     "metrics": [
       "canonical",
       "hreflang",
@@ -1006,6 +1010,7 @@
   "page-weight": {
     "name": "Page Weight",
     "summary": "This report tracks the size and quantity of many popular web page resources. Sizes represent the number of bytes sent over the network, which may be compressed.",
+    "image": "/static/img/reports/page-weight-report.png",
     "metrics": [
       "bytesTotal",
       "reqTotal",
@@ -1035,6 +1040,7 @@
   "chrome-ux-report": {
     "name": "Chrome User Experience Report",
     "summary": "Loading and interactivity performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
+    "image": "/static/img/reports/chrome-user-experience-report.png",
     "metrics": [
       "cruxFp",
       "cruxFcp",
@@ -1067,6 +1073,7 @@
   "progressive-web-apps": {
     "name": "Progressive Web Apps",
     "summary": "This report examines the state of [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) (PWAs). PWAs are a new class of web applications, enabled by the [Service Worker APIs](https://developer.mozilla.org/en/docs/Web/API/Service_Worker_API). Service workers allow apps to support network-independent loading, to receive push notifications as well as to synchronize data in the background, and — together with [Web App Manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest) — allow users to install PWAs.",
+    "image": "/static/img/reports/progressive-web-apps-report.png",
     "metrics": [
       "pwaScores",
       "swControlledPages"
@@ -1086,6 +1093,7 @@
   "accessibility": {
     "name": "Accessibility",
     "summary": "This report tracks accessibility of pages as measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Metrics in this report are only available for mobile.",
+    "image": "/static/img/reports/accessibility-report.png",
     "metrics": [
       "a11yScores",
       "a11yButtonName",
@@ -1109,6 +1117,7 @@
   "project-fugu": {
     "name": "Capabilities",
     "summary": "The [Capabilities Project](https://web.dev/fugu-status/) (aka. Project Fugu&nbsp;🐡) is a cross-company effort at Google to make it possible for web apps to do anything native apps can, by exposing the capabilities of the operating system platform to the web platform, while maintaining user security, privacy, trust, and other core tenets of the web.",
+    "image": "/static/img/reports/capabilities-report.png",
     "metrics": [
       "asyncClipboardRead",
       "badgeSet",

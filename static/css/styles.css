@@ -33,6 +33,7 @@ section [class*="col"] {
 
 .logo {
   max-height: 57px;
+  width: auto;
 }
 
 nav {
@@ -154,12 +155,19 @@ nav#mobile li ul li:last-child {
 footer img {
   display: inline-block;
   max-width: 95px;
+  height: auto;
   vertical-align: middle;
 }
 
 footer nav {
   float: right;
   text-transform: uppercase;
+}
+
+footer nav a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: inline-block;
 }
 
 footer nav > a:not(:last-child) {
