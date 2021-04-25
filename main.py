@@ -35,6 +35,8 @@ import json
 import datetime
 
 
+logging.basicConfig(level=logging.DEBUG)
+
 app = Flask(__name__)
 Markdown(app)
 talisman = Talisman(app,
@@ -45,7 +47,10 @@ timestamps_json = {}
 
 
 def update_config():
-    timestamps_json = json.load('/config/last-update.json')
+    global timestamps_json
+    with open('config/last_updated.json', 'r') as config_file:
+        timestamps_json = json.load(config_file)
+    return
 
 
 def get_timestamps_config():
@@ -344,6 +349,9 @@ def sitemap():
 if __name__ == '__main__':
     # This is used when running locally. Gunicorn is used to run the
     # application on Google App Engine. See entrypoint in app.yaml.
+
+    update_config()
+    report_util.get_reports()
 
     # If the 'background' command line argument is given:
     #    python main.py background &
