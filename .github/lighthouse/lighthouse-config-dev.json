@@ -19,7 +19,6 @@
         "mainthread-work-breakdown": "off",
         "max-potential-fid": "off",
         "no-unload-listeners": "off",
-        "no-vulnerable-libraries": "off",
         "render-blocking-resources": "off",
         "server-response-time": "off",
         "speed-index": "off",
