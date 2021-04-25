@@ -23,12 +23,12 @@
   <section id="report-header">
     <div class="container">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h2>
+        <h1>
           <small>
             {{ report.lens and report.lens.name or 'Report' }}:
           </small>
           {% block reportName %}{{ report.name }}{% endblock %}
-        </h2>
+        </h1>
 
         {{ report.summary | markdown }}
 
@@ -172,13 +172,13 @@
 {% endblock %}
 
 {% macro metric_info(metric, viz) %}
-  <h3 class="metric-header">
+  <h2 class="metric-header">
     <a href="#{{ metric.id }}" data-metric="{{ metric.id }}">{{ metric.name }}</a>
     <button class="grid-expansion" data-metric="{{ metric.id }}" type="button">
       <i class="fas fa-expand" title="Expand metric"></i>
       <i class="fas fa-compress" title="Collapse metric"></i>
     </button>
-  </h3>
+  </h2>
   {% if metric.description %}
     {{ metric.description | markdown }}
   {% endif %}

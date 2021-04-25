@@ -173,8 +173,8 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
       const trMeta = el('tr');
       trMeta.classList.add('meta-row');
       DEFAULT_COLS.map(col => {
-        return el('th');
-      }).forEach(th => trMeta.appendChild(th));
+        return el('td');
+      }).forEach(td => trMeta.appendChild(td));
       const th = el('th');
       th.classList.add('text-center');
       th.setAttribute('colspan', cols.length - DEFAULT_COLS.length);
