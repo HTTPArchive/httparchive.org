@@ -68,8 +68,10 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <!-- Let's load our fonts nice and earlier to try to reduce the annoying swap as much as possible -->
+  <link rel="preconnect" href="//fonts.googleapis.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
   <script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>

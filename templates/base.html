@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block head %}
+    <title>{% block title %}HTTP Archive{% endblock %}</title>
+    {% endblock %}
+
     {% block meta %}
     <meta name="description" content="{{ self.description() }}">
     <meta property="og:title" content="{{ self.title() }}">
@@ -11,10 +16,9 @@
     <meta name="robots" content="noindex">
     {%- endif %}
     {% endblock %}
-    {% block head %}
-    <title>{% block title %}HTTP Archive{% endblock %}</title>
+
     <link rel="shortcut icon" href="/static/img/favicon.ico">
-    {% endblock %}
+
   </head>
   <body>
     {% block content %}{% endblock %}
