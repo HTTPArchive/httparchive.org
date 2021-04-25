@@ -177,9 +177,9 @@
     <div class="container">
       <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
         <a href="{{ url_for('index') }}">
-          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/></a>
+          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" loading="lazy" /></a>
         <a href="https://archive.org/">
-          <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive"/>
+          <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive" loading="lazy" />
         </a>
       </div>
 
@@ -210,7 +210,7 @@
       {% if report.graphic.secondary %}
         {% set style = report.graphic.secondary.color and 'style="color: %s"' % report.graphic.secondary.color or '' %}
         {% if report.graphic.secondary.icon %}
-          <i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }}></i>
+          <i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }} aria-hidden="true"></i>
         {% else %}
           <div class="secondary-icon" {{ style | safe }}>
             {{ report.graphic.secondary.text }}

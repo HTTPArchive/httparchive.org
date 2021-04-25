@@ -5,6 +5,7 @@
       "assertions": {
         "bootup-time": "off",
         "canonical": "off",
+        "color-contrast": "off",
         "dom-size": "off",
         "first-contentful-paint": "off",
         "first-cpu-idle": "off",
@@ -15,8 +16,11 @@
         "is-crawlable": "off",
         "is-on-https:": "off",
         "largest-contentful-paint": "off",
+        "legacy-javascript": "off",
         "mainthread-work-breakdown": "off",
         "max-potential-fid": "off",
+        "no-unload-listeners": "off",
+        "no-vulnerable-libraries": "off",
         "render-blocking-resources": "off",
         "server-response-time": "off",
         "speed-index": "off",
@@ -26,10 +30,11 @@
         "unused-css-rules": "off",
         "unused-javascript": "off",
         "uses-long-cache-ttl": "off",
+        "uses-passive-event-listeners": "off",
         "uses-rel-preconnect": "off",
         "uses-rel-preload": "off",
-        "uses-text-compression": "off",
         "uses-responsive-images": "off",
+        "uses-text-compression": "off",
         "uses-webp-images": "off"
       }
     }

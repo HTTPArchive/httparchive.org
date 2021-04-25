@@ -175,7 +175,7 @@ footer nav > a:not(:last-child) {
 }
 
 footer a:not(:last-child) img {
-  margin-right: 70px;
+  margin-right: 60px;
 }
 
 section {
@@ -193,6 +193,7 @@ section.alt-light {
 
 section img {
   max-width: 100%;
+  height: auto;
 }
 
 #main section:first-child {
@@ -209,6 +210,7 @@ h2 {
 
 h2 small {
   display: block;
+  color: #444;
 }
 
 h2 b {

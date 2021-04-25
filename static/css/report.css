@@ -70,6 +70,8 @@
   list-style-type: initial;
   list-style-position: inside;
   text-align: left;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 #TOC li ul {

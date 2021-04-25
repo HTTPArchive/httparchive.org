@@ -16,7 +16,7 @@
     <div class="report row">
       <div class="container {{ loop.cycle('', 'alt') }}">
         <div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
-          <a href="{{ url_for('report', report_id=report.id) }}">
+          <a href="{{ url_for('report', report_id=report.id) }}" title="{{ report.name }} report">
             {{ report_graphic(report) }}
           </a>
         </div>
