@@ -79,7 +79,7 @@ The HTTP Archive is part of the Internet Archive, a 501(c)(3) non-profit. Donati
 
 The current core maintainers are [Pat Meenan](https://twitter.com/patmeenan), [Rick Viscomi](https://twitter.com/rick_viscomi), [Paul Calvano](https://twitter.com/paulcalvano), and [Barry Pollard](https://twitter.com/tunetheweb).
 
-Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://twitter.com/Souders), who started the project in 2010, [Pat Meenan](https://twitter.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, and [Ilya Grigorik](https://twitter.com/igrigorik), Guy Leech and Stephen Hay for design help along the way.
+Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://twitter.com/Souders), who started the project in 2010, [Pat Meenan](https://twitter.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, [Ilya Grigorik](https://twitter.com/igrigorik), a long-time core maintainer, and Guy Leech and Stephen Hay for design help along the way.
 
 
 ### Who do I contact for more information?
