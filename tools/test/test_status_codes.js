@@ -62,12 +62,15 @@ const test_status_codes = async () => {
 
   // Test success pages
   await test_sitemap_pages();
+  await test_status_code('/reports/state-of-the-web?lens=drupal&start=2018_04_15&end=latest&view=list', 200);
+  await test_status_code('/reports/state-of-the-web?lens=drupal', 200);
+  await test_status_code('/reports/state-of-the-web?start=2018_04_15&end=latest', 200);
+  await test_status_code('/reports/state-of-the-web?view=grid', 200);
+
+  // Test non-sitemap pages
   await test_status_code('/sitemap.xml', 200);
   await test_status_code('/robots.txt', 200);
   await test_status_code('/favicon.ico', 200);
-
-  // Test Redirects
-  await test_status_code('/index.html', 404);
 
   //Test 404s
   await test_status_code('/zz/', 404);

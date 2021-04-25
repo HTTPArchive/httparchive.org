@@ -1,10 +1,75 @@
 {% extends "base.html" %}
 
+{% block page_url %}https://httparchive.org{{ request.path }}{% endblock %}
+{% block image_url %}https://httparchive.org/static/img/ha.png{% endblock %}
+{% block image_height %}160{% endblock %}
+{% block image_width %}320{% endblock %}
+{% block image_alt %}{% endblock %}
+
+{% block description %}List of reports the HTTP Archive Tracks creates to track various aspects of the the web: State of the Web, State of JavaScript, State of Images, Loading Speed, Progressive Web Apps, Accessibility, SEO, Page Weight, Chrome User Experience Report, and Capabilities.{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ self.description() }}">
+{%- if request.url_root != "https://almanac.httparchive.org/" %}
+<meta name="robots" content="noindex">
+{%- endif %}
+<meta property="og:title" content="{{ self.title() }}">
+<meta property="og:image" content="/static/img/ha.png">
+<meta property="og:url" content="{{ self.page_url() }}">
+<meta property="og:image" content="{{ self.image_url() }}">
+<meta property="og:image:height" content="{{ self.image_height() }}">
+<meta property="og:image:width" content="{{ self.image_width() }}">
+<meta property="og:type" content="article">
+<meta property="og:description" content="{{ self.description() }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@HTTPArchive">
+<meta name="twitter:title" content="{{ self.title() }}">
+<meta name="twitter:image" content="{{ self.image_url() }}">
+<meta name="twitter:description" content="{{ self.description() }}">
+{% block structured_data %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ self.page_url() }}"
+    },
+    "headline": "{{ self.title() }}",
+    "image": {
+        "@type": "ImageObject",
+        "url": "{{ self.image_url() }}",
+        "height": {{ self.image_height() }},
+        "width": {{ self.image_width() }}
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "HTTP Archive",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://httparchive.org/static/img/ha.png",
+            "height": 160,
+            "width": 320
+        },
+        "sameas": [
+          "https://httparchive.org",
+          "https://twitter.com/HTTPArchive",
+          "https://github.com/HTTPArchive"
+          ]
+      },
+      "description": "{{ self.description() }}",
+      "datePublished": "{{ date_published }}",
+      "dateModified": "{{ date_modified }}"
+  }
+  </script>
+  {% endblock %}
+{% endblock %}
 
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap">
   <link rel="stylesheet" href="/static/css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
   <script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>
@@ -28,7 +93,7 @@
     <div class="container">
       <div class="pddl0 col-lg-2 col-md-3 col-sm-3 col-xs-10">
         <a href="{{ url_for('index') }}">
-          <img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/>
+          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
         </a>
       </div>
 
@@ -112,14 +177,14 @@
     <div class="container">
       <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
         <a href="{{ url_for('index') }}">
-          <img class="logo" src="/static/img/ha.png" alt="HTTP Archive"/></a>
+          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/></a>
         <a href="https://archive.org/">
-          <img src="/static/img/ia.png" alt="Internet Archive"/>
+          <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive"/>
         </a>
       </div>
 
       <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
-        <nav>
+        <nav id="footer-links">
           <a href="{{ url_for('reports') }}">Reports</a>
           <a href="https://discuss.httparchive.org">Discuss</a>
           <a href="https://almanac.httparchive.org/">Web Almanac</a>

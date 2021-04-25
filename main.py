@@ -27,11 +27,15 @@ import reports as report_util
 import faq as faq_util
 from legacy import Legacy
 
-from flask import Flask, request, make_response, jsonify, render_template, redirect, \
-                  abort, url_for as flask_url_for, send_from_directory
+from flask import Flask, request, make_response, jsonify, render_template as flask_render_template, \
+                  redirect, abort, url_for as flask_url_for, send_from_directory
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
+import json
+import datetime
 
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 Markdown(app)
@@ -39,6 +43,40 @@ talisman = Talisman(app,
                     content_security_policy=csp,
                     content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
+timestamps_json = {}
+
+
+def update_config():
+    global timestamps_json
+    with open('config/last_updated.json', 'r') as config_file:
+        timestamps_json = json.load(config_file)
+    return
+
+
+def get_timestamps_config():
+    global timestamps_json
+    return timestamps_json
+
+
+def get_file_date_info(file, type):
+    timestamps_config = get_timestamps_config()
+    # Default Published and Last Updated to today
+    today = datetime.datetime.utcnow().isoformat()
+    if type == 'date_published' or type == 'date_modified':
+        return timestamps_config.get(file, {}).get(type, today)
+    else:
+        return timestamps_config.get(file, {}).get(type)
+
+
+# Overwrite the built-in method.
+def render_template(template, *args, **kwargs):
+
+    date_published = get_file_date_info(template, "date_published")
+    date_modified = get_file_date_info(template, "date_modified")
+
+    kwargs.update(date_published=date_published,
+                  date_modified=date_modified)
+    return flask_render_template(template, *args, **kwargs)
 
 
 # Overwrite the built-in method.
@@ -312,15 +350,20 @@ if __name__ == '__main__':
     # This is used when running locally. Gunicorn is used to run the
     # application on Google App Engine. See entrypoint in app.yaml.
 
+    update_config()
+    report_util.get_reports()
+
     # If the 'background' command line argument is given:
     #    python main.py background &
     # then run in non-debug mode, as debug mode can't be backgrounded
     # but debug mode is useful in general (as auto reloads on change)
     if len(sys.argv) > 1 and sys.argv[1] == 'background':
+        logging.debug('Running in background mode')
         # Turn off HTTPS redirects (automatically turned off for debug)
         talisman.force_https = False
         app.run(host='0.0.0.0', port=8080)
     else:
+        logging.debug('Running in debug mode')
         app.run(host='0.0.0.0', port=8080, debug=True)
 
 # [END app]

@@ -77,7 +77,7 @@
 }
 
 #TOC a {
-  color: #3174ae;
+  color: #444;
 }
 
 .metric-summaries {
@@ -172,6 +172,10 @@ th {
   min-width: 310px;
   height: 600px;
   margin: 0 auto;
+}
+
+.highcharts-range-selector {
+  display: none;
 }
 
 .highcharts-contextbutton {

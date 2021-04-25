@@ -3,6 +3,8 @@
 
 {% block title %}HTTP Archive{% endblock %}
 
+{% block description %}The HTTP Archive Tracks how the web is built by periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page.{% endblock %}
+
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="/static/css/index.css" />
@@ -22,7 +24,7 @@
       </h2>
 
       <p>
-        We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page. We then crunch and analyze this data to identify trends &mdash; <a href="{{ url_for('about') }}">learn more</a> about our methodology.
+        We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page. We then crunch and analyze this data to identify trends &mdash; <a href="{{ url_for('about') }}">learn more about our methodology</a>.
       </p>
 
       <a href="{{ url_for('reports') }}" class="btn alt">View Reports</a>
@@ -44,7 +46,7 @@
         </div>
         <div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
           <a href="https://almanac.httparchive.org/en/2020/">
-            <img src="https://almanac.httparchive.org/static/images/home-hero.png" alt=""/>
+            <img src="https://almanac.httparchive.org/static/images/home-hero.png" alt="The 2020 Web Almanac" />
           </a>
         </div>
       </div>
@@ -63,7 +65,7 @@
           The HTTP Archive archives and provides access to detailed information about each website it crawls: request and response metadata, response bodies, execution traces, and more. You can download this data for offline analysis, or access it as a public dataset via Google BigQuery for fast and rapid analysis.
         </p>
 
-        <a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}" class="btn">Learn More</a>
+        <a href="{{ url_for('faq', _anchor=faq.ANCHOR_BIGQUERY) }}" class="btn">Learn More about using BigQuery</a>
       </div>
 
       <div class="col-lg-6 col-sm-6 col-md-6 hidden-xs">
@@ -101,7 +103,7 @@
     </div>
 
     <p class="text-center">
-      <a href="https://dev.to/httparchive" class="btn">Read More</a>
+      <a href="https://dev.to/httparchive" class="btn">Read more blog posts</a>
     </p>
   </section>
 
@@ -121,7 +123,7 @@
     </table>
 
     <p class="text-center">
-      <a href="https://discuss.httparchive.org" class="btn">Read More</a>
+      <a href="https://discuss.httparchive.org" class="btn">Read more discussions</a>
     </p>
   </section>
 {% endblock %}
