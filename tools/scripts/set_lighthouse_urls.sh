@@ -56,7 +56,6 @@ elif [ "${RUN_TYPE}" == "pull_request" ] && [ "${COMMIT_SHA}" != "" ]; then
     git pull --quiet
     git checkout main
     # Then get the changes
-    $(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d templates)
     CHANGED_FILES=$(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d templates | grep -v base.html | grep -v main.html | grep -v ejs | grep -v base_ | grep -v sitemap | grep -v error.html )
     echo "${CHANGED_FILES}"
     # Then back to the pull request changes
