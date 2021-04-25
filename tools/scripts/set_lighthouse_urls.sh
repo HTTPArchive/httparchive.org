@@ -65,9 +65,10 @@ elif [ "${RUN_TYPE}" == "pull_request" ] && [ "${COMMIT_SHA}" != "" ]; then
     # Transform the files to http://127.0.0.1:8080 URLs
     LIGHTHOUSE_URLS=$(echo "${CHANGED_FILES}" | sed 's/templates/http:\/\/127.0.0.1:8080/g' | sed 's/index\.html//g' | sed 's/\.html//g' | sed 's/_/-/g' )
 
-    # If report.json was changed, then test all the reports
+    # If report.json or any of the report templaes were changed, then test all the reports
     # TODO - make this list dynamic
-    LIGHTHOUSE_URLS=$(echo "${LIGHTHOUSE_URLS}" | sed 's/reports.json/http:\/\/127.0.0.1:8080\/reports\/state-of-the-web\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-javascript\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-images\nhttp:\/\/127.0.0.1:8080\/reports\/loading-speed\nhttp:\/\/127.0.0.1:8080\/reports\/progressive-web-apps\nhttp:\/\/127.0.0.1:8080\/reports\/accessibility\nhttp:\/\/127.0.0.1:8080\/reports\/search-engine-optimization\nhttp:\/\/127.0.0.1:8080\/reports\/page-weight\nhttp:\/\/127.0.0.1:8080\/reports\/chrome-ux-report\nhttp:\/\/127.0.0.1:8080\/reports\/project-fugu/g')
+    LIGHTHOUSE_URLS=$(echo "${LIGHTHOUSE_URLS}" | sed 's/config\/reports.json/http:\/\/127.0.0.1:8080\/reports\/state-of-the-web\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-javascript\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-images\nhttp:\/\/127.0.0.1:8080\/reports\/loading-speed\nhttp:\/\/127.0.0.1:8080\/reports\/progressive-web-apps\nhttp:\/\/127.0.0.1:8080\/reports\/accessibility\nhttp:\/\/127.0.0.1:8080\/reports\/search-engine-optimization\nhttp:\/\/127.0.0.1:8080\/reports\/page-weight\nhttp:\/\/127.0.0.1:8080\/reports\/chrome-ux-report\nhttp:\/\/127.0.0.1:8080\/reports\/project-fugu/g')
+    LIGHTHOUSE_URLS=$(echo "${LIGHTHOUSE_URLS}" | sed 's/report\/*.html/http:\/\/127.0.0.1:8080\/reports\/state-of-the-web\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-javascript\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-images\nhttp:\/\/127.0.0.1:8080\/reports\/loading-speed\nhttp:\/\/127.0.0.1:8080\/reports\/progressive-web-apps\nhttp:\/\/127.0.0.1:8080\/reports\/accessibility\nhttp:\/\/127.0.0.1:8080\/reports\/search-engine-optimization\nhttp:\/\/127.0.0.1:8080\/reports\/page-weight\nhttp:\/\/127.0.0.1:8080\/reports\/chrome-ux-report\nhttp:\/\/127.0.0.1:8080\/reports\/project-fugu/g')
 
     # Add base URLs and strip out newlines
     LIGHTHOUSE_URLS=$(echo -e "${LIGHTHOUSE_URLS}\n${BASE_URLS}" | sort -u | sed '/^$/d')
