@@ -304,7 +304,7 @@
       "name": "Time to Interactive",
       "type": "seconds",
       "singular": "second",
-      "description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
+      "description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests. [Read more about First Interactive and First Consistently Interactive](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
       "histogram": {
         "minDate": "2017_06_01"
       }
@@ -313,7 +313,7 @@
       "name": "First CPU Idle",
       "type": "seconds",
       "singular": "second",
-      "description": "The number of seconds from the time the navigation started until the page is minimally interactive. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/first-cpu-idle) as is only available in mobile tests. [Read more](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.d06i5ycfxaow).",
+      "description": "The number of seconds from the time the navigation started until the page is minimally interactive. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/first-cpu-idle) as is only available in mobile tests. [Read more about First Interactive and First Consistently Interactive](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.d06i5ycfxaow).",
       "histogram": {
         "minDate": "2017_06_01"
       },
