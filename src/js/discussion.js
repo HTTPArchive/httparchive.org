@@ -62,6 +62,9 @@ export class Discussion {
       img.src = this.getUserImgUrl(user);
       img.alt = user.username;
       img.title = user.username;
+      img.width = "32";
+      img.height = "32";
+      img.loading = "lazy";
 
       a.appendChild(img);
 

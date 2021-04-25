@@ -68,8 +68,10 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <!-- Let's load our fonts nice and earlier to try to reduce the annoying swap as much as possible -->
+  <link rel="preconnect" href="//fonts.googleapis.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/css/styles.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
   <script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>
@@ -177,9 +179,9 @@
     <div class="container">
       <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
         <a href="{{ url_for('index') }}">
-          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/></a>
+          <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" loading="lazy" /></a>
         <a href="https://archive.org/">
-          <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive"/>
+          <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive" loading="lazy" />
         </a>
       </div>
 
@@ -210,7 +212,7 @@
       {% if report.graphic.secondary %}
         {% set style = report.graphic.secondary.color and 'style="color: %s"' % report.graphic.secondary.color or '' %}
         {% if report.graphic.secondary.icon %}
-          <i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }}></i>
+          <i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }} aria-hidden="true"></i>
         {% else %}
           <div class="secondary-icon" {{ style | safe }}>
             {{ report.graphic.secondary.text }}

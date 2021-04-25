@@ -6,6 +6,19 @@ body {
   color: #444;
 }
 
+a {
+  text-decoration: underline;
+}
+
+#questions a,
+a.btn,
+#blog-posts a,
+#discussions a,
+nav a,
+h3 > a {
+  text-decoration: none;
+}
+
 header {
   border-top: 5px solid #eee;
 }
@@ -168,6 +181,7 @@ footer nav a {
   padding-top: 10px;
   padding-bottom: 10px;
   display: inline-block;
+  text-decoration: none;
 }
 
 footer nav > a:not(:last-child) {
@@ -175,7 +189,7 @@ footer nav > a:not(:last-child) {
 }
 
 footer a:not(:last-child) img {
-  margin-right: 70px;
+  margin-right: 60px;
 }
 
 section {
@@ -193,6 +207,7 @@ section.alt-light {
 
 section img {
   max-width: 100%;
+  height: auto;
 }
 
 #main section:first-child {
@@ -209,6 +224,7 @@ h2 {
 
 h2 small {
   display: block;
+  color: #444;
 }
 
 h2 b {
@@ -228,7 +244,7 @@ a:focus {
 p a,
 p a:hover,
 p a:focus {
-  color: #3174ae;
+  color: #1b4c77;
 }
 
 ol,
@@ -250,7 +266,7 @@ ul.bulleted li ul {
 }
 
 .bulleted a {
-  color: #3174ae;
+  color: #1b4c77;
 }
 
 .btn {
@@ -481,6 +497,8 @@ input {
 #sponsor-logos img {
   max-height: 115px;
   max-width: 250px;
+  height: auto;
+  width: auto;
 }
 
 #FAQ h2 {

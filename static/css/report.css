@@ -70,6 +70,8 @@
   list-style-type: initial;
   list-style-position: inside;
   text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #TOC li ul {
@@ -241,7 +243,7 @@ th {
 .metric-header a:hover + .grid-expansion,
 .grid-expansion:hover,
 .grid-expansion:focus {
-  color: #3174ae;
+  color: #1b4c77;
 }
 
 #report-metrics.grid-view .report-metric .fa-compress {
