@@ -15,7 +15,6 @@
         "inspector-issues": "off",
         "interactive": "off",
         "largest-contentful-paint": "off",
-        "legacy-javascript": "off",
         "mainthread-work-breakdown": "off",
         "max-potential-fid": "off",
         "no-unload-listeners": "off",

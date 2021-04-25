@@ -5,7 +5,6 @@
       "assertions": {
         "bootup-time": "off",
         "canonical": "off",
-        "color-contrast": "off",
         "dom-size": "off",
         "first-contentful-paint": "off",
         "first-cpu-idle": "off",
@@ -16,7 +15,6 @@
         "is-crawlable": "off",
         "is-on-https:": "off",
         "largest-contentful-paint": "off",
-        "legacy-javascript": "off",
         "mainthread-work-breakdown": "off",
         "max-potential-fid": "off",
         "no-unload-listeners": "off",
