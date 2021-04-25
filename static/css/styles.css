@@ -497,6 +497,8 @@ input {
 #sponsor-logos img {
   max-height: 115px;
   max-width: 250px;
+  height: auto;
+  width: auto;
 }
 
 #FAQ h2 {
