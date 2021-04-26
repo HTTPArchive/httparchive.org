@@ -1,5 +1,5 @@
 ######################################
-## Custom Web Almanac GitHub action ##
+## Custom HTTP Archive GitHub action ##
 ######################################
 #
 # A pre-deploy script that must be run in GitHub Actions to:
