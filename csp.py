@@ -2,8 +2,7 @@ csp = {
     'default-src': '\'self\'',
     'style-src': [
         '\'self\'',
-        '\'unsafe-inline\'',
-        'fonts.googleapis.com'
+        '\'unsafe-inline\''
     ],
     'script-src': [
         '\'self\'',
@@ -15,8 +14,7 @@ csp = {
         'lux.speedcurve.com'
     ],
     'font-src': [
-        '\'self\'',
-        'fonts.gstatic.com'
+        '\'self\''
     ],
     'connect-src': [
         '\'self\'',

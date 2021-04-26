@@ -22,7 +22,7 @@
   "/static/css/styles.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "465fd8d9fc79740470fbdd759768a023"
+    "hash": "c5dfe3a91d8e78b171cd5c3059ab55d7"
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -72,17 +72,17 @@
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "e9f68dce248ebabc1676bb989924f222"
+    "hash": "91c1270121ef694ad55a724ee4382e19"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "2377dd02cbb51e7689d83d07766309ab"
+    "hash": "58efcc79d7f076e84d1c5544efef9f20"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "f6016c9f29d92acd90759982545c6e1f"
+    "hash": "4175215c50ddf55e54368fdc8f5884ee"
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",
