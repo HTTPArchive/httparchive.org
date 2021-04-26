@@ -4,6 +4,17 @@ default_expiration: 3h
 
 handlers:
 
+# Add longer caching for fonts
+- url: /static/fonts/(.*\.(woff|woff2))$
+  static_files: static/fonts/\1
+  upload: static/fonts/.*\.(woff|woff2)$
+  secure: always
+  expiration: 365d
+  http_headers:
+    strict-transport-security: max-age=31556926; includeSubDomains
+    x-content-type-options: nosniff
+    vary: Accept-Encoding
+
 # Set the UTF-8 charset for CSS and JS files.
 # Makes the assumption that only CSS and JS files existing in the relevant dirs
 # but avoids complex regexes
