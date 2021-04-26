@@ -69,8 +69,8 @@
 {% block head %}
   {{ super() }}
   <!-- Let's load our fonts nice and earlier to try to reduce the annoying swap as much as possible -->
-  <link rel="preconnect" href="//fonts.googleapis.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap">
+  <link rel="preload" href="/static/fonts/opensans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/opensans-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/styles.css') }}">
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
