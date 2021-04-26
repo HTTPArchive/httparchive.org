@@ -1038,7 +1038,7 @@
     }
   },
   "chrome-ux-report": {
-    "name": "Chrome User Experience",
+    "name": "CrUX",
     "summary": "Loading and interactivity performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
     "image": "/static/img/reports/chrome-user-experience-report.png",
     "metrics": [
