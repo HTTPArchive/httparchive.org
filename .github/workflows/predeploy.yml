@@ -36,7 +36,7 @@ jobs:
       uses: peter-evans/create-pull-request@v3.8.2
       with:
         title: Pre-deploy Updates
-        branch-suffix: predeploy
+        branch-suffix: timestamp
         commit-message: Generate Scripts and Update Timestamps
         body: |
           Generate Scripts and Update Timestamps through GitHub action
