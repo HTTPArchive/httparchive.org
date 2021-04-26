@@ -71,7 +71,7 @@ fi
 
 # Check branch is clean first
 if [ -n "$(git status --porcelain)" ]; then
-  check_continue "Your branch is not clean. Do you still want to continue deploying?"
+  check_continue "${AMBER}Your branch is not clean. Do you still want to continue deploying?${RESET_COLOR}"
 fi
 
 check_continue "Please confirm you've run the pre-deploy script via GitHub Actions."
@@ -92,7 +92,7 @@ echo "Run and test website"
 echo "Check if any new files created"
 if [ -n "$(git status --porcelain)" ]; then
   git status
-  check_continue "Files were generated that are not in main. Do you still want to continue deploying?"
+  check_continue "${AMBER}Files were generated that are not in main. Do you still want to continue deploying?${RESET_COLOR}"
 fi
 
 echo "Please test the site locally"
@@ -100,7 +100,7 @@ echo "Please test the site locally"
 check_continue "Are you ready to deploy?"
 
 echo "Deploying to GCP"
-echo "Y" | gcloud app deploy --project httparchive --stop-previous-version
+echo "Y" | gcloud app deploy --project httparchive
 
 if [ "$(pgrep -f 'python main.py')" ]; then
   echo "Killing server so backgrounded version isn't left there"
