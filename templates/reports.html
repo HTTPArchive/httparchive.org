@@ -7,7 +7,7 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="/static/css/reports.css" />
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/reports.css') }}" />
 {% endblock %}
 
 {% block main %}

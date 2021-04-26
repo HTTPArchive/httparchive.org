@@ -33,7 +33,7 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="/static/js/faq.js"></script>
+  <script src="{{ get_versioned_filename('/static/js/faq.js') }}"></script>
   <script nonce="{{ csp_nonce() }}">
 addEventListener('DOMContentLoaded', function() {
   generateQuestionAnchors({{ faq.anchors|tojson }});
