@@ -15,6 +15,7 @@ a.btn,
 #blog-posts a,
 #discussions a,
 nav a,
+h2 > a,
 h3 > a {
   text-decoration: none;
 }
@@ -71,7 +72,8 @@ nav li .dropdown-target {
   vertical-align: sub;
 }
 
-nav li:hover {
+nav li:hover,
+nav li:focus-within {
   text-decoration: none;
   background-color: #667a7d;
   color: #fff;
@@ -92,6 +94,7 @@ nav li ul {
 }
 
 nav li:hover ul,
+nav li:focus-within ul,
 nav li .dropdown-target:focus + .dropdown-content {
   display: inherit;
 }
@@ -210,12 +213,21 @@ section img {
   height: auto;
 }
 
-#main section:first-child {
+main section:first-child {
   margin-top: 0;
 }
 
 section:last-child {
   margin-bottom: 0;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h1 small {
+  display: block;
+  color: #444;
 }
 
 h2 {
@@ -501,8 +513,17 @@ input {
   width: auto;
 }
 
-#FAQ h2 {
+#FAQ h1 {
   margin-bottom: 20px;
+  font-size: 2.7em;
+}
+
+#FAQ h2 {
+  font-size: 24px;
+}
+
+#FAQ h2 + p {
+  padding: 0;
 }
 
 #FAQ li {
@@ -515,10 +536,10 @@ input {
   margin-bottom: 30px;
 }
 
-#answers h3 {
+#answers h2 {
   margin-top: 100px;
 }
 
-#answers h3:first-child {
+#answers h2:first-child {
   margin-top: 0;
 }

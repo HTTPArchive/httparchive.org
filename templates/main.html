@@ -100,12 +100,12 @@
       </div>
 
       <div class="col-lg-10 col-md-9 col-sm-9 col-xs-2 clearfix">
-        <nav class="hidden-xs pull-right text-right">
+        <nav class="hidden-xs pull-right text-right" aria-label="Header Menu">
           <ul>
             <li>
-              <span class="dropdown-target" aria-haspopup="true">
+              <span class="dropdown-target" aria-haspopup="true" tabindex="0" role="button" title="Reports menu">
                 Reports
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-label="menu"><path d="M5 8l4 4 4-4z"/></svg>
               </span>
 
               <ul class="dropdown-content reports">
@@ -123,9 +123,9 @@
               <a href="https://discuss.httparchive.org">Discuss</a>
             </li>
             <li>
-              <span class="dropdown-target" aria-haspopup="true">
+              <span class="dropdown-target" aria-haspopup="true" tabindex="0" role="button" title="Web Almanac menu">
                 Web Almanac
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-label="menu"><path d="M5 8l4 4 4-4z"/></svg>
               </span>
 
               <ul class="dropdown-content">
@@ -138,9 +138,9 @@
               </ul>
             </li>
             <li>
-              <span class="dropdown-target" aria-haspopup="true">
+              <span class="dropdown-target" aria-haspopup="true" tabindex="0" role="button" title="About menu">
                 About
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M5 8l4 4 4-4z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-label="menu"><path d="M5 8l4 4 4-4z"/></svg>
               </span>
 
               <ul class="dropdown-content">
@@ -169,11 +169,11 @@
       </div>
     </div>
   </header>
-  <nav id="mobile" class="hidden-sm hidden-md hidden-lg"></nav>
+  <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
 
-  <div id="main">
+  <main>
     {% block main %}{% endblock %}
-  </div>
+  </main>
 
   <footer>
     <div class="container">
@@ -186,7 +186,7 @@
       </div>
 
       <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
-        <nav id="footer-links">
+        <nav id="footer-links" aria-label="Footer links">
           <a href="{{ url_for('reports') }}">Reports</a>
           <a href="https://discuss.httparchive.org">Discuss</a>
           <a href="https://almanac.httparchive.org/">Web Almanac</a>
@@ -214,7 +214,7 @@
         {% if report.graphic.secondary.icon %}
           <i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }} aria-hidden="true"></i>
         {% else %}
-          <div class="secondary-icon" {{ style | safe }}>
+          <div class="secondary-icon" {{ style | safe }} aria-hidden="true">
             {{ report.graphic.secondary.text }}
           </div>
         {% endif %}
@@ -222,9 +222,9 @@
 
       {% set style = report.graphic.primary.color and 'style="color: %s"' % report.graphic.primary.color or '' %}
       {% if report.graphic.primary.icon %}
-        <i class="primary-icon {{ report.graphic.primary.icon }}" {{ style | safe }}></i>
+        <i class="primary-icon {{ report.graphic.primary.icon }}" {{ style | safe }} aria-hidden="true"></i>
       {% else %}
-        <div class="primary-icon" {{ style | safe }}>
+        <div class="primary-icon" {{ style | safe }} aria-hidden="true">
           {{ report.graphic.primary.text }}
         </div>
       {% endif %}
