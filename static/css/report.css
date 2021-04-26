@@ -1,3 +1,19 @@
+h1 {
+  font-size: 2.7em;
+}
+
+h1 + p {
+  padding: 25px 0;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h2 + p {
+  padding: 0;
+}
+
 #report-header {
   background-color: #eee;
 }

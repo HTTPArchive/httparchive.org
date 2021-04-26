@@ -12,11 +12,16 @@
 
 {% block main %}
   <section>
+    <div class="row">
+      <div class="container">
+       <h1>All Reports</h1>
+      </div>
+    </div>
     {% for report in reports %}
     <div class="report row">
       <div class="container {{ loop.cycle('', 'alt') }}">
         <div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
-          <a href="{{ url_for('report', report_id=report.id) }}" title="{{ report.name }} report">
+          <a href="{{ url_for('report', report_id=report.id) }}" title="{{ report.name }}">
             {{ report_graphic(report) }}
           </a>
         </div>
@@ -29,7 +34,7 @@
 
           {{ report.summary | markdown }}
 
-          <a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the Report</a>
+          <a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the {{ report.name }} Report</a>
 
         </div>
       </div>

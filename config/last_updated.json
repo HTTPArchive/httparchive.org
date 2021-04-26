@@ -1,127 +1,137 @@
 {
   "/static/css/bootstrap.min.css": {
-      "date_published": "2018-05-08T00:00:00.000Z",
+    "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-23T00:00:00.000Z",
     "hash": "ec3bb52a00e176a7181d454dffaea219"
   },
   "/static/css/index.css": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "c9d02fdf5e2bbd380b09217a13e72b72"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "495df86a2484fab21cf45408c98308e5"
   },
   "/static/css/report.css": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "a35ccc6dd3249e1cb741ba52f8648fba"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "00da69106b249c042a0657d78ffe4c11"
   },
   "/static/css/reports.css": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "f6c0204af5b5e600573fa356a5bdb177"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "eef119f0c48c5de8cb44856fe2069d9f"
   },
   "/static/css/styles.css": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "a03dbabed734fa1c959db7ab60edce5c"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "465fd8d9fc79740470fbdd759768a023"
   },
   "/static/js/faq.js": {
-      "date_published": "2018-05-08T00:00:00.000Z",
+    "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
     "hash": "14ba894ead819c322cf8a67e9d01dbff"
   },
+  "/static/js/highcharts-more.js": {
+    "date_published": "2021-04-26T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "679aad6f3635cab282bf729bad76d9f4"
+  },
+  "/static/js/highstock.js": {
+    "date_published": "2021-04-26T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "0f7415bff9b44ceb9b082b777bfd493a"
+  },
   "/static/js/histogram.js": {
-      "date_published": "2018-05-08T00:00:00.000Z",
+    "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
     "hash": "804469446aa0cff5aaab9c29b270c3da"
   },
   "/static/js/index.js": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "e2b398737bf92ae635be1f606d455d16"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "776c5a9f4d7215df0c624415c4a946f5"
   },
   "/static/js/main.js": {
-      "date_published": "2018-05-08T00:00:00.000Z",
+    "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
     "hash": "36da1f8970107c2d3feb46fa51f5e9f0"
   },
   "/static/js/report.js": {
-      "date_published": "2018-05-08T00:00:00.000Z",
+    "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
     "hash": "66d2e6fcafe639dc80e5e05745468a8a"
   },
   "/static/js/timeseries.js": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "0dffeb46e328a59a696fbd200b1e47ec"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "bcdeb2a4bb572b4b8eeab12169de0a0f"
   },
   "about.html": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-25T00:00:00.000Z",
-    "hash": "00c84f7863c4b00966585d1826e876ed"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "71788b6fa1aa3bf39a9b73fb56d96eee"
   },
   "faq.html": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-25T00:00:00.000Z",
-    "hash": "1bc337565f9dca27f5d115ef3e5d6ab4"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "e9f68dce248ebabc1676bb989924f222"
   },
   "index.html": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-25T00:00:00.000Z",
-    "hash": "17eba4c6a92c305ea3170e33a7530fd8"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "2377dd02cbb51e7689d83d07766309ab"
   },
   "reports.html": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-25T00:00:00.000Z",
-    "hash": "a570334ab624785fe12e2b387ef420f4"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "f6016c9f29d92acd90759982545c6e1f"
   },
   "reports/accessibility": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "942d0d92d36501186349cd3b0866d5b2"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "f2a604a8026afbb2c7f778f412731ae7"
   },
   "reports/chrome-ux-report": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "9ef5833114e90b95c43aedfdadeec02d"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "a93a42c3343d12df91c75d245ed5f8d2"
   },
   "reports/loading-speed": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "133dab1f1b207e4ed70243cb42526576"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "c32e0bcfa0fbbb3e66a5467bf8b5974c"
   },
   "reports/page-weight": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "b0f8af74a38c8afb27a07cfcf8d6cc26"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "70e1a92638557ddfa9df6a0517e6c84f"
   },
   "reports/progressive-web-apps": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "1423e1ac221866cd1d664ca8bf20d2a7"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "8fb8983e0a28cc2433f25ce9063e844b"
   },
   "reports/project-fugu": {
     "date_published": "2020-07-31T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "66c919b24eba7647f5cfb81e6d01f13e"
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "0cb0fbbd2b60c712d42ee3af404fcfb1"
   },
   "reports/search-engine-optimization": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "3ea330c0ebfb6d17c76baa45928db117"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "228064df9d005931d60be4afe540bb0b"
   },
   "reports/state-of-images": {
-      "date_published": "2018-05-08T00:00:00.000Z",
+    "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-23T00:00:00.000Z",
     "hash": "3e4226bd3a208a4e6e8f57d2cf9ae62d"
   },
   "reports/state-of-javascript": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "d2e2b3b64d6f0b0b285828b69b738217"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "088130edb243e90c7fb6b1cd7deae144"
   },
   "reports/state-of-the-web": {
-      "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "c00b2a6f221ea99bbc53817108250182"
+    "date_published": "2018-05-08T00:00:00.000Z",
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "e569323af0b31a6ba47029372ea9c50d"
   }
 }
