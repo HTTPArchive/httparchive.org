@@ -37,13 +37,50 @@ import datetime
 
 logging.basicConfig(level=logging.DEBUG)
 
-app = Flask(__name__)
+
+# Set WOFF and WOFF2 caching to return 1 year as they should never change
+# Note this requires similar set up in app.yaml for Google App Engine
+class HttpArchiveWebServer(Flask):
+    def get_send_file_max_age(self, name):
+        if name.lower().endswith('.woff') or name.lower().endswith('.woff2'):
+            return 31536000
+        return Flask.get_send_file_max_age(self, name)
+
+
+# Initialize The Server
+app = HttpArchiveWebServer(__name__)
 Markdown(app)
 talisman = Talisman(app,
                     content_security_policy=csp,
                     content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
 timestamps_json = {}
+
+
+@app.after_request
+def add_header(response):
+    # Make sure bad responses are not cached
+    #
+    # Cache good responses for 10 mins if no other Cache-Control header set
+    # This is used for the dynamically generated files (e.g. the HTML)
+    # (currently don't use unique filenames so cannot use long caches and
+    # some say they are overrated anyway as caches smaller than we think).
+    # Note this IS used by Google App Engine as dynamic content.
+    if 'Cache-Control' not in response.headers:
+        if response.status_code != 200 and response.status_code != 304:
+            response.cache_control.no_store = True
+            response.cache_control.no_cache = True
+            response.cache_control.max_age = 0
+        if response.status_code == 200 or response.status_code == 304:
+            response.cache_control.public = True
+            response.cache_control.max_age = 600
+    return response
+
+
+# Cache static resources for 10800 secs (3 hrs) with SEND_FILE_MAX_AGE_DEFAULT.
+# Flask default if not set is 12 hours but we want to match app.yaml
+# which is used by Google App Engine as it serves static files directly
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 10800
 
 
 def update_config():
@@ -66,6 +103,15 @@ def get_file_date_info(file, type):
         return timestamps_config.get(file, {}).get(type, today)
     else:
         return timestamps_config.get(file, {}).get(type)
+
+
+def get_versioned_filename(path):
+    version = get_file_date_info(path, 'hash')
+    if version:
+        return '%s?v=%s' % (path, version)
+    else:
+        logging.exception('An un-versioned file was used: %s', path)
+        return '%s' % path
 
 
 # Overwrite the built-in method.
@@ -91,6 +137,7 @@ def url_for(endpoint, **kwargs):
 
 
 app.jinja_env.globals['url_for'] = url_for
+app.jinja_env.globals['get_versioned_filename'] = get_versioned_filename
 
 
 @app.route('/')

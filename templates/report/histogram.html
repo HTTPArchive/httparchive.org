@@ -28,7 +28,7 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="/static/js/histogram.js"></script>
+  <script src="{{ get_versioned_filename('/static/js/histogram.js') }}"></script>
   <script nonce="{{ csp_nonce() }}">
 {% for metric in report.metrics %}
   {% if metric[viz]['enabled'] %}

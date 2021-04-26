@@ -7,7 +7,7 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="/static/css/index.css" />
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/index.css') }}" />
 {% endblock %}
 
 {% block main %}
@@ -130,5 +130,5 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="/static/js/index.js"></script>
+  <script src="{{ get_versioned_filename('/static/js/index.js') }}"></script>
 {% endblock %}

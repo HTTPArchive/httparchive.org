@@ -18,8 +18,8 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="/static/js/highcharts-more.js"></script>
-  <script src="/static/js/timeseries.js"></script>
+  <script src="{{ get_versioned_filename('/static/js/highcharts-more.js') }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/timeseries.js') }}"></script>
   <script nonce="{{ csp_nonce() }}">
 {% for metric in report.metrics %}
   {% if metric[viz]['enabled'] %}

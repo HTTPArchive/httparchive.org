@@ -14,7 +14,7 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="/static/css/report.css" />
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/report.css') }}" />
   <link rel="preconnect" href="https://cdn.httparchive.org" />
   <link rel="canonical" href="https://httparchive.org{{ request.path }}" />
 {% endblock %}
@@ -155,9 +155,9 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="/static/js/highstock.js"></script>
+  <script src="{{ get_versioned_filename('/static/js/highstock.js') }}"></script>
   <script src="https://cdn.httparchive.org/reports/exporting.js"></script>
-  <script src="/static/js/report.js"></script>
+  <script src="{{ get_versioned_filename('/static/js/report.js') }}"></script>
   <script nonce="{{ csp_nonce() }}">
     var report = {{ report|tojson }};
     report.url = {{ request.script_root|tojson|safe }};
