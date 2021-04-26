@@ -64,7 +64,7 @@ echo "Beginning the https://httparchive.org Website deployment process"
 
 if [ "${no_promote}" == "1" ]; then
   echo "Deploying to GCP (no promote)"
-  echo "Y" | gcloud app deploy --project webalmanac --no-promote
+  echo "Y" | gcloud app deploy --project httparchive --no-promote
   echo "Done"
   exit 0
 fi
