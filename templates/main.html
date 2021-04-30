@@ -10,7 +10,7 @@
 
 {% block meta %}
 <meta name="description" content="{{ self.description() }}">
-{%- if request.url_root != "https://almanac.httparchive.org/" %}
+{%- if request.url_root != "https://httparchive.org/" %}
 <meta name="robots" content="noindex">
 {%- endif %}
 <meta property="og:title" content="{{ self.title() }}">
