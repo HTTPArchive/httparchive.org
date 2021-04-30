@@ -25,14 +25,13 @@ except ImportError:
 from csp import csp
 import reports as report_util
 import faq as faq_util
+import timestamps as timestamps_util
 from legacy import Legacy
 
 from flask import Flask, request, make_response, jsonify, render_template as flask_render_template, \
                   redirect, abort, url_for as flask_url_for, send_from_directory
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
-import json
-import datetime
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -54,7 +53,6 @@ talisman = Talisman(app,
                     content_security_policy=csp,
                     content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
-timestamps_json = {}
 
 
 @app.after_request
@@ -83,42 +81,11 @@ def add_header(response):
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 10800
 
 
-def update_config():
-    global timestamps_json
-    with open('config/last_updated.json', 'r') as config_file:
-        timestamps_json = json.load(config_file)
-    return
-
-
-def get_timestamps_config():
-    global timestamps_json
-    return timestamps_json
-
-
-def get_file_date_info(file, type):
-    timestamps_config = get_timestamps_config()
-    # Default Published and Last Updated to today
-    today = datetime.datetime.utcnow().isoformat()
-    if type == 'date_published' or type == 'date_modified':
-        return timestamps_config.get(file, {}).get(type, today)
-    else:
-        return timestamps_config.get(file, {}).get(type)
-
-
-def get_versioned_filename(path):
-    version = get_file_date_info(path, 'hash')
-    if version:
-        return '%s?v=%s' % (path, version)
-    else:
-        logging.exception('An un-versioned file was used: %s', path)
-        return '%s' % path
-
-
 # Overwrite the built-in method.
 def render_template(template, *args, **kwargs):
 
-    date_published = get_file_date_info(template, "date_published")
-    date_modified = get_file_date_info(template, "date_modified")
+    date_published = timestamps_util.get_file_date_info(template, "date_published")
+    date_modified = timestamps_util.get_file_date_info(template, "date_modified")
 
     kwargs.update(date_published=date_published,
                   date_modified=date_modified)
@@ -137,7 +104,7 @@ def url_for(endpoint, **kwargs):
 
 
 app.jinja_env.globals['url_for'] = url_for
-app.jinja_env.globals['get_versioned_filename'] = get_versioned_filename
+app.jinja_env.globals['get_versioned_filename'] = timestamps_util.get_versioned_filename
 
 
 @app.route('/')
@@ -396,9 +363,6 @@ def sitemap():
 if __name__ == '__main__':
     # This is used when running locally. Gunicorn is used to run the
     # application on Google App Engine. See entrypoint in app.yaml.
-
-    update_config()
-    report_util.get_reports()
 
     # If the 'background' command line argument is given:
     #    python main.py background &
