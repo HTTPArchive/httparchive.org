@@ -4,8 +4,8 @@
 {% set wpt_id = request.args.get('wptid') %}
 {% set enabled_lens_id = report.lens.id if report.lens else '' %}
 
-{% block title %}{{ (report.lens and '%s: ' % report.lens.name or '') +report.name }}{% endblock %}
-{% block description %}HTTP Archive {{ report.summary }}{% endblock %}
+{% block title %}HTTP Archive {{ (report.lens and '%s: ' % report.lens.name or '') +report.name }}{% endblock %}
+{% block description %}{{ report.summary | markdown | striptags }}{% endblock %}
 {% block page_url %}https://httparchive.org{{ url_for(request.endpoint, **request.view_args) }}{% endblock %}
 
 {% block image_url %}{% if report.image %}https://httparchive.org{{ report.image }}{% else %}{{ super() }}{% endif %}{% endblock %}
