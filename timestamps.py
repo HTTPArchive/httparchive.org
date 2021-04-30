@@ -1,7 +1,9 @@
 import json
 import datetime
+import logging
 
 timestamps_json = {}
+
 
 def update_config():
     global timestamps_json
