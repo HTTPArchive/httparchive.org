@@ -130,3 +130,6 @@ def get_lens(lens_id):
 def is_valid_lens(lens):
     lenses = get_lenses()
     return lens in lenses
+
+
+update_reports()
