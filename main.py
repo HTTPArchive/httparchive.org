@@ -398,7 +398,7 @@ if __name__ == '__main__':
     # application on Google App Engine. See entrypoint in app.yaml.
 
     update_config()
-    report_util.get_reports()
+    report_util.update_reports()
 
     # If the 'background' command line argument is given:
     #    python main.py background &
