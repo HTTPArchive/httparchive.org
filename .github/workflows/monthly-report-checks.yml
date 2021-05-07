@@ -40,10 +40,12 @@ jobs:
          REPORT_DATE: ${{ github.event.inputs.REPORT_DATE }}
       run: ./tools/scripts/test_reports.sh
       continue-on-error: true
-    -name: Open Pull Request
-      if: ${{ env.REPORT_FAILS > 0 }}
+    - name: Open Pull Request
+      if: env.REPORT_FAILS > 0
       uses: alialaa/issue-action@v1.0.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         title: This months reports have failed to run
-        body: See log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
+        body: >
+          See log in [GitHub Actions](https://github.com/HTTPArchive/
+          httparchive.org/actions/workflows/monthly-report-checks.yml)
