@@ -27,7 +27,8 @@ echo "Starting testing"
 for TEST_URL in ${REPORT_MONTHLY_URLS}
 do
     STATUS_CODE=$(curl  -s -o /dev/null -w "%{http_code}" "${TEST_URL}")
-    if [[ "${STATUS_CODE}" -eq "200" ]]; then
+    if [[ "${STATUS_CODE}" -eq "200" ]]
+    then
         echo "200 Status code found for ${TEST_URL}"
     else
         echo "Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}"
@@ -37,7 +38,8 @@ done
 
 for TEST_URL in ${TIMESERIES_URLS}
 do
-    if [[ $(curl -s "${TEST_URL}" | grep "${THIS_MONTH}") ]]; then
+    if curl -s "${TEST_URL}" | grep -q "${THIS_MONTH}"
+    then
         echo "${THIS_MONTH} found in body for ${TEST_URL}"
     else
         echo "${THIS_MONTH} not found in body for ${TEST_URL}"
@@ -45,7 +47,8 @@ do
     fi
 done
 
-if [[ ${FAIL} > 0 ]]; then
+if [[ ${FAIL} -gt 0 ]]
+then
     echo "${FAIL} test(s) failed. Exiting 1"
     exit 1
 fi
