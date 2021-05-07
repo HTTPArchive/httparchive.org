@@ -1,5 +1,5 @@
 ######################################
-## Custom Web Almanac GitHub action ##
+## Custom Http Archive GitHub action ##
 ######################################
 #
 # Run checks against the production website
@@ -21,7 +21,7 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-20.04
-    if: github.repository == 'HTTPArchive/almanac.httparchive.org'
+    if: github.repository == 'HTTPArchive/httparchive.org'
     steps:
     - name: Checkout branch
       uses: actions/checkout@v2.3.4
