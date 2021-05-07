@@ -41,7 +41,7 @@ jobs:
       run: ./tools/scripts/test_reports.sh
       continue-on-error: true
     -name: Open Pull Request
-      if: github.env.REPORT_FAILS > 0
+      if: ${{ github.env.REPORT_FAILS > 0 }}
       uses: alialaa/issue-action@v1.0.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
