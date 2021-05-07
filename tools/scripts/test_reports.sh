@@ -1,14 +1,17 @@
 #!/bin/bash
 
-THIS_MONTH=$(date +%Y_%m_01)
+if [[ "${REPORT_DATE}" -eq "" || "${REPORT_DATE}" -eq "LATEST" ]]
+then
+    REPORT_DATE=$(date +%Y_%m_01)
+fi
 FAIL=0
 
 # These URLs are tested for 200 status
 REPORT_MONTHLY_URLS=$(cat <<-END
-https://cdn.httparchive.org/reports/${THIS_MONTH}/bootupJs.json
-https://cdn.httparchive.org/reports/${THIS_MONTH}/vulnJs.json
-https://cdn.httparchive.org/reports/drupal/${THIS_MONTH}/bootupJs.json
-https://cdn.httparchive.org/reports/drupal/${THIS_MONTH}/vulnJs.json
+https://cdn.httparchive.org/reports/${REPORT_DATE}/bootupJs.json
+https://cdn.httparchive.org/reports/${REPORT_DATE}/vulnJs.json
+https://cdn.httparchive.org/reports/drupal/${REPORT_DATE}/bootupJs.json
+https://cdn.httparchive.org/reports/drupal/${REPORT_DATE}/vulnJs.json
 END
 )
 
@@ -38,14 +41,17 @@ done
 
 for TEST_URL in ${TIMESERIES_URLS}
 do
-    if curl -s "${TEST_URL}" | grep -q "${THIS_MONTH}"
+    if curl -s "${TEST_URL}" | grep -q "${REPORT_DATE}"
     then
-        echo "${THIS_MONTH} found in body for ${TEST_URL}"
+        echo "${REPORT_DATE} found in body for ${TEST_URL}"
     else
-        echo "${THIS_MONTH} not found in body for ${TEST_URL}"
+        echo "${REPORT_DATE} not found in body for ${TEST_URL}"
         FAIL=$((FAIL+1))
     fi
 done
+
+# Export the number of fails to GitHub env
+echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
 
 if [[ ${FAIL} -gt 0 ]]
 then
