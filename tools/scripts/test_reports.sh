@@ -46,7 +46,7 @@ do
         echo "200 Status code found for ${TEST_URL}"
     else
         echo "Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}"
-        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}%\n"
+        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
 done
