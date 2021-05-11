@@ -46,6 +46,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         title: This months reports have failed to run
-        body: >
-          See log in [GitHub Actions](https://github.com/HTTPArchive/
-          httparchive.org/actions/workflows/monthly-report-checks.yml)
+        body: ${{ env.REPORT_FAIL_LOG }}
