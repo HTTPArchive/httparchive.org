@@ -63,7 +63,7 @@ do
     fi
 done
 
-FAIL_LOG="${FAIL_LOG%0ASee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
+FAIL_LOG="${FAIL_LOG}%0ASee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
 "
 
 # Export the number of fails to GitHub env
