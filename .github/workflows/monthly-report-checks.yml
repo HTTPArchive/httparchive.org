@@ -1,0 +1,51 @@
+######################################
+## Custom HTTP Archive GitHub action ##
+######################################
+#
+# On the 28th of the month it checks all the reports exist for the website.
+# The 28th was choosen so it runs every month (inc February)
+#
+# The crawl should be finished by then but, if not, the reports will not
+# be automatically created when it slips into the new month and will need to manually be
+# created.
+#
+name: Monthly Report Checks
+on:
+  schedule:
+    #        ┌───────────── minute (0 - 59)
+    #        │ ┌───────────── hour (0 - 23)
+    #        │ │ ┌───────────── day of the month (1 - 31)
+    #        │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #        │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #        │ │ │ │ │
+    #        │ │ │ │ │
+    #        │ │ │ │ │
+    #        * * * * *
+    - cron: '00 09 28 * *'
+  workflow_dispatch:
+    inputs:
+      REPORT_DATE:
+        description: "Date in YYYY_MM_DD format (Optional)"
+        required: false
+        default: 'LATEST'
+jobs:
+  checks:
+    runs-on: ubuntu-20.04
+    if: github.repository == 'HTTPArchive/httparchive.org'
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2.3.4
+    - name: Run the website
+      env:
+         REPORT_DATE: ${{ github.event.inputs.REPORT_DATE }}
+      run: ./tools/scripts/test_reports.sh
+      continue-on-error: true
+    - name: Open Pull Request
+      if: env.REPORT_FAILS > 0
+      uses: alialaa/issue-action@v1.0.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        title: This months reports have failed to run
+        body: >
+          See log in [GitHub Actions](https://github.com/HTTPArchive/
+          httparchive.org/actions/workflows/monthly-report-checks.yml)
