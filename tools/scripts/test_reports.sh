@@ -6,7 +6,7 @@ then
 fi
 FAIL=0
 NUM_TESTS=0
-FAIL_LOG="\`\`\`"
+FAIL_LOG=""
 TITLE=""
 
 # These dated report URLs are tested for 200 status
@@ -67,7 +67,7 @@ do
     fi
 done
 
-FAIL_LOG="${FAIL_LOG}\`\`\`\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
+FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
 "
 
 if [[ ${FAIL} -ne 0 && ${FAIL} -eq ${NUM_TESTS} ]]
