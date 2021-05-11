@@ -81,7 +81,7 @@ fi
 # Export the number of fails to GitHub env
 if [[ "$GITHUB_ENV" ]]
 then
-    # shellcheck disable=SC1219
+    # shellcheck disable=SC2129
     echo "REPORT_TITLE=${TITLE}" >> "$GITHUB_ENV"
     echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
     echo "REPORT_FAIL_LOG<<EOF" >> "$GITHUB_ENV"
