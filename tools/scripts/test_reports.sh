@@ -6,24 +6,30 @@ then
 fi
 FAIL=0
 
-# These URLs are tested for 200 status
+# These dated report URLs are tested for 200 status
+# We test the first and last report for each lens
 REPORT_MONTHLY_URLS=$(cat <<-END
 https://cdn.httparchive.org/reports/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/${REPORT_DATE}/vulnJs.json
 https://cdn.httparchive.org/reports/drupal/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/drupal/${REPORT_DATE}/vulnJs.json
+https://cdn.httparchive.org/reports/magento/${REPORT_DATE}/bootupJs.json
+https://cdn.httparchive.org/reports/magento/${REPORT_DATE}/vulnJs.json
 https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/vulnJs.json
 END
 )
 
 
-# These URLs are tested if the date exists in the returned body
+# These timeseries URLs are tested if the date exists in the returned body
+# We test the first and last report for each lens
 TIMESERIES_URLS=$(cat <<-END
 https://cdn.httparchive.org/reports/numUrls.json
 https://cdn.httparchive.org/reports/a11yButtonName.json
 https://cdn.httparchive.org/reports/drupal/numUrls.json
 https://cdn.httparchive.org/reports/drupal/a11yButtonName.json
+https://cdn.httparchive.org/reports/magento/numUrls.json
+https://cdn.httparchive.org/reports/magento/a11yButtonName.json
 https://cdn.httparchive.org/reports/wordpress/numUrls.json
 https://cdn.httparchive.org/reports/wordpress/a11yButtonName.json
 END
