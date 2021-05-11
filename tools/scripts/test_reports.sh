@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "${REPORT_DATE}" -eq "" || "${REPORT_DATE}" -eq "LATEST" ]]
+if [[ "${REPORT_DATE}" == "" || "${REPORT_DATE}" == "LATEST" ]]
 then
     REPORT_DATE=$(date +%Y_%m_01)
 fi
@@ -12,6 +12,8 @@ https://cdn.httparchive.org/reports/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/${REPORT_DATE}/vulnJs.json
 https://cdn.httparchive.org/reports/drupal/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/drupal/${REPORT_DATE}/vulnJs.json
+https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/bootupJs.json
+https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/vulnJs.json
 END
 )
 
@@ -22,6 +24,8 @@ https://cdn.httparchive.org/reports/numUrls.json
 https://cdn.httparchive.org/reports/a11yButtonName.json
 https://cdn.httparchive.org/reports/drupal/numUrls.json
 https://cdn.httparchive.org/reports/drupal/a11yButtonName.json
+https://cdn.httparchive.org/reports/wordpress/numUrls.json
+https://cdn.httparchive.org/reports/wordpress/a11yButtonName.json
 END
 )
 
@@ -30,7 +34,7 @@ echo "Starting testing"
 for TEST_URL in ${REPORT_MONTHLY_URLS}
 do
     STATUS_CODE=$(curl  -s -o /dev/null -w "%{http_code}" "${TEST_URL}")
-    if [[ "${STATUS_CODE}" -eq "200" ]]
+    if [[ "${STATUS_CODE}" == "200" ]]
     then
         echo "200 Status code found for ${TEST_URL}"
     else
@@ -51,7 +55,10 @@ do
 done
 
 # Export the number of fails to GitHub env
-echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
+if [[ "$GITHUB_ENV" ]]
+then
+    echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
+fi
 
 if [[ ${FAIL} -gt 0 ]]
 then
