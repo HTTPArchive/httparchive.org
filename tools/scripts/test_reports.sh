@@ -5,7 +5,8 @@ then
     REPORT_DATE=$(date +%Y_%m_01)
 fi
 FAIL=0
-FAIL_LOG=""
+NUM_TESTS=0
+FAIL_LOG="\`\`\`"
 
 # These dated report URLs are tested for 200 status
 # We test the first and last report for each lens
@@ -40,6 +41,7 @@ echo "Starting testing"
 
 for TEST_URL in ${REPORT_MONTHLY_URLS}
 do
+    NUM_TESTS=$((NUM_TESTS+1))
     STATUS_CODE=$(curl  -s -o /dev/null -w "%{http_code}" "${TEST_URL}")
     if [[ "${STATUS_CODE}" == "200" ]]
     then
@@ -53,6 +55,7 @@ done
 
 for TEST_URL in ${TIMESERIES_URLS}
 do
+    NUM_TESTS=$((NUM_TESTS+1))
     if curl -s "${TEST_URL}" | grep -q "${REPORT_DATE}"
     then
         echo "${REPORT_DATE} found in body for ${TEST_URL}"
@@ -66,11 +69,25 @@ done
 FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
 "
 
+MONTH_YEAR=$(date +"%b %Y")
+TITLE=""
+
+if [[ ${FAIL} -ne 0 && ${FAIL} -eq ${NUM_TESTS} ]]
+then
+    TITLE="All reports have failed for ${MONTH_YEAR}"
+elif [[ ${FAIL} -ne 0 && ${FAIL} < ${NUM_TESTS} ]]
+then
+    TITLE="Some reports have failed for ${MONTH_YEAR}"
+fi
+
 # Export the number of fails to GitHub env
 if [[ "$GITHUB_ENV" ]]
 then
+    echo "REPORT_TITLE=${TITLE}" >> "$GITHUB_ENV"
     echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
-    echo -e "REPORT_FAIL_LOG=${FAIL_LOG}" >> "$GITHUB_ENV"
+    echo "REPORT_FAIL_LOG<<EOF" >> $GITHUB_ENV
+    echo -e "${FAIL_LOG}}" >> $GITHUB_ENV
+    echo "EOF" >> $GITHUB_ENV
 fi
 
 if [[ ${FAIL} -gt 0 ]]
