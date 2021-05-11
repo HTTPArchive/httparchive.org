@@ -7,6 +7,7 @@ fi
 FAIL=0
 NUM_TESTS=0
 FAIL_LOG="\`\`\`"
+TITLE=""
 
 # These dated report URLs are tested for 200 status
 # We test the first and last report for each lens
@@ -69,15 +70,12 @@ done
 FAIL_LOG="${FAIL_LOG}\`\`\`\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
 "
 
-MONTH_YEAR=$(date +"%b %Y")
-TITLE=""
-
 if [[ ${FAIL} -ne 0 && ${FAIL} -eq ${NUM_TESTS} ]]
 then
-    TITLE="All reports have failed for ${MONTH_YEAR}"
+    TITLE="All reports have failed for ${REPORT_DATE}"
 elif [[ ${FAIL} -ne 0 && ${FAIL} < ${NUM_TESTS} ]]
 then
-    TITLE="Some reports have failed for ${MONTH_YEAR}"
+    TITLE="Some reports have failed for ${REPORT_DATE}"
 fi
 
 # Export the number of fails to GitHub env
