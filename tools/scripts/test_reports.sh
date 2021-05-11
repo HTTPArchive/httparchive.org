@@ -46,7 +46,7 @@ do
         echo "200 Status code found for ${TEST_URL}"
     else
         echo "Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}"
-        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}%0A"
+        FAIL_LOG="${FAIL_LOG}`Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}`%0A"
         FAIL=$((FAIL+1))
     fi
 done
@@ -58,7 +58,7 @@ do
         echo "${REPORT_DATE} found in body for ${TEST_URL}"
     else
         echo "${REPORT_DATE} not found in body for ${TEST_URL}"
-        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}%0A"
+        FAIL_LOG="${FAIL_LOG}`Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}`%0A"
         FAIL=$((FAIL+1))
     fi
 done
