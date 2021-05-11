@@ -35,12 +35,12 @@ jobs:
     steps:
     - name: Checkout branch
       uses: actions/checkout@v2.3.4
-    - name: Run the website
+    - name: Run the report checks
       env:
          REPORT_DATE: ${{ github.event.inputs.REPORT_DATE }}
       run: ./tools/scripts/test_reports.sh
       continue-on-error: true
-    - name: Open Pull Request
+    - name: Open Issue for Failures
       if: env.REPORT_FAILS > 0
       uses: alialaa/issue-action@v1.0.0
       with:

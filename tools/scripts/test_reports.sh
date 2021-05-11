@@ -46,7 +46,7 @@ do
         echo "200 Status code found for ${TEST_URL}"
     else
         echo "Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}"
-        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}%0A"
+        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
 done
@@ -58,19 +58,19 @@ do
         echo "${REPORT_DATE} found in body for ${TEST_URL}"
     else
         echo "${REPORT_DATE} not found in body for ${TEST_URL}"
-        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}%0A"
+        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
 done
 
-FAIL_LOG="${FAIL_LOG}%0ASee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
+FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
 "
 
 # Export the number of fails to GitHub env
 if [[ "$GITHUB_ENV" ]]
 then
     echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
-    echo "REPORT_FAIL_LOG=${FAIL_LOG}" >> "$GITHUB_ENV"
+    echo -e "REPORT_FAIL_LOG='${FAIL_LOG}'" >> "$GITHUB_ENV"
 fi
 
 if [[ ${FAIL} -gt 0 ]]
