@@ -66,7 +66,7 @@ do
     fi
 done
 
-FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
+FAIL_LOG="${FAIL_LOG}\`\`\`\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
 "
 
 MONTH_YEAR=$(date +"%b %Y")
@@ -86,7 +86,7 @@ then
     echo "REPORT_TITLE=${TITLE}" >> "$GITHUB_ENV"
     echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
     echo "REPORT_FAIL_LOG<<EOF" >> $GITHUB_ENV
-    echo -e "${FAIL_LOG}}" >> $GITHUB_ENV
+    echo -e "${FAIL_LOG}" >> $GITHUB_ENV
     echo "EOF" >> $GITHUB_ENV
 fi
 
