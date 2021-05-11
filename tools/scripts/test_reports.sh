@@ -70,7 +70,7 @@ FAIL_LOG="${FAIL_LOG%0ASee latest log in [GitHub Actions](https://github.com/HTT
 if [[ "$GITHUB_ENV" ]]
 then
     echo "REPORT_FAILS=${FAIL}" >> "$GITHUB_ENV"
-    echo -e "REPORT_FAIL_LOG=${FAIL_LOG}" >> "$GITHUB_ENV"
+    echo "REPORT_FAIL_LOG=${FAIL_LOG}" >> "$GITHUB_ENV"
 fi
 
 if [[ ${FAIL} -gt 0 ]]
