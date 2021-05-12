@@ -160,7 +160,7 @@
   <script src="{{ get_versioned_filename('/static/js/report.js') }}"></script>
   <script nonce="{{ csp_nonce() }}">
     var report = {{ report|tojson }};
-    report.url = {{ request.script_root|tojson|safe }};
+    report.url = {{ script_root|tojson|safe }};
     report.startDate = {{ start|tojson }};
     report.endDate = {{ end|tojson }};
     report = new Report(report, {{ viz|tojson }});

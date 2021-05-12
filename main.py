@@ -16,6 +16,7 @@
 import sys
 import logging
 import re
+import os
 from time import time
 try:
     from urllib.parse import urlparse
@@ -41,8 +42,9 @@ logging.basicConfig(level=logging.DEBUG)
 # Note this requires similar set up in app.yaml for Google App Engine
 class HttpArchiveWebServer(Flask):
     def get_send_file_max_age(self, name):
-        if name.lower().endswith('.woff') or name.lower().endswith('.woff2'):
-            return 31536000
+        if name:
+            if os.fspath(name).lower().endswith('.woff') or os.fspath(name).lower().endswith('.woff2'):
+                return 31536000
         return Flask.get_send_file_max_age(self, name)
 
 
@@ -268,8 +270,7 @@ def report(report_id):
 
         metric[viz]['enabled'] = enabled
 
-    if not request.script_root:
-        request.script_root = url_for('report', report_id=report_id, _external=True)
+    script_root = url_for('report', report_id=report_id, _external=True)
 
     # Return as JSON if requested.
     if get_format(request) == 'json':
@@ -277,6 +278,7 @@ def report(report_id):
 
     return render_template('report/%s.html' % viz,
                            viz=viz,
+                           script_root=script_root,
                            reports=report_util.get_reports(),
                            report=report,
                            start=start,
