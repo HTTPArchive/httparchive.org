@@ -156,7 +156,7 @@
 {% block scripts %}
   {{ super() }}
   <script src="{{ get_versioned_filename('/static/js/highstock.js') }}"></script>
-  <script src="https://cdn.httparchive.org/reports/exporting.js"></script>
+  <script src="{{ get_versioned_filename('/static/js/exporting.js') }}"></script>
   <script src="{{ get_versioned_filename('/static/js/report.js') }}"></script>
   <script nonce="{{ csp_nonce() }}">
     var report = {{ report|tojson }};

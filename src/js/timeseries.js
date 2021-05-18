@@ -456,4 +456,5 @@ const toRow = (o, i, n, cols) => {
 };
 
 // Export directly to global scope for use by Jinja template.
+
 window.timeseries = timeseries;

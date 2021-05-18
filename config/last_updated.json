@@ -11,8 +11,8 @@
   },
   "/static/css/report.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "00da69106b249c042a0657d78ffe4c11"
+    "date_modified": "2021-05-19T00:00:00.000Z",
+    "hash": "46c7c17f5035a5209af3ddc5a2f1d4ea"
   },
   "/static/css/reports.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -24,6 +24,11 @@
     "date_modified": "2021-04-26T00:00:00.000Z",
     "hash": "c5dfe3a91d8e78b171cd5c3059ab55d7"
   },
+  "/static/js/exporting.js": {
+    "date_published": "2021-05-19T00:00:00.000Z",
+    "date_modified": "2021-05-19T00:00:00.000Z",
+    "hash": "e96a3b2f9f14fddd5d94fc6212c9a373"
+  },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-04-24T00:00:00.000Z",
@@ -31,13 +36,13 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "679aad6f3635cab282bf729bad76d9f4"
+    "date_modified": "2021-05-19T00:00:00.000Z",
+    "hash": "c0a7c04eeba32ef638f18006d047baaa"
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "0f7415bff9b44ceb9b082b777bfd493a"
+    "date_modified": "2021-05-19T00:00:00.000Z",
+    "hash": "9e37379df58a4a4dd15e0cecb8912fec"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
