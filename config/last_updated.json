@@ -11,8 +11,8 @@
   },
   "/static/css/report.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-05-19T00:00:00.000Z",
-    "hash": "46c7c17f5035a5209af3ddc5a2f1d4ea"
+    "date_modified": "2021-04-26T00:00:00.000Z",
+    "hash": "00da69106b249c042a0657d78ffe4c11"
   },
   "/static/css/reports.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -66,8 +66,8 @@
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "bcdeb2a4bb572b4b8eeab12169de0a0f"
+    "date_modified": "2021-05-19T00:00:00.000Z",
+    "hash": "ec2cd88069d99759394a24b8259b04c9"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",

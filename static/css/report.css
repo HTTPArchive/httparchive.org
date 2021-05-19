@@ -200,10 +200,6 @@ th {
   color: red;
 }
 
-.highcharts-markers {
-  clip-path: none !important;
-}
-
 #report-metrics.grid-view .report-metrics-inner-wrapper {
   display: grid;
   grid-gap: 40px;
