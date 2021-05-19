@@ -266,6 +266,7 @@ const getFlagSeries = () => loadChangelog().then(data => {
       x: change.date,
       title: String.fromCharCode(65 + (i % 26))
     })),
+    clip: false,
     color: '#90b1b6',
     y: 25,
     showInLegend: false

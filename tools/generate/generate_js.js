@@ -12,6 +12,11 @@ const generate_js = async () => {
     './node_modules/highcharts/highstock.js',
     './static/js/highstock.js',
   );
+  console.log(` Copying exporting.js`);
+  fs.copy(
+    './node_modules/highcharts/modules/exporting.js',
+    './static/js/exporting.js',
+  );
 };
 
 module.exports = {
