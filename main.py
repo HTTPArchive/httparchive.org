@@ -16,7 +16,6 @@
 import sys
 import logging
 import re
-import os
 from time import time
 try:
     from urllib.parse import urlparse
@@ -43,7 +42,7 @@ logging.basicConfig(level=logging.DEBUG)
 class HttpArchiveWebServer(Flask):
     def get_send_file_max_age(self, name):
         if name:
-            if os.fspath(name).lower().endswith('.woff') or os.fspath(name).lower().endswith('.woff2'):
+            if name.lower().endswith('.woff') or name.lower().endswith('.woff2'):
                 return 31536000
         return Flask.get_send_file_max_age(self, name)
 
