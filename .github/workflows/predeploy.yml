@@ -29,10 +29,10 @@ jobs:
       uses: actions/setup-python@v2.2.2
       with:
         python-version: '3.8'
-    - name: Update timestamps
-      run: npm run timestamps
     - name: Run the website
       run: ./tools/scripts/run_and_test_website.sh
+    - name: Update timestamps
+      run: npm run timestamps
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v3.10.0
