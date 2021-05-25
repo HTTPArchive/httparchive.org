@@ -29,6 +29,8 @@ jobs:
       uses: actions/setup-python@v2.2.2
       with:
         python-version: '3.8'
+    - name: Update timestamps
+      run: npm run timestamps
     - name: Run the website
       run: ./tools/scripts/run_and_test_website.sh
     - name: Create Pull Request
