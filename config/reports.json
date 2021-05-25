@@ -496,9 +496,9 @@
       }
     },
     "cruxFastFcp": {
-      "name": "Fast First Contentful Paint",
+      "name": "Good First Contentful Paint",
       "type": "%",
-      "description": "The percent of \"fast\" FCP experiences less than 1 second.",
+      "description": "The percent of \"good\" FCP experiences, less than or equal to 1 second.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -510,9 +510,9 @@
       }
     },
     "cruxFastFp": {
-      "name": "Fast First Paint",
+      "name": "Good First Paint",
       "type": "%",
-      "description": "The percent of \"fast\" FP experiences less than 1 second.",
+      "description": "The percent of \"good\" FP experiences, less than or equal to 1 second.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -524,9 +524,9 @@
       }
     },
     "cruxFastDcl": {
-      "name": "Fast DOM Content Loaded",
+      "name": "Good DOM Content Loaded",
       "type": "%",
-      "description": "The percent of \"fast\" DCL experiences less than 1 second.",
+      "description": "The percent of \"good\" DCL experiences, less than or equal to 1 second.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -538,9 +538,9 @@
       }
     },
     "cruxFastOl": {
-      "name": "Fast Onload",
+      "name": "Good Onload",
       "type": "%",
-      "description": "The percent of \"fast\" OL experiences less than 1 second.",
+      "description": "The percent of \"good\" OL experiences, less than or equal to 1 second.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -552,9 +552,37 @@
       }
     },
     "cruxFastFid": {
-      "name": "Fast First Input Delay",
+      "name": "Good First Input Delay",
       "type": "%",
-      "description": "The percent of \"fast\" FID experiences less than 50 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+      "description": "The percent of \"good\" FID experiences, less than or equal to 100 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "cruxFastLcp": {
+      "name": "Good Largest Contentful Paint",
+      "type": "%",
+      "description": "The percent of \"good\" LCP experiences, less than or equal to 2.5 seconds.",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "cruxLargeCls": {
+      "name": "Poor Cumulative Layout Shift",
+      "type": "%",
+      "description": "The percent of \"poor\" CLS experiences, greater than 0.25.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -566,9 +594,9 @@
       }
     },
     "cruxSlowFcp": {
-      "name": "Slow First Contentful Paint",
+      "name": "Poor First Contentful Paint",
       "type": "%",
-      "description": "The percent of \"slow\" FCP experiences, which are 2.5 seconds or greater.",
+      "description": "The percent of \"poor\" FCP experiences, greater than 3 seconds.",
       "histogram": {
         "enabled": false
       },
@@ -579,9 +607,36 @@
       }
     },
     "cruxSlowFid": {
-      "name": "Slow First Input Delay",
+      "name": "Poor First Input Delay",
       "type": "%",
-      "description": "The percent of \"slow\" FID experiences, which are 250 ms or greater. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+      "description": "The percent of \"poor\" FID experiences, greater than 250 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "cruxSlowLcp": {
+      "name": "Poor Largest Contentful Paint",
+      "type": "%",
+      "description": "The percent of \"poor\" LCP experiences, greater than 4.0 seconds.",
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "cruxSmallCls": {
+      "name": "Poor Cumulative Layout Shift",
+      "type": "%",
+      "description": "The percent of \"poor\" CLS experiences, greater than 0.25.",
+      "downIsBad": true,
       "histogram": {
         "enabled": false
       },
@@ -1042,18 +1097,22 @@
     "summary": "Loading and interactivity performance as experienced by real-world Chrome users across a diverse set of hardware and network conditions, powered by the [Chrome User Experience Report](https://developers.google.com/web/tools/chrome-user-experience-report/).",
     "image": "/static/img/reports/chrome-user-experience-report.png",
     "metrics": [
+      "cruxFastFcp",
+      "cruxSlowFcp",
+      "cruxFastLcp",
+      "cruxSlowLcp",
+      "cruxFastFid",
+      "cruxSlowFid",
+      "cruxSmallCls",
+      "cruxLargeCls",
       "cruxFp",
       "cruxFcp",
       "cruxDcl",
       "cruxOl",
       "cruxFid",
       "cruxFastFp",
-      "cruxFastFcp",
       "cruxFastDcl",
-      "cruxFastOl",
-      "cruxFastFid",
-      "cruxSlowFcp",
-      "cruxSlowFid"
+      "cruxFastOl"
     ],
     "minDate": "2017_10_01",
     "datePattern": ".*_01$",
