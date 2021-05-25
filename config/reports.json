@@ -633,9 +633,9 @@
       }
     },
     "cruxSmallCls": {
-      "name": "Poor Cumulative Layout Shift",
+      "name": "Good Cumulative Layout Shift",
       "type": "%",
-      "description": "The percent of \"poor\" CLS experiences, greater than 0.25.",
+      "description": "The percent of \"good\" CLS experiences, less and or equal to 0.1.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
