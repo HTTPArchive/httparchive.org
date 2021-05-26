@@ -609,7 +609,7 @@
       "name": "Poor Cumulative Layout Shift",
       "type": "%",
       "description": "The percent of \"poor\" CLS experiences, greater than 0.25.",
-      "downIsBad": true,
+      "downIsBad": false,
       "histogram": {
         "enabled": false
       },
