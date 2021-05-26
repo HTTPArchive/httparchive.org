@@ -24,7 +24,7 @@ https://cdn.httparchive.org/reports/magento/${REPORT_DATE}/vulnJs.json
 https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/vulnJs.json
 https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxCls.json
-https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxOp.json
+https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxOl.json
 END
 )
 
