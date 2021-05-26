@@ -445,6 +445,32 @@
         "scale": 0.001
       }
     },
+    "cruxLcp": {
+      "name": "Largest Contentful Paint",
+      "type": "seconds",
+      "singular": "second",
+      "description": "The number of seconds from the time the navigation started until the browser first renders the largest image or text block visible within the viewport. See the [LargestContentfulPaint API](https://wicg.github.io/largest-contentful-paint/) for more info.",
+      "timeseries": {
+        "enabled": false
+      },
+      "wpt": {
+        "path": "median$firstView$largestContentfulPaint",
+        "scale": 0.001
+      }
+    },
+    "cruxCls": {
+      "name": "Cumulative Layout Shift",
+      "type": "",
+      "singular": "",
+      "description": "The layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page. See the [Cumulative Layout Shift (CLS)](https://web.dev/cls/) for more info.",
+      "timeseries": {
+        "enabled": false
+      },
+      "wpt": {
+        "path": "median$firstView$cumulativeLayoutshift",
+        "scale": 1
+      }
+    },
     "cruxFcp": {
       "name": "First Contentful Paint",
       "type": "seconds",
@@ -1105,14 +1131,16 @@
       "cruxSlowFid",
       "cruxSmallCls",
       "cruxLargeCls",
-      "cruxFp",
-      "cruxFcp",
-      "cruxDcl",
-      "cruxOl",
-      "cruxFid",
       "cruxFastFp",
       "cruxFastDcl",
-      "cruxFastOl"
+      "cruxFastOl",
+      "cruxFcp",
+      "cruxLcp",
+      "cruxFid",
+      "cruxCls",
+      "cruxFp",
+      "cruxDcl",
+      "cruxOl"
     ],
     "minDate": "2017_10_01",
     "datePattern": ".*_01$",

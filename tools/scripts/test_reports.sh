@@ -3,6 +3,9 @@
 if [[ "${REPORT_DATE}" == "" || "${REPORT_DATE}" == "LATEST" ]]
 then
     REPORT_DATE=$(date +%Y_%m_01)
+    CRUX_REPORT_DATE=$(date -d "-1 month" +%Y_%m_01)
+else
+    CRUX_REPORT_DATE="${REPORT_DATE}"
 fi
 FAIL=0
 NUM_TESTS=0
@@ -20,6 +23,8 @@ https://cdn.httparchive.org/reports/magento/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/magento/${REPORT_DATE}/vulnJs.json
 https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/bootupJs.json
 https://cdn.httparchive.org/reports/wordpress/${REPORT_DATE}/vulnJs.json
+https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxCls.json
+https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxOp.json
 END
 )
 
@@ -35,6 +40,15 @@ https://cdn.httparchive.org/reports/magento/numUrls.json
 https://cdn.httparchive.org/reports/magento/a11yButtonName.json
 https://cdn.httparchive.org/reports/wordpress/numUrls.json
 https://cdn.httparchive.org/reports/wordpress/a11yButtonName.json
+END
+)
+
+# These timeseries URLs are tested if the date exists in the returned body
+# For CrUX we always test the month before (unless an explicit date was passed)
+# We test the first and last report
+CRUX_TIMESERIES_URLS=$(cat <<-END
+https://cdn.httparchive.org/reports/cruxFastDcl.json
+https://cdn.httparchive.org/reports/cruxSmallCls.json
 END
 )
 
@@ -62,7 +76,20 @@ do
         echo "${REPORT_DATE} found in body for ${TEST_URL}"
     else
         echo "${REPORT_DATE} not found in body for ${TEST_URL}"
-        FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}\n"
+        FAIL_LOG="${FAIL_LOG}${REPORT_DATE} not found in body for ${TEST_URL}\n"
+        FAIL=$((FAIL+1))
+    fi
+done
+
+for TEST_URL in ${CRUX_TIMESERIES_URLS}
+do
+    NUM_TESTS=$((NUM_TESTS+1))
+    if curl -s "${TEST_URL}" | grep -q "${CRUX_REPORT_DATE}"
+    then
+        echo "${CRUX_REPORT_DATE} found in body for ${TEST_URL}"
+    else
+        echo "${CRUX_REPORT_DATE} not found in body for ${TEST_URL}"
+        FAIL_LOG="${FAIL_LOG}${CRUX_REPORT_DATE} not found in body for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
 done
