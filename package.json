@@ -41,7 +41,7 @@
     "node-fetch": "2.6.1",
     "recursive-readdir": "2.2.2",
     "run-script-os": "1.1.6",
-    "webpack": "5.37.1",
+    "webpack": "5.38.1",
     "webpack-cli": "4.7.0",
     "xml-js": "1.6.11"
   }
