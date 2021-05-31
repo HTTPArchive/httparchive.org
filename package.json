@@ -32,7 +32,7 @@
   "devDependencies": {
     "@babel/cli": "7.14.3",
     "@babel/core": "7.14.3",
-    "@babel/plugin-proposal-object-rest-spread": "7.14.2",
+    "@babel/plugin-proposal-object-rest-spread": "7.14.4",
     "@babel/preset-env": "7.14.2",
     "babel-loader": "8.2.2",
     "ejs": "3.1.6",
