@@ -36,7 +36,7 @@ csp = {
         'www.google.com',
         's.g.doubleclick.net',
         'stats.g.doubleclick.net',
-        'sjc3.discourse-cdn.com',
+        '*.discourse-cdn.com',
         'res.cloudinary.com'
     ]
 }
