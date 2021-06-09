@@ -15,6 +15,7 @@ MAX_REPORT_STALENESS = 60 * 60 * 3
 
 last_report_update = 0
 latest_metric_dates = {}
+latest_metric_check = {}
 report_dates = []
 reports_json = {}
 
@@ -103,8 +104,8 @@ def get_dates():
 def get_latest_date(metric_id):
     global report_dates
     global latest_metric_dates
+    global latest_metric_check
     global MAX_REPORT_STALENESS
-    global last_report_update
 
     # Check the cache before hitting GCS.
     latest_date = latest_metric_dates.get(metric_id)
@@ -115,12 +116,13 @@ def get_latest_date(metric_id):
             return latest_date
         # If it's not the latest date, but we're withing our staleness time period
         # then also OK to use this
-        if (time() - last_report_update) < MAX_REPORT_STALENESS:
+        if (time() - latest_metric_check[metric_id]) < MAX_REPORT_STALENESS:
             return latest_date
 
     # If not using cached value then get the latest value
     latest_date = date_util.get_latest_date(report_dates, metric_id)
     latest_metric_dates[metric_id] = latest_date
+    latest_metric_check[metric_id] = time()
     return latest_date
 
 
