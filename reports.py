@@ -103,12 +103,22 @@ def get_dates():
 def get_latest_date(metric_id):
     global report_dates
     global latest_metric_dates
+    global MAX_REPORT_STALENESS
+    global last_report_update
+
     # Check the cache before hitting GCS.
     latest_date = latest_metric_dates.get(metric_id)
-    # Only return the cached value if it's the latest date
-    # So reports like CrUX which come in later are checked each time
-    if latest_date and latest_date == report_dates[0]:
-        return latest_date
+    if latest_date:
+        # Only return the cached value if it's the latest date
+        # So reports like CrUX which come in later are checked each time
+        if latest_date == report_dates[0]:
+            return latest_date
+        # If it's not the latest date, but we're withing our staleness time period
+        # then also OK to use this
+        if (time() - last_report_update) < MAX_REPORT_STALENESS:
+            return latest_date
+
+    # If not using cached value then get the latest value
     latest_date = date_util.get_latest_date(report_dates, metric_id)
     latest_metric_dates[metric_id] = latest_date
     return latest_date
