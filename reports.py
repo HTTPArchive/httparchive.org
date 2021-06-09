@@ -105,7 +105,9 @@ def get_latest_date(metric_id):
     global latest_metric_dates
     # Check the cache before hitting GCS.
     latest_date = latest_metric_dates.get(metric_id)
-    if latest_date:
+    # Only return the cached value if it's the latest date
+    # So reports like CrUX which come in later are checked each time
+    if latest_date and latest_date == report_dates[0]:
         return latest_date
     latest_date = date_util.get_latest_date(report_dates, metric_id)
     latest_metric_dates[metric_id] = latest_date
