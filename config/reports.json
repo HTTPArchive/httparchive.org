@@ -524,7 +524,7 @@
     "cruxPassesCWV": {
       "name": "Passes Core Web Vitals",
       "type": "%",
-      "description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a \"good\" experience.",
+      "description": "The percentage of origins passing all three [Core Web Vitals](https://web.dev/vitals/#core-web-vitals) (LCP, FID, CLS) with a \"good\" experience.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
