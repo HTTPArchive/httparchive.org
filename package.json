@@ -30,7 +30,7 @@
     "test": "node ./tools/test"
   },
   "devDependencies": {
-    "@babel/cli": "7.14.3",
+    "@babel/cli": "7.14.5",
     "@babel/core": "7.14.3",
     "@babel/plugin-proposal-object-rest-spread": "7.14.4",
     "@babel/preset-env": "7.14.4",
