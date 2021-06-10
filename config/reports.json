@@ -524,7 +524,7 @@
     "cruxPassesCWV": {
       "name": "Passes Core Web Vitals",
       "type": "%",
-      "description": "The percentage of origins passing all three [Core Web Vitals](https://web.dev/vitals/#core-web-vitals) (LCP, FID, CLS) with a \"good\" experience.",
+      "description": "The percentage of origins passing all three [Core Web Vitals](https://web.dev/vitals/#core-web-vitals) (LCP, FID, CLS) with a \"good\" experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -538,7 +538,7 @@
     "cruxFastFcp": {
       "name": "Good First Contentful Paint",
       "type": "%",
-      "description": "The percentage of origins with \"good\" FCP experiences, less than or equal to 1 second.",
+      "description": "The percentage of origins with \"good\" FCP experiences, less than or equal to 1.8 seconds.",
       "downIsBad": true,
       "histogram": {
         "enabled": false

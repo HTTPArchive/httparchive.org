@@ -114,7 +114,7 @@ def get_latest_date(metric_id):
         # So reports like CrUX which come in later are checked each time
         if latest_date == report_dates[0]:
             return latest_date
-        # If it's not the latest date, but we're withing our staleness time period
+        # If it's not the latest date, but we're within our staleness time period
         # then also OK to use this
         if (time() - latest_metric_check[metric_id]) < MAX_REPORT_STALENESS:
             return latest_date
