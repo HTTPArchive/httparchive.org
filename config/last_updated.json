@@ -26,8 +26,8 @@
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2021-05-19T00:00:00.000Z",
-    "hash": "e96a3b2f9f14fddd5d94fc6212c9a373"
+    "date_modified": "2021-06-11T00:00:00.000Z",
+    "hash": "90619e80ed0f5910a5e1e45517874619"
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -36,13 +36,13 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2021-05-19T00:00:00.000Z",
-    "hash": "c0a7c04eeba32ef638f18006d047baaa"
+    "date_modified": "2021-06-11T00:00:00.000Z",
+    "hash": "7ad858bec13415e7341f872341766528"
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2021-05-19T00:00:00.000Z",
-    "hash": "9e37379df58a4a4dd15e0cecb8912fec"
+    "date_modified": "2021-06-11T00:00:00.000Z",
+    "hash": "7c93440dd848cbbc2625657f567f7a86"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -96,8 +96,8 @@
   },
   "reports/chrome-ux-report": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-05-26T00:00:00.000Z",
-    "hash": "eeeda1bc66a1c9ab1a9390a3da727daa"
+    "date_modified": "2021-06-11T00:00:00.000Z",
+    "hash": "d726e51a5f474037387bb6c622b60386"
   },
   "reports/loading-speed": {
     "date_published": "2018-05-08T00:00:00.000Z",
