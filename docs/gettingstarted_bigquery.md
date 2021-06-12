@@ -23,7 +23,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 4. Optional: Enable Billing by clicking on the Billing menu item and adding your billing information.
 
-    *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
+    *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing#free-tier) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
 
 5. Navigate to the [Big Query console](https://bigquery.cloud.google.com).  Note that if you see "Beta" then you are using the new UI which is currently in Beta. You can easily switch between the Beta and Classic UIs as needed.
 
