@@ -155,9 +155,9 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="{{ get_versioned_filename('/static/js/highstock.js') }}"></script>
-  <script src="{{ get_versioned_filename('/static/js/exporting.js') }}"></script>
-  <script src="{{ get_versioned_filename('/static/js/report.js') }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/highstock.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/exporting.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/report.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script nonce="{{ csp_nonce() }}">
     var report = {{ report|tojson }};
     report.url = {{ script_root|tojson|safe }};

@@ -130,5 +130,5 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="{{ get_versioned_filename('/static/js/index.js') }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/index.js') }}" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}
