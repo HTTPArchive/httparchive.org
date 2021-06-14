@@ -72,9 +72,9 @@
   <link rel="preload" href="/static/fonts/opensans-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/styles.css') }}">
-  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" nonce="{{ csp_nonce() }}"></script>
   <script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>
-  <script async defer src="https://cdn.speedcurve.com/js/lux.js?id=104609804"></script>
+  <script async defer src="https://cdn.speedcurve.com/js/lux.js?id=104609804" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}
 
 {% block content %}
@@ -201,7 +201,7 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="{{ get_versioned_filename('/static/js/main.js') }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/main.js') }}" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}
 
 {% macro report_graphic(report) %}

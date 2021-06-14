@@ -6,6 +6,7 @@ csp = {
     ],
     'script-src': [
         '\'self\'',
+        '\'strict-dynamic\'',
         'cdn.httparchive.org',
         'www.google-analytics.com',
         'use.fontawesome.com',
@@ -38,5 +39,15 @@ csp = {
         'stats.g.doubleclick.net',
         '*.discourse-cdn.com',
         'res.cloudinary.com'
+    ],
+    'frame-src': [
+        '\'none\''
+    ],
+    'object-src': [
+        '\'none\''
+    ],
+    'base-uri': [
+        '\'none\''
     ]
+
 }

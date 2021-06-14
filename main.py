@@ -354,7 +354,6 @@ def default_favicon():
     content_security_policy_nonce_in=['script-src']
 )
 def sitemap():
-    delattr(request, 'csp_nonce')
     xml = render_template('sitemap.xml')
     resp = app.make_response(xml)
     resp.mimetype = "text/xml"
