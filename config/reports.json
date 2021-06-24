@@ -289,7 +289,21 @@
     "h2": {
       "name": "HTTP/2 Requests",
       "type": "%",
-      "description": "The percent of all requests in the crawl using HTTP/2.",
+      "description": "The percent of all requests in the crawl using HTTP/2. Note servers supporting HTTP/2 and HTTP/3, may use HTTP/2 initially due to the way the HTTPArchive starts with a fresh Chrome instance each time, but may use HTTP/3 on subsequent requests.",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "h3": {
+      "name": "HTTP/3 Support",
+      "type": "%",
+      "description": "The percent of all requests in the crawl which support HTTP/3. Note that, due to the way the HTTPArchive starts with a fresh Chrome instance each time, HTTP/3 will often not be used for initial connections until the browser is aware the server supports HTTP/3, which is why we measure support, rather than actual usage like we do for HTTP/2.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -1069,6 +1083,7 @@
       "pctVuln",
       "tcp",
       "h2",
+      "h3",
       "vulnJs",
       "fontDisplay"
     ],
