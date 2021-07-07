@@ -100,7 +100,7 @@ FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTT
 if [[ ${FAIL} -ne 0 && ${FAIL} -eq ${NUM_TESTS} ]]
 then
     TITLE="All reports have failed for ${REPORT_DATE}"
-elif [[ ${FAIL} -ne 0 && ${FAIL} < ${NUM_TESTS} ]]
+elif [[ ${FAIL} -ne 0 && ${FAIL} -lt ${NUM_TESTS} ]]
 then
     TITLE="Some reports have failed for ${REPORT_DATE}"
 fi
