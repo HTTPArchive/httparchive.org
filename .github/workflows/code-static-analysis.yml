@@ -34,10 +34,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
       - name: Set up Python 3.8
+        if: ${{ matrix.language == 'python' }}
         uses: actions/setup-python@v2.2.2
         with:
           python-version: '3.8'
       - name: Install dependencies
+        if: ${{ matrix.language == 'python' }}
         run: |
           pip install -r requirements.txt;
           # Set the `CODEQL-PYTHON` environment variable to the Python executable
@@ -48,5 +50,6 @@ jobs:
         with:
           queries: +security-and-quality
           setup-python-dependencies: false
+          languages: '${{ matrix.language }}'
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
