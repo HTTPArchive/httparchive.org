@@ -12,7 +12,8 @@ csp = {
         'use.fontawesome.com',
         'cdn.speedcurve.com',
         'spdcrv.global.ssl.fastly.net',
-        'lux.speedcurve.com'
+        'lux.speedcurve.com',
+        '\'unsafe-inline\''
     ],
     'font-src': [
         '\'self\''
@@ -48,6 +49,12 @@ csp = {
     ],
     'base-uri': [
         '\'none\''
+    ],
+    'report-uri': [
+        'https://httparchive.report-uri.com/r/d/csp/enforce'
+    ],
+    'report-to': [
+        'https://httparchive.report-uri.com/r/d/csp/enforce'
     ]
 
 }
