@@ -30,16 +30,7 @@ csp = {
     ],
     'img-src': [
         '\'self\'',
-        'lux.speedcurve.com',
-        'almanac.httparchive.org',
-        'discuss.httparchive.org',
-        'avatars.discourse.org',
-        'www.google-analytics.com',
-        'www.google.com',
-        's.g.doubleclick.net',
-        'stats.g.doubleclick.net',
-        '*.discourse-cdn.com',
-        'res.cloudinary.com'
+        'https:'
     ],
     'frame-src': [
         '\'none\''
