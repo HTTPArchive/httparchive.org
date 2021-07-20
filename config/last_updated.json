@@ -6,8 +6,8 @@
   },
   "/static/css/index.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "495df86a2484fab21cf45408c98308e5"
+    "date_modified": "2021-07-20T00:00:00.000Z",
+    "hash": "7c3287d4a7e4cb6574375131255aff18"
   },
   "/static/css/report.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -21,8 +21,8 @@
   },
   "/static/css/styles.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "c5dfe3a91d8e78b171cd5c3059ab55d7"
+    "date_modified": "2021-07-20T00:00:00.000Z",
+    "hash": "ae98b87db5a383c8f9f6144562d91fde"
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
@@ -86,8 +86,8 @@
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "4175215c50ddf55e54368fdc8f5884ee"
+    "date_modified": "2021-07-20T00:00:00.000Z",
+    "hash": "eb87217674359fe9d73b8d26347d5810"
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",
