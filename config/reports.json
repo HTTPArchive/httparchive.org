@@ -276,8 +276,8 @@
     },
     "tcp": {
       "name": "TCP Connections Per Page",
-      "type": "Connections",
-      "singular": "Connection",
+      "type": "",
+      "singular": "",
       "description": "The number of TCP connections per page.",
       "histogram": {
         "minDate": "2014_05_15"
