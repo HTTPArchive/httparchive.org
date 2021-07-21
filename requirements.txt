@@ -1,5 +1,5 @@
 Flask==2.0.1
 Flask-Markdown==0.3
 flask-talisman==0.8.1
-google-cloud-storage==1.41.0
+google-cloud-storage==1.41.1
 gunicorn==20.1.0
