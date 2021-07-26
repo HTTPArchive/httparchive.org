@@ -348,20 +348,17 @@ footer {
   line-height: 25px;
 }
 
-header .pddl0 {
-  margin-right: -4px;
-}
-
 header [class*="col"],
 footer [class*="col"],
 section [class*="col"] {
   display: inline-block;
   float: none;
+  margin-right: -4px;
   vertical-align: middle;
 }
 
 .container {
-  padding: 15px;
+  padding: 18px;
 }
 
 .logo {
@@ -766,6 +763,10 @@ input {
 }
 
 @media (max-width: 767px) {
+  h1 {
+    font-size: 2.65em;
+  }
+
   h2 {
     font-size: 2em;
   }
