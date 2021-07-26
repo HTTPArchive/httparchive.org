@@ -348,15 +348,12 @@ footer {
   line-height: 25px;
 }
 
-header .pddl0 {
-  margin-right: -4px;
-}
-
 header [class*="col"],
 footer [class*="col"],
 section [class*="col"] {
   display: inline-block;
   float: none;
+  margin-right: -4px;
   vertical-align: middle;
 }
 
