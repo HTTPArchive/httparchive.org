@@ -358,7 +358,7 @@ section [class*="col"] {
 }
 
 .container {
-  padding: 15px;
+  padding: 18px;
 }
 
 .logo {
@@ -764,7 +764,7 @@ input {
 
 @media (max-width: 767px) {
   h1 {
-    font-size: 2.7em;
+    font-size: 2.65em;
   }
 
   h2 {
