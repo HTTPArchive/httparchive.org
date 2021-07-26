@@ -170,7 +170,7 @@
     "hreflang": {
       "name": "hreflang",
       "type": "%",
-      "description": "The percent of pages with valid `hreflang` attributes, which allows crawlers to discover alternate translations of the page content. Validity is measured by Lighthouse. This metric is only available in mobile tests.",
+      "description": "The percent of pages with a valid `hreflang` attribute, which allows crawlers to discover alternate translations of the page content. Validity is measured by Lighthouse. This metric is only available in mobile tests.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
