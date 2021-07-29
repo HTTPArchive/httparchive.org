@@ -23,6 +23,18 @@
     },
     "wordpress": {
       "name": "WordPress"
+    },
+    "top1k": {
+      "name": "Top 1,000"
+    },
+    "top10k": {
+      "name": "Top 10,000"
+    },
+    "top100k": {
+      "name": "Top 100,000"
+    },
+    "top1m": {
+      "name": "Top 1,000,000"
     }
   },
   "_metrics": {
