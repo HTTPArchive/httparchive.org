@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@babel/cli": "7.15.4",
-    "@babel/core": "7.15.0",
+    "@babel/core": "7.15.4",
     "@babel/plugin-proposal-object-rest-spread": "7.14.7",
     "@babel/preset-env": "7.15.4",
     "babel-loader": "8.2.2",
