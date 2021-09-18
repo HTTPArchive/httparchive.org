@@ -30,11 +30,6 @@
     "test": "node ./tools/test"
   },
   "devDependencies": {
-    "@babel/cli": "7.15.4",
-    "@babel/core": "7.15.5",
-    "@babel/plugin-proposal-object-rest-spread": "7.15.6",
-    "@babel/preset-env": "7.15.6",
-    "babel-loader": "8.2.2",
     "ejs": "3.1.6",
     "fs-extra": "10.0.0",
     "highcharts": "9.2.2",
