@@ -161,7 +161,8 @@ def reports():
 @app.route('/reports/<report_id>')
 def report(report_id):
     report = report_util.get_report(report_id)
-    if not report:
+    external_reports = report_util.get_external_reports()
+    if not report or report_id in external_reports:
         abort(404)
 
     dates = report_util.get_dates()

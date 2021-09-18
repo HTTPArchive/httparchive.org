@@ -66,6 +66,7 @@ const test_status_codes = async () => {
   await test_status_code('/reports/state-of-the-web?lens=drupal', 200);
   await test_status_code('/reports/state-of-the-web?start=2018_04_15&end=latest', 200);
   await test_status_code('/reports/state-of-the-web?view=grid', 200);
+  await test_status_code('/reports/cwv-tech', 404);
 
   // Test non-sitemap pages
   await test_status_code('/sitemap.xml', 200);
