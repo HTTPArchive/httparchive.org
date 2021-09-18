@@ -27,11 +27,13 @@ const get_last_update_json = async () => {
 const find_asset_files = async () => {
   const filter = (file, stats) => {
     const isJS = file && file.endsWith('.js');
+    const isJSMap = file && file.endsWith('.js.map');
     const isCSS = file && file.endsWith('.css');
+    const isCSSMap = file && file.endsWith('.css.map');
     const isPDF = file && file.endsWith('.pdf');
     const isDirectory = stats && stats.isDirectory();
 
-    return !isJS && !isCSS && !isPDF && !isDirectory;
+    return !isJS && !isJSMap && !isCSS && !isCSSMap && !isPDF && !isDirectory;
   };
 
   return await recursive('static', [filter]);
