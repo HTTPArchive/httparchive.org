@@ -1198,13 +1198,13 @@
       "swControlledPages"
     ],
     "graphic": {
-      "bgcolor": "#fff",
+      "bgcolor": "#97b5b9",
       "primary": {
         "text": "PWA",
-        "color": "#6800cb"
+        "color": "#eee"
       },
       "secondary": {
-        "color": "rgba(0, 0, 0, 0.3)",
+        "color": "rgba(255, 255, 255, 0.3)",
         "icon": "fas fa-cogs"
       }
     }
@@ -1271,13 +1271,13 @@
     "url": "https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC",
     "metrics": [],
     "graphic": {
-      "bgcolor": "#97b5b9",
+      "bgcolor": "#fff",
       "primary": {
-        "color": "#eee",
+        "color": "#444",
         "icon": "fas fa-wrench"
       },
       "secondary": {
-        "color": "rgba(255, 255, 255, 0.3)",
+        "color": "rgba(0, 0, 0, 0.3)",
         "icon": "fas fa-tachometer-alt"
       }
     }
