@@ -1,22 +1,25 @@
 const fs = require('fs-extra');
 
+node_module_files = [
+  'highcharts/highcharts-more.js',
+  'highcharts/highstock.js',
+  'highcharts/modules/exporting.js',
+  'highcharts/highcharts-more.js.map',
+  'highcharts/highstock.js.map',
+  'highcharts/modules/exporting.js.map'
+];
+
 const generate_js = async () => {
-  console.log(`\n Generating non-webpack JavaScript`);
-  console.log(` Copying highcharts-more.js`);
-  fs.copy(
-    './node_modules/highcharts/highcharts-more.js',
-    './static/js/highcharts-more.js',
-  );
-  console.log(` Copying highstock.js`);
-  fs.copy(
-    './node_modules/highcharts/highstock.js',
-    './static/js/highstock.js',
-  );
-  console.log(` Copying exporting.js`);
-  fs.copy(
-    './node_modules/highcharts/modules/exporting.js',
-    './static/js/exporting.js',
-  );
+  console.log(`\n Copying JavaScript Libraries from node_modules`);
+  for (idx in node_module_files) {
+    const file = node_module_files[idx]
+    const filename = file.replace(/.*\//,'');
+    console.log(" Copying ", filename);
+    fs.copy(
+      './node_modules/' + file,
+      './static/js/' + filename,
+    );
+  }
 };
 
 module.exports = {
