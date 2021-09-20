@@ -162,8 +162,12 @@ def reports():
 def report(report_id):
     report = report_util.get_report(report_id)
     external_reports = report_util.get_external_reports()
-    if not report or report_id in external_reports:
+    if not report:
         abort(404)
+
+    report_url = report_util.get_report(report_id).get('url')
+    if report_url:
+        return redirect(report_url), 301
 
     dates = report_util.get_dates()
     if not dates:
