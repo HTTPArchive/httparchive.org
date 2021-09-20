@@ -604,9 +604,11 @@ ul.bulleted li ul {
   padding: 6px 20px;
   background-color: #fff;
   font-size: 1.3rem;
-  line-height: 1.3rem;
+  line-height: 1.5rem;
   text-align: center;
   color: #667a7d;
+  white-space: normal !important;
+  word-wrap: break-word;
 }
 
 .btn:hover,
