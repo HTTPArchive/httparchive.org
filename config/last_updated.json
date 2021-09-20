@@ -41,8 +41,8 @@
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-06-24T00:00:00.000Z",
-    "hash": "eda1cf10f99c6c8c0ed177bb3f9448ac"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "9394c8c9bd791fff1eabb0a7e413ed27"
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
@@ -66,28 +66,28 @@
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-06-24T00:00:00.000Z",
-    "hash": "b2d86c24fd586ad45e88a9f4228fdba1"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "c760f38b3e611c49b7da66fddf4e1d60"
   },
   "/static/js/index.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "776c5a9f4d7215df0c624415c4a946f5"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "543c929c341a7fe2ba6c0731cfcfb703"
   },
   "/static/js/main.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-24T00:00:00.000Z",
-    "hash": "36da1f8970107c2d3feb46fa51f5e9f0"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "a2d81ca3ac7a77b3ec5a671bc43ecf58"
   },
   "/static/js/report.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-06-24T00:00:00.000Z",
-    "hash": "84f85f0eac023ce6d5b7d7cb9b14a247"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "63d4b296d1aba99875379b0d4d853128"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-06-24T00:00:00.000Z",
-    "hash": "be1ce1897cf63c2ed9e2ef72a4203d8f"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "49f27fd803e2446acbb26dd7eef5f927"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -106,8 +106,8 @@
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-07-20T00:00:00.000Z",
-    "hash": "eb87217674359fe9d73b8d26347d5810"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "a321aa8c89d6af946437d30f92c12166"
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -118,6 +118,11 @@
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-06-11T00:00:00.000Z",
     "hash": "d726e51a5f474037387bb6c622b60386"
+  },
+  "reports/cwv-tech": {
+    "date_published": "2021-09-20T00:00:00.000Z",
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "f063ced5899d6334168c77ddd407afd8"
   },
   "reports/loading-speed": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -131,8 +136,8 @@
   },
   "reports/progressive-web-apps": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "8fb8983e0a28cc2433f25ce9063e844b"
+    "date_modified": "2021-09-20T00:00:00.000Z",
+    "hash": "c3426cc768e51a570af5fccbc537c785"
   },
   "reports/project-fugu": {
     "date_published": "2020-07-31T00:00:00.000Z",
