@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#import main
 from main import app, talisman
 import pytest
 
@@ -31,7 +30,7 @@ def assert_route(client, path, status, location=None):
     response = client.get(path)
     redirect_loc = response.location
     if redirect_loc:
-        redirect_loc = redirect_loc.replace('http://localhost', '')
+        redirect_loc = redirect_loc.replace("http://localhost", "")
     if location is not None:
         assert response.status_code == status and redirect_loc == location
     else:
@@ -39,16 +38,21 @@ def assert_route(client, path, status, location=None):
 
 
 def test_index(client):
-    assert_route(client, '/', 200)
+    assert_route(client, "/", 200)
 
 
 def test_reports(client):
-    assert_route(client, '/reports', 200)
+    assert_route(client, "/reports", 200)
 
 
 def test_report(client):
-    assert_route(client, '/reports/state-of-the-web', 200)
+    assert_route(client, "/reports/state-of-the-web", 200)
 
 
 def test_external_report(client):
-    assert_route(client, '/reports/cwv-tech', 301, 'https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC')
+    assert_route(
+        client,
+        "/reports/cwv-tech",
+        301,
+        "https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC",
+    )
