@@ -166,7 +166,7 @@ def report(report_id):
 
     report_url = report_util.get_report(report_id).get('url')
     if report_url:
-        return redirect(report_url), 301
+        return redirect(report_url), 302
 
     dates = report_util.get_dates()
     if not dates:
