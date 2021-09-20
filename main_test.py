@@ -12,20 +12,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import main
+#import main
+from main import app, talisman
+import pytest
 
 
-def test_index():
-    main.app.testing = True
-    client = main.app.test_client()
+# Create test client without https redirect
+# (normally taken care of by running in debug)
+@pytest.fixture
+def client():
+    with app.test_client() as client:
+        talisman.force_https = False
+        yield client
 
-    r = client.get('/')
-    assert r.status_code == 200
+
+# Add a function to test routes with optional location
+def assert_route(client, path, status, location=None):
+    response = client.get(path)
+    redirect_loc = response.location
+    if redirect_loc:
+        redirect_loc = redirect_loc.replace('http://localhost', '')
+    if location is not None:
+        assert response.status_code == status and redirect_loc == location
+    else:
+        assert response.status_code == status
 
 
-def test_report():
-    main.app.testing = True
-    client = main.app.test_client()
+def test_index(client):
+    assert_route(client, '/', 200)
 
-    r = client.get('/report')
-    assert r.status_code == 200
+
+def test_reports(client):
+    assert_route(client, '/reports', 200)
+
+
+def test_report(client):
+    assert_route(client, '/reports/state-of-the-web', 200)
+
+
+def test_external_report(client):
+    assert_route(client, '/reports/cwv-tech', 301, 'https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC')

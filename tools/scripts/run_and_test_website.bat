@@ -31,7 +31,7 @@ rem # Use sleep as well in case running in GitBash where above command fails
 sleep 5
 
 rem echo "Running pytest"
-rem npm run pytest
+call npm run pytest
 
 echo "Testing website"
 call npm run test
