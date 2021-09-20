@@ -110,8 +110,9 @@
               <ul class="dropdown-content reports">
                 <li><a href="{{ url_for('reports') }}">All Reports</a></li>
                 {% for report in reports %}
+                {% set url = report.url or url_for('report', report_id=report.id) %}
                   <li>
-                    <a href="{{ url_for('report', report_id=report.id) }}">
+                    <a href="{{ url }}">
                       {{ report.name }}
                     </a>
                   </li>

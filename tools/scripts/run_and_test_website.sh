@@ -65,7 +65,7 @@ npm run build
 npm run generate
 
 #echo "Running pytest"
-#npm run pytest
+npm run pytest
 
 echo "Testing website"
 npm run test

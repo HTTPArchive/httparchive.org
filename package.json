@@ -27,6 +27,7 @@
     "lint": "run-script-os",
     "lint:darwin:linux": "docker container run -it --rm -v \"$PWD\":/app -w /app --entrypoint=./tools/scripts/run_linter_locally.sh github/super-linter",
     "lint:win32": "docker container run --rm -v \"%cd%\":/app -w /app/ --entrypoint=./tools/scripts/run_linter_locally.sh github/super-linter",
+    "pytest": "pytest --cov . --cov-fail-under=70 --cov-report=term-missing -s",
     "test": "node ./tools/test"
   },
   "devDependencies": {

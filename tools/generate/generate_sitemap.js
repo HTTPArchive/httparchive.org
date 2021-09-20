@@ -28,11 +28,15 @@ const generate_sitemap = async () => {
   // Get the sitemap entries for reports
   const report_config = await get_report_config();
   for (const report of report_config._reports) {
-    const loc = `reports/${report}`;
+    if (report_config[report] && report_config[report].url && report_config[report].url.startsWith('http')) {
+      console.log(`Skipping ${report} as has external url\n`)
+    } else {
+      const loc = `reports/${report}`;
       const lastmod = get_lastmod_date(loc);
       const url = convert_file_name(loc);
 
       urls.push({ url, lastmod });
+    }
   }
 
   // Sort the urls to prevent needless change

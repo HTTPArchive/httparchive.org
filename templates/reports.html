@@ -18,23 +18,24 @@
       </div>
     </div>
     {% for report in reports %}
+    {% set url = report.url or url_for('report', report_id=report.id) %}
     <div class="report row">
       <div class="container {{ loop.cycle('', 'alt') }}">
         <div class="col-lg-5 col-sm-6 col-md-6 col-xs-12 hidden-xs">
-          <a href="{{ url_for('report', report_id=report.id) }}" title="{{ report.name }}">
+          <a href="{{ url }}" title="{{ report.name }}">
             {{ report_graphic(report) }}
           </a>
         </div>
         <div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
           <h2>
-            <a href="{{ url_for('report', report_id=report.id) }}">
+            <a href="{{ url }}">
               {{ report.name }}
             </a>
           </h2>
 
           {{ report.summary | markdown }}
 
-          <a href="{{ url_for('report', report_id=report.id) }}" class="btn">View the {{ report.name }} Report</a>
+          <a href="{{ url }}" class="btn">View the {{ report.name }}{% if not report.name.endswith('Report') %} Report{% endif %}</a>
 
         </div>
       </div>
