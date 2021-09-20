@@ -45,13 +45,6 @@ def get_reports():
     return list(map(get_report, reports_json.get('_reports')))
 
 
-def get_external_reports():
-    global reports_json
-    update_reports()
-
-    return reports_json.get('_externalReports') or []
-
-
 def get_featured_reports():
     global reports_json
     update_reports()
