@@ -607,7 +607,7 @@ ul.bulleted li ul {
   line-height: 1.5rem;
   text-align: center;
   color: #667a7d;
-  white-space:normal !important;
+  white-space: normal !important;
   word-wrap: break-word;
 }
 
