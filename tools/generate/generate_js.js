@@ -11,7 +11,7 @@ node_module_files = [
 
 const generate_js = async () => {
   console.log(`\n Copying JavaScript Libraries from node_modules`);
-  for (idx in node_module_files) {
+  for (let idx in node_module_files) {
     const file = node_module_files[idx]
     const filename = file.replace(/.*\//,'');
     console.log(" Copying ", filename);
