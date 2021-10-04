@@ -1,4 +1,4 @@
-Flask==2.0.1
+Flask==2.0.2
 Flask-Markdown==0.3
 flask-talisman==0.8.1
 google-cloud-storage==1.42.3
