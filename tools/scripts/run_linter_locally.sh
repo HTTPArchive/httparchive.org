@@ -6,7 +6,7 @@
 #
 # Run the GitHub Super-Linter locally
 # useful to avoid waiting on the push to get feed back
-# 
+#
 # It can be run to lint everthing if no params are passed
 # Or pass one or more params to just lint those files or folders
 #
@@ -48,14 +48,14 @@ fi
 export RUN_LOCAL=true
 export VALIDATE_BASH=true
 export FILTER_REGEX_EXCLUDE=".*\.min\..*"
-export VALIDATE_CSS=true
-export VALIDATE_HTML=true
-export VALIDATE_JAVASCRIPT_ES=true
-export VALIDATE_JSON=true
-export VALIDATE_MD=true
-export VALIDATE_PYTHON_PYLINT=true
-export VALIDATE_PYTHON_FLAKE8=true
-export VALIDATE_YAML=true
+# export VALIDATE_CSS=true
+# export VALIDATE_HTML=true
+# export VALIDATE_JAVASCRIPT_ES=true
+# export VALIDATE_JSON=true
+export VALIDATE_MARKDOWN=true
+# export VALIDATE_PYTHON_PYLINT=true
+# export VALIDATE_PYTHON_FLAKE8=true
+# export VALIDATE_YAML=true
 
 echo "Starting linting"
 /action/lib/linter.sh "$@"

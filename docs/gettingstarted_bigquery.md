@@ -1,6 +1,6 @@
 # Getting Started Accessing the HTTP Archive with BigQuery
 
-The [HTTP Archive ](https://httparchive.org)is an open source project that tracks how the web is built. Historical data is provided to show how the web is constantly evolving, and the project is frequently used for research by the web community, scholars and industry leaders. If you are interested in digging into the HTTP Archive and are not sure where to start, then this guide should help you get started quickly.
+The [HTTP Archive](https://httparchive.org) is an open source project that tracks how the web is built. Historical data is provided to show how the web is constantly evolving, and the project is frequently used for research by the web community, scholars and industry leaders. If you are interested in digging into the HTTP Archive and are not sure where to start, then this guide should help you get started quickly.
 
 There are over 1 million pages tracked on desktop and emulated mobile in the most recent HTTP Archive data, and the historical data goes back to 2010. While the HTTP Archive website makes a lot of information available via [curated reports](https://httparchive.org/reports), analyzing the raw data is a powerful way of answering your questions about the web.
 
@@ -53,7 +53,8 @@ In order to understand what each of these tables contain, you can click on the t
 
 Some of the types of tables you'll find useful when getting started are described below. These table names all follow the format `yyyy_mm_dd_desktop` and `yyyy_mm_dd_mobile`.
 
-### Summary Tables:
+### Summary Tables
+
 * `summary_pages` tables:
     * Each row contains details about a single page including timings, # of requests, types of requests and sizes.
     * Information about the page load such # of domains, redirects, errors, https requests, CDN, etc.
@@ -66,7 +67,8 @@ Some of the types of tables you'll find useful when getting started are describe
     * Information about the object, and how it was loaded.
     * Contains some response headers for each object.
 
-### HAR Tables:
+### HAR Tables
+
 The HTTP Archive stores detailed information about each page load in [HAR (HTTP Archive) files](https://en.wikipedia.org/wiki/.har). Each HAR file is JSON formatted and contains detailed performance data about a web page.  The [specification for this format](https://w3c.github.io/web-performance/specs/HAR/Overview.html) is produced by the Web Performance Working Group of the W3C. The HTTP Archive splits each HAR file into multiple BigQuery tables, which are described below.
 
 * `pages` tables
