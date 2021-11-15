@@ -82,7 +82,7 @@ h2 + p {
   width: 100%;
 }
 
-#TOC li {
+#toc li {
   list-style-type: initial;
   list-style-position: inside;
   text-align: left;
@@ -90,11 +90,11 @@ h2 + p {
   padding-bottom: 5px;
 }
 
-#TOC li ul {
+#toc li ul {
   margin-left: 20px;
 }
 
-#TOC a {
+#toc a {
   color: #444;
 }
 
@@ -169,7 +169,7 @@ th {
   border: 1px solid #666;
   background-color: #eee;
   border-top: none;
-  opacity: 0.5;
+  opacity: 50%;
 }
 
 .volume div.desktop {

@@ -7,6 +7,7 @@
                 "ignoreAtRules": ["prince-pdf"]
             }
         ],
+        "color-function-notation": null,
         "comment-empty-line-before": null,
         "font-family-no-duplicate-names": [
             true,
@@ -15,6 +16,7 @@
             }
         ],
         "length-zero-no-unit": null,
+        "max-line-length": null,
         "no-descending-specificity": null,
         "no-eol-whitespace": [
             true,
