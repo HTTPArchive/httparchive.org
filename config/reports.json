@@ -49,7 +49,7 @@
       "name": "Speed Index",
       "type": "seconds",
       "singular": "second",
-      "description": "How quickly the contents of a page are visibly populated.  This metric comes from [Lighthouse](https://web.dev/speed-index/) and is only available in mobile tests."
+      "description": "How quickly the contents of a page are visibly populated. This metric comes from [WebPageTest](https://github.com/WPO-Foundation/webpagetest-docs/blob/main/src/metrics/SpeedIndex.md) and differs slightly from the [Lighthouse version](https://web.dev/speed-index/) (which was based on this)."
     },
     "bytesCss": {
       "name": "CSS Bytes",
