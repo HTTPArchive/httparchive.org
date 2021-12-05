@@ -45,6 +45,12 @@
       "singular": "second",
       "description": "The amount of CPU time each script consumes per page.  This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests."
     },
+    "speedIndex": {
+      "name": "Speed Index",
+      "type": "seconds",
+      "singular": "second",
+      "description": "How quickly the contents of a page are visibly populated.  This metric comes from [Lighthouse](https://web.dev/speed-index/) and is only available in mobile tests."
+    },
     "bytesCss": {
       "name": "CSS Bytes",
       "type": "KB",
@@ -1060,7 +1066,8 @@
       "ttci",
       "dcl",
       "ol",
-      "bootupJs"
+      "bootupJs",
+      "speedIndex"
     ],
     "graphic": {
       "bgcolor": "#97b5b9",
