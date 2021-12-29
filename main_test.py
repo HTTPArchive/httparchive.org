@@ -49,6 +49,10 @@ def test_report(client):
     assert_route(client, "/reports/state-of-the-web", 200)
 
 
+def test_reports_www(client):
+    assert_route(client, "https://www.httparchive.org/reports", 301, "https://httparchive.org/reports")
+
+
 def test_external_report(client):
     assert_route(
         client,
