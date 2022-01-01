@@ -125,8 +125,9 @@ def test_sitemap(client):
 
 def test_favicon(client):
     response = client.get('/favicon.ico')
+    # Note flask sometimes returns image/x-icon and sometimes image/vnd.microsoft.icon
     assert response.status_code == 200 and \
-        'image/x-icon' in response.headers.get('Content-Type')
+        'image/' in response.headers.get('Content-Type')
 
 
 def test_metric(client):
