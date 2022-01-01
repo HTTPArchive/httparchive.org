@@ -19,7 +19,7 @@ import re
 from time import time
 try:
     from urllib.parse import urlparse, urlunparse
-except ImportError:
+except ImportError:  # pragma: no cover
     from urlparse import urlparse, urlunparse
 
 from csp import csp
@@ -179,7 +179,7 @@ def report(report_id):
         return redirect(report_url), 302
 
     dates = report_util.get_dates()
-    if not dates:
+    if not dates:  # pragma: no cover
         abort(500)
 
     min_date = report.get('minDate')
@@ -241,7 +241,7 @@ def report(report_id):
     viz = report_util.VizTypes.HISTOGRAM if (start and not end) else report_util.VizTypes.TIMESERIES
 
     if viz == report_util.VizTypes.TIMESERIES and report.get('timeseries') \
-       and not report.get('timeseries').get('enabled'):
+       and not report.get('timeseries').get('enabled'):  # pragma: no cover
         end = None
         viz = report_util.VizTypes.HISTOGRAM
 
@@ -338,13 +338,13 @@ def page_not_found(e):
 
 
 @app.errorhandler(500)
-def server_error_500(e):
+def server_error_500(e):  # pragma: no cover
     logging.exception('An error occurred during a request.')
     return render_template('error/500.html', error=e), 500
 
 
 @app.errorhandler(502)
-def server_error_502(e):
+def server_error_502(e):  # pragma: no cover
     return render_template('error/502.html', error=e), 502
 
 
@@ -382,12 +382,12 @@ if __name__ == '__main__':
     #    python main.py background &
     # then run in non-debug mode, as debug mode can't be backgrounded
     # but debug mode is useful in general (as auto reloads on change)
-    if len(sys.argv) > 1 and sys.argv[1] == 'background':
+    if len(sys.argv) > 1 and sys.argv[1] == 'background':  # pragma: no cover
         logging.debug('Running in background mode')
         # Turn off HTTPS redirects (automatically turned off for debug)
         talisman.force_https = False
         app.run(host='0.0.0.0', port=8080)
-    else:
+    else:  # pragma: no cover
         logging.debug('Running in debug mode')
         app.run(host='0.0.0.0', port=8080, debug=True)
 

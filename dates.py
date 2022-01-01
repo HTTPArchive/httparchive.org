@@ -20,7 +20,7 @@ GCS_BUCKET = 'httparchive'
 LOAD_DATES_FROM_GCS = True
 try:
     gcs = storage.Client()
-except DefaultCredentialsError:
+except DefaultCredentialsError:  # pragma: no cover
     logger.warning('Unable to authenticate to Google Cloud Storage.')
     LOAD_DATES_FROM_GCS = False
 
@@ -53,7 +53,7 @@ except DefaultCredentialsError:
     mock_dates = mock_get_dates(2010, now.year, now.day, now.month)
 
 
-def get_dates():
+def get_dates():  # pragma: no cover
     if not LOAD_DATES_FROM_GCS:
         logger.warning('Google Cloud Storage disabled, using mock_get_dates()')
         return mock_dates
@@ -71,7 +71,7 @@ def get_dates():
     return dates
 
 
-def get_latest_date(dates, metric_id):
+def get_latest_date(dates, metric_id):  # pragma: no cover
     if not LOAD_DATES_FROM_GCS:
         logger.warning('Google Cloud Storage disabled, using mock_get_latest_date')
         return mock_dates[0]

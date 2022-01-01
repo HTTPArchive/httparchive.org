@@ -3,7 +3,7 @@ class Page:
         self.name = name
         self.kwargs = kwargs
 
-    def set_kwargs(self, **kwargs):
+    def set_kwargs(self, **kwargs):  # pragma: no cover
         self.kwargs = kwargs
 
 

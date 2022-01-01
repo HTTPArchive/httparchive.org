@@ -28,7 +28,7 @@ def find_anchor(query):
     questions = [question for question in anchors if query.lower() in question.lower()]
     if len(questions):
         return anchors.get(questions[0])
-    return None
+    return None  # pragma: no cover
 
 
 load_faq()
