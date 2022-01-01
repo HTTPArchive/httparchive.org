@@ -52,7 +52,7 @@ def get_featured_reports():
     return map(get_report, reports_json.get('_featured'))
 
 
-def map_reports(report_id):  ## pragma: no cover
+def map_reports(report_id):  # pragma: no cover
     global reports_json
     report = reports_json.get(report_id)
     report['id'] = report_id
@@ -109,7 +109,7 @@ def get_latest_date(metric_id):
 
     # Check the cache before hitting GCS.
     latest_date = latest_metric_dates.get(metric_id)
-    if latest_date:  ## pragma: no cover
+    if latest_date:  # pragma: no cover
         # Only return the cached value if it's the latest date
         # So reports like CrUX which come in later are checked each time
         if latest_date == report_dates[0]:
