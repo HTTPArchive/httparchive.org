@@ -45,8 +45,101 @@ def test_reports(client):
     assert_route(client, "/reports", 200)
 
 
-def test_report(client):
+def test_report_state_of_the_web(client):
     assert_route(client, "/reports/state-of-the-web", 200)
+
+
+def test_report_state_of_the_web_lens(client):
+    response = client.get('/reports/state-of-the-web?lens=top1k')
+    assert response.status_code == 200 and \
+        '<option value="top1k" selected>' in response.get_data(as_text=True)
+
+
+def test_reports_json(client):
+    response = client.get('/reports?f=json')
+    assert response.status_code == 200 and \
+        'application/json' in response.headers.get('Content-Type')
+
+
+def test_report_state_of_the_web_json(client):
+    response = client.get('/reports/state-of-the-web?f=json')
+    assert response.status_code == 200 and \
+        'application/json' in response.headers.get('Content-Type')
+
+
+def test_invalid_report(client):
+    assert_route(client, "/reports/test", 404)
+
+
+def test_report_invalid_start_date(client):
+    assert_route(client, "/reports/state-of-the-web?start=1900_05_15&end=latest&view=list", 400)
+
+
+def test_report_invalid_end_date(client):
+    assert_route(client, "/reports/state-of-the-web?start=earliest&end=1900_05_15&view=list", 400)
+
+
+def test_report_crux_max_date(client):
+    assert_route(client, "/reports/chrome-ux-report", 200)
+
+
+def test_report_latest(client):
+    assert_route(client, "/reports/state-of-the-web?end=latest&view=list", 200)
+
+
+def test_report_earliest(client):
+    assert_route(client, "/reports/state-of-the-web?start=earliest&view=list", 200)
+
+
+def test_report_earliest_end(client):
+    assert_route(client, "/reports/state-of-the-web?start=earliest&end=earliest&view=list", 200)
+
+
+def test_about(client):
+    assert_route(client, "/about", 200)
+
+
+def test_faq(client):
+    assert_route(client, "/faq", 200)
+
+
+def test_faq_legacy(client):
+    assert_route(client, "/downloads.php", 301, "/faq#how-do-i-use-bigquery-to-write-custom-queries-over-the-data")
+
+
+def test_legacy_page(client):
+    assert_route(client, "/index.php", 301, "/")
+
+
+def test_robots_txt(client):
+    response = client.get('/robots.txt')
+    assert response.status_code == 200 and \
+        'text/plain' in response.headers.get('Content-Type')
+
+
+def test_sitemap(client):
+    response = client.get('/sitemap.xml')
+    assert response.status_code == 200 and \
+        'text/xml' in response.headers.get('Content-Type')
+
+
+def test_favicon(client):
+    response = client.get('/favicon.ico')
+    # Note flask sometimes returns image/x-icon and sometimes image/vnd.microsoft.icon
+    assert response.status_code == 200 and \
+        'image/' in response.headers.get('Content-Type')
+
+
+def test_metric(client):
+    response = client.get('/metric.json')
+    assert response.status_code == 200 and \
+        'id parameter required' in response.get_data(as_text=True)
+
+
+def test_metric_speedindex(client):
+    response = client.get('/metric.json?id=speedIndex')
+    assert response.status_code == 200 and \
+        '"description":"How quickly the contents of a page' in response.get_data(as_text=True)
 
 
 def test_external_report(client):
@@ -56,3 +149,15 @@ def test_external_report(client):
         302,
         "https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC",
     )
+
+
+def test_render_efonts_cache_control(client):
+    response = client.get('/static/fonts/opensans-latin-700.woff2')
+    assert response.status_code == 200 and \
+        'max-age=3153600' in response.headers.get('Cache-Control')
+
+
+def test_render_js_cache_control(client):
+    response = client.get('/static/js/main.js')
+    assert response.status_code == 200 and \
+        'max-age=10800' in response.headers.get('Cache-Control')
