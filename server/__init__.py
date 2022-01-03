@@ -35,6 +35,7 @@ ROOT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 TEMPLATES_DIR = ROOT_DIR + '/templates'
 STATIC_DIR = ROOT_DIR + '/static'
 
+
 # Set WOFF and WOFF2 caching to return 1 year as they should never change
 # Note this requires similar set up in app.yaml for Google App Engine
 class HttpArchiveWebServer(Flask):
