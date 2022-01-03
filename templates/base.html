@@ -33,6 +33,8 @@
       ga('create', 'UA-22381566-2', 'auto');
       ga('send', 'pageview');
     </script>
+    <script defer src="{{ get_versioned_filename('/static/js/web-vitals.js') }}" nonce="{{ csp_nonce() }}"></script>
+    <script defer src="{{ get_versioned_filename('/static/js/send-web-vitals.js') }}" nonce="{{ csp_nonce() }}"></script>
     {% endblock %}
   </body>
 </html>

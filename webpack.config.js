@@ -9,6 +9,7 @@ module.exports = {
     'report': './src/js/report.js',
     'histogram': './src/js/histogram.js',
     'timeseries': './src/js/timeseries.js',
+    'send-web-vitals': './src/js/send-web-vitals.js',
   },
   output: {
     path: path.resolve(__dirname, 'static/js'),
