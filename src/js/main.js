@@ -2,11 +2,15 @@ const nav = document.querySelector('header nav');
 const mobileNav = document.querySelector('nav#mobile');
 const hamburger = document.querySelector('header .hamburger');
 
-hamburger.addEventListener('click', (e) => {
-  mobileNav.classList.toggle('active');
-});
+if (mobileNav) {
+  if (hamburger) {
+    hamburger.addEventListener('click', (e) => {
+      mobileNav.classList.toggle('active');
+    });
+  }
 
-mobileNav.innerHTML = nav.innerHTML;
+  mobileNav.innerHTML = nav.innerHTML;
+}
 
 const closeBtn = document.querySelector('.alert .close');
 if (closeBtn) {

@@ -17,6 +17,7 @@ import os
 import logging
 from flask import Flask, request, render_template as flask_render_template, \
                   redirect, url_for as flask_url_for
+from werkzeug.http import HTTP_STATUS_CODES
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 from urllib.parse import urlparse, urlunparse
@@ -117,6 +118,7 @@ def url_for(endpoint, **kwargs):
 
 app.jinja_env.globals['url_for'] = url_for
 app.jinja_env.globals['get_versioned_filename'] = timestamps_util.get_versioned_filename
+app.jinja_env.globals['HTTP_STATUS_CODES'] = HTTP_STATUS_CODES
 
 
 # Circular Import but this is fine because routes and errors modules are not used in here and
