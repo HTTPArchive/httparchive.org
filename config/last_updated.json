@@ -76,8 +76,8 @@
   },
   "/static/js/main.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-09-20T00:00:00.000Z",
-    "hash": "a2d81ca3ac7a77b3ec5a671bc43ecf58"
+    "date_modified": "2022-01-03T00:00:00.000Z",
+    "hash": "359b1488c83de5823b7da7a345b92f92"
   },
   "/static/js/report.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -121,8 +121,8 @@
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "f2a604a8026afbb2c7f778f412731ae7"
+    "date_modified": "2022-01-03T00:00:00.000Z",
+    "hash": "3ecdfc4c4e9a55dbf61742186e10b952"
   },
   "reports/chrome-ux-report": {
     "date_published": "2018-05-08T00:00:00.000Z",
