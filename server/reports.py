@@ -2,7 +2,8 @@ import json
 from copy import deepcopy
 from time import time
 
-import dates as date_util
+
+from . import dates as date_util
 
 
 class VizTypes():

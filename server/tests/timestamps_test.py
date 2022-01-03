@@ -1,4 +1,4 @@
-from timestamps import get_versioned_filename
+from server.timestamps import get_versioned_filename
 
 
 def test_versioned_file():
