@@ -15,13 +15,20 @@ def index():
                            faq=faq_util)
 
 
-@app.route('/about')
+@app.route('/about', strict_slashes=False)
 def about():
+
+    if request.base_url[-1] == "/":
+        return redirect("/about"), 301
+
     return render_template('about.html', reports=report_util.get_reports())
 
 
-@app.route('/faq')
+@app.route('/faq', strict_slashes=False)
 def faq():
+
+    if request.base_url[-1] == "/":
+        return redirect("/faq"), 301
     return render_template('faq.html',
                            reports=report_util.get_reports(),
                            faq=faq_util)
@@ -46,8 +53,12 @@ def metric():
     )
 
 
-@app.route('/reports')
+@app.route('/reports', strict_slashes=False)
 def reports():
+
+    if request.base_url[-1] == "/":
+        return redirect("/reports"), 301
+
     all_reports = report_util.get_reports()
 
     # Return as JSON if requested.
@@ -57,8 +68,12 @@ def reports():
     return render_template('reports.html', reports=all_reports)
 
 
-@app.route('/reports/<report_id>')
+@app.route('/reports/<report_id>', strict_slashes=False)
 def report(report_id):
+
+    if request.base_url[-1] == "/":
+        return redirect("/reports/%s" % (report_id)), 301
+
     report = report_util.get_report(report_id)
     if not report:
         abort(404)

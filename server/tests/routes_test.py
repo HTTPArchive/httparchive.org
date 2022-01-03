@@ -45,8 +45,16 @@ def test_reports(client):
     assert_route(client, "/reports", 200)
 
 
+def test_reports_with_slash(client):
+    assert_route(client, "/reports/", 301, "/reports")
+
+
 def test_report_state_of_the_web(client):
     assert_route(client, "/reports/state-of-the-web", 200)
+
+
+def test_report_state_of_the_web_with_slash(client):
+    assert_route(client, "/reports/state-of-the-web/", 301, "/reports/state-of-the-web")
 
 
 def test_reports_www(client):
@@ -107,8 +115,16 @@ def test_about(client):
     assert_route(client, "/about", 200)
 
 
+def test_about_with_slash(client):
+    assert_route(client, "/about/", 301, "/about")
+
+
 def test_faq(client):
     assert_route(client, "/faq", 200)
+
+
+def test_faq_with_slash(client):
+    assert_route(client, "/faq/", 301, "/faq")
 
 
 def test_faq_legacy(client):

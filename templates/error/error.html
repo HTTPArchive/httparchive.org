@@ -41,4 +41,14 @@
   </section>
 {% endblock %}
 
-{% block scripts %}{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script nonce="{{ csp_nonce() }}">
+  ga('send', 'event', {
+    'eventAction': '{{ HTTP_STATUS_CODES[error.code] }}',
+    'eventCategory': 'error',
+    'eventLabel': '{{ request.path }}',
+    'eventValue': 1
+  });
+</script>
+{% endblock %}
