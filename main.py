@@ -18,9 +18,9 @@ import logging
 import re
 from time import time
 try:
-    from urllib.parse import urlparse
+    from urllib.parse import urlparse, urlunparse
 except ImportError:  # pragma: no cover
-    from urlparse import urlparse
+    from urlparse import urlparse, urlunparse
 
 from csp import csp
 import reports as report_util
@@ -54,6 +54,16 @@ talisman = Talisman(app,
                     content_security_policy=csp,
                     content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
+
+
+@app.before_request
+def redirect_www():
+    """Redirect www requests to bare domain."""
+    urlparts = urlparse(request.url)
+    if urlparts.netloc == 'www.httparchive.org':
+        urlparts_list = list(urlparts)
+        urlparts_list[1] = 'httparchive.org'
+        return redirect(urlunparse(urlparts_list), code=301)
 
 
 @app.after_request
