@@ -20,6 +20,11 @@ const generate_js = async () => {
       './static/js/' + filename,
     );
   }
+  console.log(`\n Generating web-vitals.js`);
+  fs.copy(
+    './node_modules/web-vitals/dist/web-vitals.umd.js',
+    './static/js/web-vitals.js',
+  );
 };
 
 module.exports = {
