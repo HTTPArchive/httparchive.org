@@ -53,6 +53,10 @@ def test_reports_www(client):
     assert_route(client, "https://www.httparchive.org/reports", 301, "https://httparchive.org/reports")
 
 
+def test_reports_beta(client):
+    assert_route(client, "https://beta.httparchive.org/reports", 301, "https://httparchive.org/reports")
+
+
 def test_report_state_of_the_web_lens(client):
     response = client.get('/reports/state-of-the-web?lens=top1k')
     assert response.status_code == 200 and \

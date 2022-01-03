@@ -58,9 +58,9 @@ legacy_util = Legacy(faq_util)
 
 @app.before_request
 def redirect_www():
-    """Redirect www requests to bare domain."""
+    """Redirect www and beta requests to bare domain."""
     urlparts = urlparse(request.url)
-    if urlparts.netloc == 'www.httparchive.org':
+    if urlparts.netloc == 'www.httparchive.org' or urlparts.netloc == 'beta.httparchive.org':
         urlparts_list = list(urlparts)
         urlparts_list[1] = 'httparchive.org'
         return redirect(urlunparse(urlparts_list), code=301)
