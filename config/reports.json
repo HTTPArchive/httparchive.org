@@ -768,7 +768,21 @@
       "name": "Bypass",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/bypass) that checks if pages provide a way to bypass repeated blocks of content.",
+      "description": "The percent of pages that pass the [Lighthouse bypass audit](https://dequeuniversity.com/rules/axe/2.2/bypass) that checks if pages provide a way to bypass repeated blocks of content.",
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "a11yColorContrast": {
+      "name": "Color Contrast",
+      "type": "%",
+      "downIsBad": true,
+      "description": "The percent of pages that pass the [Lighthouse color-contrast audit](https://web.dev/color-contrast/) that checks if pages background and foreground colors do not have a sufficient contrast ratio.",
       "histogram": {
         "enabled": false
       },
@@ -782,7 +796,7 @@
       "name": "Image Alt",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/image-alt) that checks if all images have alternate text.",
+      "description": "The percent of pages that pass the [Lighthouse image-alt audit](https://dequeuniversity.com/rules/axe/2.2/image-alt) that checks if all images have alternate text.",
       "histogram": {
         "enabled": false
       },
@@ -796,7 +810,7 @@
       "name": "Label",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/label) that checks if all form elements have associated labels.",
+      "description": "The percent of pages that pass the [Lighthouse label audit](https://dequeuniversity.com/rules/axe/2.2/label) that checks if all form elements have associated labels.",
       "histogram": {
         "enabled": false
       },
@@ -810,7 +824,7 @@
       "name": "Link Name",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse audit](https://dequeuniversity.com/rules/axe/2.2/link-name) that checks if all links have discernable text.",
+      "description": "The percent of pages that pass the [Lighthouse link-name audit](https://dequeuniversity.com/rules/axe/2.2/link-name) that checks if all links have discernable text.",
       "histogram": {
         "enabled": false
       },
@@ -1221,6 +1235,7 @@
       "a11yScores",
       "a11yButtonName",
       "a11yBypass",
+      "a11yColorContrast",
       "a11yImageAlt",
       "a11yLabel",
       "a11yLinkName"
