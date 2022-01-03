@@ -64,7 +64,7 @@ def redirect_www():
         urlparts_list = list(urlparts)
         urlparts_list[1] = 'httparchive.org'
         return redirect(urlunparse(urlparts_list), code=301)
-    return
+    return None
 
 
 @app.after_request
