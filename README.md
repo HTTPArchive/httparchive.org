@@ -5,10 +5,10 @@ New and improved version of [HTTP Archive](https://httparchive.org). This replac
 
 [Source](https://cloud.google.com/appengine/docs/flexible/python/quickstart)
 
-1. If you don't have virtualenv, install it using pip.
+1. If you don't have virtualenv, install it using pip3.
 
 ```
-sudo pip install virtualenv
+sudo pip3 install virtualenv
 ```
 
 2. Create an isolated Python environment, and install dependencies:
@@ -16,7 +16,7 @@ sudo pip install virtualenv
 ```
 virtualenv --python python3.8 .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 3. Install the NPM dependencies:
