@@ -37,7 +37,7 @@ jobs:
       uses: actions/checkout@v2.4.0
     - name: Run the report checks
       env:
-         REPORT_DATE: ${{ github.event.inputs.REPORT_DATE }}
+        REPORT_DATE: ${{ github.event.inputs.REPORT_DATE }}
       run: ./tools/scripts/test_reports.sh
       continue-on-error: true
     - name: Open Issue for Failures
