@@ -5,13 +5,11 @@
       "assertions": {
         "bootup-time": "off",
         "canonical": "off",
-        "csp-xss": "off",
         "dom-size": "off",
         "first-contentful-paint": "off",
         "first-cpu-idle": "off",
         "first-meaningful-paint": "off",
         "font-display": "off",
-        "inspector-issues": "off",
         "installable-manifest": "off",
         "interactive": "off",
         "is-crawlable": "off",
@@ -34,9 +32,7 @@
         "unused-css-rules": "off",
         "unused-javascript": "off",
         "uses-long-cache-ttl": "off",
-        "uses-passive-event-listeners": "off",
         "uses-rel-preconnect": "off",
-        "uses-rel-preload": "off",
         "uses-responsive-images": "off",
         "uses-text-compression": "off",
         "uses-webp-images": "off"
