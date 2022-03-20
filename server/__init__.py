@@ -53,6 +53,7 @@ app = HttpArchiveWebServer(__name__, template_folder=TEMPLATES_DIR, static_folde
 Markdown(app)
 talisman = Talisman(app,
                     content_security_policy=csp,
+                    content_security_policy_report_uri="https://httparchive.report-uri.com/r/d/csp/enforce",
                     content_security_policy_nonce_in=['script-src'])
 legacy_util = Legacy(faq_util)
 
