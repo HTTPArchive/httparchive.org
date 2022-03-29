@@ -13,8 +13,6 @@ const test_status_code = async (page, status, location) => {
 
   if (location == undefined) {
     location = null;
-  } else if (!location.startsWith('http')) {
-    location = base_url + location;
   }
 
   try {
