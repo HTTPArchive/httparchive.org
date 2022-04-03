@@ -12,6 +12,7 @@ sh.setFormatter(fmt)
 # Register stream handler
 logger = logging.getLogger(__name__)
 logger.addHandler(sh)
+mock_dates = []
 
 GCS_BUCKET = 'httparchive'
 
