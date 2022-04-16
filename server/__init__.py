@@ -16,7 +16,7 @@
 import os
 import logging
 from flask import Flask, request, render_template as flask_render_template, \
-                  redirect, url_for as flask_url_for
+    redirect, url_for as flask_url_for
 from werkzeug.http import HTTP_STATUS_CODES
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
@@ -102,7 +102,7 @@ def render_template(template, *args, **kwargs):
     date_modified = timestamps_util.get_file_date_info(template, "date_modified")
 
     kwargs.update(date_published=date_published,
-                  date_modified=date_modified)
+                    date_modified=date_modified)
     return flask_render_template(template, *args, **kwargs)
 
 

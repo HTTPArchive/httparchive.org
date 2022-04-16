@@ -25,7 +25,7 @@ pip install -r requirements.txt
 npm install
 ```
 
- 4. Initialize the Google Cloud CLI (this is necessary because the App Engine server uses Google Cloud APIs):
+4. Initialize the Google Cloud CLI (this is necessary because the App Engine server uses Google Cloud APIs):
 
 ```
 gcloud init
