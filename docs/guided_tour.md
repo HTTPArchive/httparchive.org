@@ -7,8 +7,8 @@ If you are new to BigQuery, then the [Getting Started guide](./gettingstarted_bi
 
 *Prerequisites: This guide assumes that you've completed the setup from the [Getting Started guide](./gettingstarted_bigquery.md). It also assumes some familiarity with SQL. All of the examples provided will be using [Standard SQL](https://cloud.google.com/bigquery/docs/reference/standard-sql/). If you are looking to adapt older HTTP Archive queries, written in [Legacy SQL](https://cloud.google.com/bigquery/docs/reference/legacy-sql), then you may find this [migration guide](https://cloud.google.com/bigquery/docs/reference/standard-sql/migrating-from-legacy-sql) helpful.*
 
-This guide is split into multiple sections, each one focusing on different tables in the HTTP Archive. Each section builds on top of the previous one. 
- 
+This guide is split into multiple sections, each one focusing on different tables in the HTTP Archive. Each section builds on top of the previous one.
+
 1. [Exploring the Summary Pages Tables](./guided_tour_summary_pages.md)
 2. [Exploring the Summary Requests Tables](./guided_tour_summary_requests.md)
 3. [JOINing Summary_Pages and Summary_Requests Tables](./guided_tour_summary_pages_requests.md)

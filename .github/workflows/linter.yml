@@ -36,6 +36,7 @@ jobs:
           FILTER_REGEX_EXCLUDE: .*\.min\..*
           VALIDATE_BASH: true
           VALIDATE_CSS: true
+          VALIDATE_EDITORCONFIG: true
           VALIDATE_HTML: true
           VALIDATE_JAVASCRIPT_ES: true
           VALIDATE_JSON: true

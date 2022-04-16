@@ -14,7 +14,7 @@ This document is an update to [Ilya Grigorik's 2013 introduction](https://www.ig
 In order to access the HTTP Archive via BigQuery, you'll need a Google account.  To document this process for new visitors, this example uses a new Google account that has never logged into any Google Cloud services.
 
 1. Navigate to the [Google Cloud Projects Page](https://console.cloud.google.com/start) and log in with your Google account if prompted.  If this is your first time accessing Google Cloud, you may be prompted to accept the terms of service. Once you are logged in, you'll see a page like this -
-   ![Getting Started](images/google_cloud_gettingstarted.jpg)
+  ![Getting Started](images/google_cloud_gettingstarted.jpg)
 
 2. Click `Select a project` and then "New Project".   This takes you to a New Project page.
 
@@ -23,7 +23,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 4. Optional: Enable Billing by clicking on the Billing menu item and adding your billing information.
 
-    *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing#free-tier) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
+  *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing#free-tier) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
 
 5. Navigate to the [Big Query console](https://bigquery.cloud.google.com).  Note that if you see "Beta" then you are using the new UI which is currently in Beta. You can easily switch between the Beta and Classic UIs as needed.
 
@@ -31,8 +31,8 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 6. In order to add the HTTP Archive tables to your project, follow this link: [https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset](https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset)
 
-   *Note: If you want to pin the httparchive project to your account so that you do not have to use the above link every time, then you can switch to the classic UI and follow the instructions below
-   ![Adding HTTP Archive Tables - Classic UI](images/adding_httparchive_to_bigquery_classic_UI.jpg)*
+  *Note: If you want to pin the httparchive project to your account so that you do not have to use the above link every time, then you can switch to the classic UI and follow the instructions below
+  ![Adding HTTP Archive Tables - Classic UI](images/adding_httparchive_to_bigquery_classic_UI.jpg)*
 
 7. At this point you should see the httparchive tables in your BigQuery dashboard.   If you expand the httparchive project, you'll see folders for all the different tables. In the next section, we explore the structure of these tables so you can start digging in!
   ![Setup Complete](images/httparchive_setup_complete.jpg)
@@ -112,8 +112,10 @@ The [HTTP Archive Discuss section](https://discuss.httparchive.org/) has lots of
 Now that you are all set up, let's run some queries!  Most HTTP Archive users start off examining the summary tables, so we'll start there as well. Below is a simple aggregate query that tells you how many URLs are contained in the latest HTTP Archive data.
 
 ```
-SELECT COUNT(*) total_pages
-FROM `httparchive.summary_pages.2018_09_01_desktop`
+SELECT
+  COUNT(0) total_pages
+FROM
+  `httparchive.summary_pages.2018_09_01_desktop`
 ```
 
 ![Simple Aggregate Query](images/simple_agg_query_example.jpg)
@@ -121,11 +123,15 @@ FROM `httparchive.summary_pages.2018_09_01_desktop`
 Perhaps you want to JOIN the pages and requests tables together, and see how many page URLs and request URLs are in this data set.
 
 ```
-SELECT COUNT(distinct pages.url) total_pages,
-       COUNT(*) total_requests
-FROM `httparchive.summary_pages.2018_09_01_desktop` pages
-INNER JOIN `httparchive.summary_requests.2018_09_01_desktop`requests
-ON pages.pageid = requests.pageid
+SELECT
+  COUNT(distinct pages.url) total_pages,
+  COUNT(0) total_requests
+FROM
+  `httparchive.summary_pages.2018_09_01_desktop` pages
+INNER JOIN
+  `httparchive.summary_requests.2018_09_01_desktop`requests
+ON
+  pages.pageid = requests.pageid
 ```
 
 When we look at the results of this, you can see how much data was processed during this query.  Writing efficient queries limits the number of bytes processed - which is helpful since that's how BigQuery is billed.   *Note: There is 1TB free per month*
@@ -133,21 +139,28 @@ When we look at the results of this, you can see how much data was processed dur
 ![Simple JOIN Example](images/simple_join_example.jpg)
 
 If you look closely, you'll notice that this particular query could actually be written without the JOIN. For example, we can count `distinct pageid` from the `summary_requests` table instead of JOINing the `summary_pages` table. If you run this query, you'll notice that the results are the same as the previous query, and the processed bytes are less.
+
 ```
-SELECT COUNT(distinct pageid) total_pages,
-       COUNT(*) total_requests
-FROM `httparchive.summary_requests.2018_09_01_desktop`requests
+SELECT
+  COUNT(distinct pageid) total_pages,
+  COUNT(0) total_requests
+FROM
+  `httparchive.summary_requests.2018_09_01_desktop`requests
 ```
 
 Next let's summarize  all of the HTTP requests by mime type, and the number of pages that contain at least one request of that mime type.  In the example  below, you can see that I added `mimeType` to the SELECT clause, added a GROUP clause and sorted the results by mimeTypes that have the most requests.
 
 ```
-SELECT mimeType,
-       COUNT(distinct pageid) total_pages,
-       COUNT(*) total_requests
-FROM `httparchive.summary_requests.2018_09_01_desktop`requests
-GROUP BY mimeType
-ORDER BY total_requests DESC
+SELECT
+  mimeType,
+  COUNT(distinct pageid) total_pages,
+  COUNT(0) total_requests
+FROM
+  `httparchive.summary_requests.2018_09_01_desktop`requests
+GROUP BY
+  mimeType
+ORDER BY
+  total_requests DESC
 ```
 
 Now things are starting to get interesting.
@@ -157,15 +170,24 @@ Now things are starting to get interesting.
 So let's try to learn something from this basic example.   We know from the first example that there are 1.2 million URLs in the latest HTTP Archive dataset. Let's calculate the percent of pages that have each mimeType. To do this, we'll divide the number of pages by the total pages (using our first query as a subquery). Then we'll use a `ROUND()` function to trim the result to 2 decimal points.
 
 ```
-SELECT mimeType,
-       COUNT(distinct pageid) total_pages,
-       COUNT(*) total_requests,
-       ROUND(
-          COUNT(distinct pageid) / (SELECT COUNT(*) FROM `httparchive.summary_pages.2018_09_01_desktop`)
-          ,2) percent_pages
-FROM `httparchive.summary_requests.2018_09_01_desktop`requests
-GROUP BY mimeType
-ORDER BY total_requests DESC
+SELECT
+  mimeType,
+  COUNT(distinct pageid) total_pages,
+  COUNT(0) total_requests,
+  ROUND(
+    COUNT(distinct pageid) / (
+      SELECT
+        COUNT(0)
+      FROM
+        `httparchive.summary_pages.2018_09_01_desktop`
+    )
+    , 2) percent_pages
+FROM
+  `httparchive.summary_requests.2018_09_01_desktop`requests
+GROUP BY
+  mimeType
+ORDER BY
+  total_requests DESC
 ```
 
 When analyzing the results from this, you can see the % of websites that use different Content-Types for their JavaScript, you can see that 93% of sites have at least one PNG image, 89% have at least 1 GIF, 48% use JSON, and 3% of sites have MP4 videos on their homepage, etc.
