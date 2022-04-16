@@ -101,8 +101,7 @@ def render_template(template, *args, **kwargs):
     date_published = timestamps_util.get_file_date_info(template, "date_published")
     date_modified = timestamps_util.get_file_date_info(template, "date_modified")
 
-    kwargs.update(date_published=date_published,
-        date_modified=date_modified)
+    kwargs.update(date_published=date_published, date_modified=date_modified)
     return flask_render_template(template, *args, **kwargs)
 
 
