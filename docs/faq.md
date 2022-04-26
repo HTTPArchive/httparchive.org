@@ -18,7 +18,25 @@ The list of URLs is fed to our private instance of [WebPageTest](https://webpage
 
 As of March 1 2016, the tests are performed on Chrome for desktop and emulated Android (on Chrome) for mobile.
 
-The test agents are located in the [Internet Systems Consortium](https://www.isc.org/) data center in Redwood City, CA. Each URL is loaded 3 times with an empty cache ("first view"). The data from the median run (based on load time) is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates our database with the relevant information. The data is also available in [BigQuery](https://bigquery.cloud.google.com/dataset/httparchive:pages).
+The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates various tables in [BigQuery](https://bigquery.cloud.google.com/dataset/httparchive).
+
+The test infrastructure uses fixed, reserved IP addresses and crawl traffic will come from one of these (and they will only be used for HTTP Archive crawl traffic):
+
+- 34.70.135.249
+- 34.82.69.144
+- 34.102.25.232
+- 34.105.27.245
+- 34.106.20.144
+- 34.106.57.32
+- 34.122.58.12
+- 34.125.80.148
+- 34.125.215.28
+- 34.145.183.240
+- 34.148.198.182
+- 34.148.244.203
+- 35.194.67.240
+- 35.222.15.125
+- 35.236.8.58
 
 
 ## How accurate is the data, in particular the time measurements?
@@ -27,12 +45,12 @@ Some metrics like the number of bytes, HTTP headers, etc are accurate at the tim
 
 The time measurements are gathered in a test environment, and thus have all the potential biases that come with that:
 
-- browser - All tests are performed using a single browser. Page load times can vary depending on browser.
-- location - The HAR files are generated from Redwood City, CA. The distance to the site's servers can affect time measurements.
-- sample size - Each URL is loaded three times. The HAR file is generated from the median test run. This is not a large sample size.
-- Internet connection - The connection speed, latency, and packet loss from the test location is another variable that affects time measurements.
+- **Browser** - All tests are performed using a single browser. Page load times can vary depending on browser.
+- **Location** - The HAR files are generated from various datacenters in the US. The distance to the site's servers can affect time measurements.
+- **Sample size** - Each URL is loaded only once.
+- **Internet connection** - The connection speed, latency, and packet loss from the test location is another variable that affects time measurements.
 
-Given these conditions it's virtually impossible to compare WebPagetest.org's time measurements with those gathered in other browsers or locations or connection speeds. They are best used as a source of comparison.
+Given these conditions it's virtually impossible to compare the HTTP Archive's time measurements with those gathered in other browsers, locations or connection speeds. They are best used as a source of comparison only within the HTTP Archive dataset.
 
 
 ## How do I use BigQuery to write custom queries over the data?
@@ -72,7 +90,7 @@ See the full list of [HTTP Archive sponsors](/about#sponsors).
 
 ## How do I make a donation to support the HTTP Archive?
 
-The HTTP Archive is part of the Internet Archive, a 501(c)(3) non-profit. Donations in support of the HTTP Archive can be made through the Internet Archive's [donation page](https://archive.org/donate/). Make sure to send a follow-up email to [donations@archive.org](mailto:donations@archive.org?subject=HTTP+Archive+donation) designating your donation to the "HTTP Archive".
+Donations in support of the HTTP Archive can be made through the [Open Collective](https://opencollective.com/httparchive).
 
 
 ## Who maintains the HTTP Archive?
