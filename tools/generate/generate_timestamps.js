@@ -97,7 +97,7 @@ const write_files_dates_file = async () => {
   console.log("Writing file")
 
   try {
-    fs.writeFile(last_update_json, JSON.stringify(file_dates + '\n', null, 2), (err) => {
+    fs.writeFile(last_update_json, JSON.stringify(file_dates, null, 2) + '\n', (err) => {
       if (err) console.log('Error')
     });
   } catch(err) {
