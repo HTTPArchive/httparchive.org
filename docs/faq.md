@@ -23,20 +23,20 @@ The test agents are run from [Google Cloud regions](https://cloud.google.com/com
 The test infrastructure uses fixed, reserved IP addresses and crawl traffic will come from one of these (and they will only be used for HTTP Archive crawl traffic):
 
 - 34.70.135.249
-- 34.122.58.12
-- 35.222.15.125
-- 34.148.244.203
-- 34.148.198.182
-- 35.194.67.240
-- 34.145.183.240
-- 34.105.27.245
 - 34.82.69.144
-- 35.236.8.58
 - 34.102.25.232
+- 34.105.27.245
 - 34.106.20.144
 - 34.106.57.32
+- 34.122.58.12
 - 34.125.80.148
 - 34.125.215.28
+- 34.145.183.240
+- 34.148.198.182
+- 34.148.244.203
+- 35.194.67.240
+- 35.222.15.125
+- 35.236.8.58
 
 
 ## How accurate is the data, in particular the time measurements?
