@@ -46,9 +46,9 @@ Some metrics like the number of bytes, HTTP headers, etc are accurate at the tim
 The time measurements are gathered in a test environment, and thus have all the potential biases that come with that:
 
 - **Browser** - All tests are performed using a single browser. Page load times can vary depending on browser.
-- location - The HAR files are generated from various datacenters in the US. The distance to the site's servers can affect time measurements.
-- sample size - Each URL is loaded only once.
-- Internet connection - The connection speed, latency, and packet loss from the test location is another variable that affects time measurements.
+- **Location** - The HAR files are generated from various datacenters in the US. The distance to the site's servers can affect time measurements.
+- **Sample size** - Each URL is loaded only once.
+- **Internet connection** - The connection speed, latency, and packet loss from the test location is another variable that affects time measurements.
 
 Given these conditions it's virtually impossible to compare the HTTP Archive's time measurements with those gathered in other browsers, locations or connection speeds. They are best used as a source of comparison only within the HTTP Archive dataset.
 
