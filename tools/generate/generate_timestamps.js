@@ -63,6 +63,10 @@ const get_template_pages_dates = async () => {
   for (const file of static_pages) {
     if (fs.existsSync(`templates/${file}`)) {
       let content = await fs.readFile(`templates/${file}`, 'utf-8');
+      if (`${file}` == 'faq.html') {
+        // For FAQ page, also check changes to the FAQs (stored in markdown)
+        content = content + await fs.readFile(`docs/faq.md`, 'utf-8');
+      }
       let hash = crypto.createHash('md5').update(content).digest("hex");
       check_and_update_date(file, hash, null);
     }
@@ -97,7 +101,7 @@ const write_files_dates_file = async () => {
   console.log("Writing file")
 
   try {
-    fs.writeFile(last_update_json, JSON.stringify(file_dates + '\n', null, 2), (err) => {
+    fs.writeFile(last_update_json, JSON.stringify(file_dates, null, 2) + '\n', (err) => {
       if (err) console.log('Error')
     });
   } catch(err) {
