@@ -63,11 +63,11 @@ const get_template_pages_dates = async () => {
   for (const file of static_pages) {
     if (fs.existsSync(`templates/${file}`)) {
       let content = await fs.readFile(`templates/${file}`, 'utf-8');
-      let hash = crypto.createHash('md5').update(content).digest("hex");
       if (`${file}` == 'faq.html') {
+        // For FAQ page, also check changes to the FAQs (stored in markdown)
         content = content + await fs.readFile(`docs/faq.md`, 'utf-8');
-        hash = crypto.createHash('md5').update(content).digest("hex");
       }
+      let hash = crypto.createHash('md5').update(content).digest("hex");
       check_and_update_date(file, hash, null);
     }
   }
