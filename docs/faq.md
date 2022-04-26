@@ -20,7 +20,7 @@ As of March 1 2016, the tests are performed on Chrome for desktop and emulated A
 
 The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates various tables in [BigQuery](https://bigquery.cloud.google.com/dataset/httparchive).
 
-The test infrastructure uses fixed, reserved, IP addresses and crawl traffic will come from one of these (and they will only be used for HTTP Archive crawl traffic):
+The test infrastructure uses fixed, reserved IP addresses and crawl traffic will come from one of these (and they will only be used for HTTP Archive crawl traffic):
 
 - 34.70.135.249
 - 34.122.58.12
