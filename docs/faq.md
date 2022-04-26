@@ -90,7 +90,7 @@ See the full list of [HTTP Archive sponsors](/about#sponsors).
 
 ## How do I make a donation to support the HTTP Archive?
 
-The HTTP Archive is part of the Internet Archive, a 501(c)(3) non-profit. Donations in support of the HTTP Archive can be made through the [open collective](https://opencollective.com/httparchive).
+The HTTP Archive is part of the Internet Archive, a 501(c)(3) non-profit. Donations in support of the HTTP Archive can be made through the [Open Collective](https://opencollective.com/httparchive).
 
 
 ## Who maintains the HTTP Archive?
