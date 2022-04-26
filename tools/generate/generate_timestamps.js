@@ -64,6 +64,10 @@ const get_template_pages_dates = async () => {
     if (fs.existsSync(`templates/${file}`)) {
       let content = await fs.readFile(`templates/${file}`, 'utf-8');
       let hash = crypto.createHash('md5').update(content).digest("hex");
+      if (`${file}` == 'faq.html') {
+        content = content + await fs.readFile(`docs/faq.md`, 'utf-8');
+        hash = crypto.createHash('md5').update(content).digest("hex");
+      }
       check_and_update_date(file, hash, null);
     }
   }
