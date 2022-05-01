@@ -20,25 +20,6 @@ As of March 1 2016, the tests are performed on Chrome for desktop and emulated A
 
 The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates various tables in [BigQuery](https://bigquery.cloud.google.com/dataset/httparchive).
 
-The test infrastructure uses fixed, reserved IP addresses and crawl traffic will come from one of these (and they will only be used for HTTP Archive crawl traffic):
-
-- 34.70.135.249
-- 34.82.69.144
-- 34.102.25.232
-- 34.105.27.245
-- 34.106.20.144
-- 34.106.57.32
-- 34.122.58.12
-- 34.125.80.148
-- 34.125.215.28
-- 34.145.183.240
-- 34.148.198.182
-- 34.148.244.203
-- 35.194.67.240
-- 35.222.15.125
-- 35.236.8.58
-
-
 ## How accurate is the data, in particular the time measurements?
 
 Some metrics like the number of bytes, HTTP headers, etc are accurate at the time the test was performed. It's entirely possible that the web page has changed since it was tested. The tests were performed using a single browser. If the page's content varies by browser this could be a source of differences.
