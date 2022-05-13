@@ -560,7 +560,7 @@
         "enabled": false
       },
       "histogram": {
-        "minDate": "2022_04_01"
+        "minDate": "2019_07_01"
       }
     },
     "cruxPassesCWV": {
