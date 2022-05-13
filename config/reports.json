@@ -542,7 +542,7 @@
       }
     },
     "cruxInp": {
-      "name": "Interaction to Paint",
+      "name": "Interaction to Next Paint",
       "type": "ms",
       "description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds. See [Interaction to Next Paint (INP)](https://web.dev/inp/).",
       "timeseries": {
