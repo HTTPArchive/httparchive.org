@@ -533,7 +533,7 @@
     "cruxFid": {
       "name": "First Input Delay",
       "type": "ms",
-      "description": "The number of milliseconds from the time the user initiates a first interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+      "description": "The number of milliseconds from the time the user initiates their first interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
       "timeseries": {
         "enabled": false
       },
