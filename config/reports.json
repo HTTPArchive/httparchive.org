@@ -533,12 +533,23 @@
     "cruxFid": {
       "name": "First Input Delay",
       "type": "ms",
-      "description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+      "description": "The number of milliseconds from the time the user initiates a first interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
       "timeseries": {
         "enabled": false
       },
       "histogram": {
         "minDate": "2018_06_01"
+      }
+    },
+    "cruxInp": {
+      "name": "Interaction to Paint",
+      "type": "ms",
+      "description": "The number of milliseconds from the time the user initiates an interaction to the time the page responds. See [Interaction to Next Paint (INP)](https://web.dev/inp/).",
+      "timeseries": {
+        "enabled": false
+      },
+      "histogram": {
+        "minDate": "2022_04_01"
       }
     },
     "cruxPassesCWV": {
@@ -625,6 +636,20 @@
         ]
       }
     },
+    "cruxFastInp": {
+      "name": "Good Interaction to Next Paint",
+      "type": "%",
+      "description": "The percentage of origins with \"good\" INP experiences, less than or equal to 200 ms. See [Interaction to Next Paint (INP)](https://web.dev/inp/).",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
     "cruxFastLcp": {
       "name": "Good Largest Contentful Paint",
       "type": "%",
@@ -670,6 +695,19 @@
       "name": "Poor First Input Delay",
       "type": "%",
       "description": "The percentage of origins with \"poor\" FID experiences, greater than 250 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "cruxSlowInp": {
+      "name": "Poor Interaction to Next Paint",
+      "type": "%",
+      "description": "The percentage of origins with \"poor\" INP experiences, greater than 500 ms. See [Interaction to Next Paint (INP)](https://web.dev/inp/).",
       "histogram": {
         "enabled": false
       },
@@ -1179,6 +1217,8 @@
       "cruxSlowLcp",
       "cruxFastFid",
       "cruxSlowFid",
+      "cruxFastInp",
+      "cruxSlowInp",
       "cruxSmallCls",
       "cruxLargeCls",
       "cruxFastFp",
@@ -1187,6 +1227,7 @@
       "cruxFcp",
       "cruxLcp",
       "cruxFid",
+      "cruxInp",
       "cruxCls",
       "cruxFp",
       "cruxDcl",
