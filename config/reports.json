@@ -552,6 +552,17 @@
         "minDate": "2022_04_01"
       }
     },
+    "cruxTtfb": {
+      "name": "Time to First Byte",
+      "type": "ms",
+      "description": "The number of milliseconds from the time the user initiates a navigation until the first bytes are received. See [Time to First Byte (TTFB)](https://web.dev/ttfb/).",
+      "timeseries": {
+        "enabled": false
+      },
+      "histogram": {
+        "minDate": "2019_07_01"
+      }
+    },
     "cruxPassesCWV": {
       "name": "Passes Core Web Vitals",
       "type": "%",
@@ -664,6 +675,20 @@
         ]
       }
     },
+    "cruxFastTtfb": {
+      "name": "Good Time to First Byte",
+      "type": "%",
+      "description": "The percentage of origins with \"good\" TTFB experiences, less than or equal to 800ms. See [Time to First Byte (TTFB)](https://web.dev/ttfb/).",
+      "downIsBad": true,
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
     "cruxLargeCls": {
       "name": "Poor Cumulative Layout Shift",
       "type": "%",
@@ -721,6 +746,19 @@
       "name": "Poor Largest Contentful Paint",
       "type": "%",
       "description": "The percentage of origins with \"poor\" LCP experiences, greater than 4.0 seconds.",
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
+    "cruxSlowTtfb": {
+      "name": "Poor Time to First Byte",
+      "type": "%",
+      "description": "The percentage of origins with \"poor\" TTFB experiences, greater than 1800ms. See [Time to First Byte (TTFB)](https://web.dev/ttfb/).",
       "histogram": {
         "enabled": false
       },
@@ -1221,6 +1259,8 @@
       "cruxSlowFid",
       "cruxFastInp",
       "cruxSlowInp",
+      "cruxFastTtfb",
+      "cruxSlowTtfb",
       "cruxFastFp",
       "cruxFastDcl",
       "cruxFastOl",
@@ -1229,6 +1269,7 @@
       "cruxCls",
       "cruxFid",
       "cruxInp",
+      "cruxTtfb",
       "cruxFp",
       "cruxDcl",
       "cruxOl"
