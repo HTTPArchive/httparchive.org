@@ -88,5 +88,15 @@
                 "wptagent#366": "https://github.com/WPO-Foundation/wptagent/pull/366"
             }
         ]
+    },
+    {
+        "date": 1651363200000,
+        "title": "Lighthouse desktop integration",
+        "desc": "Lighthouse testing for Desktop crawl added, in addition to Mobile (which was added in 2017)"
+    },
+    {
+        "date": 1654041600000,
+        "title": "Mobile network throttling changed from 3G to 4G (faster performance)",
+        "desc": "Note: Lighthouse still running at Fast 3G so this only affects the HTTP Archive crawl."
     }
 ]
