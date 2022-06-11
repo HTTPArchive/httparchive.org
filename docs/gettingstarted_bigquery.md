@@ -90,8 +90,8 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
 * `lighthouse` tables:
     * Results from a [Lighthouse](https://developers.google.com/web/tools/lighthouse/) audit of a page.
     * Table contains a url, and a JSON-encoded copy of the lighthouse report.
-    * Lighthouse only runs on mobile pages. The chrome_lighthouse table contains null data and can be ignored.
-    * These tables are very large (200GB as of Aug 2018)
+    * Lighthouse was intially only run on mobile, but as of May 2021 also runs as part of the desktop crawl.
+    * These tables are very large (2.3 TB for Mobile only as of May 2021)
 
 
 ## Useful Links for BigQuery SQL Reference

@@ -43,7 +43,7 @@
       "name": "JavaScript Boot-up Time",
       "type": "seconds",
       "singular": "second",
-      "description": "The amount of CPU time each script consumes per page. This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high) and is only available in mobile tests."
+      "description": "The amount of CPU time each script consumes per page. This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high)."
     },
     "speedIndex": {
       "name": "Speed Index",
@@ -126,7 +126,7 @@
     "canonical": {
       "name": "rel=canonical",
       "type": "%",
-      "description": "The percent of pages with a valid canonical link. Canonical pages are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/canonical). This metric is only available in mobile tests.",
+      "description": "The percent of pages with a valid canonical link. Canonical pages are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/canonical).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -189,7 +189,7 @@
     "hreflang": {
       "name": "hreflang",
       "type": "%",
-      "description": "The percent of pages with a valid `hreflang` attribute, which allows crawlers to discover alternate translations of the page content. Validity is measured by Lighthouse. This metric is only available in mobile tests.",
+      "description": "The percent of pages with a valid `hreflang` attribute, which allows crawlers to discover alternate translations of the page content. Validity is measured by Lighthouse.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -203,7 +203,7 @@
     "fontDisplay": {
       "name": "Font Display",
       "type": "%",
-      "description": "The percent of pages that avoid the flash of invisible text (FOIT) during web font loading by using the `font-display` CSS property. This metric is measured by [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#all_text_remains_visible_during_web_font_loads) and is only available in mobile tests.",
+      "description": "The percent of pages that avoid the flash of invisible text (FOIT) during web font loading by using the `font-display` CSS property. This metric is measured by [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#all_text_remains_visible_during_web_font_loads).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -217,7 +217,7 @@
     "legible": {
       "name": "Legible Text",
       "type": "%",
-      "description": "The percent of pages with legible text. Legibility is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/font-sizes). This metric is only available in mobile tests.",
+      "description": "The percent of pages with legible text. Legibility is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -231,7 +231,7 @@
     "linkText": {
       "name": "Descriptive Link Text",
       "type": "%",
-      "description": "The percent of pages with descriptive link text. Descriptiveness is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/link-text). This metric is only available in mobile tests.",
+      "description": "The percent of pages with descriptive link text. Descriptiveness is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/link-text).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -283,7 +283,7 @@
     "pctVuln": {
       "name": "Pages with Vulnerable JS",
       "type": "%",
-      "description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
+      "description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
       "histogram": {
         "enabled": false
       },
@@ -337,7 +337,7 @@
       "name": "Time to Interactive",
       "type": "seconds",
       "singular": "second",
-      "description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive) as is only available in mobile tests. [Read more about First Interactive and First Consistently Interactive](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
+      "description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive). [Read more about First Interactive and First Consistently Interactive](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
       "histogram": {
         "minDate": "2017_06_01"
       }
@@ -356,12 +356,12 @@
     "offscreenImages": {
       "name": "Offscreen Image Savings",
       "type": "KB",
-      "description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images) and is only available in mobile tests."
+      "description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)."
     },
     "optimizedImages": {
       "name": "Optimized Image Savings",
       "type": "KB",
-      "description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images) and is only available in mobile tests."
+      "description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images)."
     },
     "imgLazy": {
       "name": "Native Image Lazy Loading",
@@ -786,7 +786,7 @@
       "name": "Vulnerable JavaScript Libraries Per Page",
       "type": "libraries",
       "singular": "library",
-      "description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all). This metric is only available in mobile tests.",
+      "description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
       "histogram": {
         "minDate": "2017_10_15"
       },
@@ -1311,7 +1311,7 @@
   },
   "accessibility": {
     "name": "Accessibility",
-    "summary": "This report tracks accessibility of pages as measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Metrics in this report are only available for mobile.",
+    "summary": "This report tracks accessibility of pages as measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/).",
     "image": "/static/img/reports/accessibility-report.png",
     "metrics": [
       "a11yScores",
