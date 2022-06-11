@@ -43,7 +43,7 @@
       "name": "JavaScript Boot-up Time",
       "type": "seconds",
       "singular": "second",
-      "description": "The amount of CPU time each script consumes per page. This metric comes from [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#javascript_boot-up_time_is_high)."
+      "description": "The amount of CPU time each script consumes per page. This metric comes from [Lighthouse](https://web.dev/bootup-time/)."
     },
     "speedIndex": {
       "name": "Speed Index",
@@ -126,7 +126,7 @@
     "canonical": {
       "name": "rel=canonical",
       "type": "%",
-      "description": "The percent of pages with a valid canonical link. Canonical pages are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/canonical).",
+      "description": "The percent of pages with a valid canonical link. Canonical pages are detected by [Lighthouse](https://web.dev/canonical/).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -203,7 +203,7 @@
     "fontDisplay": {
       "name": "Font Display",
       "type": "%",
-      "description": "The percent of pages that avoid the flash of invisible text (FOIT) during web font loading by using the `font-display` CSS property. This metric is measured by [Lighthouse](https://developers.google.com/web/updates/2018/05/lighthouse#all_text_remains_visible_during_web_font_loads).",
+      "description": "The percent of pages that avoid the flash of invisible text (FOIT) during web font loading by using the `font-display` CSS property. This metric is measured by [Lighthouse](https://web.dev/font-display/).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -217,7 +217,7 @@
     "legible": {
       "name": "Legible Text",
       "type": "%",
-      "description": "The percent of pages with legible text. Legibility is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/font-sizes).",
+      "description": "The percent of pages with legible text. Legibility is measured by [Lighthouse](https://web.dev/font-size/).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -231,7 +231,7 @@
     "linkText": {
       "name": "Descriptive Link Text",
       "type": "%",
-      "description": "The percent of pages with descriptive link text. Descriptiveness is measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/link-text).",
+      "description": "The percent of pages with descriptive link text. Descriptiveness is measured by [Lighthouse](https://web.dev/link-text/).",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -283,7 +283,7 @@
     "pctVuln": {
       "name": "Pages with Vulnerable JS",
       "type": "%",
-      "description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
+      "description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://web.dev/no-vulnerable-libraries/) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
       "histogram": {
         "enabled": false
       },
@@ -337,7 +337,7 @@
       "name": "Time to Interactive",
       "type": "seconds",
       "singular": "second",
-      "description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/time-to-interactive). [Read more about First Interactive and First Consistently Interactive](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
+      "description": "The number of seconds from the time the navigation started until the CPU had at least 5 seconds of quiescence. This metric comes from [Lighthouse](https://web.dev/interactive/). [Read more about First Interactive and First Consistently Interactive](https://docs.google.com/document/d/1GGiI9-7KeY3TPqS3YT271upUVimo-XiL5mwWorDUD4c/edit#heading=h.iqlwzaf6lqrh).",
       "histogram": {
         "minDate": "2017_06_01"
       }
@@ -356,12 +356,12 @@
     "offscreenImages": {
       "name": "Offscreen Image Savings",
       "type": "KB",
-      "description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/offscreen-images)."
+      "description": "The number of kilobytes that could be saved per page by lazy-loading offscreen and hidden images. This metric comes from [Lighthouse](https://web.dev/offscreen-images/)."
     },
     "optimizedImages": {
       "name": "Optimized Image Savings",
       "type": "KB",
-      "description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/optimize-images)."
+      "description": "The number of kilobytes that could be saved per page by setting JPEG compression levels to 85 or lower. This metric comes from [Lighthouse](https://web.dev/uses-optimized-images/)."
     },
     "imgLazy": {
       "name": "Native Image Lazy Loading",
@@ -786,7 +786,7 @@
       "name": "Vulnerable JavaScript Libraries Per Page",
       "type": "libraries",
       "singular": "library",
-      "description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://developers.google.com/web/tools/lighthouse/audits/vulnerabilities) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
+      "description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://web.dev/no-vulnerable-libraries/) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
       "histogram": {
         "minDate": "2017_10_15"
       },
@@ -821,7 +821,7 @@
       "name": "Accessibility Scores",
       "type": "%",
       "downIsBad": true,
-      "description": "This metric tracks the distribution of Accessibility category scores in Lighthouse.",
+      "description": "This metric tracks the distribution of [Accessibility category scores in Lighthouse](https://web.dev/accessibility-scoring/).",
       "histogram": {
         "enabled": false
       }
@@ -830,7 +830,7 @@
       "name": "Button Name",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse audit](https://developers.google.com/web/tools/lighthouse/audits/button-name) that checks if buttons have an accessible name.",
+      "description": "The percent of pages that pass the [Lighthouse audit](https://web.dev/button-name/) that checks if buttons have an accessible name.",
       "histogram": {
         "enabled": false
       },
@@ -844,7 +844,7 @@
       "name": "Bypass",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse bypass audit](https://dequeuniversity.com/rules/axe/2.2/bypass) that checks if pages provide a way to bypass repeated blocks of content.",
+      "description": "The percent of pages that pass the [Lighthouse bypass audit](https://web.dev/bypass/) that checks if pages provide a way to bypass repeated blocks of content.",
       "histogram": {
         "enabled": false
       },
@@ -872,7 +872,7 @@
       "name": "Image Alt",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse image-alt audit](https://dequeuniversity.com/rules/axe/2.2/image-alt) that checks if all images have alternate text.",
+      "description": "The percent of pages that pass the [Lighthouse image-alt audit](https://web.dev/image-alt/) that checks if all images have alternate text.",
       "histogram": {
         "enabled": false
       },
@@ -886,7 +886,7 @@
       "name": "Label",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse label audit](https://dequeuniversity.com/rules/axe/2.2/label) that checks if all form elements have associated labels.",
+      "description": "The percent of pages that pass the [Lighthouse label audit](https://web.dev/label/) that checks if all form elements have associated labels.",
       "histogram": {
         "enabled": false
       },
@@ -900,7 +900,7 @@
       "name": "Link Name",
       "type": "%",
       "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse link-name audit](https://dequeuniversity.com/rules/axe/2.2/link-name) that checks if all links have discernable text.",
+      "description": "The percent of pages that pass the [Lighthouse link-name audit](https://web.dev/link-name/) that checks if all links have discernable text.",
       "histogram": {
         "enabled": false
       },
@@ -1311,7 +1311,7 @@
   },
   "accessibility": {
     "name": "Accessibility",
-    "summary": "This report tracks accessibility of pages as measured by [Lighthouse](https://developers.google.com/web/tools/lighthouse/).",
+    "summary": "This report tracks accessibility of pages as measured by [Lighthouse](https://web.dev/lighthouse-accessibility/).",
     "image": "/static/img/reports/accessibility-report.png",
     "metrics": [
       "a11yScores",
