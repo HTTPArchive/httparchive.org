@@ -259,6 +259,8 @@ const getFlagSeries = () => loadChangelog().then(data => {
       desc: change.desc
     };
   });
+  // Filter out changes that don't need to be displayed in time series
+  data = data.filter(o => o.displayInTimeSeries !== false);
   return {
     type: 'flags',
     name: 'Changelog',

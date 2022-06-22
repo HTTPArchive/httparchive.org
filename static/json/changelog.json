@@ -91,6 +91,12 @@
     },
     {
         "date": 1651363200000,
+        "title": "Response bodies unavailable for May 2022",
+        "desc": "Due to a crawl config error, we don't have response bodies in the May 2022 dataset.",
+        "displayInTimeSeries": false
+    },
+    {
+        "date": 1651363200000,
         "title": "Lighthouse desktop integration",
         "desc": "Lighthouse testing for Desktop crawl added, in addition to Mobile (which was added in 2017)"
     },
