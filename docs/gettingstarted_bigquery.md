@@ -14,29 +14,46 @@ This document is an update to [Ilya Grigorik's 2013 introduction](https://www.ig
 In order to access the HTTP Archive via BigQuery, you'll need a Google account.  To document this process for new visitors, this example uses a new Google account that has never logged into any Google Cloud services.
 
 1. Navigate to the [Google Cloud Projects Page](https://console.cloud.google.com/start) and log in with your Google account if prompted.  If this is your first time accessing Google Cloud, you may be prompted to accept the terms of service. Once you are logged in, you'll see a page like this -
-  ![Getting Started](images/google_cloud_gettingstarted.jpg)
+  ![Google Cloud Welcome](images/google-cloud-welcome.png)
 
 2. Click `Select a project` and then "New Project".   This takes you to a New Project page.
+  ![Google Cloud select project](images/google-cloud-select-project.png)
 
 3. Give your project a name and then click the `Create` button.
-  ![Create a Project](images/create_a_project.jpg)
+  ![Create a Project](images/google-cloud-create-new-project.png)
+
 
 4. Optional: Enable Billing by clicking on the Billing menu item and adding your billing information.
 
   *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing#free-tier) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
 
-5. Navigate to the [Big Query console](https://bigquery.cloud.google.com).  Note that if you see "Beta" then you are using the new UI which is currently in Beta. You can easily switch between the Beta and Classic UIs as needed.
+5. Navigate to the [Big Query console](https://console.cloud.google.com/bigquery) where you should see your project, with no data.
 
-  ![BigQuery Console](images/bigquery_console.jpg)
+6. In order to add the HTTP Archive tables to your project, click on Add Data -> Pin a Project->Enter Project Name
 
-6. In order to add the HTTP Archive tables to your project, follow this link: [https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset](https://console.cloud.google.com/bigquery?p=httparchive&d=httparchive&page=dataset)
+  ![BigQuery add a dataset](bigquery-add-a-dataset.png)
 
-  *Note: If you want to pin the httparchive project to your account so that you do not have to use the above link every time, then you can switch to the classic UI and follow the instructions below
-  ![Adding HTTP Archive Tables - Classic UI](images/adding_httparchive_to_bigquery_classic_UI.jpg)*
+7. Type in `HTTPArchive` and click `PIN`:
 
-7. At this point you should see the httparchive tables in your BigQuery dashboard.   If you expand the httparchive project, you'll see folders for all the different tables. In the next section, we explore the structure of these tables so you can start digging in!
-  ![Setup Complete](images/httparchive_setup_complete.jpg)
+  ![BigQuery search for a project](bigquery-pin-httparchive.png)
 
+8. You should now see the HTTP Archive data set pinned:
+
+  ![BigQuery HTTPArchive pinned](bigquery-httparchive-dataset-pinned.png)
+
+8. Let's run a quick sample query to confirm access is all working. Navigate to the `summary_pages` tables and select the first one:
+
+  ![BigQuery summary_pages tables](bigquery-summary_pages.png)
+
+9. Click on the `QUERY` button and select `In a new tab`:
+
+  ![BigQuery Query in a new tab](bigquery-query-in-a-new-tab.png)
+
+10. Change the query to select some columns (e.g. `SELECT *`) and click the `RUN` button and you should see the results of your query.
+
+  ![BigQuery run a sample query](bigquery-run-sample-query.png)
+
+In the next section, we explore the structure of these tables so you can start digging in!
 
 ## Understanding how the tables are structured
 So, now you have access! But what do you have access to?
@@ -94,21 +111,10 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
     * These tables are very large (200GB as of Aug 2018)
 
 
-## Useful Links for BigQuery SQL Reference
-BigQuery supports two SQL dialects: standard SQL and legacy SQL.  Legacy SQL is a non-standard SQL dialect that BigQuery started out using.   Standard SQL is a a SQL2011 compliant dialect that has many more features and functions.  Standard SQL is the preferred dialect for querying data via BigQuery, but both are supported.
-
-[Documentation for Standard SQL](https://cloud.google.com/bigquery/docs/reference/standard-sql/)
-
-[Documentation for Legacy SQL](https://cloud.google.com/bigquery/docs/reference/legacy-sql)
-
-If you have existing Legacy SQL that you are trying to migrate to Standard SQL, then you may want to read the [migration guide.](https://cloud.google.com/bigquery/docs/reference/standard-sql/migrating-from-legacy-sql)
-
-When you are ready to start writing queries, make sure that the SQL dialect option selected matches what you are writing your query in.   The classic UI defaults to Legacy SQL, but de-selecting this switches to Standard SQL.  The new UI defaults to Standard SQL.
-![SQL Dialect](images/standard_or_legacy_sql.jpg)
+## Some Example Queries to Get Started Exploring the Data
 
 The [HTTP Archive Discuss section](https://discuss.httparchive.org/) has lots of useful examples and discussion on how to analyze this data.
 
-## Some Example Queries to Get Started Exploring the Data
 Now that you are all set up, let's run some queries!  Most HTTP Archive users start off examining the summary tables, so we'll start there as well. Below is a simple aggregate query that tells you how many URLs are contained in the latest HTTP Archive data.
 
 ```
