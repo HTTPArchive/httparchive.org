@@ -15,15 +15,15 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 1. Navigate to the [Google Cloud Projects Page](https://console.cloud.google.com/start) and log in with your Google account if prompted.  If this is your first time accessing Google Cloud, you may be prompted to accept the terms of service. Once you are logged in, you'll see a page like this -
 
-  <img src="images/google-cloud-welcome.png" width="630" height="161" alt="Google Cloud Welcome">
+  <img src="images/google-cloud-welcome.png" width="630" alt="Google Cloud Welcome">
 
 2. Click `Select a project` and then "New Project".   This takes you to a New Project page.
 
-  <img src="images/google-cloud-select-project.png" width="423" height="140" alt="Google Cloud select project">
+  <img src="images/google-cloud-select-project.png" width="423" alt="Google Cloud select project">
 
 3. Give your project a name and then click the `Create` button.
 
-  <img src="images/google-cloud-create-new-project.png" width="423" height="266" alt="Create a Project">
+  <img src="images/google-cloud-create-new-project.png" width="423" alt="Create a Project">
 
 4. Optional: Enable Billing by clicking on the Billing menu item and adding your billing information.
 
@@ -33,23 +33,23 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 6. In order to add the HTTP Archive tables to your project, click on Add Data -> Pin a Project->Enter Project Name
 
-  <img src="images/bigquery-add-a-dataset.png" width="423" height="195" alt="BigQuery add a dataset">
+  <img src="images/bigquery-add-a-dataset.png" width="423" alt="BigQuery add a dataset">
 
 7. Type in `HTTPArchive` and click `PIN`:
 
-  <img src="images/bigquery-pin-httparchive.png" width="212" height="200" alt="BigQuery pin a project">
+  <img src="images/bigquery-pin-httparchive.png" width="212" alt="BigQuery pin a project">
 
 8. You should now see the HTTP Archive data set pinned:
 
-  <img src="images/bigquery-httparchive-dataset-pinned.png" width="423" height="337" alt="BigQuery HTTPArchive pinned">
+  <img src="images/bigquery-httparchive-dataset-pinned.png" width="423" alt="BigQuery HTTPArchive pinned">
 
 8. Let's run a quick sample query to confirm access is all working. Navigate to the `summary_pages` tables and select the first one:
 
-  <img src="images/bigquery-summary_pages.png" width="423" height="370" alt="BigQuery summary_pages tables">
+  <img src="images/bigquery-summary_pages.png" width="423" alt="BigQuery summary_pages tables">
 
 9. Click on the `QUERY` button and select `In a new tab`:
 
-  <img src="images/bigquery-query-in-a-new-tab.png" width="423" height="235" alt="BigQuery Query in a new tab">
+  <img src="images/bigquery-query-in-a-new-tab.png" width="423" alt="BigQuery Query in a new tab">
 
 10. Change the query to select some columns (e.g. `SELECT *`) and click the `RUN` button and you should see the results of your query.
 
