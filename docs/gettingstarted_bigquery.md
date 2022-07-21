@@ -31,27 +31,27 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 6. In order to add the HTTP Archive tables to your project, click on Add Data -> Pin a Project->Enter Project Name
 
-  ![BigQuery add a dataset](bigquery-add-a-dataset.png)
+  ![BigQuery add a dataset](images/bigquery-add-a-dataset.png)
 
 7. Type in `HTTPArchive` and click `PIN`:
 
-  ![BigQuery search for a project](bigquery-pin-httparchive.png)
+  ![BigQuery search for a project](images/bigquery-pin-httparchive.png)
 
 8. You should now see the HTTP Archive data set pinned:
 
-  ![BigQuery HTTPArchive pinned](bigquery-httparchive-dataset-pinned.png)
+  ![BigQuery HTTPArchive pinned](images/bigquery-httparchive-dataset-pinned.png)
 
 8. Let's run a quick sample query to confirm access is all working. Navigate to the `summary_pages` tables and select the first one:
 
-  ![BigQuery summary_pages tables](bigquery-summary_pages.png)
+  ![BigQuery summary_pages tables](images/bigquery-summary_pages.png)
 
 9. Click on the `QUERY` button and select `In a new tab`:
 
-  ![BigQuery Query in a new tab](bigquery-query-in-a-new-tab.png)
+  ![BigQuery Query in a new tab](images/bigquery-query-in-a-new-tab.png)
 
 10. Change the query to select some columns (e.g. `SELECT *`) and click the `RUN` button and you should see the results of your query.
 
-  ![BigQuery run a sample query](bigquery-run-sample-query.png)
+  ![BigQuery run a sample query](images/bigquery-run-sample-query.png)
 
 In the next section, we explore the structure of these tables so you can start digging in!
 
