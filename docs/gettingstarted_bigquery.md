@@ -43,15 +43,15 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
   <img src="images/bigquery-httparchive-dataset-pinned.png" width="423" alt="BigQuery HTTPArchive pinned">
 
-8. Let's run a quick sample query to confirm access is all working. Navigate to the `summary_pages` tables and select the first one:
+9. Let's run a quick sample query to confirm access is all working. Navigate to the `summary_pages` tables and select the first one:
 
   <img src="images/bigquery-summary_pages.png" width="423" alt="BigQuery summary_pages tables">
 
-9. Click on the `QUERY` button and select `In a new tab`:
+10. Click on the `QUERY` button and select `In a new tab`:
 
   <img src="images/bigquery-query-in-a-new-tab.png" width="423" alt="BigQuery Query in a new tab">
 
-10. Change the query to select some columns (e.g. `SELECT *`) and click the `RUN` button and you should see the results of your query.
+11. Change the query to select some columns (e.g. `SELECT *`) and click the `RUN` button and you should see the results of your query.
 
   <img src="images/bigquery-run-sample-query.png" width="1012" alt="BigQuery run a sample query">
 
