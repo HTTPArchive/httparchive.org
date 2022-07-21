@@ -53,7 +53,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 10. Change the query to select some columns (e.g. `SELECT *`) and click the `RUN` button and you should see the results of your query.
 
-  <img src="images/bigquery-run-sample-query.png" width="423" height="302" alt="BigQuery run a sample query">
+  <img src="images/bigquery-run-sample-query.png" width="1012" height="722" alt="BigQuery run a sample query">
 
 In the next section, we explore the structure of these tables so you can start digging in!
 
