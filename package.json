@@ -34,7 +34,7 @@
     "ejs": "3.1.8",
     "fs-extra": "10.1.0",
     "highcharts": "10.2.0",
-    "node-fetch": "3.2.9",
+    "node-fetch": "3.2.10",
     "recursive-readdir": "2.2.2",
     "run-script-os": "1.1.6",
     "web-vitals": "2.1.4",
