@@ -62,7 +62,11 @@ legacy_util = Legacy(faq_util)
 def redirect_www():
     """Redirect subdomain requests to bare domain."""
     urlparts = urlparse(request.url)
-    if urlparts.netloc == 'www.httparchive.org' or urlparts.netloc == 'beta.httparchive.org' or urlparts.netloc == 'legacy.httparchive.org':
+    if (
+        urlparts.netloc == "www.httparchive.org"
+        or urlparts.netloc == "beta.httparchive.org"
+        or urlparts.netloc == "legacy.httparchive.org"
+    ):
         urlparts_list = list(urlparts)
         urlparts_list[1] = 'httparchive.org'
         return redirect(urlunparse(urlparts_list), code=301)
