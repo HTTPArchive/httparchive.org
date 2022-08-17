@@ -6,9 +6,9 @@ from time import time
 from . import dates as date_util
 
 
-class VizTypes():
-    HISTOGRAM = 'histogram'
-    TIMESERIES = 'timeseries'
+class VizTypes:
+    HISTOGRAM = "histogram"
+    TIMESERIES = "timeseries"
 
 
 # Ensure reports are updated every 3 hours.
@@ -33,7 +33,7 @@ def update_reports():
 
     report_dates = date_util.get_dates()
 
-    with open('config/reports.json') as reports_file:
+    with open("config/reports.json") as reports_file:
         reports_json = json.load(reports_file)
         last_report_update = time()
     update_reports()
@@ -43,20 +43,20 @@ def get_reports():
     global reports_json
     update_reports()
 
-    return list(map(get_report, reports_json.get('_reports')))
+    return list(map(get_report, reports_json.get("_reports")))
 
 
 def get_featured_reports():
     global reports_json
     update_reports()
 
-    return map(get_report, reports_json.get('_featured'))
+    return map(get_report, reports_json.get("_featured"))
 
 
 def map_reports(report_id):  # pragma: no cover
     global reports_json
     report = reports_json.get(report_id)
-    report['id'] = report_id
+    report["id"] = report_id
     return report
 
 
@@ -66,25 +66,25 @@ def get_report(report_id):
     if not report:
         return None
     report = deepcopy(report)
-    report['id'] = report_id
-    report['metrics'] = list(map(get_metric, report.get('metrics')))
+    report["id"] = report_id
+    report["metrics"] = list(map(get_metric, report.get("metrics")))
     return report
 
 
 def get_metric(metric_id):
     global reports_json
-    metrics = reports_json.get('_metrics')
+    metrics = reports_json.get("_metrics")
     metric = deepcopy(metrics.get(metric_id))
     if not metric:  # pragma: no cover
         return None
-    metric['id'] = metric_id
+    metric["id"] = metric_id
     return metric
 
 
 def get_similar_reports(metric_id, current_report_id):
     global reports_json
     similar_reports = {}
-    reports = reports_json.get('_reports', [])
+    reports = reports_json.get("_reports", [])
     for report_id in reports:
         # A report is not similar to itself.
         if report_id == current_report_id:
@@ -92,8 +92,8 @@ def get_similar_reports(metric_id, current_report_id):
 
         report = reports_json.get(report_id, {})
         # A report is similar if it contains the same metric.
-        if 'metrics' in report and metric_id in report['metrics']:
-            similar_reports[report_id] = report['name']
+        if "metrics" in report and metric_id in report["metrics"]:
+            similar_reports[report_id] = report["name"]
     return similar_reports
 
 
@@ -130,7 +130,7 @@ def get_latest_date(metric_id):
 def get_lenses():
     global reports_json
     # TODO: Consider sorting the lenses by name.
-    return reports_json.get('_lens', {})
+    return reports_json.get("_lens", {})
 
 
 def get_lens(lens_id):
@@ -138,7 +138,7 @@ def get_lens(lens_id):
     lens = deepcopy(lenses.get(lens_id))
     if not lens:
         return None
-    lens['id'] = lens_id
+    lens["id"] = lens_id
     return lens
 
 

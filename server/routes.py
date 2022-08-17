@@ -99,7 +99,7 @@ def report(report_id):
     if min_date:
         dates = dates[: dates.index(min_date) + 1]
     if max_date:
-        dates = dates[dates.index(max_date):]
+        dates = dates[dates.index(max_date) :]  # noqa: E203
     if date_pattern:
         date_pattern = re.compile(date_pattern)
         dates = [d for d in dates if date_pattern.match(d)]
