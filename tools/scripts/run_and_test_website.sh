@@ -53,7 +53,7 @@ pip install -r requirements.txt
 echo "Starting website in background mode for tests"
 python main.py background &
 # Sleep for a couple of seconds to make sure server is up
-sleep 2
+sleep 5
 # Check website is running as won't have got feedback as backgrounded
 pgrep -f "python main.py"
 
