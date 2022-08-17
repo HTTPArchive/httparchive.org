@@ -15,8 +15,13 @@
 # [START app]
 import os
 import logging
-from flask import Flask, request, render_template as flask_render_template, \
-    redirect, url_for as flask_url_for
+from flask import (
+    Flask,
+    request,
+    render_template as flask_render_template,
+    redirect,
+    url_for as flask_url_for,
+)
 from werkzeug.http import HTTP_STATUS_CODES
 from flaskext.markdown import Markdown
 from flask_talisman import Talisman
@@ -32,9 +37,9 @@ from .legacy import Legacy
 
 logging.basicConfig(level=logging.DEBUG)
 
-ROOT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-TEMPLATES_DIR = ROOT_DIR + '/templates'
-STATIC_DIR = ROOT_DIR + '/static'
+ROOT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+TEMPLATES_DIR = ROOT_DIR + "/templates"
+STATIC_DIR = ROOT_DIR + "/static"
 
 
 # Set WOFF and WOFF2 caching to return 1 year as they should never change
@@ -42,19 +47,23 @@ STATIC_DIR = ROOT_DIR + '/static'
 class HttpArchiveWebServer(Flask):
     def get_send_file_max_age(self, name):
         if name:
-            if name.lower().endswith('.woff') or name.lower().endswith('.woff2'):
+            if name.lower().endswith(".woff") or name.lower().endswith(".woff2"):
                 return 31536000
         return Flask.get_send_file_max_age(self, name)
 
 
 # Initialize The Server
-app = HttpArchiveWebServer(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
+app = HttpArchiveWebServer(
+    __name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR
+)
 
 Markdown(app)
-talisman = Talisman(app,
-                    content_security_policy=csp,
-                    content_security_policy_report_uri="https://httparchive.report-uri.com/r/d/csp/enforce",
-                    content_security_policy_nonce_in=['script-src'])
+talisman = Talisman(
+    app,
+    content_security_policy=csp,
+    content_security_policy_report_uri="https://httparchive.report-uri.com/r/d/csp/enforce",
+    content_security_policy_nonce_in=["script-src"],
+)
 legacy_util = Legacy(faq_util)
 
 
@@ -68,7 +77,7 @@ def redirect_www():
         or urlparts.netloc == "legacy.httparchive.org"
     ):
         urlparts_list = list(urlparts)
-        urlparts_list[1] = 'httparchive.org'
+        urlparts_list[1] = "httparchive.org"
         return redirect(urlunparse(urlparts_list), code=301)
     return None
 
@@ -82,7 +91,7 @@ def add_header(response):
     # (currently don't use unique filenames so cannot use long caches and
     # some say they are overrated anyway as caches smaller than we think).
     # Note this IS used by Google App Engine as dynamic content.
-    if 'Cache-Control' not in response.headers:
+    if "Cache-Control" not in response.headers:
         if response.status_code != 200 and response.status_code != 304:
             response.cache_control.no_store = True
             response.cache_control.no_cache = True
@@ -96,7 +105,7 @@ def add_header(response):
 # Cache static resources for 10800 secs (3 hrs) with SEND_FILE_MAX_AGE_DEFAULT.
 # Flask default if not set is 12 hours but we want to match app.yaml
 # which is used by Google App Engine as it serves static files directly
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 10800
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 10800
 
 
 # Overwrite the built-in method.
@@ -112,17 +121,17 @@ def render_template(template, *args, **kwargs):
 # Overwrite the built-in method.
 def url_for(endpoint, **kwargs):
     # Persist the lens parameter across navigations.
-    lens = request.args.get('lens')
+    lens = request.args.get("lens")
     if report_util.is_valid_lens(lens):
-        kwargs['lens'] = lens
+        kwargs["lens"] = lens
 
     # Pass through to the built-in method.
     return flask_url_for(endpoint, **kwargs)
 
 
-app.jinja_env.globals['url_for'] = url_for
-app.jinja_env.globals['get_versioned_filename'] = timestamps_util.get_versioned_filename
-app.jinja_env.globals['HTTP_STATUS_CODES'] = HTTP_STATUS_CODES
+app.jinja_env.globals["url_for"] = url_for
+app.jinja_env.globals["get_versioned_filename"] = timestamps_util.get_versioned_filename
+app.jinja_env.globals["HTTP_STATUS_CODES"] = HTTP_STATUS_CODES
 
 
 # Circular Import but this is fine because routes and errors modules are not used in here and
