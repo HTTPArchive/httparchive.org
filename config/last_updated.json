@@ -31,13 +31,13 @@
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "7a75e52831c2ccf2c2dc28dfd62fc9e0"
+    "date_modified": "2022-10-03T00:00:00.000Z",
+    "hash": "56f50cc9f7fcb12f43de9ff3ccb0fe70"
   },
   "/static/js/exporting.js.map": {
     "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "3c376c937372d9d4f6991041281221c1"
+    "date_modified": "2022-10-03T00:00:00.000Z",
+    "hash": "7cce58217d6a4d972552ccbbdb0a5ba5"
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -46,23 +46,23 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "be4b5faaa6b7d813a06d970de4c9ff0e"
+    "date_modified": "2022-10-03T00:00:00.000Z",
+    "hash": "98df7937d9ac05936e5a86f5aabd77a6"
   },
   "/static/js/highcharts-more.js.map": {
     "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "80f8652c0f1c3876c73464eda2583d92"
+    "date_modified": "2022-10-03T00:00:00.000Z",
+    "hash": "4d7d903ba826d7762360f03147a00921"
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "7d817696ab68e7d11c52093d903c8303"
+    "date_modified": "2022-10-03T00:00:00.000Z",
+    "hash": "42fabf79432a05006bc64cc7fa9246fa"
   },
   "/static/js/highstock.js.map": {
     "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "bb94bca26462c2503370717dc35421e9"
+    "date_modified": "2022-10-03T00:00:00.000Z",
+    "hash": "20ebe36724f2d65d3485e7c44325ba7f"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -111,8 +111,8 @@
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "08b9e6ddc159c1ecfe27074a95484253"
+    "date_modified": "2022-10-03T00:00:00.000Z",
+    "hash": "3444a9c0685135a8edae6198895cd5d7"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
