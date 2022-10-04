@@ -9,7 +9,7 @@ from . import app, render_template, legacy_util, url_for
 
 @app.errorhandler(400)
 def bad_request(e):
-    return render_template('error/400.html', error=e), 400
+    return render_template("error/400.html", error=e), 400
 
 
 @app.errorhandler(404)
@@ -25,18 +25,18 @@ def page_not_found(e):
         # Since the redirects are permanent (301) this should only be
         # shown to users the first time they hit each legacy URL.
         expiration = time() + 5
-        response.set_cookie('legacy_welcome', '1', expires=expiration)
+        response.set_cookie("legacy_welcome", "1", expires=expiration)
         return response
 
-    return render_template('error/404.html', error=e, path=path), 404
+    return render_template("error/404.html", error=e, path=path), 404
 
 
 @app.errorhandler(500)
 def server_error_500(e):  # pragma: no cover
-    logging.exception('An error occurred during a request.')
-    return render_template('error/500.html', error=e), 500
+    logging.exception("An error occurred during a request.")
+    return render_template("error/500.html", error=e), 500
 
 
 @app.errorhandler(502)
 def server_error_502(e):  # pragma: no cover
-    return render_template('error/502.html', error=e), 502
+    return render_template("error/502.html", error=e), 502
