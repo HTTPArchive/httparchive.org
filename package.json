@@ -37,7 +37,7 @@
     "node-fetch": "3.2.10",
     "recursive-readdir": "2.2.2",
     "run-script-os": "1.1.6",
-    "web-vitals": "3.0.2",
+    "web-vitals": "3.0.3",
     "webpack": "5.74.0",
     "webpack-cli": "4.10.0",
     "xml-js": "1.6.11"
