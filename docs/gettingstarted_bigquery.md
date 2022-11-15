@@ -31,13 +31,9 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 5. Navigate to the [Big Query console](https://console.cloud.google.com/bigquery) where you should see your project, with no data.
 
-6. In order to add the HTTP Archive tables to your project, click on Add Data -> Pin a Project->Enter Project Name
+6. In order to add the HTTP Archive tables to your project, click on Add Data ->Star a project by name.
 
-  <img src="images/bigquery-add-a-dataset.png" width="423" alt="BigQuery add a dataset">
-
-7. Type in `HTTPArchive` and click `PIN`:
-
-  <img src="images/bigquery-pin-httparchive.png" width="212" alt="BigQuery pin a project">
+7. Type in `HTTPArchive` and click `STAR`.
 
 8. You should now see the HTTP Archive data set pinned:
 
@@ -58,6 +54,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 In the next section, we explore the structure of these tables so you can start digging in!
 
 ## Understanding how the tables are structured
+
 So, now you have access! But what do you have access to?
 
 The table below outlines what some of the different grouping of tables includes. You'll find summaries of page views and HTTP requests. There are also JSON encoded HAR files for pages, requests, lighthouse reports and even response bodies!
