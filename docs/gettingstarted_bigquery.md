@@ -33,7 +33,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 6. In order to add the HTTP Archive tables to your project, click on Add Data ->Star a project by name.
 
-7. Type in `HTTPArchive` and click `STAR`.
+7. Type in `httparchive` (case-sensitive) and click `STAR`.
 
 8. You should now see the HTTP Archive data set pinned:
 
