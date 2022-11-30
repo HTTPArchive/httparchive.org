@@ -33,7 +33,7 @@
   "devDependencies": {
     "ejs": "3.1.8",
     "fs-extra": "10.1.0",
-    "highcharts": "10.3.1",
+    "highcharts": "10.3.2",
     "node-fetch": "3.3.0",
     "recursive-readdir": "2.2.3",
     "run-script-os": "1.1.6",
