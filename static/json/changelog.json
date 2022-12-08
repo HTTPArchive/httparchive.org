@@ -104,5 +104,10 @@
         "date": 1654041600000,
         "title": "Mobile network throttling changed from 3G to 4G (faster performance)",
         "desc": "Note: Lighthouse still running at Fast 3G so this only affects the HTTP Archive crawl."
+    },
+    {
+        "date": 1672531200000,
+        "title": "Upgrade agents to Ubuntu 22.04",
+        "desc": "Upgraded the test agents from Ubuntu 18.04 to 22.04."
     }
 ]
