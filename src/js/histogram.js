@@ -369,7 +369,10 @@ function drawChart(series, containerId, options) {
       opposite: true
     }],
     series,
-    credits: false,
+    credits: {
+      text: 'highcharts.com',
+      href: 'http://highcharts.com'
+    },
     exporting: chartExportOptions
   });
   chart.drawBenchmark = (name, value, color) => {

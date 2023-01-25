@@ -395,7 +395,10 @@ function drawChart(options, series) {
       min: 0
     },
     series,
-    credits: false,
+    credits: {
+      text: 'highcharts.com',
+      href: 'http://highcharts.com'
+    },
     exporting: chartExportOptions
   });
   chart.drawBenchmark = (name, value, color) => {
