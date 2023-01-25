@@ -56,3 +56,7 @@ To push changes live to the production instance, use the deployment script. Chan
 ```
 npm run deploy
 ```
+
+## Third-party software licenses
+
+HTTP Archive uses Highcharts. See their [licensing terms](https://shop.highcharts.com/) for more info.
