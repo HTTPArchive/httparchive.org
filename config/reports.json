@@ -840,20 +840,6 @@
         ]
       }
     },
-    "a11yBypass": {
-      "name": "Bypass",
-      "type": "%",
-      "downIsBad": true,
-      "description": "The percent of pages that pass the [Lighthouse bypass audit](https://web.dev/bypass/) that checks if pages provide a way to bypass repeated blocks of content.",
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "a11yColorContrast": {
       "name": "Color Contrast",
       "type": "%",
@@ -1316,7 +1302,6 @@
     "metrics": [
       "a11yScores",
       "a11yButtonName",
-      "a11yBypass",
       "a11yColorContrast",
       "a11yImageAlt",
       "a11yLabel",
