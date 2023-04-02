@@ -59,7 +59,7 @@ export const drawMetricSummary = (options, client, value, isMedian=true, change=
 };
 
 const getQueryUrl = (metric, type) => {
-  const URL_BASE = 'https://cdn.rawgit.com/HTTPArchive/bigquery/master/sql';
+  const URL_BASE = 'https://github.com/HTTPArchive/bigquery/blob/master/sql';
   if (type === 'timeseries') {
     return `${URL_BASE}/timeseries/${metric}.sql`;
   }
