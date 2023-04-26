@@ -151,6 +151,10 @@ table tbody tr:nth-child(odd) {
   background-color: #f4f4f4;
 }
 
+.highcharts-label table tbody tr:nth-child(odd) {
+  background-color: initial;
+}
+
 td,
 th {
   padding: 0 5px;

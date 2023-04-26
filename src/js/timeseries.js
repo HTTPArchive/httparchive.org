@@ -283,7 +283,10 @@ function drawChart(options, series) {
       zoomType: 'x'
     },
     title: {
-      text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Timeseries of ${options.name}`
+      text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Timeseries of ${options.name}`,
+      style: {
+        "font-weight": "normal"
+      }
     },
     subtitle: {
       text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',

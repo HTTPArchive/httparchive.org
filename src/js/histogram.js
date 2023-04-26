@@ -281,7 +281,10 @@ function drawChart(series, containerId, options) {
       }
     },
     title: {
-      text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Histogram of ${options.name}`
+      text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Histogram of ${options.name}`,
+      style: {
+        "font-weight": "normal"
+      }
     },
     subtitle: {
       text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
