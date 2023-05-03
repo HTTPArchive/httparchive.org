@@ -66,6 +66,17 @@ def reports():
     return render_template("reports.html", reports=all_reports)
 
 
+@app.route("/reports/<report_id>/<section_id>", strict_slashes=False)
+def dashboard(report_id, section_id):
+    report = report_util.get_report(report_id)
+    
+    if report.get("type"):
+        if report.get("type") == "dashboard":
+            return render_template(
+                "dashboard/%s.html" % section_id,
+                report=report,
+            )
+
 @app.route("/reports/<report_id>", strict_slashes=False)
 def report(report_id):
 
@@ -75,6 +86,10 @@ def report(report_id):
     report = report_util.get_report(report_id)
     if not report:
         abort(404)
+
+    if report.get("type"):
+        if report.get("type") == "dashboard":
+            return redirect('/reports/%s/%s' % (report_id, 'landing'))
 
     report_url = report_util.get_report(report_id).get("url")
     if report_url:
