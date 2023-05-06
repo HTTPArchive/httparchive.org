@@ -1,4 +1,4 @@
-{% extends "dashboard/dashboard.html" %}
+{% extends "techreport/techreport.html" %}
 
 {% block section %}
   <section id="landing-header" class="block">
@@ -6,7 +6,7 @@
       <small>
         Report:
       </small>
-      {% block reportName %}{{ report.name }}{% endblock %}
+      {% block reportName %}{{ tech_report.name }}{% endblock %}
     </h1>
 
     {{ report.summary | markdown }}
@@ -14,11 +14,11 @@
 
   <section id="landing-pages" class="block">
     <div class="card">
-      <h2><a href="/reports/{{ report.id }}/drilldown">Technology Drilldown</a></h2>
+      <h2><a href="/reports/{{ tech_report.id }}/drilldown">Technology Drilldown</a></h2>
       <p>Get detailed information about <strong>one</strong> technology. </p>
     </div>
     <div class="card">
-      <h2><a href="/reports/{{ report.id }}/comparison">Technology Comparison</a></h2>
+      <h2><a href="/reports/{{ tech_report.id }}/comparison">Technology Comparison</a></h2>
       <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
     </div>
   </section>
@@ -32,7 +32,7 @@
         This is a selection of some the technologies used on the most websites.
       </p>
       <p>Table comes here</p>
-      <a href="/reports/{{ report.id }}/comparison?tech=wordpress">Compare technologies</a>
+      <a href="/reports/{{ tech_report.id }}/comparison?tech=wordpress">Compare technologies</a>
     </div>
   </section>
 {% endblock %}

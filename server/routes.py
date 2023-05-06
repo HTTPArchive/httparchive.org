@@ -68,23 +68,16 @@ def reports():
 
 
 @app.route("/reports/techreport/<section_id>", strict_slashes=False)
-def dashboard(section_id):
+def techreport(section_id):
     report = tech_report_util.get_report()
 
-    print('report')
-    print(report)
+    all_reports = report_util.get_reports()
 
     return render_template(
-        "dashboard/%s.html" % section_id,
-        report=report,
+        "techreport/%s.html" % section_id,
+        tech_report=report,
+        reports=all_reports,
     )
-    
-    # if report.get("type"):
-    #     if report.get("type") == "dashboard":
-    #         return render_template(
-    #             "dashboard/%s.html" % section_id,
-    #             report=report,
-    #         )
 
 @app.route("/reports/<report_id>", strict_slashes=False)
 def report(report_id):
