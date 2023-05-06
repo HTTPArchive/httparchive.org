@@ -1,5 +1,38 @@
 {% extends "dashboard/dashboard.html" %}
 
 {% block section %}
-<p>Landing page, search for things here</p>
+  <section id="landing-header" class="block">
+    <h1>
+      <small>
+        Report:
+      </small>
+      {% block reportName %}{{ report.name }}{% endblock %}
+    </h1>
+
+    {{ report.summary | markdown }}
+  </section>
+
+  <section id="landing-pages" class="block">
+    <div class="card">
+      <h2><a href="/reports/{{ report.id }}/drilldown">Technology Drilldown</a></h2>
+      <p>Get detailed information about <strong>one</strong> technology. </p>
+    </div>
+    <div class="card">
+      <h2><a href="/reports/{{ report.id }}/comparison">Technology Comparison</a></h2>
+      <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+    </div>
+  </section>
+
+  <section id="interesting" class="block">
+    <h2>Interesting to explore</h2>
+    <div class="card metric">
+      <h3>Popular technologies</h3>
+      <p>
+        We have data on XXX technologies, across XXX categories. In total XXX origins were assessed.
+        This is a selection of some the technologies used on the most websites.
+      </p>
+      <p>Table comes here</p>
+      <a href="/reports/{{ report.id }}/comparison?tech=wordpress">Compare technologies</a>
+    </div>
+  </section>
 {% endblock %}
