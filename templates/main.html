@@ -117,14 +117,6 @@
                     </a>
                   </li>
                 {% endfor %}
-                {% if tech_report %}
-                  {% set url = tech_report.url or url_for('report', report_id=tech_report.id) %}
-                  <li>
-                    <a href="{{ url }}">
-                      {{ tech_report.name }}
-                    </a>
-                  </li>
-                {% endif %}
               </ul>
             </li>
             <li>
