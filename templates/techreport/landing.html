@@ -1,38 +1,64 @@
 {% extends "techreport/techreport.html" %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/landing.css') }}" />
+{% endblock %}
+
 {% block section %}
-  <section id="landing-header" class="block">
+  <div class="intro block-m">
     <h1>
-      <small>
-        Report:
-      </small>
+      <span>Report</span>
       {% block reportName %}{{ tech_report.name }}{% endblock %}
     </h1>
 
     {{ report.summary | markdown }}
-  </section>
 
-  <section id="landing-pages" class="block">
-    <div class="card">
-      <h2><a href="/reports/{{ tech_report.id }}/drilldown">Technology Drilldown</a></h2>
-      <p>Get detailed information about <strong>one</strong> technology. </p>
-    </div>
-    <div class="card">
-      <h2><a href="/reports/{{ tech_report.id }}/comparison">Technology Comparison</a></h2>
-      <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
-    </div>
-  </section>
+  </div>
 
-  <section id="interesting" class="block">
-    <h2>Interesting to explore</h2>
-    <div class="card metric">
-      <h3>Popular technologies</h3>
-      <p>
-        We have data on XXX technologies, across XXX categories. In total XXX origins were assessed.
-        This is a selection of some the technologies used on the most websites.
-      </p>
-      <p>Table comes here</p>
-      <a href="/reports/{{ tech_report.id }}/comparison?tech=wordpress">Compare technologies</a>
+  <div class="choices-wrapper">
+    <div class="choices block-m">
+      <div class="card">
+        <h2><a href="/reports/{{ tech_report.id }}/drilldown">Technology Drilldown</a></h2>
+        <p>Get detailed information about <strong>one</strong> technology. </p>
+      </div>
+      <div class="card">
+        <h2><a href="/reports/{{ tech_report.id }}/comparison">Technology Comparison</a></h2>
+        <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+      </div>
     </div>
-  </section>
+
+    <div class="latest-info block-s">
+      <h2>About our dataset</h2>
+      <div class="stats">
+        <div>
+          <h3>Last updated</h3>
+          <p class="value">Timestamp</p>
+        </div>
+  
+        <div>
+          <h3>Websites tested</h3>
+          <p class="value">123456</p>
+        </div>
+
+        <div>
+          <h3>Good CWVs amongst top websites</h3>
+          <p class="value">70%</p>
+        </div>
+      </div>
+      </div>
+  </div>
+
+  <div class="block-m">
+    <h2>Dive into our data</h2>
+
+    {% for block in tech_report_page.get("blocks") %}
+      {% if block.type == "table" %}
+        {% set ctaUrl = "/reports/{{ tech_report.id }}/comparison?tech=wordpress" %}
+        {% set ctaLabel = "Compare technologies" %}
+        {% include "techreport/components/table.html" %}
+      {% endif %}
+    {% endfor %}
+
+  </div>
 {% endblock %}

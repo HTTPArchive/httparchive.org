@@ -6,24 +6,12 @@
 
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport.css') }}" />
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/variables.css') }}" />
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/techreport.css') }}" />
 {% endblock %}
 
 {% block main %}
 
   {% block section %}{% endblock %}
-
-  <p>Debug:</p>
-  <ul>
-    <li>
-      <a href="/reports/{{ tech_report.id }}/landing">Home</a>
-    </li>
-    <li>
-      <a href="/reports/{{ tech_report.id }}/drilldown">Drilldown</a>
-    </li>
-    <li>
-      <a href="/reports/{{ tech_report.id }}/comparison">Comparison</a>
-    </li>
-  </ul>
   
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends "techreport/techreport.html" %}
+
+{% block section %}
+  <nav>
+    <ul>
+      <li>
+        <a href="/reports/{{ tech_report.id }}/landing">Home</a>
+      </li>
+      <li>
+        <a href="/reports/{{ tech_report.id }}/drilldown">Drilldown</a>
+      </li>
+      <li>
+        <a href="/reports/{{ tech_report.id }}/comparison">Comparison</a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}

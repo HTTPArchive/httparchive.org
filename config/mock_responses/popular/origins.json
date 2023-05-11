@@ -1,0 +1,54 @@
+{
+  "results": [
+    {
+      "technology_name": "Wordpress",
+      "origins": [
+        {
+          "date": "2022-04-22T00:00:00.000Z",
+          "origins": "16173173",
+          "origins_dataset": "72438921"
+        },
+        {
+          "date": "2022-03-22T00:00:00.000Z",
+          "origins": "15173173",
+          "origins_dataset": "70337805"
+        },
+        {
+          "date": "2022-02-22T00:00:00.000Z",
+          "origins": "15173275",
+          "origins_dataset": "70337805"
+        },
+        {
+          "date": "2022-01-22T00:00:00.000Z",
+          "origins": "13236250",
+          "origins_dataset": "70125002"
+        }
+      ]
+    },
+    {
+      "technology_name": "Squarespace",
+      "origins": [
+        {
+          "date": "2022-04-22T00:00:00.000Z",
+          "origins": "16173173",
+          "origins_dataset": "72438921"
+        },
+        {
+          "date": "2022-03-22T00:00:00.000Z",
+          "origins": "15173173",
+          "origins_dataset": "70337805"
+        },
+        {
+          "date": "2022-02-22T00:00:00.000Z",
+          "origins": "15173275",
+          "origins_dataset": "70337805"
+        },
+        {
+          "date": "2022-01-22T00:00:00.000Z",
+          "origins": "13236250",
+          "origins_dataset": "70125002"
+        }
+      ]
+    }
+  ]
+}

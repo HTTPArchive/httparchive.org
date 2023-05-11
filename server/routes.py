@@ -69,13 +69,14 @@ def reports():
 
 @app.route("/reports/techreport/<section_id>", strict_slashes=False)
 def techreport(section_id):
-    report = tech_report_util.get_report()
+    tech_report = tech_report_util.get_report()
 
     all_reports = report_util.get_reports()
 
     return render_template(
         "techreport/%s.html" % section_id,
-        tech_report=report,
+        tech_report=tech_report,
+        tech_report_page=tech_report.get('pages')[0],
         reports=all_reports,
     )
 

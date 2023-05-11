@@ -1,0 +1,81 @@
+header {
+  margin: 0;
+}
+
+.intro {
+  border: none;
+  margin-top: 0;
+  background-color: transparent;
+  padding: 4rem 0;
+}
+
+h1 {
+  font-size: var(--font-size-large);
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+}
+
+h1 span {
+  font-size: var(--font-size-regular);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-size: var(--font-size-regular);
+}
+
+h1 + p {
+  padding: 0;
+}
+
+.choices-wrapper {
+  background-image: linear-gradient(to bottom, #9bb8bb 0%, #d7e0e1 100%);
+  padding: 4rem 0;
+  margin-top: 4rem;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  column-gap: 2rem;
+  row-gap: 1rem;
+  margin-top: -8rem;
+  margin-bottom: 4rem;
+}
+
+.choices .card {
+  padding: 1.5rem 1.75rem;
+}
+
+.choices .card h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.choices .card h2 + p {
+  margin: 0;
+  padding: 0;
+}
+
+.latest-info h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.latest-info .stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.latest-info h3 {
+  font-size: var(--font-size-regular);
+}
+
+.latest-info p.value {
+  font-size: var(--font-size-medium);
+  font-weight: 600;
+}
