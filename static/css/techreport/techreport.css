@@ -25,3 +25,38 @@ main {
   margin-left: auto;
   margin-right: auto;
 }
+
+
+.block-l {
+  width: 85rem;
+  max-width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.intro {
+  border: none;
+  margin-top: 0;
+  background-color: transparent;
+  padding: 4rem 0;
+}
+
+.intro h1 {
+  font-size: var(--font-size-large);
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+}
+
+.intro h1 span {
+  font-size: var(--font-size-regular);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.intro p {
+  font-size: var(--font-size-regular);
+}
+
+.intro h1 + p {
+  padding: 0;
+}

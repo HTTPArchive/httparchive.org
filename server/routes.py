@@ -67,16 +67,17 @@ def reports():
     return render_template("reports.html", reports=all_reports)
 
 
-@app.route("/reports/techreport/<section_id>", strict_slashes=False)
-def techreport(section_id):
+@app.route("/reports/techreport/<page_id>", strict_slashes=False)
+def techreport(page_id):
     tech_report = tech_report_util.get_report()
-
     all_reports = report_util.get_reports()
+    active_tech_report=tech_report.get('pages').get(page_id)
 
     return render_template(
-        "techreport/%s.html" % section_id,
+        "techreport/%s.html" % page_id,
+        active_page=page_id,
         tech_report=tech_report,
-        tech_report_page=tech_report.get('pages')[0],
+        tech_report_page=active_tech_report,
         reports=all_reports,
     )
 

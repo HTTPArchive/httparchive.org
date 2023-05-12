@@ -6,6 +6,8 @@
   --color-card-background: #fff;
   --color-card-border: var(--color-brand-faded);
 
+  --color-page-background: #f4f4f4;
+
   --shadow-card: 0 3px 12px -2px rgba(106, 121, 124, 0.2);
 
   --font-size-regular: 1.15rem;

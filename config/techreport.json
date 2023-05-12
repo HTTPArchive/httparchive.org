@@ -3,22 +3,47 @@
   "name": "Technology Report",
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "metrics": [],
-  "pages": [
-    {
+  "pages": {
+    "landing": {
       "id": "landing",
-      "name": "Technology Report",
+      "title": "Technology Report",
+      "subtitle": "Report",
+      "description": "This is placeholder text about how the report works",
       "blocks": [
         {
           "name": "Popular Technologies",
           "description": "Placeholder description",
-          "type": "table",
-          "filter": {
-            "technologies": ["Wordpress", "Squarespace"]
-          }
+          "type": "table"
+        }
+      ]
+    },
+    "drilldown": {
+      "id": "drilldown",
+      "title": "Drilldown",
+      "subtitle": "Technology Report",
+      "description": "Drilldown placeholder",
+      "blocks": [
+        {
+          "name": "Summary",
+          "description": "Summary table",
+          "type": "table"
+        }
+      ]
+    },
+    "comparison": {
+      "id": "comparison",
+      "title": "Comparison",
+      "subtitle": "Technology Report",
+      "description": "Comparison placeholder",
+      "blocks": [
+        {
+          "name": "Summary",
+          "description": "Summary table",
+          "type": "table"
         }
       ]
     }
-  ],
+  },
   "graphic": {
     "bgcolor": "#fff",
     "primary": {

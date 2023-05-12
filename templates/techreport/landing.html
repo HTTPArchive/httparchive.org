@@ -6,15 +6,9 @@
 {% endblock %}
 
 {% block section %}
-  <div class="intro block-m">
-    <h1>
-      <span>Report</span>
-      {% block reportName %}{{ tech_report.name }}{% endblock %}
-    </h1>
 
-    {{ report.summary | markdown }}
+  {% include "techreport/components/heading.html" %}
 
-  </div>
 
   <div class="choices-wrapper">
     <div class="choices block-m">
