@@ -13,7 +13,7 @@ def get_report():
     return tech_report_json
 
 
-def get_metrics(metric, filters):
+def get_metrics(metric, filters={}):
   global report_metrics
 
   # Mock functionality
@@ -22,7 +22,7 @@ def get_metrics(metric, filters):
   print(metric)
   print(filters)
 
-  with open("config/mock_responses/popular/%s.json" % metric) as report_metrics_file:
+  with open("config/mock_responses/%s.json" % metric) as report_metrics_file:
       report_metrics = json.load(report_metrics_file)
   
   return report_metrics

@@ -9,18 +9,23 @@
       "title": "Technology Report",
       "subtitle": "Report",
       "description": "This is placeholder text about how the report works",
-      "blocks": [
+      "sections": [
         {
-          "name": "Popular Technologies",
-          "description": "Placeholder description",
-          "type": "table",
-          "data": {
-            "metrics": ["adoption", "good_vitals"],
-            "filters": {
-              "technologies": ["wordpress", "squarespace"],
-              "geo": "all"
+          "id": "explore",
+          "title": "Explore our data",
+          "metrics": ["adoption", "good_vitals"],
+          "filters": {
+            "technologies": ["wordpress", "squarespace"],
+            "geo": "all"
+          },
+          "data": {},
+          "blocks": [
+            {
+              "name": "Popular Technologies",
+              "description": "Placeholder description",
+              "type": "table"
             }
-          }
+          ]
         }
       ]
     },
@@ -29,11 +34,19 @@
       "title": "Drilldown",
       "subtitle": "Technology Report",
       "description": "Drilldown placeholder",
-      "blocks": [
+      "sections": [
         {
-          "name": "Summary",
-          "description": "Summary table",
-          "type": "table"
+          "id": "cwv",
+          "title": "Core Web Vitals",
+          "metrics": ["good_vitals"],
+          "data": {},
+          "blocks": [
+            {
+              "id": "summary",
+              "name": "Summary",
+              "type": "cards"
+            }
+          ]
         }
       ]
     },

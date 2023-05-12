@@ -2,12 +2,11 @@
   "results": [
     {
       "technology": "wordpress",
-      "vitals": [
+      "dates": [
         {
           "date": "2022-04-22T00:00:00.000Z",
-          "name": "overall",
           "tested": 10,
-          "good_number": {
+          "good_overall": {
             "desktop": 4,
             "mobile": 7,
             "dataset": 6
@@ -17,12 +16,12 @@
     },
     {
       "technology": "squarespace",
-      "vitals": [
+      "dates": [
         {
           "date": "2022-04-22T00:00:00.000Z",
           "name": "overall",
           "tested": 264,
-          "good_number": {
+          "good_overall": {
             "desktop": 163,
             "mobile": 13,
             "dataset": 54

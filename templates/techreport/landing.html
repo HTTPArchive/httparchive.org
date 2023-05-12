@@ -46,15 +46,15 @@
   <div class="report-summary-tables block-m">
     <h2>Dive into our data</h2>
 
-    {% for block in tech_report_page.get("blocks") %}
-      {% if block.type == "table" %}
-        {% set ctaUrl = "/reports/" + tech_report.id + "/comparison?tech=" %}
-        {% for tech in block.data.filters.technologies %}
-          {% set ctaUrl = ctaUrl + tech + "," %}
-        {% endfor %}
-        {% set ctaLabel = "Compare technologies" %}
-        {% include "techreport/components/table.html" %}
-      {% endif %}
+    {% set sections = tech_report_page.get("sections") %}
+    {% for section in sections %}
+      {% for block in section.get("blocks") %}
+        {% if block.type == "table" %}
+          {% set ctaUrl = "/reports/" + tech_report.id + "/comparison?tech=" %}
+          {% set ctaLabel = "Compare technologies" %}
+          {% include "techreport/components/table.html" %}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
 
   </div>

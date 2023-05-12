@@ -5,9 +5,10 @@
     {{ block.description }}
   </p>
   
-  <!-- TODO: Get this from JSON file based on configuration -->
+  <!-- TODO: Configure columns and rows in the techreport.json -->
+  <!-- OR: Hardcode the different tables for now, reuse styling -->
   <table class="table-ui">
-    <caption>{{ block.name }}</caption>
+    <caption>Sample table: {{ block.name }} (in progress)</caption>
     <thead>
       <tr>
         <th>Technology</th>
@@ -16,11 +17,11 @@
       </tr>
     </thead>
     <tbody>
-      {% for technology in block.data.filters.technologies %}
+      {% for technology in section.filters.technologies %}
         <tr>
           <th><a href="/reports/techreport/drilldown?tech={{ technology }}">{{ technology }}</a></th>
-          <td>{{ block.data.adoption.results[0].origins[0].origins }}</td>
-          <td>{{ block.data.good_vitals.results[0].vitals[0].good_number.mobile / block.data.good_vitals.results[0].vitals[0].tested * 100 }}%</td>
+          <td>Placeholder</td>
+          <td>Placeholder%</td>
         </tr>
       {% endfor %}
     </tbody>

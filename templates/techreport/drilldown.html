@@ -2,4 +2,27 @@
 
 {% block section %}
   {{ super() }}
+
+  <div class="block-m">
+    <p>Placehodler content</p>
+
+    <h2>Core Web Vitals</h2>
+    
+    {{ tech_report_page.title }}
+
+    {% for section in tech_report_page.sections %}
+      {% set section_data = section.data.good_vitals.results %}
+      {% for entry in section_data %}
+        {% set latest = entry.dates[0] %}
+        <h3>{{ entry.technology }}</h3>
+        <ul>
+          <li>Latest mobile: {{ latest.good_overall.mobile }}</li>
+          <li>Latest desktop: {{ latest.good_overall.desktop }}</li>
+          <li>Latest tested: {{ latest.tested }}</li>
+        </ul>
+      {% endfor %}
+    {% endfor %}
+  </div>
+  
+
 {% endblock %}
