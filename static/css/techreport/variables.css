@@ -1,7 +1,12 @@
 :root {
   --color-brand-faded: #A6BBBE;
+  --color-brand-dark: #3A5C63;
+  --color-brand-darker: #1C4750;
+
+  --color-link: #24618E;
 
   --color-text: #444444;
+  --color-text-inverted: #FFF;
 
   --color-card-background: #fff;
   --color-card-border: var(--color-brand-faded);

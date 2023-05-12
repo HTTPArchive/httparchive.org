@@ -49,3 +49,7 @@
   font-size: var(--font-size-medium);
   font-weight: 600;
 }
+
+.report-summary-tables {
+  padding: 4rem 0;
+}

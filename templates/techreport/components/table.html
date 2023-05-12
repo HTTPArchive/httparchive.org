@@ -6,7 +6,7 @@
   </p>
   
   <!-- TODO: Get this from JSON file based on configuration -->
-  <table>
+  <table class="table-ui">
     <caption>{{ block.name }}</caption>
     <thead>
       <tr>
@@ -17,17 +17,20 @@
     </thead>
     <tbody>
       <tr>
-        <th>Wordpress</th>
+        <th><a href="/reports/techreport/drilldown?tech=wordpress">Wordpress</a></th>
         <td>16,263,163</td>
         <td>78%</td>
       </tr>
       <tr>
-        <th>Squarespace</th>
+        <th><a href="/reports/techreport/drilldown?tech=squarespace"></a></th>
         <td>5,479,006</td>
         <td>53%</td>
       </tr>
     </tbody>
   </table>
 
-  <a href="{{ ctaUrl }}">{{ ctaLabel }}</a>
+  <p class="cta-link-wrapper">
+    <a href="{{ ctaUrl }}" class="cta-link">{{ ctaLabel }}</a>
+  </p>
+
 </div>
