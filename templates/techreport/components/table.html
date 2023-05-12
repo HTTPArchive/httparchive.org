@@ -16,16 +16,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th><a href="/reports/techreport/drilldown?tech=wordpress">Wordpress</a></th>
-        <td>16,263,163</td>
-        <td>78%</td>
-      </tr>
-      <tr>
-        <th><a href="/reports/techreport/drilldown?tech=squarespace"></a></th>
-        <td>5,479,006</td>
-        <td>53%</td>
-      </tr>
+      {% for technology in block.data.filters.technologies %}
+        <tr>
+          <th><a href="/reports/techreport/drilldown?tech={{ technology }}">{{ technology }}</a></th>
+          <td>{{ block.data.adoption.results[0].origins[0].origins }}</td>
+          <td>{{ block.data.good_vitals.results[0].vitals[0].good_number.mobile / block.data.good_vitals.results[0].vitals[0].tested * 100 }}%</td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
 

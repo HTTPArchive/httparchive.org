@@ -48,7 +48,10 @@
 
     {% for block in tech_report_page.get("blocks") %}
       {% if block.type == "table" %}
-        {% set ctaUrl = "/reports/{{ tech_report.id }}/comparison?tech=wordpress" %}
+        {% set ctaUrl = "/reports/" + tech_report.id + "/comparison?tech=" %}
+        {% for tech in block.data.filters.technologies %}
+          {% set ctaUrl = ctaUrl + tech + "," %}
+        {% endfor %}
         {% set ctaLabel = "Compare technologies" %}
         {% include "techreport/components/table.html" %}
       {% endif %}

@@ -13,7 +13,14 @@
         {
           "name": "Popular Technologies",
           "description": "Placeholder description",
-          "type": "table"
+          "type": "table",
+          "data": {
+            "metrics": ["adoption", "good_vitals"],
+            "filters": {
+              "technologies": ["wordpress", "squarespace"],
+              "geo": "all"
+            }
+          }
         }
       ]
     },

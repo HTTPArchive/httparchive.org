@@ -73,6 +73,16 @@ def techreport(page_id):
     all_reports = report_util.get_reports()
     active_tech_report=tech_report.get('pages').get(page_id)
 
+    for block in active_tech_report.get("blocks"):
+      data_options = block.get("data")
+      if data_options:
+        metrics = data_options.get("metrics")
+        filters = data_options.get("filters")
+
+        for metric in metrics:
+          results = tech_report_util.get_metrics(metric, filters)
+          block["data"][metric] = results
+
     return render_template(
         "techreport/%s.html" % page_id,
         active_page=page_id,
