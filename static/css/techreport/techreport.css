@@ -172,3 +172,23 @@ h2 {
   margin-top: -0.5rem;
   margin-bottom: 0;
 }
+
+/* Timeseries cards */
+.timeseries-container {
+  margin-top: 2rem;
+}
+
+.timeseries-title {
+  font-size: var(--font-size-regular);
+  margin-bottom: 0.75rem;
+}
+
+.timeseries-description {
+  max-width: 50rem;
+}
+
+.timeseries-time {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0.75rem 0;
+}

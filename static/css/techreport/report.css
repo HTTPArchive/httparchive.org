@@ -54,3 +54,11 @@
   background-size: 100% 25rem;
   background-repeat: no-repeat;
 }
+
+.page-data h2 {
+  margin-bottom: 1rem;
+}
+
+.block-description {
+  max-width: 50rem;
+}

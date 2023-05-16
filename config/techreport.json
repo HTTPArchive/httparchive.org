@@ -55,27 +55,14 @@
           "id": "summary",
           "title": "Summary",
           "metrics": ["good_vitals", "adoption"],
-          "data": {},
-          "blocks": [
-            {
-              "id": "summary",
-              "name": "Summary",
-              "type": "cards"
-            }
-          ]
+          "data": {}
         },
         {
           "id": "cwv",
           "title": "Core Web Vitals",
+          "description": "Placeholder text, A couple of words about what will be visualized in this section. Which values are there, what do they mean, etc. And we can also link to a relevant help page if needed. Probably doesn’t need much text here, unless if we want to summarise the data. Learn more",
           "metrics": ["good_vitals"],
-          "data": {},
-          "blocks": [
-            {
-              "id": "summary",
-              "name": "Summary",
-              "type": "cards"
-            }
-          ]
+          "data": {}
         }
       ]
     },

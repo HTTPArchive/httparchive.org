@@ -35,12 +35,24 @@
 
   <div class="page-data">
     <div class="block-m">
-      <h2>Core Web Vitals</h2>
-      <ul>
-        {% for date in tech_report_page.sections[0].data.good_vitals.results[0].dates %}
-          <li>{{date.good_overall.mobile}}</li>
-        {% endfor %}
-      </ul>
+      <h2>{{ tech_report_page.sections[1].title }}</h2>
+      <div class="block-description">
+        {{ tech_report_page.sections[1].description }}
+      </div>
+
+      <div class="card timeseries-container">
+        <p class="timeseries-title">Good Core Web Vitals over time</p>
+        <p class="timeseries-description">The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a "good" experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics.</p>
+        <p class="timeseries-time">Latest: {{ tech_report_page.sections[1].data.good_vitals.results[0].dates[0].date }}</p>
+        <p>
+          Chart comes here:
+        </p>
+        <ul>
+          {% for date in tech_report_page.sections[1].data.good_vitals.results[0].dates %}
+            <li>{{date.good_overall.mobile}}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   </div>
 
