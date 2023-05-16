@@ -1,0 +1,14 @@
+{
+  "results": [
+    {
+      "technology": "wordpress",
+      "title": "Wordpress",
+      "description": "Wordpress description"
+    },
+    {
+      "technology": "squarespace",
+      "title": "Squarespace",
+      "description": "Squarespace description"
+    }
+  ]
+}

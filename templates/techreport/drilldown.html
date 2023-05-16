@@ -3,62 +3,69 @@
 {% block section %}
   {{ super() }}
 
+  {% set filtered_technology = tech_report_page.tech[0] %}
+
+  {% include "techreport/components/heading.html" %}
+
   {% set tech_report_section = tech_report_page.sections[0] %}
 
-  <div class="block-m summary">
-    <h2>Summary</h2>
+  {% if filtered_technology %}
+    <div class="block-m summary">
+      <h2>Summary</h2>
 
-    <div class="summary-grid">
-      {% set summary = {
-        "url": "#adoption",
-        "label": tech_report_labels.adoption.title,
-        "value": tech_report_section.data.adoption.results[0].dates[0].origins.mobile,
-        "description": tech_report_labels.adoption.summary_description
-      } %}
-      {% include "techreport/components/summary_linked.html" %}
+      <div class="summary-grid">
+        {% set summary = {
+          "url": "#adoption",
+          "label": tech_report_labels.adoption.title,
+          "value": tech_report_section.data.adoption.results[0].dates[0].origins.mobile,
+          "description": tech_report_labels.adoption.summary_description
+        } %}
+        {% include "techreport/components/summary_linked.html" %}
 
-      {% set summary = {
-        "url": "#cwv",
-        "label": tech_report_labels.cwv.good.title,
-        "value": tech_report_section.data.good_vitals.results[0].dates[0].good_overall.mobile,
-        "description":  tech_report_labels.cwv.good.summary_description
-      } %}
-      {% include "techreport/components/summary_linked.html" %}
-    </div>
-  </div>
-
-  <div class="page-data">
-    <div class="block-m metric-block">
-      <h2>{{ tech_report_labels.cwv.title }}</h2>
-      <div class="block-description">
-        {{ tech_report_labels.cwv.section_description }}
+        {% set summary = {
+          "url": "#cwv",
+          "label": tech_report_labels.cwv.good.summary_title,
+          "value": tech_report_section.data.good_vitals.results[0].dates[0].good_overall.mobile,
+          "description":  tech_report_labels.cwv.good.summary_description
+        } %}
+        {% include "techreport/components/summary_linked.html" %}
       </div>
-      
-      {% set timeseries_title = tech_report_labels.cwv.good.timeseries_title %}
-      {% set timeseries_description = tech_report_labels.cwv.good.section_description %}
-      {% set timeseries_metric = "good_vitals" %}
-      {% set timeseries_sub_metric = "good_overall" %}
-      {% set client = "mobile" %}
-
-      {% include "techreport/components/timeseries_container.html" %}
-
     </div>
 
-    <div class="block-m metric-block">
-      <h2>{{ tech_report_labels.adoption.title }}</h2>
-      <div class="block-description">
-        {{ tech_report_labels.adoption.section_description }}
+    <div class="page-data">
+      <div class="block-m metric-block">
+        <h2>{{ tech_report_labels.cwv.title }}</h2>
+        <div class="block-description">
+          {{ tech_report_labels.cwv.section_description }}
+        </div>
+        
+        {% set timeseries_title = tech_report_labels.cwv.good.timeseries_title %}
+        {% set timeseries_description = tech_report_labels.cwv.good.section_description %}
+        {% set timeseries_metric = "good_vitals" %}
+        {% set timeseries_sub_metric = "good_overall" %}
+        {% set client = "mobile" %}
+
+        {% include "techreport/components/timeseries_container.html" %}
+
       </div>
-      
-      {% set timeseries_title = tech_report_labels.adoption.timeseries_title %}
-      {% set timeseries_description = tech_report_labels.adoption.timeseries_description %}
-      {% set timeseries_metric = "adoption" %}
-      {% set timeseries_sub_metric = "origins" %}
-      {% set client = "mobile" %}
 
-      {% include "techreport/components/timeseries_container.html" %}
+      <div class="block-m metric-block">
+        <h2>{{ tech_report_labels.adoption.title }}</h2>
+        <div class="block-description">
+          {{ tech_report_labels.adoption.section_description }}
+        </div>
+        
+        {% set timeseries_title = tech_report_labels.adoption.timeseries_title %}
+        {% set timeseries_description = tech_report_labels.adoption.timeseries_description %}
+        {% set timeseries_metric = "adoption" %}
+        {% set timeseries_sub_metric = "origins" %}
+        {% set client = "mobile" %}
 
+        {% include "techreport/components/timeseries_container.html" %}
+
+      </div>
     </div>
-  </div>
+  {% endif %}
+
 
 {% endblock %}

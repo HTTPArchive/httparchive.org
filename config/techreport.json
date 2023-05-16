@@ -8,7 +8,7 @@
       "title": "Adoption",
       "section_description": "Here is a description for the adoption section",
       "summary_description": "websites tested using this technology",
-      "timeseries_title": "Adoption",
+      "timeseries_title": "Origins in our dataset over time",
       "timeseries_description": "Origin description"
     },
     "cwv": {
@@ -73,7 +73,7 @@
         {
           "id": "all",
           "title": "All",
-          "metrics": ["good_vitals", "adoption"],
+          "metrics": ["good_vitals", "adoption", "metadata"],
           "data": {}
         }
       ]
