@@ -86,7 +86,7 @@ def techreport(page_id):
     return render_template(
         "techreport/%s.html" % page_id,
         active_page=page_id,
-        tech_report=tech_report,
+        tech_report_labels=tech_report.get("labels"),
         tech_report_page=active_tech_report,
         reports=all_reports,
     )

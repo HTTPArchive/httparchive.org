@@ -1,0 +1,14 @@
+{% set timeseries_dates = tech_report_section.data[timeseries_metric].results[0].dates %}
+<div class="card timeseries-container">
+  <p class="timeseries-title">{{ timeseries_title }}</p>
+  <p class="timeseries-description">{{ timeseries_description }}</p>
+  <p class="timeseries-time">Latest: {{ timeseries_dates[0].date }}</p>
+  <p>
+    Chart comes here:
+  </p>
+  <ul>
+    {% for date in timeseries_dates %}
+      <li>{{ date.date }}: {{date[timeseries_sub_metric][client]}}</li>
+    {% endfor %}
+  </ul>
+</div>

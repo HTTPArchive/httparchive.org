@@ -3,10 +3,29 @@
   "name": "Technology Report",
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "metrics": [],
+  "labels": {
+    "adoption": {
+      "title": "Adoption",
+      "section_description": "Here is a description for the adoption section",
+      "summary_description": "websites tested using this technology",
+      "timeseries_title": "Adoption",
+      "timeseries_description": "Origin description"
+    },
+    "cwv": {
+      "title": "Core Web Vitals",
+      "section_description": "Placeholder text, A couple of words about what will be visualized in this section. Which values are there, what do they mean, etc. And we can also link to a relevant help page if needed. Probably doesn’t need much text here, unless if we want to summarise the data. Learn more",
+      "good": {
+        "summary_title": "Good CWVs",
+        "summary_description": "of tested origins had overall good Core Web Vitals.",
+        "timeseries_title": "Good Core Web Vitals over time",
+        "section_description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a 'good' experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics."
+      }
+    }
+  },
   "pages": {
     "landing": {
       "id": "landing",
-      "title": "Technology Report Landing",
+      "title": "Technology Report",
       "subtitle": "Report",
       "description": "This is placeholder text about how the report works",
       "sections": [
@@ -52,16 +71,9 @@
       "description": "Drilldown placeholder",
       "sections": [
         {
-          "id": "summary",
-          "title": "Summary",
+          "id": "all",
+          "title": "All",
           "metrics": ["good_vitals", "adoption"],
-          "data": {}
-        },
-        {
-          "id": "cwv",
-          "title": "Core Web Vitals",
-          "description": "Placeholder text, A couple of words about what will be visualized in this section. Which values are there, what do they mean, etc. And we can also link to a relevant help page if needed. Probably doesn’t need much text here, unless if we want to summarise the data. Learn more",
-          "metrics": ["good_vitals"],
           "data": {}
         }
       ]

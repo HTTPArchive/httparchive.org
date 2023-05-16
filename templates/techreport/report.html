@@ -6,19 +6,5 @@
 {% endblock %}
 
 {% block section %}
-  <nav class="report-navigation">
-    <ul class="block-l">
-      <li>
-        <a href="/reports/{{ tech_report.id }}/landing" {% if active_page == "landing" %} aria-current="page" {% endif %}>Home</a>
-      </li>
-      <li>
-        <a href="/reports/{{ tech_report.id }}/drilldown" {% if active_page == "drilldown" %} aria-current="page" {% endif %}>Drilldown</a>
-      </li>
-      <li>
-        <a href="/reports/{{ tech_report.id }}/comparison" {% if active_page == "comparison" %} aria-current="page" {% endif %}>Comparison</a>
-      </li>
-    </ul>
-  </nav>
-
   {% include "techreport/components/heading.html" %}
 {% endblock %}

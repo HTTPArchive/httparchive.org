@@ -1,8 +1,6 @@
-{% set report = tech_report %}
 {% extends "main.html" %}
 
-{% block title %}HTTP Archive: {{ tech_report.name }}{% endblock %}
-{% block description %}{{ tech_report.summary | markdown | striptags }}{% endblock %}
+{% block title %}HTTP Archive: Tech Report{% endblock %}
 
 {% block head %}
   {{ super() }}
@@ -10,8 +8,24 @@
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/techreport.css') }}" />
 {% endblock %}
 
+{% block report_navigation %}
+  <nav class="report-navigation">
+    <ul class="block-l">
+      <li>
+        <a href="/reports/techreport/landing" {% if active_page == "landing" %} aria-current="page" {% endif %}>Home</a>
+      </li>
+      <li>
+        <a href="/reports/techreport/drilldown" {% if active_page == "drilldown" %} aria-current="page" {% endif %}>Drilldown</a>
+      </li>
+      <li>
+        <a href="/reports/techreport/comparison" {% if active_page == "comparison" %} aria-current="page" {% endif %}>Comparison</a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+
 {% block main %}
 
-{% block section %}{% endblock %}
+  {% block section %}{% endblock %}
   
 {% endblock %}

@@ -5,23 +5,17 @@
       "dates": [
         {
           "date": "2022-04-22T00:00:00.000Z",
-          "origins": "16173173",
-          "origins_dataset": "72438921"
+          "origins": {
+            "mobile": 524362,
+            "desktop": 73542
+          }
         },
         {
           "date": "2022-03-22T00:00:00.000Z",
-          "origins": "15173173",
-          "origins_dataset": "70337805"
-        },
-        {
-          "date": "2022-02-22T00:00:00.000Z",
-          "origins": "15173275",
-          "origins_dataset": "70337805"
-        },
-        {
-          "date": "2022-01-22T00:00:00.000Z",
-          "origins": "13236250",
-          "origins_dataset": "70125002"
+          "origins": {
+            "mobile": 471531,
+            "desktop": 68634
+          }
         }
       ]
     },
@@ -30,8 +24,10 @@
       "dates": [
         {
           "date": "2022-04-22T00:00:00.000Z",
-          "origins": "524362",
-          "origins_dataset": "761353"
+          "origins": {
+            "mobile": 16345,
+            "desktop": 735
+          }
         }
       ]
     }

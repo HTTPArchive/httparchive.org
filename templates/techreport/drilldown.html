@@ -3,48 +3,61 @@
 {% block section %}
   {{ super() }}
 
+  {% set tech_report_section = tech_report_page.sections[0] %}
+
   <div class="block-m summary">
     <h2>Summary</h2>
 
     <div class="summary-grid">
       {% set summary = {
         "url": "#adoption",
-        "label": "Adoption",
-        "value": tech_report_page.sections[0].data.adoption.results[0].dates[0].origins,
-        "description": "websites tested using this technology."
+        "label": tech_report_labels.adoption.title,
+        "value": tech_report_section.data.adoption.results[0].dates[0].origins.mobile,
+        "description": tech_report_labels.adoption.summary_description
       } %}
       {% include "techreport/components/summary_linked.html" %}
 
       {% set summary = {
         "url": "#cwv",
-        "label": "Good CWVs",
-        "value": tech_report_page.sections[0].data.good_vitals.results[0].dates[0].good_overall.mobile,
-        "description": "of tested origins had overall good Core Web Vitals."
+        "label": tech_report_labels.cwv.good.title,
+        "value": tech_report_section.data.good_vitals.results[0].dates[0].good_overall.mobile,
+        "description":  tech_report_labels.cwv.good.summary_description
       } %}
       {% include "techreport/components/summary_linked.html" %}
     </div>
   </div>
 
   <div class="page-data">
-    <div class="block-m">
-      <h2>{{ tech_report_page.sections[1].title }}</h2>
+    <div class="block-m metric-block">
+      <h2>{{ tech_report_labels.cwv.title }}</h2>
       <div class="block-description">
-        {{ tech_report_page.sections[1].description }}
+        {{ tech_report_labels.cwv.section_description }}
       </div>
+      
+      {% set timeseries_title = tech_report_labels.cwv.good.timeseries_title %}
+      {% set timeseries_description = tech_report_labels.cwv.good.section_description %}
+      {% set timeseries_metric = "good_vitals" %}
+      {% set timeseries_sub_metric = "good_overall" %}
+      {% set client = "mobile" %}
 
-      <div class="card timeseries-container">
-        <p class="timeseries-title">Good Core Web Vitals over time</p>
-        <p class="timeseries-description">The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a "good" experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics.</p>
-        <p class="timeseries-time">Latest: {{ tech_report_page.sections[1].data.good_vitals.results[0].dates[0].date }}</p>
-        <p>
-          Chart comes here:
-        </p>
-        <ul>
-          {% for date in tech_report_page.sections[1].data.good_vitals.results[0].dates %}
-            <li>{{date.good_overall.mobile}}</li>
-          {% endfor %}
-        </ul>
+      {% include "techreport/components/timeseries_container.html" %}
+
+    </div>
+
+    <div class="block-m metric-block">
+      <h2>{{ tech_report_labels.adoption.title }}</h2>
+      <div class="block-description">
+        {{ tech_report_labels.adoption.section_description }}
       </div>
+      
+      {% set timeseries_title = tech_report_labels.adoption.timeseries_title %}
+      {% set timeseries_description = tech_report_labels.adoption.timeseries_description %}
+      {% set timeseries_metric = "adoption" %}
+      {% set timeseries_sub_metric = "origins" %}
+      {% set client = "mobile" %}
+
+      {% include "techreport/components/timeseries_container.html" %}
+
     </div>
   </div>
 

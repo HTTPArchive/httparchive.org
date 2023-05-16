@@ -12,11 +12,11 @@
 
   <div class="choices block-m">
     <div class="card">
-      <h2><a href="/reports/{{ tech_report.id }}/drilldown">Technology Drilldown</a></h2>
+      <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
       <p>Get detailed information about <strong>one</strong> technology. </p>
     </div>
     <div class="card">
-      <h2><a href="/reports/{{ tech_report.id }}/comparison">Technology Comparison</a></h2>
+      <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
       <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
     </div>
   </div>
@@ -28,7 +28,7 @@
     {% for section in sections %}
       {% for block in section.get("blocks") %}
         {% if block.type == "table" %}
-          {% set ctaUrl = "/reports/" + tech_report.id + "/comparison?tech=" %}
+          {% set ctaUrl = "/reports/techreport/comparison?tech=" %}
           {% set ctaLabel = "Compare technologies" %}
           {% include "techreport/components/table.html" %}
         {% endif %}
