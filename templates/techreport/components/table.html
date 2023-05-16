@@ -8,8 +8,8 @@
   <!-- TODO: Configure columns and rows in the techreport.json -->
   <!-- OR: Hardcode the different tables for now, reuse styling -->
   <table class="table-ui">
-    <caption>Sample table: {{ block.name }} (in progress)</caption>
-    <thead>
+    <caption class="sr-only">Sample table: {{ block.name }} (in progress)</caption>
+    <!-- <thead>
       <tr>
         <th>Technology</th>
         <th>Origins</th>
@@ -22,6 +22,22 @@
           <th><a href="/reports/techreport/drilldown?tech={{ technology }}">{{ technology }}</a></th>
           <td>Placeholder</td>
           <td>Placeholder%</td>
+        </tr>
+      {% endfor %}
+    </tbody> -->
+    <thead>
+      <tr>
+        {% for column in block.config.columns %}
+          <th>{{ column.name }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table_data %}
+        <tr>
+          {% for column in block.columns %}
+            <td>{{ row.results[column.metric] }}</td>
+          {% endfor %}
         </tr>
       {% endfor %}
     </tbody>

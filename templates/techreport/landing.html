@@ -10,37 +10,15 @@
   {% include "techreport/components/heading.html" %}
 
 
-  <div class="choices-wrapper">
-    <div class="choices block-m">
-      <div class="card">
-        <h2><a href="/reports/{{ tech_report.id }}/drilldown">Technology Drilldown</a></h2>
-        <p>Get detailed information about <strong>one</strong> technology. </p>
-      </div>
-      <div class="card">
-        <h2><a href="/reports/{{ tech_report.id }}/comparison">Technology Comparison</a></h2>
-        <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
-      </div>
+  <div class="choices block-m">
+    <div class="card">
+      <h2><a href="/reports/{{ tech_report.id }}/drilldown">Technology Drilldown</a></h2>
+      <p>Get detailed information about <strong>one</strong> technology. </p>
     </div>
-
-    <div class="latest-info block-s">
-      <h2>About our dataset</h2>
-      <div class="stats">
-        <div>
-          <h3>Last updated</h3>
-          <p class="value">Timestamp</p>
-        </div>
-  
-        <div>
-          <h3>Websites tested</h3>
-          <p class="value">123456</p>
-        </div>
-
-        <div>
-          <h3>Good CWVs amongst top websites</h3>
-          <p class="value">70%</p>
-        </div>
-      </div>
-      </div>
+    <div class="card">
+      <h2><a href="/reports/{{ tech_report.id }}/comparison">Technology Comparison</a></h2>
+      <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+    </div>
   </div>
 
   <div class="report-summary-tables block-m">

@@ -6,7 +6,7 @@
   "pages": {
     "landing": {
       "id": "landing",
-      "title": "Technology Report",
+      "title": "Technology Report Landing",
       "subtitle": "Report",
       "description": "This is placeholder text about how the report works",
       "sections": [
@@ -23,7 +23,23 @@
             {
               "name": "Popular Technologies",
               "description": "Placeholder description",
-              "type": "table"
+              "type": "table",
+              "config": {
+                "columns": [
+                  {
+                    "metric": "technology",
+                    "name": "Technology"
+                  },
+                  {
+                    "metric": "adoption d",
+                    "name": "Origins"
+                  },
+                  {
+                    "metric": "good_vitals",
+                    "name": "Good CWVs"
+                  }
+                ]
+              } 
             }
           ]
         }
@@ -35,6 +51,19 @@
       "subtitle": "Technology Report",
       "description": "Drilldown placeholder",
       "sections": [
+        {
+          "id": "summary",
+          "title": "Summary",
+          "metrics": ["good_vitals", "adoption"],
+          "data": {},
+          "blocks": [
+            {
+              "id": "summary",
+              "name": "Summary",
+              "type": "cards"
+            }
+          ]
+        },
         {
           "id": "cwv",
           "title": "Core Web Vitals",

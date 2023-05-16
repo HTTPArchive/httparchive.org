@@ -80,6 +80,9 @@ def techreport(page_id):
           results = tech_report_util.get_metrics(metric)
           section["data"][metric] = results
     
+    print('active_tech_report')
+    print(active_tech_report)
+
     return render_template(
         "techreport/%s.html" % page_id,
         active_page=page_id,

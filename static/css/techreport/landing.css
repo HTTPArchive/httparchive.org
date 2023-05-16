@@ -1,16 +1,9 @@
 
-.choices-wrapper {
-  background-image: linear-gradient(to bottom, #9bb8bb 0%, #d7e0e1 100%);
-  padding: 4rem 0;
-  margin-top: 4rem;
-}
-
 .choices {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   column-gap: 2rem;
   row-gap: 1rem;
-  margin-top: -8rem;
   margin-bottom: 4rem;
 }
 

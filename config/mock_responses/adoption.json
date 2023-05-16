@@ -2,7 +2,7 @@
   "results": [
     {
       "technology_name": "Wordpress",
-      "origins": [
+      "dates": [
         {
           "date": "2022-04-22T00:00:00.000Z",
           "origins": "16173173",
@@ -27,7 +27,7 @@
     },
     {
       "technology_name": "Squarespace",
-      "origins": [
+      "dates": [
         {
           "date": "2022-04-22T00:00:00.000Z",
           "origins": "524362",

@@ -27,5 +27,4 @@ def get_metrics(metric, filters={}):
   
   return report_metrics
 
-
 update_report()

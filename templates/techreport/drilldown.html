@@ -3,26 +3,45 @@
 {% block section %}
   {{ super() }}
 
-  <div class="block-m">
-    <p>Placehodler content</p>
+  <div class="block-m summary">
+    <h2>Summary</h2>
 
-    <h2>Core Web Vitals</h2>
-    
-    {{ tech_report_page.title }}
+    <div class="summary-grid">
+      <div class="card linked-summary">
+        <p class="linked-summary-label">
+          <a href="#">Adoption</a>
+        </p>
+        <p class="linked-summary-value">
+          {{ tech_report_page.sections[0].data.adoption.results[0].dates[0].origins }}
+        </p>
+        <p class="linked-summary-description">
+          websites tested using this technology.
+        </p>
+      </div>
 
-    {% for section in tech_report_page.sections %}
-      {% set section_data = section.data.good_vitals.results %}
-      {% for entry in section_data %}
-        {% set latest = entry.dates[0] %}
-        <h3>{{ entry.technology }}</h3>
-        <ul>
-          <li>Latest mobile: {{ latest.good_overall.mobile }}</li>
-          <li>Latest desktop: {{ latest.good_overall.desktop }}</li>
-          <li>Latest tested: {{ latest.tested }}</li>
-        </ul>
-      {% endfor %}
-    {% endfor %}
+      <div class="card linked-summary">
+        <p class="linked-summary-label">
+          <a href="#">Good CWVs</a>
+        </p>
+        <p class="linked-summary-value">
+          {{ tech_report_page.sections[0].data.good_vitals.results[0].dates[0].good_overall.mobile }}
+        </p>
+        <p class="linked-summary-description">
+          of tested origins had overall good Core Web Vitals.
+        </p>
+      </div>
+    </div>
   </div>
-  
+
+  <div class="page-data">
+    <div class="block-m">
+      <h2>Core Web Vitals</h2>
+      <ul>
+        {% for date in tech_report_page.sections[0].data.good_vitals.results[0].dates %}
+          <li>{{date.good_overall.mobile}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
 {% endblock %}

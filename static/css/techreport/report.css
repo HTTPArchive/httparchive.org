@@ -28,6 +28,29 @@
 }
 
 .report-navigation ul li a:not([aria-current="page"]):hover {
-  border-bottom: 3px solid var(--color-brand-faded);
+  border-bottom: 3px solid var(--color-teal-faded);
 }
 
+/* -------------------- */
+/* ----- Sections ----- */
+/* -------------------- */
+
+/* Summary */
+.summary h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Main data */
+.page-data {
+  margin-top: -4rem;
+  padding: 8rem 0;
+  border-top: 1px solid var(--color-teal-medium);
+  background-image: linear-gradient(
+    var(--color-teal-faded) 60%,
+    var(--color-page-background)
+  );
+  background-size: 100% 25rem;
+  background-repeat: no-repeat;
+}
