@@ -12,11 +12,11 @@
   --color-text-inverted: #FFF;
 
   --color-card-background: #fff;
-  --color-card-border: #A6BBBE;
+  --color-card-border: #CDD4D6;
 
   --color-page-background: #f4f4f4;
 
-  --shadow-card: 0 3px 12px -2px rgba(106, 121, 124, 0.2);
+  --shadow-card: 0 3px 12px -2px rgba(106, 121, 124, 0.05);
 
   --font-size-regular: 1.15rem;
   --font-size-medium: 1.75rem;

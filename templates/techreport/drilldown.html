@@ -7,29 +7,21 @@
     <h2>Summary</h2>
 
     <div class="summary-grid">
-      <div class="card linked-summary">
-        <p class="linked-summary-label">
-          <a href="#">Adoption</a>
-        </p>
-        <p class="linked-summary-value">
-          {{ tech_report_page.sections[0].data.adoption.results[0].dates[0].origins }}
-        </p>
-        <p class="linked-summary-description">
-          websites tested using this technology.
-        </p>
-      </div>
+      {% set summary = {
+        "url": "#adoption",
+        "label": "Adoption",
+        "value": tech_report_page.sections[0].data.adoption.results[0].dates[0].origins,
+        "description": "websites tested using this technology."
+      } %}
+      {% include "techreport/components/summary_linked.html" %}
 
-      <div class="card linked-summary">
-        <p class="linked-summary-label">
-          <a href="#">Good CWVs</a>
-        </p>
-        <p class="linked-summary-value">
-          {{ tech_report_page.sections[0].data.good_vitals.results[0].dates[0].good_overall.mobile }}
-        </p>
-        <p class="linked-summary-description">
-          of tested origins had overall good Core Web Vitals.
-        </p>
-      </div>
+      {% set summary = {
+        "url": "#cwv",
+        "label": "Good CWVs",
+        "value": tech_report_page.sections[0].data.good_vitals.results[0].dates[0].good_overall.mobile,
+        "description": "of tested origins had overall good Core Web Vitals."
+      } %}
+      {% include "techreport/components/summary_linked.html" %}
     </div>
   </div>
 

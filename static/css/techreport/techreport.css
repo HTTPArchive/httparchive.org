@@ -150,25 +150,25 @@ h2 {
   row-gap: 1rem;
 }
 
-.linked-summary-label {
+.summary-linked-label {
   font-weight: 600;
 }
 
-.linked-summary-label a {
+.summary-linked-label a {
   color: var(--color-link);
 }
 
-.linked-summary-label a:is(:hover, :focus) {
+.summary-linked-label a:is(:hover, :focus) {
   color: var(--color-link);
   text-decoration: none;
 }
 
-.linked-summary-value {
+.summary-linked-value {
   font-size: var(--font-size-medium);
   margin-top: -0.25rem;
 }
 
-.linked-summary-description {
+.summary-linked-description {
   margin-top: -0.5rem;
   margin-bottom: 0;
 }
