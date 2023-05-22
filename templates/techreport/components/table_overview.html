@@ -5,52 +5,33 @@
     {{ table.description }}
   </p>
 
-  <table class="table-ui">
-    <caption class="sr-only">{{ table.caption or table.title }}</caption>
-    <thead>
-      <tr>
-        <th>Technology</th>
-        <th>Origins</th>
-        <th>Good CWVs</th>
-        <th>LCP</th>
-        <th>CLS</th>
-        <th>FID</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for technology in table["technologies"] %}
+  <div class="table-ui-wrapper" tabindex="0" role="region" aria-labelledby="{{ table.id }}-caption">
+    <table class="table-ui">
+      <caption class="sr-only" id="{{ table.id }}-caption">{{ table.caption or table.title }}</caption>
+      <thead>
         <tr>
-          <th><a href="/reports/techreport/drilldown?tech={{ technology }}">{{ explore.data[technology].name }}</a></th>
-          <td>{{ explore.data[technology].dates[0].origins.mobile }}</td>
-          <td>{{ explore.data[technology].dates[0].good_overall.mobile }}</td>
+          <th>Technology</th>
+          <th>Origins</th>
+          <th>Good CWVs</th>
+          <th>LCP</th>
+          <th>CLS</th>
+          <th>FID</th>
         </tr>
-      {% endfor %}
-      <!-- <tr>
-        <th><a href="/reports/techreport/drilldown?tech=wordpress">Wordpress</a></th>
-        <td>1743634</td>
-        <td>73%</td>
-        <td><strong>2</strong>s</td>
-        <td><strong>0</strong></td>
-        <td><strong>24</strong>ms</td>
-      </tr>
-      <tr>
-        <th><a href="/reports/techreport/drilldown?tech=squarespace">SquareSpace</a></th>
-        <td>1743634</td>
-        <td>73%</td>
-        <td><strong>2</strong>s</td>
-        <td><strong>0</strong></td>
-        <td><strong>24</strong>ms</td>
-      </tr>
-      <tr>
-        <th><a href="/reports/techreport/drilldown?tech=drupal">Drupal</a></th>
-        <td>1743634</td>
-        <td>73%</td>
-        <td><strong>2</strong>s</td>
-        <td><strong>0</strong></td>
-        <td><strong>24</strong>ms</td>
-      </tr> -->
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for technology in table["technologies"] %}
+          <tr>
+            <th><a href="/reports/techreport/drilldown?tech={{ technology }}">{{ explore.data[technology].name }}</a></th>
+            <td>{{ explore.data[technology].dates[0].origins.mobile }}</td>
+            <td>{{ explore.data[technology].dates[0].good_overall.mobile }}</td>
+            <td><strong>2</strong>s</td>
+            <td><strong>0</strong></td>
+            <td><strong>24</strong>ms</td>
+          </tr>
+        {% endfor %} 
+      </tbody>
+    </table>
+  </div>
 
   <p class="cta-link-wrapper">
     <a href="{{ table.ctaUrl }}" class="cta-link">{{ table.ctaLabel }}</a>

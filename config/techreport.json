@@ -36,6 +36,7 @@
           "data": {},
           "blocks": {
             "popular_tech": {
+              "id": "popular_tech",
               "title": "Popular technologies",
               "description": "To write",
               "caption": "popular technologies table caption todo",

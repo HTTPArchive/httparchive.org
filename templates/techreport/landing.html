@@ -26,29 +26,7 @@
     <h2>{{ explore.title }}</h2>
 
     {% set table = explore.blocks.popular_tech %}
-    {% set ctaLabel = "Compare technologies" %}
-    {% set ctaUrl = "/reports/techreport/comparison?tech=wordpress,squarespace,drupal" %}
-
     {% include "techreport/components/table_overview.html" %}
-
-    {% set table = {
-      "title": "Most used CMS'es",
-      "description": "Most popular CMSes, data only for the top 1k rank",
-      "caption": "Popular technologies caption todo",
-      "ctaLabel": "Compare technologies",
-      "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
-    } %}
-    {% include "techreport/components/table_overview.html" %}
-
-    {% set table = {
-      "title": "JavaScript frameworks",
-      "description": "Table with some other data",
-      "caption": "Popular technologies caption todo",
-      "ctaLabel": "Compare technologies",
-      "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
-    } %}
-    {% include "techreport/components/table_overview.html" %}
-      
-
+    
   </div>
 {% endblock %}
