@@ -1,3 +1,4 @@
+/* General */
 main {
   color: var(--color-text);
 }
@@ -81,6 +82,22 @@ h2 {
 /* -------------------- */
 /* ---- Components ---- */
 /* -------------------- */
+
+/* Overwriting the current HA header */
+header {
+  padding: 1rem 0;
+  border-top: 0;
+}
+
+header .container {
+  width: 85rem;
+  max-width: 98%;
+  padding: 0;
+}
+
+header .container > div {
+  padding: 0;
+}
 
 /* Report navigation */
 .report-navigation {

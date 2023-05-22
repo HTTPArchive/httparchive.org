@@ -9,22 +9,6 @@
   <!-- OR: Hardcode the different tables for now, reuse styling -->
   <table class="table-ui">
     <caption class="sr-only">Sample table: {{ block.name }} (in progress)</caption>
-    <!-- <thead>
-      <tr>
-        <th>Technology</th>
-        <th>Origins</th>
-        <th>Good CWVs</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for technology in section.filters.technologies %}
-        <tr>
-          <th><a href="/reports/techreport/drilldown?tech={{ technology }}">{{ technology }}</a></th>
-          <td>Placeholder</td>
-          <td>Placeholder%</td>
-        </tr>
-      {% endfor %}
-    </tbody> -->
     <thead>
       <tr>
         {% for column in block.config.columns %}
