@@ -84,18 +84,18 @@ h2 {
 /* -------------------- */
 
 /* Overwriting the current HA header */
-header {
+:is(header, footer) {
   padding: 1rem 0;
   border-top: 0;
 }
 
-header .container {
+:is(header, footer) .container {
   width: 85rem;
   max-width: 98%;
   padding: 0;
 }
 
-header .container > div {
+:is(header, footer) .container > div {
   padding: 0;
 }
 
