@@ -71,8 +71,12 @@ def reports():
 def techreport(page_id):
     all_reports = report_util.get_reports()
     tech_report = tech_report_util.get_report()
+
+    # Get the settings for the current page
     active_tech_report=tech_report.get('pages').get(page_id)
 
+    # For all the sections, fetch their defined metrics
+    # Later: only for the active section (when each section is its own view)
     if active_tech_report.get("sections"):
       for section in active_tech_report.get("sections"):
         metrics = section.get("metrics")

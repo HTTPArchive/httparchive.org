@@ -16,9 +16,9 @@
 
   --color-page-background: #f4f4f4;
 
-  --shadow-card: 0 3px 12px -2px rgba(106, 121, 124, 0.05);
+  --card-shadow: 0 2px 7px 0px rgba(143, 149, 150, 0.05);
+  --card-radius: 0.25rem;
 
-  --font-size-regular: 1.15rem;
   --font-size-medium: 1.75rem;
   --font-size-large: 2.15rem;
   --font-size-xlarge: 2.35rem;

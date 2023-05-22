@@ -1,0 +1,34 @@
+{
+  "technology": "wordpress",
+  "name": "Wordpress",
+  "metadata": {
+    "categories": ["CMS", "Blog"],
+    "description": "Description on wordpress" 
+  },
+  "dates": [
+    {
+      "date": "2022-04-22T00:00:00.000Z",
+      "tested": 204743,
+      "good_overall": {
+        "desktop": 73624,
+        "mobile": 13947
+      },
+      "origins": {
+        "mobile": 524362,
+        "desktop": 73542
+      }
+    },
+    {
+      "date": "2022-03-22T00:00:00.000Z",
+      "tested": 104312,
+      "good_overall": {
+        "desktop": 14,
+        "mobile": 263
+      },
+      "origins": {
+        "mobile": 524362,
+        "desktop": 73542
+      }
+    }
+  ]
+}

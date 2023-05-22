@@ -11,6 +11,11 @@ h2 {
   font-size: var(--font-size-large);
 }
 
+:is(a, button, select):focus {
+  outline: 1.5px solid var(--color-teal-dark);
+  outline-offset: 1.5px;
+}
+
 .sr-only {
   clip: rect(0 0 0 0); 
   clip-path: inset(50%);
@@ -22,11 +27,15 @@ h2 {
 }
 
 .card {
-  padding: 1rem;
+  padding: 1.5rem;
   background: var(--color-card-background);
-  border-radius: 0.625rem;
+  border-radius: var(--card-radius);
   border: 1px solid var(--color-card-border);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--card-shadow);
+}
+
+.card > :is(h2, h3, h4) {
+  margin-top: 0;
 }
 
 .block-s {
@@ -105,6 +114,8 @@ h2 {
   background-color: var(--color-card-background);
   border-top: 1px solid var(--color-page-background);
   border-bottom: 1px solid var(--color-page-background);
+  position: sticky;
+  top: 0;
 }
 
 .report-navigation ul li {
@@ -149,13 +160,13 @@ h2 {
 }
 
 .intro h1 span {
-  font-size: var(--font-size-regular);
+  font-size: 1.15rem;
   display: block;
   margin-bottom: 0.5rem;
 }
 
 .intro p {
-  font-size: var(--font-size-regular);
+  font-size: 1.15rem;
 }
 
 .intro h1 + p {
@@ -178,10 +189,15 @@ h2 {
 }
 
 .table-ui thead {
-  font-size: 14px;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--color-text);
 }
 
-.table-ui tbody tr :is(td, th) {
+.table-ui thead th {
+  padding: 1rem 0;
+}
+
+.table-ui tbody :is(td, th) {
   padding: 1rem 0;
 }
 
@@ -189,9 +205,18 @@ h2 {
   font-weight: normal;
 }
 
+.table-ui :is(td, th) strong {
+  margin-right: 0.1rem;
+  font-weight: 600;
+}
+
 .table-ui tr a {
   color: var(--color-link);
   text-decoration: underline;
+}
+
+.table-ui tbody :is(td, th) {
+  border-bottom: 1px solid var(--color-card-border);
 }
 
 /* Summary grid */
@@ -231,7 +256,7 @@ h2 {
 }
 
 .timeseries-title {
-  font-size: var(--font-size-regular);
+  font-size: 1.15rem;
   margin-bottom: 0.75rem;
 }
 
@@ -243,4 +268,12 @@ h2 {
   font-weight: 600;
   font-size: 1rem;
   margin: 0.75rem 0;
+}
+
+/* Re-arrange when viewport becomes too narrow in height */
+/* ± 200% zoom on a 13" screen */
+@media screen and (max-height: 25rem) {
+  .report-navigation {
+    position: static;
+  }
 }

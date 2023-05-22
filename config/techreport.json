@@ -32,35 +32,18 @@
         {
           "id": "explore",
           "title": "Explore our data",
-          "metrics": ["adoption", "good_vitals"],
-          "filters": {
-            "technologies": ["wordpress", "squarespace"],
-            "geo": "all"
-          },
+          "metrics": ["wordpress", "squarespace", "drupal"],
           "data": {},
-          "blocks": [
-            {
-              "name": "Popular Technologies",
-              "description": "Placeholder description",
-              "type": "table",
-              "config": {
-                "columns": [
-                  {
-                    "metric": "technology",
-                    "name": "Technology"
-                  },
-                  {
-                    "metric": "adoption d",
-                    "name": "Origins"
-                  },
-                  {
-                    "metric": "good_vitals",
-                    "name": "Good CWVs"
-                  }
-                ]
-              } 
+          "blocks": {
+            "popular_tech": {
+              "title": "Popular technologies",
+              "description": "To write",
+              "caption": "popular technologies table caption todo",
+              "technologies": ["wordpress", "squarespace", "drupal"],
+              "ctaLabel": "Compare technologies",
+              "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
             }
-          ]
+          }
         }
       ]
     },

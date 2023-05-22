@@ -22,18 +22,33 @@
   </div>
 
   <div class="report-summary-tables block-m">
-    <h2>Dive into our data</h2>
+    {% set explore = tech_report_page.sections[0] %}
+    <h2>{{ explore.title }}</h2>
 
-    {% set sections = tech_report_page.get("sections") %}
-    {% for section in sections %}
-      {% for block in section.get("blocks") %}
-        {% if block.type == "table" %}
-          {% set ctaUrl = "/reports/techreport/comparison?tech=" %}
-          {% set ctaLabel = "Compare technologies" %}
-          {% include "techreport/components/table.html" %}
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
+    {% set table = explore.blocks.popular_tech %}
+    {% set ctaLabel = "Compare technologies" %}
+    {% set ctaUrl = "/reports/techreport/comparison?tech=wordpress,squarespace,drupal" %}
+
+    {% include "techreport/components/table_overview.html" %}
+
+    {% set table = {
+      "title": "Most used CMS'es",
+      "description": "Most popular CMSes, data only for the top 1k rank",
+      "caption": "Popular technologies caption todo",
+      "ctaLabel": "Compare technologies",
+      "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
+    } %}
+    {% include "techreport/components/table_overview.html" %}
+
+    {% set table = {
+      "title": "JavaScript frameworks",
+      "description": "Table with some other data",
+      "caption": "Popular technologies caption todo",
+      "ctaLabel": "Compare technologies",
+      "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
+    } %}
+    {% include "techreport/components/table_overview.html" %}
+      
 
   </div>
 {% endblock %}

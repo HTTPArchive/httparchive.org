@@ -35,7 +35,7 @@
 }
 
 .latest-info h3 {
-  font-size: var(--font-size-regular);
+  font-size: 1.15rem;
 }
 
 .latest-info p.value {
@@ -45,4 +45,8 @@
 
 .report-summary-tables {
   padding: 4rem 0;
+}
+
+.report-summary-tables .section {
+  margin-bottom: 1rem;
 }
