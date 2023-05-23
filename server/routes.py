@@ -78,14 +78,14 @@ def techreport(page_id):
     # For all the sections, fetch their defined metrics
     # Later: only for the active section (when each section is its own view)
     if active_tech_report.get("sections"):
-      for section in active_tech_report.get("sections"):
-        metrics = section.get("metrics")
-        for metric in metrics:
-          results = tech_report_util.get_metrics(metric)
-          section["data"][metric] = results
-    
+        for section in active_tech_report.get("sections"):
+            metrics = section.get("metrics")
+            for metric in metrics:
+                results = tech_report_util.get_metrics(metric)
+                section["data"][metric] = results
+
     active_tech_report["tech"] = tech_report_util.get_tech_id(request)
-    
+
     print('active_tech_report')
     print(active_tech_report)
 

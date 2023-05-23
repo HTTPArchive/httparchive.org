@@ -14,18 +14,18 @@ def get_report():
 
 
 def get_metrics(metric, filters={}):
-  global report_metrics
+    global report_metrics
 
-  # Mock functionality
-  # TODO: Replace with API call
-  print("fetch results for metric with filters")
-  print(metric)
-  print(filters)
+    # Mock functionality
+    # TODO: Replace with API call
+    print("fetch results for metric with filters")
+    print(metric)
+    print(filters)
 
-  with open("config/mock_responses/%s.json" % metric) as report_metrics_file:
-      report_metrics = json.load(report_metrics_file)
-  
-  return report_metrics
+    with open("config/mock_responses/%s.json" % metric) as report_metrics_file:
+        report_metrics = json.load(report_metrics_file)
+
+    return report_metrics
 
 def get_tech_id(request):
     host = request.host.split(".")
@@ -33,7 +33,7 @@ def get_tech_id(request):
     tech = request.args.get("tech")
     tech_arr = []
     if tech:
-      tech_arr = tech.split(",")
+        tech_arr = tech.split(",")
     return tech_arr or subdomain
 
 update_report()
