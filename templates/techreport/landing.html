@@ -27,6 +27,7 @@
       <h2>{{ explore.title }}</h2>
 
       {% set table = explore.blocks.popular_tech %}
+      {% set technologies = table["technologies"] %}
       {% include "techreport/components/table_overview.html" %}
 
     </div>

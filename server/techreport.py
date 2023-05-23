@@ -23,10 +23,14 @@ def get_metrics(metric, filters={}):
     print(metric)
     print(filters)
 
-    with open("config/mock_responses/%s.json" % metric) as report_metrics_file:
-        report_metrics = json.load(report_metrics_file)
-
-    return report_metrics
+    try:
+        with open("config/mock_responses/%s.json" % metric) as report_metrics_file:
+            report_metrics = json.load(report_metrics_file)
+            return report_metrics
+    except Exception as error:
+         with open("config/mock_responses/all.json") as report_metrics_file:
+            report_metrics = json.load(report_metrics_file)
+            return report_metrics
 
 
 def get_tech_id(request):

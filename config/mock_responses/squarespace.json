@@ -3,15 +3,15 @@
   "name": "Squarespace",
   "metadata": {
     "categories": ["CMS", "Blog"],
-    "description": "Description on wordpress"
+    "description": "Squarespace, Inc. is an American website building and hosting company which is based in New York City. It provides software as a service for website building and hosting, and allows users to use pre-built website templates and drag-and-drop elements to create and modify webpages"
   },
   "dates": [
     {
       "date": "2022-04-22T00:00:00.000Z",
       "tested": 204743,
       "good_overall": {
-        "desktop": 73624,
-        "mobile": 13947
+        "desktop": 654,
+        "mobile": 837
       },
       "median_cls": {
         "desktop": "0",
@@ -26,8 +26,8 @@
         "mobile": "1"
       },
       "origins": {
-        "mobile": 524362,
-        "desktop": 73542
+        "mobile": 2735,
+        "desktop": 363
       }
     },
     {
@@ -50,7 +50,7 @@
         "mobile": "1"
       },
       "origins": {
-        "mobile": 524362,
+        "mobile": 1111,
         "desktop": 73542
       }
     }

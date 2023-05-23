@@ -165,6 +165,7 @@ h2 {
 
 .intro p {
   font-size: 1.15rem;
+  max-width: 45rem;
 }
 
 .intro h1 + p {
@@ -296,6 +297,18 @@ h2 {
   font-weight: 600;
   font-size: 1rem;
   margin: 0.75rem 0;
+}
+
+/* Categories */
+.categories {
+  margin: 1rem 0;
+}
+.categories .cell {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-text);
+  font-size: 0.875rem;
 }
 
 /* Re-arrange when viewport becomes too narrow in height */

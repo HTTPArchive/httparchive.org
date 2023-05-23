@@ -57,7 +57,7 @@
         {
           "id": "all",
           "title": "All",
-          "metrics": ["good_vitals", "adoption", "metadata"],
+          "metrics": ["all"],
           "data": {}
         }
       ]
@@ -67,11 +67,20 @@
       "title": "Comparison",
       "subtitle": "Technology Report",
       "description": "Comparison placeholder",
-      "blocks": [
+      "sections": [
         {
-          "name": "Summary",
-          "description": "Summary table",
-          "type": "table"
+          "id": "all",
+          "title": "All",
+          "metrics": ["all"],
+          "data": {},
+          "labels": {
+            "summary": {
+              "id": "comparing_summary",
+              "title": "Comparing technologies",
+              "description": "Placeholder: Comparing the following techs",
+              "caption": "Placeholder: comparing technologies table caption todo"
+            }
+          }
         }
       ]
     }

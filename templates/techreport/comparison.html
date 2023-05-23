@@ -5,6 +5,12 @@
 
   {% include "techreport/components/heading.html" %}
 
-  <p>Content coming soon</p>
+  {% set explore = tech_report_page.sections[0] %}
+  <h2>{{ explore.title }}</h2>
+
+  {% set table = explore.labels.summary %}
+  {% set technologies = tech_report_page.tech %}
+  {% include "techreport/components/table_overview.html" %}
+
 
 {% endblock %}

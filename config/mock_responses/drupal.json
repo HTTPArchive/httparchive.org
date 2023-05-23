@@ -3,15 +3,15 @@
   "name": "Drupal",
   "metadata": {
     "categories": ["CMS", "Blog"],
-    "description": "Description on wordpress"
+    "description": "Drupal is a free and open-source web content management system written in PHP and distributed under the GNU General Public License."
   },
   "dates": [
     {
       "date": "2022-04-22T00:00:00.000Z",
       "tested": 204743,
       "good_overall": {
-        "desktop": 73624,
-        "mobile": 13947
+        "desktop": 6353,
+        "mobile": 746
       },
       "median_cls": {
         "desktop": "0",
@@ -26,8 +26,8 @@
         "mobile": "1"
       },
       "origins": {
-        "mobile": 524362,
-        "desktop": 73542
+        "mobile": 1635,
+        "desktop": 8363
       }
     },
     {
@@ -50,8 +50,8 @@
         "mobile": "1"
       },
       "origins": {
-        "mobile": 524362,
-        "desktop": 73542
+        "mobile": 222,
+        "desktop": 7353
       }
     }
   ]
