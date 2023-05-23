@@ -19,19 +19,23 @@
         </tr>
       </thead>
       <tbody>
+        {% set latest = explore.data[table["technologies"][0]].dates[0] %}
         {% for technology in table["technologies"] %}
+          {% set latest = explore.data[technology].dates[0] %}
           <tr>
-            <th><a href="/reports/techreport/drilldown?tech={{ technology }}">{{ explore.data[technology].name }}</a></th>
-            <td>{{ explore.data[technology].dates[0].origins.mobile }}</td>
-            <td>{{ explore.data[technology].dates[0].good_overall.mobile }}</td>
-            <td><strong>2</strong>s</td>
-            <td><strong>0</strong></td>
-            <td><strong>24</strong>ms</td>
+            <th><a class="row-link" href="/reports/techreport/drilldown?tech={{ technology }}">{{ explore.data[technology].name }}</a></th>
+            <td>{{ latest.origins.mobile }}</td>
+            <td>{{ latest.good_overall.mobile }}</td>
+            <td><strong>{{ latest.median_lcp.mobile }}</strong>s</td>
+            <td><strong>{{ latest.median_cls.mobile }}</strong></td>
+            <td><strong>{{ latest.median_fid.mobile }}</strong>ms</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+
+  <p class="footnote">Last updated at {{ latest.date }}.</p>
 
   <p class="cta-link-wrapper">
     <a href="{{ table.ctaUrl }}" class="cta-link">{{ table.ctaLabel }}</a>

@@ -42,10 +42,26 @@
   font-weight: 600;
 }
 
+.report-summary-wrapper {
+  background-image:
+    linear-gradient(
+      var(--color-teal-faded) 60%,
+      var(--color-page-background)
+    );
+  background-size: 100% 25rem;
+  background-repeat: no-repeat;
+  border-top: 1px solid var(--color-teal-medium);
+  padding-bottom: 5rem;
+}
+
 .report-summary-tables {
   padding: 4rem 0;
 }
 
 .report-summary-tables .section {
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.report-summary-tables .section + .section {
+  margin-top: 1rem;
 }

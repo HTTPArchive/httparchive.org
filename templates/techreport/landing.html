@@ -21,12 +21,14 @@
     </div>
   </div>
 
-  <div class="report-summary-tables block-m">
-    {% set explore = tech_report_page.sections[0] %}
-    <h2>{{ explore.title }}</h2>
+  <div class="report-summary-wrapper">
+    <div class="report-summary-tables block-m">
+      {% set explore = tech_report_page.sections[0] %}
+      <h2>{{ explore.title }}</h2>
 
-    {% set table = explore.blocks.popular_tech %}
-    {% include "techreport/components/table_overview.html" %}
+      {% set table = explore.blocks.popular_tech %}
+      {% include "techreport/components/table_overview.html" %}
 
+    </div>
   </div>
 {% endblock %}

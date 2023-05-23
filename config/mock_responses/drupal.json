@@ -13,6 +13,18 @@
         "desktop": 73624,
         "mobile": 13947
       },
+      "median_cls": {
+        "desktop": "0",
+        "mobile": "0"
+      },
+      "median_fid": {
+        "desktop": "24",
+        "mobile": "12"
+      },
+      "median_lcp": {
+        "desktop": "2",
+        "mobile": "1"
+      },
       "origins": {
         "mobile": 524362,
         "desktop": 73542
@@ -24,6 +36,18 @@
       "good_overall": {
         "desktop": 14,
         "mobile": 263
+      },
+      "median_cls": {
+        "desktop": "0",
+        "mobile": "0"
+      },
+      "median_fid": {
+        "desktop": "24",
+        "mobile": "12"
+      },
+      "median_lcp": {
+        "desktop": "2",
+        "mobile": "1"
       },
       "origins": {
         "mobile": 524362,

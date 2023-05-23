@@ -178,7 +178,7 @@ h2 {
 
 .table-ui {
   width: 100%;
-  margin: 1rem 0 2rem;
+  margin: 1rem 0;
 }
 
 .table-ui tr {
@@ -216,6 +216,35 @@ h2 {
 .table-ui tr a {
   color: var(--color-link);
   text-decoration: underline;
+}
+
+.table-ui tr .row-link:is(:hover, :focus) {
+  text-decoration-thickness: 3px;
+}
+
+.table-ui tr:has(.row-link:hover) {
+  background-color: var(--table-row-hover);
+}
+
+.table-ui tr:has(.row-link:focus) {
+  background-color: var(--table-row-hover);
+  border: 1.5px solid var(--color-teal-dark);
+}
+
+.table-ui tr:has(.row-link:focus) :is(th, td) {
+  border-bottom: 1.5px solid var(--color-teal-dark);
+  border-top: 1.5px solid var(--color-teal-dark);
+}
+
+.table-ui tr:has(.row-link:focus) .row-link:focus {
+  /* So the outline only gets removed in browsers that support :has */
+  outline-style: dotted;
+}
+
+.footnote {
+  margin-bottom: 2rem;
+  font-style: italic;
+  font-size: 0.875rem;
 }
 
 /* Summary grid */

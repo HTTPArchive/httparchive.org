@@ -12,8 +12,8 @@
   <nav class="report-navigation">
     <ul class="block-l">
       <li>
-        {% set ariaCurrent = "false"}
-        {% if active_page == "landing" %}{% set ariaCurrent = "page"}{% endif %}
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
           href="/reports/techreport/landing"
           aria-current="{{ ariaCurrent }}"
@@ -22,8 +22,8 @@
         </a>
       </li>
       <li>
-        {% set ariaCurrent = "false"}
-        {% if active_page == "drilldown" %}{% set ariaCurrent = "page"}{% endif %}
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "drilldown" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
           href="/reports/techreport/drilldown"
           aria-current="{{ ariaCurrent }}"
@@ -32,8 +32,8 @@
         </a>
       </li>
       <li>
-        {% set ariaCurrent = "false"}
-        {% if active_page == "comparison" %}{% set ariaCurrent = "page"}{% endif %}
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "comparison" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
           href="/reports/techreport/comparison"
           aria-current="{{ ariaCurrent }}"
