@@ -12,31 +12,31 @@
   <nav class="report-navigation">
     <ul class="block-l">
       <li>
+        {% set ariaCurrent = "false"}
+        {% if active_page == "landing" %}{% set ariaCurrent = "page"}{% endif %}
         <a
           href="/reports/techreport/landing"
-          {% if active_page == "landing" %}
-            aria-current="page"
-          {% endif %}
+          aria-current="{{ ariaCurrent }}"
         >
           Home
         </a>
       </li>
       <li>
+        {% set ariaCurrent = "false"}
+        {% if active_page == "drilldown" %}{% set ariaCurrent = "page"}{% endif %}
         <a
           href="/reports/techreport/drilldown"
-          {% if active_page == "drilldown" %}
-            aria-current="page"
-          {% endif %}
+          aria-current="{{ ariaCurrent }}"
         >
           Drilldown
         </a>
       </li>
       <li>
+        {% set ariaCurrent = "false"}
+        {% if active_page == "comparison" %}{% set ariaCurrent = "page"}{% endif %}
         <a
-          href="/reports/techreport/comparison"@
-          {% if active_page == "comparison" %}
-            aria-current="page"
-          {% endif %}
+          href="/reports/techreport/comparison"
+          aria-current="{{ ariaCurrent }}"
         >
           Comparison
         </a>
