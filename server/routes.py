@@ -73,7 +73,7 @@ def techreport(page_id):
     tech_report = tech_report_util.get_report()
 
     # Get the settings for the current page
-    active_tech_report=tech_report.get('pages').get(page_id)
+    active_tech_report = tech_report.get("pages").get(page_id)
 
     # For all the sections, fetch their defined metrics
     # Later: only for the active section (when each section is its own view)
@@ -86,7 +86,7 @@ def techreport(page_id):
 
     active_tech_report["tech"] = tech_report_util.get_tech_id(request)
 
-    print('active_tech_report')
+    print("active_tech_report")
     print(active_tech_report)
 
     return render_template(
@@ -96,6 +96,7 @@ def techreport(page_id):
         tech_report_page=active_tech_report,
         reports=all_reports,
     )
+
 
 @app.route("/reports/<report_id>", strict_slashes=False)
 def report(report_id):

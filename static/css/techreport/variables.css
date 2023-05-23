@@ -1,24 +1,17 @@
 :root {
-  --color-teal-faded: #C0CED0;
-  --color-teal-medium: #6A797C;
-  --color-teal-dark: #3A5C63;
-  --color-teal-darker: #1C4750;
-
-  --color-blue-dark: #3A7098;
-
+  --color-teal-faded: #c0ced0;
+  --color-teal-medium: #6a797c;
+  --color-teal-dark: #3a5c63;
+  --color-teal-darker: #1c4750;
+  --color-blue-dark: #3a7098;
   --color-link: var(--color-blue-dark);
-
-  --color-text: #444444;
-  --color-text-inverted: #FFF;
-
+  --color-text: #444;
+  --color-text-inverted: #fff;
   --color-card-background: #fff;
-  --color-card-border: #CDD4D6;
-
+  --color-card-border: #cdd4d6;
   --color-page-background: #f4f4f4;
-
   --card-shadow: 0 2px 7px 0px rgba(143, 149, 150, 0.05);
   --card-radius: 0.25rem;
-
   --font-size-medium: 1.75rem;
   --font-size-large: 2.15rem;
   --font-size-xlarge: 2.35rem;

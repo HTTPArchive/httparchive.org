@@ -12,13 +12,34 @@
   <nav class="report-navigation">
     <ul class="block-l">
       <li>
-        <a href="/reports/techreport/landing" {% if active_page == "landing" %} aria-current="page" {% endif %}>Home</a>
+        <a
+          href="/reports/techreport/landing"
+          {% if active_page == "landing" %}
+            aria-current="page"
+          {% endif %}
+        >
+          Home
+        </a>
       </li>
       <li>
-        <a href="/reports/techreport/drilldown" {% if active_page == "drilldown" %} aria-current="page" {% endif %}>Drilldown</a>
+        <a
+          href="/reports/techreport/drilldown"
+          {% if active_page == "drilldown" %}
+            aria-current="page"
+          {% endif %}
+        >
+          Drilldown
+        </a>
       </li>
       <li>
-        <a href="/reports/techreport/comparison" {% if active_page == "comparison" %} aria-current="page" {% endif %}>Comparison</a>
+        <a
+          href="/reports/techreport/comparison"@
+          {% if active_page == "comparison" %}
+            aria-current="page"
+          {% endif %}
+        >
+          Comparison
+        </a>
       </li>
     </ul>
   </nav>
@@ -27,5 +48,5 @@
 {% block main %}
 
   {% block section %}{% endblock %}
-  
+
 {% endblock %}

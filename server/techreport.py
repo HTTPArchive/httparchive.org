@@ -1,5 +1,6 @@
 import json
 
+
 def update_report():
     global tech_report_json
     with open("config/techreport.json") as tech_report_file:
@@ -27,6 +28,7 @@ def get_metrics(metric, filters={}):
 
     return report_metrics
 
+
 def get_tech_id(request):
     host = request.host.split(".")
     subdomain = len(host) > 2 and host[0] or ""
@@ -35,5 +37,6 @@ def get_tech_id(request):
     if tech:
         tech_arr = tech.split(",")
     return tech_arr or subdomain
+
 
 update_report()
