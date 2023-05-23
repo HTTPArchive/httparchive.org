@@ -28,7 +28,7 @@ def get_metrics(metric, filters={}):
             report_metrics = json.load(report_metrics_file)
             return report_metrics
     except Exception as error:
-         with open("config/mock_responses/all.json") as report_metrics_file:
+        with open("config/mock_responses/all.json") as report_metrics_file:
             report_metrics = json.load(report_metrics_file)
             return report_metrics
 

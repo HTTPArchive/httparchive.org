@@ -3,7 +3,8 @@
   "name": "Squarespace",
   "metadata": {
     "categories": ["CMS", "Blog"],
-    "description": "Squarespace, Inc. is an American website building and hosting company which is based in New York City. It provides software as a service for website building and hosting, and allows users to use pre-built website templates and drag-and-drop elements to create and modify webpages"
+    "description": "Squarespace, Inc. is an American website building and hosting company which is based in New York City. It provides software as a service for website building and hosting, and allows users to use pre-built website templates and drag-and-drop elements to create and modify webpages",
+    "similar": ["wordpress", "drupal"]
   },
   "dates": [
     {

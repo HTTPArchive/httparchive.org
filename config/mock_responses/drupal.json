@@ -3,7 +3,8 @@
   "name": "Drupal",
   "metadata": {
     "categories": ["CMS", "Blog"],
-    "description": "Drupal is a free and open-source web content management system written in PHP and distributed under the GNU General Public License."
+    "description": "Drupal is a free and open-source web content management system written in PHP and distributed under the GNU General Public License.",
+    "similar": ["squarespace", "wordpress"]
   },
   "dates": [
     {

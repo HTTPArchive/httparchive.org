@@ -20,6 +20,14 @@
         "timeseries_title": "Good Core Web Vitals over time",
         "section_description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a 'good' experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics."
       }
+    },
+    "similar": {
+      "id": "similar_tech",
+      "title": "Similar technologies",
+      "description": "Placeholder: To write",
+      "caption": "Placeholder: popular technologies table caption todo",
+      "ctaLabel": "Compare similar technologies",
+      "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
     }
   },
   "pages": {
