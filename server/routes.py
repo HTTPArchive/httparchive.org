@@ -89,6 +89,7 @@ def techreport(page_id):
                 results = tech_report_util.get_metrics(metric)
                 section["data"][metric] = results
 
+    active_tech_report["tech_queried"] = technology_ids
     active_tech_report["tech"] = metrics
 
     print("active_tech_report")
