@@ -9,7 +9,8 @@
   <h2>{{ explore.title }}</h2>
 
   {% set table = explore.labels.summary %}
-  {% set technologies = tech_report_page.tech %}
+  {% set technologies = tech_report_page.tech or tech_report_page.tech_all %}
+  {% set data = tech_report_page.data %}
   {% include "techreport/components/table_overview.html" %}
 
 

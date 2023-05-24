@@ -36,12 +36,14 @@
       "title": "Technology Report",
       "subtitle": "Report",
       "description": "This is placeholder text about how the report works",
+      "data": {},
+      "filters": {
+        "technologies": ["wordpress", "squarespace", "drupal"]
+      },
       "sections": [
         {
           "id": "explore",
           "title": "Explore our data",
-          "metrics": ["wordpress", "squarespace", "drupal"],
-          "data": {},
           "blocks": {
             "popular_tech": {
               "id": "popular_tech",
@@ -61,12 +63,14 @@
       "title": "Drilldown",
       "subtitle": "Technology Report",
       "description": "Drilldown placeholder",
+      "data": {},
+      "filters": {
+        "technologies": ["all"]
+      },
       "sections": [
         {
           "id": "all",
-          "title": "All",
-          "metrics": ["all"],
-          "data": {}
+          "title": "All"
         }
       ]
     },
@@ -74,13 +78,15 @@
       "id": "comparison",
       "title": "Comparison",
       "subtitle": "Technology Report",
+      "data": {},
       "description": "Comparison placeholder",
+      "filters": {
+        "technologies": ["all"]
+      },
       "sections": [
         {
           "id": "all",
           "title": "All",
-          "metrics": ["all"],
-          "data": {},
           "labels": {
             "summary": {
               "id": "comparing_summary",

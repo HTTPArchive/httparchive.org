@@ -76,21 +76,19 @@ def techreport(page_id):
     active_tech_report = tech_report.get("pages").get(page_id)
 
     # Get which technologies are requested through the URL
-    technology_ids = tech_report_util.get_tech_id(request)
+    requested_technologies = tech_report_util.get_tech_id(request)
 
-    # For all the sections, fetch their defined metrics
-    # Later: only for the active section (when each section is its own view)
-    if active_tech_report.get("sections"):
-        for section in active_tech_report.get("sections"):
-            metrics = section.get("metrics")
-            if technology_ids and len(technology_ids) > 0:
-                metrics = [*metrics, *technology_ids]
-            for metric in metrics:
-                results = tech_report_util.get_metrics(metric)
-                section["data"][metric] = results
+    # Combine the technologies from the config with the ones from the url
+    defined_technologies = active_tech_report.get("filters").get("technologies")
+    technologies_all = [*defined_technologies, *requested_technologies]
 
-    active_tech_report["tech_queried"] = technology_ids
-    active_tech_report["tech"] = metrics
+    for technology in technologies_all:
+        # For each of the technologies, get the data
+        results = tech_report_util.get_metrics(technology)
+        active_tech_report["data"][technology] = results
+
+    active_tech_report["tech"] = requested_technologies
+    active_tech_report["tech_all"] = technologies_all
 
     print("active_tech_report")
     print(active_tech_report)

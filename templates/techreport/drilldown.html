@@ -3,7 +3,7 @@
 {% block section %}
   {{ super() }}
 
-  {% set filtered_technology = tech_report_page.tech_queried[0] or tech_report_page.tech[0] %}
+  {% set filtered_technology = tech_report_page.tech[0] or tech_report_page.tech_all[0] %}
   {% set tech_report_section = tech_report_page.sections[0] %}
 
   {% include "techreport/components/heading.html" %}
@@ -16,7 +16,7 @@
         {% set summary = {
           "url": "#adoption",
           "label": tech_report_labels.adoption.title,
-          "value": tech_report_section.data[filtered_technology].dates[0].origins.mobile,
+          "value": tech_report_page.data[filtered_technology].dates[0].origins.mobile,
           "description": tech_report_labels.adoption.summary_description
         } %}
         {% include "techreport/components/summary_linked.html" %}
@@ -24,7 +24,7 @@
         {% set summary = {
           "url": "#cwv",
           "label": tech_report_labels.cwv.good.summary_title,
-          "value": tech_report_section.data[filtered_technology].dates[0].good_overall.mobile,
+          "value": tech_report_page.data[filtered_technology].dates[0].good_overall.mobile,
           "description":  tech_report_labels.cwv.good.summary_description
         } %}
         {% include "techreport/components/summary_linked.html" %}
