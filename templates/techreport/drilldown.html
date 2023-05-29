@@ -16,7 +16,7 @@
         {% set summary = {
           "url": "#adoption",
           "label": tech_report_labels.adoption.title,
-          "value": tech_report_page.data[filtered_technology].dates[0].origins.mobile,
+          "value": tech_report_page.data[filtered_technology][0].origins,
           "description": tech_report_labels.adoption.summary_description
         } %}
         {% include "techreport/components/summary_linked.html" %}
@@ -24,7 +24,7 @@
         {% set summary = {
           "url": "#cwv",
           "label": tech_report_labels.cwv.good.summary_title,
-          "value": tech_report_page.data[filtered_technology].dates[0].good_overall.mobile,
+          "value": tech_report_page.data[filtered_technology][0].origins_with_good_cwv,
           "description":  tech_report_labels.cwv.good.summary_description
         } %}
         {% include "techreport/components/summary_linked.html" %}
@@ -40,7 +40,7 @@
 
         {% set timeseries_title = tech_report_labels.cwv.good.timeseries_title %}
         {% set timeseries_description = tech_report_labels.cwv.good.section_description %}
-        {% set timeseries_metric = "good_overall" %}
+        {% set timeseries_metric = "origins_with_good_cwv" %}
         {% set client = "mobile" %}
 
         {% include "techreport/components/timeseries_container.html" %}

@@ -1,4 +1,4 @@
-{% set timeseries_dates = tech_report_page.data[filtered_technology].dates %}
+{% set timeseries_dates = tech_report_page.data[filtered_technology] %}
 <div class="card timeseries-container">
   <p class="timeseries-title">{{ timeseries_title }}</p>
   <p class="timeseries-description">{{ timeseries_description }}</p>
@@ -8,7 +8,7 @@
   </p>
   <ul>
     {% for entry in timeseries_dates %}
-      <li>{{ entry.date }}: {{entry[timeseries_metric][client]}}</li>
+      <li>{{ entry.date }}: {{entry[timeseries_metric]}} ({{ entry.client }})</li>
     {% endfor %}
   </ul>
 </div>

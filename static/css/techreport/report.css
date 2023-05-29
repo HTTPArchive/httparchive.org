@@ -3,6 +3,11 @@
 /* -------------------- */
 
 /* Summary */
+.summary {
+  position: relative;
+  z-index: 1;
+}
+
 .summary h2 {
   font-size: 1rem;
   font-weight: 600;

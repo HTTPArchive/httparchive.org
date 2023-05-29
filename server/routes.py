@@ -90,9 +90,6 @@ def techreport(page_id):
     active_tech_report["tech"] = requested_technologies
     active_tech_report["tech_all"] = technologies_all
 
-    print("active_tech_report")
-    print(active_tech_report)
-
     return render_template(
         "techreport/%s.html" % page_id,
         active_page=page_id,

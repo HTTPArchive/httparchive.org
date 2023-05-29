@@ -19,16 +19,16 @@
         </tr>
       </thead>
       <tbody>
-        {% set latest = data[technologies[0]].dates[0] %}
+        {% set latest = data[technologies[0]][0] %}
         {% for technology in technologies %}
-          {% set latest = data[technology].dates[0] %}
+          {% set latest = data[technology][0] %}
           <tr>
-            <th><a class="row-link" href="/reports/techreport/drilldown?tech={{ technology }}">{{ data[technology].name }}</a></th>
-            <td>{{ latest.origins.mobile }}</td>
-            <td>{{ latest.good_overall.mobile }}</td>
-            <td><strong>{{ latest.median_lcp.mobile }}</strong>s</td>
-            <td><strong>{{ latest.median_cls.mobile }}</strong></td>
-            <td><strong>{{ latest.median_fid.mobile }}</strong>ms</td>
+            <th><a class="row-link" href="/reports/techreport/drilldown?tech={{ technology }}">{{ data[technology][0].app }}</a></th>
+            <td>{{ latest.origins }}</td>
+            <td>{{ latest.origins_with_good_cwv }}</td>
+            <td><strong>{{ latest.origins_with_good_lcp }}</strong>s</td>
+            <td><strong>{{ latest.origins_with_good_cls }}</strong></td>
+            <td><strong>{{ latest.origins_with_good_fid }}</strong>ms</td>
           </tr>
         {% endfor %}
       </tbody>

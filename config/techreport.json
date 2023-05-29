@@ -38,7 +38,7 @@
       "description": "This is placeholder text about how the report works",
       "data": {},
       "filters": {
-        "technologies": ["wordpress", "squarespace", "drupal"]
+        "technologies": ["WordPress", "Squarespace", "Drupal"]
       },
       "sections": [
         {
@@ -50,9 +50,9 @@
               "title": "Popular technologies",
               "description": "To write",
               "caption": "popular technologies table caption todo",
-              "technologies": ["wordpress", "squarespace", "drupal"],
+              "technologies": ["WordPress", "Squarespace", "Drupal"],
               "ctaLabel": "Compare technologies",
-              "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
+              "ctaUrl": "/reports/techreport/comparison?tech=WordPress,Squarespace,Drupal"
             }
           }
         }
@@ -65,7 +65,7 @@
       "description": "Drilldown placeholder",
       "data": {},
       "filters": {
-        "technologies": ["all"]
+        "technologies": ["ALL"]
       },
       "sections": [
         {
@@ -81,7 +81,7 @@
       "data": {},
       "description": "Comparison placeholder",
       "filters": {
-        "technologies": ["all"]
+        "technologies": ["ALL"]
       },
       "sections": [
         {

@@ -1,5 +1,5 @@
 import json
-
+import requests
 
 def update_report():
     global tech_report_json
@@ -24,13 +24,14 @@ def get_metrics(metric, filters={}):
     print(filters)
 
     try:
-        with open("config/mock_responses/%s.json" % metric) as report_metrics_file:
-            report_metrics = json.load(report_metrics_file)
-            return report_metrics
+        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/ALL/ALL/%s.json" % metric)
+        response_json = response.json()
+        return response_json
+
     except Exception as error:
-        with open("config/mock_responses/all.json") as report_metrics_file:
-            report_metrics = json.load(report_metrics_file)
-            return report_metrics
+        print("there was an error")
+        print(error)
+        return {}
 
 
 def get_tech_id(request):
