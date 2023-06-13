@@ -7,6 +7,38 @@ def update_report():
         tech_report_json = json.load(tech_report_file)
 
 
+def get_technologies():
+    try:
+        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/technologies.json")
+        technologies = response.json()
+        return technologies
+
+    except Exception as error:
+        # In the future: we could expand this to have a local fallback list of allowed technologies
+        print(error)
+        return []
+
+
+def get_geos():
+    try:
+        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/geos.json")
+        geos = response.json()
+        return geos
+    except Exception as error:
+        print(error)
+        return []
+
+
+def get_ranks():
+    try:
+        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/ranks.json")
+        ranks = response.json()
+        return ranks
+    except Exception as error:
+        print(error)
+        return []
+
+
 def get_report():
     global tech_report_json
     update_report()
@@ -14,34 +46,44 @@ def get_report():
     return tech_report_json
 
 
-def get_metrics(metric, filters={}):
-    global report_metrics
-
-    # Mock functionality
-    # TODO: Replace with API call
-    print("fetch results for metric with filters")
-    print(metric)
-    print(filters)
+def get_metrics(technology, filters):
+    global report_data
 
     try:
-        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/ALL/ALL/%s.json" % metric)
-        response_json = response.json()
-        return response_json
+        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/%s/%s/%s.json" % (filters["rank"], filters["geo"], technology))
+        report_data = response.json()
+        return report_data
 
     except Exception as error:
-        print("there was an error")
         print(error)
-        return {}
+        return []
 
 
-def get_tech_id(request):
-    host = request.host.split(".")
-    subdomain = len(host) > 2 and host[0] or ""
-    tech = request.args.get("tech")
+def get_request_values(request, key, allowed_values):
+    request_value = request.args.get(key) or "ALL"
+    if allowed_values and len(allowed_values) > 0:
+        _value = request_value.replace(" ", "-").lower()
+        updated_value = [option for option in allowed_values if option[key].replace(" ", "-").lower() == _value]
+        print('updated_value')
+        print(updated_value)
+        print(_value)
+        if updated_value:
+            updated_value = updated_value[0][key]
+            updated_value = updated_value.replace(" ", "-")
+            print('we replaced stuff')
+            print(updated_value)
+
+    return updated_value or request_value
+
+
+def get_requested_technologies(request, allowed_values):
+    print('get_requested_technologies')
+    print(request)
     tech_arr = []
-    if tech:
-        tech_arr = tech.split(",")
-    return tech_arr or subdomain
+    requested_tech = get_request_values(request, "app", allowed_values)
+    if requested_tech:
+        tech_arr = requested_tech.split(",")
+    return tech_arr
 
 
 update_report()

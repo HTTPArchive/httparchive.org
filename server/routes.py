@@ -69,30 +69,50 @@ def reports():
 
 @app.route("/reports/techreport/<page_id>", strict_slashes=False)
 def techreport(page_id):
+    # Needed for the header dropdown
     all_reports = report_util.get_reports()
+
+    # Get the configuration for the tech report
     tech_report = tech_report_util.get_report()
+
+    # Get the technologies, geos, ranks on which we have data
+    available_technologies = tech_report_util.get_technologies()
+    available_geos = tech_report_util.get_geos()
+    available_ranks = tech_report_util.get_ranks()
 
     # Get the settings for the current page
     active_tech_report = tech_report.get("pages").get(page_id)
 
-    # Get which technologies are requested through the URL
-    requested_technologies = tech_report_util.get_tech_id(request)
-
-    # Combine the technologies from the config with the ones from the url
+    # Combine technologies from the URL with the pre-defined ones from the config
+    # Because sometimes we want 'ALL' in addition to chosen tech
+    requested_technologies = tech_report_util.get_requested_technologies(request, available_technologies)
     defined_technologies = active_tech_report.get("filters").get("technologies")
     technologies_all = [*defined_technologies, *requested_technologies]
 
+    # Get the filters
+    requested_geo = tech_report_util.get_request_values(request, "geo", available_geos)
+    requested_rank = tech_report_util.get_request_values(request, "rank", available_ranks)
+    filters = {
+        "geo": requested_geo,
+        "rank": requested_rank
+    }
+
     for technology in technologies_all:
         # For each of the technologies, get the data
-        results = tech_report_util.get_metrics(technology)
+        results = tech_report_util.get_metrics(technology, filters)
         active_tech_report["data"][technology] = results
 
     active_tech_report["tech"] = requested_technologies
     active_tech_report["tech_all"] = technologies_all
 
+    print(active_tech_report["data"])
+
     return render_template(
         "techreport/%s.html" % page_id,
         active_page=page_id,
+        available_technologies=available_technologies,
+        available_geos=available_geos,
+        available_ranks=available_ranks,
         tech_report_labels=tech_report.get("labels"),
         tech_report_page=active_tech_report,
         reports=all_reports,

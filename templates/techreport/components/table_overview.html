@@ -23,7 +23,7 @@
         {% for technology in technologies %}
           {% set latest = data[technology][0] %}
           <tr>
-            <th><a class="row-link" href="/reports/techreport/drilldown?tech={{ technology }}">{{ data[technology][0].app }}</a></th>
+            <th><a class="row-link" href="/reports/techreport/drilldown?app={{ technology }}">{{ data[technology][0].app }}</a></th>
             <td>{{ latest.origins }}</td>
             <td>{{ latest.origins_with_good_cwv }}</td>
             <td><strong>{{ latest.origins_with_good_lcp }}</strong>s</td>

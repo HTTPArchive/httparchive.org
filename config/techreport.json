@@ -27,7 +27,7 @@
       "description": "Placeholder: To write",
       "caption": "Placeholder: popular technologies table caption todo",
       "ctaLabel": "Compare similar technologies",
-      "ctaUrl": "/reports/techreport/comparison?tech=wordpress,squarespace,drupal"
+      "ctaUrl": "/reports/techreport/comparison?app=wordpress,squarespace,drupal"
     }
   },
   "pages": {
@@ -52,7 +52,7 @@
               "caption": "popular technologies table caption todo",
               "technologies": ["WordPress", "Squarespace", "Drupal"],
               "ctaLabel": "Compare technologies",
-              "ctaUrl": "/reports/techreport/comparison?tech=WordPress,Squarespace,Drupal"
+              "ctaUrl": "/reports/techreport/comparison?app=WordPress,Squarespace,Drupal"
             }
           }
         }

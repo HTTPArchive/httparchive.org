@@ -6,9 +6,9 @@
   {% set filtered_technology = tech_report_page.tech[0] or tech_report_page.tech_all[0] %}
   {% set tech_report_section = tech_report_page.sections[0] %}
 
-  {% include "techreport/components/heading.html" %}
+  {% if filtered_technology and tech_report_page.data[filtered_technology] %}
+    {% include "techreport/components/heading.html" %}
 
-  {% if filtered_technology %}
     <div class="block-m summary">
       <h2>Summary</h2>
 
@@ -62,5 +62,7 @@
 
       </div>
     </div>
+  {% else %}
+    <p>No data found</p>
   {% endif %}
 {% endblock %}
