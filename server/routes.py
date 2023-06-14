@@ -85,13 +85,17 @@ def techreport(page_id):
 
     # Combine technologies from the URL with the pre-defined ones from the config
     # Because sometimes we want 'ALL' in addition to chosen tech
-    requested_technologies = tech_report_util.get_requested_technologies(request, available_technologies)
+    requested_technologies = tech_report_util.get_requested_technologies(
+        request, available_technologies
+    )
     defined_technologies = active_tech_report.get("filters").get("technologies")
     technologies_all = [*defined_technologies, *requested_technologies]
 
     # Get the filters
     requested_geo = tech_report_util.get_request_values(request, "geo", available_geos)
-    requested_rank = tech_report_util.get_request_values(request, "rank", available_ranks)
+    requested_rank = tech_report_util.get_request_values(
+        request, "rank", available_ranks
+    )
     filters = {
         "geo": requested_geo,
         "rank": requested_rank,

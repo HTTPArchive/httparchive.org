@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 def update_report():
     global tech_report_json
     with open("config/techreport.json") as tech_report_file:
@@ -9,7 +10,9 @@ def update_report():
 
 def get_technologies():
     try:
-        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/technologies.json")
+        response = requests.get(
+            "https://cdn.httparchive.org/reports/cwvtech/technologies.json"
+        )
         technologies = response.json()
         return technologies
 
@@ -21,7 +24,9 @@ def get_technologies():
 
 def get_geos():
     try:
-        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/geos.json")
+        response = requests.get(
+            "https://cdn.httparchive.org/reports/cwvtech/geos.json"
+        )
         geos = response.json()
         return geos
     except Exception as error:
@@ -31,7 +36,9 @@ def get_geos():
 
 def get_ranks():
     try:
-        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/ranks.json")
+        response = requests.get(
+            "https://cdn.httparchive.org/reports/cwvtech/ranks.json"
+        )
         ranks = response.json()
         return ranks
     except Exception as error:
@@ -50,7 +57,10 @@ def get_metrics(technology, filters):
     global report_data
 
     try:
-        response = requests.get("https://cdn.httparchive.org/reports/cwvtech/%s/%s/%s.json" % (filters["rank"], filters["geo"], technology))
+        response = requests.get(
+            "https://cdn.httparchive.org/reports/cwvtech/%s/%s/%s.json"
+            % (filters["rank"], filters["geo"], technology)
+        )
         report_data = response.json()
         return report_data
 
@@ -63,7 +73,11 @@ def get_request_values(request, key, allowed_values):
     request_value = request.args.get(key) or "ALL"
     if allowed_values and len(allowed_values) > 0:
         _value = request_value.replace(" ", "-").lower()
-        updated_value = [option for option in allowed_values if option[key].replace(" ", "-").lower() == _value]
+        updated_value = [
+            option
+            for option in allowed_values
+            if option[key].replace(" ", "-").lower() == _value
+        ]
         if updated_value:
             updated_value = updated_value[0][key]
             updated_value = updated_value.replace(" ", "-")
