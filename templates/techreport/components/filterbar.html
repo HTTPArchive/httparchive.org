@@ -4,7 +4,12 @@
       <label for="app">Technology</label>
       <select name="app" id="app">
         {% for technology in available_technologies %}
-          <option value="{{ technology.app }}" {% if tech_report_page.data[filtered_technology][0].app == technology.app %} selected {% endif %}>{{ technology.app }}</option>
+          {% if tech_report_page.set_filters.app[0].app == technology.app %}
+            {% set tech_selected = true %}
+          {% else %}
+            {% set tech_selected = false %}
+          {% endif %}
+          <option value="{{ technology.app }}" selected="{{ tech_selected }}">{{ technology.app }}</option>
         {% endfor %}
       </select>
     </div>
@@ -12,7 +17,12 @@
       <label for="geo">Geo</label>
       <select name="geo" id="geo">
         {% for geo in available_geos %}
-          <option value="{{ geo.geo }}">
+          {% if tech_report_page.set_filters.geo == geo.geo.replace(" ", "-") %}
+            {% set geo_selected = true %}
+          {% else %}
+            {% set geo_selected = false %}
+          {% endif %}
+          <option value="{{ geo.geo }}" selected="{{ geo_selected }}">
             {{ geo.geo }}
           </option>
         {% endfor %}
@@ -22,7 +32,12 @@
       <label for="geo">Rank</label>
       <select name="rank" id="rank">
         {% for rank in available_ranks %}
-          <option value="{{ rank.rank }}">
+          {% if tech_report_page.set_filters.rank == rank.rank.replace(" ", "-") %}
+            {% set rank_selected = true %}
+          {% else %}
+            {% set rank_selected = false %}
+          {% endif %}
+          <option value="{{ rank.rank }}" selected="{{ rank_selected }}">
             {{ rank.rank }}
           </option>
         {% endfor %}

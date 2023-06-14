@@ -94,7 +94,8 @@ def techreport(page_id):
     requested_rank = tech_report_util.get_request_values(request, "rank", available_ranks)
     filters = {
         "geo": requested_geo,
-        "rank": requested_rank
+        "rank": requested_rank,
+        "app": requested_technologies,
     }
 
     for technology in technologies_all:
@@ -105,7 +106,9 @@ def techreport(page_id):
     active_tech_report["tech"] = requested_technologies
     active_tech_report["tech_all"] = technologies_all
 
-    print(active_tech_report["data"])
+    active_tech_report["set_filters"] = filters
+
+    print(active_tech_report)
 
     return render_template(
         "techreport/%s.html" % page_id,

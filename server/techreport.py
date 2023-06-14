@@ -64,21 +64,14 @@ def get_request_values(request, key, allowed_values):
     if allowed_values and len(allowed_values) > 0:
         _value = request_value.replace(" ", "-").lower()
         updated_value = [option for option in allowed_values if option[key].replace(" ", "-").lower() == _value]
-        print('updated_value')
-        print(updated_value)
-        print(_value)
         if updated_value:
             updated_value = updated_value[0][key]
             updated_value = updated_value.replace(" ", "-")
-            print('we replaced stuff')
-            print(updated_value)
 
     return updated_value or request_value
 
 
 def get_requested_technologies(request, allowed_values):
-    print('get_requested_technologies')
-    print(request)
     tech_arr = []
     requested_tech = get_request_values(request, "app", allowed_values)
     if requested_tech:
