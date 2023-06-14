@@ -184,10 +184,10 @@ h2 {
   margin-top: 0;
   background-color: transparent;
   padding: 4rem 0;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 20rem;
   column-gap: 2rem;
-  justify-content: space-between;
+  row-gap: 2rem;
 }
 
 .intro h1 {
