@@ -2,11 +2,10 @@ function sendWebVitals() {
 
   function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
 
-    let webVitalInfo = '(not set)';
+    let overrides = {};
 
     switch (name) {
       case 'CLS':
-        webVitalInfo = attribution.largestShiftTarget;
         overrides = {
           debug_time: attribution.largestShiftTime,
           debug_load_state: attribution.loadState,
@@ -14,7 +13,6 @@ function sendWebVitals() {
         };
         break;
       case 'FCP':
-        webVitalInfo = attribution.firstByteToFCP;
         overrides = {
           debug_ttfb: attribution.timeToFirstByte,
           debug_fb2fcp: attribution.firstByteToFCP,
@@ -24,7 +22,6 @@ function sendWebVitals() {
         break;
       case 'FID':
       case 'INP':
-        webVitalInfo = attribution.eventTarget;
         overrides = {
           debug_event: attribution.eventType,
           debug_time: attribution.eventTime,
@@ -33,7 +30,6 @@ function sendWebVitals() {
         };
         break;
       case 'LCP':
-        webVitalInfo = attribution.element;
         overrides = {
           debug_url: attribution.url,
           debug_ttfb: attribution.timeToFirstByte,
@@ -44,7 +40,6 @@ function sendWebVitals() {
         };
         break;
       case 'TTFB':
-        webVitalInfo = attribution.connectionTime;
         overrides = {
           debug_waiting_time: attribution.waitingTime,
           debug_dns_time: attribution.dnsTime,
@@ -87,13 +82,21 @@ function sendWebVitals() {
         nonInteraction: true,
 
         // See: https://web.dev/debug-web-vitals-in-the-field/
-        dimension1: webVitalInfo,
+        // UA - Remove once fully migrated to GA4
+        dimension1: overrides.debug_target,
         dimension2: effectiveType,
         dimension3: dataSaver,
         dimension4: deviceMemory,
         dimension5: prefersReducedMotion,
         dimension6: prefersColorScheme,
         dimension7: navigationType,
+        //GA4
+        effective_type: effectiveType,
+        data_saver: dataSaver,
+        device_memory: deviceMemory,
+        prefers_reduced_motion: prefersReducedMotion,
+        prefers_color_scheme: prefersColorScheme,
+        navigation_type: navigationType,
       }, overrides));
 
   }
