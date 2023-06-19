@@ -7,21 +7,50 @@ function sendWebVitals() {
     switch (name) {
       case 'CLS':
         webVitalInfo = attribution.largestShiftTarget;
-        break;
-      case 'FID':
-        webVitalInfo = attribution.eventTarget;
-        break;
-      case 'LCP':
-        webVitalInfo = attribution.element;
-        break;
-      case 'TTFB':
-        webVitalInfo = attribution.connectionTime;
+        overrides = {
+          debug_time: attribution.largestShiftTime,
+          debug_load_state: attribution.loadState,
+          debug_target: attribution.largestShiftTarget || '(not set)',
+        };
         break;
       case 'FCP':
         webVitalInfo = attribution.firstByteToFCP;
+        overrides = {
+          debug_ttfb: attribution.timeToFirstByte,
+          debug_fb2fcp: attribution.firstByteToFCP,
+          debug_load_state: attribution.loadState,
+          debug_target: attribution.loadState || '(not set)',
+        };
         break;
+      case 'FID':
       case 'INP':
         webVitalInfo = attribution.eventTarget;
+        overrides = {
+          debug_event: attribution.eventType,
+          debug_time: attribution.eventTime,
+          debug_load_state: attribution.loadState,
+          debug_target: attribution.eventTarget || '(not set)',
+        };
+        break;
+      case 'LCP':
+        webVitalInfo = attribution.element;
+        overrides = {
+          debug_url: attribution.url,
+          debug_ttfb: attribution.timeToFirstByte,
+          debug_rld: attribution.resourceLoadDelay,
+          debug_rlt: attribution.resourceLoadTime,
+          debug_erd: attribution.elementRenderDelay,
+          debug_target: attribution.element || '(not set)',
+        };
+        break;
+      case 'TTFB':
+        webVitalInfo = attribution.connectionTime;
+        overrides = {
+          debug_waiting_time: attribution.waitingTime,
+          debug_dns_time: attribution.dnsTime,
+          debug_connection_time: attribution.connectionTime,
+          debug_request_time: attribution.requestTime,
+        };
         break;
     }
 
@@ -50,22 +79,22 @@ function sendWebVitals() {
     }
 
 
-    ga('send', 'event', {
-      eventAction: name,
-      eventCategory: 'Web Vitals',
-      eventValue: Math.round(name === 'CLS' ? delta * 1000 : delta),
-      eventLabel: id,
-      nonInteraction: true,
+    gtag('event', name, Object.assign(
+      {
+        event_category: 'Web Vitals',
+        event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+        event_label: id,
+        nonInteraction: true,
 
-      // See: https://web.dev/debug-web-vitals-in-the-field/
-      dimension1: webVitalInfo,
-      dimension2: effectiveType,
-      dimension3: dataSaver,
-      dimension4: deviceMemory,
-      dimension5: prefersReducedMotion,
-      dimension6: prefersColorScheme,
-      dimension7: navigationType,
-    });
+        // See: https://web.dev/debug-web-vitals-in-the-field/
+        dimension1: webVitalInfo,
+        dimension2: effectiveType,
+        dimension3: dataSaver,
+        dimension4: deviceMemory,
+        dimension5: prefersReducedMotion,
+        dimension6: prefersColorScheme,
+        dimension7: navigationType,
+      }, overrides));
 
   }
 
