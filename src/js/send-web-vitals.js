@@ -14,8 +14,8 @@ function sendWebVitals() {
         break;
       case 'FCP':
         overrides = {
-          debug_ttfb: attribution.timeToFirstByte,
-          debug_fb2fcp: attribution.firstByteToFCP,
+          debug_time_to_first_byte: attribution.timeToFirstByte,
+          debug_first_byte_to_fcp: attribution.firstByteToFCP,
           debug_load_state: attribution.loadState,
           debug_target: attribution.loadState || '(not set)',
         };
@@ -43,6 +43,7 @@ function sendWebVitals() {
           debug_resource_load_time: attribution.resourceLoadTime,
           debug_element_render_delay: attribution.elementRenderDelay,
           debug_target: attribution.element || '(not set)',
+          debug_scroll_y: scrollY,
         };
         break;
       case 'TTFB':
