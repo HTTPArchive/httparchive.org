@@ -44,11 +44,10 @@
 {% block scripts %}
 {{ super() }}
 <script nonce="{{ csp_nonce() }}">
-  ga('send', 'event', {
-    'eventAction': '{{ HTTP_STATUS_CODES[error.code] }}',
-    'eventCategory': 'error',
-    'eventLabel': '{{ request.path }}',
-    'eventValue': 1
+  gtag('event', '{{ HTTP_STATUS_CODES[error.code] }}' {
+    'event_category': 'error',
+    'event_label': '{{ request.path }}',
+    'value': 1
   });
 </script>
 {% endblock %}

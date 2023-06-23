@@ -2,26 +2,57 @@ function sendWebVitals() {
 
   function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
 
-    let webVitalInfo = '(not set)';
+    let overrides = {};
 
     switch (name) {
       case 'CLS':
-        webVitalInfo = attribution.largestShiftTarget;
-        break;
-      case 'FID':
-        webVitalInfo = attribution.eventTarget;
-        break;
-      case 'LCP':
-        webVitalInfo = attribution.element;
-        break;
-      case 'TTFB':
-        webVitalInfo = attribution.connectionTime;
+        overrides = {
+          debug_time: attribution.largestShiftTime,
+          debug_load_state: attribution.loadState,
+          debug_target: attribution.largestShiftTarget || '(not set)',
+        };
         break;
       case 'FCP':
-        webVitalInfo = attribution.firstByteToFCP;
+        overrides = {
+          debug_time_to_first_byte: attribution.timeToFirstByte,
+          debug_first_byte_to_fcp: attribution.firstByteToFCP,
+          debug_load_state: attribution.loadState,
+          debug_target: attribution.loadState || '(not set)',
+        };
         break;
+      case 'FID':
       case 'INP':
-        webVitalInfo = attribution.eventTarget;
+        overrides = {
+          debug_event: attribution.eventType,
+          debug_time: Math.round(attribution.eventTime),
+          debug_load_state: attribution.loadState,
+          debug_target: attribution.eventTarget || '(not set)',
+        };
+        if (!attribution.eventEntry) {
+          break;
+        }
+        overrides.debug_interaction_delay = Math.round(attribution.eventEntry.processingStart - attribution.eventEntry.startTime);
+        overrides.debug_processing_time = Math.round(attribution.eventEntry.processingEnd - attribution.eventEntry.processingStart);
+        overrides.debug_presentation_delay =  Math.round(attribution.eventEntry.duration + attribution.eventEntry.startTime - attribution.eventEntry.processingEnd);
+        break;
+      case 'LCP':
+        overrides = {
+          debug_url: attribution.url,
+          debug_time_to_first_byte: attribution.timeToFirstByte,
+          debug_resource_load_delay: attribution.resourceLoadDelay,
+          debug_resource_load_time: attribution.resourceLoadTime,
+          debug_element_render_delay: attribution.elementRenderDelay,
+          debug_target: attribution.element || '(not set)',
+          debug_scroll_y: scrollY,
+        };
+        break;
+      case 'TTFB':
+        overrides = {
+          debug_waiting_time: attribution.waitingTime,
+          debug_dns_time: attribution.dnsTime,
+          debug_connection_time: attribution.connectionTime,
+          debug_request_time: attribution.requestTime,
+        };
         break;
     }
 
@@ -50,22 +81,30 @@ function sendWebVitals() {
     }
 
 
-    ga('send', 'event', {
-      eventAction: name,
-      eventCategory: 'Web Vitals',
-      eventValue: Math.round(name === 'CLS' ? delta * 1000 : delta),
-      eventLabel: id,
-      nonInteraction: true,
+    gtag('event', name, Object.assign(
+      {
+        event_category: 'Web Vitals',
+        event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+        event_label: id,
+        nonInteraction: true,
 
-      // See: https://web.dev/debug-web-vitals-in-the-field/
-      dimension1: webVitalInfo,
-      dimension2: effectiveType,
-      dimension3: dataSaver,
-      dimension4: deviceMemory,
-      dimension5: prefersReducedMotion,
-      dimension6: prefersColorScheme,
-      dimension7: navigationType,
-    });
+        // See: https://web.dev/debug-web-vitals-in-the-field/
+        // UA - Remove once fully migrated to GA4
+        dimension1: overrides.debug_target,
+        dimension2: effectiveType,
+        dimension3: dataSaver,
+        dimension4: deviceMemory,
+        dimension5: prefersReducedMotion,
+        dimension6: prefersColorScheme,
+        dimension7: navigationType,
+        //GA4
+        effective_type: effectiveType,
+        data_saver: dataSaver,
+        device_memory: deviceMemory,
+        prefers_reduced_motion: prefersReducedMotion,
+        prefers_color_scheme: prefersColorScheme,
+        navigation_type: navigationType,
+      }, overrides));
 
   }
 
