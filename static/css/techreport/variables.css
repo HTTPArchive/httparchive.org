@@ -24,4 +24,8 @@
   --card-shadow: 0 2px 7px 0px rgba(143, 149, 150, 0.05);
   --card-radius: 0.25rem;
   --table-row-hover: var(--color-blue-100);
+
+  /* Graph colors */
+  --graph-color-primary: var(--color-teal-dark);
+  --graph-color-primary-darker: var(--color-teal-darker);
 }

@@ -99,7 +99,7 @@ h2 {
 
 :is(header, footer) .container {
   width: 85rem;
-  max-width: 98%;
+  max-width: 98vw;
   padding: 0;
 }
 
@@ -279,6 +279,21 @@ h2 {
 .table-ui tr:has(.row-link:focus) .row-link:focus {
   /* So the outline only gets removed in browsers that support :has */
   outline-style: dotted;
+}
+
+.table-ui td ul {
+  height: 30px;
+  display: flex;
+  align-items: flex-end;
+  column-gap: 1px;
+}
+
+.table-ui td ul li {
+  background-color: var(--graph-color-primary);
+  border: 1px solid var(--graph-color-primary-darker);
+  height: var(--height);
+  border-radius: 1px 1px 0 0;
+  flex: 1;
 }
 
 .footnote {

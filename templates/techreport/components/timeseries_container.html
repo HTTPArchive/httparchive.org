@@ -1,6 +1,6 @@
 {% set timeseries_dates = tech_report_page.data[filtered_technology] %}
 <div class="card timeseries-container">
-  <p class="timeseries-title">{{ timeseries_title }}</p>
+  <h3 class="timeseries-title">{{ timeseries_title }}</h3>
   <p class="timeseries-description">{{ timeseries_description }}</p>
   <p class="timeseries-time">Latest: {{ timeseries_dates[0].date }}</p>
   <p>
