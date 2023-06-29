@@ -12,10 +12,11 @@
         <tr>
           <th>Technology</th>
           <th>Origins</th>
-          <th>Good CWVs</th>
+          <th>% Good CWVs</th>
           <th>LCP</th>
           <th>CLS</th>
           <th>FID</th>
+          <th>INP</th>
         </tr>
       </thead>
       <tbody>
@@ -25,10 +26,11 @@
           <tr>
             <th><a class="row-link" href="/reports/techreport/drilldown?app={{ technology }}">{{ data[technology][0].app }}</a></th>
             <td>{{ latest.origins }}</td>
-            <td>{{ latest.origins_with_good_cwv }}</td>
-            <td><strong>{{ latest.origins_with_good_lcp }}</strong>s</td>
-            <td><strong>{{ latest.origins_with_good_cls }}</strong></td>
-            <td><strong>{{ latest.origins_with_good_fid }}</strong>ms</td>
+            <td>{{ latest.pct_good_cwv }}</td>
+            <td><strong>{{ latest.pct_good_lcp }}</strong>%</td>
+            <td><strong>{{ latest.pct_good_cls }}</strong>%</td>
+            <td><strong>{{ latest.pct_good_fid }}</strong>%</td>
+            <td><strong>{{ latest.pct_good_inp }}</strong>%</td>
           </tr>
         {% endfor %}
       </tbody>
