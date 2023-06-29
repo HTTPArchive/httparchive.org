@@ -8,7 +8,9 @@
       <tr>
         <th>Date</th>
         <th>Client</th>
-        <th>% Good scores</th>
+        {% for metric in timeseries_metrics %}
+          <th>{{ metric.title }}</th>
+        {% endfor %}
       </tr>
     </thead>
     <tbody>
@@ -16,7 +18,9 @@
         <tr>
           <th>{{ entry.date }}</th>
           <td>{{ entry.client }}</td>
-          <td>{{ entry[timeseries_metric] }}</td>
+          {% for metric in timeseries_metrics %}
+            <th>{{ entry[metric.key] }}{% if metric.suffix %}{{ metric.suffix }}{% endif %}</th>
+          {% endfor %}
         </tr>
       {% endfor %}
     </tbody>

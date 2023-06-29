@@ -40,7 +40,19 @@
 
         {% set timeseries_title = tech_report_labels.cwv.good.timeseries_title %}
         {% set timeseries_description = tech_report_labels.cwv.good.section_description %}
-        {% set timeseries_metric = "pct_good_cwv" %}
+        {% set timeseries_metrics = [
+          {
+            "key": "pct_good_cwv",
+            "title": "% Good CWVs",
+            "suffic": "%"
+          }, {
+            "key": "origins_with_good_cwv",
+            "title": "# Good CWVs"
+          }, {
+            "key": "origins_eligible_for_cwv",
+            "title": "Eligible"
+          }
+        ] %}
         {% set client = "mobile" %}
 
         {% include "techreport/components/cwv_overview.html" %}
@@ -56,11 +68,15 @@
 
         {% set timeseries_title = tech_report_labels.adoption.timeseries_title %}
         {% set timeseries_description = tech_report_labels.adoption.timeseries_description %}
-        {% set timeseries_metric = "origins" %}
+        {% set timeseries_metrics = [
+          {
+            "key": "origins",
+            "title": "Origins"
+          }
+        ] %}
         {% set client = "mobile" %}
 
         {% include "techreport/components/timeseries_container.html" %}
-
       </div>
     </div>
   {% else %}

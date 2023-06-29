@@ -90,11 +90,11 @@
       </tr>
       <tr>
         <th>INP</th>
-        <td>{{latest.pct_good_inp}}%</td>
+        <td>{{ latest.pct_good_inp }}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
-              {% if entry.client == "mobile" %}
+              {% if entry.client == "desktop" %}
                 <li class="bar" style="--height: {{ entry.pct_good_inp }}%">
                   <span class="sr-only">{{ entry.pct_good_inp }}</span>
                 </li>
