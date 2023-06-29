@@ -15,13 +15,13 @@
     <tbody>
       <tr>
         <th>Overall</th>
-        <td>{{latest.origins_with_good_cwv}}%</td>
+        <td>{{latest.pct_good_cwv}}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
               {% if entry.client == "mobile" %}
-                <li class="bar" style="--height: calc({{ entry.origins_with_good_cwv }}% / {{ entry.origins_eligible_for_cwv }} * 100)">
-                  <span class="sr-only">{{ entry.origins_with_good_cwv }}</span>
+                <li class="bar" style="--height: {{ entry.pct_good_cwv }}%">
+                  <span class="sr-only">{{ entry.date }}: {{ entry.pct_good_cwv }}% with good CWVs</span>
                 </li>
               {% endif %}
             {% endfor %}
@@ -30,13 +30,13 @@
       </tr>
       <tr>
         <th>LCP</th>
-        <td>{{latest.origins_with_good_lcp}}%</td>
+        <td>{{ latest.pct_good_lcp }}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
               {% if entry.client == "mobile" %}
-                <li class="bar" style="--height: calc({{ entry.origins_with_good_lcp }}% / {{ entry.origins_eligible_for_cwv }} * 100)">
-                  <span class="sr-only">{{ entry.origins_with_good_lcp }}</span>
+                <li class="bar" style="--height: {{ entry.pct_good_lcp }}%">
+                  <span class="sr-only">{{ entry.pct_good_lcp }}</span>
                 </li>
               {% endif %}
             {% endfor %}
@@ -45,13 +45,13 @@
       </tr>
       <tr>
         <th>CLS</th>
-        <td>{{latest.origins_with_good_cls}}%</td>
+        <td>{{latest.pct_good_cls}}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
               {% if entry.client == "mobile" %}
-                <li class="bar" style="--height: calc({{ entry.origins_with_good_cls }}% / {{ entry.origins_eligible_for_cwv }} * 100)">
-                  <span class="sr-only">{{ entry.origins_with_good_cls }}</span>
+                <li class="bar" style="--height: {{ entry.pct_good_cls }}%">
+                  <span class="sr-only">{{ entry.pct_good_cls }}</span>
                 </li>
               {% endif %}
             {% endfor %}
@@ -60,13 +60,13 @@
       </tr>
       <tr>
         <th>FID</th>
-        <td>{{latest.origins_with_good_fid}}%</td>
+        <td>{{latest.pct_good_fid}}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
               {% if entry.client == "mobile" %}
-                <li class="bar" style="--height: calc({{ entry.origins_with_good_fid }}% / {{ entry.origins_eligible_for_cwv }} * 100)">
-                  <span class="sr-only">{{ entry.origins_with_good_fid }}</span>
+                <li class="bar" style="--height: {{ entry.pct_good_fid }}%">
+                  <span class="sr-only">{{ entry.pct_good_fid }}</span>
                 </li>
               {% endif %}
             {% endfor %}
@@ -75,13 +75,13 @@
       </tr>
       <tr>
         <th>FCP</th>
-        <td>{{latest.origins_with_good_fcp}}%</td>
+        <td>{{ latest.pct_good_fcp }}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
               {% if entry.client == "mobile" %}
-                <li class="bar" style="--height: calc({{ entry.origins_with_good_fcp }}% / {{ entry.origins_eligible_for_cwv }} * 100)">
-                  <span class="sr-only">{{ entry.origins_with_good_fcp }}</span>
+                <li class="bar" style="--height: {{ entry.pct_good_fcp }}%">
+                  <span class="sr-only">{{ entry.pct_good_fcp }}</span>
                 </li>
               {% endif %}
             {% endfor %}
@@ -90,13 +90,13 @@
       </tr>
       <tr>
         <th>INP</th>
-        <td>{{latest.origins_with_good_inp}}%</td>
+        <td>{{latest.pct_good_inp}}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
               {% if entry.client == "mobile" %}
-                <li class="bar" style="--height: calc({{ entry.origins_with_good_inp }}% / {{ entry.origins_eligible_for_cwv }} * 100)">
-                  <span class="sr-only">{{ entry.origins_with_good_inp }}</span>
+                <li class="bar" style="--height: {{ entry.pct_good_inp }}%">
+                  <span class="sr-only">{{ entry.pct_good_inp }}</span>
                 </li>
               {% endif %}
             {% endfor %}
@@ -105,13 +105,13 @@
       </tr>
       <tr>
         <th>TTFB</th>
-        <td>{{latest.origins_with_good_ttfb}}%</td>
+        <td>{{ latest.pct_good_ttfb }}%</td>
         <td>
           <ul>
             {% for entry in tech_data %}
               {% if entry.client == "mobile" %}
-                <li class="bar" style="--height: calc({{ entry.origins_with_good_ttfb }}% / {{ entry.origins_eligible_for_cwv }} * 100)">
-                  <span class="sr-only">{{ entry.origins_with_good_ttfb }}</span>
+                <li class="bar" style="--height: {{ entry.pct_good_ttfb }}%">
+                  <span class="sr-only">{{ entry.pct_good_ttfb }}</span>
                 </li>
               {% endif %}
             {% endfor %}

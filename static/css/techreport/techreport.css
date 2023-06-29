@@ -289,9 +289,12 @@ h2 {
 }
 
 .table-ui td ul li {
-  background-color: var(--graph-color-primary);
   border: 1px solid var(--graph-color-primary-darker);
-  height: var(--height);
+  height: 100%;
+  background-image: linear-gradient(
+    transparent calc(100% - var(--height)),
+    var(--graph-color-primary) calc(100% - var(--height)) 100%
+  );
   border-radius: 1px 1px 0 0;
   flex: 1;
 }

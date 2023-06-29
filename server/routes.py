@@ -112,8 +112,6 @@ def techreport(page_id):
 
     active_tech_report["set_filters"] = filters
 
-    print(active_tech_report)
-
     return render_template(
         "techreport/%s.html" % page_id,
         active_page=page_id,

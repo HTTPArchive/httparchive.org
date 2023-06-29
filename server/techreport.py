@@ -62,6 +62,15 @@ def get_metrics(technology, filters):
             % (filters["rank"], filters["geo"], technology)
         )
         report_data = response.json()
+        for entry in report_data:
+            entry["pct_good_cwv"] = round(int(entry["origins_with_good_cwv"]) / int(entry["origins_eligible_for_cwv"]) * 100.0, 2)
+            entry["pct_good_fid"] = round(int(entry["origins_with_good_fid"]) / int(entry["origins_eligible_for_cwv"]) * 100.0, 2)
+            entry["pct_good_cls"] = round(int(entry["origins_with_good_cls"]) / int(entry["origins_eligible_for_cwv"]) * 100.0, 2)
+            entry["pct_good_lcp"] = round(int(entry["origins_with_good_lcp"]) / int(entry["origins_eligible_for_cwv"]) * 100.0, 2)
+            entry["pct_good_fcp"] = round(int(entry["origins_with_good_fcp"]) / int(entry["origins_eligible_for_cwv"]) * 100.0, 2)
+            entry["pct_good_ttfb"] = round(int(entry["origins_with_good_lcp"]) / int(entry["origins_eligible_for_cwv"]) * 100.0, 2)
+            entry["pct_good_inp"] = round(int(entry["origins_with_good_inp"]) / int(entry["origins_eligible_for_cwv"]) * 100.0, 2)
+
         return report_data
 
     except Exception as error:

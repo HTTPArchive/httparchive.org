@@ -2,13 +2,26 @@
 <div class="card timeseries-container">
   <h3 class="timeseries-title">{{ timeseries_title }}</h3>
   <p class="timeseries-description">{{ timeseries_description }}</p>
-  <p class="timeseries-time">Latest: {{ timeseries_dates[0].date }}</p>
-  <p>
-    Chart comes here:
-  </p>
-  <ul>
-    {% for entry in timeseries_dates %}
-      <li>{{ entry.date }}: {{entry[timeseries_metric]}} ({{ entry.client }})</li>
-    {% endfor %}
-  </ul>
+
+  <table class="table-ui">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Client</th>
+        <th>% Good scores</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in timeseries_dates %}
+        <tr>
+          <th>{{ entry.date }}</th>
+          <td>{{ entry.client }}</td>
+          <td>{{ entry[timeseries_metric] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="footnote">Last updated at {{ timeseries_dates[0].date }}.</p>
+
 </div>
