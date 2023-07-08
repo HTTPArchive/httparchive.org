@@ -1,0 +1,92 @@
+
+.table-ui {
+  width: 100%;
+  margin: 1rem 0;
+  border-collapse: collapse;
+}
+
+.table-ui tr {
+  border-bottom: 1px solid var(--color-card-border);
+  width: 100%;
+}
+
+.table-ui tr:last-child {
+  border-bottom: none;
+}
+
+.table-ui thead {
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--color-text);
+}
+
+.table-ui thead th {
+  padding: 1rem 0;
+}
+
+.table-ui tbody :is(td, th) {
+  padding: 1rem 0;
+}
+
+.table-ui tbody tr {
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.table-ui tbody th {
+  font-weight: normal;
+}
+
+.table-ui :is(td, th) {
+  text-align: left;
+}
+
+.table-ui :is(td, th) strong {
+  margin-right: 0.1rem;
+  font-weight: 600;
+}
+
+.table-ui tr a {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.table-ui tr .row-link:is(:hover, :focus) {
+  text-decoration-thickness: 3px;
+}
+
+.table-ui tr:has(.row-link:hover) {
+  background-color: var(--table-row-hover);
+}
+
+.table-ui tr:has(.row-link:focus) {
+  background-color: var(--table-row-hover);
+  border: 1.5px solid var(--color-teal-dark);
+}
+
+.table-ui tr:has(.row-link:focus) :is(th, td) {
+  border-bottom: 1.5px solid var(--color-teal-dark);
+  border-top: 1.5px solid var(--color-teal-dark);
+}
+
+.table-ui tr:has(.row-link:focus) .row-link:focus {
+  /* So the outline only gets removed in browsers that support :has */
+  outline-style: dotted;
+}
+
+.table-ui td ul {
+  height: 30px;
+  display: flex;
+  align-items: flex-end;
+  column-gap: 1px;
+}
+
+.table-ui td ul li {
+  border: 1px solid var(--graph-color-primary-darker);
+  height: 100%;
+  background-image: linear-gradient(
+    transparent calc(100% - var(--height)),
+    var(--graph-color-primary) calc(100% - var(--height)) 100%
+  );
+  border-radius: 1px 1px 0 0;
+  flex: 1;
+  list-style-type: none;
+}

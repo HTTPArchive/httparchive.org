@@ -1,28 +1,30 @@
 <template id="table-overview">
-  <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
-    <h3>Latest data</h3>
-    <table class="table-ui">
-      <caption class="sr-only" id="cwv-overview-caption">
-        Latest % of websites with good core web vitals.
-      </caption>
-      <thead>
-        <tr>
-          <th>Core Web Vital</th>
-          <th>% Good scores</th>
-          <th>Trend</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-  </div>
+  <link rel="stylesheet" href="/static/css/techreport/general.css">
+  <link rel="stylesheet" href="/static/components/table.css">
+
+  <table class="table-ui">
+    <caption class="sr-only" id="cwv-overview-caption">
+      Latest % of websites with good core web vitals.
+    </caption>
+    <thead>
+      <tr>
+        <th>Core Web Vital</th>
+        <th>% Good scores</th>
+        <th>Trend</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </template>
 
 <template id="table-overview-row">
   <tr>
     <th></th>
     <td></td>
-    <td></td>
+    <td>
+      <ul class="table-bar-preview"></ul>
+    </td>
   </tr>
 </template>
 

@@ -33,6 +33,9 @@ class TableOverview extends HTMLElement {
 
   setData() {
     const focusedData = this.allData.filter(entry => entry.client === this.focus);
+    const focusedDataSorted = [...focusedData].sort((a, b) => {
+      return new Date(a.date) - new Date(b.date);
+    });
     const latestFocus = getLatestEntry(focusedData);
 
     const tableBody = this.shadowRoot.querySelector('table.table-ui tbody');
@@ -41,26 +44,43 @@ class TableOverview extends HTMLElement {
       {
         origins_with_good: "origins_with_good_cwv",
         origins_eligible: "origins_eligible_for_cwv",
-        title: "Overall"
+        title: "Overall",
+      },
+      {
+        origins_with_good: "origins_with_good_lcp",
+        origins_eligible: "origins_with_any_lcp",
+        title: "Largest Contentful Paint",
       },
       {
         origins_with_good: "origins_with_good_fid",
         origins_eligible: "origins_with_any_fid",
-        title: "FID"
-      }
+        title: "First Input Delay",
+      },
+      {
+        origins_with_good: "origins_with_good_cls",
+        origins_eligible: "origins_with_any_cls",
+        title: "Cumulative Layout Shift",
+      },
+      {
+        origins_with_good: "origins_with_good_inp",
+        origins_eligible: "origins_with_any_inp",
+        title: "Interaction to Next Paint",
+      },
     ];
 
     coreWebVitals.forEach((cwv) => {
       const rowTemplate = document.getElementById('table-overview-row').content.cloneNode(true);
-
-      console.log(latestFocus, latestFocus[cwv.origins_with_good]);
-
+      const latestPercentageGood = parseInt(latestFocus[cwv.origins_with_good] / latestFocus[cwv.origins_eligible] * 10000) / 100;
       rowTemplate.querySelector('tr th').textContent = cwv.title;
-      rowTemplate.querySelectorAll('tr td')[0].textContent = `${parseInt(latestFocus[cwv.origins_with_good] / latestFocus[cwv.origins_eligible] * 1000) / 100}%`;
+      rowTemplate.querySelectorAll('tr td')[0].textContent = `${latestPercentageGood}%`;
 
-      focusedData.reverse().forEach((entry) => {
+      focusedDataSorted.forEach((entry) => {
         const barTemplate = document.getElementById('table-overview-bar').content.cloneNode(true);
-        rowTemplate.querySelectorAll('tr td')[1].append(barTemplate);
+        const percentageGood = parseInt(entry[cwv.origins_with_good] / latestFocus[cwv.origins_eligible] * 10000) / 100;
+        const date = entry.date;
+        barTemplate.querySelector('li.bar').style.setProperty('--height', `${percentageGood}%`);
+        barTemplate.querySelector('li.bar .sr-only').textContent = `${date}: ${percentageGood}%`;
+        rowTemplate.querySelector('tr td ul.table-bar-preview').append(barTemplate);
       })
       tableBody.append(rowTemplate);
     });
