@@ -3,35 +3,4 @@
 {% block section %}
   {{ super() }}
 
-  {% set filtered_technology = tech_report_page.tech[0] or tech_report_page.tech_all[0] %}
-
-  {% if filtered_technology and tech_report_page.data[filtered_technology] %}
-    {% include "techreport/components/heading.html" %}
-
-    <div class="block-m summary">
-      {% set explore = tech_report_page.sections[0] %}
-      <h2>Summary</h2>
-
-      {% set table = explore.labels.summary %}
-      {% set technologies = tech_report_page.tech or tech_report_page.tech_all %}
-      {% set data = tech_report_page.data %}
-      {% include "techreport/components/table_overview.html" %}
-    </div>
-
-    <div class="page-data">
-      <div class="block-m metric-block">
-        <h2>{{ tech_report_labels.cwv.title }}</h2>
-        <div class="block-description">
-          {{ tech_report_labels.cwv.section_description }}
-        </div>
-      </div>
-
-      <div class="block-m metric-block">
-        <h2>{{ tech_report_labels.adoption.title }}</h2>
-        <div class="block-description">
-          {{ tech_report_labels.adoption.section_description }}
-        </div>
-      </div>
-    </div>
-  {% endif %}
 {% endblock %}

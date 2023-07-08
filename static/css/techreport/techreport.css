@@ -1,64 +1,3 @@
-/* General */
-main {
-  color: var(--color-text);
-}
-
-h1 {
-  font-size: var(--font-size-xlarge);
-}
-
-h2 {
-  font-size: var(--font-size-large);
-}
-
-:is(a, button, select):focus {
-  outline: 1.5px solid var(--color-teal-dark);
-  outline-offset: 1.5px;
-}
-
-.sr-only {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-}
-
-.card {
-  padding: 1.5rem;
-  background: var(--color-card-background);
-  border-radius: var(--card-radius);
-  border: 1px solid var(--color-card-border);
-  box-shadow: var(--card-shadow);
-}
-
-.card > :is(h2, h3, h4) {
-  margin-top: 0;
-}
-
-.block-s {
-  width: 50rem;
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.block-m {
-  width: 70rem;
-  max-width: 95%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.block-l {
-  width: 85rem;
-  max-width: 98%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* Building blocks */
 .cta-link {
   background-color: var(--color-teal-dark);
@@ -178,38 +117,6 @@ h2 {
   padding: 0.25rem 0.5rem;
 }
 
-/* Page heading */
-.intro {
-  border: none;
-  margin-top: 0;
-  background-color: transparent;
-  padding: 4rem 0;
-  display: grid;
-  grid-template-columns: 1fr 20rem;
-  column-gap: 2rem;
-  row-gap: 2rem;
-}
-
-.intro h1 {
-  font-size: var(--font-size-xlarge);
-  margin-bottom: 2.5rem;
-  margin-top: 0;
-}
-
-.intro h1 span {
-  font-size: 1.15rem;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.intro p {
-  font-size: 1.15rem;
-  max-width: 45rem;
-}
-
-.intro h1 + p {
-  padding: 0;
-}
 
 /* Table */
 .table-ui-wrapper {
@@ -313,28 +220,6 @@ h2 {
   row-gap: 1rem;
 }
 
-.summary-linked-label {
-  font-weight: 600;
-}
-
-.summary-linked-label a {
-  color: var(--color-link);
-}
-
-.summary-linked-label a:is(:hover, :focus) {
-  color: var(--color-link);
-  text-decoration: none;
-}
-
-.summary-linked-value {
-  font-size: var(--font-size-medium);
-  margin-top: -0.25rem;
-}
-
-.summary-linked-description {
-  margin-top: -0.5rem;
-  margin-bottom: 0;
-}
 
 /* Timeseries cards */
 .timeseries-container {
@@ -354,19 +239,6 @@ h2 {
   font-weight: 600;
   font-size: 1rem;
   margin: 0.75rem 0;
-}
-
-/* Categories */
-.categories {
-  margin: 1rem 0;
-}
-
-.categories .cell {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  border: 1px solid var(--color-text);
-  font-size: 0.875rem;
 }
 
 /* Re-arrange when viewport becomes too narrow in height */

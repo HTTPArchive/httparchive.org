@@ -95,3 +95,8 @@ const getChangeSentiment = (change, options) => {
   }
   return 'neutral';
 };
+
+export const getLatestEntry = (data) => {
+  const sorted = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return sorted[0];
+};

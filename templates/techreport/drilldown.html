@@ -3,83 +3,45 @@
 {% block section %}
   {{ super() }}
 
-  {% set filtered_technology = tech_report_page.tech[0] or tech_report_page.tech_all[0] %}
-  {% set tech_report_section = tech_report_page.sections[0] %}
+  <drilldown-header
+    data-scope="general-info"
+    app="Drilldown"
+  >
+  </drilldown-header>
 
-  {% if filtered_technology and tech_report_page.data[filtered_technology] %}
-    {% include "techreport/components/heading.html" %}
+  <div class="block-m summary">
+    <h2>Summary</h2>
 
-    <div class="block-m summary">
-      <h2>Summary</h2>
+    <div class="summary-grid">
+      <summary-linked
+        title="Adoption"
+        link="#adoption"
+        key="origins"
+        data-scope="all-latest"
+      >
+      </summary-linked>
 
-      <div class="summary-grid">
-        {% set summary = {
-          "url": "#adoption",
-          "label": tech_report_labels.adoption.title,
-          "value": tech_report_page.data[filtered_technology][0].origins,
-          "description": tech_report_labels.adoption.summary_description
-        } %}
-        {% include "techreport/components/summary_linked.html" %}
-
-        {% set summary = {
-          "url": "#cwv",
-          "label": tech_report_labels.cwv.good.summary_title,
-          "value": tech_report_page.data[filtered_technology][0].origins_with_good_cwv,
-          "description":  tech_report_labels.cwv.good.summary_description
-        } %}
-        {% include "techreport/components/summary_linked.html" %}
-      </div>
+      <summary-linked
+        title="Good CWVs"
+        link="#good-cwvs"
+        key="origins_with_good_cwv"
+        data-scope="all-latest"
+      >
+      </summary-linked>
     </div>
+  </div>
 
-    <div class="page-data">
-      <div class="block-m metric-block">
-        <h2>{{ tech_report_labels.cwv.title }}</h2>
-        <div class="block-description">
-          {{ tech_report_labels.cwv.section_description }}
-        </div>
-
-        {% set timeseries_title = tech_report_labels.cwv.good.timeseries_title %}
-        {% set timeseries_description = tech_report_labels.cwv.good.section_description %}
-        {% set timeseries_metrics = [
-          {
-            "key": "pct_good_cwv",
-            "title": "% Good CWVs",
-            "suffic": "%"
-          }, {
-            "key": "origins_with_good_cwv",
-            "title": "# Good CWVs"
-          }, {
-            "key": "origins_eligible_for_cwv",
-            "title": "Eligible"
-          }
-        ] %}
-        {% set client = "mobile" %}
-
-        {% include "techreport/components/cwv_overview.html" %}
-        {% include "techreport/components/timeseries_container.html" %}
-
-      </div>
-
-      <div class="block-m metric-block">
-        <h2>{{ tech_report_labels.adoption.title }}</h2>
-        <div class="block-description">
-          {{ tech_report_labels.adoption.section_description }}
-        </div>
-
-        {% set timeseries_title = tech_report_labels.adoption.timeseries_title %}
-        {% set timeseries_description = tech_report_labels.adoption.timeseries_description %}
-        {% set timeseries_metrics = [
-          {
-            "key": "origins",
-            "title": "Origins"
-          }
-        ] %}
-        {% set client = "mobile" %}
-
-        {% include "techreport/components/timeseries_container.html" %}
-      </div>
+  <div class="block-m">
+    <h2>Core Web Vitals</h2>
+    <p>Description</p>
+    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <h3>Latest data</h3>
+      <table-overview
+        data-scope="all-data"
+        data-focus="mobile"
+      >
+      </table-overview>
     </div>
-  {% else %}
-    <p>No data found</p>
-  {% endif %}
+  </div>
+
 {% endblock %}

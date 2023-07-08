@@ -6,29 +6,5 @@
 {% endblock %}
 
 {% block section %}
-  {% include "techreport/components/heading.html" %}
 
-  <div class="choices block-m">
-    <div class="card">
-      <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
-      <p>Get detailed information about <strong>one</strong> technology. </p>
-    </div>
-    <div class="card">
-      <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
-      <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
-    </div>
-  </div>
-
-  <div class="report-summary-wrapper">
-    <div class="report-summary-tables block-m">
-      {% set explore = tech_report_page.sections[0] %}
-      <h2>{{ explore.title }}</h2>
-
-      {% set table = explore.blocks.popular_tech %}
-      {% set data = tech_report_page.data %}
-      {% set technologies = table["technologies"] %}
-      {% include "techreport/components/table_overview.html" %}
-
-    </div>
-  </div>
 {% endblock %}

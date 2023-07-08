@@ -5,8 +5,9 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/variables.css') }}" />
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/general.css') }}" />
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/techreport.css') }}" />
-{% endblock %}
+  {% endblock %}
 
 {% block report_navigation %}
   <nav class="report-navigation">
@@ -46,7 +47,27 @@
 {% endblock %}
 
 {% block main %}
-
   {% block section %}{% endblock %}
 
+  <!-- Import templates -->
+  {% include "techreport/templates/drilldown_header.html" %}
+  {% include "techreport/templates/summary_linked.html" %}
+  {% include "techreport/templates/table_overview.html" %}
+
+{% endblock %}
+
+
+{% block scripts %}
+  {{ super() }}
+  <!-- Import web components code -->
+  <script src="{{ get_versioned_filename('/static/js/drilldownHeader.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/summaryLinked.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/tableOverview.js') }}" nonce="{{ csp_nonce() }}"></script>
+
+  <!-- Import general JS -->
+  <script src="{{ get_versioned_filename('/static/js/techreport.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script nonce="{{ csp_nonce() }}">
+    const techReportJson = {{ tech_report_page|tojson }};
+    const techReport = new TechReport(techReportJson);
+  </script>
 {% endblock %}
