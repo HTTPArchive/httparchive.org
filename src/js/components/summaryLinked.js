@@ -21,7 +21,6 @@ class SummaryLinked extends HTMLElement {
   attributeChangedCallback(property, oldValue, newValue) {
     if (oldValue === newValue) return;
     this[ property ] = newValue;
-    console.log('attributeChangedCallback of the summary', property, 'from', oldValue, 'to', newValue);
     this.renderComponent();
   }
 

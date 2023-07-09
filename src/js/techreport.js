@@ -1,4 +1,5 @@
 const { DrilldownHeader } = require("./components/drilldownHeader");
+const { Filters } = require("./components/filters");
 
 class TechReport {
   constructor(report) {
@@ -17,7 +18,20 @@ class TechReport {
           data.push(result);
           this.updateComponents(data);
         });
-    });;
+    });
+
+    fetch('https://cdn.httparchive.org/reports/cwvtech/technologies.json')
+      .then(result => result.json())
+      .then(result => Filters.updateTechnologies(result, this.filters));
+
+    fetch('https://cdn.httparchive.org/reports/cwvtech/geos.json')
+      .then(result => result.json())
+      .then(result => Filters.updateGeo(result, this.filters));
+
+    fetch('https://cdn.httparchive.org/reports/cwvtech/ranks.json')
+      .then(result => result.json())
+      .then(result => Filters.updateRank(result, this.filters));
+
   }
 
   updateComponents(data) {
