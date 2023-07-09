@@ -11,7 +11,6 @@ module.exports = {
     'histogram': './src/js/histogram.js',
     'timeseries': './src/js/timeseries.js',
     'send-web-vitals': './src/js/send-web-vitals.js',
-    'drilldownHeader': './src/js/components/drilldownHeader.js',
     'summaryLinked': './src/js/components/summaryLinked.js',
     'tableOverview': './src/js/components/tableOverview.js',
   },

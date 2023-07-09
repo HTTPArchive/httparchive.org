@@ -1,3 +1,88 @@
+/* Variables */
+:root {
+  /* Main colors to use */
+  --color-teal-faded: #c0ced0;
+  --color-teal-medium: #6a797c;
+  --color-teal-dark: #3a5c63;
+  --color-teal-darker: #1c4750;
+  --color-blue-dark: #3a7098;
+  --color-blue-100: #eff7ff;
+
+  /* Colors based on function */
+  --color-link: var(--color-blue-dark);
+  --color-text: #444;
+  --color-text-inverted: #fff;
+  --color-card-background: #fff;
+  --color-card-border: #cdd4d6;
+  --color-page-background: #f4f4f4;
+
+  /* Font sizes */
+  --font-size-medium: 1.75rem;
+  --font-size-large: 2.15rem;
+  --font-size-xlarge: 2.35rem;
+
+  /* Components */
+  --card-shadow: 0 2px 7px 0px rgba(143, 149, 150, 0.05);
+  --card-radius: 0.25rem;
+  --table-row-hover: var(--color-blue-100);
+
+  /* Graph colors */
+  --graph-color-primary: var(--color-teal-dark);
+  --graph-color-primary-darker: var(--color-teal-darker);
+}
+
+/* Page heading */
+.intro {
+  border: none;
+  margin-top: 0;
+  background-color: transparent;
+  padding: 4rem 0;
+  display: grid;
+  grid-template-columns: 1fr 20rem;
+  column-gap: 2rem;
+  row-gap: 2rem;
+}
+
+.intro h1 {
+  font-size: var(--font-size-xlarge);
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+}
+
+.intro h1 span.subtitle {
+  font-size: 1.15rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.intro p {
+  font-size: 1.15rem;
+  max-width: 45rem;
+}
+
+.intro h1 + p {
+  padding: 0;
+}
+
+.intro ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* Categories */
+.categories {
+  margin: 1rem 0;
+}
+
+.categories .cell {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-text);
+  font-size: 0.875rem;
+}
+
+
 /* Building blocks */
 .cta-link {
   background-color: var(--color-teal-dark);
@@ -157,6 +242,49 @@
   font-size: 1rem;
   margin: 0.75rem 0;
 }
+
+/* -------------------- */
+/* ----- Sections ----- */
+/* -------------------- */
+
+/* Summary */
+.summary {
+  position: relative;
+  z-index: 1;
+}
+
+.summary h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Main data */
+.page-data {
+  margin-top: -4rem;
+  padding: 8rem 0;
+  border-top: 1px solid var(--color-teal-medium);
+  background-image:
+    linear-gradient(
+      var(--color-teal-faded) 60%,
+      var(--color-page-background)
+    );
+  background-size: 100% 25rem;
+  background-repeat: no-repeat;
+}
+
+.page-data h2 {
+  margin-bottom: 1rem;
+}
+
+.metric-block + .metric-block {
+  margin-top: 6rem;
+}
+
+.block-description {
+  max-width: 50rem;
+}
+
 
 /* Re-arrange when viewport becomes too narrow in height */
 /* ± 200% zoom on a 13" screen */

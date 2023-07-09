@@ -1,6 +1,7 @@
+const { DrilldownHeader } = require("./components/drilldownHeader");
+
 class TechReport {
   constructor(report) {
-    console.log('TechReport', report);
     this.filters = report.set_filters;
     this.allData = [];
     this.getAllData();
@@ -20,17 +21,7 @@ class TechReport {
   }
 
   updateComponents(data) {
-    const generalComponents = document.querySelectorAll('[data-scope="general-info"]');
-    generalComponents.forEach((component) => {
-      const app = this.filters.app.join(',');
-
-      component.categories = data[0][0]?.category?.split(",");
-      component.app = app;
-      component.filters = this.filters;
-      component.filters.appString = this.filters.app.join(',');
-
-      component.setAttribute('loaded', true);
-    });
+    DrilldownHeader.update(data, this.filters)
 
     const latestComponents = document.querySelectorAll('[data-scope="all-latest"]');
     latestComponents.forEach((component) => {

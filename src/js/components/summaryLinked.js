@@ -3,6 +3,7 @@ class SummaryLinked extends HTMLElement {
     super();
 
     this.latest = {};
+    this.placeholder = '000';
 
     this.attachShadow({ mode: 'open' });
     const template = document.getElementById('summary-linked').content.cloneNode(true);
@@ -35,12 +36,12 @@ class SummaryLinked extends HTMLElement {
   setData() {
     this.shadowRoot.querySelectorAll('.summary-linked-value')
       .forEach( (node) => {
-        node.textContent = this.latest[this.key];
+        node.textContent = this.latest[this.key] || this.placeholder;
       } );
 
     this.shadowRoot.querySelectorAll('.summary-linked-description')
       .forEach( (node) => {
-        node.textContent = `For ${this.latest.client}.`;
+        node.textContent = this.latest.client ? `For ${this.latest.client}.` : this.placeholder;
       } );
   }
 
