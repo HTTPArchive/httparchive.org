@@ -12,6 +12,7 @@ module.exports = {
     'timeseries': './src/js/timeseries.js',
     'send-web-vitals': './src/js/send-web-vitals.js',
     'summaryLinked': './src/js/components/summaryLinked.js',
+    'tableGeneral': './src/js/components/tableGeneral.js',
     'tableOverview': './src/js/components/tableOverview.js',
   },
   output: {

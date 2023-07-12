@@ -101,6 +101,7 @@ def techreport(page_id):
         "techreport/%s.html" % page_id,
         active_page=page_id,
         tech_report_labels=tech_report.get("labels"),
+        tech_report_config=tech_report.get("config"),
         tech_report_page=active_tech_report,
         reports=all_reports,
     )

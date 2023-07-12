@@ -100,3 +100,7 @@ export const getLatestEntry = (data) => {
   const sorted = data.sort((a, b) => new Date(b.date) - new Date(a.date));
   return sorted[0];
 };
+
+export const getPercentage = (x, y) => {
+  return parseInt(parseInt(x) / parseInt(y) * 10000) / 100;
+}

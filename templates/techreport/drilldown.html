@@ -50,12 +50,56 @@
     <p>Description</p>
     <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
       <h3>Latest data</h3>
+      <p>Explanation</p>
       <table-overview
         data-scope="all-data"
         data-focus="mobile"
       >
       </table-overview>
     </div>
+
+    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <h3>All data</h3>
+      <p>Explanation</p>
+      <table-general
+        data-scope="all-data"
+        client="mobile"
+        subcategory="cwv"
+        columns="date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
+      >
+      </table-general>
+    </div>
   </div>
 
+  <div class="block-m">
+    <h2>Lighthouse</h2>
+    <p>Description</p>
+
+    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <h3>All data</h3>
+      <p>Explanation</p>
+      <table-general
+        data-scope="all-data"
+        client="mobile"
+        columns="date,client,median_lighthouse_score_accessibility,median_lighthouse_score_performance,median_lighthouse_score_pwa,median_lighthouse_score_seo, median_lighthouse_score_best_practices"
+      >
+      </table-general>
+    </div>
+  </div>
+
+  <div class="block-m">
+    <h2>Page weight</h2>
+    <p>Description</p>
+
+    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <h3>All data</h3>
+      <p>Explanation</p>
+      <table-general
+        data-scope="all-data"
+        client="mobile"
+        columns="date,client,median_bytes_image,median_bytes_js,median_bytes_total"
+      >
+      </table-general>
+    </div>
+  </div>
 {% endblock %}

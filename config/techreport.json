@@ -2,32 +2,97 @@
   "id": "techreport",
   "name": "Technology Report",
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
-  "metrics": [],
+  "config": {
+    "cwv_subcategories": [
+      "fid",
+      "cls",
+      "lcp",
+      "fcp",
+      "inp",
+      "ttfb"
+    ],
+    "lighthouse_subcategories": [
+      "accessibility",
+      "best_practices",
+      "performance",
+      "pwa",
+      "seo"
+    ]
+  },
   "labels": {
-    "adoption": {
-      "title": "Adoption",
-      "section_description": "Here is a description for the adoption section",
-      "summary_description": "websites tested using this technology",
-      "timeseries_title": "Origins in our dataset over time",
-      "timeseries_description": "Origin description"
-    },
+    "values": {
+      "date": "Date",
+      "client": "Client",
+      "origins_eligible_for_cwv": "Eligible",
+      "origins_eligible_for_fid": "Eligible",
+      "origins_eligible_for_cls": "Eligible",
+      "origins_eligible_for_lcp": "Eligible",
+      "origins_eligible_for_fcp": "Eligible",
+      "origins_eligible_for_inp": "Eligible",
+      "origins_eligible_for_ttfb": "Eligible",
+
+      "origins_with_good_cwv": "Having good CWVs",
+      "origins_with_good_fid": "Having good FID",
+      "origins_with_good_cls": "Having good CLS",
+      "origins_with_good_lcp": "Having good LCP",
+      "origins_with_good_fcp": "Having good FCP",
+      "origins_with_good_inp": "Having good INP",
+      "origins_with_good_ttfb": "Having good TTFB",
+
+      "pct_good_cwv": "% Good CWVs",
+      "pct_good_fid": "% Good FID",
+      "pct_good_cls": "% Good CLS",
+      "pct_good_lcp": "% Good LCP",
+      "pct_good_fcp": "% Good FCP",
+      "pct_good_inp": "% Good INP",
+      "pct_good_ttfb": "% Good TTFB",
+
+      "median_lighthouse_score_accessibility": "Median accessibility",
+      "median_lighthouse_score_performance": "Median performance",
+      "median_lighthouse_score_pwa": "Median PWA",
+      "median_lighthouse_score_seo": "Median SEO",
+      "median_lighthouse_score_best_practices": "Median best practices",
+
+      "median_bytes_image":"Median bytes image",
+      "median_bytes_js":"Median bytes js",
+      "median_bytes_total":"Median bytes total"
+    }
+  },
+  "metrics": {
     "cwv": {
       "title": "Core Web Vitals",
-      "section_description": "Placeholder text, A couple of words about what will be visualized in this section. Which values are there, what do they mean, etc. And we can also link to a relevant help page if needed. Probably doesn’t need much text here, unless if we want to summarise the data. Learn more",
-      "good": {
-        "summary_title": "Good CWVs",
-        "summary_description": "of tested origins had overall good Core Web Vitals.",
-        "timeseries_title": "Good Core Web Vitals over time",
-        "section_description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a 'good' experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics."
-      }
+      "shortened": "CWVs",
+      "description": ""
     },
-    "similar": {
-      "id": "similar_tech",
-      "title": "Similar technologies",
-      "description": "Placeholder: To write",
-      "caption": "Placeholder: popular technologies table caption todo",
-      "ctaLabel": "Compare similar technologies",
-      "ctaUrl": "/reports/techreport/comparison?app=wordpress,squarespace,drupal"
+    "lcp": {
+      "title": "Largest Contentful Paint",
+      "shortened": "LCP",
+      "description": ""
+    },
+    "fid": {
+      "title": "First Input Delay",
+      "shortened": "FID",
+      "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+    },
+    "cls": {
+      "title": "Cumulative Layout Shift",
+      "shortened": "CLS",
+      "description": ""
+    },
+    "fcp": {
+      "title": "First Contentful Paint",
+      "shortened": "FCP",
+      "description": ""
+    },
+    "inp": {
+      "title": "Interaction to Next Paint",
+      "shortened": "INP",
+      "description": ""
+    },
+    "ttfb": {
+      "title": "Time to First Byte",
+      "shortened": "TTFB",
+      "description": ""
     }
   },
   "pages": {
@@ -63,16 +128,35 @@
       "title": "Drilldown",
       "subtitle": "Technology Report",
       "description": "Drilldown placeholder",
-      "data": {},
-      "filters": {
-        "technologies": ["ALL"]
-      },
-      "sections": [
-        {
-          "id": "all",
-          "title": "All"
+      "config": {
+        "default": {
+          "app": ["ALL"]
+        },
+        "good_cwv_timeseries": {
+          "columns": [
+            {
+              "key": "date",
+              "label": "Date"
+            },
+            {
+              "key": "client",
+              "label": "Client"
+            },
+            {
+              "key": "origins_eligible_for_*subcategory*",
+              "label": "Eligible"
+            },
+            {
+              "key": "origins_with_good_*subcategory*",
+              "label": "Have good values"
+            },
+            {
+              "key": "pct_good_*subcategory*",
+              "label": "% With good values"
+            }
+          ]
         }
-      ]
+      }
     },
     "comparison": {
       "id": "comparison",

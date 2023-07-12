@@ -70,13 +70,13 @@ class TableOverview extends HTMLElement {
 
     coreWebVitals.forEach((cwv) => {
       const rowTemplate = document.getElementById('table-overview-row').content.cloneNode(true);
-      const latestPercentageGood = parseInt(latestFocus[cwv.origins_with_good] / latestFocus[cwv.origins_eligible] * 10000) / 100;
+      const latestPercentageGood = parseInt(latestFocus[cwv?.origins_with_good] / latestFocus[cwv?.origins_eligible] * 10000) / 100;
       rowTemplate.querySelector('tr th').textContent = cwv.title;
       rowTemplate.querySelectorAll('tr td')[0].textContent = `${latestPercentageGood}%`;
 
       focusedDataSorted.forEach((entry) => {
         const barTemplate = document.getElementById('table-overview-bar').content.cloneNode(true);
-        const percentageGood = parseInt(entry[cwv.origins_with_good] / latestFocus[cwv.origins_eligible] * 10000) / 100;
+        const percentageGood = parseInt(entry[cwv?.origins_with_good] / latestFocus[cwv?.origins_eligible] * 10000) / 100;
         const date = entry.date;
         barTemplate.querySelector('li.bar').style.setProperty('--height', `${percentageGood}%`);
         barTemplate.querySelector('li.bar .sr-only').textContent = `${date}: ${percentageGood}%`;
