@@ -48,6 +48,10 @@
 {% endblock %}
 
 {% block main %}
+  <div class="info-panel">
+    <p class="label">Beta</p>
+    <p>Changes are still being made to this page.</p>
+  </div>
   {% block section %}{% endblock %}
 
   <!-- Import templates -->
@@ -55,6 +59,8 @@
   {% include "techreport/templates/summary_linked.html" %}
   {% include "techreport/templates/table_general.html" %}
   {% include "techreport/templates/table_overview.html" %}
+  {% include "techreport/templates/table_overview_multitech.html" %}
+
 {% endblock %}
 
 
@@ -63,6 +69,7 @@
   <!-- Import web components code -->
   <script src="{{ get_versioned_filename('/static/js/summaryLinked.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableOverview.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/tableOverviewMulti.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableGeneral.js') }}" nonce="{{ csp_nonce() }}"></script>
 
   <!-- Import general JS -->
@@ -72,6 +79,6 @@
     const config = {{ tech_report_config|tojson }};
     const labels = {{ tech_report_labels|tojson }};
 
-    const techReport = new TechReport(reportPage, config, labels);
+    const techReport = new TechReport('{{ active_page }}', reportPage, config, labels);
   </script>
 {% endblock %}

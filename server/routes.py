@@ -81,6 +81,8 @@ def techreport(page_id):
     # Combine technologies from the URL with the pre-defined ones from the config
     # Because sometimes we want 'ALL' in addition to chosen tech
     requested_technologies = "ALL"
+    default_technologies = active_tech_report.get("config").get("default").get("app")
+
     if request.args.get("tech"):
         requested_technologies = request.args.get("tech").split(",")
     if isinstance(requested_technologies, str):
@@ -93,9 +95,12 @@ def techreport(page_id):
         "geo": requested_geo,
         "rank": requested_rank,
         "app": requested_technologies,
+        "app_defaults": default_technologies,
     }
 
-    active_tech_report["set_filters"] = filters
+    active_tech_report["filters"] = filters
+
+    print('active_tech_report', active_tech_report)
 
     return render_template(
         "techreport/%s.html" % page_id,

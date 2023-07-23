@@ -105,23 +105,22 @@
       "filters": {
         "technologies": ["WordPress", "Squarespace", "Drupal"]
       },
-      "sections": [
-        {
-          "id": "explore",
-          "title": "Explore our data",
-          "blocks": {
-            "popular_tech": {
-              "id": "popular_tech",
-              "title": "Popular technologies",
-              "description": "To write",
-              "caption": "popular technologies table caption todo",
-              "technologies": ["WordPress", "Squarespace", "Drupal"],
-              "ctaLabel": "Compare technologies",
-              "ctaUrl": "/reports/techreport/comparison?app=WordPress,Squarespace,Drupal"
-            }
-          }
+      "config": {
+        "default": {
+          "app": ["WordPress", "Squarespace", "Drupal"]
+        },
+        "popular_tech": {
+          "id": "popular_tech",
+          "title": "Popular technologies",
+          "description": "To write",
+          "caption": "popular technologies table caption todo",
+          "filters": {
+            "app": ["WordPress", "Squarespace", "Drupal"]
+          },
+          "ctaLabel": "Compare technologies",
+          "ctaUrl": "/reports/techreport/comparison?app=WordPress,Squarespace,Drupal"
         }
-      ]
+      }
     },
     "drilldown": {
       "id": "drilldown",
@@ -162,25 +161,12 @@
       "id": "comparison",
       "title": "Comparison",
       "subtitle": "Technology Report",
-      "data": {},
-      "description": "Comparison placeholder",
-      "filters": {
-        "technologies": ["ALL"]
-      },
-      "sections": [
-        {
-          "id": "all",
-          "title": "All",
-          "labels": {
-            "summary": {
-              "id": "comparing_summary",
-              "title": "Comparing technologies",
-              "description": "Placeholder: Comparing the following techs",
-              "caption": "Placeholder: comparing technologies table caption todo"
-            }
-          }
+      "config": {
+        "default": {
+          "app": ["ALL", "WordPress", "Drupal"]
         }
-      ]
+      },
+      "description": "Comparison placeholder"
     }
   },
   "graphic": {

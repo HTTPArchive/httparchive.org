@@ -6,7 +6,6 @@ class TableOverview extends HTMLElement {
 
     this.latest = {};
     this.allData = [];
-    this.focus = 'mobile';
 
     this.attachShadow({ mode: 'open' });
     const template = document.getElementById('table-overview').content.cloneNode(true);
@@ -18,7 +17,7 @@ class TableOverview extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['loaded', 'focus'];
+    return ['loaded', 'client'];
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
@@ -32,13 +31,15 @@ class TableOverview extends HTMLElement {
   }
 
   setData() {
-    const focusedData = this.allData.filter(entry => entry.client === this.focus);
+    const focusedData = this.allData.filter(entry => entry.client === this.client);
     const focusedDataSorted = [...focusedData].sort((a, b) => {
       return new Date(a.date) - new Date(b.date);
     });
+
     const latestFocus = getLatestEntry(focusedData);
 
     const tableBody = this.shadowRoot.querySelector('table.table-ui tbody');
+    tableBody.innerHTML = '';
 
     const coreWebVitals = [
       {
@@ -69,20 +70,22 @@ class TableOverview extends HTMLElement {
     ];
 
     coreWebVitals.forEach((cwv) => {
-      const rowTemplate = document.getElementById('table-overview-row').content.cloneNode(true);
-      const latestPercentageGood = parseInt(latestFocus[cwv?.origins_with_good] / latestFocus[cwv?.origins_eligible] * 10000) / 100;
-      rowTemplate.querySelector('tr th').textContent = cwv.title;
-      rowTemplate.querySelectorAll('tr td')[0].textContent = `${latestPercentageGood}%`;
+      if(cwv && latestFocus?.[cwv?.origins_with_good] && latestFocus[cwv?.origins_eligible]) {
+        const rowTemplate = document.getElementById('table-overview-row').content.cloneNode(true);
+        const latestPercentageGood = parseInt(latestFocus[cwv?.origins_with_good] / latestFocus[cwv?.origins_eligible] * 10000) / 100;
+        rowTemplate.querySelector('tr th').textContent = cwv.title;
+        rowTemplate.querySelectorAll('tr td')[0].textContent = `${latestPercentageGood}%`;
 
-      focusedDataSorted.forEach((entry) => {
-        const barTemplate = document.getElementById('table-overview-bar').content.cloneNode(true);
-        const percentageGood = parseInt(entry[cwv?.origins_with_good] / latestFocus[cwv?.origins_eligible] * 10000) / 100;
-        const date = entry.date;
-        barTemplate.querySelector('li.bar').style.setProperty('--height', `${percentageGood}%`);
-        barTemplate.querySelector('li.bar .sr-only').textContent = `${date}: ${percentageGood}%`;
-        rowTemplate.querySelector('tr td ul.table-bar-preview').append(barTemplate);
-      })
-      tableBody.append(rowTemplate);
+        focusedDataSorted.forEach((entry) => {
+          const barTemplate = document.getElementById('table-overview-bar').content.cloneNode(true);
+          const percentageGood = parseInt(entry[cwv?.origins_with_good] / entry[cwv?.origins_eligible] * 10000) / 100;
+          const date = entry.date;
+          barTemplate.querySelector('li.bar').style.setProperty('--height', `${percentageGood}%`);
+          barTemplate.querySelector('li.bar .sr-only').textContent = `${date}: ${percentageGood}%`;
+          rowTemplate.querySelector('tr td ul.table-bar-preview').append(barTemplate);
+        })
+        tableBody.append(rowTemplate);
+      }
     });
   }
 

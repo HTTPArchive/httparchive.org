@@ -6,5 +6,32 @@
 {% endblock %}
 
 {% block section %}
+  <div class="choices block-m">
+    <div class="card">
+      <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
+      <p>Get detailed information about <strong>one</strong> technology. </p>
+    </div>
+    <div class="card">
+      <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
+      <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+    </div>
+  </div>
 
+  <div class="block-m">
+    <h2>Explore</h2>
+    <p>Placeholder</p>
+
+    <div class="card table-ui-wrapper">
+      <h3>Popular CMSes</h3>
+      <p>Description</p>
+
+      <table-overview-multitech
+        data-scope="all-data"
+        client="mobile"
+        technologies="{{ ','.join(tech_report_page.config.popular_tech.filters.app) }}"
+      >
+      </table-overview-multitech>
+
+    </div>
+  </div>
 {% endblock %}

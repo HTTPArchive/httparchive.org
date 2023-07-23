@@ -1,9 +1,13 @@
+import { getLatestEntry } from "../utils";
+
 class SummaryLinked extends HTMLElement {
   constructor() {
     super();
 
     this.latest = {};
+    this.allData = [];
     this.placeholder = '000';
+    this.client = 'mobile';
 
     this.attachShadow({ mode: 'open' });
     const template = document.getElementById('summary-linked').content.cloneNode(true);
@@ -15,7 +19,7 @@ class SummaryLinked extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['key', 'title', 'loaded'];
+    return ['key', 'title', 'client', 'loaded'];
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
@@ -35,16 +39,19 @@ class SummaryLinked extends HTMLElement {
   setData() {
     this.shadowRoot.querySelectorAll('.summary-linked-value')
       .forEach( (node) => {
-        node.textContent = this.latest[this.key] || this.placeholder;
+        node.textContent = this.latest?.[this.key] || this.placeholder;
       } );
 
     this.shadowRoot.querySelectorAll('.summary-linked-description')
       .forEach( (node) => {
-        node.textContent = this.latest.client ? `For ${this.latest.client}.` : this.placeholder;
+        node.textContent = this.latest?.client ? `For ${this.latest.client}.` : this.placeholder;
       } );
   }
 
   renderComponent() {
+    const _filtered = this.allData?.filter(row => row.client === this.client);
+    const _latest = getLatestEntry(_filtered);
+    this.latest = _latest;
     this.setTitle();
     this.setData();
   }

@@ -23,6 +23,13 @@
     </div>
   </div>
 
+  <label for="client-breakdown">Client</label>
+
+  <select name="client-breakdown" id="client-breakdown">
+    <option value="mobile" selected>Mobile</option>
+    <option value="desktop">Desktop</option>
+  </select>
+
   <div class="block-m summary">
     <h2>Summary</h2>
 
@@ -31,7 +38,8 @@
         title="Adoption"
         link="#adoption"
         key="origins"
-        data-scope="all-latest"
+        data-scope="all-data"
+        client="mobile"
       >
       </summary-linked>
 
@@ -39,7 +47,8 @@
         title="Good CWVs"
         link="#good-cwvs"
         key="origins_with_good_cwv"
-        data-scope="all-latest"
+        data-scope="all-data"
+        client="mobile"
       >
       </summary-linked>
     </div>
@@ -53,7 +62,7 @@
       <p>Explanation</p>
       <table-overview
         data-scope="all-data"
-        data-focus="mobile"
+        client="mobile"
       >
       </table-overview>
     </div>

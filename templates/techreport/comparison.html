@@ -3,4 +3,41 @@
 {% block section %}
   {{ super() }}
 
+  <div class="intro block-m">
+    <div>
+      <h1>
+        <span class="subtitle">Tech Report</span>
+        <span class="main-title">Comparison</span>
+      </h1>
+
+      <p>
+        Description not yet supported.
+      </p>
+    </div>
+    <div class="filters">
+      {% include "techreport/templates/filters.html" %}
+    </div>
+  </div>
+
+  <label for="client-breakdown">Client</label>
+  <select name="client-breakdown" id="client-breakdown">
+    <option value="mobile" selected>Mobile</option>
+    <option value="desktop">Desktop</option>
+  </select>
+
+  <div class="block-m">
+    <div class="card table-ui-wrapper">
+      <h3>Popular CMSes</h3>
+      <p>Description</p>
+      {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+      {% set technologies_str = ','.join(technologies) %}
+      <table-overview-multitech
+        data-scope="all-data"
+        client="mobile"
+        technologies="{{ technologies_str }}"
+      >
+      </table-overview-multitech>
+    </div>
+  </div>
+
 {% endblock %}

@@ -14,6 +14,7 @@ module.exports = {
     'summaryLinked': './src/js/components/summaryLinked.js',
     'tableGeneral': './src/js/components/tableGeneral.js',
     'tableOverview': './src/js/components/tableOverview.js',
+    'tableOverviewMulti': './src/js/components/tableOverviewMulti.js',
   },
   output: {
     path: path.resolve(__dirname, 'static/js'),
