@@ -1,17 +1,21 @@
 function updateTechnologies(technologies, filters) {
-  const select = document.querySelector('select#tech');
-  select.innerHTML = '';
-  technologies.forEach((technology) => {
-    const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
-    const option = optionTmpl.querySelector('option');
-    const formattedTech = technology.app.replaceAll(" ", "-");
-    option.textContent = technology.app;
-    option.value = formattedTech;
-    if(formattedTech === filters.app[0]) {
-      option.selected = true;
-    }
-    select.append(optionTmpl);
-  });
+  const selectAll = document.querySelectorAll('select.tech');
+
+  selectAll.forEach(select => {
+    select.innerHTML = '';
+
+    technologies.forEach((technology) => {
+      const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
+      const option = optionTmpl.querySelector('option');
+      const formattedTech = technology.app.replaceAll(" ", "-");
+      option.textContent = technology.app;
+      option.value = formattedTech;
+      if(formattedTech === select.getAttribute('data-selected')) {
+        option.selected = true;
+      }
+      select.append(optionTmpl);
+    });
+  })
 }
 
 function updateGeo(geos, filters) {

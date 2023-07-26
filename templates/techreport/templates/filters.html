@@ -1,11 +1,16 @@
 <form id="filter-bar">
   <div>
-    <label for="tech">Technology</label>
-    <select name="tech" id="tech">
-      <option value="ALL" selected="true">
-        ALL
-      </option>
-    </select>
+    {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+    {% for technology in technologies %}
+      {% set key = loop.index %}
+      <label for="tech-{{ key }}">Technology</label>
+      <select name="tech-{{ key }}" class="tech" data-selected="{{ technology }}" id="tech-{{ key }}">
+        <option value="{{ technology }}" selected="true">
+          {{ technology }}
+        </option>
+      </select>
+    {% endfor %}
+
   </div>
   <div>
     <label for="geo">Geo</label>
