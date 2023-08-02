@@ -13,18 +13,20 @@ class TechReport {
 
     this.bindClientListener();
     this.getAllData();
+
+    Filters.bindFilterListener();
   }
 
   bindClientListener() {
     const select = document.getElementById('client-breakdown');
     if(select) {
       select.onchange = (event) => {
-      const client = event.target.value;
-      const allDataComponents = document.querySelectorAll('[data-scope]');
-        allDataComponents.forEach(component => {
-          component.setAttribute('client', client);
-        });
-    }
+        const client = event.target.value;
+        const allDataComponents = document.querySelectorAll('[data-scope]');
+          allDataComponents.forEach(component => {
+            component.setAttribute('client', client);
+          });
+      }
     }
   }
 
@@ -121,7 +123,6 @@ class TechReport {
       component.setAttribute('loaded', true);
     });
   }
-
 
   updateComparisonComponents(data) {
     const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');

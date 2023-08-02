@@ -3,13 +3,11 @@
     {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
     {% for technology in technologies %}
       {% set key = loop.index %}
-      <label for="tech-{{ key }}">Technology</label>
-      <select name="tech-{{ key }}" class="tech" data-selected="{{ technology }}" id="tech-{{ key }}">
-        <option value="{{ technology }}" selected="true">
-          {{ technology }}
-        </option>
-      </select>
+      {% set option = technology %}
+      {% set name = "tech-" + key|string %}
+      {% include "techreport/templates/selector_tech.html" %}
     {% endfor %}
+    <button id="add-tech">Add technology</button>
 
   </div>
   <div>
@@ -21,18 +19,24 @@
     </select>
   </div>
   <div>
-    <label for="geo">Rank</label>
+    <label for="rank">Rank</label>
     <select name="rank" id="rank">
       <option value="ALL" selected="true">
         ALL
       </option>
     </select>
   </div>
-  <button type="submit">Update</button>
+  <button type="submit" id="submit-form">Update</button>
 </form>
 
 <template id="filter-option">
   <option value="Option">
     Option
   </option>
+</template>
+
+<template id="tech-selector">
+  {% set option = "ALL" %}
+  {% set name = "tech-new" %}
+  {% include "techreport/templates/selector_tech.html" %}
 </template>
