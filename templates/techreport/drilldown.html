@@ -9,11 +9,6 @@
         <span class="subtitle">Tech Report</span>
         <span class="main-title">Drilldown</span>
       </h1>
-
-      <p>
-        Description not yet supported.
-      </p>
-
       <ul class="category-list categories">
         <li class="cell">Placeholder</li>
       </ul>
@@ -23,92 +18,113 @@
     </div>
   </div>
 
-  <label for="client-breakdown">Client</label>
-
-  <select name="client-breakdown" id="client-breakdown">
-    <option value="mobile" selected>Mobile</option>
-    <option value="desktop">Desktop</option>
-  </select>
-
-  <div class="block-m summary">
-    <h2>Summary</h2>
-
-    <div class="summary-grid">
-      <summary-linked
-        title="Adoption"
-        link="#adoption"
-        key="origins"
-        data-scope="all-data"
-        client="mobile"
-      >
-      </summary-linked>
-
-      <summary-linked
-        title="Good CWVs"
-        link="#good-cwvs"
-        key="origins_with_good_cwv"
-        data-scope="all-data"
-        client="mobile"
-      >
-      </summary-linked>
-    </div>
-  </div>
-
-  <div class="block-m">
-    <h2>Core Web Vitals</h2>
-    <p>Description</p>
-    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
-      <h3>Latest data</h3>
-      <p>Explanation</p>
-      <table-overview
-        data-scope="all-data"
-        client="mobile"
-      >
-      </table-overview>
+  <div class="report-content">
+    <div class="client-selector block-m">
+      <label for="client-breakdown">Client</label>
+      <select name="client-breakdown" id="client-breakdown">
+        <option value="mobile" selected>Mobile</option>
+        <option value="desktop">Desktop</option>
+      </select>
     </div>
 
-    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
-      <h3>All data</h3>
-      <p>Explanation</p>
-      <table-general
-        data-scope="all-data"
-        client="mobile"
-        subcategory="cwv"
-        columns="date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
-      >
-      </table-general>
+    <div class="block-m summary report-section">
+      <h2>Summary</h2>
+
+      <div class="summary-grid">
+        <summary-linked
+          title="Adoption"
+          link="#adoption"
+          key="origins"
+          data-scope="all-data"
+          client="mobile"
+        >
+        </summary-linked>
+
+        <summary-linked
+          title="Good CWVs"
+          link="#good-cwvs"
+          key="origins_with_good_cwv"
+          data-scope="all-data"
+          client="mobile"
+        >
+        </summary-linked>
+
+        <summary-linked
+          title="Lighthouse performance"
+          link="#lighthouse"
+          key="median_lighthouse_score_performance"
+          data-scope="all-data"
+          client="mobile"
+        >
+        </summary-linked>
+
+        <summary-linked
+          title="Page weight"
+          link="#page-weight"
+          key="median_bytes_total"
+          data-scope="all-data"
+          client="mobile"
+        >
+        </summary-linked>
+      </div>
     </div>
-  </div>
 
-  <div class="block-m">
-    <h2>Lighthouse</h2>
-    <p>Description</p>
+    <div class="block-m report-section">
+      <h2>Core Web Vitals</h2>
+      <p>Description</p>
+      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+        <h3>Latest data</h3>
+        <p>Explanation</p>
+        <table-overview
+          data-scope="all-data"
+          client="mobile"
+        >
+        </table-overview>
+      </div>
 
-    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
-      <h3>All data</h3>
-      <p>Explanation</p>
-      <table-general
-        data-scope="all-data"
-        client="mobile"
-        columns="date,client,median_lighthouse_score_accessibility,median_lighthouse_score_performance,median_lighthouse_score_pwa,median_lighthouse_score_seo, median_lighthouse_score_best_practices"
-      >
-      </table-general>
+      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+        <h3>All data</h3>
+        <p>Explanation</p>
+        <table-general
+          data-scope="all-data"
+          client="mobile"
+          subcategory="cwv"
+          columns="date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
+        >
+        </table-general>
+      </div>
     </div>
-  </div>
 
-  <div class="block-m">
-    <h2>Page weight</h2>
-    <p>Description</p>
+    <div class="block-m report-section">
+      <h2>Lighthouse</h2>
+      <p>Description</p>
 
-    <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
-      <h3>All data</h3>
-      <p>Explanation</p>
-      <table-general
-        data-scope="all-data"
-        client="mobile"
-        columns="date,client,median_bytes_image,median_bytes_js,median_bytes_total"
-      >
-      </table-general>
+      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+        <h3>All data</h3>
+        <p>Explanation</p>
+        <table-general
+          data-scope="all-data"
+          client="mobile"
+          columns="date,client,median_lighthouse_score_accessibility,median_lighthouse_score_performance,median_lighthouse_score_pwa,median_lighthouse_score_seo, median_lighthouse_score_best_practices"
+        >
+        </table-general>
+      </div>
+    </div>
+
+    <div class="block-m report-section">
+      <h2>Page weight</h2>
+      <p>Description</p>
+
+      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+        <h3>All data</h3>
+        <p>Explanation</p>
+        <table-general
+          data-scope="all-data"
+          client="mobile"
+          columns="date,client,median_bytes_image,median_bytes_js,median_bytes_total"
+        >
+        </table-general>
+      </div>
     </div>
   </div>
 {% endblock %}

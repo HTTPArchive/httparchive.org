@@ -80,6 +80,7 @@
   border-radius: 1rem;
   border: 1px solid var(--color-text);
   font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 
 
@@ -193,7 +194,7 @@
   color: var(--color-text);
 }
 
-#filter-bar button[type="submit"] {
+#filter-bar button {
   background-color: var(--color-teal-darker);
   border-radius: 3px;
   color: var(--color-blue-100);
@@ -202,10 +203,17 @@
   padding: 0.25rem 0.5rem;
 }
 
+button#add-tech {
+  margin-bottom: 3rem;
+}
 
 /* Table */
 .table-ui-wrapper {
   overflow-x: scroll;
+}
+
+.card.table-ui-wrapper {
+  margin-bottom: 2rem;
 }
 
 .footnote {
@@ -243,14 +251,54 @@
   margin: 0.75rem 0;
 }
 
+/* Info message */
+.info-panel {
+  background: #bfe1e7;
+  color: #203b40;
+  font-weight: 400;
+  padding: 0.5rem;
+}
+
+.info-panel > div {
+  display: flex;
+  align-items: center;
+}
+
+.info-panel p {
+  margin-bottom: 0;
+}
+
+.info-panel .info-label {
+  margin-right: 1rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 3px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+
+
 /* -------------------- */
 /* ----- Sections ----- */
 /* -------------------- */
+
+.report-content {
+  background-image: linear-gradient(#C0CED0, rgba(238,238,238,0));
+  border-top: 1px solid #6A797C;
+  background-size: 100% 50rem;
+  background-repeat: no-repeat;
+  padding-top: 3rem;
+}
+
+.report-section {
+  margin-bottom: 4rem;
+}
 
 /* Summary */
 .summary {
   position: relative;
   z-index: 1;
+  margin-bottom: 4rem;
 }
 
 .summary h2 {
@@ -293,3 +341,4 @@
     position: static;
   }
 }
+

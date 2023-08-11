@@ -11,6 +11,13 @@
 {% endblock %}
 
 {% block report_navigation %}
+  <div class="info-panel">
+    <div class="block-l">
+      <p class="info-label">Beta</p>
+      <p>Changes are still being made to this page.</p>
+    </div>
+  </div>
+
   <nav class="report-navigation">
       <ul class="navigation-items block-l">
         <li>
@@ -48,10 +55,6 @@
 {% endblock %}
 
 {% block main %}
-  <div class="info-panel">
-    <p class="label">Beta</p>
-    <p>Changes are still being made to this page.</p>
-  </div>
   {% block section %}{% endblock %}
 
   <!-- Import templates -->

@@ -1,13 +1,20 @@
 <form id="filter-bar">
   <div>
     {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+    {% if active_page == "drilldown" %}
+      {% set technologies = [technologies[0]] %}
+    {% endif %}
+
     {% for technology in technologies %}
       {% set key = loop.index %}
       {% set option = technology %}
       {% set name = "tech-" + key|string %}
       {% include "techreport/templates/selector_tech.html" %}
     {% endfor %}
-    <button id="add-tech">Add technology</button>
+
+    {% if active_page == "comparison" %}
+      <button id="add-tech">Add technology</button>
+    {% endif %}
 
   </div>
   <div>
