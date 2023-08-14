@@ -8,6 +8,7 @@ class SummaryLinked extends HTMLElement {
     this.allData = [];
     this.placeholder = '000';
     this.client = 'mobile';
+    this.link = "#";
 
     this.attachShadow({ mode: 'open' });
     const template = document.getElementById('summary-linked').content.cloneNode(true);
@@ -19,7 +20,7 @@ class SummaryLinked extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['key', 'title', 'client', 'loaded'];
+    return ['key', 'title', 'client', 'loaded', 'link'];
   }
 
   attributeChangedCallback(property, oldValue, newValue) {

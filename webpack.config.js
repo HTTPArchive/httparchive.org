@@ -13,8 +13,9 @@ module.exports = {
     'send-web-vitals': './src/js/send-web-vitals.js',
     'summaryLinked': './src/js/components/summaryLinked.js',
     'tableGeneral': './src/js/components/tableGeneral.js',
+    'tableGeneralMulti': './src/js/components/tableGeneralMulti.js',
     'tableOverview': './src/js/components/tableOverview.js',
-    'tableOverviewMulti': './src/js/components/tableOverviewMulti.js',
+    'tableCWVOverviewMulti': './src/js/components/tableCWVOverviewMulti.js',
   },
   output: {
     path: path.resolve(__dirname, 'static/js'),

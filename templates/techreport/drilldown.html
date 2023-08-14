@@ -69,10 +69,26 @@
       </div>
     </div>
 
-    <div class="block-m report-section">
+    <div id="adoption" class="block-m report-section">
+      <h2>Adoption</h2>
+      <p>Description</p>
+
+      <div class="card">
+        <h3>All data</h3>
+        <p>Explanation</p>
+        <table-general
+          data-scope="all-data"
+          client="mobile"
+          columns="date,client,origins"
+        >
+        </table-general>
+      </div>
+    </div>
+
+    <div id="good-cwvs" class="block-m report-section">
       <h2>Core Web Vitals</h2>
       <p>Description</p>
-      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <div class="table-ui-wrapper card">
         <h3>Latest data</h3>
         <p>Explanation</p>
         <table-overview
@@ -82,7 +98,7 @@
         </table-overview>
       </div>
 
-      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <div class="table-ui-wrapper card">
         <h3>All data</h3>
         <p>Explanation</p>
         <table-general
@@ -95,11 +111,11 @@
       </div>
     </div>
 
-    <div class="block-m report-section">
+    <div id="lighthouse" class="block-m report-section">
       <h2>Lighthouse</h2>
       <p>Description</p>
 
-      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <div class="table-ui-wrapper card">
         <h3>All data</h3>
         <p>Explanation</p>
         <table-general
@@ -111,11 +127,11 @@
       </div>
     </div>
 
-    <div class="block-m report-section">
+    <div id="page-weight" class="block-m report-section">
       <h2>Page weight</h2>
       <p>Description</p>
 
-      <div class="table-ui-wrapper card" tabindex="0" role="region" aria-labelledby="cwv-overview-caption">
+      <div class="table-ui-wrapper card">
         <h3>All data</h3>
         <p>Explanation</p>
         <table-general

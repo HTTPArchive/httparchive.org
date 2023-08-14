@@ -23,6 +23,8 @@
     "values": {
       "date": "Date",
       "client": "Client",
+      "origins": "Origins",
+
       "origins_eligible_for_cwv": "Eligible",
       "origins_eligible_for_fid": "Eligible",
       "origins_eligible_for_cls": "Eligible",

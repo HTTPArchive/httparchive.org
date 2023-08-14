@@ -3,6 +3,10 @@
 {% block section %}
   {{ super() }}
 
+  {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+  {% set technologies_str = ','.join(technologies) %}
+
+
   <div class="intro block-m">
     <div>
       <h1>
@@ -26,16 +30,83 @@
 
     <div class="block-m report-section">
       <div class="card table-ui-wrapper">
-        <h3>Popular CMSes</h3>
+        <h3>Comparing {{ technologies | length }} technologies</h3>
         <p>Description</p>
-        {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
-        {% set technologies_str = ','.join(technologies) %}
-        <table-overview-multitech
+
+        <table-cwv-overview-multitech
           data-scope="all-data"
           client="mobile"
           technologies="{{ technologies_str }}"
         >
-        </table-overview-multitech>
+        </table-cwv-overview-multitech>
+      </div>
+    </div>
+
+    <div class="block-m report-section">
+      <h2>Adoption</h2>
+      <p>Description</p>
+
+      <div class="card">
+        <h3>Origins</h3>
+        <p>Explanation</p>
+        <table-general-multitech
+          data-scope="all-data"
+          client="mobile"
+          technologies="{{ technologies_str }}"
+          metric="origins"
+        >
+        </table-general-multitech>
+      </div>
+    </div>
+
+    <div class="block-m report-section">
+      <h2>Core Web Vitals</h2>
+      <p>Description</p>
+
+      <div class="card">
+        <h3>Good Core Web Vitals</h3>
+        <p>Explanation</p>
+        <table-general-multitech
+          data-scope="all-data"
+          client="mobile"
+          technologies="{{ technologies_str }}"
+          metric="origins_with_good_cwv"
+        >
+        </table-general-multitech>
+      </div>
+    </div>
+
+    <div class="block-m report-section">
+      <h2>Lighthouse</h2>
+      <p>Description</p>
+
+      <div class="card">
+        <h3>Median Lighthouse Performance</h3>
+        <p>Explanation</p>
+        <table-general-multitech
+          data-scope="all-data"
+          client="mobile"
+          technologies="{{ technologies_str }}"
+          metric="median_lighthouse_score_performance"
+        >
+        </table-general-multitech>
+      </div>
+    </div>
+
+    <div class="block-m report-section">
+      <h2>Page weight</h2>
+      <p>Description</p>
+
+      <div class="card">
+        <h3>Median bytes total</h3>
+        <p>Explanation</p>
+        <table-general-multitech
+          data-scope="all-data"
+          client="mobile"
+          technologies="{{ technologies_str }}"
+          metric="median_bytes_total"
+        >
+        </table-general-multitech>
       </div>
     </div>
   </div>
