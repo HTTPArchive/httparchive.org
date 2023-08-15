@@ -1,3 +1,11 @@
+.table-ui-wrapper {
+  overflow: auto;
+}
+
+.table-ui-wrapper:focus-visible {
+  outline: 1.5px solid var(--color-teal-dark);
+  outline-offset: 1.5px;
+}
 
 .table-ui {
   width: 100%;
@@ -19,12 +27,12 @@
   border-bottom: 1px solid var(--color-text);
 }
 
-.table-ui thead th {
-  padding: 1rem 0;
+.table-ui :is(td, th) {
+  min-width: 5rem;
 }
 
-.table-ui tbody :is(td, th) {
-  padding: 1rem 0;
+.table-ui :is(td, th):not(:last-child) {
+  padding: 1rem 2rem 1rem 0;
 }
 
 .table-ui tbody tr {
@@ -47,6 +55,8 @@
 .table-ui tr a {
   color: var(--color-link);
   text-decoration: underline;
+  width: 100%;
+  display: block;
 }
 
 .table-ui tr .row-link:is(:hover, :focus) {

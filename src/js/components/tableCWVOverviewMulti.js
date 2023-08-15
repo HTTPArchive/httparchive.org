@@ -75,29 +75,31 @@ class tableCWVOverviewMulti extends HTMLElement {
         });
         const _latest = getLatestEntry(_clientDataSorted);
 
-        /* Fetch the templates for the rows and cells */
-        const rowTemplate = document.getElementById('table-general-row').content.cloneNode(true);
-        const headingCellTemplate = document.getElementById('table-general-heading-cell').content.cloneNode(true);
-
         /* Fill in the tech names as row headings */
-        headingCellTemplate.querySelector('th').textContent = technology;
-        rowTemplate.querySelector('tr').append(headingCellTemplate);
+        const row = document.createElement('tr');
+        const headingCell = document.createElement('th');
+        const technologyLinkEl = document.createElement('a');
+        technologyLinkEl.className = 'row-link';
+        technologyLinkEl.href = `/reports/techreport/drilldown/?tech=${technology}`;
+        technologyLinkEl.innerHTML = technology;
+        headingCell.append(technologyLinkEl);
+        row.append(headingCell);
 
         /* Fill in amount of origins tech has */
-        const origins = document.getElementById('table-general-cell').content.cloneNode(true);
-        origins.querySelector('td').textContent = _latest.origins;
-        rowTemplate.querySelector('tr').append(origins);
+        const origins = document.createElement('td');
+        origins.innerHTML = _latest.origins;
+        row.append(origins);
 
         /* Fill in the data for each of the core web vitals */
         coreWebVitals.forEach(cwv => {
-          const dataCellTemplate = document.getElementById('table-general-cell').content.cloneNode(true);
+          const dataCell = document.createElement('td');
           const percentageGood = parseInt(_latest[cwv?.origins_with_good] / _latest[cwv?.origins_eligible] * 10000) / 100;
-          dataCellTemplate.querySelector('td').textContent = `${percentageGood}%`;
-          rowTemplate.querySelector('tr').append(dataCellTemplate);
+          dataCell.innerHTML = `${percentageGood}%`;
+          row.append(dataCell);
         })
 
         /* Add the row to the table body */
-        tableBody.append(rowTemplate);
+        tableBody.append(row);
 
         /* Show the latest timestamp */
         this.shadowRoot.querySelector('.timestamp').innerHTML = _latest.date;

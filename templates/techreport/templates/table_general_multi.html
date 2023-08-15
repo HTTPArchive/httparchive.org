@@ -2,15 +2,17 @@
   <link rel="stylesheet" href="/static/css/techreport/general.css">
   <link rel="stylesheet" href="/static/components/table.css">
 
-  <table class="table-ui">
-    <caption class="sr-only">
-      TODO: ADD CAPTION
-    </caption>
-    <thead>
-      <tr>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <!-- This makes the table focusable and scrollable by keyboard -->
+  <!-- Table content and caption id set in JS -->
+  <div class="table-ui-wrapper" role="region" aria-labelledby="" tabindex="0">
+    <table class="table-ui">
+      <caption class="sr-only"></caption>
+      <thead>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 </template>

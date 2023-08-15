@@ -37,10 +37,6 @@
   margin-top: 0;
   background-color: transparent;
   padding: 4rem 0;
-  display: grid;
-  grid-template-columns: 1fr 20rem;
-  column-gap: 2rem;
-  row-gap: 2rem;
 }
 
 .intro h1 {
@@ -176,16 +172,21 @@
 }
 
 /* Filters */
-#filter-bar {
-  padding: 1rem;
+#filter-bar > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#filter-bar > div > *:not(:last-child) {
+  margin-right: 1.5rem;
 }
 
 #filter-bar label {
   margin-bottom: 0.25rem;
+  display: block;
 }
 
 #filter-bar select {
-  display: block;
   width: 20rem;
   max-width: 100%;
   margin-bottom: 1rem;
@@ -341,4 +342,3 @@ button#add-tech {
     position: static;
   }
 }
-

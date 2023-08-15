@@ -2,20 +2,23 @@
   <link rel="stylesheet" href="/static/css/techreport/general.css">
   <link rel="stylesheet" href="/static/components/table.css">
 
-  <table class="table-ui">
-    <caption class="sr-only">
-      TODO: ADD CAPTION
-    </caption>
-    <thead>
-      <tr>
-        <th>Core Web Vital</th>
-        <th>% Good scores</th>
-        <th>Trend</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <!-- This makes the table focusable and scrollable by keyboard -->
+  <div class="table-ui-wrapper" role="region" aria-labelledby="cwv-overview-table" tabindex="0">
+    <table class="table-ui">
+      <caption class="sr-only" id="cwv-overview-table">
+        % Of tested origins that had good Core Web Vitals
+      </caption>
+      <thead>
+        <tr>
+          <th>Core Web Vital</th>
+          <th>% Good scores</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <template id="table-overview-row">

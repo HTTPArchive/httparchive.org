@@ -1,9 +1,14 @@
+.landing-content {
+  margin-top: 10rem;
+}
+
 .choices {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   column-gap: 2rem;
   row-gap: 1rem;
   margin-bottom: 4rem;
+  margin-top: -15rem;
 }
 
 .choices .card {
@@ -19,6 +24,14 @@
 .choices .card h2 + p {
   margin: 0;
   padding: 0;
+}
+
+.choices .card .img-placeholder {
+  display: block;
+  width: 100%;
+  height: 17rem;
+  background-color: #EEEEEE;
+  margin-top: 1rem;
 }
 
 .latest-info h2 {
@@ -40,18 +53,6 @@
 .latest-info p.value {
   font-size: var(--font-size-medium);
   font-weight: 600;
-}
-
-.report-summary-wrapper {
-  background-image:
-    linear-gradient(
-      var(--color-teal-faded) 60%,
-      var(--color-page-background)
-    );
-  background-size: 100% 25rem;
-  background-repeat: no-repeat;
-  border-top: 1px solid var(--color-teal-medium);
-  padding-bottom: 5rem;
 }
 
 .report-summary-tables {

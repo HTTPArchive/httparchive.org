@@ -19,38 +19,42 @@
   </div>
 
   <nav class="report-navigation">
-      <ul class="navigation-items block-l">
-        <li>
-          {% set ariaCurrent = "false" %}
-          {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
-          <a
-            href="/reports/techreport/landing"
-            aria-current="{{ ariaCurrent }}"
-          >
-            Home
-          </a>
-        </li>
-        <li>
-          {% set ariaCurrent = "false" %}
-          {% if active_page == "drilldown" %}{% set ariaCurrent = "page" %}{% endif %}
-          <a
-            href="/reports/techreport/drilldown"
-            aria-current="{{ ariaCurrent }}"
-          >
-            Drilldown
-          </a>
-        </li>
-        <li>
-          {% set ariaCurrent = "false" %}
-          {% if active_page == "comparison" %}{% set ariaCurrent = "page" %}{% endif %}
-          <a
-            href="/reports/techreport/comparison"
-            aria-current="{{ ariaCurrent }}"
-          >
-            Comparison
-          </a>
-        </li>
-      </ul>
+    {% set filters = "" %}
+    {% if tech_report_page.filters %}
+      {% set filters = "?geo=" + tech_report_page.filters.geo + "&rank=" + tech_report_page.filters.rank %}
+    {% endif %}
+    <ul class="navigation-items block-l">
+      <li>
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
+        <a
+          href="/reports/techreport/landing"
+          aria-current="{{ ariaCurrent }}"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "drilldown" %}{% set ariaCurrent = "page" %}{% endif %}
+        <a
+          href="/reports/techreport/drilldown{{ filters }}"
+          aria-current="{{ ariaCurrent }}"
+        >
+          Drilldown
+        </a>
+      </li>
+      <li>
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "comparison" %}{% set ariaCurrent = "page" %}{% endif %}
+        <a
+          href="/reports/techreport/comparison{{ filters }}"
+          aria-current="{{ ariaCurrent }}"
+        >
+          Comparison
+        </a>
+      </li>
+    </ul>
   </nav>
 {% endblock %}
 

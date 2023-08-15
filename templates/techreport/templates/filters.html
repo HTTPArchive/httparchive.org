@@ -1,37 +1,39 @@
 <form id="filter-bar">
   <div>
-    {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
-    {% if active_page == "drilldown" %}
-      {% set technologies = [technologies[0]] %}
-    {% endif %}
+    <div class="technologies">
+      {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+      {% if active_page == "drilldown" %}
+        {% set technologies = [technologies[0]] %}
+      {% endif %}
 
-    {% for technology in technologies %}
-      {% set key = loop.index %}
-      {% set option = technology %}
-      {% set name = "tech-" + key|string %}
-      {% include "techreport/templates/selector_tech.html" %}
-    {% endfor %}
+      {% for technology in technologies %}
+        {% set key = loop.index %}
+        {% set option = technology %}
+        {% set name = "tech-" + key|string %}
+        {% include "techreport/templates/selector_tech.html" %}
+      {% endfor %}
 
-    {% if active_page == "comparison" %}
-      <button id="add-tech">Add technology</button>
-    {% endif %}
+      {% if active_page == "comparison" %}
+        <button id="add-tech">Add</button>
+      {% endif %}
 
-  </div>
-  <div>
-    <label for="geo">Geo</label>
-    <select name="geo" id="geo">
-      <option value="ALL" selected="true">
-        ALL
-      </option>
-    </select>
-  </div>
-  <div>
-    <label for="rank">Rank</label>
-    <select name="rank" id="rank">
-      <option value="ALL" selected="true">
-        ALL
-      </option>
-    </select>
+    </div>
+    <div>
+      <label for="geo">Geo</label>
+      <select name="geo" id="geo">
+        <option value="ALL" selected="true">
+          ALL
+        </option>
+      </select>
+    </div>
+    <div>
+      <label for="rank">Rank</label>
+      <select name="rank" id="rank">
+        <option value="ALL" selected="true">
+          ALL
+        </option>
+      </select>
+    </div>
   </div>
   <button type="submit" id="submit-form">Update</button>
 </form>

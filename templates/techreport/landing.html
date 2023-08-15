@@ -6,32 +6,54 @@
 {% endblock %}
 
 {% block section %}
-  <div class="choices block-m">
-    <div class="card">
-      <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
-      <p>Get detailed information about <strong>one</strong> technology. </p>
-    </div>
-    <div class="card">
-      <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
-      <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+  <div class="intro block-m">
+    <div>
+      <h1>
+        <span class="subtitle">Reports</span>
+        <span class="title">Tech Report</span>
+      </h1>
+      <p>
+        Placeholder text: A short description about what it is that we display in the Core Web Vitals report, and how it can be used. There should probably be links here to the individual technology pages and a few interesting comparison pages, as well as to the methodology page and the discussions etc like the reports have today.
+      </p>
     </div>
   </div>
 
-  <div class="block-m">
-    <h2>Explore</h2>
-    <p>Placeholder</p>
+  <div class="report-content landing-content">
+    <div class="choices block-m">
+      <div class="card">
+        <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
+        <p>Get detailed information about <strong>one</strong> technology. </p>
+        <span class="img-placeholder"></span>
+      </div>
+      <div class="card">
+        <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
+        <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+        <span class="img-placeholder"></span>
+      </div>
+    </div>
 
-    <div class="card table-ui-wrapper">
-      <h3>Popular CMSes</h3>
-      <p>Description</p>
+    <div class="block-m">
+      <h2>Explore</h2>
+      <p>Placeholder</p>
 
-      <table-cwv-overview-multitech
-        data-scope="all-data"
-        client="mobile"
-        technologies="{{ ','.join(tech_report_page.config.popular_tech.filters.app) }}"
-      >
-      </table-cwv-overview-multitech>
+      <div class="card table-ui-wrapper">
+        <h3>Popular CMSes</h3>
+        <p>Description</p>
 
+        <table-cwv-overview-multitech
+          data-scope="all-data"
+          client="mobile"
+          technologies="{{ ','.join(tech_report_page.config.popular_tech.filters.app) }}"
+        >
+        </table-cwv-overview-multitech>
+
+        <p>
+          <a href="/reports/techreport/comparison?tech={{ ','.join(tech_report_page.config.popular_tech.filters.app) }}" class="cta-link">
+            Compare technologies
+          </a>
+        </p>
+
+      </div>
     </div>
   </div>
 {% endblock %}
