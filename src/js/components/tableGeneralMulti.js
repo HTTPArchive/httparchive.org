@@ -85,7 +85,7 @@ class tableGenralMulti extends HTMLElement {
         const dataCellTemplate = document.getElementById('table-general-cell').content.cloneNode(true);
         const _data = this.allData?.[technology]?.filter(entry => entry.client === this.client)?.find(row => row.date = date);
 
-        dataCellTemplate.querySelector('td').textContent = _data?.[this.metric];
+        dataCellTemplate.querySelector('td').textContent = _data ? _data[this.metric] : '-';
         rowTemplate.append(dataCellTemplate);
       });
 

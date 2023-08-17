@@ -29,8 +29,14 @@ function setCategories(categories) {
 
 function update(data, filters) {
   const app = filters.app[0];
-  setTitle(app);
-  setCategories(data[app][0]?.category?.split(", "));
+
+  if(app) {
+    setTitle(app);
+  }
+
+  if(data[app]) {
+    setCategories(data[app][0]?.category?.split(", "));
+  }
 }
 
 export const DrilldownHeader = {

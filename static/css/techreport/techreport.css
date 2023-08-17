@@ -295,6 +295,19 @@ button#add-tech {
   margin-bottom: 4rem;
 }
 
+.report-content:has(> .error) {
+  background-image: none;
+  padding-top: 0;
+  background-color: #fff;
+  border-bottom: 1px solid #6A797C;
+}
+
+.report-content > .error {
+  margin-bottom: 0;
+  text-align: center;
+  padding: 5rem 0;
+}
+
 /* Summary */
 .summary {
   position: relative;

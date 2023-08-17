@@ -50,11 +50,13 @@ class SummaryLinked extends HTMLElement {
   }
 
   renderComponent() {
-    const _filtered = this.allData?.filter(row => row.client === this.client);
-    const _latest = getLatestEntry(_filtered);
-    this.latest = _latest;
-    this.setTitle();
-    this.setData();
+    if(this.allData) {
+      const _filtered = this.allData?.filter(row => row.client === this.client);
+      const _latest = getLatestEntry(_filtered);
+      this.latest = _latest;
+      this.setTitle();
+      this.setData();
+    }
   }
 }
 

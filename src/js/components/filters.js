@@ -1,10 +1,20 @@
 function updateTechnologies(technologies, filters) {
   /* Get existing tech selectors on the page */
   const allTechSelectors = document.querySelectorAll('select.tech');
+  const techNames = technologies.map(element => element.app);
 
   /* Update the options inside all of the selectors */
   allTechSelectors.forEach(techSelector => {
     techSelector.innerHTML = '';
+
+    const selectedTechFormatted = techSelector.getAttribute('data-selected').replaceAll('-', ' ');
+
+    /* If the technology doesn't exist, throw a warning */
+    if(!techNames.includes(selectedTechFormatted)) {
+      const errorMsg = document.createElement('p');
+      errorMsg.textContent = 'Technology not found, please select a different one';
+      techSelector.before(errorMsg);
+    }
 
     /* Add one option per technology */
     technologies.forEach((technology) => {

@@ -55,7 +55,8 @@ class TechReport {
         .then(result => this.processData(result))
         .then(result => {
           data[technology] = result;
-        });
+        })
+        .catch(error => console.log('Something went wrong', error));
     })).then(() => {
       this.updateComponents(data);
     });
@@ -109,31 +110,49 @@ class TechReport {
 
     const app = this.filters.app[0];
 
-    const latestComponents = document.querySelectorAll('[data-scope="all-latest"]');
-    latestComponents.forEach((component) => {
-      component.latest = data[app][0];
-      component.labels = this.labels;
-      component.setAttribute('loaded', true);
-    });
+    if(data && data[app]) {
+      const latestComponents = document.querySelectorAll('[data-scope="all-latest"]');
+      latestComponents.forEach((component) => {
+        component.latest = data[app][0];
+        component.labels = this.labels;
+        component.setAttribute('loaded', true);
+      });
 
-    const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
-    allDataComponents.forEach((component) => {
-      component.allData = data[app];
-      component.labels = this.labels;
-      component.setAttribute('loaded', true);
-    });
+      const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
+      allDataComponents.forEach((component) => {
+        component.allData = data[app];
+        component.labels = this.labels;
+        component.setAttribute('loaded', true);
+      });
+    } else {
+      this.updateWithEmptyData();
+    }
   }
 
   updateComparisonComponents(data) {
-    const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
+    if(data && Object.keys(data).length > 0) {
+      const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
 
-    allDataComponents.forEach((component) => {
-      component.allData = data;
-      component.page = this.page;
-      component.labels = this.labels;
-      component.setAttribute('loaded', true);
-      component.setAttribute('all_data', JSON.stringify(data));
-    });
+      allDataComponents.forEach((component) => {
+        component.allData = data;
+        component.page = this.page;
+        component.labels = this.labels;
+        component.setAttribute('loaded', true);
+        component.setAttribute('all_data', JSON.stringify(data));
+      });
+    } else {
+      this.updateWithEmptyData();
+    }
+  }
+
+  updateWithEmptyData() {
+    const text = document.createElement('p');
+    text.textContent = 'No data found for this query';
+    text.className = 'error';
+
+    const report = document.querySelector('.report-content');
+    report.innerHTML = '';
+    report.append(text);
   }
 }
 

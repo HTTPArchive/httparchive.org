@@ -62,6 +62,8 @@ class tableCWVOverviewMulti extends HTMLElement {
       },
     ];
 
+    this.shadowRoot.querySelector('.errorMsg').innerHTML = '';
+
     technologies.forEach(technology => {
       /* Select the data for each of the technologies */
       const _data = this.allData?.[technology];
@@ -103,6 +105,13 @@ class tableCWVOverviewMulti extends HTMLElement {
 
         /* Show the latest timestamp */
         this.shadowRoot.querySelector('.timestamp').innerHTML = _latest.date;
+      }
+
+      /* Else show a mesage that this tech doesn't have data */
+      else {
+        const errorMsg = document.createElement('p');
+        errorMsg.textContent = `No data found for ${technology}.`;
+        this.shadowRoot.querySelector('.errorMsg').append(errorMsg);
       }
     });
 
