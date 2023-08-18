@@ -41,7 +41,7 @@ function sendWebVitals() {
       return {};
     }
 
-    // The LoAF script with the single longest duration.
+    // The LoAF script with the single longest total duration.
     return loafAttribution;
   }
 
@@ -146,7 +146,6 @@ function sendWebVitals() {
       navigation_type: navigationType,
     }, overrides);
 
-    console.log('gtag', name, params);
     gtag('event', name, params);
 
   }
