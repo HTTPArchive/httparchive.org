@@ -1,7 +1,51 @@
 function sendWebVitals() {
 
-  function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
+  let longAnimationFrames = [];
+  function getLoafAttribution(attribution) {
+    if (!attribution) {
+      return {};
+    }
 
+    const entry = attribution.eventEntry;
+
+    if (!entry) {
+      return {};
+    }
+
+    const loafAttribution = {
+      total: 0
+    };
+
+    longAnimationFrames.filter(loaf => {
+      // LoAFs that intersect with the event.
+      return entry.startTime < (loaf.startTime + loaf.duration) && loaf.startTime < (entry.startTime + entry.duration);
+    }).forEach(loaf => {
+      if (loaf.duration <= loafAttribution.duration) {
+        return;
+      }
+
+      loaf.scripts.forEach(script => {
+        const total = script.startTime + script.duration - script.desiredExecutionStart;
+        if (total > loafAttribution.total) {
+          loafAttribution.total = total;
+          loafAttribution.delay = script.startTime - script.desiredExecutionStart;
+          loafAttribution.compileDuration = script.executionStart - script.startTime;
+          loafAttribution.execDuration = script.startTime + script.duration - script.executionStart;
+          loafAttribution.source = script.sourceLocation || script.name;
+          loafAttribution.type = script.type;
+        }
+      });
+    });
+
+    if (!loafAttribution.total) {
+      return {};
+    }
+
+    // The LoAF script with the single longest duration.
+    return loafAttribution;
+  }
+
+  function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
     let overrides = {};
 
     switch (name) {
@@ -22,11 +66,19 @@ function sendWebVitals() {
         break;
       case 'FID':
       case 'INP':
+        const loafAttribution = getLoafAttribution(attribution);
         overrides = {
           debug_event: attribution.eventType,
           debug_time: Math.round(attribution.eventTime),
           debug_load_state: attribution.loadState,
           debug_target: attribution.eventTarget || '(not set)',
+          debug_loaf_total: loafAttribution.total,
+          debug_loaf_delay: loafAttribution.delay,
+          debug_loaf_compile: loafAttribution.compileDuration,
+          debug_loaf_exec: loafAttribution.execDuration,
+          debug_loaf_source: loafAttribution.source,
+          debug_loaf_type: loafAttribution.type,
+          debug_loaf_length: longAnimationFrames.length,
         };
         if (!attribution.eventEntry) {
           break;
@@ -80,32 +132,33 @@ function sendWebVitals() {
       prefersColorScheme = 'not supported';
     }
 
+    const params = Object.assign({
+      event_category: 'Web Vitals',
+      event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+      event_label: id,
+      nonInteraction: true,
 
-    gtag('event', name, Object.assign(
-      {
-        event_category: 'Web Vitals',
-        event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
-        event_label: id,
-        nonInteraction: true,
+      effective_type: effectiveType,
+      data_saver: dataSaver,
+      device_memory: deviceMemory,
+      prefers_reduced_motion: prefersReducedMotion,
+      prefers_color_scheme: prefersColorScheme,
+      navigation_type: navigationType,
+    }, overrides);
 
-        // See: https://web.dev/debug-web-vitals-in-the-field/
-        // UA - Remove once fully migrated to GA4
-        dimension1: overrides.debug_target,
-        dimension2: effectiveType,
-        dimension3: dataSaver,
-        dimension4: deviceMemory,
-        dimension5: prefersReducedMotion,
-        dimension6: prefersColorScheme,
-        dimension7: navigationType,
-        //GA4
-        effective_type: effectiveType,
-        data_saver: dataSaver,
-        device_memory: deviceMemory,
-        prefers_reduced_motion: prefersReducedMotion,
-        prefers_color_scheme: prefersColorScheme,
-        navigation_type: navigationType,
-      }, overrides));
+    console.log('gtag', name, params);
+    gtag('event', name, params);
 
+  }
+
+  // Monitor LoAFs
+  if (PerformanceObserver.supportedEntryTypes.includes('long-animation-frame')) {
+    new PerformanceObserver(entries => {
+      longAnimationFrames = longAnimationFrames.concat(entries.getEntries());
+    }).observe({
+      type: 'long-animation-frame',
+      buffered: true
+    });
   }
 
   // As the web-vitals script and this script is set with defer in order, so it should be loaded
