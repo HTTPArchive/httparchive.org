@@ -1,4 +1,4 @@
-function updateTechnologies(technologies, filters) {
+function updateTechnologies(technologies) {
   /* Get existing tech selectors on the page */
   const allTechSelectors = document.querySelectorAll('select.tech');
   const techNames = technologies.map(element => element.app);
@@ -28,7 +28,9 @@ function updateTechnologies(technologies, filters) {
       }
       techSelector.append(optionTmpl);
     });
-  })
+  });
+
+  hideRemoveButton();
 }
 
 function updateGeo(geos, filters) {
@@ -69,30 +71,66 @@ function bindFilterListener() {
     submit.addEventListener('click', setFilter);
   }
 
-  const add = document.getElementById('add-tech');
-  if(add) {
-    add.addEventListener('click', addTechnologySelector);
+  const addButton = document.getElementById('add-tech');
+  if(addButton) {
+    addButton.addEventListener('click', addTechnologySelector);
   }
+
+  const removeButtons = Object.values(document.getElementsByClassName('remove-tech'));
+  removeButtons?.forEach(removeButton => removeButton.addEventListener('click', removeTechnology));
 }
+
 
 function addTechnologySelector(event) {
   event.preventDefault();
 
   const selectorTemplate = document.getElementById('tech-selector').content.cloneNode(true);
+
   const selectElement = selectorTemplate.querySelector('select');
   const labelElement = selectorTemplate.querySelector('label');
+  const removeButton = selectorTemplate.querySelector('.remove-tech');
+
+  /* Set a unique name on the new element (based on the amount of techs) */
   const techId = `tech-${document.querySelectorAll('select.tech[name="tech"]').length + 1}`;
   selectElement.setAttribute('id', techId);
   labelElement.setAttribute('for', techId);
+  removeButton.dataset.tech = techId;
 
+  removeButton.classList.remove('hidden');
+
+  /* Bind functionality to the button */
+  removeButton.addEventListener('click', removeTechnology);
+
+  /* Fill in all techs and select the first one */
   selectElement.innerHTML = document.querySelector('select.tech').innerHTML;
-  const firstOption = selectElement.querySelector('option');
-  firstOption.selected = true;
+  selectElement.getElementsByTagName('option')[0].selected = true;
 
-  const techs = document.getElementsByName('tech');
+  /* Add the new tech to the end of the list */
+  const techs = document.getElementsByClassName('tech-selector-group');
   const last = techs[techs.length - 1];
-
   last.after(selectorTemplate);
+
+  /* If this is there are 2 or more technologies, the first one can be removed too */
+  if(techs.length === 2) {
+    techs[0].getElementsByClassName('remove-tech')[0].classList.remove('hidden');
+  }
+}
+
+function removeTechnology(event) {
+  event.preventDefault();
+
+  /* Remove the tech selector group from the DOM */
+  event.target.parentElement.remove();
+
+  /* Don't show any remove buttons if there is only one element left */
+  hideRemoveButton();
+}
+
+function hideRemoveButton() {
+  const techs = document.getElementsByClassName('tech-selector-group');
+  if(techs.length === 1) {
+    techs[0].getElementsByClassName('remove-tech')[0].classList.add('hidden');
+  }
 }
 
 function setFilter(event) {

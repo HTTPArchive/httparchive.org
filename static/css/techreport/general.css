@@ -22,6 +22,7 @@ h2 {
   outline-offset: 1.5px;
 }
 
+/* Hidden visually, but still accessible through screen readers/other AT */
 .sr-only {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -30,6 +31,11 @@ h2 {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+/* Hidden for everyone */
+.hidden {
+  display: none;
 }
 
 .card {

@@ -1,6 +1,11 @@
-<label for="{{ name }}">Technology</label>
-<select name="tech" class="tech" data-selected="{{ option }}" id="{{ name }}">
-  <option value="{{ option }}" selected="true">
-    {{ option }}
-  </option>
-</select>
+<div class="tech-selector-group">
+  <label for="{{ name }}">Technology</label>
+  <select name="tech" class="tech" data-selected="{{ option }}" id="{{ name }}">
+    <option value="{{ option }}" selected="true">
+      {{ option }}
+    </option>
+  </select>
+  {% if active_page == "comparison" %}
+    <button class="remove-tech {% if technologies|length == 1 %}hidden{% endif %}" data-tech="{{ name }}">Remove</button>
+  {% endif %}
+</div>
