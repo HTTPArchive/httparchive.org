@@ -53,7 +53,11 @@
           client="mobile"
           technologies="{{ technologies_str }}"
           metric="origins"
+          id="origins-over-time"
         >
+          <span slot="table-caption">
+            The origins over time, compared for the selected technologies.
+          </span>
         </table-general-multitech>
       </div>
     </div>
@@ -70,7 +74,11 @@
           client="mobile"
           technologies="{{ technologies_str }}"
           metric="origins_with_good_cwv"
+          id="good-cwv-over-time"
         >
+          <span slot="table-caption">
+            The amount of good core web vitals over time, compared for the selected technologies.
+          </span>
         </table-general-multitech>
       </div>
     </div>
@@ -87,7 +95,11 @@
           client="mobile"
           technologies="{{ technologies_str }}"
           metric="median_lighthouse_score_performance"
+          id="lighthouse-over-time"
         >
+          <span slot="table-caption">
+            The lighthouse scores over time, compared for the selected technologies.
+          </span>
         </table-general-multitech>
       </div>
     </div>
@@ -104,7 +116,11 @@
           client="mobile"
           technologies="{{ technologies_str }}"
           metric="median_bytes_total"
+          id="weight-over-time"
         >
+          <span slot="table-caption">
+            The page weight over time, compared for the selected technologies.
+          </span>
         </table-general-multitech>
       </div>
     </div>

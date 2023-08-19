@@ -25,7 +25,7 @@ class tableGenralMulti extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['loaded', 'client', 'all_data', 'technologies', 'metric'];
+    return ['loaded', 'client', 'all_data', 'technologies', 'metric', 'id'];
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
@@ -41,6 +41,12 @@ class tableGenralMulti extends HTMLElement {
     /* Select the elements within the component */
     const tableHead = this.shadowRoot.querySelector('table.table-ui thead tr');
     const tableBody = this.shadowRoot.querySelector('table.table-ui tbody');
+    const tableCaption = this.shadowRoot.querySelector('table.table-ui caption');
+    const tableWrapper = this.shadowRoot.querySelector('table-ui-wrapper[role="region"]');
+
+    /* Set the caption id and connect the wrapper to it */
+    tableCaption.setAttribute('id', this.id);
+    tableWrapper.setAttribute('aria-labelledby', this.id);
 
     /* Reset the component */
     tableBody.innerHTML = '';

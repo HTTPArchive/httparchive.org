@@ -30,7 +30,7 @@ function updateTechnologies(technologies) {
     });
   });
 
-  hideRemoveButton();
+  // hideRemoveButton();
 }
 
 function updateGeo(geos, filters) {
