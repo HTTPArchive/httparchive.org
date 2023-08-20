@@ -42,7 +42,7 @@ class tableGenralMulti extends HTMLElement {
     const tableHead = this.shadowRoot.querySelector('table.table-ui thead tr');
     const tableBody = this.shadowRoot.querySelector('table.table-ui tbody');
     const tableCaption = this.shadowRoot.querySelector('table.table-ui caption');
-    const tableWrapper = this.shadowRoot.querySelector('table-ui-wrapper[role="region"]');
+    const tableWrapper = this.shadowRoot.querySelector('.table-ui-wrapper[role="region"]');
 
     /* Set the caption id and connect the wrapper to it */
     tableCaption.setAttribute('id', this.id);

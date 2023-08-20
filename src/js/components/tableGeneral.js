@@ -14,7 +14,7 @@ class TableGeneral extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['loaded', 'labels', 'columns', 'client', 'subcategory'];
+    return ['loaded', 'labels', 'columns', 'client', 'subcategory', 'id'];
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
@@ -37,6 +37,12 @@ class TableGeneral extends HTMLElement {
   }
 
   setData() {
+    /* Set the caption id and connect the wrapper to it */
+    const tableWrapper = this.shadowRoot.querySelector('.table-ui-wrapper[role="region"]');
+    const tableCaption = this.shadowRoot.querySelector('table.table-ui caption');
+    tableCaption.setAttribute('id', this.id);
+    tableWrapper.setAttribute('aria-labelledby', this.id);
+
     if(this.columns) {
       const _columns = this.columns.replaceAll("*subcategory*", this.subcategory)
       const columns = _columns.split(",");

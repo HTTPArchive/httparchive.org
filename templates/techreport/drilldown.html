@@ -80,7 +80,11 @@
           data-scope="all-data"
           client="mobile"
           columns="date,client,origins"
+          id="origins-over-time"
         >
+          <span slot="table-caption">
+            Adoption over time
+          </span>
         </table-general>
       </div>
     </div>
@@ -106,7 +110,11 @@
           client="mobile"
           subcategory="cwv"
           columns="date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
+          id="good-cwv-over-time"
         >
+          <span slot="table-caption">
+            Good CWVs over time.
+          </span>
         </table-general>
       </div>
     </div>
@@ -122,7 +130,11 @@
           data-scope="all-data"
           client="mobile"
           columns="date,client,median_lighthouse_score_accessibility,median_lighthouse_score_performance,median_lighthouse_score_pwa,median_lighthouse_score_seo,median_lighthouse_score_best_practices"
+          id="median-lighthouse-over-time"
         >
+          <span slot="table-caption">
+            Median lighthouse scores over time.
+          </span>
         </table-general>
       </div>
     </div>
@@ -138,7 +150,11 @@
           data-scope="all-data"
           client="mobile"
           columns="date,client,median_bytes_image,median_bytes_js,median_bytes_total"
+          id="weight-over-time"
         >
+          <span slot="table-caption">
+            The page weight over time.
+          </span>
         </table-general>
       </div>
     </div>
