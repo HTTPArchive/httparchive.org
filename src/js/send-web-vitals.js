@@ -1,6 +1,5 @@
 function sendWebVitals() {
 
-  let longAnimationFrames = [];
   function getLoafAttribution(attribution) {
     if (!attribution) {
       return {};
@@ -16,6 +15,7 @@ function sendWebVitals() {
       total: 0
     };
 
+    const longAnimationFrames = performance.getEntriesByType('long-animation-frame');
     longAnimationFrames.filter(loaf => {
       // LoAFs that intersect with the event.
       return entry.startTime < (loaf.startTime + loaf.duration) && loaf.startTime < (entry.startTime + entry.duration);
@@ -29,6 +29,7 @@ function sendWebVitals() {
           loafAttribution.execDuration = script.startTime + script.duration - script.executionStart;
           loafAttribution.source = script.sourceLocation || script.name;
           loafAttribution.type = script.type;
+          loafAttribution.length = longAnimationFrames.length;
         }
       });
     });
@@ -74,7 +75,7 @@ function sendWebVitals() {
           debug_loaf_exec: loafAttribution.execDuration,
           debug_loaf_source: loafAttribution.source,
           debug_loaf_type: loafAttribution.type,
-          debug_loaf_length: longAnimationFrames.length,
+          debug_loaf_length: loafAttribution.length,
         };
         if (!attribution.eventEntry) {
           break;
@@ -144,16 +145,6 @@ function sendWebVitals() {
 
     gtag('event', name, params);
 
-  }
-
-  // Monitor LoAFs
-  if (PerformanceObserver.supportedEntryTypes.includes('long-animation-frame')) {
-    new PerformanceObserver(entries => {
-      longAnimationFrames = longAnimationFrames.concat(entries.getEntries());
-    }).observe({
-      type: 'long-animation-frame',
-      buffered: true
-    });
   }
 
   // As the web-vitals script and this script is set with defer in order, so it should be loaded
