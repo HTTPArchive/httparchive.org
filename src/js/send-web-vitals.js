@@ -20,10 +20,6 @@ function sendWebVitals() {
       // LoAFs that intersect with the event.
       return entry.startTime < (loaf.startTime + loaf.duration) && loaf.startTime < (entry.startTime + entry.duration);
     }).forEach(loaf => {
-      if (loaf.duration <= loafAttribution.duration) {
-        return;
-      }
-
       loaf.scripts.forEach(script => {
         const total = script.startTime + script.duration - script.desiredExecutionStart;
         if (total > loafAttribution.total) {
