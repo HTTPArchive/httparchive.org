@@ -3,6 +3,7 @@ class TableGeneral extends HTMLElement {
     super();
 
     this.allData = [];
+    this.subcategory = '';
 
     this.attachShadow({ mode: 'open' });
     const template = document.getElementById('table-general').content.cloneNode(true);
@@ -10,6 +11,13 @@ class TableGeneral extends HTMLElement {
   }
 
   connectedCallback() {
+    /* Listen to changes on the subcategory selector */
+    const subcategorySelector = this.shadowRoot.querySelector('[name="subcategory"]');
+    subcategorySelector.addEventListener('change', (event) => {
+      this.setAttribute('subcategory', event.target.value);
+    });
+
+    /* Render the component */
     this.renderComponent();
   }
 
@@ -20,7 +28,7 @@ class TableGeneral extends HTMLElement {
   attributeChangedCallback(property, oldValue, newValue) {
     if (oldValue === newValue) return;
     this[ property ] = newValue;
-    this.renderComponent(property);
+    this.renderComponent();
   }
 
   setTitle() {
@@ -62,7 +70,7 @@ class TableGeneral extends HTMLElement {
     }
   }
 
-  renderComponent(property) {
+  renderComponent() {
     this.setTitle();
     this.setData();
   }
