@@ -2,11 +2,7 @@
   <link rel="stylesheet" href="/static/css/techreport/general.css">
   <link rel="stylesheet" href="/static/components/table.css">
 
-  <label for="subcategory">Subcategory</label>
-  <select name="subcategory" id="subcategory">
-    <option value="cwv" selected="true">CWV</option>
-    <option value="fid">FID</option>
-  </select>
+  <slot name="subcategory-selector"></slot>
 
   <!-- This makes the table focusable and scrollable by keyboard -->
   <!-- Table content and caption id set in JS -->

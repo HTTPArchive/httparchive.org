@@ -11,14 +11,8 @@ class TableGeneral extends HTMLElement {
   }
 
   connectedCallback() {
-    /* Listen to changes on the subcategory selector */
-    const subcategorySelector = this.shadowRoot.querySelector('[name="subcategory"]');
-    subcategorySelector.addEventListener('change', (event) => {
-      this.setAttribute('subcategory', event.target.value);
-    });
-
-    /* Render the component */
     this.renderComponent();
+    this.renderSubcategorySelector();
   }
 
   static get observedAttributes() {
@@ -29,6 +23,18 @@ class TableGeneral extends HTMLElement {
     if (oldValue === newValue) return;
     this[ property ] = newValue;
     this.renderComponent();
+  }
+
+  renderSubcategorySelector() {
+    /* Get the subcategory slot content. */
+    const subcategorySelector = this.shadowRoot.querySelector('slot[name="subcategory-selector"]');
+
+    /* Only add event listener if subcategory slots were added. */
+    if(subcategorySelector) {
+      subcategorySelector.addEventListener('change', (event) => {
+        this.setAttribute('subcategory', event.target.value);
+      });
+    }
   }
 
   setTitle() {

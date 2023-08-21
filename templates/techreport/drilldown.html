@@ -92,6 +92,7 @@
     <div id="good-cwvs" class="block-m report-section">
       <h2>Core Web Vitals</h2>
       <p>Description</p>
+
       <div class="table-ui-wrapper card">
         <h3>Latest data</h3>
         <p>Explanation</p>
@@ -115,6 +116,18 @@
           <span slot="table-caption">
             Good CWVs over time.
           </span>
+          <form slot="subcategory-selector">
+            <label for="subcategory">Subcategory</label>
+            <select name="subcategory" id="subcategory">
+              <option value="cwv" selected>Overall CWVs</option>
+              <option value="lcp">LCP</option>
+              <option value="fid">FID</option>
+              <option value="cls">CLS</option>
+              <option value="fcp">FCP</option>
+              <option value="ttfb">TTFB</option>
+              <option value="inp">INP</option>
+            </select>
+          </form>
         </table-general>
       </div>
     </div>
@@ -129,12 +142,23 @@
         <table-general
           data-scope="all-data"
           client="mobile"
-          columns="date,client,median_lighthouse_score_accessibility,median_lighthouse_score_performance,median_lighthouse_score_pwa,median_lighthouse_score_seo,median_lighthouse_score_best_practices"
+          columns="date,client,median_lighthouse_score_*subcategory*"
+          subcategory="performance"
           id="median-lighthouse-over-time"
         >
           <span slot="table-caption">
             Median lighthouse scores over time.
           </span>
+          <form slot="subcategory-selector">
+            <label for="subcategory">Subcategory</label>
+            <select name="subcategory" id="subcategory">
+              <option value="performance" selected>Performance</option>
+              <option value="accessibility">Accessibility</option>
+              <option value="pwa">PWA</option>
+              <option value="seo">SEO</option>
+              <option value="best_practices">Best practices</option>
+            </select>
+          </form>
         </table-general>
       </div>
     </div>
@@ -149,12 +173,21 @@
         <table-general
           data-scope="all-data"
           client="mobile"
-          columns="date,client,median_bytes_image,median_bytes_js,median_bytes_total"
+          columns="date,client,median_bytes_*subcategory*"
           id="weight-over-time"
+          subcategory="image"
         >
           <span slot="table-caption">
             The page weight over time.
           </span>
+          <form slot="subcategory-selector">
+            <label for="subcategory">Subcategory</label>
+            <select name="subcategory" id="subcategory">
+              <option value="image" selected>Image weight</option>
+              <option value="js">Javascript transfer size</option>
+              <option value="total">Total page weight</option>
+            </select>
+          </form>
         </table-general>
       </div>
     </div>
