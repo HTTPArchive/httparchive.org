@@ -71,14 +71,28 @@
         <p>Explanation</p>
         <table-general-multitech
           data-scope="all-data"
+          data-unit="%"
           client="mobile"
           technologies="{{ technologies_str }}"
-          metric="origins_with_good_cwv"
+          metric="pct_good_*subcategory*"
+          subcategory="cwv"
           id="good-cwv-over-time"
         >
           <span slot="table-caption">
             The amount of good core web vitals over time, compared for the selected technologies.
           </span>
+          <form slot="subcategory-selector">
+            <label for="subcategory">Subcategory</label>
+            <select name="subcategory" id="subcategory">
+              <option value="cwv" selected>Overall CWVs</option>
+              <option value="lcp">LCP</option>
+              <option value="fid">FID</option>
+              <option value="cls">CLS</option>
+              <option value="fcp">FCP</option>
+              <option value="ttfb">TTFB</option>
+              <option value="inp">INP</option>
+            </select>
+          </form>
         </table-general-multitech>
       </div>
     </div>
@@ -94,12 +108,23 @@
           data-scope="all-data"
           client="mobile"
           technologies="{{ technologies_str }}"
-          metric="median_lighthouse_score_performance"
+          metric="median_lighthouse_score_*subcategory*"
+          subcategory="performance"
           id="lighthouse-over-time"
         >
           <span slot="table-caption">
             The lighthouse scores over time, compared for the selected technologies.
           </span>
+          <form slot="subcategory-selector">
+            <label for="subcategory">Subcategory</label>
+            <select name="subcategory" id="subcategory">
+              <option value="performance" selected>Performance</option>
+              <option value="accessibility">Accessibility</option>
+              <option value="pwa">PWA</option>
+              <option value="seo">SEO</option>
+              <option value="best_practices">Best practices</option>
+            </select>
+          </form>
         </table-general-multitech>
       </div>
     </div>
@@ -113,14 +138,22 @@
         <p>Explanation</p>
         <table-general-multitech
           data-scope="all-data"
+          data-unit=" kB"
           client="mobile"
           technologies="{{ technologies_str }}"
-          metric="median_bytes_total"
+          metric="median_bytes_*subcategory*"
+          subcategory="image"
           id="weight-over-time"
         >
           <span slot="table-caption">
             The page weight over time, compared for the selected technologies.
           </span>
+          <label for="subcategory">Subcategory</label>
+          <select name="subcategory" id="subcategory">
+            <option value="image" selected>Image weight</option>
+            <option value="js">Javascript transfer size</option>
+            <option value="total">Total page weight</option>
+          </select>
         </table-general-multitech>
       </div>
     </div>

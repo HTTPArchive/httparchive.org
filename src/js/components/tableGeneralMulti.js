@@ -5,6 +5,9 @@ import { getLatestEntry } from "../utils";
  * Dataset: Based on selected metric (CWV, lighthouse, etc.)
  * Columns: Selected technologies.
  * Rows: Time entries.
+ * TODO:
+ *  - Some functionality shared with tableGeneral.js -> Merge
+ *  - Clean up code and naming
  */
 class tableGenralMulti extends HTMLElement {
   constructor() {
@@ -14,6 +17,7 @@ class tableGenralMulti extends HTMLElement {
     this.technologies = '';
     this.client = 'mobile';
     this.metric = 'origins';
+    this.subcategory = '';
 
     this.attachShadow({ mode: 'open' });
     const template = document.getElementById('table-general-multitech').content.cloneNode(true);
@@ -22,16 +26,29 @@ class tableGenralMulti extends HTMLElement {
 
   connectedCallback() {
     this.renderComponent();
+    this.renderSubcategorySelector();
   }
 
   static get observedAttributes() {
-    return ['loaded', 'client', 'all_data', 'technologies', 'metric', 'id'];
+    return ['loaded', 'client', 'all_data', 'subcategory', 'technologies', 'metric', 'id'];
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
     if (oldValue === newValue) return;
     this[ property ] = newValue;
     this.renderComponent();
+  }
+
+  renderSubcategorySelector() {
+    /* Get the subcategory slot content. */
+    const subcategorySelector = this.shadowRoot.querySelector('slot[name="subcategory-selector"]');
+
+    /* Only add event listener if subcategory slots were added. */
+    if(subcategorySelector) {
+      subcategorySelector.addEventListener('change', (event) => {
+        this.setAttribute('subcategory', event.target.value);
+      });
+    }
   }
 
   setData() {
@@ -79,7 +96,7 @@ class tableGenralMulti extends HTMLElement {
     /* Add a row to the table body for each of the time entries */
     _dates.forEach(date => {
       /* Select the needed templates */
-      const rowTemplate = document.getElementById('table-general-row').content.cloneNode(true);
+      const rowTemplate = document.getElementById('table-general-row').content.cloneNode(true).querySelector('tr');
       const headingCellTemplate = document.getElementById('table-general-heading-cell').content.cloneNode(true);
 
       /* Fill in the dates */
@@ -89,14 +106,22 @@ class tableGenralMulti extends HTMLElement {
       /* For each of the technologies, select the chosen metric for the given date */
       technologies.forEach(technology => {
         const dataCellTemplate = document.getElementById('table-general-cell').content.cloneNode(true);
-        const _data = this.allData?.[technology]?.filter(entry => entry.client === this.client)?.find(row => row.date = date);
+        const _data = this.allData?.[technology]?.filter(entry => entry.client === this.client)?.find(row => row.date === date);
+        const metric = this.metric?.replaceAll("*subcategory*", this.subcategory);
 
-        dataCellTemplate.querySelector('td').textContent = _data ? _data[this.metric] : '-';
-        rowTemplate.append(dataCellTemplate);
+        let cellContent;
+        if(_data && _data[metric]) {
+          cellContent = `${_data[metric]}${this.getAttribute('data-unit') || ''}`;
+        } else {
+          cellContent = '-';
+        }
+
+        dataCellTemplate.querySelector('td').textContent = cellContent;
+        rowTemplate.appendChild(dataCellTemplate);
       });
 
       /* Append the row to the table */
-      tableBody.append(rowTemplate);
+      tableBody.appendChild(rowTemplate);
     });
   }
 

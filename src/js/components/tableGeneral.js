@@ -39,7 +39,7 @@ class TableGeneral extends HTMLElement {
 
   setTitle() {
     const columnHeading = this.shadowRoot.querySelector('table.table-ui thead tr');
-    const _columns = this.columns?.replaceAll("*subcategory*", this.subcategory)
+    const _columns = this.columns?.replaceAll("*subcategory*", this.subcategory);
     const columns = _columns?.split(",");
 
     columnHeading.innerHTML = '';
