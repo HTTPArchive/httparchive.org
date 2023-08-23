@@ -11,6 +11,10 @@ function sendWebVitals() {
       return {};
     }
 
+    if (!PerformanceObserver.supportedEntryTypes.includes('long-animation-frame')) {
+      return {};
+    }
+
     let loafAttribution = {
       debug_loaf_script_total_duration: 0
     };
@@ -33,7 +37,7 @@ function sendWebVitals() {
             debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
             debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
             debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loaf.startTime + loaf.duration - loaf.styleAndLayoutStart : 0,
-            
+
             // Stats for the longest script in the LoAF entry.
             debug_loaf_script_total_duration: totalDuration,
             debug_loaf_script_delay: script.startTime - script.desiredExecutionStart,
