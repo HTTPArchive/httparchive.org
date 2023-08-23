@@ -47,7 +47,7 @@ function sendWebVitals() {
             debug_loaf_script_type: script.type,
 
             // LoAF metadata.
-            deubg_loaf_meta_length: longAnimationFrames.length,
+            debug_loaf_meta_length: longAnimationFrames.length,
           }
         }
       });
