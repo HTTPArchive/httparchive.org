@@ -1,7 +1,70 @@
 function sendWebVitals() {
 
-  function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
+  function getLoafAttribution(attribution) {
+    if (!attribution) {
+      return {};
+    }
 
+    const entry = attribution.eventEntry;
+
+    if (!entry) {
+      return {};
+    }
+
+    if (!PerformanceObserver.supportedEntryTypes.includes('long-animation-frame')) {
+      return {};
+    }
+
+    let loafAttribution = {
+      debug_loaf_script_total_duration: 0
+    };
+
+    const longAnimationFrames = performance.getEntriesByType('long-animation-frame');
+    longAnimationFrames.filter(loaf => {
+      // LoAFs that intersect with the event.
+      return entry.startTime < (loaf.startTime + loaf.duration) && loaf.startTime < (entry.startTime + entry.duration);
+    }).forEach(loaf => {
+      loaf.scripts.forEach(script => {
+        const totalDuration = script.startTime + script.duration - script.desiredExecutionStart;
+        if (totalDuration > loafAttribution.debug_loaf_script_total_duration) {
+          loafAttribution = {
+            // Stats for the LoAF entry itself.
+            debug_loaf_entry_start_time: loaf.startTime,
+            debug_loaf_entry_end_time: loaf.startTime + loaf.duration,
+            debug_loaf_entry_delay: loaf.desiredRenderStart ? Math.max(0, loaf.startTime - loaf.desiredRenderStart) : 0,
+            debug_loaf_entry_deferred_duration: Math.max(0, loaf.desiredRenderStart - loaf.startTime),
+            debug_loaf_entry_render_duration: loaf.styleAndLayoutStart - loaf.renderStart,
+            debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
+            debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
+            debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loaf.startTime + loaf.duration - loaf.styleAndLayoutStart : 0,
+
+            // Stats for the longest script in the LoAF entry.
+            debug_loaf_script_total_duration: totalDuration,
+            debug_loaf_script_delay: script.startTime - script.desiredExecutionStart,
+            debug_loaf_script_compile_duration: script.executionStart - script.startTime,
+            debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
+            debug_loaf_script_source: script.sourceLocation || script.name,
+            debug_loaf_script_type: script.type,
+
+            // LoAF metadata.
+            deubg_loaf_meta_length: longAnimationFrames.length,
+          }
+        }
+      });
+    });
+
+    if (!loafAttribution.debug_loaf_script_total_duration) {
+      return {};
+    }
+
+    // The LoAF script with the single longest total duration.
+    return Object.fromEntries(Object.entries(loafAttribution).map(([k, v]) => {
+      // Convert all floats to ints.
+      return [k, typeof v == 'number' ? Math.floor(v) : v];
+    }));
+  }
+
+  function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
     let overrides = {};
 
     switch (name) {
@@ -22,11 +85,13 @@ function sendWebVitals() {
         break;
       case 'FID':
       case 'INP':
+        const loafAttribution = getLoafAttribution(attribution);
         overrides = {
           debug_event: attribution.eventType,
           debug_time: Math.round(attribution.eventTime),
           debug_load_state: attribution.loadState,
           debug_target: attribution.eventTarget || '(not set)',
+          ...loafAttribution
         };
         if (!attribution.eventEntry) {
           break;
@@ -80,31 +145,21 @@ function sendWebVitals() {
       prefersColorScheme = 'not supported';
     }
 
+    const params = Object.assign({
+      event_category: 'Web Vitals',
+      event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+      event_label: id,
+      nonInteraction: true,
 
-    gtag('event', name, Object.assign(
-      {
-        event_category: 'Web Vitals',
-        event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
-        event_label: id,
-        nonInteraction: true,
+      effective_type: effectiveType,
+      data_saver: dataSaver,
+      device_memory: deviceMemory,
+      prefers_reduced_motion: prefersReducedMotion,
+      prefers_color_scheme: prefersColorScheme,
+      navigation_type: navigationType,
+    }, overrides);
 
-        // See: https://web.dev/debug-web-vitals-in-the-field/
-        // UA - Remove once fully migrated to GA4
-        dimension1: overrides.debug_target,
-        dimension2: effectiveType,
-        dimension3: dataSaver,
-        dimension4: deviceMemory,
-        dimension5: prefersReducedMotion,
-        dimension6: prefersColorScheme,
-        dimension7: navigationType,
-        //GA4
-        effective_type: effectiveType,
-        data_saver: dataSaver,
-        device_memory: deviceMemory,
-        prefers_reduced_motion: prefersReducedMotion,
-        prefers_color_scheme: prefersColorScheme,
-        navigation_type: navigationType,
-      }, overrides));
+    gtag('event', name, params);
 
   }
 
