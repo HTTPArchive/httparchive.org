@@ -111,7 +111,8 @@ class tableGenralMulti extends HTMLElement {
 
         let cellContent;
         if(_data && _data[metric]) {
-          cellContent = `${_data[metric]}${this.getAttribute('data-unit') || ''}`;
+          const value = _data[metric];
+          cellContent = `${value}${this.getAttribute('data-unit') || ''}`;
         } else {
           cellContent = '-';
         }
