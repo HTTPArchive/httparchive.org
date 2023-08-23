@@ -77,12 +77,18 @@ class tableCWVOverviewMulti extends HTMLElement {
         });
         const _latest = getLatestEntry(_clientDataSorted);
 
+        /* Get the filters from the URL */
+        const url = window.location.search;
+        const parameters = new URLSearchParams(url);
+        const geo = parameters.get('geo') || 'ALL';
+        const rank = parameters.get('rank') || 'ALL';
+
         /* Fill in the tech names as row headings */
         const row = document.createElement('tr');
         const headingCell = document.createElement('th');
         const technologyLinkEl = document.createElement('a');
         technologyLinkEl.className = 'row-link';
-        technologyLinkEl.href = `/reports/techreport/drilldown/?tech=${technology}`;
+        technologyLinkEl.href = `/reports/techreport/drilldown/?tech=${technology}&geo=${geo}&rank=${rank}`;
         technologyLinkEl.innerHTML = technology;
         headingCell.append(technologyLinkEl);
         row.append(headingCell);
