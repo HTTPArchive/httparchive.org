@@ -11,8 +11,8 @@ function sendWebVitals() {
       return {};
     }
 
-    const loafAttribution = {
-      total: 0
+    let loafAttribution = {
+      debug_loaf_script_total_duration: 0
     };
 
     const longAnimationFrames = performance.getEntriesByType('long-animation-frame');
@@ -21,25 +21,43 @@ function sendWebVitals() {
       return entry.startTime < (loaf.startTime + loaf.duration) && loaf.startTime < (entry.startTime + entry.duration);
     }).forEach(loaf => {
       loaf.scripts.forEach(script => {
-        const total = script.startTime + script.duration - script.desiredExecutionStart;
-        if (total > loafAttribution.total) {
-          loafAttribution.total = total;
-          loafAttribution.delay = script.startTime - script.desiredExecutionStart;
-          loafAttribution.compileDuration = script.executionStart - script.startTime;
-          loafAttribution.execDuration = script.startTime + script.duration - script.executionStart;
-          loafAttribution.source = script.sourceLocation || script.name;
-          loafAttribution.type = script.type;
-          loafAttribution.length = longAnimationFrames.length;
+        const totalDuration = script.startTime + script.duration - script.desiredExecutionStart;
+        if (totalDuration > loafAttribution.debug_loaf_script_total_duration) {
+          loafAttribution = {
+            // Stats for the LoAF entry itself.
+            debug_loaf_entry_start_time: loaf.startTime,
+            debug_loaf_entry_end_time: loaf.startTime + loaf.duration,
+            debug_loaf_entry_delay: loaf.desiredRenderStart ? Math.max(0, loaf.startTime - loaf.desiredRenderStart) : 0,
+            debug_loaf_entry_deferred_duration: Math.max(0, loaf.desiredRenderStart - loaf.startTime),
+            debug_loaf_entry_render_duration: loaf.styleAndLayoutStart - loaf.renderStart,
+            debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
+            debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
+            debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loaf.startTime + loaf.duration - loaf.styleAndLayoutStart : 0,
+            
+            // Stats for the longest script in the LoAF entry.
+            debug_loaf_script_total_duration: totalDuration,
+            debug_loaf_script_delay: script.startTime - script.desiredExecutionStart,
+            debug_loaf_script_compile_duration: script.executionStart - script.startTime,
+            debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
+            debug_loaf_script_source: script.sourceLocation || script.name,
+            debug_loaf_script_type: script.type,
+
+            // LoAF metadata.
+            deubg_loaf_meta_length: longAnimationFrames.length,
+          }
         }
       });
     });
 
-    if (!loafAttribution.total) {
+    if (!loafAttribution.debug_loaf_script_total_duration) {
       return {};
     }
 
     // The LoAF script with the single longest total duration.
-    return loafAttribution;
+    return Object.fromEntries(Object.entries(loafAttribution).map(([k, v]) => {
+      // Convert all floats to ints.
+      return [k, typeof v == 'number' ? Math.floor(v) : v];
+    }));
   }
 
   function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
@@ -69,13 +87,7 @@ function sendWebVitals() {
           debug_time: Math.round(attribution.eventTime),
           debug_load_state: attribution.loadState,
           debug_target: attribution.eventTarget || '(not set)',
-          debug_loaf_total: loafAttribution.total,
-          debug_loaf_delay: loafAttribution.delay,
-          debug_loaf_compile: loafAttribution.compileDuration,
-          debug_loaf_exec: loafAttribution.execDuration,
-          debug_loaf_source: loafAttribution.source,
-          debug_loaf_type: loafAttribution.type,
-          debug_loaf_length: loafAttribution.length,
+          ...loafAttribution
         };
         if (!attribution.eventEntry) {
           break;
