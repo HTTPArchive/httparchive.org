@@ -8,7 +8,7 @@
 
       {% for technology in technologies %}
         {% set key = loop.index %}
-        {% set option = technology %}
+        {% set technology = technology %}
         {% set name = "tech-" + key|string %}
         {% include "techreport/templates/selector_tech.html" %}
       {% endfor %}
@@ -43,7 +43,7 @@
 </template>
 
 <template id="tech-selector">
-  {% set option = "ALL" %}
+  {% set technology = "ALL" %}
   {% set name = "tech-new" %}
   {% set key = 2 %}
   {% include "techreport/templates/selector_tech.html" %}

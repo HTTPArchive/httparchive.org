@@ -1,5 +1,6 @@
 const { DrilldownHeader } = require("./components/drilldownHeader");
 const { Filters } = require("./components/filters");
+const { Timeseries } = require("./techreport/timeseries");
 const { getPercentage } = require("./utils");
 
 class TechReport {
@@ -15,17 +16,31 @@ class TechReport {
     this.getAllData();
 
     Filters.bindFilterListener();
+    Timeseries.init(this.page, this.filters);
   }
 
   bindClientListener() {
     const select = document.getElementById('client-breakdown');
+    const allDataComponents = document.querySelectorAll('[data-scope]');
+
     if(select) {
       select.onchange = (event) => {
         const client = event.target.value;
-        const allDataComponents = document.querySelectorAll('[data-scope]');
-          allDataComponents.forEach(component => {
-            component.setAttribute('client', client);
-          });
+
+        allDataComponents.forEach(component => {
+          component.setAttribute('client', client);
+        });
+
+        this.filters = {
+          ...this.filters,
+          client: client
+        };
+
+        Timeseries.updateFilters(this.allData, this.filters);
+
+        const url = new URL(window.location.href);
+        url.searchParams.set(`client`, client);
+        window.history.replaceState(null, null, url);
       }
     }
   }
@@ -58,6 +73,7 @@ class TechReport {
         })
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
+      this.allData = data;
       this.updateComponents(data);
     });
   }
@@ -74,6 +90,10 @@ class TechReport {
     fetch('https://cdn.httparchive.org/reports/cwvtech/ranks.json')
       .then(result => result.json())
       .then(result => Filters.updateRank(result, this.filters));
+
+    fetch('https://cdn.httparchive.org/reports/cwvtech/categories.json')
+      .then(result => result.json())
+      .then(result => Filters.updateCategories(result, this.filters));
   }
 
   updateComponents(data) {
@@ -111,6 +131,7 @@ class TechReport {
     const app = this.filters.app[0];
 
     if(data && data[app]) {
+      Timeseries.updateData(data);
       const latestComponents = document.querySelectorAll('[data-scope="all-latest"]');
       latestComponents.forEach((component) => {
         component.latest = data[app][0];

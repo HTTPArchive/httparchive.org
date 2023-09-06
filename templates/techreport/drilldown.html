@@ -22,8 +22,8 @@
     <div class="client-selector block-m">
       <label for="client-breakdown">Client</label>
       <select name="client-breakdown" id="client-breakdown">
-        <option value="mobile" selected>Mobile</option>
-        <option value="desktop">Desktop</option>
+        <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
+        <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
       </select>
     </div>
 
@@ -37,7 +37,7 @@
             link="#adoption"
             key="origins"
             data-scope="all-data"
-            client="mobile"
+            client="{{ request.args.get('client', '')  or 'mobile' }}"
           >
           </summary-linked>
         </div>
@@ -48,7 +48,7 @@
             link="#good-cwvs"
             key="origins_with_good_cwv"
             data-scope="all-data"
-            client="mobile"
+            client="{{ request.args.get('client', '')  or 'mobile' }}"
           >
           </summary-linked>
         </div>
@@ -59,7 +59,7 @@
             link="#lighthouse"
             key="median_lighthouse_score_performance"
             data-scope="all-data"
-            client="mobile"
+            client="{{ request.args.get('client', '')  or 'mobile' }}"
           >
           </summary-linked>
         </div>
@@ -70,7 +70,7 @@
             link="#page-weight"
             key="median_bytes_total"
             data-scope="all-data"
-            client="mobile"
+            client="{{ request.args.get('client', '')  or 'mobile' }}"
           >
           </summary-linked>
         </div>
@@ -80,13 +80,22 @@
     <div id="adoption" class="block-m report-section">
       <h2>Adoption</h2>
       <p>Description</p>
-
       <div class="card">
+        {% set timeseries = tech_report_page.config.adoption_timeseries %}
+        {% include "techreport/components/timeseries.html" %}
+      </div>
+
+      <!-- <div class="card">
         <h3>All data</h3>
         <p>Explanation</p>
+
+        <div id="container"></div>
+
+        <button class="btn show-hide">Show Table</button>
+
         <table-general
           data-scope="all-data"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           columns="date,client,origins"
           id="origins-over-time"
         >
@@ -94,7 +103,7 @@
             Adoption over time
           </span>
         </table-general>
-      </div>
+      </div> -->
     </div>
 
     <div id="good-cwvs" class="block-m report-section">
@@ -106,18 +115,19 @@
         <p>Explanation</p>
         <table-overview
           data-scope="all-data"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
         >
         </table-overview>
       </div>
 
-      <div class="table-ui-wrapper card">
+      <!-- <div class="table-ui-wrapper card">
         <h3>All data</h3>
         <p>Explanation</p>
+
         <table-general
           data-scope="all-data"
-          client="mobile"
-          subcategory="cwv"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
+          subcategory="{{ request.args.get('good-cwv-over-time', '')  or 'cwv' }}"
           columns="date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
           id="good-cwv-over-time"
         >
@@ -127,16 +137,22 @@
           <form slot="subcategory-selector">
             <label for="subcategory">Subcategory</label>
             <select name="subcategory" id="subcategory">
-              <option value="cwv" selected>Overall CWVs</option>
-              <option value="lcp">LCP</option>
-              <option value="fid">FID</option>
-              <option value="cls">CLS</option>
-              <option value="fcp">FCP</option>
-              <option value="ttfb">TTFB</option>
-              <option value="inp">INP</option>
+              <option value="cwv" {% if request.args.get('good-cwv-over-time', '') == 'cwv' %}selected{% endif %}>Overall CWVs</option>
+              <option value="lcp" {% if request.args.get('good-cwv-over-time', '') == 'lcp' %}selected{% endif %}>LCP</option>
+              <option value="fid" {% if request.args.get('good-cwv-over-time', '') == 'fid' %}selected{% endif %}>FID</option>
+              <option value="cls" {% if request.args.get('good-cwv-over-time', '') == 'cls' %}selected{% endif %}>CLS</option>
+              <option value="fcp" {% if request.args.get('good-cwv-over-time', '') == 'fcp' %}selected{% endif %}>FCP</option>
+              <option value="ttfb" {% if request.args.get('good-cwv-over-time', '') == 'ttfb' %}selected{% endif %}>TTFB</option>
+              <option value="inp" {% if request.args.get('good-cwv-over-time', '') == 'inp' %}selected{% endif %}>INP</option>
             </select>
           </form>
         </table-general>
+      </div> -->
+
+      <div class="card">
+        {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
+        {% set subcategory = request.args.get('good-cwv-over-time', '')  or 'cwv' %}
+        {% include "techreport/components/timeseries.html" %}
       </div>
     </div>
 
@@ -147,11 +163,12 @@
       <div class="table-ui-wrapper card">
         <h3>All data</h3>
         <p>Explanation</p>
+
         <table-general
           data-scope="all-data"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           columns="date,client,median_lighthouse_score_*subcategory*"
-          subcategory="performance"
+          subcategory="{{ request.args.get('median-lighthouse-over-time', '')  or 'performance' }}"
           id="median-lighthouse-over-time"
         >
           <span slot="table-caption">
@@ -160,11 +177,11 @@
           <form slot="subcategory-selector">
             <label for="subcategory">Subcategory</label>
             <select name="subcategory" id="subcategory">
-              <option value="performance" selected>Performance</option>
-              <option value="accessibility">Accessibility</option>
-              <option value="pwa">PWA</option>
-              <option value="seo">SEO</option>
-              <option value="best_practices">Best practices</option>
+              <option value="performance" {% if request.args.get('median-lighthouse-over-time', '') == 'performance' %}selected{% endif %}>Performance</option>
+              <option value="accessibility" {% if request.args.get('median-lighthouse-over-time', '') == 'accessibility' %}selected{% endif %}>Accessibility</option>
+              <option value="pwa" {% if request.args.get('median-lighthouse-over-time', '') == 'pwa' %}selected{% endif %}>PWA</option>
+              <option value="seo" {% if request.args.get('median-lighthouse-over-time', '') == 'seo' %}selected{% endif %}>SEO</option>
+              <option value="best_practices" {% if request.args.get('median-lighthouse-over-time', '') == 'best_practices' %}selected{% endif %}>Best practices</option>
             </select>
           </form>
         </table-general>
@@ -178,12 +195,14 @@
       <div class="table-ui-wrapper card">
         <h3>All data</h3>
         <p>Explanation</p>
+
         <table-general
           data-scope="all-data"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           columns="date,client,median_bytes_*subcategory*"
           id="weight-over-time"
-          subcategory="image"
+          subcategory="{{ request.args.get('weight-over-time', '')  or 'image' }}"
+
         >
           <span slot="table-caption">
             The page weight over time.
@@ -191,9 +210,9 @@
           <form slot="subcategory-selector">
             <label for="subcategory">Subcategory</label>
             <select name="subcategory" id="subcategory">
-              <option value="image" selected>Image weight</option>
-              <option value="js">Javascript transfer size</option>
-              <option value="total">Total page weight</option>
+              <option value="image" {% if request.args.get('weight-over-time', '') == 'image' %}selected{% endif %}>Image weight</option>
+              <option value="js" {% if request.args.get('weight-over-time', '') == 'js' %}selected{% endif %}>Javascript transfer size</option>
+              <option value="total" {% if request.args.get('weight-over-time', '') == 'total' %}selected{% endif %}>Total page weight</option>
             </select>
           </form>
         </table-general>

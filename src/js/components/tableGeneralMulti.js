@@ -47,6 +47,9 @@ class tableGenralMulti extends HTMLElement {
     if(subcategorySelector) {
       subcategorySelector.addEventListener('change', (event) => {
         this.setAttribute('subcategory', event.target.value);
+        const url = new URL(window.location.href);
+        url.searchParams.set(this.id, event.target.value);
+        window.history.replaceState(null, null, url);
       });
     }
   }

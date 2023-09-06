@@ -1,8 +1,18 @@
 <div class="tech-selector-group">
+  <label for="categories">Category</label>
+
+  <select name="categories" class="categories" id="categories">
+    <option value="ALL" selected="true">
+      ALL
+    </option>
+  </select>
+  <br />
+
   <label for="{{ name }}">Technology</label>
-  <select name="tech" class="tech" data-selected="{{ option }}" id="{{ name }}">
-    <option value="{{ option }}" selected="true">
-      {{ option }}
+
+  <select name="tech" class="tech" data-selected="{{ technology }}" id="{{ name }}">
+    <option value="{{ technology }}" selected="true">
+      {{ technology }}
     </option>
   </select>
   {% if active_page == "comparison" %}

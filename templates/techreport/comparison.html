@@ -22,8 +22,8 @@
     <div class="client-selector block-m">
       <label for="client-breakdown">Client</label>
       <select name="client-breakdown" id="client-breakdown">
-        <option value="mobile" selected>Mobile</option>
-        <option value="desktop">Desktop</option>
+        <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
+        <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
       </select>
     </div>
 
@@ -34,7 +34,7 @@
 
         <table-cwv-overview-multitech
           data-scope="all-data"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           technologies="{{ technologies_str }}"
         >
         </table-cwv-overview-multitech>
@@ -50,7 +50,7 @@
         <p>Explanation</p>
         <table-general-multitech
           data-scope="all-data"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           technologies="{{ technologies_str }}"
           metric="origins"
           id="origins-over-time"
@@ -72,10 +72,10 @@
         <table-general-multitech
           data-scope="all-data"
           data-unit="%"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           technologies="{{ technologies_str }}"
           metric="pct_good_*subcategory*"
-          subcategory="cwv"
+          subcategory="{{ request.args.get('good-cwv-over-time', '')  or 'cwv' }}"
           id="good-cwv-over-time"
         >
           <span slot="table-caption">
@@ -84,13 +84,13 @@
           <form slot="subcategory-selector">
             <label for="subcategory">Subcategory</label>
             <select name="subcategory" id="subcategory">
-              <option value="cwv" selected>Overall CWVs</option>
-              <option value="lcp">LCP</option>
-              <option value="fid">FID</option>
-              <option value="cls">CLS</option>
-              <option value="fcp">FCP</option>
-              <option value="ttfb">TTFB</option>
-              <option value="inp">INP</option>
+              <option value="cwv" {% if request.args.get('good-cwv-over-time', '') == 'cwv' %}selected{% endif %}>Overall CWVs</option>
+              <option value="lcp" {% if request.args.get('good-cwv-over-time', '') == 'lcp' %}selected{% endif %}>LCP</option>
+              <option value="fid" {% if request.args.get('good-cwv-over-time', '') == 'fid' %}selected{% endif %}>FID</option>
+              <option value="cls" {% if request.args.get('good-cwv-over-time', '') == 'cls' %}selected{% endif %}>CLS</option>
+              <option value="fcp" {% if request.args.get('good-cwv-over-time', '') == 'fcp' %}selected{% endif %}>FCP</option>
+              <option value="ttfb" {% if request.args.get('good-cwv-over-time', '') == 'ttfb' %}selected{% endif %}>TTFB</option>
+              <option value="inp" {% if request.args.get('good-cwv-over-time', '') == 'inp' %}selected{% endif %}>INP</option>
             </select>
           </form>
         </table-general-multitech>
@@ -106,11 +106,11 @@
         <p>Explanation</p>
         <table-general-multitech
           data-scope="all-data"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           technologies="{{ technologies_str }}"
           metric="median_lighthouse_score_*subcategory*"
-          subcategory="performance"
-          id="lighthouse-over-time"
+          subcategory="{{ request.args.get('median-lighthouse-over-time', '')  or 'performance' }}"
+          id="median-lighthouse-over-time"
         >
           <span slot="table-caption">
             The lighthouse scores over time, compared for the selected technologies.
@@ -118,11 +118,11 @@
           <form slot="subcategory-selector">
             <label for="subcategory">Subcategory</label>
             <select name="subcategory" id="subcategory">
-              <option value="performance" selected>Performance</option>
-              <option value="accessibility">Accessibility</option>
-              <option value="pwa">PWA</option>
-              <option value="seo">SEO</option>
-              <option value="best_practices">Best practices</option>
+              <option value="performance" {% if request.args.get('median-lighthouse-over-time', '') == 'performance' %}selected{% endif %}>Performance</option>
+              <option value="accessibility" {% if request.args.get('median-lighthouse-over-time', '') == 'accessibility' %}selected{% endif %}>Accessibility</option>
+              <option value="pwa" {% if request.args.get('median-lighthouse-over-time', '') == 'pwa' %}selected{% endif %}>PWA</option>
+              <option value="seo" {% if request.args.get('median-lighthouse-over-time', '') == 'seo' %}selected{% endif %}>SEO</option>
+              <option value="best_practices" {% if request.args.get('median-lighthouse-over-time', '') == 'best_practices' %}selected{% endif %}>Best practices</option>
             </select>
           </form>
         </table-general-multitech>
@@ -139,21 +139,24 @@
         <table-general-multitech
           data-scope="all-data"
           data-unit=" kB"
-          client="mobile"
+          client="{{ request.args.get('client', '')  or 'mobile' }}"
           technologies="{{ technologies_str }}"
           metric="median_bytes_*subcategory*"
-          subcategory="image"
+          subcategory="{{ request.args.get('weight-over-time', '')  or 'image' }}"
           id="weight-over-time"
         >
           <span slot="table-caption">
             The page weight over time, compared for the selected technologies.
           </span>
           <label for="subcategory">Subcategory</label>
-          <select name="subcategory" id="subcategory">
-            <option value="image" selected>Image weight</option>
-            <option value="js">Javascript transfer size</option>
-            <option value="total">Total page weight</option>
-          </select>
+          <form slot="subcategory-selector">
+            <label for="subcategory">Subcategory</label>
+            <select name="subcategory" id="subcategory">
+              <option value="image" {% if request.args.get('weight-over-time', '') == 'image' %}selected{% endif %}>Image weight</option>
+              <option value="js" {% if request.args.get('weight-over-time', '') == 'js' %}selected{% endif %}>Javascript transfer size</option>
+              <option value="total" {% if request.args.get('weight-over-time', '') == 'total' %}selected{% endif %}>Total page weight</option>
+            </select>
+          </form>
         </table-general-multitech>
       </div>
     </div>

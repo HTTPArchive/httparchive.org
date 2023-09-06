@@ -346,6 +346,13 @@ button#add-tech {
   max-width: 50rem;
 }
 
+.highcharts-title {
+  font-weight: normal !important;
+  fill: var(--color-text) !important;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 0.875rem !important;
+}
+
 
 /* Re-arrange when viewport becomes too narrow in height */
 /* ± 200% zoom on a 13" screen */

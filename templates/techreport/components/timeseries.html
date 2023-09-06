@@ -1,0 +1,31 @@
+<div data-id="{{ timeseries.id }}" data-component="timeseries">
+  <h3>{{ timeseries.title }}</h3>
+  <p>{{ timeseries.description }}</p>
+
+  {% if timeseries.summary %}
+    <div class="data-summary">
+      <h3>Latest data</h3>
+      <p data-slot="timestamp">TODO</p>
+    </div>
+  {% endif %}
+
+  <!-- This will be used to load the Highcharts viz into -->
+  <div id="{{ timeseries.id }}-timeseries"></div>
+
+  <button class="btn show-table" type="button" data-id="{{ timeseries.id }}">Show table</button>
+
+  <div id="{{ timeseries.id }}-table-wrapper" class="hidden">
+    <table-general
+      data-scope="all-data"
+      client="{{ request.args.get('client', '')  or 'mobile' }}"
+      columns="{{ timeseries.table.columns }}"
+      subcategory="{{ subcategory }}"
+      id="{{ timeseries.id }}-table"
+    >
+      <span slot="table-caption">
+        {{ timeseries.title }}
+      </span>
+    </table-general>
+  </div>
+
+</div>

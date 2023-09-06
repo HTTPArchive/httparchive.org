@@ -133,29 +133,103 @@
         "default": {
           "app": ["ALL"]
         },
-        "good_cwv_timeseries": {
-          "columns": [
-            {
-              "key": "date",
-              "label": "Date"
+        "adoption_timeseries": {
+          "title": "All usage",
+          "description": "Placeholder",
+          "id": "adoption_timeseries",
+          "table": {
+            "columns": "date,client,origins"
+          },
+          "viz": {
+            "title": "Origins over time",
+            "metric": "origins",
+            "series": {
+              "breakdown": "client",
+              "values": ["desktop", "mobile"],
+              "defaults": [
+                {
+                  "name": "Desktop origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "Mobile origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
             },
-            {
-              "key": "client",
-              "label": "Client"
+            "xAxis": {
+              "title": "Months",
+              "description": "accessibility description of x-axis",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
             },
-            {
-              "key": "origins_eligible_for_*subcategory*",
-              "label": "Eligible"
-            },
-            {
-              "key": "origins_with_good_*subcategory*",
-              "label": "Have good values"
-            },
-            {
-              "key": "pct_good_*subcategory*",
-              "label": "% With good values"
+            "yAxis": {
+              "title": "Origins",
+              "tickAmount": 3
             }
-          ]
+          }
+        },
+        "good_cwv_timeseries": {
+          "title": "Good Core Web Vitals over time",
+          "description": "Placeholder - combination of several metrics",
+          "id": "good_cwv_timeseries",
+          "table": {
+            "columns": "date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
+          },
+          "viz": {
+            "title": "Overall good CWVs over time",
+            "metric": "pct_good_cwv",
+            "height": 600,
+            "series": {
+              "breakdown": "client",
+              "values": ["desktop", "mobile"],
+              "defaults": [
+                {
+                  "name": "Desktop origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "Mobile origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Months",
+              "description": "accessibility description of x-axis",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "% Good CWVs"
+            }
+          }
         }
       }
     },

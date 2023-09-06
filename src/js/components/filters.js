@@ -65,6 +65,28 @@ function updateRank(ranks, filters) {
   });
 }
 
+function updateCategories(categories, filters) {
+  const select = document.querySelector('select#categories');
+
+  if(categories) {
+    select.innerHTML = '';
+
+    const all = document.createElement('option');
+    all.value = 'ALL';
+    all.innerHTML = 'ALL';
+    select.append(all);
+
+
+    Object.keys(categories).forEach((category) => {
+     const option = document.createElement('option');
+     option.value = category;
+     option.innerHTML = category;
+     select.append(option);
+    });
+
+  }
+}
+
 function bindFilterListener() {
   const submit = document.getElementById('submit-form');
   if(submit) {
@@ -170,4 +192,5 @@ export const Filters = {
   updateTechnologies,
   updateGeo,
   updateRank,
+  updateCategories,
 }
