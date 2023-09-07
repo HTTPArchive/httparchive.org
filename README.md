@@ -57,6 +57,11 @@ To push changes live to the production instance, use the deployment script. Chan
 npm run deploy
 ```
 
+## Added new icons
+
+We use [Font Awesome](https://fontawesome.com/) icons but inline them directly in the code to save using the JavaScript library. To add, or change an icon, [find one on the Font Awesome website](https://fontawesome.com/icons) and copy the path from the SVG tab and reference it by name in the [reports.json](/config/reports.json) and add the SVG path in the [reports.html](/templates/reports.html) file as per the others. The width in the `reports.json` can be set based on display preferences.
+
 ## Third-party software licenses
 
 HTTP Archive uses Highcharts. See their [licensing terms](https://shop.highcharts.com/) for more info.
+HTTP Archive uses Font Awesome. See their [licensing terms](https://github.com/FortAwesome/Font-Awesome#license) for more info.

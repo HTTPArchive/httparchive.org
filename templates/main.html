@@ -72,7 +72,6 @@
   <link rel="preload" href="/static/fonts/opensans-latin-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/styles.css') }}">
-  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" nonce="{{ csp_nonce() }}"></script>
   <script nonce="{{ csp_nonce() }}">LUX = window.LUX || {}; LUX.samplerate = 100;</script>
   <script async defer src="https://cdn.speedcurve.com/js/lux.js?id=104609804" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}
@@ -218,7 +217,9 @@
       {% if report.graphic.secondary %}
         {% set style = report.graphic.secondary.color and 'style="color: %s"' % report.graphic.secondary.color or '' %}
         {% if report.graphic.secondary.icon %}
-          <i class="secondary-icon {{ report.graphic.secondary.icon }}" {{ style | safe }} aria-hidden="true"></i>
+          <svg class="svg-inline--fa {{ report.graphic.secondary.width }} secondary-icon" style="color: {{ report.graphic.secondary.color }};" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#{{ report.graphic.secondary.icon }}"></use>
+          </svg>
         {% else %}
           <div class="secondary-icon" {{ style | safe }} aria-hidden="true">
             {{ report.graphic.secondary.text }}
@@ -228,7 +229,9 @@
 
       {% set style = report.graphic.primary.color and 'style="color: %s"' % report.graphic.primary.color or '' %}
       {% if report.graphic.primary.icon %}
-        <i class="primary-icon {{ report.graphic.primary.icon }}" {{ style | safe }} aria-hidden="true"></i>
+        <svg class="svg-inline--fa {{ report.graphic.primary.width }} primary-icon" style="color: {{ report.graphic.primary.color }};" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#{{ report.graphic.primary.icon }}"></use>
+        </svg>
       {% else %}
         <div class="primary-icon" {{ style | safe }} aria-hidden="true">
           {{ report.graphic.primary.text }}
