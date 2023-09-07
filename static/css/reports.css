@@ -8,6 +8,7 @@
   margin-bottom: 15px;
 }
 
+/* stylelint-disable kebab-case */
 .report .alt {
   background-color: #fff;
 }
@@ -41,3 +42,4 @@
   height: 1em;
   vertical-align: -0.125em;
 }
+/* stylelint-enable */

@@ -284,9 +284,11 @@ th {
   display: none;
 }
 
+/* stylelint-disable kebab-case */
 .svg-inline--fa.fa-w-16 {
   width: 1em;
 }
+/* stylelint-enable */
 
 @media (max-width: 992px) {
   #history {
