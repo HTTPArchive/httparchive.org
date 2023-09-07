@@ -60,3 +60,4 @@ npm run deploy
 ## Third-party software licenses
 
 HTTP Archive uses Highcharts. See their [licensing terms](https://shop.highcharts.com/) for more info.
+HTTP Archive uses Font Awesome. See their [licensing terms](https://github.com/FortAwesome/Font-Awesome#license) for more info.

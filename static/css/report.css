@@ -284,6 +284,10 @@ th {
   display: none;
 }
 
+.svg-inline--fa.fa-w-16 {
+  width: 1em;
+}
+
 @media (max-width: 992px) {
   #history {
     margin-top: 40px;
