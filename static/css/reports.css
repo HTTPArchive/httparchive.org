@@ -8,11 +8,13 @@
   margin-bottom: 15px;
 }
 
-/* stylelint-disable kebab-case */
 .report .alt {
   background-color: #fff;
 }
 
+/* Disable selector-class-pattern which enforces kebab-case to allow us to */
+/* continue using font awesome class styles for ease */
+/* stylelint-disable selector-class-pattern */
 .svg-inline--fa.fa-w-12 {
   width: 0.75em;
 }
@@ -42,4 +44,4 @@
   height: 1em;
   vertical-align: -0.125em;
 }
-/* stylelint-enable */
+/* stylelint-enable selector-class-pattern */

@@ -284,11 +284,13 @@ th {
   display: none;
 }
 
-/* stylelint-disable kebab-case */
+/* Disable selector-class-pattern which enforces kebab-case to allow us to */
+/* continue using font awesome class styles for ease */
+/* stylelint-disable selector-class-pattern */
 .svg-inline--fa.fa-w-16 {
   width: 1em;
 }
-/* stylelint-enable */
+/* stylelint-enable selector-class-pattern */
 
 @media (max-width: 992px) {
   #history {
