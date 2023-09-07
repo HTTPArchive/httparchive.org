@@ -217,7 +217,7 @@
       {% if report.graphic.secondary %}
         {% set style = report.graphic.secondary.color and 'style="color: %s"' % report.graphic.secondary.color or '' %}
         {% if report.graphic.secondary.icon %}
-          <svg class="svg-inline--fa {{ report.graphic.secondary.width }} secondary-icon" style="color: {{ report.graphic.secondary.color }};" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg class="svg-inline--fa {{ report.graphic.secondary.width }} secondary-icon" style="color: {{ report.graphic.secondary.color }};" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#{{ report.graphic.secondary.icon }}"></use>
           </svg>
         {% else %}
@@ -229,7 +229,7 @@
 
       {% set style = report.graphic.primary.color and 'style="color: %s"' % report.graphic.primary.color or '' %}
       {% if report.graphic.primary.icon %}
-        <svg class="svg-inline--fa {{ report.graphic.primary.width }} primary-icon" style="color: {{ report.graphic.primary.color }};" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg class="svg-inline--fa {{ report.graphic.primary.width }} primary-icon" style="color: {{ report.graphic.primary.color }};" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#{{ report.graphic.primary.icon }}"></use>
         </svg>
       {% else %}
