@@ -16,13 +16,13 @@
   },
   "/static/css/report.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "480955dc370e9a4781a45b868022f3de"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "8b92ae537215eeaecfc9c8a574c836b4"
   },
   "/static/css/reports.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "eef119f0c48c5de8cb44856fe2069d9f"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "82818febf0ba6c7f255463cdebfa1b12"
   },
   "/static/css/styles.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -86,8 +86,8 @@
   },
   "/static/js/send-web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2023-08-23T00:00:00.000Z",
-    "hash": "e5b146ebc76c3e8937bb2ee519b96589"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "4bd90d17bc07ad1e7b5a52912b3b1075"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -116,38 +116,38 @@
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2022-04-26T00:00:00.000Z",
-    "hash": "86cb979795a9585de91dbca252f86fbe"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "7d1ccde0c033b5bd49aaa506a030805f"
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-03-16T00:00:00.000Z",
-    "hash": "064057b4f3ffea758ada90cb9dfe0bf0"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "0071daa22d6a609dbcff7b9a39a40793"
   },
   "reports/chrome-ux-report": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2022-05-13T00:00:00.000Z",
-    "hash": "8ea80898074164c1ff3b18cc3c2b9884"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "9503bd882ed6c162c7343267eb56aad5"
   },
   "reports/cwv-tech": {
     "date_published": "2021-09-20T00:00:00.000Z",
-    "date_modified": "2021-09-20T00:00:00.000Z",
-    "hash": "f063ced5899d6334168c77ddd407afd8"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "bb56bcf9203e97fcad14369053f778e3"
   },
   "reports/loading-speed": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-12-05T00:00:00.000Z",
-    "hash": "939c872f5a3a20881c0ad9d9acf957b0"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "792ee1ec0b02db56532ce023e9527da2"
   },
   "reports/page-weight": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "70e1a92638557ddfa9df6a0517e6c84f"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "621fa2bbdcf7636b3c1c3f98f2a12fd3"
   },
   "reports/progressive-web-apps": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-09-20T00:00:00.000Z",
-    "hash": "c3426cc768e51a570af5fccbc537c785"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "9a63b62365a3a0500c66187e779af14d"
   },
   "reports/project-fugu": {
     "date_published": "2020-07-31T00:00:00.000Z",
@@ -156,13 +156,13 @@
   },
   "reports/search-engine-optimization": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "228064df9d005931d60be4afe540bb0b"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "65f3bac46441a78d0483dd45e5826c5e"
   },
   "reports/state-of-images": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "3e4226bd3a208a4e6e8f57d2cf9ae62d"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "361b8c1a518ef7304d73f74258b6f07a"
   },
   "reports/state-of-javascript": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -171,7 +171,7 @@
   },
   "reports/state-of-the-web": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-06-24T00:00:00.000Z",
-    "hash": "0503d3a92fa0604b10e4234e9b98f406"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "637f205b4c36490bb4c925d1898811b4"
   }
 }
