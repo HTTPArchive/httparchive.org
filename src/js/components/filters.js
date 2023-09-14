@@ -76,15 +76,33 @@ function updateCategories(categories, filters) {
     all.innerHTML = 'ALL';
     select.append(all);
 
-
     Object.keys(categories).forEach((category) => {
-     const option = document.createElement('option');
-     option.value = category;
-     option.innerHTML = category;
-     select.append(option);
+      const option = document.createElement('option');
+      option.value = category;
+      option.innerHTML = category;
+      option.dataset.technologies = categories[category].join(',');
+      select.append(option);
     });
-
   }
+}
+
+function updateCategory(event) {
+  const selectedOption = document.querySelector(`option[value="${event.target.value}"]`);
+  const selectedTechs = selectedOption.dataset.technologies.split(",");
+  const techSelector = document.getElementById(event.target.dataset.tech);
+  techSelector.innerHTML = '';
+
+  selectedTechs.forEach((technology) => {
+    const option = document.createElement('option');
+    const formattedTech = technology.replaceAll(" ", "-");
+    option.textContent = technology;
+    option.value = formattedTech;
+    if(formattedTech === techSelector.getAttribute('data-selected')) {
+      option.selected = true;
+    }
+    techSelector.append(option);
+  });
+
 }
 
 function bindFilterListener() {
@@ -97,6 +115,9 @@ function bindFilterListener() {
   if(addButton) {
     addButton.addEventListener('click', addTechnologySelector);
   }
+
+  const categoriesSelectors = Object.values(document.getElementsByClassName('categories-selector'));
+  categoriesSelectors.forEach(categorySelector => categorySelector.addEventListener('change', updateCategory));
 
   const removeButtons = Object.values(document.getElementsByClassName('remove-tech'));
   removeButtons?.forEach(removeButton => removeButton.addEventListener('click', removeTechnology));

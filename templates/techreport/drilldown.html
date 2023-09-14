@@ -120,35 +120,6 @@
         </table-overview>
       </div>
 
-      <!-- <div class="table-ui-wrapper card">
-        <h3>All data</h3>
-        <p>Explanation</p>
-
-        <table-general
-          data-scope="all-data"
-          client="{{ request.args.get('client', '')  or 'mobile' }}"
-          subcategory="{{ request.args.get('good-cwv-over-time', '')  or 'cwv' }}"
-          columns="date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
-          id="good-cwv-over-time"
-        >
-          <span slot="table-caption">
-            Good CWVs over time.
-          </span>
-          <form slot="subcategory-selector">
-            <label for="subcategory">Subcategory</label>
-            <select name="subcategory" id="subcategory">
-              <option value="cwv" {% if request.args.get('good-cwv-over-time', '') == 'cwv' %}selected{% endif %}>Overall CWVs</option>
-              <option value="lcp" {% if request.args.get('good-cwv-over-time', '') == 'lcp' %}selected{% endif %}>LCP</option>
-              <option value="fid" {% if request.args.get('good-cwv-over-time', '') == 'fid' %}selected{% endif %}>FID</option>
-              <option value="cls" {% if request.args.get('good-cwv-over-time', '') == 'cls' %}selected{% endif %}>CLS</option>
-              <option value="fcp" {% if request.args.get('good-cwv-over-time', '') == 'fcp' %}selected{% endif %}>FCP</option>
-              <option value="ttfb" {% if request.args.get('good-cwv-over-time', '') == 'ttfb' %}selected{% endif %}>TTFB</option>
-              <option value="inp" {% if request.args.get('good-cwv-over-time', '') == 'inp' %}selected{% endif %}>INP</option>
-            </select>
-          </form>
-        </table-general>
-      </div> -->
-
       <div class="card">
         {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
         {% set subcategory = request.args.get('good-cwv-over-time', '')  or 'cwv' %}
@@ -161,30 +132,11 @@
       <p>Description</p>
 
       <div class="table-ui-wrapper card">
-        <h3>All data</h3>
-        <p>Explanation</p>
 
-        <table-general
-          data-scope="all-data"
-          client="{{ request.args.get('client', '')  or 'mobile' }}"
-          columns="date,client,median_lighthouse_score_*subcategory*"
-          subcategory="{{ request.args.get('median-lighthouse-over-time', '')  or 'performance' }}"
-          id="median-lighthouse-over-time"
-        >
-          <span slot="table-caption">
-            Median lighthouse scores over time.
-          </span>
-          <form slot="subcategory-selector">
-            <label for="subcategory">Subcategory</label>
-            <select name="subcategory" id="subcategory">
-              <option value="performance" {% if request.args.get('median-lighthouse-over-time', '') == 'performance' %}selected{% endif %}>Performance</option>
-              <option value="accessibility" {% if request.args.get('median-lighthouse-over-time', '') == 'accessibility' %}selected{% endif %}>Accessibility</option>
-              <option value="pwa" {% if request.args.get('median-lighthouse-over-time', '') == 'pwa' %}selected{% endif %}>PWA</option>
-              <option value="seo" {% if request.args.get('median-lighthouse-over-time', '') == 'seo' %}selected{% endif %}>SEO</option>
-              <option value="best_practices" {% if request.args.get('median-lighthouse-over-time', '') == 'best_practices' %}selected{% endif %}>Best practices</option>
-            </select>
-          </form>
-        </table-general>
+        {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
+        {% set subcategory = request.args.get('median-lighthouse-over-time', '')  or 'cwv' %}
+        {% include "techreport/components/timeseries.html" %}
+
       </div>
     </div>
 
@@ -193,29 +145,8 @@
       <p>Description</p>
 
       <div class="table-ui-wrapper card">
-        <h3>All data</h3>
-        <p>Explanation</p>
-
-        <table-general
-          data-scope="all-data"
-          client="{{ request.args.get('client', '')  or 'mobile' }}"
-          columns="date,client,median_bytes_*subcategory*"
-          id="weight-over-time"
-          subcategory="{{ request.args.get('weight-over-time', '')  or 'image' }}"
-
-        >
-          <span slot="table-caption">
-            The page weight over time.
-          </span>
-          <form slot="subcategory-selector">
-            <label for="subcategory">Subcategory</label>
-            <select name="subcategory" id="subcategory">
-              <option value="image" {% if request.args.get('weight-over-time', '') == 'image' %}selected{% endif %}>Image weight</option>
-              <option value="js" {% if request.args.get('weight-over-time', '') == 'js' %}selected{% endif %}>Javascript transfer size</option>
-              <option value="total" {% if request.args.get('weight-over-time', '') == 'total' %}selected{% endif %}>Total page weight</option>
-            </select>
-          </form>
-        </table-general>
+        {% set timeseries = tech_report_page.config.weight_timeseries %}
+        {% include "techreport/components/timeseries.html" %}
       </div>
     </div>
   </div>

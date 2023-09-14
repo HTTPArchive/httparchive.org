@@ -1,7 +1,9 @@
 let pageConfig;
 let pageFilters;
+let pageData;
+let charts = [];
 
-const colors = ['#04c7fd', '#a62aa4'];
+const colors = ['#449BC6', '#AF5AB6'];
 
 function init(page, filters) {
   pageConfig = page.config;
@@ -9,6 +11,30 @@ function init(page, filters) {
 
   updateAllComponents();
   bindToggleButtons();
+  bindSubcategorySelector();
+}
+
+function bindSubcategorySelector() {
+  const selectors = Object.values(document.getElementsByClassName('subcategory-selector'));
+  selectors.forEach(selector => {
+    selector.addEventListener('change', (event) => {
+      const url = new URL(window.location.href);
+      url.searchParams.set(event.target.dataset.param, event.target.value);
+      window.history.replaceState(null, null, url);
+
+      const id = event.target.dataset.controls;
+      const querySelector = `[data-id="${id}"][data-component="timeseries"]`;
+      const timeseries = document.querySelector(querySelector);
+
+      if(pageConfig[id].viz) {
+        pageConfig[id].viz.current = event.target.value;
+        pageConfig[id].viz.base = event.target.dataset.base;
+      }
+
+      document.getElementById(`${id}-timeseries`).innerHTML = '';
+      updateComponent(timeseries, pageData);
+    });
+  });
 }
 
 function bindToggleButtons() {
@@ -31,6 +57,7 @@ function toggleButton(event) {
 }
 
 function updateData(data) {
+  pageData = data;
   updateAllComponents(data);
 }
 
@@ -69,8 +96,6 @@ function drawViz(id, config, data) {
     height: config.height,
   };
 
-  console.log(timeseries.chart);
-
   /* Axis styling */
   timeseries.yAxis = {
     ...timeseries.yAxis,
@@ -85,37 +110,57 @@ function drawViz(id, config, data) {
   /* Set the data */
   if(data) {
     timeseries.series = getSeries(data, config);
-    timeseries.xAxis.categories = getCategories(data, config);
   }
 
   /* Render the chart */
   Highcharts.chart(`${id}-timeseries`, timeseries);
 }
 
-function getCategories(data, config) {
-  const app = pageFilters.app[0];
-  const dates = [];
-  const sorted = data[app].sort((a, b) => new Date(a.date) - new Date(b.date));
-  sorted.forEach(entry => dates.push(entry.date));
-  return dates;
-}
-
 function getSeries(data, config) {
   const series = [];
   const app = pageFilters.app[0];
-  if(config.series.breakdown === 'client') {
-    config.series.values.forEach((value, index) => {
+
+  const defaultMetric = config.metric;
+  const currentSubcategory = config.current;
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlSubcategory = urlParams.get(config.param);
+
+  console.log(urlParams, urlSubcategory);
+
+  let metric = defaultMetric;
+
+  console.log('metric', metric, 'currentSubcategory', currentSubcategory);
+  console.log('config', config, 'config.base', config.base);
+
+  if(urlSubcategory) {
+    metric = `${config.base}${urlSubcategory}`;
+  }
+
+  if(currentSubcategory) {
+    metric = `${config.base}${currentSubcategory}`;
+  }
+
+  console.log(metric, 'default', defaultMetric);
+
+  if(config?.series?.breakdown === 'client') {
+    config?.series?.values?.forEach((value, index) => {
       const filteredData = data[app].filter(entry => entry.client === value);
       filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
       const formattedData = [];
-      filteredData.forEach(row => formattedData.push(Number(row[config.metric])));
+      filteredData.forEach(row => {
+        formattedData.push({
+          x: new Date(row.date),
+          y: Number(row[metric]),
+        });
+      });
 
       series.push(
         {
           name: value,
           data: formattedData,
           color: colors[index],
+          lineWidth: 2,
         }
       )
     });
@@ -139,7 +184,7 @@ function defaults(config) {
       title: {
         text: config.xAxis.title,
       },
-      categories: config.xAxis.defaults,
+      type: 'datetime'
     },
     yAxis: {
       title: {

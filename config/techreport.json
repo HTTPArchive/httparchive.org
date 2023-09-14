@@ -137,6 +137,7 @@
           "title": "All usage",
           "description": "Placeholder",
           "id": "adoption_timeseries",
+
           "table": {
             "columns": "date,client,origins"
           },
@@ -186,10 +187,47 @@
           "title": "Good Core Web Vitals over time",
           "description": "Placeholder - combination of several metrics",
           "id": "good_cwv_timeseries",
+          "subcategory": {
+            "base": "pct_good_",
+            "param": "good-cwv-over-time",
+            "default": "overall",
+            "options": [
+              {
+                "label": "Overall good CWVs",
+                "value": "overall"
+              },
+              {
+                "label": "LCP",
+                "value": "lcp"
+              },
+              {
+                "label": "FID",
+                "value": "fid"
+              },
+              {
+                "label": "CLS",
+                "value": "cls"
+              },
+              {
+                "label": "FCP",
+                "value": "fcp"
+              },
+              {
+                "label": "TTFB",
+                "value": "ttfb"
+              },
+              {
+                "label": "INP",
+                "value": "inp"
+              }
+            ]
+          },
           "table": {
             "columns": "date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
           },
           "viz": {
+            "base": "pct_good_",
+            "param": "good-cwv-over-time",
             "title": "Overall good CWVs over time",
             "metric": "pct_good_cwv",
             "height": 600,
@@ -228,6 +266,154 @@
             },
             "yAxis": {
               "title": "% Good CWVs"
+            }
+          }
+        },
+        "lighthouse_timeseries": {
+          "title": "Lighthouse over time",
+          "description": "Placeholder text",
+          "id": "lighthouse_timeseries",
+          "subcategory": {
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "options": [
+              {
+                "label": "Performance",
+                "value": "performance"
+              },
+              {
+                "label": "Accessibility",
+                "value": "accessibility"
+              },
+              {
+                "label": "SEO (Search Engine Optimisation)",
+                "value": "seo"
+              },
+              {
+                "label": "PWA (Progressive Web Apps)",
+                "value": "pwa"
+              },
+              {
+                "label": "Best practices",
+                "value": "best_practices"
+              }
+            ]
+          },
+          "table": {
+            "columns": "date,client,median_lighthouse_score_*subcategory*"
+          },
+          "viz": {
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "title": "Performance lighthouse scores over time",
+            "metric": "median_lighthouse_score_performance",
+            "height": 600,
+            "series": {
+              "breakdown": "client",
+              "values": ["desktop", "mobile"],
+              "defaults": [
+                {
+                  "name": "Desktop origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "Mobile origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Months",
+              "description": "accessibility description of x-axis",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Performance score"
+            }
+          }
+        },
+        "weight_timeseries": {
+          "title": "Weight over time",
+          "description": "Placeholder text",
+          "id": "weight_timeseries",
+          "subcategory": {
+            "base": "median_bytes_",
+            "param": "weight-over-time",
+            "default": "image",
+            "options": [
+              {
+                "label": "Image weight",
+                "value": "image"
+              },
+              {
+                "label": "JavaScript transfer size",
+                "value": "js"
+              },
+              {
+                "label": "Total page weight",
+                "value": "total"
+              }
+            ]
+          },
+          "table": {
+            "columns": "date,client,median_bytes_*subcategory*"
+          },
+          "viz": {
+            "base": "median_bytes_",
+            "param": "weight-over-time",
+            "title": "Image weight over time",
+            "metric": "median_bytes_image",
+            "height": 600,
+            "series": {
+              "breakdown": "client",
+              "values": ["desktop", "mobile"],
+              "defaults": [
+                {
+                  "name": "Desktop origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "Mobile origins",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Months",
+              "description": "accessibility description of x-axis",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Image weight (kB)"
             }
           }
         }

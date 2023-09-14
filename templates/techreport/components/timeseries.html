@@ -1,10 +1,16 @@
 <div data-id="{{ timeseries.id }}" data-component="timeseries">
+  {% if timeseries.subcategory %}
+    {% set subcategory = timeseries.subcategory %}
+    {% set id = timeseries.id %}
+    {% include "techreport/components/subcategory.html" %}
+  {% endif %}
+
   <h3>{{ timeseries.title }}</h3>
   <p>{{ timeseries.description }}</p>
 
   {% if timeseries.summary %}
     <div class="data-summary">
-      <h3>Latest data</h3>
+      <h4>Latest data</h4>
       <p data-slot="timestamp">TODO</p>
     </div>
   {% endif %}

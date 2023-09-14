@@ -29,6 +29,8 @@
   /* Graph colors */
   --graph-color-primary: var(--color-teal-dark);
   --graph-color-primary-darker: var(--color-teal-darker);
+  --graph-color-line: #A6BBBE;
+  --graph-color-labels: #62777B;
 }
 
 /* Page heading */
@@ -346,6 +348,8 @@ button#add-tech {
   max-width: 50rem;
 }
 
+
+/* Highcharts */
 .highcharts-title {
   font-weight: normal !important;
   fill: var(--color-text) !important;
@@ -353,6 +357,23 @@ button#add-tech {
   font-size: 0.875rem !important;
 }
 
+svg.highcharts-root text {
+  font-weight: normal !important;
+  fill: var(--color-text) !important;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+svg.highcharts-root .highcharts-axis-line {
+  stroke: var(--graph-color-line);
+}
+
+svg.highcharts-root .highcharts-axis-labels text {
+  fill: var(--graph-color-labels) !important;
+}
+
+path.highcharts-tick {
+  display: none;
+}
 
 /* Re-arrange when viewport becomes too narrow in height */
 /* ± 200% zoom on a 13" screen */
