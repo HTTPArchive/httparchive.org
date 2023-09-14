@@ -190,11 +190,11 @@
           "subcategory": {
             "base": "pct_good_",
             "param": "good-cwv-over-time",
-            "default": "overall",
+            "default": "cwv",
             "options": [
               {
                 "label": "Overall good CWVs",
-                "value": "overall"
+                "value": "cwv"
               },
               {
                 "label": "LCP",

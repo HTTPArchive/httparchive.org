@@ -32,6 +32,8 @@ function bindSubcategorySelector() {
       }
 
       document.getElementById(`${id}-timeseries`).innerHTML = '';
+
+      document.getElementById(`${id}-table`).setAttribute('subcategory',event.target.value);
       updateComponent(timeseries, pageData);
     });
   });

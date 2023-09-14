@@ -25,7 +25,7 @@
       data-scope="all-data"
       client="{{ request.args.get('client', '')  or 'mobile' }}"
       columns="{{ timeseries.table.columns }}"
-      subcategory="{{ subcategory }}"
+      subcategory="{% if subcategory %}{{ subcategory.default }}{% endif %}"
       id="{{ timeseries.id }}-table"
     >
       <span slot="table-caption">
