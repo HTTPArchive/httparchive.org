@@ -81,14 +81,15 @@
   <script src="{{ get_versioned_filename('/static/js/accessibility.js') }}" nonce="{{ csp_nonce() }}"></script>
 
   <!-- Import web components code -->
-  <script src="{{ get_versioned_filename('/static/js/summaryLinked.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <!-- <script src="{{ get_versioned_filename('/static/js/summaryLinked.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableOverview.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableCWVOverviewMulti.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableGeneral.js') }}" nonce="{{ csp_nonce() }}"></script>
-  <script src="{{ get_versioned_filename('/static/js/tableGeneralMulti.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/tableGeneralMulti.js') }}" nonce="{{ csp_nonce() }}"></script> -->
 
   <!-- Import general JS -->
   <script src="{{ get_versioned_filename('/static/js/techreport.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/techreport/timeseries.js') }}" nonce="{{ csp_nonce() }}"></script>
 
   <script nonce="{{ csp_nonce() }}">
     const reportPage = {{ tech_report_page|tojson }};

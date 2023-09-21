@@ -131,7 +131,22 @@
       "description": "Drilldown placeholder",
       "config": {
         "default": {
-          "app": ["ALL"]
+          "app": ["ALL"],
+          "series": {
+            "breakdown": "client",
+            "breakdown_values": [
+              {
+                "name": "desktop",
+                "color": "#449BC6",
+                "suffix": "%"
+              },
+              {
+                "name": "mobile",
+                "color": "#AF5AB6",
+                "suffix": "%"
+              }
+            ]
+          }
         },
         "adoption_timeseries": {
           "title": "All usage",
@@ -146,14 +161,23 @@
             "metric": "origins",
             "series": {
               "breakdown": "client",
-              "values": ["desktop", "mobile"],
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#449BC6"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#AF5AB6"
+                }
+              ],
               "defaults": [
                 {
-                  "name": "Desktop origins",
+                  "name": "Desktop",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 },
                 {
-                  "name": "Mobile origins",
+                  "name": "Mobile",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
               ]
@@ -225,22 +249,35 @@
           "table": {
             "columns": "date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
           },
+          "summary": true,
           "viz": {
             "base": "pct_good_",
+            "default": "cwv",
             "param": "good-cwv-over-time",
             "title": "Overall good CWVs over time",
             "metric": "pct_good_cwv",
             "height": 600,
             "series": {
               "breakdown": "client",
-              "values": ["desktop", "mobile"],
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#449BC6",
+                  "suffix": "%"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#AF5AB6",
+                  "suffix": "%"
+                }
+              ],
               "defaults": [
                 {
-                  "name": "Desktop origins",
+                  "name": "desktop",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 },
                 {
-                  "name": "Mobile origins",
+                  "name": "mobile",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
               ]
@@ -273,6 +310,7 @@
           "title": "Lighthouse over time",
           "description": "Placeholder text",
           "id": "lighthouse_timeseries",
+          "summary": true,
           "subcategory": {
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
@@ -306,19 +344,29 @@
           "viz": {
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
+            "default": "performance",
             "title": "Performance lighthouse scores over time",
             "metric": "median_lighthouse_score_performance",
             "height": 600,
             "series": {
               "breakdown": "client",
-              "values": ["desktop", "mobile"],
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#449BC6"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#AF5AB6"
+                }
+              ],
               "defaults": [
                 {
-                  "name": "Desktop origins",
+                  "name": "Desktop",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 },
                 {
-                  "name": "Mobile origins",
+                  "name": "Mobile",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
               ]
@@ -351,6 +399,7 @@
           "title": "Weight over time",
           "description": "Placeholder text",
           "id": "weight_timeseries",
+          "summary": true,
           "subcategory": {
             "base": "median_bytes_",
             "param": "weight-over-time",
@@ -376,19 +425,31 @@
           "viz": {
             "base": "median_bytes_",
             "param": "weight-over-time",
+            "default": "image",
             "title": "Image weight over time",
             "metric": "median_bytes_image",
             "height": 600,
             "series": {
               "breakdown": "client",
-              "values": ["desktop", "mobile"],
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#449BC6",
+                  "suffix": " kB"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#AF5AB6",
+                  "suffix": " kB"
+                }
+              ],
               "defaults": [
                 {
-                  "name": "Desktop origins",
+                  "name": "Desktop",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 },
                 {
-                  "name": "Mobile origins",
+                  "name": "Mobile",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
               ]

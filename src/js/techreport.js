@@ -1,5 +1,6 @@
 const { DrilldownHeader } = require("./components/drilldownHeader");
 const { Filters } = require("./components/filters");
+const { Sections } = require("./techreport/sections");
 const { Timeseries } = require("./techreport/timeseries");
 const { getPercentage } = require("./utils");
 
@@ -12,13 +13,20 @@ class TechReport {
     this.labels = labels;
     this.pageId = pageId;
 
-    this.bindClientListener();
+    /* Fetch the data */
     this.getAllData();
 
-    Filters.bindFilterListener();
-    Timeseries.init(this.page, this.filters);
+    /* Initiate components */
+    if(pageId === 'drilldown' || pageId === 'comparison') {
+        Filters.bindFilterListener();
+        // Timeseries.init(this.page, this.filters);
+        Sections.init(this.page, this.filters);
+        this.bindClientListener();
+        this.updateStyling();
+    }
   }
 
+  /* Watch for changes in the client dropdown */
   bindClientListener() {
     const select = document.getElementById('client-breakdown');
     const allDataComponents = document.querySelectorAll('[data-scope]');
@@ -36,7 +44,7 @@ class TechReport {
           client: client
         };
 
-        Timeseries.updateFilters(this.allData, this.filters);
+        // Timeseries.updateFilters(this.page.config, this.filters, this.allData);
 
         const url = new URL(window.location.href);
         url.searchParams.set(`client`, client);
@@ -45,24 +53,15 @@ class TechReport {
     }
   }
 
-  processData(result) {
-    return result.map(entry => {
-      entry.pct_good_cwv = getPercentage(entry.origins_with_good_cwv, entry.origins_eligible_for_cwv);
-      this.config.cwv_subcategories.forEach(cwv => {
-        entry[`origins_eligible_for_${cwv}`] = entry[`origins_with_any_${cwv}`];
-        entry[`pct_good_${cwv}`] = getPercentage(entry[`origins_with_good_${cwv}`], entry[`origins_with_any_${cwv}`]);
-      });
-
-      this.config.lighthouse_subcategories.forEach(metric => {
-        entry[`median_lighthouse_score_${metric}`] = parseInt(entry[`median_lighthouse_score_${metric}`] * 100);
-      })
-      return entry;
-    });
-  }
-
+  /* Fetch all the data for this report */
   getAllData() {
     const data = {};
     const fetch_app = this.filters.app.concat(this.filters.app_defaults);
+    console.log('fetch_app', fetch_app);
+
+    /* Make a request for each of the technologies and return them in an object.
+     * Once we port this over to the new APIs, this should be moved to the section level.
+     */
     Promise.all(fetch_app.map(technology => {
       const url = `https://cdn.httparchive.org/reports/cwvtech/${this.filters.rank}/${this.filters.geo}/${technology}.json`;
       return fetch(url)
@@ -78,24 +77,28 @@ class TechReport {
     });
   }
 
-  getFilterInfo() {
-    fetch('https://cdn.httparchive.org/reports/cwvtech/technologies.json')
-      .then(result => result.json())
-      .then(result => Filters.updateTechnologies(result, this.filters));
+  /* Change format from API data to what we need */
+  processData(result) {
+    return result.map(entry => {
+      /* Calculate percentage of good core web vitals */
+      entry.pct_good_cwv = getPercentage(entry.origins_with_good_cwv, entry.origins_eligible_for_cwv);
+      this.config.cwv_subcategories.forEach(cwv => {
+        entry[`origins_eligible_for_${cwv}`] = entry[`origins_with_any_${cwv}`];
+        entry[`pct_good_${cwv}`] = getPercentage(entry[`origins_with_good_${cwv}`], entry[`origins_with_any_${cwv}`]);
+      });
 
-    fetch('https://cdn.httparchive.org/reports/cwvtech/geos.json')
-      .then(result => result.json())
-      .then(result => Filters.updateGeo(result, this.filters));
+      /* Turn the LH score from a decimal to an int
+       * If this is changed in the new APIs then we can remove this
+       */
+      this.config.lighthouse_subcategories.forEach(metric => {
+        entry[`median_lighthouse_score_${metric}`] = parseInt(entry[`median_lighthouse_score_${metric}`] * 100);
+      })
 
-    fetch('https://cdn.httparchive.org/reports/cwvtech/ranks.json')
-      .then(result => result.json())
-      .then(result => Filters.updateRank(result, this.filters));
-
-    fetch('https://cdn.httparchive.org/reports/cwvtech/categories.json')
-      .then(result => result.json())
-      .then(result => Filters.updateCategories(result, this.filters));
+      return entry;
+    });
   }
 
+  /* Update components that are relevant to the current page */
   updateComponents(data) {
     switch(this.pageId) {
       case 'landing':
@@ -114,6 +117,25 @@ class TechReport {
     }
   }
 
+  /* Fetch the data for the filter dropdowns */
+  getFilterInfo() {
+    fetch('https://cdn.httparchive.org/reports/cwvtech/technologies.json')
+      .then(result => result.json())
+      .then(result => Filters.updateTechnologies(result, this.filters));
+
+    fetch('https://cdn.httparchive.org/reports/cwvtech/geos.json')
+      .then(result => result.json())
+      .then(result => Filters.updateGeo(result, this.filters));
+
+    fetch('https://cdn.httparchive.org/reports/cwvtech/ranks.json')
+      .then(result => result.json())
+      .then(result => Filters.updateRank(result, this.filters));
+
+    fetch('https://cdn.httparchive.org/reports/cwvtech/categories.json')
+      .then(result => result.json())
+      .then(result => Filters.updateCategories(result, this.filters));
+  }
+
   updateLandingComponents(data) {
     const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
     allDataComponents.forEach((component) => {
@@ -127,11 +149,14 @@ class TechReport {
 
   updateDrilldownComponents(data) {
     DrilldownHeader.update(data, this.filters);
+    Sections.updateSectionWithData('', data);
 
     const app = this.filters.app[0];
 
     if(data && data[app]) {
-      Timeseries.updateData(data);
+      // Timeseries.updateData(this.page.config, this.filters, data);
+
+      /* Update web components */
       const latestComponents = document.querySelectorAll('[data-scope="all-latest"]');
       latestComponents.forEach((component) => {
         component.latest = data[app][0];
@@ -171,9 +196,19 @@ class TechReport {
     text.textContent = 'No data found for this query';
     text.className = 'error';
 
-    const report = document.querySelector('.report-content');
+    const report = document.getElementById('report-content');
     report.innerHTML = '';
     report.append(text);
+  }
+
+  updateStyling() {
+    const series = this.page.config.default.series;
+    const body = document.querySelector('body');
+    if(series.breakdown == 'client') {
+      series.breakdown_values.forEach((breakdown) => {
+        body.style.setProperty(`--breakdown-color-${breakdown.name}`, breakdown.color);
+      });
+    }
   }
 }
 

@@ -11,6 +11,7 @@
   /* Colors based on function */
   --color-link: var(--color-blue-dark);
   --color-text: #444;
+  --color-text-lighter: #6E7576;
   --color-text-inverted: #fff;
   --color-card-background: #fff;
   --color-card-border: #cdd4d6;
@@ -348,6 +349,50 @@ button#add-tech {
   max-width: 50rem;
 }
 
+/* Chart summary list */
+.data-summary {
+  margin-top: 2rem;
+}
+
+.data-summary .heading {
+  font-size: 0.875rem;
+  color: var(--color-text-lighter);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.data-summary .breakdown-list {
+  display: flex;
+  column-gap: 3rem;
+  margin-top: 1rem;
+}
+
+.data-summary .breakdown-item {
+  padding: 0.15rem;
+}
+
+.data-summary .breakdown-label {
+  position: relative;
+  margin-right: 3rem;
+}
+
+.data-summary .breakdown-label:after {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 0.17rem;
+  background-color: black;
+  background-color: var(--breakdown-color);
+
+  position: absolute;
+  top: 0.7rem;
+  left: 100%;
+  left: calc(100% + 0.4rem);
+}
+
+.data-summary .breakdown-value {
+  font-size: var(--font-size-medium);
+}
 
 /* Highcharts */
 .highcharts-title {
@@ -380,5 +425,16 @@ path.highcharts-tick {
 @media screen and (max-height: 25rem) {
   .report-navigation {
     position: static;
+  }
+}
+
+/* Smaller screens */
+@media screen and (max-width: 46rem) {
+  .summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  .summary-grid > * {
+    max-width: 95vw;
   }
 }

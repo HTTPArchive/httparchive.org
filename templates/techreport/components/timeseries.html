@@ -10,8 +10,18 @@
 
   {% if timeseries.summary %}
     <div class="data-summary">
-      <h4>Latest data</h4>
-      <p data-slot="timestamp">TODO</p>
+      <div class="heading">
+        <p>
+          Latest data: <span data-slot="timestamp"></span>
+        </p>
+      </div>
+      <div class="breakdown-list">
+        <div class="breakdown-item">
+          <p class="breakdown-label"></p>
+          <p class="breakdown-value"></p>
+          <p>Last month: <span></span></p>
+        </div>
+      </div>
     </div>
   {% endif %}
 

@@ -11,7 +11,8 @@
   text-decoration: none;
 }
 
-.summary-linked-value {
+.summary-linked-value,
+.summary-suffix {
   font-size: var(--font-size-medium);
 }
 

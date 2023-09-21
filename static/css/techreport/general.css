@@ -17,6 +17,11 @@ h2 {
   font-size: var(--font-size-large);
 }
 
+/* Overwrite margin that's set elsewhere */
+p {
+  margin: 0;
+}
+
 :is(a, button, select):focus {
   outline: 1.5px solid var(--color-teal-dark);
   outline-offset: 1.5px;

@@ -1,154 +1,204 @@
-let pageConfig;
-let pageFilters;
-let pageData;
-let charts = [];
+class Timeseries {
+  // Create the component
+  constructor(id, config, filters, data) {
+    this.id = id;
+    this.pageConfig = config;
+    this.pageFilters = filters;
+    this.submetric = ''; // TODO: Fetch the default one from somewhere
+    this.data = data;
 
-const colors = ['#449BC6', '#AF5AB6'];
+    this.updateContent();
+    this.bindEventListeners();
+  }
 
-function init(page, filters) {
-  pageConfig = page.config;
-  pageFilters = filters;
+  // Check if anything in the component updates
+  bindEventListeners() {
+    const subcategory = `[data-id="${this.id}"] .subcategory-selector`;
+    document.querySelectorAll(subcategory).forEach(dropdown => {
+      dropdown.addEventListener('change', (event) => this.updateSubmetric(event));
+    });
 
-  updateAllComponents();
-  bindToggleButtons();
-  bindSubcategorySelector();
-}
+    const buttons = Object.values(document.getElementsByClassName('show-table'));
+    buttons.forEach(button => {
+      button.addEventListener('click', this.toggleTable);
+    });
+  }
 
-function bindSubcategorySelector() {
-  const selectors = Object.values(document.getElementsByClassName('subcategory-selector'));
-  selectors.forEach(selector => {
-    selector.addEventListener('change', (event) => {
+  // Filter and re-render the component when the submetric changes
+  updateSubmetric(event) {
+    if(this.submetric !== event.target.value) {
+      console.log('click', event.target.value);
+
+      // Update the URL
       const url = new URL(window.location.href);
       url.searchParams.set(event.target.dataset.param, event.target.value);
       window.history.replaceState(null, null, url);
 
-      const id = event.target.dataset.controls;
-      const querySelector = `[data-id="${id}"][data-component="timeseries"]`;
-      const timeseries = document.querySelector(querySelector);
-
-      if(pageConfig[id].viz) {
-        pageConfig[id].viz.current = event.target.value;
-        pageConfig[id].viz.base = event.target.dataset.base;
-      }
-
-      document.getElementById(`${id}-timeseries`).innerHTML = '';
-
-      document.getElementById(`${id}-table`).setAttribute('subcategory',event.target.value);
-      updateComponent(timeseries, pageData);
-    });
-  });
-}
-
-function bindToggleButtons() {
-  const buttons = Object.values(document.getElementsByClassName('show-table'));
-  buttons.forEach(button => {
-    button.addEventListener('click', toggleButton);
-  });
-}
-
-function toggleButton(event) {
-  const button = event.target;
-  const tableWrapper = document.getElementById(`${button.dataset.id}-table-wrapper`);
-  if(tableWrapper.classList.contains('hidden')) {
-    button.innerHTML = 'Hide table';
-    tableWrapper.classList.remove('hidden');
-  } else {
-    button.innerHTML = 'Show table';
-    tableWrapper.classList.add('hidden');
-  }
-}
-
-function updateData(data) {
-  pageData = data;
-  updateAllComponents(data);
-}
-
-function updateAllComponents(data) {
-  const timeseries = document.querySelectorAll('[data-component="timeseries"]');
-  Array.from(timeseries).forEach(component => updateComponent(component, data));
-}
-
-function updateComponent(component, data) {
-  const id = component.dataset.id;
-  const config = pageConfig[id].viz;
-
-  drawViz(id, config, data);
-}
-
-function drawViz(id, config, data) {
-  const timeseries = defaults(config);
-
-  /* Accessibility configs */
-  if(config.caption) {
-    timeseries.caption = {
-      text: config.caption,
-    };
-  }
-
-  if(pageConfig[id].valueSuffix) {
-    timeseries.accessibility.point = {
-      ...timeseries.accessibility.point,
-      'valueSuffix': pageConfig[id].valueSuffix,
+      // Re-render the content
+      this.updateContent();
     }
   }
 
-  /* Chart styling configs */
-  timeseries.chart = {
-    ...timeseries.chart,
-    height: config.height,
-  };
-
-  /* Axis styling */
-  timeseries.yAxis = {
-    ...timeseries.yAxis,
-    tickAmount: config.yAxis.tickAmount,
+  // Show/hide UI table
+  toggleTable(event) {
+    const button = event.target;
+    const tableWrapper = document.getElementById(`${button.dataset.id}-table-wrapper`);
+    if(tableWrapper.classList.contains('hidden')) {
+      button.innerHTML = 'Hide table';
+      tableWrapper.classList.remove('hidden');
+    } else {
+      button.innerHTML = 'Show table';
+      tableWrapper.classList.add('hidden');
+    }
   }
 
-  timeseries.xAxis = {
-    ...timeseries.xAxis,
-    tickAmount: config.xAxis.tickAmount,
+  // Re-render the contents of the component
+  updateContent() {
+    this.updateSummary();
+    this.updateViz();
   }
 
-  /* Set the data */
-  if(data) {
-    timeseries.series = getSeries(data, config);
+  // Update the summary with the latest data for all categories
+  // TODO: only works this way in the single tech, for comparison we need to do this differently
+  updateSummary() {
+    const config = this.pageConfig[this.id]?.viz;
+    const data = this.data;
+    const id = this.id;
+    const pageFilters = this.pageFilters;
+
+    if(data) {
+      /* Select the container to which we'll add elements. */
+      const viz = document.querySelector(`[data-id="${id}"]`);
+      const container = viz.querySelector('.breakdown-list');
+
+      /* Select the data old to new for the selected technology */
+      const app = pageFilters.app[0];
+      const sorted = data[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      /* Get the currently selected subcategory based on the URL */
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlSubcategory = urlParams.get(config.param);
+      const subcategory = urlSubcategory || config.default;
+
+      /* Remove the previous content */
+      container.innerHTML = '';
+
+      /* Update the date to the most recent timestamp in the dataset */
+      viz.querySelector('[data-slot="timestamp"]').innerHTML = sorted[0].date;
+
+      /* For each of the breakdowns, add a component with the latest data */
+      config.series.values.forEach(breakdown => {
+        /* Get the latest values */
+        const breakdownData = sorted.filter(row => row.client === breakdown.name);
+        const latest = breakdownData[0];
+        const latestValue = latest[`${config.base}${subcategory}`];
+
+        /* Create a wrapper */
+        const itemWrapper = document.createElement('div');
+        itemWrapper.classList.add('breakdown-item');
+        itemWrapper.style.setProperty('--breakdown-color', breakdown.color);
+
+        /* Add a text label to the wrapper */
+        const breakdownLabel = document.createElement('p');
+        breakdownLabel.textContent = breakdown.name;
+        breakdownLabel.classList.add('breakdown-label');
+        itemWrapper.appendChild(breakdownLabel);
+
+        /* Add the value to the wrapper */
+        const valueLabel = document.createElement('p');
+        valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+        valueLabel.classList.add('breakdown-value');
+        itemWrapper.appendChild(valueLabel);
+
+        /* Add the wrapper to the container */
+        container.appendChild(itemWrapper);
+      });
+    }
+
   }
 
-  /* Render the chart */
-  Highcharts.chart(`${id}-timeseries`, timeseries);
-}
+  // Update the highcharts timeseries
+  updateViz() {
+    const config = this.pageConfig[this.id]?.viz;
+    const timeseries = this.defaults(config);
 
-function getSeries(data, config) {
-  const series = [];
-  const app = pageFilters.app[0];
+    // Accessibility settings
+    if(config.caption) {
+      timeseries.caption = {
+        text: config.caption,
+      };
+    }
 
-  const defaultMetric = config.metric;
-  const currentSubcategory = config.current;
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlSubcategory = urlParams.get(config.param);
+    if(this.pageConfig[this.id].valueSuffix) {
+      timeseries.accessibility.point = {
+        ...timeseries.accessibility.point,
+        'valueSuffix': this.pageConfig[this.id].valueSuffix,
+      }
+    }
 
-  console.log(urlParams, urlSubcategory);
+    // General styling
+    timeseries.chart = {
+      ...timeseries.chart,
+      height: config.height,
+    };
 
-  let metric = defaultMetric;
+    // Axis settings
+    timeseries.yAxis = {
+      ...timeseries.yAxis,
+      tickAmount: config.yAxis.tickAmount,
+    }
 
-  console.log('metric', metric, 'currentSubcategory', currentSubcategory);
-  console.log('config', config, 'config.base', config.base);
+    timeseries.xAxis = {
+      ...timeseries.xAxis,
+      tickAmount: config.xAxis.tickAmount,
+    }
 
-  if(urlSubcategory) {
-    metric = `${config.base}${urlSubcategory}`;
+    // Update the data
+    if(this.data) {
+      timeseries.series = this.formatSeries();
+    }
+
+    // Render the chart
+    Highcharts.chart(`${this.id}-timeseries`, timeseries);
   }
 
-  if(currentSubcategory) {
-    metric = `${config.base}${currentSubcategory}`;
+  // Format the data in the format Highcharts needs it to be
+  formatSeries() {
+    return this.formatDataByClient();
   }
 
-  console.log(metric, 'default', defaultMetric);
+  // Format the data broken down by client
+  formatDataByClient() {
+    // Empty array that we'll populate later
+    const series = [];
 
-  if(config?.series?.breakdown === 'client') {
+    // Get the viz settings
+    const config = this.pageConfig[this.id]?.viz;
+    const app = this.pageFilters.app[0];
+
+    // The default metric from the settings
+    const defaultMetric = config.metric;
+
+    // Get the submetric from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlSubcategory = urlParams.get(config.param);
+
+    // By default, we use the metric from the settings
+    let metric = defaultMetric;
+
+    // If the subcategory is set, take it from the url
+    if(urlSubcategory) {
+      metric = `${config.base}${urlSubcategory}`;
+    }
+
+    // Breakdown data by categories defined in config
     config?.series?.values?.forEach((value, index) => {
-      const filteredData = data[app].filter(entry => entry.client === value);
+      // Filter by selected client & sort
+      const filteredData = this.data[app].filter(entry => entry.client === value.name);
       filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
+      // Add the values for the selected metric to a new array of objects
+      // Formatted as coordinates for Highcharts
       const formattedData = [];
       filteredData.forEach(row => {
         formattedData.push({
@@ -157,58 +207,48 @@ function getSeries(data, config) {
         });
       });
 
+      // Push the configurations and formatted data to the series array
       series.push(
         {
-          name: value,
+          name: value.name,
           data: formattedData,
-          color: colors[index],
+          color: value.color || colors[index],
           lineWidth: 2,
         }
       )
     });
+
+    return series;
   }
 
-  return series;
-}
-
-function defaults(config) {
-  const defaults = {
-    type: 'timeseries',
-    chart: {
-      colors: ['#070746', '#157F56', '#C9200D', '#AA0DC9'],
-    },
-    title: {
-      text: config.title,
-    },
-    accessibility: {},
-    series: config.series.defaults,
-    xAxis: {
-      title: {
-        text: config.xAxis.title,
+  // Get the default settings
+  defaults(config) {
+    const defaults = {
+      type: 'timeseries',
+      chart: {
+        colors: ['#070746', '#157F56', '#C9200D', '#AA0DC9'],
       },
-      type: 'datetime'
-    },
-    yAxis: {
       title: {
-        text: config.yAxis.title,
+        text: config?.title,
       },
-    },
-  };
+      accessibility: {},
+      series: config?.series?.defaults,
+      xAxis: {
+        title: {
+          text: config?.xAxis?.title,
+        },
+        type: 'datetime'
+      },
+      yAxis: {
+        title: {
+          text: config?.yAxis?.title,
+        },
+      },
+    };
 
-  return defaults;
+    return defaults;
+  }
 }
 
-function updateFilters(data, filters) {
-  /* Filters get saved so other functions have access to it*/
-  pageFilters = filters;
-
-  updateAllComponents(data);
-}
-
-
-export const Timeseries = {
-  init,
-  updateAllComponents,
-  updateData,
-  updateFilters,
-};
+/* Make the component availble everywhere */
+window.Timeseries = Timeseries;

@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="report-content">
+  <div id="report-content" class="report-content">
     <div class="client-selector block-m">
       <label for="client-breakdown">Client</label>
       <select name="client-breakdown" id="client-breakdown">
@@ -27,125 +27,19 @@
       </select>
     </div>
 
-    <div class="block-m summary report-section">
-      <h2>Summary</h2>
-
-      <div class="summary-grid">
-        <div class="card summary-linked">
-          <summary-linked
-            title="Adoption"
-            link="#adoption"
-            key="origins"
-            data-scope="all-data"
-            client="{{ request.args.get('client', '')  or 'mobile' }}"
-          >
-          </summary-linked>
-        </div>
-
-        <div class="card summary-linked">
-          <summary-linked
-            title="Good CWVs"
-            link="#good-cwvs"
-            key="origins_with_good_cwv"
-            data-scope="all-data"
-            client="{{ request.args.get('client', '')  or 'mobile' }}"
-          >
-          </summary-linked>
-        </div>
-
-        <div class="card summary-linked">
-          <summary-linked
-            title="Lighthouse performance"
-            link="#lighthouse"
-            key="median_lighthouse_score_performance"
-            data-scope="all-data"
-            client="{{ request.args.get('client', '')  or 'mobile' }}"
-          >
-          </summary-linked>
-        </div>
-
-        <div class="card summary-linked">
-          <summary-linked
-            title="Page weight"
-            link="#page-weight"
-            key="median_bytes_total"
-            data-scope="all-data"
-            client="{{ request.args.get('client', '')  or 'mobile' }}"
-          >
-          </summary-linked>
-        </div>
-      </div>
-    </div>
-
-    <div id="adoption" class="block-m report-section">
-      <h2>Adoption</h2>
-      <p>Description</p>
-      <div class="card">
-        {% set timeseries = tech_report_page.config.adoption_timeseries %}
-        {% include "techreport/components/timeseries.html" %}
-      </div>
-
-      <!-- <div class="card">
-        <h3>All data</h3>
-        <p>Explanation</p>
-
-        <div id="container"></div>
-
-        <button class="btn show-hide">Show Table</button>
-
-        <table-general
-          data-scope="all-data"
-          client="{{ request.args.get('client', '')  or 'mobile' }}"
-          columns="date,client,origins"
-          id="origins-over-time"
-        >
-          <span slot="table-caption">
-            Adoption over time
-          </span>
-        </table-general>
-      </div> -->
-    </div>
-
-    <div id="good-cwvs" class="block-m report-section">
-      <h2>Core Web Vitals</h2>
-      <p>Description</p>
-
-      <div class="table-ui-wrapper card">
-        <h3>Latest data</h3>
-        <p>Explanation</p>
-        <table-overview
-          data-scope="all-data"
-          client="{{ request.args.get('client', '')  or 'mobile' }}"
-        >
-        </table-overview>
-      </div>
-
-      <div class="card">
-        {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
-        {% set subcategory = request.args.get('good-cwv-over-time', '')  or 'cwv' %}
-        {% include "techreport/components/timeseries.html" %}
-      </div>
-    </div>
-
-    <div id="lighthouse" class="block-m report-section">
+    <div
+      id="lighthouse"
+      class="block-m report-section"
+      data-type="section"
+      data-metric="lighthouse"
+      data-config="lighthouse_section"
+    >
       <h2>Lighthouse</h2>
       <p>Description</p>
 
-      <div class="table-ui-wrapper card">
-
+      <div class="card">
         {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
         {% set subcategory = request.args.get('median-lighthouse-over-time', '')  or 'cwv' %}
-        {% include "techreport/components/timeseries.html" %}
-
-      </div>
-    </div>
-
-    <div id="page-weight" class="block-m report-section">
-      <h2>Page weight</h2>
-      <p>Description</p>
-
-      <div class="table-ui-wrapper card">
-        {% set timeseries = tech_report_page.config.weight_timeseries %}
         {% include "techreport/components/timeseries.html" %}
       </div>
     </div>

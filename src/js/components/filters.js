@@ -1,3 +1,59 @@
+/* Add event listeners to the interactive components */
+function bindFilterListener() {
+  /* Submit the form */
+  const submit = document.getElementById('submit-form');
+  if(submit) {
+    submit.addEventListener('click', setFilter);
+  }
+
+  /* Add a new technology */
+  const addButton = document.getElementById('add-tech');
+  if(addButton) {
+    addButton.addEventListener('click', addTechnologySelector);
+  }
+
+  /* Remove a technology */
+  const removeButtons = Object.values(document.getElementsByClassName('remove-tech'));
+  removeButtons?.forEach(removeButton => removeButton.addEventListener('click', removeTechnology));
+
+  /* Choose a category */
+  const categoriesSelectors = Object.values(document.getElementsByClassName('categories-selector'));
+  categoriesSelectors.forEach(categorySelector => categorySelector.addEventListener('change', updateCategory));
+}
+
+/* Submit form */
+function setFilter(event) {
+  event.preventDefault();
+
+  const url = new URL(location.href);
+
+  /* Get the geo and rank filter */
+  const geo = document.getElementsByName('geo')[0].value;
+  const rank = document.getElementsByName('rank')[0].value;
+
+  /* Create a string of technologies */
+  let technologies = [];
+  document.getElementsByName('tech').forEach(technology => {
+    technologies.push(technology.value);
+  });
+  technologies.join(",");
+
+  /* Modify the URL with the tech */
+  url.searchParams.delete('tech');
+  url.searchParams.append('tech', technologies);
+
+  url.searchParams.delete('geo');
+  url.searchParams.append('geo', geo);
+
+  url.searchParams.delete('rank');
+  url.searchParams.append('rank', rank);
+
+
+  /* Update the url */
+  location.href = url;
+}
+
+/* Update the list of technologies */
 function updateTechnologies(technologies) {
   /* Get existing tech selectors on the page */
   const allTechSelectors = document.querySelectorAll('select.tech');
@@ -33,6 +89,7 @@ function updateTechnologies(technologies) {
   // hideRemoveButton();
 }
 
+/* Update the list with geographies */
 function updateGeo(geos, filters) {
   const select = document.querySelector('select#geo');
   select.innerHTML = '';
@@ -49,6 +106,7 @@ function updateGeo(geos, filters) {
   });
 }
 
+/* Update the list with ranks */
 function updateRank(ranks, filters) {
   const select = document.querySelector('select#rank');
   select.innerHTML = '';
@@ -65,6 +123,7 @@ function updateRank(ranks, filters) {
   });
 }
 
+/* Update the list with categories */
 function updateCategories(categories, filters) {
   const select = document.querySelector('select#categories');
 
@@ -86,6 +145,7 @@ function updateCategories(categories, filters) {
   }
 }
 
+/* Set the selected category */
 function updateCategory(event) {
   const selectedOption = document.querySelector(`option[value="${event.target.value}"]`);
   const selectedTechs = selectedOption.dataset.technologies.split(",");
@@ -105,25 +165,7 @@ function updateCategory(event) {
 
 }
 
-function bindFilterListener() {
-  const submit = document.getElementById('submit-form');
-  if(submit) {
-    submit.addEventListener('click', setFilter);
-  }
-
-  const addButton = document.getElementById('add-tech');
-  if(addButton) {
-    addButton.addEventListener('click', addTechnologySelector);
-  }
-
-  const categoriesSelectors = Object.values(document.getElementsByClassName('categories-selector'));
-  categoriesSelectors.forEach(categorySelector => categorySelector.addEventListener('change', updateCategory));
-
-  const removeButtons = Object.values(document.getElementsByClassName('remove-tech'));
-  removeButtons?.forEach(removeButton => removeButton.addEventListener('click', removeTechnology));
-}
-
-
+/* Duplicate the technology dropdowns */
 function addTechnologySelector(event) {
   event.preventDefault();
 
@@ -159,6 +201,7 @@ function addTechnologySelector(event) {
   }
 }
 
+/* Remove the chosen technology option */
 function removeTechnology(event) {
   event.preventDefault();
 
@@ -169,43 +212,12 @@ function removeTechnology(event) {
   hideRemoveButton();
 }
 
+/* Hide possibility to remove tech when only one is selected */
 function hideRemoveButton() {
   const techs = document.getElementsByClassName('tech-selector-group');
   if(techs.length === 1) {
     techs[0].getElementsByClassName('remove-tech')[0].classList.add('hidden');
   }
-}
-
-function setFilter(event) {
-  event.preventDefault();
-
-  const url = new URL(location.href);
-
-  /* Get the geo and rank filter */
-  const geo = document.getElementsByName('geo')[0].value;
-  const rank = document.getElementsByName('rank')[0].value;
-
-  /* Create a string of technologies */
-  let technologies = [];
-  document.getElementsByName('tech').forEach(technology => {
-    technologies.push(technology.value);
-  });
-  technologies.join(",");
-
-  /* Modify the URL with the tech */
-  url.searchParams.delete('tech');
-  url.searchParams.append('tech', technologies);
-
-  url.searchParams.delete('geo');
-  url.searchParams.append('geo', geo);
-
-  url.searchParams.delete('rank');
-  url.searchParams.append('rank', rank);
-
-
-  /* Update the url */
-  location.href = url;
-
 }
 
 export const Filters = {
