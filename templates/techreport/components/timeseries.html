@@ -16,11 +16,14 @@
         </p>
       </div>
       <div class="breakdown-list">
-        <div class="breakdown-item">
-          <p class="breakdown-label"></p>
-          <p class="breakdown-value"></p>
-          <p>Last month: <span></span></p>
-        </div>
+        {% if timeseries.viz.series.breakdown == 'client' %}
+          {% for breakdown in timeseries.viz.series["values"] %}
+            <div class="breakdown-item">
+              <p class="breakdown-label">{{ breakdown.name }}</p>
+              <p class="breakdown-value">00{{ breakdown.suffix }}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
   {% endif %}

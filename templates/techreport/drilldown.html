@@ -18,21 +18,34 @@
     </div>
   </div>
 
+  <div class="client-selector block-m">
+    <label for="client-breakdown">Client</label>
+    <select name="client-breakdown" id="client-breakdown">
+      <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
+      <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
+    </select>
+  </div>
+
   <div id="report-content" class="report-content">
-    <div class="client-selector block-m">
-      <label for="client-breakdown">Client</label>
-      <select name="client-breakdown" id="client-breakdown">
-        <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
-        <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
-      </select>
+    <div
+      id="good-cwvs"
+      class="block-m report-section"
+      data-type="section"
+    >
+      <h2>Core Web Vitals</h2>
+      <p>Description</p>
+
+      <div class="card">
+        {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
+        {% set subcategory = request.args.get('good-cwv-over-time', '')  or 'cwv' %}
+        {% include "techreport/components/timeseries.html" %}
+      </div>
     </div>
 
     <div
       id="lighthouse"
       class="block-m report-section"
       data-type="section"
-      data-metric="lighthouse"
-      data-config="lighthouse_section"
     >
       <h2>Lighthouse</h2>
       <p>Description</p>
@@ -42,6 +55,35 @@
         {% set subcategory = request.args.get('median-lighthouse-over-time', '')  or 'cwv' %}
         {% include "techreport/components/timeseries.html" %}
       </div>
+    </div>
+
+    <div
+      id="page-weight"
+      class="block-m report-section"
+      data-type="section"
+    >
+      <h2>Page weight</h2>
+      <p>Description</p>
+      <div class="table-ui-wrapper card">
+        {% set timeseries = tech_report_page.config.weight_timeseries %}
+        {% include "techreport/components/timeseries.html" %}
+      </div>
+
+    </div>
+
+    <div
+      id="adoption"
+      class="block-m report-section"
+      data-type="section"
+    >
+      <h2>Adoption</h2>
+      <p>Description</p>
+
+      <div class="card">
+        {% set timeseries = tech_report_page.config.adoption_timeseries %}
+        {% include "techreport/components/timeseries.html" %}
+      </div>
+
     </div>
   </div>
 {% endblock %}

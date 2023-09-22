@@ -27,8 +27,6 @@ class Timeseries {
   // Filter and re-render the component when the submetric changes
   updateSubmetric(event) {
     if(this.submetric !== event.target.value) {
-      console.log('click', event.target.value);
-
       // Update the URL
       const url = new URL(window.location.href);
       url.searchParams.set(event.target.dataset.param, event.target.value);
@@ -54,7 +52,9 @@ class Timeseries {
 
   // Re-render the contents of the component
   updateContent() {
-    this.updateSummary();
+    if(this.pageConfig[this.id]?.summary) {
+      this.updateSummary();
+    }
     this.updateViz();
   }
 
@@ -66,14 +66,13 @@ class Timeseries {
     const id = this.id;
     const pageFilters = this.pageFilters;
 
-    if(data) {
+    const app = pageFilters.app[0];
+    const sorted = data?.[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if(sorted) {
       /* Select the container to which we'll add elements. */
       const viz = document.querySelector(`[data-id="${id}"]`);
       const container = viz.querySelector('.breakdown-list');
-
-      /* Select the data old to new for the selected technology */
-      const app = pageFilters.app[0];
-      const sorted = data[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
 
       /* Get the currently selected subcategory based on the URL */
       const urlParams = new URLSearchParams(window.location.search);
@@ -84,12 +83,12 @@ class Timeseries {
       container.innerHTML = '';
 
       /* Update the date to the most recent timestamp in the dataset */
-      viz.querySelector('[data-slot="timestamp"]').innerHTML = sorted[0].date;
+      viz.querySelector('[data-slot="timestamp"]').innerHTML = sorted?.[0].date;
 
       /* For each of the breakdowns, add a component with the latest data */
       config.series.values.forEach(breakdown => {
         /* Get the latest values */
-        const breakdownData = sorted.filter(row => row.client === breakdown.name);
+        const breakdownData = sorted?.filter(row => row.client === breakdown.name);
         const latest = breakdownData[0];
         const latestValue = latest[`${config.base}${subcategory}`];
 
@@ -194,13 +193,13 @@ class Timeseries {
     // Breakdown data by categories defined in config
     config?.series?.values?.forEach((value, index) => {
       // Filter by selected client & sort
-      const filteredData = this.data[app].filter(entry => entry.client === value.name);
-      filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const filteredData = this.data?.[app]?.filter(entry => entry.client === value.name);
+      filteredData?.sort((a, b) => new Date(a.date) - new Date(b.date));
 
       // Add the values for the selected metric to a new array of objects
       // Formatted as coordinates for Highcharts
       const formattedData = [];
-      filteredData.forEach(row => {
+      filteredData?.forEach(row => {
         formattedData.push({
           x: new Date(row.date),
           y: Number(row[metric]),
