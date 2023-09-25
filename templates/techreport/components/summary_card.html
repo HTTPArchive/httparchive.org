@@ -1,0 +1,12 @@
+<div class="card" data-component="summaryCard" data-metric="{{ summary.metric }}">
+  <p class="summary-linked-label">
+    <a href="{{ summary.url }}{{ filters }}" data-slot="label">{{ summary.label }}</a>
+  </p>
+  <p>
+    <span class="summary-linked-value" data-slot="value">--</span>
+    <span class="summary-suffix" data-slot="suffix">{{ summary.suffix or "" }}</span>
+  </p>
+  <p class="summary-linked-description" data-slot="description">
+    {{ summary.description }}
+  </p>
+</div>

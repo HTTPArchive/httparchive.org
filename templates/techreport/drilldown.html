@@ -27,6 +27,17 @@
   </div>
 
   <div id="report-content" class="report-content">
+    <!-- Summary of the main metrics -->
+    <div class="block-m summary report-section">
+      <h2>Summary</h2>
+      <div class="summary-grid">
+        {% for summary in tech_report_page.config.summary %}
+          {% include "techreport/components/summary_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Section: Core Web Vitals -->
     <div
       id="good-cwvs"
       class="block-m report-section"
@@ -42,6 +53,7 @@
       </div>
     </div>
 
+    <!-- Section: Lighthouse -->
     <div
       id="lighthouse"
       class="block-m report-section"
@@ -57,6 +69,7 @@
       </div>
     </div>
 
+    <!-- Section: Page Weight -->
     <div
       id="page-weight"
       class="block-m report-section"
@@ -71,6 +84,7 @@
 
     </div>
 
+    <!-- Section: Adoption -->
     <div
       id="adoption"
       class="block-m report-section"

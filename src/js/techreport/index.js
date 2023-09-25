@@ -1,6 +1,7 @@
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { Filters } = require("../components/filters");
 const { getPercentage } = require("../utils");
+const { SummaryCards } = require('./summaryCards');
 
 class TechReport {
   constructor(pageId, page, config, labels) {
@@ -186,6 +187,8 @@ class TechReport {
         section.data = data;
         section.updateSection();
       });
+
+      SummaryCards.updateCards(data[app]);
 
       // Update web components
       // TODO: Change to same system as sections/timeseries

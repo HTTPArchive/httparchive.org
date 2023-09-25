@@ -63,7 +63,6 @@
 
   <!-- Import templates -->
   {% include "techreport/templates/drilldown_header.html" %}
-  {% include "techreport/templates/summary_linked.html" %}
   {% include "techreport/templates/table_general.html" %}
   {% include "techreport/templates/table_general_multi.html" %}
   {% include "techreport/templates/table_overview.html" %}
@@ -82,7 +81,6 @@
 
   <!-- TODO: Change this -->
   <!-- Import web components code -->
-  <script src="{{ get_versioned_filename('/static/js/summaryLinked.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableOverview.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableCWVOverviewMulti.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/tableGeneral.js') }}" nonce="{{ csp_nonce() }}"></script>

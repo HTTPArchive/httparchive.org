@@ -148,6 +148,29 @@
             ]
           }
         },
+        "summary": [
+          {
+            "metric": "pct_good_cwv",
+            "label": "Overall good CWVs",
+            "suffix": "%",
+            "description": "Origins with overall good core web vitals.",
+            "url": "#good-cwvs"
+          },
+          {
+            "metric": "median_lighthouse_score_performance",
+            "label": "Lighthouse performance",
+            "suffix": "",
+            "description": "Median lighthouse performance score across tested origins.",
+            "url": "#lighthouse"
+          },
+          {
+            "metric": "median_bytes_total",
+            "label": "Page weight",
+            "suffix": "kB",
+            "description": "Median total bytes per page for across tested origins.",
+            "url": "#page-weight"
+          }
+        ],
         "adoption_timeseries": {
           "title": "All usage",
           "description": "Placeholder",
