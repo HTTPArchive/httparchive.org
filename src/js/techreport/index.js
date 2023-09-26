@@ -70,7 +70,9 @@ class TechReport {
           client: client
         };
 
-        // Timeseries.updateFilters(this.page.config, this.filters, this.allData);
+        Object.values(this.sections).forEach(section => {
+          section.updateActiveClient(client);
+        });
 
         const url = new URL(window.location.href);
         url.searchParams.set(`client`, client);
@@ -188,17 +190,8 @@ class TechReport {
         section.updateSection();
       });
 
-      SummaryCards.updateCards(data[app]);
-
       // Update web components
       // TODO: Change to same system as sections/timeseries
-      const latestComponents = document.querySelectorAll('[data-scope="all-latest"]');
-      latestComponents.forEach((component) => {
-        component.latest = data[app][0];
-        component.labels = this.labels;
-        component.setAttribute('loaded', true);
-      });
-
       const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
       allDataComponents.forEach((component) => {
         component.allData = data[app];

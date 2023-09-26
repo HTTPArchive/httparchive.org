@@ -1,31 +1,67 @@
+import SummaryCard from "./summaryCards";
+
 class Section {
   constructor(id, config, filters, data) {
     this.id = id;
     this.data = data;
     this.pageConfig = config;
     this.pageFilters = filters;
-    this.timeseries = {};
+    this.components = {};
 
     this.initializeComponents();
   }
 
   initializeComponents() {
     const section = document.getElementById(this.id);
-    const timeseriesComponents = section.querySelectorAll('[data-component="timeseries"]');
-    Object.values(timeseriesComponents).forEach(component => {
-      this.timeseries[component.dataset.id] = new Timeseries(
-        component.dataset.id,
-        this.pageConfig,
-        this.pageFilters,
-        this.data
-      );
+
+    // Initialize components
+    section.querySelectorAll('[data-component]').forEach(component => {
+      switch(component.dataset.component) {
+        case "timeseries":
+          this.initializeTimeseries(component);
+          break;
+
+        case "summaryCard":
+          this.initializeSummaryCards(component);
+          break;
+
+        default:
+          break;
+      }
     });
   }
 
+  initializeSummaryCards(component) {
+    this.components[component.dataset.id] = new SummaryCard(
+      component.dataset.id,
+      this.pageConfig,
+      this.pageFilters,
+      this.data
+    );
+  }
+
+  initializeTimeseries(component) {
+    this.components[component.dataset.id] = new Timeseries(
+      component.dataset.id,
+      this.pageConfig,
+      this.pageFilters,
+      this.data
+    );
+  }
+
   updateSection() {
-    Object.values(this.timeseries).forEach(component => {
+    Object.values(this.components).forEach(component => {
       component.data = this.data;
       component.updateContent();
+    });
+  }
+
+  updateActiveClient(client) {
+    Object.values(this.components).forEach(component => {
+      if(component.client) {
+        component.client = client;
+        component.updateContent();
+      }
     });
   }
 }

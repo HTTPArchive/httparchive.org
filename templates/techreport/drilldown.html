@@ -27,8 +27,13 @@
   </div>
 
   <div id="report-content" class="report-content">
-    <!-- Summary of the main metrics -->
-    <div class="block-m summary report-section">
+    <!-- Section: Summary of the main metrics -->
+    <div
+      id="drilldown-summary"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
       <h2>Summary</h2>
       <div class="summary-grid">
         {% for summary in tech_report_page.config.summary %}
@@ -42,6 +47,7 @@
       id="good-cwvs"
       class="block-m report-section"
       data-type="section"
+      data-api="cwv"
     >
       <h2>Core Web Vitals</h2>
       <p>Description</p>
@@ -58,6 +64,7 @@
       id="lighthouse"
       class="block-m report-section"
       data-type="section"
+      data-api="lighthouse"
     >
       <h2>Lighthouse</h2>
       <p>Description</p>
@@ -74,6 +81,7 @@
       id="page-weight"
       class="block-m report-section"
       data-type="section"
+      data-api="page-weight"
     >
       <h2>Page weight</h2>
       <p>Description</p>
@@ -89,6 +97,7 @@
       id="adoption"
       class="block-m report-section"
       data-type="section"
+      data-api="adoption"
     >
       <h2>Adoption</h2>
       <p>Description</p>

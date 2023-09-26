@@ -164,6 +164,13 @@
             "url": "#lighthouse"
           },
           {
+            "metric": "median_lighthouse_score_accessibility",
+            "label": "Lighthouse accessibility",
+            "suffix": "",
+            "description": "Median lighthouse accessibility score across tested origins.",
+            "url": "#lighthouse&median-lighthouse-over-time=accessibility"
+          },
+          {
             "metric": "median_bytes_total",
             "label": "Page weight",
             "suffix": "kB",

@@ -1,4 +1,9 @@
-<div class="card" data-component="summaryCard" data-metric="{{ summary.metric }}">
+<div
+  class="card"
+  data-component="summaryCard"
+  data-metric="{{ summary.metric }}"
+  data-id="summary-{{ summary.metric }}"
+>
   <p class="summary-linked-label">
     <a href="{{ summary.url }}{{ filters }}" data-slot="label">{{ summary.label }}</a>
   </p>
