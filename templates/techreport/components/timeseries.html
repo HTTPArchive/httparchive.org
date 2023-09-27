@@ -47,4 +47,7 @@
     </table-general>
   </div>
 
+  <p class="meta">
+    Client: <span data-slot="client">{{ request.args.get('client', '')  or 'mobile' }}</span>
+  </p>
 </div>

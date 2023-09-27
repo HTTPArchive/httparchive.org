@@ -37,7 +37,6 @@ class TechReport {
 
   // TODO
   initializeLanding() {
-
   }
 
   // TODO
@@ -69,18 +68,12 @@ class TechReport {
       component.setAttribute('client', client);
     });
 
-    // Update the filters object
-    this.filters = {
-      ...this.filters,
-      client: client
-    };
-
     // Update the URL
     const url = new URL(window.location.href);
     url.searchParams.set(`client`, client);
     window.history.replaceState(null, null, url);
 
-    // Update selected client property everywhere
+    // Update selected client property ever
     document.querySelectorAll('[data-client]').forEach(component => {
       component.dataset.client = client;
     });

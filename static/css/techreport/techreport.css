@@ -34,56 +34,11 @@
   --graph-color-labels: #62777B;
 }
 
-/* Page heading */
-.intro {
-  border: none;
-  margin-top: 0;
-  background-color: transparent;
-  padding: 4rem 0;
-}
+/* ------------------------- */
+/* ---- Building blocks ---- */
+/* ------------------------- */
 
-.intro h1 {
-  font-size: var(--font-size-xlarge);
-  margin-bottom: 2.5rem;
-  margin-top: 0;
-}
-
-.intro h1 span.subtitle {
-  font-size: 1.15rem;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.intro p {
-  font-size: 1.15rem;
-  max-width: 45rem;
-}
-
-.intro h1 + p {
-  padding: 0;
-}
-
-.intro ul {
-  padding-left: 0;
-  margin-left: 0;
-}
-
-/* Categories */
-.categories {
-  margin: 1rem 0;
-}
-
-.categories .cell {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  border: 1px solid var(--color-text);
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
-}
-
-
-/* Building blocks */
+/* CTA */
 .cta-link {
   background-color: var(--color-teal-dark);
   color: var(--color-text-inverted);
@@ -109,6 +64,16 @@
 .cta-link-wrapper {
   display: block;
   margin-top: 1rem;
+}
+
+/* Filter info */
+p.meta {
+  font-size: 0.75rem;
+  color: var(--color-text-lighter);
+}
+
+p.meta span {
+  font-weight: 600;
 }
 
 /* -------------------- */
@@ -280,10 +245,57 @@ button#add-tech {
 }
 
 
-
 /* -------------------- */
 /* ----- Sections ----- */
 /* -------------------- */
+
+/* Page heading */
+.intro {
+  border: none;
+  margin-top: 0;
+  background-color: transparent;
+  padding: 4rem 0;
+}
+
+.intro h1 {
+  font-size: var(--font-size-xlarge);
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+}
+
+.intro h1 span.subtitle {
+  font-size: 1.15rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.intro p {
+  font-size: 1.15rem;
+  max-width: 45rem;
+}
+
+.intro h1 + p {
+  padding: 0;
+}
+
+.intro ul {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.intro .categories {
+  margin: 1rem 0;
+}
+
+.intro .categories .cell {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-text);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
 
 .report-content {
   background-image: linear-gradient(#C0CED0, rgba(238,238,238,0));
@@ -333,17 +345,14 @@ button#add-tech {
   margin-bottom: 0;
 }
 
-/* Summary */
-.summary {
+[data-component="summaryCard"] {
   position: relative;
-  z-index: 1;
-  margin-bottom: 4rem;
+  padding-bottom: 3rem;
 }
 
-.summary h2 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+[data-component="summaryCard"] > p.meta {
+  position: absolute;
+  bottom: 1rem;
 }
 
 /* Main data */
@@ -417,6 +426,10 @@ button#add-tech {
   font-size: var(--font-size-medium);
 }
 
+/* -------------------- */
+/* ---- Highcharts ---- */
+/* -------------------- */
+
 /* Highcharts */
 .highcharts-title {
   font-weight: normal !important;
@@ -442,6 +455,10 @@ svg.highcharts-root .highcharts-axis-labels text {
 path.highcharts-tick {
   display: none;
 }
+
+/* ----------------------- */
+/* ---- Media queries ---- */
+/* ----------------------- */
 
 /* Re-arrange when viewport becomes too narrow in height */
 /* ± 200% zoom on a 13" screen */

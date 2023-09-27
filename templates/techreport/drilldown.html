@@ -35,7 +35,6 @@
       data-api="cwv,lighthouse,page-weight"
     >
       <h2>Summary</h2>
-      <p>Based on the latest data.</p>
       <div class="summary-grid">
         {% for summary in tech_report_page.config.summary %}
           {% include "techreport/components/summary_card.html" %}
@@ -57,9 +56,6 @@
         {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
         {% set subcategory = request.args.get('good-cwv-over-time', '')  or 'cwv' %}
         {% include "techreport/components/timeseries.html" %}
-        <p class="meta">
-          Client: <span data-slot="client">Mobile</span>
-        </p>
       </div>
     </div>
 
