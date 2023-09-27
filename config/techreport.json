@@ -182,9 +182,23 @@
           "title": "All usage",
           "description": "Placeholder",
           "id": "adoption_timeseries",
-
           "table": {
-            "columns": "date,client,origins"
+            "param":"",
+            "caption": "Usage placeholder",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date"
+             },
+              {
+                "key": "client",
+                "name": "Client"
+             },
+              {
+                "key": "origins",
+                "name": "Origins"
+             }
+            ]
           },
           "viz": {
             "title": "Origins over time",
@@ -277,7 +291,32 @@
             ]
           },
           "table": {
-            "columns": "date,client,origins_eligible_for_*subcategory*,origins_with_good_*subcategory*,pct_good_*subcategory*"
+            "param":"good-cwv-over-time",
+            "default": "cwv",
+            "caption": "Good Core Web Vitals placeholder",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date",
+                "type": "heading"
+             },
+              {
+                "key": "client",
+                "name": "Client"
+             },
+              {
+                "key": "origins_eligible_for_*subcategory*",
+                "name": "Eligible"
+             },
+              {
+                "key": "origins_with_good_*subcategory*",
+                "name": "Good scores"
+             },
+              {
+                "key": "pct_good_*subcategory*",
+                "name": "% Good scores"
+             }
+            ]
           },
           "summary": true,
           "viz": {
@@ -369,7 +408,23 @@
             ]
           },
           "table": {
-            "columns": "date,client,median_lighthouse_score_*subcategory*"
+            "param":"median-lighthouse-over-time",
+            "default": "performance",
+            "caption": "Lighthouse scores",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date"
+             },
+              {
+                "key": "client",
+                "name": "Client"
+             },
+              {
+                "key": "median_lighthouse_score_*subcategory*",
+                "name": "Median score"
+             }
+            ]
           },
           "viz": {
             "base": "median_lighthouse_score_",
@@ -450,7 +505,23 @@
             ]
           },
           "table": {
-            "columns": "date,client,median_bytes_*subcategory*"
+            "param":"weight-over-time",
+            "default": "image",
+            "caption": "Weight",
+            "columns": [
+              {
+                "name": "Date",
+                "key": "date"
+             },
+              {
+                "name": "Client",
+                "key": "client"
+             },
+              {
+                "name": "Median Bytes",
+                "key": "median_bytes_*subcategory*"
+             }
+            ]
           },
           "viz": {
             "base": "median_bytes_",

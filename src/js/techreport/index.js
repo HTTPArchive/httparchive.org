@@ -63,17 +63,12 @@ class TechReport {
   updateClient(event) {
     const client = event.target.value;
 
-    // Update web components
-    document.querySelectorAll('[data-scope]').forEach(component => {
-      component.setAttribute('client', client);
-    });
-
     // Update the URL
     const url = new URL(window.location.href);
     url.searchParams.set(`client`, client);
     window.history.replaceState(null, null, url);
 
-    // Update selected client property ever
+    // Update selected client property everywhere
     document.querySelectorAll('[data-client]').forEach(component => {
       component.dataset.client = client;
     });

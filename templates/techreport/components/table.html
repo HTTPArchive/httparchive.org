@@ -1,0 +1,29 @@
+<!-- This makes the table focusable and scrollable by keyboard -->
+<!-- Table content and caption id set in JS -->
+<div class="table-ui-wrapper" role="region" aria-labelledby="table-{{ id }}" tabindex="0">
+  <table
+    id="table-{{ id }}"
+    class="table-ui"
+    data-client="{{ client }}"
+  >
+    <caption class="sr-only">{{ table.caption }}</caption>
+    <thead>
+      <tr>
+        {% for column in table.columns %}
+          <th data-key=" {{ column.key }}">{{ column.name }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% if table.rows %}
+        {% for row in table.rows %}
+          {% if row.header == "true" %}
+            <th data-key="{{ row.key }}">{{ row.name }}</th>
+          {% else %}
+            <td data-key="{{ row.key }}">{{ row.name }}</td>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+</div>

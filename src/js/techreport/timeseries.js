@@ -1,3 +1,5 @@
+import { Table } from "./table";
+
 class Timeseries {
   // Create the component
   constructor(id, config, filters, data) {
@@ -56,6 +58,7 @@ class Timeseries {
       this.updateSummary();
     }
     this.updateViz();
+    Table.updateTable(this.id, this.pageConfig[this.id]?.table, this.pageFilters.app[0], this.data);
   }
 
   // Update the summary with the latest data for all categories

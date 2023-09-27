@@ -34,17 +34,10 @@
   <button class="btn show-table" type="button" data-id="{{ timeseries.id }}">Show table</button>
 
   <div id="{{ timeseries.id }}-table-wrapper" class="hidden">
-    <table-general
-      data-scope="all-data"
-      client="{{ request.args.get('client', '')  or 'mobile' }}"
-      columns="{{ timeseries.table.columns }}"
-      subcategory="{% if subcategory %}{{ subcategory.default }}{% endif %}"
-      id="{{ timeseries.id }}-table"
-    >
-      <span slot="table-caption">
-        {{ timeseries.title }}
-      </span>
-    </table-general>
+    {% set table = timeseries.table %}
+    {% set id = timeseries.id %}
+    {% set client = request.args.get('client', '')  or 'mobile' %}
+    {% include "techreport/components/table.html" %}
   </div>
 
   <p class="meta">
