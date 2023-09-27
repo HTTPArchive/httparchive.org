@@ -70,6 +70,7 @@
 p.meta {
   font-size: 0.75rem;
   color: var(--color-text-lighter);
+  margin-top: 1rem;
 }
 
 p.meta span {
