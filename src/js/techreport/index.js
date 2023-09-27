@@ -55,30 +55,46 @@ class TechReport {
   // Watch for changes in the client dropdown
   bindClientListener() {
     const select = document.getElementById('client-breakdown');
-    const allDataComponents = document.querySelectorAll('[data-scope]');
 
     if(select) {
-      select.onchange = (event) => {
-        const client = event.target.value;
-
-        allDataComponents.forEach(component => {
-          component.setAttribute('client', client);
-        });
-
-        this.filters = {
-          ...this.filters,
-          client: client
-        };
-
-        Object.values(this.sections).forEach(section => {
-          section.updateActiveClient(client);
-        });
-
-        const url = new URL(window.location.href);
-        url.searchParams.set(`client`, client);
-        window.history.replaceState(null, null, url);
-      }
+      select.onchange = (event) => this.updateClient(event);
     }
+  }
+
+  updateClient(event) {
+    const client = event.target.value;
+
+    // Update web components
+    document.querySelectorAll('[data-scope]').forEach(component => {
+      component.setAttribute('client', client);
+    });
+
+    // Update the filters object
+    this.filters = {
+      ...this.filters,
+      client: client
+    };
+
+    // Update the URL
+    const url = new URL(window.location.href);
+    url.searchParams.set(`client`, client);
+    window.history.replaceState(null, null, url);
+
+    // Update selected client property everywhere
+    document.querySelectorAll('[data-client]').forEach(component => {
+      component.dataset.client = client;
+    });
+
+    // Update the sections
+    Object.values(this.sections).forEach(section => {
+      section.updateSection();
+    });
+
+    // Update labels
+    document.querySelectorAll('[data-slot="client"]').forEach(component => {
+      component.innerHTML = client;
+    })
+
   }
 
   // Fetch all the data based on search criteria and config

@@ -19,8 +19,7 @@ class SummaryCard {
 
       // Get the latest data for the selected app/tech
       const app = this.pageFilters.app[0];
-      const client = this.client;
-
+      const client = card.dataset.client || this.client;
       const filteredData = this.data?.[app]?.filter(entry => entry.client === client);
       filteredData?.sort((a, b) => new Date(b.date) - new Date(a.date));
       const latest = filteredData[0];
@@ -29,6 +28,7 @@ class SummaryCard {
       const metric = card.dataset.metric;
       const value = latest[metric];
 
+      // Update the html
       if(value) {
         card.querySelector('[data-slot="value"]').innerHTML = value;
       }

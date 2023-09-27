@@ -3,6 +3,7 @@
   data-component="summaryCard"
   data-metric="{{ summary.metric }}"
   data-id="summary-{{ summary.metric }}"
+  data-client="{{ request.args.get('client', '')  or 'mobile' }}"
 >
   <p class="summary-linked-label">
     <a href="{{ summary.url }}{{ filters }}" data-slot="label">{{ summary.label }}</a>
@@ -13,5 +14,8 @@
   </p>
   <p class="summary-linked-description" data-slot="description">
     {{ summary.description }}
+  </p>
+  <p class="meta">
+    Client: <span data-slot="client">Mobile</span>
   </p>
 </div>

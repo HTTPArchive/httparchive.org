@@ -51,17 +51,10 @@ class Section {
 
   updateSection() {
     Object.values(this.components).forEach(component => {
-      component.data = this.data;
-      component.updateContent();
-    });
-  }
-
-  updateActiveClient(client) {
-    Object.values(this.components).forEach(component => {
-      if(component.client) {
-        component.client = client;
-        component.updateContent();
+      if(component.data !== this.data) {
+        component.data = this.data;
       }
+      component.updateContent();
     });
   }
 }
