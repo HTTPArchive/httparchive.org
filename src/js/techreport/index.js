@@ -1,7 +1,6 @@
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { Filters } = require("../components/filters");
 const { getPercentage } = require("../utils");
-const { SummaryCards } = require('./summaryCards');
 
 class TechReport {
   constructor(pageId, page, config, labels) {
@@ -42,11 +41,19 @@ class TechReport {
   // TODO
   initializeReport() {
     Filters.bindFilterListener();
+
     const sections = document.querySelectorAll('[data-type="section"]');
+    // TODO: add general config too
     sections.forEach(section => {
-      const reportSection = new Section(section.id, this.page.config, this.filters, this.allData);
+      const reportSection = new Section(
+        section.id,
+        this.page.config,
+        this.filters,
+        this.allData
+      );
       this.sections[section.id] = reportSection;
     });
+
     this.bindClientListener();
     this.updateStyling();
   }
@@ -120,9 +127,7 @@ class TechReport {
         entry[`pct_good_${cwv}`] = getPercentage(entry[`origins_with_good_${cwv}`], entry[`origins_with_any_${cwv}`]);
       });
 
-      /* Turn the LH score from a decimal to an int
-       * If this is changed in the new APIs then we can remove this
-       */
+      // Turn the LH score from a decimal to an int
       this.config.lighthouse_subcategories.forEach(metric => {
         entry[`median_lighthouse_score_${metric}`] = parseInt(entry[`median_lighthouse_score_${metric}`] * 100);
       })

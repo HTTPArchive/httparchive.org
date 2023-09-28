@@ -17,85 +17,24 @@
       "performance",
       "pwa",
       "seo"
+    ],
+    "lighthouse_brackets": [
+      {
+        "name": "poor",
+        "min": 0,
+        "max": 49
+      },
+      {
+        "name": "improvement",
+        "min": 50,
+        "max": 89
+      },
+      {
+        "name": "good",
+        "min": 90,
+        "max": 100
+      }
     ]
-  },
-  "labels": {
-    "values": {
-      "date": "Date",
-      "client": "Client",
-      "origins": "Origins",
-
-      "origins_eligible_for_cwv": "Eligible",
-      "origins_eligible_for_fid": "Eligible",
-      "origins_eligible_for_cls": "Eligible",
-      "origins_eligible_for_lcp": "Eligible",
-      "origins_eligible_for_fcp": "Eligible",
-      "origins_eligible_for_inp": "Eligible",
-      "origins_eligible_for_ttfb": "Eligible",
-
-      "origins_with_good_cwv": "Having good CWVs",
-      "origins_with_good_fid": "Having good FID",
-      "origins_with_good_cls": "Having good CLS",
-      "origins_with_good_lcp": "Having good LCP",
-      "origins_with_good_fcp": "Having good FCP",
-      "origins_with_good_inp": "Having good INP",
-      "origins_with_good_ttfb": "Having good TTFB",
-
-      "pct_good_cwv": "% Good CWVs",
-      "pct_good_fid": "% Good FID",
-      "pct_good_cls": "% Good CLS",
-      "pct_good_lcp": "% Good LCP",
-      "pct_good_fcp": "% Good FCP",
-      "pct_good_inp": "% Good INP",
-      "pct_good_ttfb": "% Good TTFB",
-
-      "median_lighthouse_score_accessibility": "Median accessibility",
-      "median_lighthouse_score_performance": "Median performance",
-      "median_lighthouse_score_pwa": "Median PWA",
-      "median_lighthouse_score_seo": "Median SEO",
-      "median_lighthouse_score_best_practices": "Median best practices",
-
-      "median_bytes_image":"Median bytes image",
-      "median_bytes_js":"Median bytes js",
-      "median_bytes_total":"Median bytes total"
-    }
-  },
-  "metrics": {
-    "cwv": {
-      "title": "Core Web Vitals",
-      "shortened": "CWVs",
-      "description": ""
-    },
-    "lcp": {
-      "title": "Largest Contentful Paint",
-      "shortened": "LCP",
-      "description": ""
-    },
-    "fid": {
-      "title": "First Input Delay",
-      "shortened": "FID",
-      "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
-    },
-    "cls": {
-      "title": "Cumulative Layout Shift",
-      "shortened": "CLS",
-      "description": ""
-    },
-    "fcp": {
-      "title": "First Contentful Paint",
-      "shortened": "FCP",
-      "description": ""
-    },
-    "inp": {
-      "title": "Interaction to Next Paint",
-      "shortened": "INP",
-      "description": ""
-    },
-    "ttfb": {
-      "title": "Time to First Byte",
-      "shortened": "TTFB",
-      "description": ""
-    }
   },
   "pages": {
     "landing": {
@@ -189,15 +128,15 @@
               {
                 "key": "date",
                 "name": "Date"
-             },
-              {
-                "key": "client",
-                "name": "Client"
-             },
+              },
               {
                 "key": "origins",
                 "name": "Origins"
-             }
+              },
+              {
+                "key": "client",
+                "name": "Client"
+              }
             ]
           },
           "viz": {
@@ -299,23 +238,29 @@
                 "key": "date",
                 "name": "Date",
                 "type": "heading"
-             },
-              {
-                "key": "client",
-                "name": "Client"
-             },
-              {
-                "key": "origins_eligible_for_*subcategory*",
-                "name": "Eligible"
-             },
-              {
-                "key": "origins_with_good_*subcategory*",
-                "name": "Good scores"
-             },
+              },
               {
                 "key": "pct_good_*subcategory*",
-                "name": "% Good scores"
-             }
+                "name": "% Good scores",
+                "suffix": "%",
+                "className": "main-cell pct-value"
+              },
+              {
+                "key": "origins_with_good_*subcategory*",
+                "name": "Good scores",
+                "className": "good-scores",
+                "hiddenSuffix": "/"
+              },
+              {
+                "key": "origins_eligible_for_*subcategory*",
+                "name": "Eligible",
+                "className": "eligible"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
             ]
           },
           "summary": true,
@@ -415,15 +360,17 @@
               {
                 "key": "date",
                 "name": "Date"
-             },
-              {
-                "key": "client",
-                "name": "Client"
-             },
+              },
               {
                 "key": "median_lighthouse_score_*subcategory*",
-                "name": "Median score"
-             }
+                "name": "Median score",
+                "className": "main-cell"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
             ]
           },
           "viz": {
@@ -512,15 +459,18 @@
               {
                 "name": "Date",
                 "key": "date"
-             },
-              {
-                "name": "Client",
-                "key": "client"
-             },
+              },
               {
                 "name": "Median Bytes",
-                "key": "median_bytes_*subcategory*"
-             }
+                "key": "median_bytes_*subcategory*",
+                "suffix": "kB",
+                "className": "main-cell"
+              },
+              {
+                "name": "Client",
+                "key": "client",
+                "className": "client"
+              }
             ]
           },
           "viz": {
@@ -593,6 +543,86 @@
       "description": "Comparison placeholder"
     }
   },
+
+  "labels": {
+    "values": {
+      "date": "Date",
+      "client": "Client",
+      "origins": "Origins",
+
+      "origins_eligible_for_cwv": "Eligible",
+      "origins_eligible_for_fid": "Eligible",
+      "origins_eligible_for_cls": "Eligible",
+      "origins_eligible_for_lcp": "Eligible",
+      "origins_eligible_for_fcp": "Eligible",
+      "origins_eligible_for_inp": "Eligible",
+      "origins_eligible_for_ttfb": "Eligible",
+
+      "origins_with_good_cwv": "Having good CWVs",
+      "origins_with_good_fid": "Having good FID",
+      "origins_with_good_cls": "Having good CLS",
+      "origins_with_good_lcp": "Having good LCP",
+      "origins_with_good_fcp": "Having good FCP",
+      "origins_with_good_inp": "Having good INP",
+      "origins_with_good_ttfb": "Having good TTFB",
+
+      "pct_good_cwv": "% Good CWVs",
+      "pct_good_fid": "% Good FID",
+      "pct_good_cls": "% Good CLS",
+      "pct_good_lcp": "% Good LCP",
+      "pct_good_fcp": "% Good FCP",
+      "pct_good_inp": "% Good INP",
+      "pct_good_ttfb": "% Good TTFB",
+
+      "median_lighthouse_score_accessibility": "Median accessibility",
+      "median_lighthouse_score_performance": "Median performance",
+      "median_lighthouse_score_pwa": "Median PWA",
+      "median_lighthouse_score_seo": "Median SEO",
+      "median_lighthouse_score_best_practices": "Median best practices",
+
+      "median_bytes_image":"Median bytes image",
+      "median_bytes_js":"Median bytes js",
+      "median_bytes_total":"Median bytes total"
+    }
+  },
+  "metrics": {
+    "cwv": {
+      "title": "Core Web Vitals",
+      "shortened": "CWVs",
+      "description": ""
+    },
+    "lcp": {
+      "title": "Largest Contentful Paint",
+      "shortened": "LCP",
+      "description": ""
+    },
+    "fid": {
+      "title": "First Input Delay",
+      "shortened": "FID",
+      "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+    },
+    "cls": {
+      "title": "Cumulative Layout Shift",
+      "shortened": "CLS",
+      "description": ""
+    },
+    "fcp": {
+      "title": "First Contentful Paint",
+      "shortened": "FCP",
+      "description": ""
+    },
+    "inp": {
+      "title": "Interaction to Next Paint",
+      "shortened": "INP",
+      "description": ""
+    },
+    "ttfb": {
+      "title": "Time to First Byte",
+      "shortened": "TTFB",
+      "description": ""
+    }
+  },
+
   "graphic": {
     "bgcolor": "#fff",
     "primary": {

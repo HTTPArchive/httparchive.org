@@ -20,7 +20,7 @@
           {% for breakdown in timeseries.viz.series["values"] %}
             <div class="breakdown-item">
               <p class="breakdown-label">{{ breakdown.name }}</p>
-              <p class="breakdown-value">00{{ breakdown.suffix }}</p>
+              <p class="breakdown-value">00{% if breakdown.suffix == "%" %}.00{% endif %}{{ breakdown.suffix }}</p>
             </div>
           {% endfor %}
         {% endif %}

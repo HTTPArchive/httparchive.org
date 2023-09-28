@@ -102,5 +102,9 @@ export const getLatestEntry = (data) => {
 };
 
 export const getPercentage = (x, y) => {
-  return parseInt(parseInt(x) / parseInt(y) * 10000) / 100;
+  if(y && y > 0) {
+    return parseInt(parseInt(x) / parseInt(y) * 10000) / 100;
+  }
+
+  return;
 }

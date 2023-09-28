@@ -10,7 +10,17 @@
     <thead>
       <tr>
         {% for column in table.columns %}
-          <th data-key=" {{ column.key }}">{{ column.name }}</th>
+          <th
+            data-key="{{ column.key }}"
+            class="{{ column.className }}"
+          >
+            {{ column.name }}
+            {% if column.hiddenSuffix %}
+              <span aria-hidden="true">
+                  {{ column.hiddenSuffix }}
+              </span>
+            {% endif %}
+          </th>
         {% endfor %}
       </tr>
     </thead>
