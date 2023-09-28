@@ -516,11 +516,6 @@ button#add-tech {
   margin-bottom: 6rem;
 }
 
-.report-section + .report-section {
-  padding-top: 4rem;
-  border-top: 1px solid var(--color-text-lighter);
-}
-
 .report-content:has(> .error) {
   background-image: none;
   padding-top: 0;
