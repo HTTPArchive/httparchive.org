@@ -416,6 +416,33 @@ button#add-tech {
   );
 }
 
+/* Metric components */
+.component-heading-wrapper {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.component-heading-wrapper > * {
+  flex: 1;
+}
+
+.component-heading {
+  max-width: 90vw;
+}
+
+.component-heading h3 {
+  margin-top: 0;
+}
+
+.component-filters {
+  text-align: right;
+}
+
+.component-filters label {
+  display: block;
+  font-weight: normal;
+}
+
 /* -------------------- */
 /* ----- Sections ----- */
 /* -------------------- */
