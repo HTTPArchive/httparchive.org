@@ -513,7 +513,12 @@ button#add-tech {
 }
 
 .report-section {
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
+}
+
+.report-section + .report-section {
+  padding-top: 4rem;
+  border-top: 1px solid var(--color-text-lighter);
 }
 
 .report-content:has(> .error) {
@@ -560,32 +565,6 @@ button#add-tech {
 [data-component="summaryCard"] > p.meta {
   position: absolute;
   bottom: 1rem;
-}
-
-/* Main data */
-.page-data {
-  margin-top: -4rem;
-  padding: 8rem 0;
-  border-top: 1px solid var(--color-teal-medium);
-  background-image:
-    linear-gradient(
-      var(--color-teal-faded) 60%,
-      var(--color-page-background)
-    );
-  background-size: 100% 25rem;
-  background-repeat: no-repeat;
-}
-
-.page-data h2 {
-  margin-bottom: 1rem;
-}
-
-.metric-block + .metric-block {
-  margin-top: 6rem;
-}
-
-.block-description {
-  max-width: 50rem;
 }
 
 /* Chart summary list */
