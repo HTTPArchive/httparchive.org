@@ -67,13 +67,22 @@
 }
 
 /* Filter info */
-p.meta {
+.meta {
   font-size: 0.75rem;
   color: var(--color-text-lighter);
   margin-top: 1rem;
 }
 
-p.meta span {
+.meta li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.meta li:not(:last-child) {
+  margin-right: 2rem;
+}
+
+.meta span {
   font-weight: 600;
 }
 

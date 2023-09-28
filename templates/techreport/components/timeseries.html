@@ -48,7 +48,5 @@
     {% include "techreport/components/table.html" %}
   </div>
 
-  <p class="meta">
-    Client: <span data-slot="client">{{ request.args.get('client', '')  or 'mobile' }}</span>
-  </p>
+  {% include "techreport/components/filter_meta.html" %}
 </div>
