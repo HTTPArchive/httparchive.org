@@ -1,8 +1,13 @@
+{% set prefix = "summary" %}
+{% if section_prefix %}
+  {% set prefix = section_prefix + "-summary" %}
+{% endif %}
+
 <div
   class="card"
   data-component="summaryCard"
   data-metric="{{ summary.metric }}"
-  data-id="summary-{{ summary.metric }}"
+  data-id="{{ prefix }}-{{ summary.metric }}"
   data-client="{{ request.args.get('client', '')  or 'mobile' }}"
 >
   <p class="summary-linked-label">

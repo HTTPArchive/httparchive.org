@@ -28,6 +28,8 @@ class SummaryCard {
       const metric = card.dataset.metric;
       const value = latest[metric];
 
+      console.log('latest', latest);
+
       // Update the html
       if(value) {
         card.querySelector('[data-slot="value"]').innerHTML = value;

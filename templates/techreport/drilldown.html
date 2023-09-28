@@ -53,6 +53,16 @@
       <h2>Core Web Vitals</h2>
       <p>Description</p>
 
+      {% if tech_report_page.config.good_cwv_summary %}
+        <h3>{{ tech_report_page.config.good_cwv_summary.title }}</h3>
+        <div class="summary-grid">
+          {% for summary in tech_report_page.config.good_cwv_summary.cards %}
+            {% set section_prefix = "cwv" %}
+            {% include "techreport/components/summary_card.html" %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <div class="card">
         {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
         {% set subcategory = request.args.get('good-cwv-over-time', '')  or 'cwv' %}
@@ -70,6 +80,16 @@
       <h2>Lighthouse</h2>
       <p>Description</p>
 
+      {% if tech_report_page.config.lighthouse_summary %}
+        {% set section_prefix = "lighthouse" %}
+        <h3>{{ tech_report_page.config.lighthouse_summary.title }}</h3>
+        <div class="summary-grid">
+          {% for summary in tech_report_page.config.lighthouse_summary.cards %}
+            {% include "techreport/components/summary_card.html" %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <div class="card">
         {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
         {% set subcategory = request.args.get('median-lighthouse-over-time', '')  or 'cwv' %}
@@ -86,6 +106,17 @@
     >
       <h2>Page weight</h2>
       <p>Description</p>
+
+      {% if tech_report_page.config.weight_summary %}
+      {% set section_prefix = "weight" %}
+        <h3>{{ tech_report_page.config.weight_summary.title }}</h3>
+        <div class="summary-grid">
+          {% for summary in tech_report_page.config.weight_summary.cards %}
+            {% include "techreport/components/summary_card.html" %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <div class="table-ui-wrapper card">
         {% set timeseries = tech_report_page.config.weight_timeseries %}
         {% include "techreport/components/timeseries.html" %}

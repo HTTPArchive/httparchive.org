@@ -190,6 +190,46 @@
             }
           }
         },
+        "good_cwv_summary": {
+          "title": "Latest Core Web Vitals",
+          "cards": [
+            {
+              "metric": "pct_good_cwv",
+              "label": "Good CWVs",
+              "suffix": "%",
+              "description": "Origins with overall good core web vitals.",
+              "url": "?good-cwv-over-time=cwv#good-cwvs"
+            },
+            {
+              "metric": "pct_good_lcp",
+              "label": "Good LCP",
+              "suffix": "%",
+              "description": "Percentage of origins with good LCP scores (under 0.25s).",
+              "url": "?good-cwv-over-time=lcp#good-cwvs"
+            },
+            {
+              "metric": "pct_good_fid",
+              "label": "Good FID",
+              "suffix": "%",
+              "description": "Percentage of origins with good FID scores (under xxx).",
+              "url": "?good-cwv-over-time=fid#good-cwvs"
+            },
+            {
+              "metric": "pct_good_cls",
+              "label": "Good CLS",
+              "suffix": "%",
+              "description": "Percentage of origins with good CLS scores (under xxx).",
+              "url": "?good-cwv-over-time=cls#good-cwvs"
+            },
+            {
+              "metric": "pct_good_inp",
+              "label": "Good INP",
+              "suffix": "%",
+              "description": "Percentage of origins with good INP scores (under xxx).",
+              "url": "?good-cwv-over-time=inp#good-cwvs"
+            }
+          ]
+        },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
           "description": "Placeholder - combination of several metrics",
@@ -334,6 +374,36 @@
             }
           }
         },
+        "lighthouse_summary": {
+          "title": "Latest lightroom scores",
+          "cards": [
+            {
+              "metric": "median_lighthouse_score_performance",
+              "label": "Performance",
+              "url": "?median-lighthouse-over-time=performance#lighthouse"
+            },
+            {
+              "metric": "median_lighthouse_score_accessibility",
+              "label": "Accessibility",
+              "url": "?median-lighthouse-over-time=accessibility#lighthouse"
+            },
+            {
+              "metric": "median_lighthouse_score_seo",
+              "label": "SEO",
+              "url": "?median-lighthouse-over-time=seo#lighthouse"
+            },
+            {
+              "metric": "median_lighthouse_score_pwa",
+              "label": "PWA",
+              "url": "?median-lighthouse-over-time=pwa#lighthouse"
+            },
+            {
+              "metric": "median_lighthouse_score_best_practices",
+              "label": "Best Practices",
+              "url": "?median-lighthouse-over-time=best_practices#lighthouse"
+            }
+          ]
+        },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
           "description": "Placeholder text",
@@ -440,6 +510,29 @@
               "title": "Performance score"
             }
           }
+        },
+        "weight_summary": {
+          "title": "Latest page weight",
+          "cards": [
+            {
+              "metric": "median_bytes_image",
+              "label": "Image Weight",
+              "url": "?weight-over-time=image#page-weight",
+              "suffix": " kB"
+            },
+            {
+              "metric": "median_bytes_js",
+              "label": "JavaScript Size",
+              "url": "?weight-over-time=js#page-weight",
+              "suffix": " kB"
+            },
+            {
+              "metric": "median_bytes_total",
+              "label": "Total Page Weight",
+              "url": "?weight-over-time=total#page-weight",
+              "suffix": " kB"
+            }
+          ]
         },
         "weight_timeseries": {
           "title": "Weight over time",

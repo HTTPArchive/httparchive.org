@@ -1,5 +1,5 @@
 {% set selectedParam = request.args.get(subcategory.param, '') or subcategory.default %}
-<label for="subcategory-{{ subcategory.base }}">Subcategory</label>
+<label for="subcategory-{{ subcategory.base }}" class="sr-only">Metric</label>
 <select
   name="subcategory"
   class="subcategory-selector"

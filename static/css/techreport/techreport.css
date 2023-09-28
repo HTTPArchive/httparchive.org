@@ -209,6 +209,10 @@ button#add-tech {
   row-gap: 1rem;
 }
 
+.summary-grid + .card {
+  margin-top: 1rem;
+}
+
 /* Timeseries cards */
 .timeseries-container {
   margin-top: 2rem;
@@ -441,6 +445,11 @@ button#add-tech {
 .component-filters label {
   display: block;
   font-weight: normal;
+  font-size: 0.875rem;
+}
+
+.component-filters select {
+  font-size: 1rem;
 }
 
 /* -------------------- */
@@ -584,7 +593,7 @@ button#add-tech {
   margin-top: 2rem;
 }
 
-.data-summary .heading {
+.data-summary .heading h4 {
   font-size: 0.875rem;
   color: var(--color-text-lighter);
   text-transform: uppercase;
