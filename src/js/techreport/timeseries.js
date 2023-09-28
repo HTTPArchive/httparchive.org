@@ -36,6 +36,7 @@ class Timeseries {
 
       // Re-render the content
       this.updateContent();
+      this.updateInfo(event.target.value);
     }
   }
 
@@ -49,6 +50,22 @@ class Timeseries {
     } else {
       button.innerHTML = 'Show table';
       tableWrapper.classList.add('hidden');
+    }
+  }
+
+  // Re-render the title, description, and text labels
+  updateInfo(value) {
+    const option = this.pageConfig?.labels?.metrics[value];
+    const component = document.querySelector(`[data-id="${this.id}"]`);
+
+    if(option && option.title) {
+      const title = component.querySelector('h3');
+      title.innerHTML = option.title;
+    }
+
+    if(option && option.description) {
+      const descr = component.querySelector('.descr');
+      descr.innerHTML = option.description;
     }
   }
 

@@ -6,11 +6,19 @@ class TechReport {
   constructor(pageId, page, config, labels) {
     this.filters = page.filters;
     this.allData = [];
-    this.page = page;
     this.config = config;
     this.labels = labels;
     this.pageId = pageId;
     this.sections = {};
+
+    // Pass the labels into the page data
+    this.page = {
+      ...page,
+      config: {
+        ...page.config,
+        labels: labels,
+      }
+    };
 
     // Load the page
     this.initializePage();

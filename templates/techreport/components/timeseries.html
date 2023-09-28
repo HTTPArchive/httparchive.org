@@ -5,8 +5,16 @@
     {% include "techreport/components/subcategory.html" %}
   {% endif %}
 
-  <h3>{{ timeseries.title }}</h3>
-  <p>{{ timeseries.description }}</p>
+  {% set selectedParam = request.args.get(subcategory.param, '') or subcategory.default %}
+  {% set title = timeseries.title %}
+  {% set descr = timeseries.description %}
+  {% if tech_report_labels.metrics[selectedParam] %}
+    {% set title = tech_report_labels.metrics[selectedParam].title %}
+    {% set descr = tech_report_labels.metrics[selectedParam].description %}
+  {% endif %}
+
+  <h3>{{ title }}</h3>
+  <p class="descr">{{ descr }}</p>
 
   {% if timeseries.summary %}
     <div class="data-summary">
