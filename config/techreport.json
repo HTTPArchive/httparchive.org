@@ -714,7 +714,7 @@
               },
               {
                 "key": "pct_good_*subcategory*",
-                "name": "App",
+                "name": "Good scores",
                 "breakdown": "app",
                 "suffix": "%",
                 "className": "main-cell pct-value"
@@ -722,6 +722,134 @@
               {
                 "key": "client",
                 "name": "Client",
+                "className": "client"
+              }
+            ]
+          }
+        },
+        "lighthouse_timeseries": {
+          "title": "Lighthouse over time",
+          "description": "Placeholder text",
+          "id": "lighthouse_timeseries",
+          "subcategory": {
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "options": [
+              {
+                "label": "Performance",
+                "value": "performance"
+              },
+              {
+                "label": "Accessibility",
+                "value": "accessibility"
+              },
+              {
+                "label": "SEO (Search Engine Optimisation)",
+                "value": "seo"
+              },
+              {
+                "label": "PWA (Progressive Web Apps)",
+                "value": "pwa"
+              },
+              {
+                "label": "Best practices",
+                "value": "best_practices"
+              }
+            ]
+          },
+          "table": {
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "caption": "Lighthouse placeholder",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date",
+                "type": "heading"
+              },
+              {
+                "key": "median_lighthouse_score_*subcategory*",
+                "name": "Median lighthouse score",
+                "breakdown": "app",
+                "className": "main-cell"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          }
+        },
+        "weight_timeseries": {
+          "title": "Page weight over time",
+          "description": "Placeholder text",
+          "id": "weight_timeseries",
+          "subcategory": {
+            "base": "median_bytes_",
+            "param": "median-weight-over-time",
+            "default": "performance",
+            "options": [
+              {
+                "label": "Image weight",
+                "value": "image"
+              },
+              {
+                "label": "JavaScript transfer size",
+                "value": "js"
+              },
+              {
+                "label": "Total page weight",
+                "value": "total"
+              }
+            ]
+          },
+          "table": {
+            "param":"median-weight-over-time",
+            "default": "image",
+            "caption": "Weight",
+            "columns": [
+              {
+                "name": "Date",
+                "key": "date"
+              },
+              {
+                "name": "Median Bytes",
+                "key": "median_bytes_*subcategory*",
+                "suffix": "kB",
+                "className": "main-cell",
+                "breakdown": "app"
+              },
+              {
+                "name": "Client",
+                "key": "client",
+                "className": "client"
+              }
+            ]
+          }
+        },
+        "adoption_timeseries": {
+          "title": "Origins over time",
+          "description": "Placeholder text",
+          "id": "adoption_timeseries",
+          "table": {
+            "param":"",
+            "caption": "Adoption",
+            "columns": [
+              {
+                "name": "Date",
+                "key": "date"
+              },
+              {
+                "name": "Usage",
+                "key": "origins",
+                "className": "main-cell",
+                "breakdown": "app"
+              },
+              {
+                "name": "Client",
+                "key": "client",
                 "className": "client"
               }
             ]

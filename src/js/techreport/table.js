@@ -45,8 +45,6 @@ function formatData(tableConfig, data) {
     table.push(row);
   }
 
-  console.log(table);
-
   return table;
 }
 
@@ -87,8 +85,6 @@ function updateTable(id, config, apps, data) {
   // Reset what's in the table before adding new content
   tbody.innerHTML = '';
 
-  // console.log('update table', id, data);
-
   const tableConfig = {
     id,
     config,
@@ -97,14 +93,10 @@ function updateTable(id, config, apps, data) {
 
   const rows = formatData(tableConfig, data);
 
-  console.log('rows', rows);
-
   rows?.forEach(row => {
     const entry = row;
 
     const tr = document.createElement('tr');
-
-    console.log('row', row);
 
     row?.forEach(column => {
       const cellType = column.type === "heading" ? 'th' : 'td';

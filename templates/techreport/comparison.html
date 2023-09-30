@@ -73,7 +73,11 @@
 
       <!-- Timeseries -->
       <div class="card">
-
+        {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
+        {% if timeseries %}
+          {% set subcategory = request.args.get('median-lighthouse-over-time', '')  or 'performance' %}
+          {% include "techreport/components/timeseries.html" %}
+        {% endif %}
       </div>
     </div>
 
@@ -89,7 +93,11 @@
 
       <!-- Timeseries -->
       <div class="card">
-
+        {% set timeseries = tech_report_page.config.weight_timeseries %}
+        {% if timeseries %}
+          {% set subcategory = request.args.get('median-weight-over-time', '')  or 'image' %}
+          {% include "techreport/components/timeseries.html" %}
+        {% endif %}
       </div>
     </div>
 
@@ -103,10 +111,13 @@
       <h2>Adoption</h2>
       <p>Description</p>
 
-      <!-- Timeseries -->
-      <div class="card">
-
-      </div>
+     <!-- Timeseries -->
+     <div class="card">
+      {% set timeseries = tech_report_page.config.adoption_timeseries %}
+      {% if timeseries %}
+        {% include "techreport/components/timeseries.html" %}
+      {% endif %}
+    </div>
     </div>
   </div>
 
