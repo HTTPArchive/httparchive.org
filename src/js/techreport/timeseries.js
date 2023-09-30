@@ -71,7 +71,6 @@ class Timeseries {
 
   // Re-render the contents of the component
   updateContent() {
-    console.log('update content');
     if(this.pageConfig[this.id]?.summary) {
       this.updateSummary();
     }
@@ -139,7 +138,6 @@ class Timeseries {
 
   // Update the highcharts timeseries
   updateViz() {
-    console.log('update the viz');
     const config = this.pageConfig[this.id]?.viz;
     const timeseries = this.defaults(config);
 
@@ -179,9 +177,6 @@ class Timeseries {
       timeseries.series = this.formatSeries();
     }
 
-    console.log('this.data', this.data);
-    console.log('formatSeries', this.formatSeries());
-
     // Render the chart
     Highcharts.chart(`${this.id}-timeseries`, timeseries);
   }
@@ -205,6 +200,47 @@ class Timeseries {
 
   // Format the data broken down by app
   formatDataByApp() {
+    console.log(this.id, 'we will format by app here', this.data);
+    const series = [];
+
+    // Get the viz settings
+    const config = this.pageConfig[this.id]?.viz;
+
+    // The default metric from the settings
+    const defaultMetric = config?.metric;
+
+    // Get the submetric from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlSubcategory = urlParams.get(config?.param);
+
+    // By default, we use the metric from the settings
+    let metric = defaultMetric;
+
+    // If the subcategory is set, take it from the url
+    if(urlSubcategory) {
+      metric = `${config?.base}${urlSubcategory}`;
+    }
+
+    console.log(this.pageConfig);
+    console.log(this.pageFilters);
+
+    Object.values(this.data).forEach(app => {
+      const data = app.filter(row => row.client === 'mobile').map(row => {
+        return {
+          x: new Date(row.date),
+          y: Number(row['origins']),
+        };
+      });
+
+      series.push({
+        name: app[0].app,
+        data: data
+      });
+    });
+    console.log(series);
+
+    return series;
+
   }
 
   // Format the data broken down by client
