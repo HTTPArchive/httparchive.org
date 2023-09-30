@@ -725,6 +725,26 @@
                 "className": "client"
               }
             ]
+          },
+          "viz": {
+            "title": "Origins with good core web vitals over time",
+            "base": "pct_good_",
+            "param": "good-cwv-over-time",
+            "default": "cwv",
+            "metric": "pct_good_cwv",
+            "series": {
+              "breakdown": "app",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            }
           }
         },
         "lighthouse_timeseries": {
@@ -780,6 +800,26 @@
                 "className": "client"
               }
             ]
+          },
+          "viz": {
+            "title": "Lighthouse scores over time",
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "metric": "median_lighthouse_score_performance",
+            "series": {
+              "breakdown": "app",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            }
           }
         },
         "weight_timeseries": {
@@ -827,6 +867,26 @@
                 "className": "client"
               }
             ]
+          },
+          "viz": {
+            "title": "Median page weight over time",
+            "base": "median_bytes",
+            "param": "median-weight-over-time",
+            "default": "image",
+            "metric": "median_bytes_image",
+            "series": {
+              "breakdown": "app",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            }
           }
         },
         "adoption_timeseries": {
@@ -853,6 +913,23 @@
                 "className": "client"
               }
             ]
+          },
+          "viz": {
+            "title": "Origins over time",
+            "metric": "origins",
+            "series": {
+              "breakdown": "app",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            }
           }
         }
       },

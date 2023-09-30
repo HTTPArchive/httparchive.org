@@ -200,7 +200,6 @@ class Timeseries {
 
   // Format the data broken down by app
   formatDataByApp() {
-    console.log(this.id, 'we will format by app here', this.data);
     const series = [];
 
     // Get the viz settings
@@ -221,14 +220,14 @@ class Timeseries {
       metric = `${config?.base}${urlSubcategory}`;
     }
 
-    console.log(this.pageConfig);
-    console.log(this.pageFilters);
+    const component = document.querySelector(`[data-id="${this.id}"]`);
+    const client = component.dataset.client;
 
     Object.values(this.data).forEach(app => {
-      const data = app.filter(row => row.client === 'mobile').map(row => {
+      const data = app.filter(row => row.client === client).map(row => {
         return {
           x: new Date(row.date),
-          y: Number(row['origins']),
+          y: Number(row[metric]),
         };
       });
 
@@ -237,7 +236,6 @@ class Timeseries {
         data: data
       });
     });
-    console.log(series);
 
     return series;
 

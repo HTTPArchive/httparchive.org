@@ -1,4 +1,4 @@
-<div data-id="{{ timeseries.id }}" data-component="timeseries">
+<div data-id="{{ timeseries.id }}" data-component="timeseries" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
   <div class="component-heading-wrapper">
     <div class="component-heading">
       {% set selectedParam = request.args.get(subcategory.param, '') or subcategory.default %}
