@@ -103,7 +103,7 @@ class TechReport {
   // TODO: Will be moved to the section level with new APIs
   getAllData() {
     const data = {};
-    const fetch_app = this.filters.app.concat(this.filters.app_defaults);
+    const fetch_app = this.filters.app;
 
     /* Make a request for each of the technologies and return them in an object.
      * Once we port this over to the new APIs, this should be moved to the section level.
@@ -221,6 +221,14 @@ class TechReport {
 
   updateComparisonComponents(data) {
     if(data && Object.keys(data).length > 0) {
+      // TODO: this doesn't have to be diff for landing / comp / drilldown
+      // Update sections
+      Object.values(this.sections).forEach(section => {
+        section.data = data;
+        section.updateSection();
+      });
+
+
       const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
 
       allDataComponents.forEach((component) => {

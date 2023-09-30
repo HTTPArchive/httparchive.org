@@ -5,22 +5,41 @@
     id="table-{{ id }}"
     class="table-ui"
     data-client="{{ client }}"
+    data-breakdown="{{ tech_report_page.config.default.series.breakdown }}"
   >
     <caption class="sr-only">{{ table.caption }}</caption>
     <thead>
       <tr>
         {% for column in table.columns %}
-          <th
-            data-key="{{ column.key }}"
-            class="{{ column.className }}"
-          >
-            {{ column.name }}
-            {% if column.hiddenSuffix %}
-              <span aria-hidden="true">
-                  {{ column.hiddenSuffix }}
-              </span>
-            {% endif %}
-          </th>
+          {% if column.breakdown == 'app' %}
+            {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+            {% for app in technologies %}
+              <th
+                data-key="{{ column.key }}"
+                data-app="{{ app }}"
+                class="{{ column.className }}"
+              >
+               {{ app }}
+                {% if column.hiddenSuffix %}
+                  <span aria-hidden="true">
+                      {{ column.hiddenSuffix }}
+                  </span>
+                {% endif %}
+              </th>
+            {% endfor %}
+          {% else %}
+            <th
+              data-key="{{ column.key }}"
+              class="{{ column.className }}"
+            >
+              {{ column.name }}
+              {% if column.hiddenSuffix %}
+                <span aria-hidden="true">
+                    {{ column.hiddenSuffix }}
+                </span>
+              {% endif %}
+            </th>
+          {% endif %}
         {% endfor %}
       </tr>
     </thead>

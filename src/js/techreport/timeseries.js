@@ -75,7 +75,7 @@ class Timeseries {
       this.updateSummary();
     }
     this.updateViz();
-    Table.updateTable(this.id, this.pageConfig[this.id]?.table, this.pageFilters.app[0], this.data);
+    Table.updateTable(this.id, this.pageConfig[this.id]?.table, this.pageFilters.app, this.data);
   }
 
   // Update the summary with the latest data for all categories
@@ -142,8 +142,8 @@ class Timeseries {
     const timeseries = this.defaults(config);
 
     // Accessibility settings
-    if(config.caption) {
-      timeseries.caption = {
+    if(config && config.caption) {
+      timeseries['caption'] = {
         text: config.caption,
       };
     }
@@ -158,18 +158,18 @@ class Timeseries {
     // General styling
     timeseries.chart = {
       ...timeseries.chart,
-      height: config.height,
+      height: config?.height,
     };
 
     // Axis settings
     timeseries.yAxis = {
       ...timeseries.yAxis,
-      tickAmount: config.yAxis.tickAmount,
+      tickAmount: config?.yAxis?.tickAmount,
     }
 
     timeseries.xAxis = {
       ...timeseries.xAxis,
-      tickAmount: config.xAxis.tickAmount,
+      tickAmount: config?.xAxis?.tickAmount,
     }
 
     // Update the data
@@ -183,7 +183,22 @@ class Timeseries {
 
   // Format the data in the format Highcharts needs it to be
   formatSeries() {
-    return this.formatDataByClient();
+    const breakdown = this.pageConfig?.config?.default?.series?.breakdown;
+    switch(breakdown) {
+      case 'client':
+        this.formatDataByClient();
+        break;
+      case 'app':
+        this.formatDataByApp();
+        break;
+      default:
+        console.log('unknown breakdown');
+        break;
+    }
+  }
+
+  // Format the data broken down by app
+  formatDataByApp() {
   }
 
   // Format the data broken down by client
