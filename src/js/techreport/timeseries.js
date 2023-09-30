@@ -71,6 +71,7 @@ class Timeseries {
 
   // Re-render the contents of the component
   updateContent() {
+    console.log('update content');
     if(this.pageConfig[this.id]?.summary) {
       this.updateSummary();
     }
@@ -138,6 +139,7 @@ class Timeseries {
 
   // Update the highcharts timeseries
   updateViz() {
+    console.log('update the viz');
     const config = this.pageConfig[this.id]?.viz;
     const timeseries = this.defaults(config);
 
@@ -177,20 +179,24 @@ class Timeseries {
       timeseries.series = this.formatSeries();
     }
 
+    console.log('this.data', this.data);
+    console.log('formatSeries', this.formatSeries());
+
     // Render the chart
     Highcharts.chart(`${this.id}-timeseries`, timeseries);
   }
 
   // Format the data in the format Highcharts needs it to be
   formatSeries() {
-    const breakdown = this.pageConfig?.config?.default?.series?.breakdown;
+    const breakdown = this.pageConfig?.default?.series?.breakdown;
+    let series;
     switch(breakdown) {
       case 'client':
-        this.formatDataByClient();
-        break;
+        series = this.formatDataByClient();
+        return series;
       case 'app':
-        this.formatDataByApp();
-        break;
+        series = this.formatDataByApp();
+        return series;
       default:
         console.log('unknown breakdown');
         break;
