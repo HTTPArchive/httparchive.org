@@ -157,7 +157,9 @@ class Timeseries {
     const client = component.dataset.client;
     const container = component.querySelector('.breakdown-list');
 
-    pageFilters.app.forEach(app => {
+    const colors = this.defaults(config)?.chart?.colors;
+
+    pageFilters.app.forEach((app, index) => {
       const sorted = data?.[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
 
       if(sorted && sorted.length > 0) {
@@ -174,7 +176,7 @@ class Timeseries {
         label.innerHTML = latest.app;
         value.innerHTML = `${latest[metric]}${config.series.suffix || ''}`;
         timestamp.innerHTML = latest.date;
-
+        card.style.setProperty('--breakdown-color', colors[index]);
       }
     })
 
@@ -254,7 +256,9 @@ class Timeseries {
     const component = document.querySelector(`[data-id="${this.id}"]`);
     const client = component.dataset.client;
 
-    Object.values(this.data).forEach(app => {
+    const colors = this.defaults(config)?.chart?.colors;
+
+    Object.values(this.data).forEach((app, index) => {
       const data = app.filter(row => row.client === client).map(row => {
         return {
           x: new Date(row.date),
@@ -265,6 +269,7 @@ class Timeseries {
       series.push({
         name: app[0].app,
         data: data,
+        color: colors[index]
       });
     });
 
@@ -298,6 +303,8 @@ class Timeseries {
         });
       });
 
+      const colors = this.defaults(config)?.chart?.colors;
+
       // Push the configurations and formatted data to the series array
       series.push(
         {
@@ -328,7 +335,7 @@ class Timeseries {
     const defaults = {
       type: 'timeseries',
       chart: {
-        colors: ['#070746', '#157F56', '#C9200D', '#AA0DC9'],
+        colors: ['#070746', '#157F56', 'orange', 'pink', 'gray', 'teal', '#C9200D', '#AA0DC9'],
       },
       title: {
         text: config?.title,

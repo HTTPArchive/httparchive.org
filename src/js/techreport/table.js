@@ -60,7 +60,7 @@ function getColumnCell(columnConfig, data, rowNr) {
   const cell = {
     ...column,
     formattedKey: key,
-    value: _data[rowNr][key],
+    value: _data?.[rowNr]?.[key],
     app: app
   };
 
