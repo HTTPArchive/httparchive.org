@@ -32,6 +32,9 @@
   --graph-color-primary-darker: var(--color-teal-darker);
   --graph-color-line: #A6BBBE;
   --graph-color-labels: #62777B;
+
+  /* Defaults */
+  --breakdown-color: var(--color-text);
 }
 
 /* ------------------------- */

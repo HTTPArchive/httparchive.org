@@ -81,6 +81,19 @@ class Timeseries {
   // Update the summary with the latest data for all categories
   // TODO: only works this way in the single tech, for comparison we need to do this differently
   updateSummary() {
+    console.log(this.pageConfig);
+    console.log(this.data);
+    switch(this.pageConfig.default.series.breakdown) {
+      case 'client':
+        this.updateClientSummary();
+        break;
+      case 'app':
+        this.updateAppSummary();
+        break;
+    }
+  }
+
+  updateClientSummary() {
     const config = this.pageConfig[this.id]?.viz;
     const data = this.data;
     const id = this.id;
@@ -133,6 +146,42 @@ class Timeseries {
         container.appendChild(itemWrapper);
       });
     }
+  }
+
+  updateAppSummary() {
+    console.log('app summary');
+    const config = this.pageConfig[this.id]?.viz;
+    const data = this.data;
+    const id = this.id;
+    const pageFilters = this.pageFilters;
+
+    const metric = this.getMetric(config);
+    const component = document.querySelector(`[data-id="${this.id}"]`);
+    const client = component.dataset.client;
+    const container = component.querySelector('.breakdown-list');
+
+    // console.log(this.data);
+
+    pageFilters.app.forEach(app => {
+      const sorted = data?.[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      if(sorted && sorted.length > 0) {
+        const filtered = sorted?.filter(row => row.client === client);
+        const latest = filtered[0];
+
+        /* Select the container to which we'll add elements. */
+        const card = container.querySelector(`[data-app="${app}"]`);
+        const timestamp = component.querySelector('[data-slot="timestamp"]');
+        const label = card.getElementsByClassName('breakdown-label')[0];
+        const value = card.getElementsByClassName('breakdown-value')[0];
+
+        /* Update text */
+        label.innerHTML = latest.app;
+        value.innerHTML = `${latest[metric]}${config.series.suffix || ''}`;
+        timestamp.innerHTML = latest.date;
+
+      }
+    })
 
   }
 
@@ -194,7 +243,7 @@ class Timeseries {
         return series;
       default:
         console.log('unknown breakdown');
-        break;
+        return;
     }
   }
 
@@ -204,22 +253,9 @@ class Timeseries {
 
     // Get the viz settings
     const config = this.pageConfig[this.id]?.viz;
+    const metric = this.getMetric(config);
 
-    // The default metric from the settings
-    const defaultMetric = config?.metric;
-
-    // Get the submetric from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlSubcategory = urlParams.get(config?.param);
-
-    // By default, we use the metric from the settings
-    let metric = defaultMetric;
-
-    // If the subcategory is set, take it from the url
-    if(urlSubcategory) {
-      metric = `${config?.base}${urlSubcategory}`;
-    }
-
+    // Get the selected client
     const component = document.querySelector(`[data-id="${this.id}"]`);
     const client = component.dataset.client;
 
@@ -233,12 +269,11 @@ class Timeseries {
 
       series.push({
         name: app[0].app,
-        data: data
+        data: data,
       });
     });
 
     return series;
-
   }
 
   // Format the data broken down by client
@@ -250,20 +285,7 @@ class Timeseries {
     const config = this.pageConfig[this.id]?.viz;
     const app = this.pageFilters.app[0];
 
-    // The default metric from the settings
-    const defaultMetric = config.metric;
-
-    // Get the submetric from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlSubcategory = urlParams.get(config.param);
-
-    // By default, we use the metric from the settings
-    let metric = defaultMetric;
-
-    // If the subcategory is set, take it from the url
-    if(urlSubcategory) {
-      metric = `${config.base}${urlSubcategory}`;
-    }
+    const metric = this.getMetric(config);
 
     // Breakdown data by categories defined in config
     config?.series?.values?.forEach((value, index) => {
@@ -293,6 +315,17 @@ class Timeseries {
     });
 
     return series;
+  }
+
+  getMetric(config) {
+    // The default metric from the settings
+    const defaultMetric = config.metric;
+
+    // Get the submetric from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlSubcategory = urlParams.get(config.param);
+
+    return urlSubcategory ? `${config.base}${urlSubcategory}` : defaultMetric;
   }
 
   // Get the default settings

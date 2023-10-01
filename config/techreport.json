@@ -726,6 +726,7 @@
               }
             ]
           },
+          "summary": true,
           "viz": {
             "title": "Origins with good core web vitals over time",
             "base": "pct_good_",
@@ -734,6 +735,7 @@
             "metric": "pct_good_cwv",
             "series": {
               "breakdown": "app",
+              "suffix": "%",
               "defaults": [
                 {
                   "name": "App",
