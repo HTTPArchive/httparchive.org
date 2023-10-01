@@ -803,6 +803,7 @@
               }
             ]
           },
+          "summary": true,
           "viz": {
             "title": "Lighthouse scores over time",
             "base": "median_lighthouse_score_",
@@ -870,6 +871,7 @@
               }
             ]
           },
+          "summary": true,
           "viz": {
             "title": "Median page weight over time",
             "base": "median_bytes",
@@ -878,6 +880,7 @@
             "metric": "median_bytes_image",
             "series": {
               "breakdown": "app",
+              "suffix": " kB",
               "defaults": [
                 {
                   "name": "App",
@@ -916,6 +919,7 @@
               }
             ]
           },
+          "summary": true,
           "viz": {
             "title": "Origins over time",
             "metric": "origins",

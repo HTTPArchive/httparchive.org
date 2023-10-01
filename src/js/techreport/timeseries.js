@@ -81,8 +81,6 @@ class Timeseries {
   // Update the summary with the latest data for all categories
   // TODO: only works this way in the single tech, for comparison we need to do this differently
   updateSummary() {
-    console.log(this.pageConfig);
-    console.log(this.data);
     switch(this.pageConfig.default.series.breakdown) {
       case 'client':
         this.updateClientSummary();
@@ -149,7 +147,6 @@ class Timeseries {
   }
 
   updateAppSummary() {
-    console.log('app summary');
     const config = this.pageConfig[this.id]?.viz;
     const data = this.data;
     const id = this.id;
@@ -159,8 +156,6 @@ class Timeseries {
     const component = document.querySelector(`[data-id="${this.id}"]`);
     const client = component.dataset.client;
     const container = component.querySelector('.breakdown-list');
-
-    // console.log(this.data);
 
     pageFilters.app.forEach(app => {
       const sorted = data?.[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
