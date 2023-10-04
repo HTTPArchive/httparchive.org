@@ -76,12 +76,12 @@
             "breakdown_values": [
               {
                 "name": "desktop",
-                "color": "#449BC6",
+                "color": "#41807D",
                 "suffix": "%"
               },
               {
                 "name": "mobile",
-                "color": "#AF5AB6",
+                "color": "#B5307F",
                 "suffix": "%"
               }
             ]
