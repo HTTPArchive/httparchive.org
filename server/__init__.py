@@ -23,9 +23,9 @@ from flask import (
     url_for as flask_url_for,
 )
 from werkzeug.http import HTTP_STATUS_CODES
-from flaskext.markdown import Markdown
 from flask_talisman import Talisman
 from urllib.parse import urlparse, urlunparse
+from .markdown import Markdown, markdown
 
 
 from .csp import csp
@@ -57,7 +57,12 @@ app = HttpArchiveWebServer(
     __name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR
 )
 
-Markdown(app)
+# register jinja2 extensions and filters
+
+app.jinja_options = app.jinja_options.copy()
+app.jinja_env.add_extension(Markdown)
+app.jinja_env.filters['markdown'] = markdown
+
 talisman = Talisman(
     app,
     content_security_policy=csp,
