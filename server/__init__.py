@@ -61,7 +61,7 @@ app = HttpArchiveWebServer(
 
 app.jinja_options = app.jinja_options.copy()
 app.jinja_env.add_extension(Markdown)
-app.jinja_env.filters['markdown'] = markdown
+app.jinja_env.filters["markdown"] = markdown
 
 talisman = Talisman(
     app,
