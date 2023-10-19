@@ -1,4 +1,4 @@
-# Base on https://gist.github.com/mikefromit/5a6fdfecc9310712f15a872df9f41f03
+# Based on https://gist.github.com/mikefromit/5a6fdfecc9310712f15a872df9f41f03
 
 from jinja2 import pass_environment, nodes
 from jinja2.ext import Extension
@@ -16,7 +16,7 @@ def markdown(env, value):
         "markdown.extensions.meta",
         "markdown.extensions.attr_list",
         "markdown.extensions.toc",
-        "markdown.extensions.def_list"
+        "markdown.extensions.def_list",
     ]
 
     d = dict()
@@ -32,6 +32,7 @@ class Markdown(Extension):
     """
     A wrapper around the markdown filter for syntactic sugar.
     """
+
     tags = set(["markdown"])
 
     def parse(self, parser):
