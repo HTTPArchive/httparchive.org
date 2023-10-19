@@ -35,7 +35,7 @@ class Markdown(Extension):
 
     tags = set(["markdown"])
 
-    def parse(self, parser):
+    def parse(self, parser): # pragma: no cover
         """
         Parses the statements and defers to the callback
         for markdown processing.
@@ -47,7 +47,7 @@ class Markdown(Extension):
             self.call_method("_render_markdown"), [], [], body
         ).set_lineno(lineno)
 
-    def _render_markdown(self, caller=None):
+    def _render_markdown(self, caller=None): # pragma: no cover
         """
         Calls the markdown filter to transform the output.
         """
