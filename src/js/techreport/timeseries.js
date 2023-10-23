@@ -335,7 +335,7 @@ class Timeseries {
     const defaults = {
       type: 'timeseries',
       chart: {
-        colors: ['#DC267F', '#785EF0', '#FE6100', '#309C87', '#4E2C8E', '#AB8938', '#CC79A7', '#AA4499', '#C48236'],
+        colors: ['#5980EB', '#8E3496', '#D55316', '#6AA26F', '#2C2F70', '#B979A7', '#449DB1', '#CB377C', '#AC8D1C', '#742F53'],
       },
       title: {
         text: config?.title,
