@@ -353,6 +353,17 @@ class Timeseries {
           text: config?.yAxis?.title,
         },
       },
+      plotOptions: {
+        series: {
+          lineWidth: 2,
+          marker: {
+            enabled: false,
+            fillColor: '#ffffff',
+            lineWidth: 2,
+            lineColor: null // inherit from series
+          },
+        },
+      },
     };
 
     return defaults;
