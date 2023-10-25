@@ -267,7 +267,7 @@ class Timeseries {
       });
 
       series.push({
-        name: app[0].app,
+        name: app[0]?.app,
         data: data,
         color: colors[index]
       });
