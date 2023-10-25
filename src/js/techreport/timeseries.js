@@ -332,6 +332,9 @@ class Timeseries {
 
   // Get the default settings
   defaults(config) {
+    console.log('UPDATE', document.querySelector('main').dataset.showIndicators);
+    const showIndicators = document.querySelector('main').dataset.showIndicators === true
+      || document.querySelector('main').dataset.showIndicators === "true";
     const defaults = {
       type: 'timeseries',
       chart: {
@@ -357,7 +360,7 @@ class Timeseries {
         series: {
           lineWidth: 2,
           marker: {
-            enabled: false,
+            enabled: showIndicators,
             fillColor: '#ffffff',
             lineWidth: 2,
             lineColor: null // inherit from series
@@ -365,6 +368,8 @@ class Timeseries {
         },
       },
     };
+
+    console.log(defaults);
 
     return defaults;
   }

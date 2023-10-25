@@ -23,6 +23,7 @@ class TechReport {
     // Load the page
     this.initializePage();
     this.getAllData();
+    this.bindSettingsListeners();
   }
 
   // Initialize the sections for the different pages
@@ -72,6 +73,25 @@ class TechReport {
 
     if(select) {
       select.onchange = (event) => this.updateClient(event);
+    }
+  }
+
+  bindSettingsListeners() {
+    const indicatorSetting = document.querySelector('input[name="indicators-check"]');
+    if(indicatorSetting) {
+      indicatorSetting.onchange = (event) => {
+        console.log('change the thing', event, event.target.checked);
+        document.querySelector('main').dataset.showIndicators = event.target.checked;
+
+        console.log('and now here update the charts again');
+
+        Object.values(this.sections).forEach(section => {
+          console.log('loop is working');
+          section.updateSection();
+        });
+
+        console.log('no issues after loop');
+      }
     }
   }
 
