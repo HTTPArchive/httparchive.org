@@ -126,26 +126,28 @@ function updateRank(ranks, filters) {
 /* Update the list with categories */
 function updateCategories(categories, filters) {
   console.log('try to update categories', categories);
-  const select = document.querySelector('select#categories');
+  const selects = document.querySelectorAll('select[name="categories"]');
 
   if(categories) {
-    console.log(categories, 'categories exist, set select stuff', select)
-    select.innerHTML = '';
+    selects.forEach(select => {
+      console.log(categories, 'categories exist, set select stuff', select)
+      select.innerHTML = '';
 
-    const all = document.createElement('option');
-    all.value = 'ALL';
-    all.innerHTML = 'ALL';
-    select.append(all);
+      const all = document.createElement('option');
+      all.value = 'ALL';
+      all.innerHTML = 'ALL';
+      select.append(all);
 
-    Object.keys(categories).forEach((category) => {
-      const option = document.createElement('option');
-      option.value = category;
-      option.innerHTML = category;
-      option.dataset.technologies = categories[category].join(',');
-      select.append(option);
-    });
+      Object.keys(categories).forEach((category) => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.innerHTML = category;
+        option.dataset.technologies = categories[category].join(',');
+        select.append(option);
+      });
 
-    console.log('select when we are done', select);
+      console.log('select when we are done', select);
+    })
   }
 }
 
