@@ -76,12 +76,12 @@
             "breakdown_values": [
               {
                 "name": "desktop",
-                "color": "#41807D",
+                "color": "#669E8E",
                 "suffix": "%"
               },
               {
                 "name": "mobile",
-                "color": "#B5307F",
+                "color": "#BD6EBE",
                 "suffix": "%"
               }
             ]
@@ -147,11 +147,11 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#449BC6"
+                  "color": "#669E8E"
                 },
                 {
                   "name": "mobile",
-                  "color": "#AF5AB6"
+                  "color": "#BD6EBE"
                 }
               ],
               "defaults": [
@@ -330,12 +330,12 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#449BC6",
+                  "color": "#669E8E",
                   "suffix": "%"
                 },
                 {
                   "name": "mobile",
-                  "color": "#AF5AB6",
+                  "color": "#BD6EBE",
                   "suffix": "%"
                 }
               ],
@@ -469,11 +469,11 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#449BC6"
+                  "color": "#669E8E"
                 },
                 {
                   "name": "mobile",
-                  "color": "#AF5AB6"
+                  "color": "#BD6EBE"
                 }
               ],
               "defaults": [
@@ -592,12 +592,12 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#449BC6",
+                  "color": "#669E8E",
                   "suffix": " kB"
                 },
                 {
                   "name": "mobile",
-                  "color": "#AF5AB6",
+                  "color": "#BD6EBE",
                   "suffix": " kB"
                 }
               ],
