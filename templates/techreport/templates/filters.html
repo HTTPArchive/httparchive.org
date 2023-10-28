@@ -1,5 +1,24 @@
 <form id="filter-bar">
   <div>
+    <div class="metadata">
+      <div>
+        <label for="geo">Geo</label>
+        <select name="geo" id="geo">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+      <div>
+        <label for="rank">Rank</label>
+        <select name="rank" id="rank">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+    </div>
+
     <div class="technologies">
       {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
       {% if active_page == "drilldown" %}
@@ -17,20 +36,6 @@
         <button id="add-tech">Add</button>
       {% endif %}
 
-    </div>
-    <div>
-      <label for="geo">Geo</label>
-      <select name="geo" id="geo">
-        <option value="ALL" selected="true">
-          ALL
-        </option>
-      </select>
-      <label for="rank">Rank</label>
-      <select name="rank" id="rank">
-        <option value="ALL" selected="true">
-          ALL
-        </option>
-      </select>
     </div>
   </div>
   <button type="submit" id="submit-form">Update</button>

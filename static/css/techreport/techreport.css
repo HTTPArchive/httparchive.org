@@ -153,13 +153,23 @@
 }
 
 /* Filters */
-#filter-bar > div {
-  display: flex;
-  flex-wrap: wrap;
+#filter-bar {
+  padding: 1.5rem;
+  background: var(--color-card-background);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--card-shadow);
 }
 
 #filter-bar > div > *:not(:last-child) {
   margin-right: 1.5rem;
+}
+
+#filter-bar .tech-selector-group {
+  border-radius: var(--card-radius);
+  border: 1px solid var(--color-card-border);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 #filter-bar label {
@@ -176,6 +186,26 @@
   color: var(--color-text);
 }
 
+
+#filter-bar .metadata {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  column-gap: 2rem;
+}
+
+#filter-bar .metadata label,
+#filter-bar .metadata select {
+  color: var(--color-text-lighter);
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+#filter-bar .metadata select {
+  border-color: var(--color-text-lighter);
+}
+
+
 #filter-bar button {
   background-color: var(--color-teal-darker);
   border-radius: 3px;
@@ -187,6 +217,12 @@
 
 button#add-tech {
   margin-bottom: 3rem;
+}
+
+#filter-bar button#submit-form {
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  width: 100%;
 }
 
 /* Table */
