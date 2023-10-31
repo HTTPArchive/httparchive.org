@@ -1,25 +1,7 @@
 <form id="filter-bar">
   <div>
-    <div class="metadata">
-      <div>
-        <label for="geo">Geo</label>
-        <select name="geo" id="geo">
-          <option value="ALL" selected="true">
-            ALL
-          </option>
-        </select>
-      </div>
-      <div>
-        <label for="rank">Rank</label>
-        <select name="rank" id="rank">
-          <option value="ALL" selected="true">
-            ALL
-          </option>
-        </select>
-      </div>
-    </div>
-
-    <div class="technologies">
+    <fieldset class="technologies">
+      <legend>Select data</legend>
       {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
       {% if active_page == "drilldown" %}
         {% set technologies = [technologies[0]] %}
@@ -35,8 +17,26 @@
       {% if active_page == "comparison" %}
         <button id="add-tech">Add</button>
       {% endif %}
-
-    </div>
+    </fieldset>
+    <fieldset class="metadata">
+      <legend>Lens</legend>
+      <div class="select-label">
+        <label for="geo">Geo</label>
+        <select name="geo" id="geo">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+      <div class="select-label">
+        <label for="rank">Rank</label>
+        <select name="rank" id="rank">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+    </fieldset>
   </div>
   <button type="submit" id="submit-form">Update</button>
 </form>
