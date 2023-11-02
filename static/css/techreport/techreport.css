@@ -720,7 +720,11 @@
   margin-top: 0;
 }
 
-.intro h1 span.subtitle {
+.intro h2 {
+  font-size: var(--font-size-xlarge);
+}
+
+.intro span.subtitle {
   font-size: 1.15rem;
   display: block;
   margin-bottom: 0.5rem;
@@ -760,6 +764,11 @@
   background-size: 100% 50rem;
   background-repeat: no-repeat;
   padding-top: 3rem;
+}
+
+.report-content .intro {
+  padding: 0;
+  margin-bottom: 4rem;
 }
 
 .report-section {

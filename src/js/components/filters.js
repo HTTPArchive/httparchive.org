@@ -187,11 +187,11 @@ function addTechnologySelector(event) {
   const removeButton = selectorTemplate.querySelector('.remove-tech');
 
   const categorySelect = selectorTemplate.querySelector('select.categories-selector');
-  const categoryLabel = selectorTemplate.querySelector('label[for="categories"]');
+  const categoryLabel = selectorTemplate.querySelector('label[for="categories-tech-new"]');
   categorySelect.innerHTML = document.querySelector('select.categories-selector').innerHTML;
   categorySelect.addEventListener('change', updateCategory);
 
-  console.log(selectElement, labelElement);
+  console.log(categoryLabel);
 
   /* Set a unique name on the new element (based on the amount of techs) */
   const techId = `tech-${document.querySelectorAll('select.tech[name="tech"]').length + 1}`;
@@ -229,8 +229,6 @@ function addTechnologySelector(event) {
 /* Remove the chosen technology option */
 function removeTechnology(event) {
   event.preventDefault();
-
-  console.log(event.target.dataset);
 
   /* Remove the tech selector group from the DOM */
   const tech = document.querySelector(`.tech-selector-group[data-tech="${event.target.dataset.tech}"]`);

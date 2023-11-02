@@ -7,11 +7,11 @@
     <div class="info">
       <h1>
         <span class="subtitle">Tech Report</span>
-        <span class="main-title">Drilldown</span>
+        <span class="">Drilldown</span>
       </h1>
-      <ul class="category-list categories">
+      <!-- <ul class="category-list categories">
         <li class="cell">Placeholder</li>
-      </ul>
+      </ul> -->
     </div>
     <div class="filters">
       {% include "techreport/templates/filters.html" %}
@@ -27,6 +27,16 @@
   </div>
 
   <div id="report-content" class="report-content">
+    <div class="info intro block-m">
+      <h2>
+        <span class="subtitle">Results for</span>
+        <span class="main-title">ALL</span>
+      </h2>
+      <ul class="category-list categories">
+        <li class="cell">Placeholder</li>
+      </ul>
+    </div>
+
     <!-- Section: Summary of the main metrics -->
     <div
       id="drilldown-summary"
