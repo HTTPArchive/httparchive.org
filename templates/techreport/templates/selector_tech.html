@@ -1,22 +1,31 @@
 <div class="tech-selector-group">
-  <div class="cell-selector">
-    <label for="categories">Category</label>
-    <select name="categories" class="categories-selector" id="categories" data-tech="{{ name }}">
-      <option value="ALL" selected="true">
-        ALL
-      </option>
-    </select>
+  <div class="content">
+    <div class="categories-selector-group">
+      <label for="categories-{{ name }}">Category</label>
+      <select name="categories" class="categories-selector" id="categories-{{ name }}" data-tech="{{ name }}">
+        <option value="ALL" selected="true">
+          ALL
+        </option>
+      </select>
+    </div>
+
+    <div class="tech-selector">
+      <label for="{{ name }}" class="tech">Technology</label>
+      <div class="tech-input-wrapper">
+        <select name="tech" class="tech" data-selected="{{ technology }}" id="{{ name }}">
+          <option value="{{ technology }}" selected="true">
+            {{ technology }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <label for="{{ name }}" class="tech">Technology</label>
-    <select name="tech" class="tech" data-selected="{{ technology }}" id="{{ name }}">
-      <option value="{{ technology }}" selected="true">
-        {{ technology }}
-      </option>
-    </select>
-  </div>
   {% if active_page == "comparison" %}
-    <button class="remove-tech {% if technologies|length == 1 %}hidden{% endif %}" data-tech="{{ name }}">Remove</button>
+    <div class="actions">
+        <button class="remove-tech {% if technologies|length == 1 %}hidden{% endif %}" data-tech="{{ name }}">
+          <img src="/static/img/icon-delete.svg" alt="Remove" />
+        </button>
+    </div>
   {% endif %}
 </div>

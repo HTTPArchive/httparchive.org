@@ -1,7 +1,8 @@
-<form id="filter-bar">
+<form id="page-filters" class="card">
   <div>
-    <fieldset class="technologies">
-      <legend>Select data</legend>
+    <fieldset class="technology-filters">
+      <legend class="sr-only">Technologies</legend>
+
       {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
       {% if active_page == "drilldown" %}
         {% set technologies = [technologies[0]] %}
@@ -15,10 +16,10 @@
       {% endfor %}
 
       {% if active_page == "comparison" %}
-        <button id="add-tech">Add</button>
+        <button id="add-tech">Add another technology</button>
       {% endif %}
     </fieldset>
-    <fieldset class="metadata">
+    <fieldset class="lens">
       <legend>Lens</legend>
       <div class="select-label">
         <label for="geo">Geo</label>
