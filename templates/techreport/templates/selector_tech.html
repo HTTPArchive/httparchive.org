@@ -1,4 +1,4 @@
-<div class="tech-selector-group">
+<div class="tech-selector-group" data-tech="{{ name }}">
   <div class="content">
     <div class="categories-selector-group">
       <label for="categories-{{ name }}">Category</label>
@@ -24,7 +24,7 @@
   {% if active_page == "comparison" %}
     <div class="actions">
         <button class="remove-tech {% if technologies|length == 1 %}hidden{% endif %}" data-tech="{{ name }}">
-          <img src="/static/img/icon-delete.svg" alt="Remove" />
+          <img src="/static/img/icon-delete.svg" alt="Remove" data-tech="{{ name }}" />
         </button>
     </div>
   {% endif %}

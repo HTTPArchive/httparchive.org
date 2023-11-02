@@ -230,8 +230,11 @@ function addTechnologySelector(event) {
 function removeTechnology(event) {
   event.preventDefault();
 
+  console.log(event.target.dataset);
+
   /* Remove the tech selector group from the DOM */
-  event.target.parentElement.remove();
+  const tech = document.querySelector(`.tech-selector-group[data-tech="${event.target.dataset.tech}"]`);
+  tech.remove();
 
   /* Don't show any remove buttons if there is only one element left */
   hideRemoveButton();
