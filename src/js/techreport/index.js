@@ -51,6 +51,10 @@ class TechReport {
   initializeReport() {
     Filters.bindFilterListener();
 
+    const showIndicators = localStorage.getItem('showIndicators');
+    document.querySelector('main').dataset.showIndicators = showIndicators;
+    document.querySelector('#indicators-check').checked = showIndicators === 'true';
+
     const sections = document.querySelectorAll('[data-type="section"]');
     // TODO: add general config too
     sections.forEach(section => {
@@ -80,17 +84,13 @@ class TechReport {
     const indicatorSetting = document.querySelector('input[name="indicators-check"]');
     if(indicatorSetting) {
       indicatorSetting.onchange = (event) => {
-        console.log('change the thing', event, event.target.checked);
         document.querySelector('main').dataset.showIndicators = event.target.checked;
-
-        console.log('and now here update the charts again');
+        localStorage.setItem('showIndicators', event.target.checked);
 
         Object.values(this.sections).forEach(section => {
-          console.log('loop is working');
           section.updateSection();
         });
 
-        console.log('no issues after loop');
       }
     }
   }
