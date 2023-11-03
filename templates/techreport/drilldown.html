@@ -18,12 +18,23 @@
     </div>
   </div>
 
-  <div class="client-selector block-m">
-    <label for="client-breakdown">Client</label>
-    <select name="client-breakdown" id="client-breakdown">
-      <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
-      <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
-    </select>
+  <div class="client-selector">
+    <div class="wrapper block-m">
+      <div class="result-info">
+        <p>{{ tech_report_page.filters.app[0] or 'ALL' }}</p>
+        <div>
+          <p>Geo: <span data-slot="geo">{{ request.args.get('geo', '')  or 'ALL' }}</span></p>
+          <p>Rank: <span data-slot="rank">{{ request.args.get('rank', '')  or 'ALL' }}</span></p>
+        </div>
+      </div>
+      <div>
+        <label for="client-breakdown">Client</label>
+        <select name="client-breakdown" id="client-breakdown">
+          <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
+          <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <div id="report-content" class="report-content">
