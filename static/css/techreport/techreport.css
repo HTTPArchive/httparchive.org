@@ -949,6 +949,33 @@ path.highcharts-tick {
   display: none;
 }
 
+.highcharts-data-table {
+}
+
+.highcharts-data-table table {
+  width: 100%;
+  color: var(--color-text);
+}
+
+.highcharts-data-table thead th {
+  font-weight: 600;
+}
+
+.highcharts-data-table thead {
+  border-bottom: 1px solid var(--color-text);
+}
+
+.highcharts-data-table :is(td, th) {
+  padding: 0.5rem 0.15rem;
+  min-width: 7rem;
+  text-overflow: ellipsis;
+}
+
+.highcharts-data-table tbody th {
+  font-weight: normal;
+}
+
+
 /* ----------------------- */
 /* ---- Media queries ---- */
 /* ----------------------- */
