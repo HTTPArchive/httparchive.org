@@ -68,8 +68,20 @@
   {% include "techreport/templates/table_overview.html" %}
   {% include "techreport/templates/table_cwv_overview_multitech.html" %}
 
-  <label for="indicators-check">Show markers</label>
-  <input type="checkbox" name="indicators-check" id="indicators-check" />
+  <div class="accessibility-options">
+    <div class="wrapper block-m">
+      <h2>Accessibility</h2>
+      <p>Change settings related to accessibility here</p>
+
+      <div class="setting">
+        <div class="check-wrapper">
+          <label for="indicators-check">Show markers</label>
+          <input type="checkbox" name="indicators-check" id="indicators-check" />
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 {% endblock %}
 

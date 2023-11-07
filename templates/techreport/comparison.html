@@ -18,15 +18,8 @@
     </div>
   </div>
 
-  <div class="client-selector">
-    <div class="wrapper block-m">
-      <label for="client-breakdown">Client</label>
-      <select name="client-breakdown" id="client-breakdown">
-        <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
-        <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
-      </select>
-    </div>
-  </div>
+  {% set filter_tech_title = technologies_str or tech_report_page.filters.app[0] or 'ALL' %}
+  {% include "techreport/components/filter_info_header.html" %}
 
   <div id="report-content" class="report-content">
     <!-- Section: Summary of the main metrics -->

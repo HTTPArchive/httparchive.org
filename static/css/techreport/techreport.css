@@ -483,6 +483,59 @@ select {
   align-items: center;
 }
 
+.client-breakdown-wrapper label {
+  display: block;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--color-text-lighter);
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.client-breakdown-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-color: transparent;
+  z-index: 1;
+  border-radius: 0;
+  border: none;
+
+  color: var(--color-text);
+
+  padding: 0;
+
+  width: 5rem;
+
+  border-bottom: 1px solid var(--color-text-lighter);
+
+  display: block;
+
+  font-size: 1rem;
+}
+
+.client-breakdown-wrapper:has(select:focus) {
+  border: 1px solid var(--color-teal-darker);
+  border-radius: 3px;
+}
+
+/* So that the outline only gets removed if :has is supported */
+.client-breakdown-wrapper:has(select:focus) select {
+  outline: none;
+  border: none;
+  position: relative;
+  left: 1px;
+  top: -1px;
+  margin-bottom: -1px;
+}
+
+.client-breakdown-wrapper:has(select:focus) label {
+  position: relative;
+  left: 1px;
+  top: -1px;
+}
+
 .result-info > div {
   display: flex;
   column-gap: 1rem;
@@ -949,9 +1002,6 @@ path.highcharts-tick {
   display: none;
 }
 
-.highcharts-data-table {
-}
-
 .highcharts-data-table table {
   width: 100%;
   color: var(--color-text);
@@ -975,6 +1025,86 @@ path.highcharts-tick {
   font-weight: normal;
 }
 
+
+/* ----------------------- */
+/* ---- Accessibility ---- */
+/* ----------------------- */
+
+.accessibility-options {
+  background-color: var(--color-card-background);
+  border-top: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-card-border);
+  padding: 2rem 0;
+}
+
+.accessibility-options h2 {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.accessibility-options p {
+  margin-bottom: 1rem;
+}
+
+.check-wrapper {
+  border: 1px solid var(--color-text-lighter);
+  display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  position: relative;
+}
+
+.check-wrapper label {
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+}
+
+.check-wrapper input {
+  width: 0;
+  height: 0;
+}
+
+.check-wrapper input:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.check-wrapper:before {
+  content: "";
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.3rem;
+  position: absolute;
+  left: 1rem;
+  top: 0.75rem;
+  border: 1px solid var(--color-blue-dark);
+}
+
+.check-wrapper:has(input:checked) {
+  background-color: #E1F1FF;
+}
+
+.check-wrapper:has(input:checked):before {
+  background-color: var(--color-blue-dark);
+  box-shadow: 0 0 0 1.5px #E1F1FF inset;
+}
+
+.check-descr {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.check-descr .check-state {
+  font-weight: 600;
+}
 
 /* ----------------------- */
 /* ---- Media queries ---- */

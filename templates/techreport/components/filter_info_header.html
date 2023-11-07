@@ -1,0 +1,32 @@
+<div class="client-selector">
+  <div class="wrapper block-m">
+    <div class="result-info">
+      <p>
+        <a href="#tech-1">
+          {{ filter_tech_title }}
+        </a>
+      </p>
+      <div>
+        <p>
+          Geo:
+          <a href="#geo">
+            <span data-slot="geo">{{ request.args.get('geo', '')  or 'ALL' }}</span>
+          </a>
+        </p>
+        <p>
+          Rank:
+          <a href="#rank">
+            <span data-slot="rank">{{ request.args.get('rank', '')  or 'ALL' }}</span>
+          </a>
+        </p>
+      </div>
+    </div>
+    <div class="client-breakdown-wrapper">
+      <label for="client-breakdown">Client</label>
+      <select name="client-breakdown" id="client-breakdown">
+        <option value="mobile" {% if request.args.get('client', '') == 'mobile' %}selected{% endif %}>Mobile</option>
+        <option value="desktop" {% if request.args.get('client', '') == 'desktop' %}selected{% endif %}>Desktop</option>
+      </select>
+    </div>
+  </div>
+</div>
