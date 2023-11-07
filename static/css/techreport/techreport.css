@@ -241,7 +241,7 @@
   color: #767474;
 }
 
-#page-filters .select-label select {
+#page-filters .select-label select{
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -463,21 +463,20 @@ select {
 }
 
 /* Results header */
-.client-selector {
+.results-header {
   position: sticky;
   top: 0;
   padding: 0.5rem 0;
   background-color: var(--color-page-background);
-  z-index: 2;
+  z-index: 3;
   border-bottom: 1px solid #6A797C;
-
 }
 
-.client-selector :is(label, select) {
+.results-header :is(label, select) {
   margin: 0;
 }
 
-.client-selector .wrapper {
+.results-header .wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -568,6 +567,96 @@ select {
 .summary-grid + .card {
   margin-top: 1rem;
 }
+
+/* Submetric selector */
+.subcategory-selector-wrapper {
+  border: 1px solid #959494;
+  padding: 0.5rem 1rem;
+  line-height: 100%;
+  position: relative;
+  border-radius: 5px;
+  display: inline-block;
+  padding-right: 0;
+}
+
+.subcategory-selector-wrapper label {
+  color: var(--color-text-lighter);
+}
+
+.subcategory-selector-wrapper select {
+  margin-bottom: 0;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-color: transparent;
+
+  color: var(--color-text);
+
+  padding-right: 3rem;
+
+  z-index: 2;
+  position: relative;
+}
+
+.subcategory-selector-wrapper:has(select:focus) select {
+  outline: none;
+}
+
+.subcategory-selector-wrapper:has(select:focus) {
+  outline: 1px solid var(--color-text);
+  outline-offset: 1.5px;
+}
+
+
+.subcategory-selector-wrapper:after {
+  content: "";
+  display: block;
+
+  width: 0.5rem;
+  height: 0.5rem;
+
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  top: calc(50% - 0.25rem);
+
+  border-bottom: 1.5px solid #1E1E1E;
+  border-left: 1.5px solid #1E1E1E;
+  border-radius: 1px;
+
+  transform: rotate(-45deg);
+
+  z-index: 1;
+}
+
+.subcategory-selector-wrapper:has(select:is(:focus-visible, :hover)):before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 2.5rem;
+  background-color: #1E1E1E;
+  border-left: 1px solid #1E1E1E;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.subcategory-selector-wrapper:has(select:is(:focus-visible, :hover)):after {
+  border-color: #F2F9FF;
+}
+
+.subcategory-selector-wrapper:has(select:focus-visible) {
+  background-color: #F2F9FF;
+}
+
+.subcategory-selector-wrapper:has(select:focus-visible) label {
+  color: var(--color-text) !important;
+}
+
+
 
 /* Timeseries cards */
 .timeseries-container {
@@ -797,12 +886,6 @@ select {
 
 .component-filters {
   text-align: right;
-}
-
-.component-filters label {
-  display: block;
-  font-weight: normal;
-  font-size: 0.875rem;
 }
 
 .component-filters select {
@@ -1113,7 +1196,7 @@ path.highcharts-tick {
 /* Re-arrange when viewport becomes too narrow in height */
 /* ± 200% zoom on a 13" screen */
 @media screen and (max-height: 30rem) {
-  .client-selector {
+  .results-header {
     position: static;
   }
 }
