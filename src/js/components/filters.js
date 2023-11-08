@@ -63,10 +63,13 @@ function updateTechnologies(technologies) {
   allTechSelectors.forEach(techSelector => {
     techSelector.innerHTML = '';
 
-    const selectedTechFormatted = techSelector.getAttribute('data-selected').replaceAll('-', ' ');
+    const selectedTechFormatted = techSelector.getAttribute('data-selected');
+    console.log('>>> techNames', techNames, 'selectedTechFormatted', selectedTechFormatted);
 
     /* If the technology doesn't exist, throw a warning */
-    if(!techNames.includes(selectedTechFormatted)) {
+    const techNamesFiltered = techNames.find(techName => techName.replaceAll(' ', '-') === selectedTechFormatted);
+    console.log(techNamesFiltered);
+    if(!techNamesFiltered) {
       const errorMsg = document.createElement('p');
       errorMsg.textContent = 'Technology not found, please select a different one';
       techSelector.before(errorMsg);

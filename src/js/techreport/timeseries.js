@@ -332,7 +332,6 @@ class Timeseries {
 
   // Get the default settings
   defaults(config) {
-    console.log('UPDATE', document.querySelector('main').dataset.showIndicators);
     const showIndicators = document.querySelector('main').dataset.showIndicators === true
       || document.querySelector('main').dataset.showIndicators === "true";
     const defaults = {
@@ -368,8 +367,6 @@ class Timeseries {
         },
       },
     };
-
-    console.log(defaults);
 
     return defaults;
   }
