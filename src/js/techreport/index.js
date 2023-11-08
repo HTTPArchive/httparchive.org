@@ -22,7 +22,8 @@ class TechReport {
 
     // Load the page
     this.initializePage();
-    this.getAllData();
+    // this.getFilterInfo();
+    this.getAllMetricData();
     this.bindSettingsListeners();
   }
 
@@ -123,12 +124,12 @@ class TechReport {
   // TODO: Will be moved to the section level with new APIs
   getAllData() {
     const data = {};
-    const fetch_app = this.filters.app;
+    const technologies = this.filters.app;
 
     /* Make a request for each of the technologies and return them in an object.
      * Once we port this over to the new APIs, this should be moved to the section level.
      */
-    Promise.all(fetch_app.map(technology => {
+    Promise.all(technologies.map(technology => {
       const url = `https://cdn.httparchive.org/reports/cwvtech/${this.filters.rank}/${this.filters.geo}/${technology}.json`;
       return fetch(url)
         .then(result => result.json())
@@ -141,6 +142,30 @@ class TechReport {
       this.allData = data;
       this.updateComponents(data);
     });
+  }
+
+  // New API
+  getAllMetricData() {
+    const data = {};
+    const technologies = this.filters.app;
+    const metrics = ['cwv', 'lighthouse', 'adoption'];
+    const base = 'https://dev-gw-2vzgiib6.uk.gateway.dev/v1';
+
+    const technology = technologies[0];
+
+    console.log('technologies', technologies);
+
+    Promise.all(metrics.map(metric => {
+      const url = `${base}/${metric}?technology=${technology}&geo=${this.filters.geo}&rank=${this.filters.rank}`;
+
+      console.log(url);
+
+      return fetch(url)
+        .then(result => result.json())
+        .then(result => console.log('result', result))
+        .catch(error => console.log('Something went wrong', error));
+
+    }));
   }
 
   // Change data format from API data to what we need
