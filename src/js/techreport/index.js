@@ -148,24 +148,60 @@ class TechReport {
   getAllMetricData() {
     const data = {};
     const technologies = this.filters.app;
-    const metrics = ['cwv', 'lighthouse', 'adoption'];
-    const base = 'https://dev-gw-2vzgiib6.uk.gateway.dev/v1';
+
+    const apis = [
+      {
+        endpoint: 'cwv',
+        metric: 'vitals'
+      },
+      {
+        endpoint: 'lighthouse',
+        metric: 'lighthouse'
+      },
+      {
+        endpoint: 'adoption',
+        metric: 'adoption'
+      },
+      {
+        endpoint: 'page-weight',
+        metric: 'page-weight'
+      }
+    ];
+
+    const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
 
     const technology = technologies[0];
 
-    console.log('technologies', technologies);
+    console.time('promiseAll');
 
-    Promise.all(metrics.map(metric => {
-      const url = `${base}/${metric}?technology=${technology}&geo=${this.filters.geo}&rank=${this.filters.rank}`;
+    let allResults = [];
 
-      console.log(url);
+    Promise.all(apis.map(api => {
+      const url = `${base}/${api.endpoint}?technology=${technology}&geo=${this.filters.geo}&rank=${this.filters.rank}`;
 
+      console.log('fetch url', url);
+      console.time(`call-${api.endpoint}`);
       return fetch(url)
         .then(result => result.json())
-        .then(result => console.log('result', result))
+        .then(result => {
+          result.forEach(row => {
+            const resIndex = allResults.findIndex(res => res.date === row.date);
+            if(resIndex > -1) {
+              allResults[resIndex] = {
+                ...allResults[resIndex],
+                ...row
+              }
+            } else {
+              allResults.push(row);
+            }
+          });
+        })
         .catch(error => console.log('Something went wrong', error));
-
-    }));
+    })).then(() => {
+      console.log('promise all finished');
+      console.timeEnd('promiseAll');
+      console.log('merged result', allResults);
+    });
   }
 
   // Change data format from API data to what we need
