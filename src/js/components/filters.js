@@ -64,11 +64,9 @@ function updateTechnologies(technologies) {
     techSelector.innerHTML = '';
 
     const selectedTechFormatted = techSelector.getAttribute('data-selected');
-    console.log('>>> techNames', techNames, 'selectedTechFormatted', selectedTechFormatted);
 
     /* If the technology doesn't exist, throw a warning */
     const techNamesFiltered = techNames.find(techName => techName.replaceAll(' ', '-') === selectedTechFormatted);
-    console.log(techNamesFiltered);
     if(!techNamesFiltered) {
       const errorMsg = document.createElement('p');
       errorMsg.textContent = 'Technology not found, please select a different one';
@@ -128,12 +126,10 @@ function updateRank(ranks, filters) {
 
 /* Update the list with categories */
 function updateCategories(categories, filters) {
-  console.log('try to update categories', categories);
   const selects = document.querySelectorAll('select[name="categories"]');
 
   if(categories) {
     selects.forEach(select => {
-      console.log(categories, 'categories exist, set select stuff', select)
       select.innerHTML = '';
 
       const all = document.createElement('option');
@@ -148,21 +144,16 @@ function updateCategories(categories, filters) {
         option.dataset.technologies = categories[category].join(',');
         select.append(option);
       });
-
-      console.log('select when we are done', select);
     })
   }
 }
 
 /* Set the selected category */
 function updateCategory(event) {
-  console.log('update category');
   const selectedOption = document.querySelector(`option[value="${event.target.value}"]`);
   const selectedTechs = selectedOption.dataset.technologies.split(",");
   const techSelector = document.getElementById(event.target.dataset.tech);
   techSelector.innerHTML = '';
-
-  console.log(selectedOption, selectedTechs, techSelector);
 
   selectedTechs.forEach((technology) => {
     const option = document.createElement('option');
@@ -181,8 +172,6 @@ function updateCategory(event) {
 function addTechnologySelector(event) {
   event.preventDefault();
 
-  console.log('add a tech selector');
-
   const selectorTemplate = document.getElementById('tech-selector').content.cloneNode(true);
 
   const selectElement = selectorTemplate.querySelector('select.tech');
@@ -193,8 +182,6 @@ function addTechnologySelector(event) {
   const categoryLabel = selectorTemplate.querySelector('label[for="categories-tech-new"]');
   categorySelect.innerHTML = document.querySelector('select.categories-selector').innerHTML;
   categorySelect.addEventListener('change', updateCategory);
-
-  console.log(categoryLabel);
 
   /* Set a unique name on the new element (based on the amount of techs) */
   const techId = `tech-${document.querySelectorAll('select.tech[name="tech"]').length + 1}`;

@@ -152,35 +152,33 @@ class TechReport {
     const apis = [
       {
         endpoint: 'cwv',
-        metric: 'vitals'
+        metric: 'vitals',
+        breakdown: ['overall', 'LCP'],
       },
       {
         endpoint: 'lighthouse',
-        metric: 'lighthouse'
+        metric: 'lighthouse',
+        breakdown: ['accessibility'],
       },
       {
         endpoint: 'adoption',
-        metric: 'adoption'
+        metric: 'adoption',
       },
-      {
-        endpoint: 'page-weight',
-        metric: 'page-weight'
-      }
+      // {
+      //   endpoint: 'page-weight',
+      //   metric: 'page-weight'
+      // }
     ];
 
     const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
 
     const technology = technologies[0];
 
-    console.time('promiseAll');
-
     let allResults = [];
 
     Promise.all(apis.map(api => {
       const url = `${base}/${api.endpoint}?technology=${technology}&geo=${this.filters.geo}&rank=${this.filters.rank}`;
 
-      console.log('fetch url', url);
-      console.time(`call-${api.endpoint}`);
       return fetch(url)
         .then(result => result.json())
         .then(result => {
@@ -198,9 +196,10 @@ class TechReport {
         })
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
-      console.log('promise all finished');
-      console.timeEnd('promiseAll');
-      console.log('merged result', allResults);
+      const results = {};
+      results[technology] = allResults;
+
+      this.updateComponents(results);
     });
   }
 

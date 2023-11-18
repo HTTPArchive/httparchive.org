@@ -110,6 +110,10 @@ class Timeseries {
       const urlSubcategory = urlParams.get(config.param);
       const subcategory = urlSubcategory || config.default;
 
+      /* Get settings */
+      const metric = viz.dataset.metric;
+      const endpoint = viz.dataset.endpoint;
+
       /* Remove the previous content */
       container.innerHTML = '';
 
@@ -119,9 +123,9 @@ class Timeseries {
       /* For each of the breakdowns, add a component with the latest data */
       config.series.values.forEach(breakdown => {
         /* Get the latest values */
-        const breakdownData = sorted?.filter(row => row.client === breakdown.name);
-        const latest = breakdownData[0];
-        const latestValue = latest[`${config.base}${subcategory}`];
+        const latestData = sorted[0];
+        const categoryData = latestData?.[endpoint]?.find(row => row.name === subcategory);
+        const latestValue = categoryData?.[breakdown.name]?.[metric];
 
         /* Create a wrapper */
         const itemWrapper = document.createElement('div');
@@ -285,21 +289,29 @@ class Timeseries {
     const config = this.pageConfig[this.id]?.viz;
     const app = this.pageFilters.app[0];
 
-    const metric = this.getMetric(config);
+    // TODO: Replace with info from component or config
+    const endpoint = this.pageConfig[this.id]?.endpoint;
+    const metric = this.pageConfig[this.id]?.metric;
+
+    console.log(endpoint, metric);
+
+    const category = this.getCategory(config);
 
     // Breakdown data by categories defined in config
     config?.series?.values?.forEach((value, index) => {
       // Filter by selected client & sort
-      const filteredData = this.data?.[app]?.filter(entry => entry.client === value.name);
-      filteredData?.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const appData = this.data?.[app];
 
       // Add the values for the selected metric to a new array of objects
       // Formatted as coordinates for Highcharts
       const formattedData = [];
-      filteredData?.forEach(row => {
+      appData?.forEach(row => {
+        const categoryData = row?.[endpoint]?.find(row => row.name === category);
+        const clientData = categoryData?.[value.name];
+        const y = clientData?.[metric];
         formattedData.push({
           x: new Date(row.date),
-          y: Number(row[metric]),
+          y: Number(y),
         });
       });
 
@@ -319,15 +331,17 @@ class Timeseries {
     return series;
   }
 
-  getMetric(config) {
+  getMetric() {}
+
+  getCategory(config) {
     // The default metric from the settings
-    const defaultMetric = config.metric;
+    const defaultMetric = config.default;
 
     // Get the submetric from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const urlSubcategory = urlParams.get(config.param);
 
-    return urlSubcategory ? `${config.base}${urlSubcategory}` : defaultMetric;
+    return urlSubcategory || defaultMetric;
   }
 
   // Get the default settings

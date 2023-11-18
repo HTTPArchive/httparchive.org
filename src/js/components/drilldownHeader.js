@@ -4,7 +4,7 @@ function setTitle(title) {
 }
 
 function setCategories(categories) {
-  if(categories.length > 0) {
+  if(categories?.length > 0) {
     /* Fetch the category list element and empty it. */
     const list = document.querySelector('.intro .category-list');
     list.innerHTML = '';

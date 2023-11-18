@@ -1,12 +1,13 @@
-<div data-id="{{ timeseries.id }}" data-component="timeseries" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
+{% set category = request.args.get(subcategory.param, '') or subcategory.default %}
+
+<div data-id="{{ timeseries.id }}" data-component="timeseries" data-endpoint="{{timeseries.endpoint}}" data-category="{{category}}" data-metric="{{timeseries.metric}}" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
   <div class="component-heading-wrapper">
     <div class="component-heading">
-      {% set selectedParam = request.args.get(subcategory.param, '') or subcategory.default %}
       {% set title = timeseries.title %}
       {% set descr = timeseries.description %}
-      {% if tech_report_labels.metrics[selectedParam] %}
-        {% set title = tech_report_labels.metrics[selectedParam].title %}
-        {% set descr = tech_report_labels.metrics[selectedParam].description %}
+      {% if tech_report_labels.metrics[category] %}
+        {% set title = tech_report_labels.metrics[category].title %}
+        {% set descr = tech_report_labels.metrics[category].description %}
       {% endif %}
 
       <h3>{{ title }}</h3>

@@ -7,7 +7,9 @@
   class="card"
   data-component="summaryCard"
   data-metric="{{ summary.metric }}"
-  data-id="{{ prefix }}-{{ summary.metric }}"
+  data-endpoint="{{ summary.endpoint }}"
+  data-category="{{ summary.category }}"
+  data-id="{{ prefix }}-{{ summary.endpoint }}-{{ summary.category }}-{{ summary.metric }}"
   data-client="{{ request.args.get('client', '')  or 'mobile' }}"
 >
   <p class="summary-linked-label">
