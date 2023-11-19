@@ -1108,6 +1108,25 @@ path.highcharts-tick {
   font-weight: normal;
 }
 
+/* ------------------------ */
+/* ----- Small charts ----- */
+/* ------------------------ */
+.progress-chart {
+  transform: rotate(-90deg);
+}
+
+.lighthouse-progress {
+  stroke-dashoffset: var(--offset);
+  transform-origin: center;
+}
+
+.lighthouse-progress.border-1 {
+  transform: rotate(-1deg);
+}
+
+.lighthouse-progress.border-2 {
+  transform: rotate(1deg);
+}
 
 /* ----------------------- */
 /* ---- Accessibility ---- */

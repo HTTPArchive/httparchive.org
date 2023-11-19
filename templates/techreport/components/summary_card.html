@@ -19,6 +19,15 @@
     <span class="summary-linked-value" data-slot="value">--</span>
     <span class="summary-suffix" data-slot="suffix">{{ summary.suffix or "" }}</span>
   </p>
+  {% if section_prefix == "lighthouse" %}
+    <svg class="progress-chart" width="50%" height="50%" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="54" fill="none" stroke="#000" stroke-width="12" />
+      <circle cx="60" cy="60" r="54" fill="none" stroke="#EEEEEE" stroke-width="10" />
+      <circle class="lighthouse-progress border-1" cx="60" cy="60" r="54" fill="none" stroke="#000" stroke-width="10" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+      <circle class="lighthouse-progress border-2" cx="60" cy="60" r="54" fill="none" stroke="#000" stroke-width="10" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+      <circle class="lighthouse-progress" cx="60" cy="60" r="54" fill="none" stroke="#1c4750" stroke-width="10" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" />
+    </svg>
+  {% endif %}
   <p class="summary-linked-description" data-slot="description">
     {{ summary.description }}
   </p>

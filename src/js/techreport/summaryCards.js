@@ -49,6 +49,12 @@ class SummaryCard {
       if(latestValue) {
         const valueSlot = card.querySelector('[data-slot="value"]');
         valueSlot.innerHTML = latestValue;
+
+        const progress = card.querySelectorAll('.lighthouse-progress');
+        progress.forEach(circle => {
+          circle.setAttribute('style', `--offset: ${100 - latestValue};`);
+        });
+
       }
     }
 
