@@ -293,8 +293,6 @@ class Timeseries {
     const endpoint = this.pageConfig[this.id]?.endpoint;
     const metric = this.pageConfig[this.id]?.metric;
 
-    console.log(endpoint, metric);
-
     const category = this.getCategory(config);
 
     // Breakdown data by categories defined in config

@@ -120,6 +120,52 @@ class TechReport {
     });
   }
 
+  parseVitalsData(metric) {
+    return metric.map(submetric => {
+      return {
+        ...submetric,
+        desktop: {
+          ...submetric.desktop,
+          good_pct: submetric.desktop.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0,
+        },
+        mobile: {
+          ...submetric.mobile,
+          good_pct: submetric.mobile.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0,
+        },
+      };
+    });
+  }
+
+  parseLighthouseData(metric) {
+    return metric.map(submetric => {
+      return {
+        ...submetric,
+        desktop: {
+          ...submetric.desktop,
+          median_score_pct: parseInt(submetric.desktop.median_score * 100),
+        },
+        mobile: {
+          ...submetric.mobile,
+          median_score_pct: parseInt(submetric.mobile.median_score * 100),
+        },
+      };
+    });
+  }
+
+  parseAdoptionData(submetric) {
+    return [
+      {
+        desktop: {
+          origins: submetric.desktop,
+        },
+        mobile: {
+          origins: submetric.mobile,
+        },
+        name: 'adoption',
+      },
+    ];
+  }
+
   // Fetch all the data based on search criteria and config
   // TODO: Will be moved to the section level with new APIs
   getAllData() {
@@ -153,21 +199,22 @@ class TechReport {
       {
         endpoint: 'cwv',
         metric: 'vitals',
-        breakdown: ['overall', 'LCP'],
+        parse: this.parseVitalsData,
       },
       {
         endpoint: 'lighthouse',
         metric: 'lighthouse',
-        breakdown: ['accessibility'],
+        parse: this.parseLighthouseData,
       },
       {
         endpoint: 'adoption',
         metric: 'adoption',
+        parse: this.parseAdoptionData,
       },
-      // {
-      //   endpoint: 'page-weight',
-      //   metric: 'page-weight'
-      // }
+      {
+        endpoint: 'page-weight',
+        metric: 'page-weight'
+      },
     ];
 
     const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
@@ -183,14 +230,22 @@ class TechReport {
         .then(result => result.json())
         .then(result => {
           result.forEach(row => {
+            const parsedRow = {
+              ...row,
+            }
+
+            if(api.parse) {
+              parsedRow[api.metric] = api.parse(parsedRow[api.metric]);
+            }
+
             const resIndex = allResults.findIndex(res => res.date === row.date);
             if(resIndex > -1) {
               allResults[resIndex] = {
                 ...allResults[resIndex],
-                ...row
+                ...parsedRow
               }
             } else {
-              allResults.push(row);
+              allResults.push(parsedRow);
             }
           });
         })
