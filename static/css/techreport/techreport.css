@@ -37,6 +37,16 @@
   --breakdown-color: var(--color-text);
 }
 
+[data-theme="dark"] {
+  --color-link: var(--color-teal-faded);
+  --color-text: #fff;
+  --color-text-lighter: #fff;
+  --color-text-inverted: #000;
+  --color-card-background: #111111;
+  --color-card-border: #000;
+  --color-page-background: #292828;
+}
+
 /* ------------------------- */
 /* ---- Building blocks ---- */
 /* ------------------------- */
@@ -1206,6 +1216,14 @@ path.highcharts-tick {
 
 .check-descr .check-state {
   font-weight: 600;
+}
+
+.theme-switcher {
+  border: 1px solid var(--color-text-lighter);
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
 }
 
 /* ----------------------- */

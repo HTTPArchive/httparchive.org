@@ -52,9 +52,20 @@ class TechReport {
   initializeReport() {
     Filters.bindFilterListener();
 
+    // TODO: Move to function
     const showIndicators = localStorage.getItem('showIndicators');
     document.querySelector('main').dataset.showIndicators = showIndicators;
     document.querySelector('#indicators-check').checked = showIndicators === 'true';
+
+    // TODO: Move to function
+    const theme = localStorage.getItem('haTheme');
+    document.querySelector('html').dataset.theme = theme;
+    const btn = document.querySelector('.theme-switcher');
+    if(theme === 'dark') {
+      btn.innerHTML = '🌝 Switch to light theme';
+    } else if(theme === 'light') {
+      btn.innerHTML = '🌚 Switch to dark theme';
+    }
 
     const sections = document.querySelectorAll('[data-type="section"]');
     // TODO: add general config too
@@ -93,6 +104,23 @@ class TechReport {
         });
 
       }
+    }
+
+    const themeSwitcher = document.querySelector('button.theme-switcher');
+    if(themeSwitcher) {
+      themeSwitcher.addEventListener('click', (event) => {
+        const currentTheme = document.querySelector('html').dataset.theme;
+
+        if(currentTheme !== 'dark') {
+          document.querySelector('html').dataset.theme = 'dark';
+          localStorage.setItem('haTheme', 'dark');
+          event.target.innerHTML = '🌝 Switch to light theme';
+        } else {
+          document.querySelector('html').dataset.theme = 'light';
+          localStorage.setItem('haTheme', 'light');
+          event.target.innerHTML = '🌚 Switch to dark theme';
+        }
+      });
     }
   }
 
