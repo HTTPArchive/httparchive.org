@@ -247,9 +247,10 @@ class TechReport {
 
     const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
 
-    const technology = technologies[0];
+    const technology = technologies.join('%2C');
 
-    let allResults = [];
+    let allResults = {};
+    technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
       const url = `${base}/${api.endpoint}?technology=${technology}&geo=${this.filters.geo}&rank=${this.filters.rank}`;
@@ -266,23 +267,20 @@ class TechReport {
               parsedRow[api.metric] = api.parse(parsedRow[api.metric]);
             }
 
-            const resIndex = allResults.findIndex(res => res.date === row.date);
+            const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
             if(resIndex > -1) {
-              allResults[resIndex] = {
-                ...allResults[resIndex],
+              allResults[row.technology][resIndex] = {
+                ...allResults[row.technology][resIndex],
                 ...parsedRow
               }
             } else {
-              allResults.push(parsedRow);
+              allResults[row.technology].push(parsedRow);
             }
           });
         })
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
-      const results = {};
-      results[technology] = allResults;
-
-      this.updateComponents(results);
+      this.updateComponents(allResults);
     });
   }
 
@@ -390,7 +388,6 @@ class TechReport {
         section.data = data;
         section.updateSection();
       });
-
 
       const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
 
