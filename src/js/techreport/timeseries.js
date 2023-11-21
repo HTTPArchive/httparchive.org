@@ -156,19 +156,32 @@ class Timeseries {
     const id = this.id;
     const pageFilters = this.pageFilters;
 
-    const metric = this.getMetric(config);
     const component = document.querySelector(`[data-id="${this.id}"]`);
-    const client = component.dataset.client;
     const container = component.querySelector('.breakdown-list');
+
+    /* Get the currently selected subcategory based on the URL */
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlSubcategory = urlParams.get(config.param);
+    const subcategory = urlSubcategory || config.default;
+
+    /* Get settings */
+    const metric = component.dataset.metric;
+    const endpoint = component.dataset.endpoint;
+    const client = component.dataset.client;
 
     const colors = this.defaults(config)?.chart?.colors;
 
     pageFilters.app.forEach((app, index) => {
-      const sorted = data?.[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-      if(sorted && sorted.length > 0) {
-        const filtered = sorted?.filter(row => row.client === client);
-        const latest = filtered[0];
+      if(data[app] && data[app].length > 0) {
+        const sorted = data[app].sort((a, b) => new Date(b.date) - new Date(a.date));
+        const latest = sorted[0];
+
+        /* Select value */
+        const latestEndpoint = latest[endpoint];
+        const latestSubcategory = latestEndpoint?.find(row => row.name === subcategory);
+        const latestClient  = latestSubcategory?.[client];
+        const latestValue = latestClient?.[metric];
 
         /* Select the container to which we'll add elements. */
         const card = container.querySelector(`[data-app="${app}"]`);
@@ -177,13 +190,17 @@ class Timeseries {
         const value = card.getElementsByClassName('breakdown-value')[0];
 
         /* Update text */
-        label.innerHTML = latest.app;
-        value.innerHTML = `${latest[metric]}${config.series.suffix || ''}`;
+        label.innerHTML = latest.technology;
+        if(latestValue) {
+          value.innerHTML = `${latestValue}${config.series.suffix || ''}`;
+        } else {
+          value.classList.add('undefined');
+          value.innerHTML = 'No data';
+        }
         timestamp.innerHTML = latest.date;
         card.style.setProperty('--breakdown-color', colors[index]);
       }
-    })
-
+    });
   }
 
   // Update the highcharts timeseries
@@ -252,26 +269,33 @@ class Timeseries {
   formatDataByApp() {
     const series = [];
 
-    // Get the viz settings
-    const config = this.pageConfig[this.id]?.viz;
-    const metric = this.getMetric(config);
-
     // Get the selected client
     const component = document.querySelector(`[data-id="${this.id}"]`);
+
+    // Get the viz settings
+    const metric = component.dataset.metric;
+    const endpoint = component.dataset.endpoint;
     const client = component.dataset.client;
+
+    // Get the currently selected subcategory based on the URL
+    const config = this.pageConfig[this.id]?.viz;
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlSubcategory = urlParams.get(config.param);
+    const subcategory = urlSubcategory || config.default;
 
     const colors = this.defaults(config)?.chart?.colors;
 
     Object.values(this.data).forEach((app, index) => {
-      const data = app.filter(row => row.client === client).map(row => {
+      const data = app.map(row => {
+        const value = row?.[endpoint]?.find(row => row.name === subcategory)?.[client]?.[metric];
         return {
           x: new Date(row.date),
-          y: Number(row[metric]),
+          y: value || 0,
         };
       });
 
       series.push({
-        name: app[0]?.app,
+        name: app[0]?.technology,
         data: data,
         color: colors[index]
       });

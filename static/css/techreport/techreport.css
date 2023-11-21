@@ -1065,6 +1065,11 @@ select {
   font-size: var(--font-size-medium);
 }
 
+.breakdown-value.undefined {
+  color: var(--color-text-lighter);
+  font-style: italic;
+}
+
 /* -------------------- */
 /* ---- Highcharts ---- */
 /* -------------------- */

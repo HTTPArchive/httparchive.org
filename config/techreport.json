@@ -688,6 +688,8 @@
           "title": "Good Core Web Vitals over time",
           "description": "Placeholder - combination of several metrics",
           "id": "good_cwv_timeseries",
+          "endpoint": "vitals",
+          "metric": "good_pct",
           "subcategory": {
             "base": "pct_good_",
             "param": "good-cwv-over-time",
@@ -767,7 +769,8 @@
             "base": "pct_good_",
             "param": "good-cwv-over-time",
             "default": "cwv",
-            "metric": "pct_good_cwv",
+            "metric": "good_pct",
+            "height": 600,
             "series": {
               "breakdown": "app",
               "suffix": "%",
@@ -788,6 +791,8 @@
           "title": "Lighthouse over time",
           "description": "Placeholder text",
           "id": "lighthouse_timeseries",
+          "endpoint": "lighthouse",
+          "metric": "median_score_pct",
           "subcategory": {
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
@@ -844,7 +849,7 @@
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
             "default": "performance",
-            "metric": "median_lighthouse_score_performance",
+            "metric": "median_score_pct",
             "series": {
               "breakdown": "app",
               "defaults": [
@@ -933,6 +938,8 @@
           "title": "Origins over time",
           "description": "Placeholder text",
           "id": "adoption_timeseries",
+          "endpoint": "adoption",
+          "metric": "origins",
           "table": {
             "param":"",
             "caption": "Adoption",
@@ -958,6 +965,7 @@
           "viz": {
             "title": "Origins over time",
             "metric": "origins",
+            "default": "adoption",
             "series": {
               "breakdown": "app",
               "defaults": [
