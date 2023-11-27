@@ -6,6 +6,9 @@
     class="table-ui"
     data-client="{{ client }}"
     data-breakdown="{{ tech_report_page.config.default.series.breakdown }}"
+    data-endpoint="{{timeseries.endpoint}}"
+    data-category="{{category}}"
+    data-metric="{{timeseries.metric}}"
   >
     <caption class="sr-only">{{ table.caption }}</caption>
     <thead>
@@ -17,6 +20,7 @@
               <th
                 data-key="{{ column.key }}"
                 data-app="{{ app }}"
+                data-metric="{{column.metric}}"
                 class="{{ column.className }}"
               >
                {{ app }}
@@ -30,6 +34,7 @@
           {% else %}
             <th
               data-key="{{ column.key }}"
+              data-metric="{{column.metric}}"
               class="{{ column.className }}"
             >
               {{ column.name }}

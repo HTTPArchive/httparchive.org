@@ -1,8 +1,12 @@
 function formatData(tableConfig, data) {
   const { id, config, apps } = tableConfig;
 
+  const component = document.getElementById(`table-${id}`);
+
   // Get the selected subcategory
   const subcategory = getSubcategory(config);
+  const metric = component.dataset.metric;
+  const endpoint = component.dataset.endpoint;
 
   // Create empty array
   const table = [];
@@ -10,9 +14,15 @@ function formatData(tableConfig, data) {
   // Loop through all of the dates
   // Populate array of data rows with it
   const dates = Object.values(data)[0];
-  const component = document.getElementById(`table-${id}`);
   const client = component.dataset.client || 'mobile';
-  const _dates = dates?.filter(entry => entry.client === client);
+
+  let _dates = [];
+
+  Object.keys(data).forEach(app => {
+    const date = data[app]?.map(entry => entry.date);
+    _dates = [...new Set([..._dates, ...date])];
+  });
+
 
   for(let i = 0; i < _dates?.length; i++) {
     const row = [];
@@ -23,21 +33,25 @@ function formatData(tableConfig, data) {
       const columnConfig = {
         config,
         column,
-        client
+        client,
+        subcategory,
+        metric,
+        endpoint,
       };
+
 
       // Add column cell for each of the apps
       // Filter by app name and then metric (key) to find the value
       if(column.breakdown === 'app') {
         apps.forEach(app => {
-          row.push(getColumnCell({...columnConfig, app}, data, i));
+          row.push(getColumnCell({...columnConfig, app}, data, _dates[i]));
         });
       }
 
       // Add column cell with the data for the first app
       else {
         const app = apps[0];
-        row.push(getColumnCell({...columnConfig, app}, data, i));
+        row.push(getColumnCell({...columnConfig, app}, data, _dates[i]));
       }
     });
 
@@ -48,19 +62,18 @@ function formatData(tableConfig, data) {
   return table;
 }
 
-function getColumnCell(columnConfig, data, rowNr) {
-  const { config, column, client, app } = columnConfig;
+function getColumnCell(columnConfig, data, date) {
+  const { config, column, client, app, subcategory, metric, endpoint } = columnConfig;
 
-  // Get the selected subcategory
-  const subcategory = getSubcategory(config);
-
-  const _data = data[app]?.filter(entry => entry.client === client);
-  const key = column?.key?.replaceAll('*subcategory*', subcategory);
+  const _data = data[app]?.find(entry => entry.date === date);
+  const endpointData = _data?.[endpoint];
+  const subcategoryData = endpointData?.find(row => row.name === subcategory);
+  const value = subcategoryData?.[client]?.[column.key];
 
   const cell = {
     ...column,
-    formattedKey: key,
-    value: _data?.[rowNr]?.[key],
+    formattedKey: column.key,
+    value: value,
     app: app
   };
 
@@ -85,21 +98,23 @@ function updateTable(id, config, apps, data) {
   // Reset what's in the table before adding new content
   tbody.innerHTML = '';
 
+  // Collect the settings in an object
   const tableConfig = {
     id,
     config,
     apps
   };
 
+  // Format the data per row
   const rows = formatData(tableConfig, data);
 
+  // Add rows to the table
   rows?.forEach(row => {
-    const entry = row;
-
     const tr = document.createElement('tr');
 
+    // Add columns to each row
     row?.forEach(column => {
-      const cellType = column.type === "heading" ? 'th' : 'td';
+      const cellType = column?.type === "heading" ? 'th' : 'td';
       let cell = document.createElement(cellType);
 
       let text = '';

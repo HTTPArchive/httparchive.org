@@ -130,9 +130,11 @@
           "description": "Placeholder",
           "id": "adoption_timeseries",
           "endpoint": "adoption",
+          "default": "adoption",
           "metric": "origins",
           "table": {
-            "param":"",
+            "param": "",
+            "default": "adoption",
             "caption": "Usage placeholder",
             "columns": [
               {
@@ -308,7 +310,7 @@
           },
           "table": {
             "param":"good-cwv-over-time",
-            "default": "cwv",
+            "default": "overall",
             "caption": "Good Core Web Vitals placeholder",
             "columns": [
               {
@@ -317,19 +319,19 @@
                 "type": "heading"
               },
               {
-                "key": "pct_good_*subcategory*",
+                "key": "good_pct",
                 "name": "% Good scores",
                 "suffix": "%",
                 "className": "main-cell pct-value"
               },
               {
-                "key": "origins_with_good_*subcategory*",
+                "key": "good_number",
                 "name": "Good scores",
                 "className": "good-scores",
                 "hiddenSuffix": "/"
               },
               {
-                "key": "origins_eligible_for_*subcategory*",
+                "key": "tested",
                 "name": "Eligible",
                 "className": "eligible"
               },
@@ -481,7 +483,7 @@
                 "name": "Date"
               },
               {
-                "key": "median_lighthouse_score_*subcategory*",
+                "key": "median_score_pct",
                 "name": "Median score",
                 "className": "main-cell"
               },
@@ -690,6 +692,7 @@
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
+          "default": "overall",
           "subcategory": {
             "base": "pct_good_",
             "param": "good-cwv-over-time",
@@ -750,7 +753,7 @@
                 "type": "heading"
               },
               {
-                "key": "pct_good_*subcategory*",
+                "key": "good_pct",
                 "name": "Good scores",
                 "breakdown": "app",
                 "suffix": "%",
@@ -831,7 +834,7 @@
                 "type": "heading"
               },
               {
-                "key": "median_lighthouse_score_*subcategory*",
+                "key": "median_score_pct",
                 "name": "Median lighthouse score",
                 "breakdown": "app",
                 "className": "main-cell"
@@ -940,9 +943,11 @@
           "id": "adoption_timeseries",
           "endpoint": "adoption",
           "metric": "origins",
+          "default": "adoption",
           "table": {
             "param":"",
             "caption": "Adoption",
+            "default": "adoption",
             "columns": [
               {
                 "name": "Date",
