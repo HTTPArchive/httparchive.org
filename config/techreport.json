@@ -771,7 +771,7 @@
             "title": "Origins with good core web vitals over time",
             "base": "pct_good_",
             "param": "good-cwv-over-time",
-            "default": "cwv",
+            "default": "overall",
             "metric": "good_pct",
             "height": 600,
             "series": {
