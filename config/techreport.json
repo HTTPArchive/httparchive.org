@@ -576,28 +576,30 @@
           "description": "Placeholder text",
           "id": "weight_timeseries",
           "summary": true,
+          "endpoint": "pageWeight",
+          "metric": "median_bytes",
           "subcategory": {
             "base": "median_bytes_",
             "param": "weight-over-time",
-            "default": "image",
+            "default": "total",
             "options": [
               {
+                "label": "Total page weight",
+                "value": "total"
+              },
+              {
                 "label": "Image weight",
-                "value": "image"
+                "value": "images"
               },
               {
                 "label": "JavaScript transfer size",
                 "value": "js"
-              },
-              {
-                "label": "Total page weight",
-                "value": "total"
               }
             ]
           },
           "table": {
             "param":"weight-over-time",
-            "default": "image",
+            "default": "images",
             "caption": "Weight",
             "columns": [
               {
@@ -606,7 +608,7 @@
               },
               {
                 "name": "Median Bytes",
-                "key": "median_bytes_*subcategory*",
+                "key": "median_bytes",
                 "suffix": "kB",
                 "className": "main-cell"
               },
@@ -620,9 +622,9 @@
           "viz": {
             "base": "median_bytes_",
             "param": "weight-over-time",
-            "default": "image",
+            "default": "images",
             "title": "Image weight over time",
-            "metric": "median_bytes_image",
+            "metric": "median_bytes",
             "height": 600,
             "series": {
               "breakdown": "client",
@@ -684,6 +686,54 @@
           "app": ["ALL", "WordPress", "Drupal"],
           "series": {
             "breakdown": "app"
+          }
+        },
+        "overall_summary": {
+          "table": {
+            "caption": "Summary",
+            "columns": [
+              {
+                "key": "technology",
+                "name": "Tech",
+                "type": "heading"
+              },
+              {
+                "key": "origins",
+                "name": "Origins",
+                "breakdown": "subcategory",
+                "subcategory": "adoption",
+                "endpoint": "adoption"
+              },
+              {
+                "key": "good_pct",
+                "name": "Overall good CWV",
+                "breakdown": "subcategory",
+                "subcategory": "overall",
+                "suffix": "%",
+                "className": "main-cell pct-value",
+                "endpoint": "vitals"
+              },
+              {
+                "key": "good_pct",
+                "name": "FID",
+                "breakdown": "subcategory",
+                "subcategory": "fid",
+                "suffix": "%",
+                "endpoint": "vitals"
+              },
+              {
+                "key": "medium_score_pct",
+                "name": "Accessibility",
+                "breakdown": "subcategory",
+                "subcategory": "accessibility",
+                "endpoint": "lighthouse"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
           }
         },
         "good_cwv_timeseries": {
@@ -872,28 +922,31 @@
           "title": "Page weight over time",
           "description": "Placeholder text",
           "id": "weight_timeseries",
+          "endpoint": "page-weight",
+          "metric": "median_bytes",
+          "default": "total",
           "subcategory": {
             "base": "median_bytes_",
             "param": "median-weight-over-time",
             "default": "performance",
             "options": [
               {
+                "label": "Total page weight",
+                "value": "total"
+              },
+              {
                 "label": "Image weight",
-                "value": "image"
+                "value": "images"
               },
               {
                 "label": "JavaScript transfer size",
                 "value": "js"
-              },
-              {
-                "label": "Total page weight",
-                "value": "total"
               }
             ]
           },
           "table": {
             "param":"median-weight-over-time",
-            "default": "image",
+            "default": "total",
             "caption": "Weight",
             "columns": [
               {
@@ -902,7 +955,7 @@
               },
               {
                 "name": "Median Bytes",
-                "key": "median_bytes_*subcategory*",
+                "key": "median_bytes",
                 "suffix": "kB",
                 "className": "main-cell",
                 "breakdown": "app"
@@ -919,8 +972,8 @@
             "title": "Median page weight over time",
             "base": "median_bytes",
             "param": "median-weight-over-time",
-            "default": "image",
-            "metric": "median_bytes_image",
+            "default": "total",
+            "metric": "median_bytes",
             "series": {
               "breakdown": "app",
               "suffix": " kB",

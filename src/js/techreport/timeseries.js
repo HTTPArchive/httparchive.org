@@ -97,22 +97,23 @@ class Timeseries {
     const id = this.id;
     const pageFilters = this.pageFilters;
 
+    /* Select the container to which we'll add elements. */
+    const viz = document.querySelector(`[data-id="${id}"]`);
+    const container = viz.querySelector('.breakdown-list');
+
+    /* Get settings */
+    const metric = viz.dataset.metric;
+    const endpoint = viz.dataset.endpoint;
+
     const app = pageFilters.app[0];
-    const sorted = data?.[app]?.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const filtered = data?.[app]?.filter(entry => entry[endpoint]);
+    const sorted = filtered?.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     if(sorted) {
-      /* Select the container to which we'll add elements. */
-      const viz = document.querySelector(`[data-id="${id}"]`);
-      const container = viz.querySelector('.breakdown-list');
-
       /* Get the currently selected subcategory based on the URL */
       const urlParams = new URLSearchParams(window.location.search);
       const urlSubcategory = urlParams.get(config.param);
       const subcategory = urlSubcategory || config.default;
-
-      /* Get settings */
-      const metric = viz.dataset.metric;
-      const endpoint = viz.dataset.endpoint;
 
       /* Remove the previous content */
       container.innerHTML = '';
@@ -336,6 +337,8 @@ class Timeseries {
           y: Number(y),
         });
       });
+
+      const sortedData = formattedData.sort((a, b) => new Date(b.x) - new Date(a.x));
 
       const colors = this.defaults(config)?.chart?.colors;
 

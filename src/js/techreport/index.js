@@ -206,6 +206,24 @@ class TechReport {
     ];
   }
 
+  parsePageWeightData(metric, date) {
+    return metric.map(submetric => {
+      return {
+        ...submetric,
+        desktop: {
+          ...submetric.desktop,
+          client: 'desktop',
+          date: date,
+        },
+        mobile: {
+          ...submetric.mobile,
+          client: 'mobile',
+          date: date,
+        },
+      };
+    });
+  }
+
   // Fetch all the data based on search criteria and config
   // TODO: Will be moved to the section level with new APIs
   getAllData() {
@@ -253,7 +271,8 @@ class TechReport {
       },
       {
         endpoint: 'page-weight',
-        metric: 'page-weight'
+        metric: 'pageWeight',
+        parse: this.parsePageWeightData,
       },
     ];
 
