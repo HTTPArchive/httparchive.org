@@ -61,6 +61,8 @@
   <div id="{{ timeseries.id }}-table-wrapper" class="hidden">
     {% set table = timeseries.table %}
     {% set id = timeseries.id %}
+    {% set endpoint = timeseries.endpoint %}
+    {% set metric = timeseries.metric %}
     {% set client = request.args.get('client', '')  or 'mobile' %}
     {% include "techreport/components/table.html" %}
   </div>

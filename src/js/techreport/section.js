@@ -1,4 +1,5 @@
 import SummaryCard from "./summaryCards";
+import { TableLinked } from "./tableLinked";
 
 class Section {
   constructor(id, config, filters, data) {
@@ -25,10 +26,24 @@ class Section {
           this.initializeSummaryCards(component);
           break;
 
+        case "table":
+          this.initializeTable(component);
+          break;
+
         default:
           break;
       }
     });
+  }
+
+  initializeTable(component) {
+    console.log(this.initializeTable);
+    TableLinked.updateTable(
+      component.id,
+      this.pageConfig,
+      this.pageFilters.app,
+      this.data,
+    );
   }
 
   initializeSummaryCards(component) {

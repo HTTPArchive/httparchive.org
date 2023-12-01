@@ -23,7 +23,7 @@
 
   <div id="report-content" class="report-content">
     <!-- Section: Summary of the main metrics -->
-    <!-- <div
+    <div
       id="comparison-summary"
       class="block-m summary report-section"
       data-type="section"
@@ -31,10 +31,14 @@
     >
       <h2>Summary ({{ technologies | length }} technologies)</h2>
       <div class="summary-grid">
-        Todo
+        {% set id = 'summary-grid-table' %}
+        {% set client = request.args.get('client', '')  or 'mobile' %}
+        {% set table = tech_report_page.config.overall_summary.table %}
+
+        {% include "techreport/components/table_linked.html" %}
       </div>
       {% include "techreport/components/filter_meta.html" %}
-    </div> -->
+    </div>
 
     <!-- Section: Core Web Vitals -->
     <div
