@@ -688,7 +688,8 @@
             "breakdown": "app"
           }
         },
-        "overall_summary": {
+        "tech_comparison_summary": {
+          "id": "tech_comparison_summary",
           "table": {
             "caption": "Summary",
             "columns": [
@@ -702,7 +703,8 @@
                 "name": "Origins",
                 "breakdown": "subcategory",
                 "subcategory": "adoption",
-                "endpoint": "adoption"
+                "endpoint": "adoption",
+                "metric": "origins"
               },
               {
                 "key": "good_pct",
@@ -711,22 +713,25 @@
                 "subcategory": "overall",
                 "suffix": "%",
                 "className": "main-cell pct-value",
-                "endpoint": "vitals"
+                "endpoint": "vitals",
+                "metric": "good_pct"
               },
               {
                 "key": "good_pct",
                 "name": "FID",
                 "breakdown": "subcategory",
-                "subcategory": "fid",
+                "subcategory": "FID",
                 "suffix": "%",
-                "endpoint": "vitals"
+                "endpoint": "vitals",
+                "metric": "good_pct"
               },
               {
                 "key": "medium_score_pct",
-                "name": "Accessibility",
+                "name": "accessibility",
                 "breakdown": "subcategory",
-                "subcategory": "accessibility",
-                "endpoint": "lighthouse"
+                "subcategory": "Accessibility",
+                "endpoint": "lighthouse",
+                "metric": "median_score_pct"
               },
               {
                 "key": "client",

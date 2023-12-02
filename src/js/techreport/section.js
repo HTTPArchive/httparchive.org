@@ -1,5 +1,5 @@
 import SummaryCard from "./summaryCards";
-import { TableLinked } from "./tableLinked";
+import TableLinked from "./tableLinked";
 
 class Section {
   constructor(id, config, filters, data) {
@@ -37,12 +37,11 @@ class Section {
   }
 
   initializeTable(component) {
-    console.log(this.initializeTable);
-    TableLinked.updateTable(
-      component.id,
+    this.components[component.dataset.id] = new TableLinked(
+      component.dataset.id,
       this.pageConfig,
-      this.pageFilters.app,
-      this.data,
+      this.pageFilters,
+      this.data
     );
   }
 

@@ -30,13 +30,13 @@
       data-api="cwv,lighthouse,page-weight"
     >
       <h2>Summary ({{ technologies | length }} technologies)</h2>
-      <div class="summary-grid">
-        {% set id = 'summary-grid-table' %}
-        {% set client = request.args.get('client', '')  or 'mobile' %}
-        {% set table = tech_report_page.config.overall_summary.table %}
+      {% set component = tech_report_page.config.tech_comparison_summary %}
+      {% set id = component.id %}
+      {% set client = request.args.get('client', '')  or 'mobile' %}
 
-        {% include "techreport/components/table_linked.html" %}
-      </div>
+      {% set table = component.table %}
+      {% include "techreport/components/table_linked.html" %}
+
       {% include "techreport/components/filter_meta.html" %}
     </div>
 

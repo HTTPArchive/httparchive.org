@@ -1,5 +1,4 @@
 import { Table } from "./table";
-
 class Timeseries {
   // Create the component
   constructor(id, config, filters, data) {
