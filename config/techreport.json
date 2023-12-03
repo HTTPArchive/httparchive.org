@@ -927,7 +927,7 @@
           "title": "Page weight over time",
           "description": "Placeholder text",
           "id": "weight_timeseries",
-          "endpoint": "page-weight",
+          "endpoint": "pageWeight",
           "metric": "median_bytes",
           "default": "total",
           "subcategory": {
