@@ -36,24 +36,6 @@
       <h2>Explore</h2>
       <p>Placeholder</p>
 
-      <div class="card table-ui-wrapper">
-        <h3>Popular CMSes</h3>
-        <p>Description</p>
-
-        <table-cwv-overview-multitech
-          data-scope="all-data"
-          client="mobile"
-          technologies="{{ ','.join(tech_report_page.config.popular_tech.filters.app) }}"
-        >
-        </table-cwv-overview-multitech>
-
-        <p>
-          <a href="/reports/techreport/comparison?tech={{ ','.join(tech_report_page.config.popular_tech.filters.app) }}" class="cta-link">
-            Compare technologies
-          </a>
-        </p>
-
-      </div>
     </div>
   </div>
 {% endblock %}

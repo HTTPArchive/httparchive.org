@@ -172,7 +172,6 @@ class Timeseries {
     const colors = this.defaults(config)?.chart?.colors;
 
     pageFilters.app.forEach((app, index) => {
-
       if(data[app] && data[app].length > 0) {
         const sorted = data[app].sort((a, b) => new Date(b.date) - new Date(a.date));
         const latest = sorted[0];

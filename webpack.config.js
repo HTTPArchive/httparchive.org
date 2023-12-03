@@ -15,13 +15,6 @@ module.exports = {
     'techreport': './src/js/techreport/index.js',
     'techreport/timeseries': './src/js/techreport/timeseries.js',
     'techreport/section': './src/js/techreport/section.js',
-
-    // TO UPDATE:
-    'summaryLinked': './src/js/components/summaryLinked.js',
-    'tableGeneral': './src/js/components/tableGeneral.js',
-    'tableGeneralMulti': './src/js/components/tableGeneralMulti.js',
-    'tableOverview': './src/js/components/tableOverview.js',
-    'tableCWVOverviewMulti': './src/js/components/tableCWVOverviewMulti.js',
   },
   output: {
     path: path.resolve(__dirname, 'static/js'),
