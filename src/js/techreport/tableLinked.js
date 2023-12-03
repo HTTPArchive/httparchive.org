@@ -61,7 +61,11 @@ class TableLinked {
               const dataset = latest?.[column?.endpoint];
               let value = dataset?.find(entry => entry.name === column.subcategory);
               value = value?.[component.dataset.client]?.[column?.metric];
-              cell.innerHTML = value;
+              cell.innerHTML = `${value}`;
+            }
+
+            if(column.className) {
+              cell.className = column.className;
             }
 
 

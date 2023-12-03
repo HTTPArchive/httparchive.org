@@ -4,12 +4,12 @@
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "config": {
     "cwv_subcategories": [
-      "fid",
-      "cls",
-      "lcp",
-      "fcp",
-      "inp",
-      "ttfb"
+      "FID",
+      "CLS",
+      "LCP",
+      "FCP",
+      "INP",
+      "TTFB"
     ],
     "lighthouse_subcategories": [
       "accessibility",
@@ -727,9 +727,9 @@
               },
               {
                 "key": "medium_score_pct",
-                "name": "accessibility",
+                "name": "Accessibility",
                 "breakdown": "subcategory",
-                "subcategory": "Accessibility",
+                "subcategory": "accessibility",
                 "endpoint": "lighthouse",
                 "metric": "median_score_pct"
               },
@@ -751,47 +751,47 @@
           "subcategory": {
             "base": "pct_good_",
             "param": "good-cwv-over-time",
-            "default": "cwv",
+            "default": "overall",
             "options": [
               {
                 "label": "Overall good CWVs",
-                "value": "cwv",
+                "value": "overall",
                 "title": "Origins with overall good Core Web Vitals",
                 "description": "overall todo"
               },
               {
                 "label": "LCP",
-                "value": "lcp",
+                "value": "LCP",
                 "title": "Origins with good LCP",
                 "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful."
               },
               {
                 "label": "FID",
-                "value": "fid",
+                "value": "FID",
                 "title": "Origins with good FID",
                 "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
               },
               {
                 "label": "CLS",
-                "value": "cls",
+                "value": "CLS",
                 "title": "Origins with good CLS",
                 "description": "Cumulative Layout Shift (CLS) is a stable Core Web Vital metric. It is an important, user-centric metric for measuring visual stability because it helps quantify how often users experience unexpected layout shifts—a low CLS helps ensure that the page is delightful."
               },
               {
                 "label": "FCP",
-                "value": "fcp",
+                "value": "FCP",
                 "title": "Origins with good FCP",
                 "description": "todo find fcp description"
               },
               {
                 "label": "TTFB",
-                "value": "ttfb",
+                "value": "TTFB",
                 "title": "Origins with good TTFB",
                 "description": "todo find fcp description"
               },
               {
                 "label": "INP",
-                "value": "inp",
+                "value": "INP",
                 "title": "Origins with good LCP",
                 "description": "todo find fcp description"
               }
