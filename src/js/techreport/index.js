@@ -1,6 +1,7 @@
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { Filters } = require("../components/filters");
-const { Utils } = require("./utils");
+const { DataUtils } = require("./utils/data");
+const { UIUtils } = require("./utils/ui");
 
 class TechReport {
   constructor(pageId, page, config, labels) {
@@ -156,22 +157,22 @@ class TechReport {
       {
         endpoint: 'cwv',
         metric: 'vitals',
-        parse: Utils.parseVitalsData,
+        parse: DataUtils.parseVitalsData,
       },
       {
         endpoint: 'lighthouse',
         metric: 'lighthouse',
-        parse: Utils.parseLighthouseData,
+        parse: DataUtils.parseLighthouseData,
       },
       {
         endpoint: 'adoption',
         metric: 'adoption',
-        parse: Utils.parseAdoptionData,
+        parse: DataUtils.parseAdoptionData,
       },
       {
         endpoint: 'page-weight',
         metric: 'pageWeight',
-        parse: Utils.parsePageWeightData,
+        parse: DataUtils.parsePageWeightData,
       },
     ];
 
@@ -271,7 +272,7 @@ class TechReport {
     const app = this.filters.app[0];
 
     if(data && data[app]) {
-      this.updateReportComponents(this.sections, data, data[app]);
+      UIUtils.updateReportComponents(this.sections, data, data[app], this.page, this.labels);
     } else {
       this.updateWithEmptyData();
     }
@@ -279,26 +280,10 @@ class TechReport {
 
   updateComparisonComponents(data) {
     if(data && Object.keys(data).length > 0) {
-      this.updateReportComponents(this.sections, data, data);
+      UIUtils.updateReportComponents(this.sections, data, data, this.page, this.labels);
     } else {
       this.updateWithEmptyData();
     }
-  }
-
-  updateReportComponents(sections, data, allData) {
-    // Update sections
-    Object.values(sections).forEach(section => {
-      section.data = data;
-      section.updateSection();
-    });
-
-    const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
-    allDataComponents.forEach((component) => {
-      component.allData = allData;
-      component.page = this.page;
-      component.labels = this.labels;
-      component.setAttribute('loaded', true);
-    });
   }
 
   // Add error message if no data was found

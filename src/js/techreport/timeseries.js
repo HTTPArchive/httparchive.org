@@ -1,5 +1,5 @@
 import { Table } from "./table";
-import { Utils } from "./utils";
+import { UIUtils } from "./utils/ui";
 class Timeseries {
   // Create the component
   constructor(id, config, filters, data) {
@@ -196,7 +196,7 @@ class Timeseries {
           value.innerHTML = 'No data';
         }
         timestamp.innerHTML = latest.date;
-        const techColor = Utils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
+        const techColor = UIUtils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
         const fallback = this.pageConfig.colors.app[index];
         card.style.setProperty('--breakdown-color', techColor || fallback);
       }
@@ -289,7 +289,7 @@ class Timeseries {
     // Create series to use in Highcharts
     Object.values(this.data).forEach((app, index) => {
       const tech = app[0]?.technology;
-      const techColor = Utils.getAppColor(tech, this.pageFilters.app, this.pageConfig.colors);
+      const techColor = UIUtils.getAppColor(tech, this.pageFilters.app, this.pageConfig.colors);
 
       const data = app.map(row => {
         const value = row?.[endpoint]?.find(row => row.name === subcategory)?.[client]?.[metric];
