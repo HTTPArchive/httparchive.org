@@ -1,6 +1,5 @@
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { Filters } = require("../components/filters");
-const { getPercentage } = require("../utils");
 
 class TechReport {
   constructor(pageId, page, config, labels) {
@@ -154,13 +153,13 @@ class TechReport {
         ...submetric,
         desktop: {
           ...submetric.desktop,
-          good_pct: submetric.desktop.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0,
+          good_pct: submetric?.desktop?.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0,
           client: 'desktop',
           date: date,
         },
         mobile: {
           ...submetric.mobile,
-          good_pct: submetric.mobile.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0,
+          good_pct: submetric?.mobile?.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0,
           client: 'mobile',
           date: date,
         },
@@ -174,13 +173,13 @@ class TechReport {
         ...submetric,
         desktop: {
           ...submetric.desktop,
-          median_score_pct: parseInt(submetric.desktop.median_score * 100),
+          median_score_pct: parseInt(submetric?.desktop?.median_score * 100),
           client: 'desktop',
           date: date,
         },
         mobile: {
           ...submetric.mobile,
-          median_score_pct: parseInt(submetric.mobile.median_score * 100),
+          median_score_pct: parseInt(submetric?.mobile?.median_score * 100),
           client: 'mobile',
           date: date,
         },
@@ -224,33 +223,8 @@ class TechReport {
     });
   }
 
-  // Fetch all the data based on search criteria and config
-  // TODO: Will be moved to the section level with new APIs
-  getAllData() {
-    const data = {};
-    const technologies = this.filters.app;
-
-    /* Make a request for each of the technologies and return them in an object.
-     * Once we port this over to the new APIs, this should be moved to the section level.
-     */
-    Promise.all(technologies.map(technology => {
-      const url = `https://cdn.httparchive.org/reports/cwvtech/${this.filters.rank}/${this.filters.geo}/${technology}.json`;
-      return fetch(url)
-        .then(result => result.json())
-        .then(result => this.processData(result))
-        .then(result => {
-          data[technology] = result;
-        })
-        .catch(error => console.log('Something went wrong', error));
-    })).then(() => {
-      this.allData = data;
-      this.updateComponents(data);
-    });
-  }
-
   // New API
   getAllMetricData() {
-    const data = {};
     const technologies = this.filters.app;
 
     const apis = [
@@ -312,26 +286,6 @@ class TechReport {
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
       this.updateComponents(allResults);
-    });
-  }
-
-  // Change data format from API data to what we need
-  // TODO: Will be moved to the section level with new APIs
-  processData(result) {
-    return result.map(entry => {
-      /* Calculate percentage of good core web vitals */
-      entry.pct_good_cwv = getPercentage(entry.origins_with_good_cwv, entry.origins_eligible_for_cwv);
-      this.config.cwv_subcategories.forEach(cwv => {
-        entry[`origins_eligible_for_${cwv}`] = entry[`origins_with_any_${cwv}`];
-        entry[`pct_good_${cwv}`] = getPercentage(entry[`origins_with_good_${cwv}`], entry[`origins_with_any_${cwv}`]);
-      });
-
-      // Turn the LH score from a decimal to an int
-      this.config.lighthouse_subcategories.forEach(metric => {
-        entry[`median_lighthouse_score_${metric}`] = parseInt(entry[`median_lighthouse_score_${metric}`] * 100);
-      })
-
-      return entry;
     });
   }
 

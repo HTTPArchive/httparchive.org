@@ -1,4 +1,5 @@
 import { Table } from "./table";
+import { Utils } from "./utils";
 class Timeseries {
   // Create the component
   constructor(id, config, filters, data) {
@@ -169,8 +170,6 @@ class Timeseries {
     const endpoint = component.dataset.endpoint;
     const client = component.dataset.client;
 
-    const colors = this.defaults(config)?.chart?.colors;
-
     pageFilters.app.forEach((app, index) => {
       if(data[app] && data[app].length > 0) {
         const sorted = data[app].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -197,7 +196,9 @@ class Timeseries {
           value.innerHTML = 'No data';
         }
         timestamp.innerHTML = latest.date;
-        card.style.setProperty('--breakdown-color', colors[index]);
+        const techColor = Utils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
+        const fallback = this.pageConfig.colors.app[index];
+        card.style.setProperty('--breakdown-color', techColor || fallback);
       }
     });
   }
@@ -282,9 +283,14 @@ class Timeseries {
     const urlSubcategory = urlParams.get(config.param);
     const subcategory = urlSubcategory || config.default;
 
+    // Get default colors
     const colors = this.defaults(config)?.chart?.colors;
 
+    // Create series to use in Highcharts
     Object.values(this.data).forEach((app, index) => {
+      const tech = app[0]?.technology;
+      const techColor = Utils.getAppColor(tech, this.pageFilters.app, this.pageConfig.colors);
+
       const data = app.map(row => {
         const value = row?.[endpoint]?.find(row => row.name === subcategory)?.[client]?.[metric];
         return {
@@ -294,9 +300,9 @@ class Timeseries {
       });
 
       series.push({
-        name: app[0]?.technology,
+        name: tech,
         data: data,
-        color: colors[index]
+        color: techColor || colors[index]
       });
     });
 
@@ -353,8 +359,6 @@ class Timeseries {
 
     return series;
   }
-
-  getMetric() {}
 
   getCategory(config) {
     // The default metric from the settings
