@@ -1,5 +1,6 @@
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { Filters } = require("../components/filters");
+const { Utils } = require("./utils");
 
 class TechReport {
   constructor(pageId, page, config, labels) {
@@ -147,82 +148,6 @@ class TechReport {
     });
   }
 
-  parseVitalsData(metric, date) {
-    return metric.map(submetric => {
-      return {
-        ...submetric,
-        desktop: {
-          ...submetric.desktop,
-          good_pct: submetric?.desktop?.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0,
-          client: 'desktop',
-          date: date,
-        },
-        mobile: {
-          ...submetric.mobile,
-          good_pct: submetric?.mobile?.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0,
-          client: 'mobile',
-          date: date,
-        },
-      };
-    });
-  }
-
-  parseLighthouseData(metric, date) {
-    return metric.map(submetric => {
-      return {
-        ...submetric,
-        desktop: {
-          ...submetric.desktop,
-          median_score_pct: parseInt(submetric?.desktop?.median_score * 100),
-          client: 'desktop',
-          date: date,
-        },
-        mobile: {
-          ...submetric.mobile,
-          median_score_pct: parseInt(submetric?.mobile?.median_score * 100),
-          client: 'mobile',
-          date: date,
-        },
-      };
-    });
-  }
-
-  parseAdoptionData(submetric, date) {
-    return [
-      {
-        desktop: {
-          origins: submetric.desktop,
-          client: 'desktop',
-          date: date,
-        },
-        mobile: {
-          origins: submetric.mobile,
-          client: 'mobile',
-          date: date,
-        },
-        name: 'adoption',
-      },
-    ];
-  }
-
-  parsePageWeightData(metric, date) {
-    return metric.map(submetric => {
-      return {
-        ...submetric,
-        desktop: {
-          ...submetric.desktop,
-          client: 'desktop',
-          date: date,
-        },
-        mobile: {
-          ...submetric.mobile,
-          client: 'mobile',
-          date: date,
-        },
-      };
-    });
-  }
-
   // New API
   getAllMetricData() {
     const technologies = this.filters.app;
@@ -231,22 +156,22 @@ class TechReport {
       {
         endpoint: 'cwv',
         metric: 'vitals',
-        parse: this.parseVitalsData,
+        parse: Utils.parseVitalsData,
       },
       {
         endpoint: 'lighthouse',
         metric: 'lighthouse',
-        parse: this.parseLighthouseData,
+        parse: Utils.parseLighthouseData,
       },
       {
         endpoint: 'adoption',
         metric: 'adoption',
-        parse: this.parseAdoptionData,
+        parse: Utils.parseAdoptionData,
       },
       {
         endpoint: 'page-weight',
         metric: 'pageWeight',
-        parse: this.parsePageWeightData,
+        parse: Utils.parsePageWeightData,
       },
     ];
 
@@ -346,20 +271,7 @@ class TechReport {
     const app = this.filters.app[0];
 
     if(data && data[app]) {
-      // Update sections
-      Object.values(this.sections).forEach(section => {
-        section.data = data;
-        section.updateSection();
-      });
-
-      // Update web components
-      // TODO: Change to same system as sections/timeseries
-      const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
-      allDataComponents.forEach((component) => {
-        component.allData = data[app];
-        component.labels = this.labels;
-        component.setAttribute('loaded', true);
-      });
+      this.updateReportComponents(this.sections, data, data[app]);
     } else {
       this.updateWithEmptyData();
     }
@@ -367,25 +279,26 @@ class TechReport {
 
   updateComparisonComponents(data) {
     if(data && Object.keys(data).length > 0) {
-      // TODO: this doesn't have to be diff for landing / comp / drilldown
-      // Update sections
-      Object.values(this.sections).forEach(section => {
-        section.data = data;
-        section.updateSection();
-      });
-
-      const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
-
-      allDataComponents.forEach((component) => {
-        component.allData = data;
-        component.page = this.page;
-        component.labels = this.labels;
-        component.setAttribute('loaded', true);
-        component.setAttribute('all_data', JSON.stringify(data));
-      });
+      this.updateReportComponents(this.sections, data, data);
     } else {
       this.updateWithEmptyData();
     }
+  }
+
+  updateReportComponents(sections, data, allData) {
+    // Update sections
+    Object.values(sections).forEach(section => {
+      section.data = data;
+      section.updateSection();
+    });
+
+    const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
+    allDataComponents.forEach((component) => {
+      component.allData = allData;
+      component.page = this.page;
+      component.labels = this.labels;
+      component.setAttribute('loaded', true);
+    });
   }
 
   // Add error message if no data was found
