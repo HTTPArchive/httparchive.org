@@ -1068,38 +1068,38 @@
 
   "labels": {
     "metrics": {
-      "cwv": {
+      "overall": {
         "label": "Overall good CWVs",
-        "title": "Origins with overall good Core Web Vitals",
+        "title": "Origins with good CWVs",
         "description": "overall todo"
       },
-      "lcp": {
+      "LCP": {
         "label": "LCP",
         "title": "Origins with good LCP",
         "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful."
       },
-      "fid": {
+      "FID": {
         "label": "FID",
         "title": "Origins with good FID",
-        "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+        "description": "First Input Delay (FID) measures the time from when a user first interacts with a page, to the time when the browser is actually able to begin processing event handlers in response to that interaction. Sites should strive to have a First Input Delay of 100 milliseconds or less. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
       },
-      "cls": {
+      "CLS": {
         "label": "CLS",
         "title": "Origins with good CLS",
-        "description": "Cumulative Layout Shift (CLS) is a stable Core Web Vital metric. It is an important, user-centric metric for measuring visual stability because it helps quantify how often users experience unexpected layout shifts—a low CLS helps ensure that the page is delightful."
+        "description": "The Cumulative Layout Shift (CLS) score is a unitless value based on a calculation of how much content is shifting and by how far. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits"
       },
-      "fcp": {
+      "FCP": {
         "label": "FCP",
         "value": "fcp",
         "title": "Origins with good FCP",
         "description": "todo find fcp description"
       },
-      "ttfb": {
+      "TTFB": {
         "label": "TTFB",
         "title": "Origins with good TTFB",
         "description": "todo find fcp description"
       },
-      "inp": {
+      "INP": {
         "label": "INP",
         "title": "Origins with good LCP",
         "description": "todo find fcp description"
