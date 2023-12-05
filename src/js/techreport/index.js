@@ -216,7 +216,6 @@ class TechReport {
   }
 
   // Update components and sections that are relevant to the current page
-  // TODO: After moving to new APIs data won't have to be passed in like this anymore
   updateComponents(data) {
     switch(this.pageId) {
       case 'landing':

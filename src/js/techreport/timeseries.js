@@ -206,6 +206,7 @@ class Timeseries {
   // Update the highcharts timeseries
   updateViz() {
     const config = this.pageConfig[this.id]?.viz;
+    console.log('updateViz', config);
     const timeseries = this.defaults(config);
 
     // Accessibility settings
@@ -378,7 +379,7 @@ class Timeseries {
     const defaults = {
       type: 'timeseries',
       chart: {
-        colors: this.pageConfig.colors.app,
+        colors: this.pageConfig.colors?.app,
       },
       title: {
         text: config?.title,
