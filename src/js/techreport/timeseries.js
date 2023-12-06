@@ -34,9 +34,13 @@ class Timeseries {
       url.searchParams.set(event.target.dataset.param, event.target.value);
       window.history.replaceState(null, null, url);
 
+      // Get the relevant endpoint and metric
+      const endpoint = event.target.dataset.endpoint;
+      const metric = event.target.value;
+
       // Re-render the content
       this.updateContent();
-      this.updateInfo(event.target.value);
+      this.updateInfo(metric, endpoint);
     }
   }
 
@@ -54,8 +58,8 @@ class Timeseries {
   }
 
   // Re-render the title, description, and text labels
-  updateInfo(value) {
-    const option = this.pageConfig?.labels?.metrics[value];
+  updateInfo(metric, endpoint) {
+    const option = this.pageConfig?.labels?.metrics[endpoint][metric];
     const component = document.querySelector(`[data-id="${this.id}"]`);
 
     if(option && option.title) {
@@ -206,7 +210,6 @@ class Timeseries {
   // Update the highcharts timeseries
   updateViz() {
     const config = this.pageConfig[this.id]?.viz;
-    console.log('updateViz', config);
     const timeseries = this.defaults(config);
 
     // Accessibility settings

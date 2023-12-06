@@ -1,13 +1,14 @@
-{% set category = request.args.get(subcategory.param, '') or subcategory.default %}
+{% set category = selected_subcategory or subcategory.default %}
+{% set endpoint = timeseries.endpoint %}
 
 <div data-id="{{ timeseries.id }}" data-component="timeseries" data-endpoint="{{timeseries.endpoint}}" data-category="{{category}}" data-metric="{{timeseries.metric}}" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
   <div class="component-heading-wrapper">
     <div class="component-heading">
       {% set title = timeseries.title %}
       {% set descr = timeseries.description %}
-      {% if tech_report_labels.metrics[category] %}
-        {% set title = tech_report_labels.metrics[category].title %}
-        {% set descr = tech_report_labels.metrics[category].description %}
+      {% if tech_report_labels.metrics[endpoint][selected_subcategory] %}
+        {% set title = tech_report_labels.metrics[endpoint][selected_subcategory].title %}
+        {% set descr = tech_report_labels.metrics[endpoint][selected_subcategory].description %}
       {% endif %}
 
       <h3>{{ title }}</h3>
@@ -61,7 +62,6 @@
   <div id="{{ timeseries.id }}-table-wrapper" class="hidden">
     {% set table = timeseries.table %}
     {% set id = timeseries.id %}
-    {% set endpoint = timeseries.endpoint %}
     {% set metric = timeseries.metric %}
     {% set client = request.args.get('client', '')  or 'mobile' %}
     {% include "techreport/components/table.html" %}

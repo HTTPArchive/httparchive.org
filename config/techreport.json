@@ -266,45 +266,31 @@
             "options": [
               {
                 "label": "Overall good CWVs",
-                "value": "overall",
-                "title": "Origins with overall good Core Web Vitals",
-                "description": "overall todo"
+                "value": "overall"
               },
               {
                 "label": "LCP",
-                "value": "LCP",
-                "title": "Origins with good LCP",
-                "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful."
+                "value": "LCP"
               },
               {
                 "label": "FID",
-                "value": "FID",
-                "title": "Origins with good FID",
-                "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+                "value": "FID"
               },
               {
                 "label": "CLS",
-                "value": "CLS",
-                "title": "Origins with good CLS",
-                "description": "Cumulative Layout Shift (CLS) is a stable Core Web Vital metric. It is an important, user-centric metric for measuring visual stability because it helps quantify how often users experience unexpected layout shifts—a low CLS helps ensure that the page is delightful."
+                "value": "CLS"
               },
               {
                 "label": "FCP",
-                "value": "FCP",
-                "title": "Origins with good FCP",
-                "description": "todo find fcp description"
+                "value": "FCP"
               },
               {
                 "label": "TTFB",
-                "value": "TTFB",
-                "title": "Origins with good TTFB",
-                "description": "todo find fcp description"
+                "value": "TTFB"
               },
               {
                 "label": "INP",
-                "value": "INP",
-                "title": "Origins with good LCP",
-                "description": "todo find fcp description"
+                "value": "INP"
               }
             ]
           },
@@ -552,19 +538,25 @@
           "title": "Latest page weight",
           "cards": [
             {
-              "metric": "median_bytes_image",
+              "endpoint": "pageWeight",
+              "category": "images",
+              "metric": "median_bytes",
               "label": "Image Weight",
               "url": "?weight-over-time=image#page-weight",
               "suffix": " kB"
             },
             {
-              "metric": "median_bytes_js",
+              "endpoint": "pageWeight",
+              "category": "js",
+              "metric": "median_bytes",
               "label": "JavaScript Size",
               "url": "?weight-over-time=js#page-weight",
               "suffix": " kB"
             },
             {
-              "metric": "median_bytes_total",
+              "endpoint": "pageWeight",
+              "category": "total",
+              "metric": "median_bytes",
               "label": "Total Page Weight",
               "url": "?weight-over-time=total#page-weight",
               "suffix": " kB"
@@ -577,6 +569,7 @@
           "id": "weight_timeseries",
           "summary": true,
           "endpoint": "pageWeight",
+          "default": "images",
           "metric": "median_bytes",
           "subcategory": {
             "base": "median_bytes_",
@@ -772,45 +765,31 @@
             "options": [
               {
                 "label": "Overall good CWVs",
-                "value": "overall",
-                "title": "Origins with overall good Core Web Vitals",
-                "description": "overall todo"
+                "value": "overall"
               },
               {
                 "label": "LCP",
-                "value": "LCP",
-                "title": "Origins with good LCP",
-                "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful."
+                "value": "LCP"
               },
               {
                 "label": "FID",
-                "value": "FID",
-                "title": "Origins with good FID",
-                "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+                "value": "FID"
               },
               {
                 "label": "CLS",
-                "value": "CLS",
-                "title": "Origins with good CLS",
-                "description": "Cumulative Layout Shift (CLS) is a stable Core Web Vital metric. It is an important, user-centric metric for measuring visual stability because it helps quantify how often users experience unexpected layout shifts—a low CLS helps ensure that the page is delightful."
+                "value": "CLS"
               },
               {
                 "label": "FCP",
-                "value": "FCP",
-                "title": "Origins with good FCP",
-                "description": "todo find fcp description"
+                "value": "FCP"
               },
               {
                 "label": "TTFB",
-                "value": "TTFB",
-                "title": "Origins with good TTFB",
-                "description": "todo find fcp description"
+                "value": "TTFB"
               },
               {
                 "label": "INP",
-                "value": "INP",
-                "title": "Origins with good LCP",
-                "description": "todo find fcp description"
+                "value": "INP"
               }
             ]
           },
@@ -1068,41 +1047,85 @@
 
   "labels": {
     "metrics": {
-      "overall": {
-        "label": "Overall good CWVs",
-        "title": "Origins with good CWVs",
-        "description": "overall todo"
+      "lighthouse": {
+        "performance": {
+          "title": "Performance",
+          "description": "In general, only metrics contribute to your Lighthouse Performance score, not the results of Opportunities or Diagnostics. "
+        },
+        "accessibility": {
+          "title": "Accessibility",
+          "description": "The Lighthouse Accessibility score is a weighted average of all accessibility audits. Weighting is based on axe user impact assessments. Each accessibility audit is pass or fail. Unlike the Performance audits, a page doesn't get points for partially passing an accessibility audit."
+        },
+        "seo": {
+          "title": "SEO",
+          "description": "todo"
+        },
+        "best_practices": {
+          "title": "Best Practices",
+          "description": "todo"
+        },
+        "pwa": {
+          "title": "Progressive Web Apps",
+          "description": "todo"
+        }
       },
-      "LCP": {
-        "label": "LCP",
-        "title": "Origins with good LCP",
-        "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful."
+      "vitals": {
+        "overall": {
+          "label": "Overall Core Web Vitals",
+          "title": "Passes Core Web Vitals",
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a good experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics."
+        },
+        "LCP": {
+          "label": "LCP",
+          "title": "Good Largest Contentful Paint",
+          "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful. Good experiences are less than or equal to 2.5 seconds."
+        },
+        "FID": {
+          "label": "FID",
+          "title": "Good First Input Delay",
+          "description": "First Input Delay (FID) measures the time from when a user first interacts with a page, to the time when the browser is actually able to begin processing event handlers in response to that interaction. Sites should strive to have a First Input Delay of 100 milliseconds or less. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+        },
+        "CLS": {
+          "label": "CLS",
+          "title": "Good Cumulative Layout Shift",
+          "description": "The Cumulative Layout Shift (CLS) score is a unitless value based on a calculation of how much content is shifting and by how far. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits."
+        },
+        "FCP": {
+          "label": "FCP",
+          "value": "fcp",
+          "title": "Good First Contentful Paint",
+          "description": "The percentage of origins with good FCP experiences, less than or equal to 1.8 seconds"
+        },
+        "TTFB": {
+          "label": "TTFB",
+          "title": "Good Time To First Byte",
+          "description": "TTFB is a metric that measures the time between the request for a resource and when the first byte of a response begins to arrive. A good TTFB is less than or equal to 800ms."
+        },
+        "INP": {
+          "label": "INP",
+          "title": "Good Interaction to Next Paint",
+          "description": "INP is a metric that assesses a page's overall responsiveness to user interactions by observing the latency of all click, tap, and keyboard interactions that occur throughout the lifespan of a user's visit to a page. The final INP value is the longest interaction observed, ignoring outliers. A good experience is less than or equal to 200ms."
+        }
       },
-      "FID": {
-        "label": "FID",
-        "title": "Origins with good FID",
-        "description": "First Input Delay (FID) measures the time from when a user first interacts with a page, to the time when the browser is actually able to begin processing event handlers in response to that interaction. Sites should strive to have a First Input Delay of 100 milliseconds or less. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+      "pageWeight": {
+        "images": {
+          "title": "Image Weight",
+          "description": "todo"
+        },
+        "js": {
+          "title": "JavaScript Transfer Size",
+          "description": "todo"
+        },
+        "total": {
+          "title": "Total Page Weight",
+          "description": "todo"
+        }
       },
-      "CLS": {
-        "label": "CLS",
-        "title": "Origins with good CLS",
-        "description": "The Cumulative Layout Shift (CLS) score is a unitless value based on a calculation of how much content is shifting and by how far. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits"
-      },
-      "FCP": {
-        "label": "FCP",
-        "value": "fcp",
-        "title": "Origins with good FCP",
-        "description": "todo find fcp description"
-      },
-      "TTFB": {
-        "label": "TTFB",
-        "title": "Origins with good TTFB",
-        "description": "todo find fcp description"
-      },
-      "INP": {
-        "label": "INP",
-        "title": "Origins with good LCP",
-        "description": "todo find fcp description"
+      "adoption": {
+        "adoption": {
+          "title": "Adoption",
+          "description": "Todo"
+        }
       }
     },
     "values": {
@@ -1145,44 +1168,6 @@
       "median_bytes_total":"Median bytes total"
     }
   },
-  "metrics": {
-    "cwv": {
-      "title": "Core Web Vitals",
-      "shortened": "CWVs",
-      "description": ""
-    },
-    "lcp": {
-      "title": "Largest Contentful Paint",
-      "shortened": "LCP",
-      "description": ""
-    },
-    "fid": {
-      "title": "First Input Delay",
-      "shortened": "FID",
-      "description": "First Input Delay (FID) is the stable Core Web Vital metric for measuring load responsiveness because it quantifies the experience users feel when trying to interact with unresponsive pages—a low FID helps ensure that the page is usable. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
-    },
-    "cls": {
-      "title": "Cumulative Layout Shift",
-      "shortened": "CLS",
-      "description": ""
-    },
-    "fcp": {
-      "title": "First Contentful Paint",
-      "shortened": "FCP",
-      "description": ""
-    },
-    "inp": {
-      "title": "Interaction to Next Paint",
-      "shortened": "INP",
-      "description": ""
-    },
-    "ttfb": {
-      "title": "Time to First Byte",
-      "shortened": "TTFB",
-      "description": ""
-    }
-  },
-
   "graphic": {
     "bgcolor": "#fff",
     "primary": {

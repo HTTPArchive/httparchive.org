@@ -70,7 +70,7 @@
 
       <div class="card">
         {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
-        {% set subcategory = request.args.get('good-cwv-over-time', '') or tech_report_page.config.good_cwv_timeseries.viz.default or 'overall' %}
+        {% set selected_subcategory = request.args.get('good-cwv-over-time', '') or tech_report_page.config.good_cwv_timeseries.viz.default or 'overall' %}
         {% include "techreport/components/timeseries.html" %}
       </div>
     </div>
@@ -97,7 +97,7 @@
 
       <div class="card">
         {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
-        {% set subcategory = request.args.get('median-lighthouse-over-time', '')  or 'performance' %}
+        {% set selected_subcategory = request.args.get('median-lighthouse-over-time', '')  or 'performance' %}
         {% include "techreport/components/timeseries.html" %}
       </div>
     </div>
@@ -124,6 +124,7 @@
 
       <div class="card">
         {% set timeseries = tech_report_page.config.weight_timeseries %}
+        {% set selected_subcategory = request.args.get('weight-over-time', '') or tech_report_page.config.weight_timeseries.viz.default or 'performance' %}
         {% include "techreport/components/timeseries.html" %}
       </div>
     </div>
@@ -140,6 +141,7 @@
 
       <div class="card">
         {% set timeseries = tech_report_page.config.adoption_timeseries %}
+        {% set selected_subcategory = tech_report_page.config.adoption_timeseries.viz.default or 'adoption' %}
         {% include "techreport/components/timeseries.html" %}
       </div>
 

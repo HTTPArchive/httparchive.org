@@ -7,7 +7,7 @@
     id="subcategory-{{ subcategory.base }}"
     data-controls="{{ id }}"
     data-param="{{ subcategory.param }}"
-    data-base="{{ subcategory.base }}"
+    data-endpoint="{{ endpoint }}"
   >
     {% for option in subcategory.options %}
       <option value="{{ option.value }}" {% if selectedParam == option.value %}selected{% endif %}>
