@@ -31,16 +31,14 @@ function sendWebVitals() {
             // Stats for the LoAF entry itself.
             debug_loaf_entry_start_time: loaf.startTime,
             debug_loaf_entry_end_time: loaf.startTime + loaf.duration,
-            debug_loaf_entry_delay: loaf.desiredRenderStart ? Math.max(0, loaf.startTime - loaf.desiredRenderStart) : 0,
-            debug_loaf_entry_deferred_duration: Math.max(0, loaf.desiredRenderStart - loaf.startTime),
-            debug_loaf_entry_render_duration: loaf.styleAndLayoutStart - loaf.renderStart,
             debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
+            debug_loaf_entry_render_duration: loaf.renderStart ? loaf.startTime + loaf.duration - loaf.renderStart : 0,
             debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
+            debug_loaf_entry_pre_layout_duration: loaf.styleAndLayoutStart ? loaf.styleAndLayoutStart - loaf.renderStart : 0,
             debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loaf.startTime + loaf.duration - loaf.styleAndLayoutStart : 0,
 
             // Stats for the longest script in the LoAF entry.
             debug_loaf_script_total_duration: totalDuration,
-            debug_loaf_script_delay: script.startTime - script.desiredExecutionStart,
             debug_loaf_script_compile_duration: script.executionStart - script.startTime,
             debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
             debug_loaf_script_source: script.sourceLocation || script.name,
