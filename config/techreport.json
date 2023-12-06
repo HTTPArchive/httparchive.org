@@ -179,8 +179,7 @@
               ]
             },
             "xAxis": {
-              "title": "Months",
-              "description": "accessibility description of x-axis",
+              "title": "Monthly entries",
               "tickAmount": 12,
               "defaults": [
                 "Jan",
@@ -198,7 +197,7 @@
               ]
             },
             "yAxis": {
-              "title": "Origins",
+              "title": "Amount of origins",
               "tickAmount": 3
             }
           }
@@ -297,7 +296,7 @@
           "table": {
             "param":"good-cwv-over-time",
             "default": "overall",
-            "caption": "Good Core Web Vitals placeholder",
+            "caption": "Good Core Web Vitals",
             "columns": [
               {
                 "key": "date",
@@ -362,8 +361,7 @@
               ]
             },
             "xAxis": {
-              "title": "Months",
-              "description": "accessibility description of x-axis",
+              "title": "Monthly entries",
               "tickAmount": 12,
               "defaults": [
                 "Jan",
@@ -381,7 +379,7 @@
               ]
             },
             "yAxis": {
-              "title": "% Good CWVs"
+              "title": "% Origins with good scores"
             }
           }
         },
@@ -484,7 +482,7 @@
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
             "default": "performance",
-            "title": "Performance lighthouse scores over time",
+            "title": "Scores over time",
             "metric": "median_score_pct",
             "height": 600,
             "series": {
@@ -511,8 +509,7 @@
               ]
             },
             "xAxis": {
-              "title": "Months",
-              "description": "accessibility description of x-axis",
+              "title": "Monthly entries",
               "tickAmount": 12,
               "defaults": [
                 "Jan",
@@ -530,7 +527,7 @@
               ]
             },
             "yAxis": {
-              "title": "Performance score"
+              "title": "Lighthouse Score"
             }
           }
         },
@@ -645,8 +642,7 @@
               ]
             },
             "xAxis": {
-              "title": "Months",
-              "description": "accessibility description of x-axis",
+              "title": "Monthly entries",
               "tickAmount": 12,
               "defaults": [
                 "Jan",
@@ -664,7 +660,7 @@
               ]
             },
             "yAxis": {
-              "title": "Image weight (kB)"
+              "title": "Weight in kB"
             }
           }
         }
@@ -689,7 +685,7 @@
             "#CB377C"
           ],
           "overrides": {
-            "WordPress": "#c0ced0"
+            "WordPress": "#ff0000"
           }
         },
         "default": {
@@ -837,7 +833,28 @@
                   "name": "App",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
-              ]
+              ],
+              "xAxis": {
+                "title": "Monthly entries",
+                "tickAmount": 12,
+                "defaults": [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                  "Oct",
+                  "Nov",
+                  "Dec"
+                ]
+              },
+              "yAxis": {
+                "title": "% Origins with good scores"
+              }
             }
           }
         },
@@ -916,6 +933,27 @@
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
               ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Lighthouse Score"
             }
           }
         },
@@ -988,6 +1026,27 @@
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
               ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Weight in kB"
             }
           }
         },
@@ -1036,7 +1095,29 @@
                   "name": "App",
                   "data": [0,0,0,0,0,0,0,0,0,0,0,0]
                 }
-              ]
+              ],
+              "xAxis": {
+                "title": "Monthly entries",
+                "tickAmount": 12,
+                "defaults": [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                  "Oct",
+                  "Nov",
+                  "Dec"
+                ]
+              },
+              "yAxis": {
+                "title": "Amount of origins",
+                "tickAmount": 3
+              }
             }
           }
         }

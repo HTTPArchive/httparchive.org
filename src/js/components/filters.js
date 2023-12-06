@@ -66,7 +66,8 @@ function updateTechnologies(technologies) {
     const selectedTechFormatted = techSelector.getAttribute('data-selected');
 
     /* If the technology doesn't exist, throw a warning */
-    const techNamesFiltered = techNames.find(techName => techName.replaceAll(' ', '-') === selectedTechFormatted);
+    // const techNamesFiltered = techNames.find(techName => techName.replaceAll(' ', '-') === selectedTechFormatted);
+    const techNamesFiltered = techNames;
     if(!techNamesFiltered) {
       const errorMsg = document.createElement('p');
       errorMsg.textContent = 'Technology not found, please select a different one';
@@ -77,7 +78,7 @@ function updateTechnologies(technologies) {
     technologies.forEach((technology) => {
       const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
       const option = optionTmpl.querySelector('option');
-      const formattedTech = technology.app.replaceAll(" ", "-");
+      const formattedTech = technology.app;
       option.textContent = technology.app;
       option.value = formattedTech;
       if(formattedTech === techSelector.getAttribute('data-selected')) {
@@ -97,7 +98,7 @@ function updateGeo(geos, filters) {
   geos.forEach((geo) => {
     const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
     const option = optionTmpl.querySelector('option');
-    const formattedTech = geo.geo.replaceAll(" ", "-");
+    const formattedTech = geo.geo;
     option.textContent = geo.geo;
     option.value = formattedTech;
     if(formattedTech === filters.geo) {
@@ -114,7 +115,7 @@ function updateRank(ranks, filters) {
   ranks.forEach((rank) => {
     const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
     const option = optionTmpl.querySelector('option');
-    const formattedTech = rank.rank.replaceAll(" ", "-");
+    const formattedTech = rank.rank;
     option.textContent = rank.rank;
     option.value = formattedTech;
     if(formattedTech === filters.rank) {
@@ -157,7 +158,8 @@ function updateCategory(event) {
 
   selectedTechs.forEach((technology) => {
     const option = document.createElement('option');
-    const formattedTech = technology.replaceAll(" ", "-");
+    //const formattedTech = technology.replaceAll(" ", "-");
+    const formattedTech = technology;
     option.textContent = technology;
     option.value = formattedTech;
     if(formattedTech === techSelector.getAttribute('data-selected')) {

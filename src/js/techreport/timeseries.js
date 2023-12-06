@@ -346,7 +346,7 @@ class Timeseries {
         });
       });
 
-      const sortedData = formattedData.sort((a, b) => new Date(b.x) - new Date(a.x));
+      const sortedData = formattedData.sort((a, b) => new Date(a.x) - new Date(b.x));
 
       const colors = this.defaults(config)?.chart?.colors;
 
@@ -354,7 +354,7 @@ class Timeseries {
       series.push(
         {
           name: value.name,
-          data: formattedData,
+          data: sortedData,
           color: value.color || colors[index],
           lineWidth: 2,
         }

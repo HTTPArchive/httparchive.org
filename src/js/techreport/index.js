@@ -178,13 +178,17 @@ class TechReport {
 
     const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
 
-    const technology = technologies.join('%2C');
+    const technology = technologies.join('%2C')
+      .replaceAll(" ", "%20");
+
+    const geo = this.filters.geo.replaceAll(" ", "%20");
+    const rank = this.filters.rank.replaceAll(" ", "%20")
 
     let allResults = {};
     technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
-      const url = `${base}/${api.endpoint}?technology=${technology}&geo=${this.filters.geo}&rank=${this.filters.rank}`;
+      const url = `${base}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
 
       return fetch(url)
         .then(result => result.json())
@@ -236,6 +240,9 @@ class TechReport {
 
   // Fetch the data for the filter dropdowns
   getFilterInfo() {
+    const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
+
+    // TODO: This should be replaced by other technologies filter once fixed
     fetch('https://cdn.httparchive.org/reports/cwvtech/technologies.json')
       .then(result => result.json())
       .then(result => Filters.updateTechnologies(result, this.filters));
