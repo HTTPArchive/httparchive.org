@@ -62,7 +62,7 @@
             </a>
           </h2>
 
-          {{ report.summary | markdown }}
+          {{ report.summary | markdown | safe }}
 
           <a href="{{ url }}" class="btn">View the {{ report.name }}{% if not report.name.endswith('Report') %} Report{% endif %}</a>
 
