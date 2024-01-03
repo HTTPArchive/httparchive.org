@@ -1,6 +1,6 @@
 Flask==3.0.0
 flask-talisman==1.1.0
-google-cloud-storage==2.13.0
+google-cloud-storage==2.14.0
 gunicorn==21.2.0
 markdown==3.5.1
 pytest==7.4.4
