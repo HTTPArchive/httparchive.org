@@ -10,9 +10,15 @@
     data-endpoint="{{ endpoint }}"
   >
     {% for option in subcategory.options %}
-      <option value="{{ option.value }}" {% if selectedparam == option.value %}selected{% endif %}>
+      {% if selectedparam == option.value %}
+      <option value="{{ option.value }}" selected>
         {{ option.label }}
       </option>
+      {% else %}
+      <option value="{{ option.value }}">
+        {{ option.label }}
+      </option>
+      {% endif %}
     {% endfor %}
   </select>
 </div>
