@@ -1,4 +1,4 @@
-{% set selectedParam = request.args.get(subcategory.param, '') or subcategory.default %}
+{% set selectedparam = request.args.get(subcategory.param, '') or subcategory.default %}
 <div class="subcategory-selector-wrapper">
   <label for="subcategory-{{ subcategory.base }}">Metric</label>
   <select
@@ -10,7 +10,7 @@
     data-endpoint="{{ endpoint }}"
   >
     {% for option in subcategory.options %}
-      <option value="{{ option.value }}" {% if selectedParam == option.value %}selected{% endif %}>
+      <option value="{{ option.value }}" {% if selectedparam == option.value %}selected{% endif %}>
         {{ option.label }}
       </option>
     {% endfor %}
