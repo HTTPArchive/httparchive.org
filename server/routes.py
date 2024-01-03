@@ -85,8 +85,6 @@ def techreport(page_id):
 
     if request.args.get("tech"):
         requested_technologies = request.args.get("tech").split(",")
-        if isinstance(requested_technologies, str):
-            requested_technologies = [requested_technologies]
 
     # Get the filters
     requested_geo = request.args.get("geo") or "ALL"
