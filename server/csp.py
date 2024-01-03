@@ -11,7 +11,7 @@ csp = {
         "spdcrv.global.ssl.fastly.net",
         "lux.speedcurve.com",
         "'unsafe-inline'",
-        "dev-gw-2vzgiib6.ue.gateway.dev"
+        "dev-gw-2vzgiib6.ue.gateway.dev",
     ],
     "font-src": ["'self'"],
     "connect-src": [
@@ -25,7 +25,7 @@ csp = {
         "analytics.google.com",
         "*.analytics.google.com",
         "stats.g.doubleclick.net",
-        "dev-gw-2vzgiib6.ue.gateway.dev"
+        "dev-gw-2vzgiib6.ue.gateway.dev",
     ],
     "img-src": ["'self'", "https:"],
     "frame-src": ["'none'"],

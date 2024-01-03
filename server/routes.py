@@ -81,7 +81,9 @@ def techreport(page_id):
     # Add the technologies requested in the URL to the filters
     # Use the default configured techs as fallback
     # Use ["ALL"] if there is nothing configured
-    requested_technologies = active_tech_report.get("config").get("default").get("app") or ["ALL"]
+    requested_technologies = active_tech_report.get("config").get("default").get(
+        "app"
+    ) or ["ALL"]
 
     if request.args.get("tech"):
         requested_technologies = request.args.get("tech").split(",")
