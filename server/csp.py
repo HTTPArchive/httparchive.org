@@ -22,6 +22,8 @@ csp = {
         "cdn.rawgit.com",
         "www.webpagetest.org",
         "www.google-analytics.com",
+        "analytics.google.com",
+        "*.analytics.google.com",
         "stats.g.doubleclick.net",
         "dev-gw-2vzgiib6.ue.gateway.dev"
     ],

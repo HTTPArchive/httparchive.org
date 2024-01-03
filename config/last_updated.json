@@ -26,13 +26,13 @@
   },
   "/static/css/report.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "480955dc370e9a4781a45b868022f3de"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "8b92ae537215eeaecfc9c8a574c836b4"
   },
   "/static/css/reports.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "eef119f0c48c5de8cb44856fe2069d9f"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "82818febf0ba6c7f255463cdebfa1b12"
   },
   "/static/css/styles.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -71,13 +71,13 @@
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "a2a9eaccff8895f1127a71d1821a18e4"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "44a755704dad3fecd7b9d1022b9c6cb5"
   },
   "/static/js/exporting.js.map": {
     "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "90a638c281c291abf8acb7531024d3a5"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "88ca30ad4c3be2d9fb708c7d54db6f43"
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -86,13 +86,13 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "38d4924da68d0fdfe145f059d78840f1"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "b4061005f0a09402598ed3a8eef130db"
   },
   "/static/js/highcharts-more.js.map": {
     "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "8d31b26d9fd75b9f2749cf0fc652fb34"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "090e6925e3dd3b71edffbd730c3265e7"
   },
   "/static/js/highcharts.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -101,13 +101,13 @@
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "a0f4226f7c89b57f57921439255b188b"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "c6744f333bf6edfeaed1200bd93a537d"
   },
   "/static/js/highstock.js.map": {
     "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "6a6de9a402c29ea5b76e30b5eed6ddd9"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "2c74a476f6d4ebe3e2deb69777a59860"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -131,8 +131,8 @@
   },
   "/static/js/send-web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2022-08-25T00:00:00.000Z",
-    "hash": "8326eed37a5ccead13f6d58ea19716fc"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "3dedd3fe304e7f12ca17afb1dadbca72"
   },
   "/static/js/summaryLinked.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -186,8 +186,8 @@
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "66e660642fbe7355520bca155685a25b"
+    "date_modified": "2023-09-28T00:00:00.000Z",
+    "hash": "0fa371ef0624041ff02cf6458e74441a"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -196,8 +196,8 @@
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2022-05-02T00:00:00.000Z",
-    "hash": "4e6af44cd0b095983af2fb662cfebc88"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "e42fbf30a383be829ea257eb2dc14f58"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -206,23 +206,23 @@
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2022-04-26T00:00:00.000Z",
-    "hash": "86cb979795a9585de91dbca252f86fbe"
+    "date_modified": "2023-12-07T00:00:00.000Z",
+    "hash": "383eb3f292743eb357f80ce20259ee5d"
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-03-16T00:00:00.000Z",
-    "hash": "064057b4f3ffea758ada90cb9dfe0bf0"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "0071daa22d6a609dbcff7b9a39a40793"
   },
   "reports/chrome-ux-report": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2022-05-13T00:00:00.000Z",
-    "hash": "8ea80898074164c1ff3b18cc3c2b9884"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "9503bd882ed6c162c7343267eb56aad5"
   },
   "reports/cwv-tech": {
     "date_published": "2021-09-20T00:00:00.000Z",
-    "date_modified": "2021-09-20T00:00:00.000Z",
-    "hash": "f063ced5899d6334168c77ddd407afd8"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "bb56bcf9203e97fcad14369053f778e3"
   },
   "reports/cwv-tech-new": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -231,18 +231,18 @@
   },
   "reports/loading-speed": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-12-05T00:00:00.000Z",
-    "hash": "939c872f5a3a20881c0ad9d9acf957b0"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "792ee1ec0b02db56532ce023e9527da2"
   },
   "reports/page-weight": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "70e1a92638557ddfa9df6a0517e6c84f"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "621fa2bbdcf7636b3c1c3f98f2a12fd3"
   },
   "reports/progressive-web-apps": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-09-20T00:00:00.000Z",
-    "hash": "c3426cc768e51a570af5fccbc537c785"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "9a63b62365a3a0500c66187e779af14d"
   },
   "reports/project-fugu": {
     "date_published": "2020-07-31T00:00:00.000Z",
@@ -251,13 +251,13 @@
   },
   "reports/search-engine-optimization": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "228064df9d005931d60be4afe540bb0b"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "65f3bac46441a78d0483dd45e5826c5e"
   },
   "reports/state-of-images": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-04-23T00:00:00.000Z",
-    "hash": "3e4226bd3a208a4e6e8f57d2cf9ae62d"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "361b8c1a518ef7304d73f74258b6f07a"
   },
   "reports/state-of-javascript": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -266,7 +266,7 @@
   },
   "reports/state-of-the-web": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-06-24T00:00:00.000Z",
-    "hash": "0503d3a92fa0604b10e4234e9b98f406"
+    "date_modified": "2023-09-07T00:00:00.000Z",
+    "hash": "637f205b4c36490bb4c925d1898811b4"
   }
 }
