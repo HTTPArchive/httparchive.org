@@ -74,9 +74,21 @@ const parsePageWeightData = (metric, date) => {
   });
 }
 
+const filterDuplicates = (array, key) => {
+  const filtered = [];
+  array.forEach((row) => {
+    const matchingKeys = filtered.filter(filteredRow => filteredRow[key] === row[key]);
+    if(matchingKeys.length < 1) {
+      filtered.push(row);
+    }
+  });
+  return filtered;
+};
+
 export const DataUtils = {
   parseVitalsData,
   parseLighthouseData,
   parseAdoptionData,
   parsePageWeightData,
+  filterDuplicates
 };

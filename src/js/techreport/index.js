@@ -1,5 +1,5 @@
+import Filters from '../components/filters';
 const { DrilldownHeader } = require("../components/drilldownHeader");
-const { Filters } = require("../components/filters");
 const { DataUtils } = require("./utils/data");
 const { UIUtils } = require("./utils/ui");
 
@@ -23,7 +23,6 @@ class TechReport {
 
     // Load the page
     this.initializePage();
-    // this.getFilterInfo();
     this.getAllMetricData();
     this.bindSettingsListeners();
   }
@@ -51,8 +50,6 @@ class TechReport {
 
   // TODO
   initializeReport() {
-    Filters.bindFilterListener();
-
     // TODO: Move to function
     const showIndicators = localStorage.getItem('showIndicators');
     document.querySelector('main').dataset.showIndicators = showIndicators;
@@ -240,24 +237,42 @@ class TechReport {
 
   // Fetch the data for the filter dropdowns
   getFilterInfo() {
+    const filterData = {};
     const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
 
-    // TODO: This should be replaced by other technologies filter once fixed
-    fetch('https://cdn.httparchive.org/reports/cwvtech/technologies.json')
-      .then(result => result.json())
-      .then(result => Filters.updateTechnologies(result, this.filters));
+    const filterApis = ['categories', 'technologies', 'ranks', 'geos'];
 
-    fetch('https://cdn.httparchive.org/reports/cwvtech/geos.json')
-      .then(result => result.json())
-      .then(result => Filters.updateGeo(result, this.filters));
+    Promise.all(filterApis.map(api => {
+      const url = `${base}/${api}`;
 
-    fetch('https://cdn.httparchive.org/reports/cwvtech/ranks.json')
-      .then(result => result.json())
-      .then(result => Filters.updateRank(result, this.filters));
+      return fetch(url)
+        .then(result => result.json())
+        .then(result => filterData[api] = result)
+        .catch(error => console.log('Something went wrong', error));
+    })).then(() => {
+      const FilterComponent = new Filters(filterData, this.filters);
 
-    fetch('https://cdn.httparchive.org/reports/cwvtech/categories.json')
-      .then(result => result.json())
-      .then(result => Filters.updateCategories(result, this.filters));
+      FilterComponent.updateCategories();
+      FilterComponent.updateTechnologies();
+      FilterComponent.updateRank();
+      FilterComponent.updateGeo();
+    });
+
+  //   fetch('https://cdn.httparchive.org/reports/cwvtech/technologies.json')
+  //     .then(result => result.json())
+  //     .then(result => FilterComponent.updateTechnologies(result, this.filters));
+
+  //   fetch(`${base}/ranks`)
+  //     .then(result => result.json())
+  //     .then(result => FilterComponent.updateRank(result, this.filters));
+
+  //   fetch(`${base}/geos`)
+  //     .then(result => result.json())
+  //     .then(result => FilterComponent.updateGeo(result, this.filters));
+
+  //   fetch(`${base}/categories`)
+  //     .then(result => result.json())
+  //     .then(result => FilterComponent.updateCategories(result));
   }
 
   // Update the page components

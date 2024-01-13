@@ -123,7 +123,7 @@ class Timeseries {
       container.innerHTML = '';
 
       /* Update the date to the most recent timestamp in the dataset */
-      viz.querySelector('[data-slot="timestamp"]').innerHTML = sorted?.[0].date;
+      viz.querySelector('[data-slot="timestamp"]').innerHTML = sorted?.[0]?.date;
 
       /* For each of the breakdowns, add a component with the latest data */
       config.series.values.forEach(breakdown => {
