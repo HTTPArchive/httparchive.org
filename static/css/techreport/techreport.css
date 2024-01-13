@@ -8,6 +8,8 @@
   --color-blue-dark: #3a7098;
   --color-blue-100: #eff7ff;
 
+  --color-gray-medium: #5c5c5d;
+
   /* Colors based on function */
   --color-link: var(--color-blue-dark);
   --color-text: #444;
@@ -45,6 +47,10 @@
   --color-card-background: #111111;
   --color-card-border: #000;
   --color-page-background: #292828;
+
+  /* Graph colors */
+  --graph-color-labels: #A6BBBE;
+  --graph-color-line: var(--color-gray-medium);
 }
 
 /* ------------------------- */
@@ -1075,11 +1081,20 @@ select {
 /* -------------------- */
 
 /* Highcharts */
+.highcharts-background,
+.highcharts-point {
+  fill: var(--color-card-background) !important;
+}
+
 .highcharts-title {
   font-weight: normal !important;
   fill: var(--color-text) !important;
   font-family: "Open Sans", sans-serif !important;
   font-size: 0.875rem !important;
+}
+
+.highcharts-grid-line {
+  stroke: var(--graph-color-line) !important;
 }
 
 svg.highcharts-root text {
@@ -1089,7 +1104,7 @@ svg.highcharts-root text {
 }
 
 svg.highcharts-root .highcharts-axis-line {
-  stroke: var(--graph-color-line);
+  stroke: var(--graph-color-line) !important;
 }
 
 svg.highcharts-root .highcharts-axis-labels text {
