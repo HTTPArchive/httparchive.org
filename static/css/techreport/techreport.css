@@ -7,6 +7,7 @@
   --color-teal-darker: #1c4750;
   --color-blue-dark: #3a7098;
   --color-blue-100: #eff7ff;
+  --color-blue-light: #E1F1FF;
 
   --color-gray-medium: #5c5c5d;
 
@@ -18,6 +19,12 @@
   --color-card-background: #fff;
   --color-card-border: #cdd4d6;
   --color-page-background: #f4f4f4;
+  --color-checkbox: var(--color-blue-dark);
+  --color-checkbox-selected: var(--color-blue-dark);
+  --color-checkbox-button-selected: var(--color-blue-light);
+  --color-checkbox-button-label: var(--color-text);
+  --color-checkbox-button-label-selected: var(--color-text);
+  --color-theme-toggle-background: #f4f4f4;
 
   /* Font sizes */
   --font-size-medium: 1.75rem;
@@ -47,6 +54,10 @@
   --color-card-background: #111111;
   --color-card-border: #000;
   --color-page-background: #292828;
+  --color-checkbox-button-label-selected: #292828;
+  --color-checkbox: #fff;
+  --color-checkbox-selected: #292828;
+  --color-theme-toggle-background: transparent;
 
   /* Graph colors */
   --graph-color-labels: #A6BBBE;
@@ -56,6 +67,19 @@
 /* ------------------------- */
 /* ---- Building blocks ---- */
 /* ------------------------- */
+
+/* Page header and footer */
+body > :is(header, footer) {
+  background-color: var(--color-card-background);
+}
+
+/* Links */
+main :is(
+  a,
+  p a
+) {
+  color: var(--color-link);
+}
 
 /* CTA */
 .cta-link {
@@ -558,6 +582,12 @@ select {
 }
 
 /* Table */
+.show-table {
+  background-color: transparent;
+  color: var(--color-text-lighter);
+  border-color: var(--color-text-lighter);
+}
+
 .table-ui-wrapper {
   overflow-x: scroll;
 }
@@ -1191,6 +1221,7 @@ path.highcharts-tick {
 .check-wrapper label {
   margin-bottom: 0;
   padding-left: 1.5rem;
+  color: var(--color-checkbox-button-label);
 }
 
 .check-wrapper input {
@@ -1217,16 +1248,21 @@ path.highcharts-tick {
   position: absolute;
   left: 1rem;
   top: 0.75rem;
-  border: 1px solid var(--color-blue-dark);
+  border: 1px solid var(--color-checkbox);
 }
 
 .check-wrapper:has(input:checked) {
-  background-color: #E1F1FF;
+  background-color: var(--color-checkbox-button-selected);
 }
 
 .check-wrapper:has(input:checked):before {
-  background-color: var(--color-blue-dark);
-  box-shadow: 0 0 0 1.5px #E1F1FF inset;
+  background-color: var(--color-checkbox-selected);
+  border-color: var(--color-checkbox-selected);
+  box-shadow: 0 0 0 1.5px var(--color-checkbox-button-selected) inset;
+}
+
+.check-wrapper:has(input:checked) label {
+  color: var(--color-checkbox-button-label-selected);
 }
 
 .check-descr {
@@ -1239,6 +1275,7 @@ path.highcharts-tick {
 }
 
 .theme-switcher {
+  background-color: var(--color-theme-toggle-background);
   border: 1px solid var(--color-text-lighter);
   margin-top: 1rem;
   margin-bottom: 0.25rem;
