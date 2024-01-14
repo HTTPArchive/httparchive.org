@@ -25,6 +25,8 @@
   --color-checkbox-button-label: var(--color-text);
   --color-checkbox-button-label-selected: var(--color-text);
   --color-theme-toggle-background: #f4f4f4;
+  --color-bg-gradient: var(--color-teal-faded);
+  --color-page-border: var(--color-teal-medium);
 
   /* Font sizes */
   --font-size-medium: 1.75rem;
@@ -58,6 +60,8 @@
   --color-checkbox: #fff;
   --color-checkbox-selected: #292828;
   --color-theme-toggle-background: transparent;
+  --color-bg-gradient: #111111;
+  --color-page-border: #000;
 
   /* Graph colors */
   --graph-color-labels: #A6BBBE;
@@ -509,7 +513,7 @@ select {
   padding: 0.5rem 0;
   background-color: var(--color-page-background);
   z-index: 3;
-  border-bottom: 1px solid #6A797C;
+  border-bottom: 1px solid var(--color-page-border);
 }
 
 .results-header :is(label, select) {
@@ -995,7 +999,7 @@ select {
 
 
 .report-content {
-  background-image: linear-gradient(#C0CED0, rgba(238,238,238,0));
+  background-image: linear-gradient(var(--color-bg-gradient), rgba(238,238,238,0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
   padding-top: 3rem;
@@ -1014,7 +1018,7 @@ select {
   background-image: none;
   padding-top: 0;
   background-color: #fff;
-  border-bottom: 1px solid #6A797C;
+  border-bottom: 1px solid var(--color-page-border);
 }
 
 .report-content > .error {
