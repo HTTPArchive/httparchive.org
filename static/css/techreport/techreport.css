@@ -28,6 +28,8 @@
   --color-theme-toggle-background: #f4f4f4;
   --color-bg-gradient: var(--color-teal-faded);
   --color-page-border: var(--color-teal-medium);
+  --color-tooltip-background: var(--color-card-background);
+  --color-tooltip-border: var(--color-card-border);
 
   /* Font sizes */
   --font-size-medium: 1.75rem;
@@ -64,6 +66,7 @@
   --color-theme-toggle-background: transparent;
   --color-bg-gradient: #111111;
   --color-page-border: #000;
+  --color-tooltip-border: var(--color-page-background);
 
   /* Graph colors */
   --graph-color-labels: #A6BBBE;
@@ -1183,6 +1186,16 @@ path.highcharts-tick {
 .highcharts-button:not(.highcharts-button-hover) path {
   fill: var(--color-text-lighter);
   stroke: var(--color-text-lighter);
+}
+
+.highcharts-tooltip {
+  filter: none;
+}
+
+.highcharts-tooltip path {
+  fill: var(--color-tooltip-background);
+  stroke: var(--color-tooltip-border);
+  stroke-width: 1px;
 }
 
 /* ------------------------ */
