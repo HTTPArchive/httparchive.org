@@ -2,10 +2,11 @@ import SummaryCard from "./summaryCards";
 import TableLinked from "./tableLinked";
 
 class Section {
-  constructor(id, config, filters, data) {
+  constructor(id, pageConfig, globalConfig, filters, data) {
     this.id = id;
     this.data = data;
-    this.pageConfig = config;
+    this.pageConfig = pageConfig;
+    this.config = globalConfig;
     this.pageFilters = filters;
     this.components = {};
 
@@ -49,6 +50,7 @@ class Section {
     this.components[component.dataset.id] = new SummaryCard(
       component.dataset.id,
       this.pageConfig,
+      this.config,
       this.pageFilters,
       this.data
     );

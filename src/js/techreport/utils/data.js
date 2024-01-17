@@ -85,10 +85,16 @@ const filterDuplicates = (array, key) => {
   return filtered;
 };
 
+const getLighthouseScoreCategories = (score, brackets) => {
+  return brackets.find(bracket => bracket.min <= score && bracket.max >= score);
+
+}
+
 export const DataUtils = {
   parseVitalsData,
   parseLighthouseData,
   parseAdoptionData,
   parsePageWeightData,
-  filterDuplicates
+  filterDuplicates,
+  getLighthouseScoreCategories,
 };

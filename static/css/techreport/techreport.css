@@ -14,7 +14,7 @@
   /* Colors based on function */
   --color-link: var(--color-blue-dark);
   --color-text: #444;
-  --color-text-lighter: #6E7576;
+  --color-text-lighter: #5f6768;
   --color-text-darker: #1E1E1E;
   --color-text-inverted: #fff;
   --color-card-background: #fff;
@@ -1059,7 +1059,6 @@ select {
 
 [data-component="summaryCard"] {
   position: relative;
-  padding-bottom: 3rem;
 }
 
 [data-component="summaryCard"] > p.meta {
@@ -1205,6 +1204,23 @@ path.highcharts-tick {
   transform: rotate(-90deg);
 }
 
+.summary-value:has(.progress-chart) {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.summary-value:has(.progress-chart) > p {
+  text-align: center;
+  width: 50%;
+  height: 100%;
+  height: calc(100% - 0.5rem);
+  position: absolute;
+  top: 0;
+  padding-top: 25%;
+  padding-top: calc(25% - 0.55rem);
+  line-height: 100%;
+}
+
 .lighthouse-progress {
   stroke-dashoffset: var(--offset);
   transform-origin: center;
@@ -1216,6 +1232,18 @@ path.highcharts-tick {
 
 .lighthouse-progress.border-2 {
   transform: rotate(1deg);
+}
+
+.progress-chart.poor .lighthouse-progress:not(.border-1, .border-2) {
+  stroke: #FF3333;
+}
+
+.progress-chart.good .lighthouse-progress:not(.border-1, .border-2) {
+  stroke: #18A975;
+}
+
+.progress-chart.improvement .lighthouse-progress:not(.border-1, .border-2) {
+  stroke: #C7870B;
 }
 
 /* ----------------------- */

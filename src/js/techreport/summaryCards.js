@@ -2,11 +2,14 @@
  * Show static values for given metrics.
  */
 
+import { DataUtils } from "./utils/data";
+
 class SummaryCard {
-  constructor(id, config, filters, data) {
+  constructor(id, pageConfig, config, filters, data) {
     this.data = data;
     this.id = id;
-    this.pageConfig = config;
+    this.pageConfig = pageConfig;
+    this.config = config;
     this.pageFilters = filters;
     this.client = 'mobile'; //TODO: get default from config
   }
@@ -52,7 +55,12 @@ class SummaryCard {
 
         const progress = card.querySelectorAll('.lighthouse-progress');
         progress.forEach(circle => {
+          const scoreCategory = DataUtils.getLighthouseScoreCategories(latestValue, this.config.lighthouse_brackets);
+          const scoreCategoryName = scoreCategory?.name;
           circle.setAttribute('style', `--offset: ${100 - latestValue};`);
+          const chart = card.querySelector('svg.progress-chart');
+          console.log('chart', chart);
+          chart.classList.add(scoreCategoryName);
         });
 
       }

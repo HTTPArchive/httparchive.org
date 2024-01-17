@@ -24,14 +24,6 @@ const updateReportComponents = (sections, data, allData, page, labels) => {
     section.data = data;
     section.updateSection();
   });
-
-  const allDataComponents = document.querySelectorAll('[data-scope="all-data"]');
-  allDataComponents.forEach((component) => {
-    component.allData = allData;
-    component.page = page;
-    component.labels = labels;
-    component.setAttribute('loaded', true);
-  });
 }
 
 export const UIUtils = {

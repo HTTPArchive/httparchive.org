@@ -18,7 +18,7 @@ class TechReport {
       config: {
         ...page.config,
         labels: labels,
-      }
+      },
     };
 
     // Load the page
@@ -71,6 +71,7 @@ class TechReport {
       const reportSection = new Section(
         section.id,
         this.page.config,
+        this.config,
         this.filters,
         this.allData
       );
@@ -257,22 +258,6 @@ class TechReport {
       FilterComponent.updateRank();
       FilterComponent.updateGeo();
     });
-
-  //   fetch('https://cdn.httparchive.org/reports/cwvtech/technologies.json')
-  //     .then(result => result.json())
-  //     .then(result => FilterComponent.updateTechnologies(result, this.filters));
-
-  //   fetch(`${base}/ranks`)
-  //     .then(result => result.json())
-  //     .then(result => FilterComponent.updateRank(result, this.filters));
-
-  //   fetch(`${base}/geos`)
-  //     .then(result => result.json())
-  //     .then(result => FilterComponent.updateGeo(result, this.filters));
-
-  //   fetch(`${base}/categories`)
-  //     .then(result => result.json())
-  //     .then(result => FilterComponent.updateCategories(result));
   }
 
   // Update the page components
