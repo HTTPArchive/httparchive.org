@@ -58,6 +58,16 @@ export const drawMetricSummary = (options, client, value, isMedian=true, change=
   }
 };
 
+export function yieldToMain () {
+/*   if ('scheduler' in window && 'yield' in scheduler) {
+    return scheduler.yield();
+  }
+   */
+  return new Promise(resolve => {
+    setTimeout(resolve, 0);
+  });
+}
+
 const getQueryUrl = (metric, type) => {
   const URL_BASE = 'https://github.com/HTTPArchive/bigquery/blob/master/sql';
   if (type === 'timeseries') {

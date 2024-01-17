@@ -2,7 +2,7 @@ import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
+import { el, prettyDate, chartExportOptions, drawMetricSummary, yieldToMain } from './utils';
 
 
 function timeseries(metric, options, start, end) {
@@ -141,6 +141,7 @@ function drawTimeseries(data, options) {
     .then(flagSeries => series.push(flagSeries))
     // If the getFlagSeries request fails (503), catch so we can still draw the chart
     .catch(console.error)
+    .then(yieldToMain)
     .then(_ => drawChart(options, series));
 
 }
