@@ -155,6 +155,9 @@ function sendWebVitals() {
       prefers_reduced_motion: prefersReducedMotion,
       prefers_color_scheme: prefersColorScheme,
       navigation_type: navigationType,
+
+      // TODO(rviscomi): Remove this after A/B testing the INP optimization.
+      debug_version: 'defer-chart',
     }, overrides);
 
     gtag('event', name, params);
