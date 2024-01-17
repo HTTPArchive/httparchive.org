@@ -30,6 +30,11 @@ const generate_sitemap = async () => {
   for (const report of report_config._reports) {
     if (report_config[report] && report_config[report].url && report_config[report].url.startsWith('http')) {
       console.log(`Skipping ${report} as has external url\n`);
+    } else if (report_config[report] && report_config[report].url && report_config[report].url.startsWith('/')) {
+      const loc = `reports/${report}`;
+      const lastmod = get_lastmod_date(loc);
+      const url = report_config[report].url.slice(1);
+      urls.push({ url, lastmod });
     } else {
       const loc = `reports/${report}`;
       const lastmod = get_lastmod_date(loc);

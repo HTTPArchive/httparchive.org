@@ -173,9 +173,11 @@ ignored-classes=optparse.Values,thread._local,_thread._local
 # supports qualified module names, as well as Unix pattern matching.
 ignored-modules=flask,
                 flask_talisman,
-                flaskext.markdown,
                 google.auth.exceptions,
                 google.cloud,
+                jinja2,
+                jinja2.ext,
+                markdown,
                 matplotlib,
                 matplotlib.pyplot,
                 mistune,

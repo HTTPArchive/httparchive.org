@@ -34,7 +34,7 @@ jobs:
     if: github.repository == 'HTTPArchive/httparchive.org'
     steps:
     - name: Checkout branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Run the report checks
       env:
         REPORT_DATE: ${{ github.event.inputs.REPORT_DATE }}

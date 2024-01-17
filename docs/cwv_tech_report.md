@@ -89,7 +89,7 @@ We use vanilla CSS, no libraries. Bootstrap is loaded as well because it's used 
 
 ## Behavior
 
-#### Filters
+### Filters
 
 **On a global level**, the data can be filtered by:
 - App / technology

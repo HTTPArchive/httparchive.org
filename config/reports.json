@@ -1108,7 +1108,8 @@
       "bgcolor": "#97b5b9",
       "primary": {
         "color": "#eee",
-        "icon": "far fa-file-image"
+        "icon": "fa-file-image",
+        "width": "fa-w-12"
       }
     }
   },
@@ -1150,7 +1151,8 @@
       "bgcolor": "#97b5b9",
       "primary": {
         "color": "#eee",
-        "icon": "fas fa-stopwatch"
+        "icon": "fa-stopwatch",
+        "width": "fa-w-14"
       }
     }
   },
@@ -1174,7 +1176,8 @@
       "bgcolor": "#97b5b9",
       "primary": {
         "color": "#eee",
-        "icon": "fab fa-connectdevelop"
+        "icon": "fa-connectdevelop",
+        "width": "fa-w-18"
       }
     }
   },
@@ -1192,7 +1195,8 @@
       "bgcolor": "#97b5b9",
       "primary": {
         "color": "#eee",
-        "icon": "fab fa-searchengin"
+        "icon": "fa-searchengin",
+        "width": "fa-w-15"
       },
       "secondary": {
         "color": "rgba(255, 255, 255, 0.3)",
@@ -1226,7 +1230,8 @@
       "bgcolor": "#97b5b9",
       "primary": {
         "color": "#eee",
-        "icon": "fas fa-weight"
+        "icon": "fa-weight",
+        "width": "fa-w-16"
       }
     }
   },
@@ -1268,11 +1273,13 @@
       "bgcolor": "#97b5b9",
       "primary": {
         "color": "#eee",
-        "icon": "fas fa-users"
+        "icon": "fa-users",
+        "width": "fa-w-20"
       },
       "secondary": {
         "color": "rgba(255, 255, 255, 0.3)",
-        "icon": "fas fa-stopwatch"
+        "icon": "fa-stopwatch",
+        "width": "fa-w-14"
       }
     }
   },
@@ -1292,7 +1299,8 @@
       },
       "secondary": {
         "color": "rgba(255, 255, 255, 0.3)",
-        "icon": "fas fa-cogs"
+        "icon": "fa-cogs",
+        "width": "fa-w-20"
       }
     }
   },
@@ -1312,7 +1320,8 @@
       "bgcolor": "#97b5b9",
       "primary": {
         "color": "#eee",
-        "icon": "fas fa-users"
+        "icon": "fa-users",
+        "width": "fa-w-20"
       },
       "secondary": {
         "color": "rgba(255, 255, 255, 0.3)",
@@ -1361,11 +1370,13 @@
       "bgcolor": "#fff",
       "primary": {
         "color": "#444",
-        "icon": "fas fa-wrench"
+        "icon": "fa-wrench",
+        "width": "fa-w-16"
       },
       "secondary": {
         "color": "rgba(0, 0, 0, 0.3)",
-        "icon": "fas fa-tachometer-alt"
+        "icon": "fa-tachometer-alt",
+        "width": "fa-w-18"
       }
     }
   },
