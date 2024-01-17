@@ -58,6 +58,28 @@ export const drawMetricSummary = (options, client, value, isMedian=true, change=
   }
 };
 
+/**
+ * Invokes the callback when the element is visible for the first time.
+ * 
+ * Rendering all charts immediately at startup causes long tasks and slow INP.
+ * Instead, wait until the chart is in view before rendering.
+ * Rendering a single chart might still create a long task,
+ * but it'll be less likely to contribute to INP.
+ * 
+ * @param {HTMLElement} element 
+ * @param {Function} callback 
+ */
+export function callOnceWhenVisible(element, callback) {
+  new IntersectionObserver((entries, observer) => {
+    if (!entries[0].isIntersecting) {
+      return;
+    }
+
+    observer.unobserve(element);
+    callback();
+  }).observe(element);
+}
+
 const getQueryUrl = (metric, type) => {
   const URL_BASE = 'https://github.com/HTTPArchive/bigquery/blob/master/sql';
   if (type === 'timeseries') {
