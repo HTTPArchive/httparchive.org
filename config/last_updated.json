@@ -34,11 +34,6 @@
     "date_modified": "2023-12-07T00:00:00.000Z",
     "hash": "44a755704dad3fecd7b9d1022b9c6cb5"
   },
-  "/static/js/exporting.js.map": {
-    "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "88ca30ad4c3be2d9fb708c7d54db6f43"
-  },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2021-09-20T00:00:00.000Z",
@@ -49,20 +44,10 @@
     "date_modified": "2023-12-07T00:00:00.000Z",
     "hash": "b4061005f0a09402598ed3a8eef130db"
   },
-  "/static/js/highcharts-more.js.map": {
-    "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "090e6925e3dd3b71edffbd730c3265e7"
-  },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
     "date_modified": "2023-12-07T00:00:00.000Z",
     "hash": "c6744f333bf6edfeaed1200bd93a537d"
-  },
-  "/static/js/highstock.js.map": {
-    "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "2c74a476f6d4ebe3e2deb69777a59860"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
