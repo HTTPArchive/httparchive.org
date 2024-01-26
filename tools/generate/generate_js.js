@@ -3,10 +3,7 @@ const fs = require('fs-extra');
 node_module_files = [
   'highcharts/highcharts-more.js',
   'highcharts/highstock.js',
-  'highcharts/modules/exporting.js',
-  'highcharts/highcharts-more.js.map',
-  'highcharts/highstock.js.map',
-  'highcharts/modules/exporting.js.map'
+  'highcharts/modules/exporting.js'
 ];
 
 const generate_js = async () => {
