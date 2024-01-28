@@ -31,8 +31,8 @@
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "44a755704dad3fecd7b9d1022b9c6cb5"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "bf113a2ddbc983f18f069cd5957814d9"
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -41,13 +41,13 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "b4061005f0a09402598ed3a8eef130db"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "1d792d50f4462089ca7b3453f8426d6c"
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "c6744f333bf6edfeaed1200bd93a537d"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "2435bd016c365ddc7c6daad120bcde8b"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -71,8 +71,8 @@
   },
   "/static/js/send-web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2024-01-17T00:00:00.000Z",
-    "hash": "1d99994a6766010b486b35d5833e8f99"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "84d4aa96901a91d02b725555cf28d3c8"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -81,8 +81,8 @@
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2024-01-17T00:00:00.000Z",
-    "hash": "4041ad869843be08e145c80e9b084ee7"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "4a23d952fb9349975e2e5252ca09a482"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
