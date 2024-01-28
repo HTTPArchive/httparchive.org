@@ -41,8 +41,8 @@ function sendWebVitals() {
             debug_loaf_script_total_duration: totalDuration,
             debug_loaf_script_compile_duration: script.executionStart - script.startTime,
             debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
-            debug_loaf_script_source: script.sourceLocation || script.name,
-            debug_loaf_script_type: script.type,
+            debug_loaf_script_source: script.sourceLocation || script.invoker || script.name,
+            debug_loaf_script_type: script.invokerType || script.type,
 
             // LoAF metadata.
             debug_loaf_meta_length: longAnimationFrames.length,
