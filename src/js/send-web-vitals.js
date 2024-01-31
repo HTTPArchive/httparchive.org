@@ -41,7 +41,10 @@ function sendWebVitals() {
             debug_loaf_script_total_duration: totalDuration,
             debug_loaf_script_compile_duration: script.executionStart - script.startTime,
             debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
-            debug_loaf_script_source: script.sourceLocation || script.invoker || script.name,
+            debug_loaf_script_source: script.sourceLocation || script.invoker || script.name, // deprecated
+            debug_loaf_script_sourceURL: script.SourceURL,
+            debug_loaf_script_sourceFunctionName: script.sourceFunctionName,
+            debug_loaf_script_sourceCharPosition: sourceCharPosition,
             debug_loaf_script_type: script.invokerType || script.type,
 
             // LoAF metadata.
