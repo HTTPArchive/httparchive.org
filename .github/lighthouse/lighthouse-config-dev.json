@@ -11,6 +11,7 @@
         "first-cpu-idle": "off",
         "first-meaningful-paint": "off",
         "font-display": "off",
+        "identical-links-same-purpose": "off",
         "installable-manifest": "off",
         "interactive": "off",
         "is-crawlable": "off",
