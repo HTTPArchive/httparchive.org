@@ -41,8 +41,13 @@ function sendWebVitals() {
             debug_loaf_script_total_duration: totalDuration,
             debug_loaf_script_compile_duration: script.executionStart - script.startTime,
             debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
-            debug_loaf_script_source: script.sourceLocation || script.invoker || script.name,
-            debug_loaf_script_type: script.invokerType || script.type,
+            debug_loaf_script_source: script.sourceLocation || script.invoker || script.name, // TODO: remove after Chrome 123
+            debug_loaf_script_type: script.invokerType || script.type, // TODO: remove `|| script.type` after Chrome 123
+            // New in Chrome 122/123 (will be null until then)
+            debug_loaf_script_invoker: script.invoker,
+            debug_loaf_script_source_url: script.sourceURL,
+            debug_loaf_script_source_function_name: script.sourceFunctionName,
+            debug_loaf_script_source_char_position: script.sourceCharPosition,
 
             // LoAF metadata.
             debug_loaf_meta_length: longAnimationFrames.length,
