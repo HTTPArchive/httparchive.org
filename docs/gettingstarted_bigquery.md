@@ -141,7 +141,7 @@ ON
   pages.pageid = requests.pageid
 ```
 
-When we look at the results of this, you can see how much data was processed during this query.  Writing efficient queries limits the number of bytes processed - which is helpful since that's how BigQuery is billed.   *Note: There is 1TB free per month*
+When we look at the results of this, you can see how much data was processed during this query.  Writing efficient queries limits the number of bytes processed - which is helpful since that's how BigQuery is billed.   _Note: There is 1TB free per month_
 
 ![Simple JOIN Example](images/simple_join_example.jpg)
 
