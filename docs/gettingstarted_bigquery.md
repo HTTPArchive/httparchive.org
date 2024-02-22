@@ -1,3 +1,5 @@
+__Warning:__ The HTTP Archive dataset is available on BigQuery. Be aware that as a consequence of collecting so much metadata from millions of websites each month, the dataset is _extremely large_—multiple petabytes. Care _must_ be taken to set up [cost controls](https://cloud.google.com/bigquery/docs/custom-quotas) to avoid unexpected bills. Also see our guide to [minimizing query costs](https://har.fyi/guides/minimizing-costs/) for tips on staying under the 1 TB per month free quota.
+
 # Getting Started Accessing the HTTP Archive with BigQuery
 
 The [HTTP Archive](https://httparchive.org) is an open source project that tracks how the web is built. Historical data is provided to show how the web is constantly evolving, and the project is frequently used for research by the web community, scholars and industry leaders. If you are interested in digging into the HTTP Archive and are not sure where to start, then this guide should help you get started quickly.
@@ -27,7 +29,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
 4. Optional: Enable Billing by clicking on the Billing menu item and adding your billing information.
 
-  *Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing#free-tier) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial).*
+  _Note:  BigQuery has a [free tier](https://cloud.google.com/bigquery/pricing#free-tier) that you can use to get started without enabling billing. At the time of this writing, the free tier allows 10GB of storage and 1TB of data processing per month. Google also provides a [$300 credit for new accounts](https://cloud.google.com/free/docs/frequently-asked-questions#free-trial)._
 
 5. Navigate to the [Big Query console](https://console.cloud.google.com/bigquery) where you should see your project, with no data.
 
@@ -61,7 +63,7 @@ The table below outlines what some of the different grouping of tables includes.
 
 ![HTTP Archive Table Summary](images/httparchive_table_summary.jpg)
 
-*Note: The size of the tables you query are important because BigQuery is billed based on the number of processed data.  There is 1TB of processed data included in the free tier, so running a full scan query on one of the larger tables can easily eat up your quota. This is where it becomes important to design queries that process only the data you wish to explore*
+_Note: The size of the tables you query are important because BigQuery is billed based on the number of processed data.  There is 1TB of processed data included in the free tier, so running a full scan query on one of the larger tables can easily eat up your quota. This is where it becomes important to design queries that process only the data you wish to explore_
 
 
 In order to understand what each of these tables contain, you can click on the table name and view the details. For example, if you expand the `summary_pages` dataset and click on the 2018_09_01_desktop (or mobile) table you can see the schema. Clicking `Details` tells you some information about the table, such as its size and the number of rows. Clicking `Preview` shows an example of some data from the table.
@@ -139,7 +141,7 @@ ON
   pages.pageid = requests.pageid
 ```
 
-When we look at the results of this, you can see how much data was processed during this query.  Writing efficient queries limits the number of bytes processed - which is helpful since that's how BigQuery is billed.   *Note: There is 1TB free per month*
+When we look at the results of this, you can see how much data was processed during this query.  Writing efficient queries limits the number of bytes processed - which is helpful since that's how BigQuery is billed.   _Note: There is 1TB free per month_
 
 ![Simple JOIN Example](images/simple_join_example.jpg)
 

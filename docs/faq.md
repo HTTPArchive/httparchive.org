@@ -18,7 +18,7 @@ The list of URLs is fed to our private instance of [WebPageTest](https://webpage
 
 As of March 1 2016, the tests are performed on Chrome for desktop and emulated Android (on Chrome) for mobile.
 
-The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates various tables in [BigQuery](https://bigquery.cloud.google.com/dataset/httparchive).
+The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates various tables in BigQuery.
 
 ## How accurate is the data, in particular the time measurements?
 
@@ -35,6 +35,8 @@ Given these conditions it's virtually impossible to compare the HTTP Archive's t
 
 
 ## How do I use BigQuery to write custom queries over the data?
+
+The HTTP Archive dataset is available on BigQuery. Be aware that as a consequence of collecting so much metadata from millions of websites each month, the dataset is _extremely large_—multiple petabytes. Care _must_ be taken to set up [cost controls](https://cloud.google.com/bigquery/docs/custom-quotas) to avoid unexpected bills. Also see our guide to [minimizing query costs](https://har.fyi/guides/minimizing-costs/) for tips on staying under the 1 TB per month free quota.
 
 Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://github.com/HTTPArchive/httparchive.org/blob/main/docs/gettingstarted_bigquery.md), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
 
