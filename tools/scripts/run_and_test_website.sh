@@ -41,6 +41,11 @@ while getopts "h?d" opt; do
 done
 shift "$((OPTIND-1))" # Discard the options and sentinel --
 
+if [ ! "$(which pgrep)" ]; then
+  echo "Need pgrep installed. Try 'brew install proctools'"
+  exit 1
+fi
+
 if [ "$(pgrep -f 'python main.py')" ]; then
   echo "Killing existing server to run a fresh version"
   pkill -9 -f "python main.py"

@@ -60,6 +60,11 @@ function check_continue {
   fi
 }
 
+if [ ! "$(which pgrep)" ]; then
+  echo "Need pgrep installed. Try 'brew install proctools'"
+  exit 1
+fi
+
 echo "Beginning the https://httparchive.org Website deployment process"
 
 if [ "${no_promote}" == "1" ]; then
