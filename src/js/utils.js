@@ -22,12 +22,12 @@ export const chartExportOptions = {
         }
         window.open(url, '_blank');
       },
-      text: 'Show Query'
+      text: 'Show query'
     }
   },
   buttons: {
     contextButton: {
-      menuItems: ['showQuery', 'downloadPNG']
+      menuItems: ['showQuery']
     }
   }
 };
