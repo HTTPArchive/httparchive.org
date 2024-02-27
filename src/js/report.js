@@ -51,11 +51,11 @@ class Report {
         return;
       }
 
-      const isHidden = e.target.innerText.startsWith('Show');
+      const isHidden = e.target.textContent.startsWith('Show');
       Array.from(e.target.parentNode.querySelectorAll('table')).forEach(table => {
         table.classList.toggle('hidden', !isHidden);
       });
-      e.target.innerText = e.target.innerText.replace(isHidden ? 'Show' : 'Hide', isHidden ? 'Hide' : 'Show');
+      e.target.textContent = e.target.textContent.replace(isHidden ? 'Show' : 'Hide', isHidden ? 'Hide' : 'Show');
     });
   }
 
@@ -122,8 +122,8 @@ class Report {
 
   makeDatesPretty() {
     Array.from(document.querySelectorAll('.yyyy_mm_dd')).forEach(option => {
-      const date = prettyDate(option.innerText.trim());
-      option.innerText = date;
+      const date = prettyDate(option.textContent.trim());
+      option.textContent = date;
     });
   }
 

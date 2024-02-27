@@ -48,11 +48,11 @@ export const drawMetricSummary = (options, client, value, isMedian=true, change=
     metric && metric.classList.add('hidden');
   }
 
-  summary.querySelector('.primary').innerText = value;
+  summary.querySelector('.primary').textContent = value;
 
   if (change) {
     const changeEl = summary.querySelector('.change');
-    changeEl.innerText = formatChange(change);
+    changeEl.textContent = formatChange(change);
     changeEl.classList.remove('good', 'bad', 'neutral'); // Reset the classes.
     changeEl.classList.add(getChangeSentiment(change, options));
   }

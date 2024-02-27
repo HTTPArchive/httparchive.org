@@ -24,7 +24,7 @@ function histogram(metric, date, options) {
       drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
     }).catch(e => {
       const chart = document.getElementById(`${metric}-chart`);
-      chart.innerText = `Error loading data: ${e}. Try a more recent start date.`;
+      chart.textContent = `Error loading data: ${e}. Try a more recent start date.`;
     });
 }
 
