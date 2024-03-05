@@ -566,7 +566,7 @@
     "cruxPassesCWV": {
       "name": "Passes Core Web Vitals",
       "type": "%",
-      "description": "The percentage of origins passing all three [Core Web Vitals](https://web.dev/vitals/#core-web-vitals) (LCP, FID, CLS) with a \"good\" experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics.",
+      "description": "The percentage of origins passing all three [Core Web Vitals](https://web.dev/articles/vitals#core-web-vitals) (LCP, INP, CLS) with a \"good\" experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics. Also note that prior to March 2024, this metric used FID instead of INP.",
       "downIsBad": true,
       "histogram": {
         "enabled": false
@@ -1246,10 +1246,10 @@
       "cruxSlowLcp",
       "cruxSmallCls",
       "cruxLargeCls",
-      "cruxFastFid",
-      "cruxSlowFid",
       "cruxFastInp",
       "cruxSlowInp",
+      "cruxFastFid",
+      "cruxSlowFid",
       "cruxFastTtfb",
       "cruxSlowTtfb",
       "cruxFastFp",
