@@ -1,5 +1,12 @@
 export const el = tagName => document.createElement(tagName);
 
+const prettyDateFormatter = new Intl.DateTimeFormat(undefined, {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC'
+});
+
 export const prettyDate = YYYY_MM_DD => {
   const [YYYY, MM, DD] = YYYY_MM_DD.split('_');
   const d = new Date(Date.UTC(YYYY, MM - 1, DD));
@@ -7,7 +14,7 @@ export const prettyDate = YYYY_MM_DD => {
 };
 
 export const getFullDate = d => {
-  return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
+  return prettyDateFormatter.format(d);
 }
 
 export const chartExportOptions = {
