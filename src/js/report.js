@@ -46,42 +46,18 @@ class Report {
   }
 
   bindTableVisibilityToggle() {
-    // Binding on pointerdown instead of click.
-    //
-    // - The user's intent is clear on pointerdown, which happens ~100ms sooner than pointerup/click.
-    //   Handling the earlier event improves the perceived latency of the interaction.
-    //   The user might have wanted to cancel the click, but toggling is an easily reversible action.
-    //
-    // - Click events can be congested from other 3P handlers, which delays the interaction.
-    //   Things like analytics and extensions can also be listening for clicks.
-    //   We could yield to break up the handlers, but this doesn't actually improve the UX.
-    document.body.addEventListener('pointerdown', e => {
+    document.body.addEventListener('click', e => {
       if (!e.target.classList.contains('show-hide')) {
         return;
       }
 
-      this.toggleTableVisibility(e.target);
+      const toggleButton = e.target;
+      const isHidden = toggleButton.textContent.startsWith('Show');
+      Array.from(toggleButton.parentNode.querySelectorAll('table')).forEach(table => {
+        table.classList.toggle('hidden', !isHidden);
+      });
+      toggleButton.textContent = toggleButton.textContent.replace(isHidden ? 'Show' : 'Hide', isHidden ? 'Hide' : 'Show');
     });
-
-    // Also allow toggling with a keyboard for accessibility.
-    document.body.addEventListener('keydown', e => {
-      if (e.key !== 'Enter' && e.key !== ' ') {
-        return;
-      }
-      if (!e.target.classList.contains('show-hide')) {
-        return;
-      }
-      
-      this.toggleTableVisibility(e.target);
-    });
-  }
-
-  toggleTableVisibility(toggleButton) {
-    const isHidden = toggleButton.textContent.startsWith('Show');
-    Array.from(toggleButton.parentNode.querySelectorAll('table')).forEach(table => {
-      table.classList.toggle('hidden', !isHidden);
-    });
-    toggleButton.textContent = toggleButton.textContent.replace(isHidden ? 'Show' : 'Hide', isHidden ? 'Hide' : 'Show');
   }
 
   isLatest(date) {
