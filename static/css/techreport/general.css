@@ -87,3 +87,15 @@ p {
   margin-right: auto;
 }
 
+.feedback {
+  background-image: linear-gradient(
+    var(--color-page-background),
+    var(--color-card-background)
+  );
+  padding: 4rem 0;
+  margin-top: -4rem;
+}
+
+.feedback h2 {
+  margin-top: 0;
+}

@@ -11,12 +11,12 @@
 {% endblock %}
 
 {% block report_navigation %}
-  <!-- <div class="info-panel">
+  <div class="info-panel">
     <div class="block-l">
       <p class="info-label">Beta</p>
-      <p>Changes are still being made to this page.</p>
+      <p>This dashboard is still under development.</p>
     </div>
-  </div> -->
+  </div>
 
   <nav class="report-navigation">
     {% set filters = "" %}
@@ -60,6 +60,15 @@
 
 {% block main %}
   {% block section %}{% endblock %}
+  <div class="feedback">
+    <div class="block-m">
+      <h2>Feedback?</h2>
+      <p>
+        We are still working on this dashboard. The design and functionality can still change, and we're working on accessibility improvements and bugfixes.
+        What you're seeing here is a snapshot of our latest GitHub commit, and are <a href="https://github.com/HTTPArchive/cwv-tech-report/discussions/30">open for feedback</a>.
+      </p>
+    </div>
+  </div>
 
   <div class="accessibility-options">
     <div class="wrapper block-m">
@@ -78,10 +87,7 @@
       </div>
     </div>
   </div>
-
-
 {% endblock %}
-
 
 {% block scripts %}
   {{ super() }}
