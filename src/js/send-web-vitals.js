@@ -24,20 +24,20 @@ function sendWebVitals() {
       // LoAFs that intersect with the event.
       return entry.startTime < (loaf.startTime + loaf.duration) && loaf.startTime < (entry.startTime + entry.duration);
     }).forEach(loaf => {
+      const loafEndTime = loaf.startTime + loaf.duration;
       loaf.scripts.forEach(script => {
-        const endTime = script.startTime + script.duration;
         if (script.duration <= loafAttribution.debug_loaf_script_total_duration) {
           return;
         }
         loafAttribution = {
           // Stats for the LoAF entry itself.
           debug_loaf_entry_start_time: loaf.startTime,
-          debug_loaf_entry_end_time: endTime,
+          debug_loaf_entry_end_time: loafEndTime,
           debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
-          debug_loaf_entry_render_duration: loaf.renderStart ? endTime - loaf.renderStart : 0,
+          debug_loaf_entry_render_duration: loaf.renderStart ? loafEndTime - loaf.renderStart : 0,
           debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
           debug_loaf_entry_pre_layout_duration: loaf.styleAndLayoutStart ? loaf.styleAndLayoutStart - loaf.renderStart : 0,
-          debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? endTime - loaf.styleAndLayoutStart : 0,
+          debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loafEndTime - loaf.styleAndLayoutStart : 0,
 
           // Stats for the longest script in the LoAF entry.
           debug_loaf_script_total_duration: script.duration,
