@@ -51,11 +51,12 @@ class Report {
         return;
       }
 
-      const isHidden = e.target.innerText.startsWith('Show');
-      Array.from(e.target.parentNode.querySelectorAll('table')).forEach(table => {
+      const toggleButton = e.target;
+      const isHidden = toggleButton.textContent.startsWith('Show');
+      Array.from(toggleButton.parentNode.querySelectorAll('table')).forEach(table => {
         table.classList.toggle('hidden', !isHidden);
       });
-      e.target.innerText = e.target.innerText.replace(isHidden ? 'Show' : 'Hide', isHidden ? 'Hide' : 'Show');
+      toggleButton.textContent = toggleButton.textContent.replace(isHidden ? 'Show' : 'Hide', isHidden ? 'Hide' : 'Show');
     });
   }
 
@@ -122,8 +123,8 @@ class Report {
 
   makeDatesPretty() {
     Array.from(document.querySelectorAll('.yyyy_mm_dd')).forEach(option => {
-      const date = prettyDate(option.innerText.trim());
-      option.innerText = date;
+      const date = prettyDate(option.textContent.trim());
+      option.textContent = date;
     });
   }
 

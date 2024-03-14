@@ -1,5 +1,12 @@
 export const el = tagName => document.createElement(tagName);
 
+const prettyDateFormatter = new Intl.DateTimeFormat(undefined, {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC'
+});
+
 export const prettyDate = YYYY_MM_DD => {
   const [YYYY, MM, DD] = YYYY_MM_DD.split('_');
   const d = new Date(Date.UTC(YYYY, MM - 1, DD));
@@ -7,7 +14,7 @@ export const prettyDate = YYYY_MM_DD => {
 };
 
 export const getFullDate = d => {
-  return d.toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
+  return prettyDateFormatter.format(d);
 }
 
 export const chartExportOptions = {
@@ -22,12 +29,12 @@ export const chartExportOptions = {
         }
         window.open(url, '_blank');
       },
-      text: 'Show Query'
+      text: 'Show query'
     }
   },
   buttons: {
     contextButton: {
-      menuItems: ['showQuery', 'downloadPNG']
+      menuItems: ['showQuery']
     }
   }
 };
@@ -48,11 +55,11 @@ export const drawMetricSummary = (options, client, value, isMedian=true, change=
     metric && metric.classList.add('hidden');
   }
 
-  summary.querySelector('.primary').innerText = value;
+  summary.querySelector('.primary').textContent = value;
 
   if (change) {
     const changeEl = summary.querySelector('.change');
-    changeEl.innerText = formatChange(change);
+    changeEl.textContent = formatChange(change);
     changeEl.classList.remove('good', 'bad', 'neutral'); // Reset the classes.
     changeEl.classList.add(getChangeSentiment(change, options));
   }
