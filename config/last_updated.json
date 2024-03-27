@@ -71,28 +71,18 @@
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "44a755704dad3fecd7b9d1022b9c6cb5"
-  },
-  "/static/js/exporting.js.map": {
-    "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "88ca30ad4c3be2d9fb708c7d54db6f43"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "bf113a2ddbc983f18f069cd5957814d9"
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-09-20T00:00:00.000Z",
-    "hash": "9394c8c9bd791fff1eabb0a7e413ed27"
+    "date_modified": "2024-03-14T00:00:00.000Z",
+    "hash": "a019c291062d72e6eace21ac47fd8108"
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "b4061005f0a09402598ed3a8eef130db"
-  },
-  "/static/js/highcharts-more.js.map": {
-    "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "090e6925e3dd3b71edffbd730c3265e7"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "1d792d50f4462089ca7b3453f8426d6c"
   },
   "/static/js/highcharts.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -101,18 +91,13 @@
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "c6744f333bf6edfeaed1200bd93a537d"
-  },
-  "/static/js/highstock.js.map": {
-    "date_published": "2021-09-19T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "2c74a476f6d4ebe3e2deb69777a59860"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "2435bd016c365ddc7c6daad120bcde8b"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "e332874b242f55f1ff5dd1492ee5ff02"
+    "date_modified": "2024-03-14T00:00:00.000Z",
+    "hash": "be48931b9eb42ac667a3c1280c75efc2"
   },
   "/static/js/index.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -126,13 +111,13 @@
   },
   "/static/js/report.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2021-09-20T00:00:00.000Z",
-    "hash": "63d4b296d1aba99875379b0d4d853128"
+    "date_modified": "2024-03-14T00:00:00.000Z",
+    "hash": "c504589fb8eee81ce0ea1d49c365dc73"
   },
   "/static/js/send-web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "3dedd3fe304e7f12ca17afb1dadbca72"
+    "date_modified": "2024-03-14T00:00:00.000Z",
+    "hash": "b15100fd778e0784c465ffe4215e57be"
   },
   "/static/js/summaryLinked.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -181,13 +166,13 @@
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "1499b116cf44f1152d064469eaeade73"
+    "date_modified": "2024-03-14T00:00:00.000Z",
+    "hash": "a57eec4d3d8726626465c8a4c9b7fd4e"
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2023-09-28T00:00:00.000Z",
-    "hash": "0fa371ef0624041ff02cf6458e74441a"
+    "date_modified": "2024-01-28T00:00:00.000Z",
+    "hash": "4a23d952fb9349975e2e5252ca09a482"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -196,8 +181,8 @@
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "e42fbf30a383be829ea257eb2dc14f58"
+    "date_modified": "2024-02-23T00:00:00.000Z",
+    "hash": "1f7d91b52fbf96b1ae5044c3e10c8b70"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -216,8 +201,8 @@
   },
   "reports/chrome-ux-report": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-09-07T00:00:00.000Z",
-    "hash": "9503bd882ed6c162c7343267eb56aad5"
+    "date_modified": "2024-03-09T00:00:00.000Z",
+    "hash": "446e414773294f1cb7a5d5f1125f695f"
   },
   "reports/cwv-tech": {
     "date_published": "2021-09-20T00:00:00.000Z",

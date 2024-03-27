@@ -41,7 +41,12 @@ while getopts "h?d" opt; do
 done
 shift "$((OPTIND-1))" # Discard the options and sentinel --
 
-if [ "$(pgrep -f 'python main.py')" ]; then
+if [ ! "$(which pgrep)" ]; then
+  echo "Need pgrep installed. Try 'brew install proctools'"
+  exit 1
+fi
+
+if [ "$(pgrep -if 'python main.py')" ]; then
   echo "Killing existing server to run a fresh version"
   pkill -9 -f "python main.py"
 fi
@@ -55,7 +60,7 @@ python main.py background &
 # Sleep for a couple of seconds to make sure server is up
 sleep 5
 # Check website is running as won't have got feedback as backgrounded
-pgrep -f "python main.py"
+pgrep -if "python main.py"
 
 echo "Installing node modules"
 npm install
@@ -80,7 +85,7 @@ if [ "${debug}" == "1" ]; then
   echo "Monitoring for changes"
   npm run watch &
 
-  if [ "$(pgrep -f 'python main.py')" ]; then
+  if [ "$(pgrep -if 'python main.py')" ]; then
     echo "Killing server to run a fresh version in debug mode"
     pkill -9 -f "python main.py"
   fi

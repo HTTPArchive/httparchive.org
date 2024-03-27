@@ -60,6 +60,11 @@ function check_continue {
   fi
 }
 
+if [ ! "$(which pgrep)" ]; then
+  echo "Need pgrep installed. Try 'brew install proctools'"
+  exit 1
+fi
+
 echo "Beginning the https://httparchive.org Website deployment process"
 
 if [ "${no_promote}" == "1" ]; then
@@ -81,7 +86,7 @@ git checkout main
 git status
 git pull
 
-if [ "$(pgrep -f 'python main.py')" ]; then
+if [ "$(pgrep -if 'python main.py')" ]; then
   echo "Killing existing server to run a fresh version"
   pkill -9 python main.py
 fi
@@ -102,7 +107,7 @@ check_continue "Are you ready to deploy?"
 echo "Deploying to GCP"
 echo "Y" | gcloud app deploy --project httparchive
 
-if [ "$(pgrep -f 'python main.py')" ]; then
+if [ "$(pgrep -if 'python main.py')" ]; then
   echo "Killing server so backgrounded version isn't left there"
   pkill -9 -f "python main.py"
 fi
