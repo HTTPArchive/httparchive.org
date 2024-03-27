@@ -6,7 +6,10 @@
 
 body {
   background-color: var(--color-page-background);
+  font-size: 1rem;
+
 }
+
 
 main {
   color: var(--color-text);

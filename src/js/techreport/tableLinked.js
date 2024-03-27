@@ -9,17 +9,6 @@ class TableLinked {
     this.updateContent();
   }
 
-  // Format the data to fit in the table structure
-  formatData(tableConfig, data) {
-    const { apps, id, config } = tableConfig;
-
-    const rows = [];
-
-    apps.forEach(app => {
-
-    });
-  }
-
   // Update content in the table
   updateContent() {
     // Select a table based on the passed in id

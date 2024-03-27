@@ -13,7 +13,6 @@ function formatData(tableConfig, data) {
 
   // Loop through all of the dates
   // Populate array of data rows with it
-  const dates = Object.values(data)[0];
   const client = component.dataset.client || 'mobile';
 
   let _dates = [];
@@ -128,7 +127,7 @@ function updateTable(id, config, apps, data) {
         text = `${value}${suffix}`;
       } else {
         text = 'N/A';
-        className += ' no-data'
+        className += ' no-data';
       }
 
       // Wrap the text in a span for styling

@@ -161,7 +161,7 @@ class Timeseries {
     const id = this.id;
     const pageFilters = this.pageFilters;
 
-    const component = document.querySelector(`[data-id="${this.id}"]`);
+    const component = document.querySelector(`[data-id="${id}"]`);
     const container = component.querySelector('.breakdown-list');
 
     /* Get the currently selected subcategory based on the URL */

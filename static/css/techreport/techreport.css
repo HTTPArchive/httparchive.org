@@ -636,8 +636,17 @@ select {
   padding-right: 0;
 }
 
+.subcategory-selector-wrapper .position-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 0.25rem;
+}
+
 .subcategory-selector-wrapper label {
   color: var(--color-text-lighter);
+  display: unset;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .subcategory-selector-wrapper select {
@@ -655,6 +664,7 @@ select {
 
   z-index: 2;
   position: relative;
+  display: unset;
 }
 
 .subcategory-selector-wrapper:has(select:focus) select {
@@ -1021,6 +1031,10 @@ select {
   margin-bottom: 6rem;
 }
 
+.report-section > .card {
+  margin-top: 2rem;
+}
+
 .report-content:has(> .error) {
   background-image: none;
   padding-top: 0;
@@ -1082,6 +1096,8 @@ select {
   display: flex;
   column-gap: 3rem;
   margin-top: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .data-summary .breakdown-item {
