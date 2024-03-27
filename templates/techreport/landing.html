@@ -1,0 +1,35 @@
+{% extends "techreport/techreport.html" %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/landing.css') }}" />
+{% endblock %}
+
+{% block section %}
+  <div class="intro block-m">
+    <div>
+      <h1>
+        <span class="subtitle">Reports</span>
+        <span class="title">Tech Report</span>
+      </h1>
+      <p>
+        Placeholder text: A short description about what it is that we display in the Core Web Vitals report, and how it can be used. There should probably be links here to the individual technology pages and a few interesting comparison pages, as well as to the methodology page and the discussions etc like the reports have today.
+      </p>
+    </div>
+  </div>
+
+  <div class="report-content landing-content">
+    <div class="choices block-m">
+      <div class="card">
+        <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
+        <p>Get detailed information about <strong>one</strong> technology. </p>
+        <span class="img-placeholder"></span>
+      </div>
+      <div class="card">
+        <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
+        <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+        <span class="img-placeholder"></span>
+      </div>
+    </div>
+  </div>
+{% endblock %}

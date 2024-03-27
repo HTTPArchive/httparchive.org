@@ -1,0 +1,46 @@
+<!-- This makes the table focusable and scrollable by keyboard -->
+<!-- Table content and caption id set in JS -->
+<div class="table-ui-wrapper" role="region" aria-labelledby="table-{{ id }}" tabindex="0">
+  <table
+    class="table-ui"
+    data-breakdown="{{ tech_report_page.config.default.series.breakdown }}"
+    data-category="{{category}}"
+    data-client="{{ client }}"
+    data-component="table"
+    data-endpoint="{{endpoint}}"
+    data-id="{{ id }}"
+    id="table-{{ id }}"
+  >
+    <caption class="sr-only">{{ table.caption }}</caption>
+    <thead>
+      <tr>
+        {% for column in table.columns %}
+          <th
+            data-key="{{ column.key }}"
+            data-metric="{{ column.metric }}"
+            data-endpoint="{{ column.endpoint }}"
+            class="{{ column.className }}"
+          >
+            {{ column.name }}
+            {% if column.hiddenSuffix %}
+              <span aria-hidden="true">
+                  {{ column.hiddenSuffix }}
+              </span>
+            {% endif %}
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% if table.rows %}
+        {% for row in table.rows %}
+          {% if row.header == "true" %}
+            <th data-key="{{ row.key }}">{{ row.name }}</th>
+          {% else %}
+            <td data-key="{{ row.key }}">{{ row.name }}</td>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+</div>

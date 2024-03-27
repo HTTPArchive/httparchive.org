@@ -124,3 +124,16 @@ const getChangeSentiment = (change, options) => {
   }
   return 'neutral';
 };
+
+export const getLatestEntry = (data) => {
+  const sorted = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return sorted[0];
+};
+
+export const getPercentage = (x, y) => {
+  if(y && y > 0) {
+    return parseInt(parseInt(x) / parseInt(y) * 10000) / 100;
+  }
+
+  return;
+}

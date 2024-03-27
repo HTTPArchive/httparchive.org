@@ -56,16 +56,16 @@ elif [ "${RUN_TYPE}" == "pull_request" ] && [ "${COMMIT_SHA}" != "" ]; then
     git pull --quiet
     git checkout main
     # Then get the changes
-    CHANGED_FILES=$(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d templates config/reports.json | grep -v base.html | grep -v main.html | grep -v ejs | grep -v base_ | grep -v sitemap | grep -v error.html )
+    CHANGED_FILES=$(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d templates config/reports.json | grep -v base.html | grep -v main.html | grep -v ejs | grep -v base_ | grep -v sitemap | grep -v error.html | grep -v techreport/components | grep -v techreport/templates | grep -v techreport/report | grep -v techreport/techreport)
     echo "${CHANGED_FILES}"
 
     # Then back to the pull request changes
     git checkout --progress --force "${COMMIT_SHA}"
 
     # Transform the files to http://127.0.0.1:8080 URLs
-    LIGHTHOUSE_URLS=$(echo "${CHANGED_FILES}" | sed 's/templates/http:\/\/127.0.0.1:8080/g' | sed 's/index\.html//g' | sed 's/\.html//g' | sed 's/_/-/g' )
+    LIGHTHOUSE_URLS=$(echo "${CHANGED_FILES}" | sed 's/templates/http:\/\/127.0.0.1:8080/g' | sed 's/techreport/reports\/techreport/g' | sed 's/index\.html//g' | sed 's/\.html//g' | sed 's/_/-/g' )
 
-    # If report.json or any of the report templaes were changed, then test all the reports
+    # If report.json or any of the report templates were changed, then test all the reports
     # TODO - make this list dynamic
     LIGHTHOUSE_URLS=$(echo "${LIGHTHOUSE_URLS}" | sed 's/config\/reports.json/http:\/\/127.0.0.1:8080\/reports\/state-of-the-web\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-javascript\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-images\nhttp:\/\/127.0.0.1:8080\/reports\/loading-speed\nhttp:\/\/127.0.0.1:8080\/reports\/progressive-web-apps\nhttp:\/\/127.0.0.1:8080\/reports\/accessibility\nhttp:\/\/127.0.0.1:8080\/reports\/search-engine-optimization\nhttp:\/\/127.0.0.1:8080\/reports\/page-weight\nhttp:\/\/127.0.0.1:8080\/reports\/chrome-ux-report\nhttp:\/\/127.0.0.1:8080\/reports\/project-fugu/g')
     LIGHTHOUSE_URLS=$(echo "${LIGHTHOUSE_URLS}" | sed 's/http:\/\/127.0.0.1:8080\/report\/.*/http:\/\/127.0.0.1:8080\/reports\/state-of-the-web\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-javascript\nhttp:\/\/127.0.0.1:8080\/reports\/state-of-images\nhttp:\/\/127.0.0.1:8080\/reports\/loading-speed\nhttp:\/\/127.0.0.1:8080\/reports\/progressive-web-apps\nhttp:\/\/127.0.0.1:8080\/reports\/accessibility\nhttp:\/\/127.0.0.1:8080\/reports\/search-engine-optimization\nhttp:\/\/127.0.0.1:8080\/reports\/page-weight\nhttp:\/\/127.0.0.1:8080\/reports\/chrome-ux-report\nhttp:\/\/127.0.0.1:8080\/reports\/project-fugu/g')
