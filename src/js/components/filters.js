@@ -51,7 +51,7 @@ class Filters {
     document.getElementsByName('tech').forEach(technology => {
       technologies.push(technology.value);
     });
-    technologies.join(",");
+    technologies = technologies.join(",");
 
     /* Modify the URL with the tech */
     url.searchParams.delete('tech');
