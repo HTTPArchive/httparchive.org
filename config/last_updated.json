@@ -41,8 +41,8 @@
   },
   "/static/css/techreport/general.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2023-10-09T00:00:00.000Z",
-    "hash": "53dd766b1d280387b36a2c3ead47e68c"
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "28eb032e3482a2447241be1e712ed74d"
   },
   "/static/css/techreport/landing.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -51,8 +51,8 @@
   },
   "/static/css/techreport/techreport.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2023-10-09T00:00:00.000Z",
-    "hash": "82ad10c0e3231f9a2e44f54007b1bda7"
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "44544a77ae69a65af90cb8b147bd0263"
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -74,6 +74,11 @@
     "date_modified": "2024-01-28T00:00:00.000Z",
     "hash": "bf113a2ddbc983f18f069cd5957814d9"
   },
+  "/static/js/exporting.js.map": {
+    "date_published": "2024-04-05T00:00:00.000Z",
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "90a638c281c291abf8acb7531024d3a5"
+  },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2024-03-14T00:00:00.000Z",
@@ -84,6 +89,11 @@
     "date_modified": "2024-01-28T00:00:00.000Z",
     "hash": "1d792d50f4462089ca7b3453f8426d6c"
   },
+  "/static/js/highcharts-more.js.map": {
+    "date_published": "2024-04-05T00:00:00.000Z",
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "8d31b26d9fd75b9f2749cf0fc652fb34"
+  },
   "/static/js/highcharts.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
     "date_modified": "2023-10-09T00:00:00.000Z",
@@ -93,6 +103,11 @@
     "date_published": "2021-04-26T00:00:00.000Z",
     "date_modified": "2024-01-28T00:00:00.000Z",
     "hash": "2435bd016c365ddc7c6daad120bcde8b"
+  },
+  "/static/js/highstock.js.map": {
+    "date_published": "2024-04-05T00:00:00.000Z",
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "6a6de9a402c29ea5b76e30b5eed6ddd9"
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -151,18 +166,18 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2023-10-09T00:00:00.000Z",
-    "hash": "41063b92eb8850bde7a49af891037f22"
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "c6d56aa085452dd25392d3cac889dba8"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2023-10-09T00:00:00.000Z",
-    "hash": "fa7b58407c44adfc374711c767522ff4"
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "692808a4620e6d84ce2a12d45eb7d40b"
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2023-10-09T00:00:00.000Z",
-    "hash": "85a82b40a1082f03dda77c5956c57d8e"
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "6e7983322c2a8dab527e43209910e939"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -211,8 +226,8 @@
   },
   "reports/cwv-tech-new": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2023-10-09T00:00:00.000Z",
-    "hash": "1c32b48207473a10ad996bb6fa245144"
+    "date_modified": "2024-04-05T00:00:00.000Z",
+    "hash": "59ca9a96a7a3a9ec1b19bb7aba15f930"
   },
   "reports/loading-speed": {
     "date_published": "2018-05-08T00:00:00.000Z",

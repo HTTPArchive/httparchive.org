@@ -9,7 +9,7 @@ node_module_files = [
   'highcharts/modules/export-data.js',
   'highcharts/highcharts-more.js.map',
   'highcharts/highstock.js.map',
-  'highcharts/modules/exporting.js.map'
+  'highcharts/modules/exporting.js.map',
   'highcharts/modules/exporting.js'
 ];
 
