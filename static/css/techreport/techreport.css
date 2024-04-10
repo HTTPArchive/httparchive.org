@@ -663,7 +663,6 @@ select {
   color: var(--color-text) !important;
 }
 
-
 /* Timeseries cards */
 .timeseries-container {
   margin-top: 2rem;
