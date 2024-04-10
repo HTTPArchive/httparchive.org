@@ -7,14 +7,14 @@
   --color-teal-darker: #1c4750;
   --color-blue-dark: #3a7098;
   --color-blue-100: #eff7ff;
-  --color-blue-light: #E1F1FF;
+  --color-blue-light: #e1f1ff;
   --color-gray-medium: #5c5c5d;
 
   /* Colors based on function */
   --color-link: var(--color-blue-dark);
   --color-text: #444;
   --color-text-lighter: #5f6768;
-  --color-text-darker: #1E1E1E;
+  --color-text-darker: #1e1e1e;
   --color-text-inverted: #fff;
   --color-card-background: #fff;
   --color-card-border: #cdd4d6;
@@ -43,8 +43,8 @@
   /* Graph colors */
   --graph-color-primary: var(--color-teal-dark);
   --graph-color-primary-darker: var(--color-teal-darker);
-  --graph-color-line: #A6BBBE;
-  --graph-color-labels: #62777B;
+  --graph-color-line: #a6bbbe;
+  --graph-color-labels: #62777b;
 
   /* Defaults */
   --breakdown-color: var(--color-text);
@@ -68,7 +68,7 @@
   --color-tooltip-border: var(--color-page-background);
 
   /* Graph colors */
-  --graph-color-labels: #A6BBBE;
+  --graph-color-labels: #a6bbbe;
   --graph-color-line: var(--color-gray-medium);
 }
 
@@ -222,7 +222,7 @@ main :is(
 }
 
 .remove-tech:is(:hover, :focus) img {
-  background: #FCC9C4;
+  background: #fcc9c4;
   border-radius: 3rem;
 }
 
@@ -334,11 +334,11 @@ main :is(
 }
 
 .select-label:has(select:is(:focus-visible, :hover))::after {
-  border-color: #F2F9FF;
+  border-color: #f2f9ff;
 }
 
 .select-label:has(select:focus-visible) {
-  background-color: #F2F9FF;
+  background-color: #f2f9ff;
 }
 
 .select-label:has(select:focus-visible) label {
@@ -374,7 +374,7 @@ main :is(
 }
 
 .tech-selector-group:has(.remove-tech:is(:focus, :hover)) {
-  background-color: #F2F9FF;
+  background-color: #f2f9ff;
 }
 
 .tech-selector-group {
@@ -425,11 +425,11 @@ main :is(
 }
 
 .tech-input-wrapper:has(select:is(:focus-visible, :hover))::after {
-  border-color: #F2F9FF;
+  border-color: #f2f9ff;
 }
 
 .tech-input-wrapper:has(select:focus-visible) {
-  background-color: #F2F9FF;
+  background-color: #f2f9ff;
   color: var(--color-text);
 }
 
@@ -657,11 +657,11 @@ select {
 }
 
 .subcategory-selector-wrapper:has(select:is(:focus-visible, :hover))::after {
-  border-color: #F2F9FF;
+  border-color: #f2f9ff;
 }
 
 .subcategory-selector-wrapper:has(select:focus-visible) {
-  background-color: #F2F9FF;
+  background-color: #f2f9ff;
 }
 
 .subcategory-selector-wrapper:has(select:focus-visible) label {
@@ -1195,15 +1195,15 @@ path.highcharts-tick {
 }
 
 .progress-chart.poor .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #F33;
+  stroke: #f33;
 }
 
 .progress-chart.good .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #18A975;
+  stroke: #18a975;
 }
 
 .progress-chart.improvement .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #C7870B;
+  stroke: #c7870b;
 }
 
 /* ----------------------- */
