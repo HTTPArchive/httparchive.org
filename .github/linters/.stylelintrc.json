@@ -10,13 +10,13 @@
         ],
         "color-function-notation": null,
         "comment-empty-line-before": null,
+        "declaration-colon-newline-after": null,
         "font-family-no-duplicate-names": [
             true,
             {
                 "ignoreFontFamilyNames": ["monospace"]
             }
         ],
-        "color-hex-case": "lower",
         "length-zero-no-unit": null,
         "max-line-length": null,
         "media-feature-range-notation": "prefix",

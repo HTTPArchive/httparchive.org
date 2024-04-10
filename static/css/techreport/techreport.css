@@ -82,10 +82,7 @@ body > :is(header, footer) {
 }
 
 /* Links */
-main :is(
-  a,
-  p a
-) {
+main :is(a, p a) {
   color: var(--color-link);
 }
 
@@ -268,7 +265,6 @@ main :is(
   border-color: var(--color-text-lighter);
 }
 
-
 .select-label {
   border: 1px solid #959494;
   padding: 0;
@@ -288,7 +284,7 @@ main :is(
   color: #767474;
 }
 
-#page-filters .select-label select{
+#page-filters .select-label select {
   appearance: none;
   background-color: transparent;
   z-index: 1;
@@ -626,7 +622,6 @@ select {
   outline-offset: 1.5px;
 }
 
-
 .subcategory-selector-wrapper::after {
   content: "";
   display: block;
@@ -667,7 +662,6 @@ select {
 .subcategory-selector-wrapper:has(select:focus-visible) label {
   color: var(--color-text) !important;
 }
-
 
 
 /* Timeseries cards */
@@ -861,7 +855,7 @@ select {
 }
 
 .table-ui td.pct-value[data-value] span::after {
-  content: '';
+  content: "";
   display: block;
   height: 0.5rem;
   width: 100%;
@@ -959,9 +953,8 @@ select {
   margin-bottom: 0.5rem;
 }
 
-
 .report-content {
-  background-image: linear-gradient(var(--color-bg-gradient), rgba(238,238,238,0));
+  background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
   padding-top: 3rem;

@@ -7,9 +7,7 @@
 body {
   background-color: var(--color-page-background);
   font-size: 1rem;
-
 }
-
 
 main {
   color: var(--color-text);
@@ -28,7 +26,6 @@ h2 + p {
   margin: 0;
   padding: 0;
 }
-
 
 /* Overwrite margin that's set elsewhere */
 p {
