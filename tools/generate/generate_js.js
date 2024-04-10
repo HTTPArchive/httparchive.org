@@ -5,11 +5,7 @@ node_module_files = [
   'highcharts/highcharts-more.js',
   'highcharts/highstock.js',
   'highcharts/modules/accessibility.js',
-  'highcharts/modules/accessibility.js.map',
   'highcharts/modules/export-data.js',
-  'highcharts/highcharts-more.js.map',
-  'highcharts/highstock.js.map',
-  'highcharts/modules/exporting.js.map',
   'highcharts/modules/exporting.js'
 ];
 
