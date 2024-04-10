@@ -15,7 +15,6 @@
       "accessibility",
       "best_practices",
       "performance",
-      "pwa",
       "seo"
     ],
     "lighthouse_brackets": [
@@ -127,7 +126,7 @@
         ],
         "adoption_timeseries": {
           "title": "All usage",
-          "description": "Placeholder",
+          "description": "Information about how ",
           "id": "adoption_timeseries",
           "endpoint": "adoption",
           "default": "adoption",
@@ -229,7 +228,7 @@
               "metric": "good_pct",
               "label": "Good FID",
               "suffix": "%",
-              "description": "Percentage of origins with good FID scores (under xxx).",
+              "description": "Percentage of origins with good FID scores (under 100ms).",
               "url": "?good-cwv-over-time=FID#good-cwvs"
             },
             {
@@ -238,7 +237,7 @@
               "metric": "good_pct",
               "label": "Good CLS",
               "suffix": "%",
-              "description": "Percentage of origins with good CLS scores (under xxx).",
+              "description": "Percentage of origins with good CLS scores (under 0.1).",
               "url": "?good-cwv-over-time=CLS#good-cwvs"
             },
             {
@@ -247,7 +246,7 @@
               "metric": "good_pct",
               "label": "Good INP",
               "suffix": "%",
-              "description": "Percentage of origins with good INP scores (under xxx).",
+              "description": "Percentage of origins with good INP scores (under 200ms).",
               "url": "?good-cwv-over-time=INP#good-cwvs"
             }
           ]
@@ -409,13 +408,6 @@
             },
             {
               "endpoint": "lighthouse",
-              "category": "pwa",
-              "metric": "median_score_pct",
-              "label": "PWA",
-              "url": "?median-lighthouse-over-time=pwa#lighthouse"
-            },
-            {
-              "endpoint": "lighthouse",
               "category": "best_practices",
               "metric": "median_score_pct",
               "label": "Best Practices",
@@ -446,10 +438,6 @@
               {
                 "label": "SEO (Search Engine Optimisation)",
                 "value": "seo"
-              },
-              {
-                "label": "PWA (Progressive Web Apps)",
-                "value": "pwa"
               },
               {
                 "label": "Best practices",
@@ -882,10 +870,6 @@
                 "value": "seo"
               },
               {
-                "label": "PWA (Progressive Web Apps)",
-                "value": "pwa"
-              },
-              {
                 "label": "Best practices",
                 "value": "best_practices"
               }
@@ -1129,6 +1113,9 @@
   "labels": {
     "metrics": {
       "lighthouse": {
+        "general": {
+          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here."
+        },
         "performance": {
           "title": "Performance",
           "description": "In general, only metrics contribute to your Lighthouse Performance score, not the results of Opportunities or Diagnostics. "
@@ -1139,15 +1126,11 @@
         },
         "seo": {
           "title": "SEO",
-          "description": "todo"
+          "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on Core Web Vitals."
         },
         "best_practices": {
           "title": "Best Practices",
-          "description": "todo"
-        },
-        "pwa": {
-          "title": "Progressive Web Apps",
-          "description": "todo"
+          "description": "This ensures that your page is built using modern web development best practices."
         }
       },
       "vitals": {

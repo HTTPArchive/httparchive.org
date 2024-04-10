@@ -936,15 +936,13 @@ select {
 .component-heading-wrapper {
   display: flex;
   flex-wrap: wrap-reverse;
-}
-
-.component-heading-wrapper > * {
-  flex: 1;
-  max-width: 100%;
+  gap: 1rem;
+  justify-content: space-between;
 }
 
 .component-heading {
-  max-width: 90vw;
+  flex: 0 0 30rem;
+  max-width: 100%;
 }
 
 .component-heading h3 {
