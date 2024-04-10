@@ -8,7 +8,6 @@
   --color-blue-dark: #3a7098;
   --color-blue-100: #eff7ff;
   --color-blue-light: #E1F1FF;
-
   --color-gray-medium: #5c5c5d;
 
   /* Colors based on function */
@@ -57,14 +56,14 @@
   --color-text-lighter: #fff;
   --color-text-darker: #fff;
   --color-text-inverted: #000;
-  --color-card-background: #111111;
+  --color-card-background: #111;
   --color-card-border: #000;
   --color-page-background: #292828;
   --color-checkbox-button-label-selected: #292828;
   --color-checkbox: #fff;
   --color-checkbox-selected: #292828;
   --color-theme-toggle-background: transparent;
-  --color-bg-gradient: #111111;
+  --color-bg-gradient: #111;
   --color-page-border: #000;
   --color-tooltip-border: var(--color-page-background);
 
@@ -252,8 +251,7 @@ main :is(
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
   margin: 0;
-  column-gap: 0.5rem;
-  row-gap: 0.5rem;
+  gap: 0.5rem 0.5rem;
   margin-bottom: 0.5rem;
   margin-right: 0;
   margin-top: 2rem;
@@ -291,30 +289,21 @@ main :is(
 }
 
 #page-filters .select-label select{
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
-
   background-color: transparent;
   z-index: 1;
-
   position: relative;
-
-  padding: 0;
   border: none;
-  border-radius: 0;
   margin-bottom: 0;
   padding: 1.75rem 0.5rem 0.5rem 0.75rem;
-
   font-size: 1rem;
   line-height: 100%;
-
   color: var(--color-text-darker);
   border-radius: 3px;
   outline-offset: 2px;
 }
 
-.select-label:before {
+.select-label::before {
   content: "";
   display: block;
   width: 2.5rem;
@@ -324,31 +313,27 @@ main :is(
   border-radius: 0 4px 4px 0;
 }
 
-.select-label:after {
+.select-label::after {
   content: "";
   display: block;
-
   width: 0.5rem;
   height: 0.5rem;
-
   position: absolute;
   right: 1rem;
   top: 50%;
   top: calc(50% - 0.25rem);
-
   border-bottom: 1.5px solid var(--color-text-darker);
   border-left: 1.5px solid var(--color-text-darker);
   border-radius: 1px;
-
   transform: rotate(-45deg);
 }
 
-.select-label:has(select:is(:focus-visible, :hover)):before {
+.select-label:has(select:is(:focus-visible, :hover))::before {
   background-color: var(--color-text-darker);
   border-left: 1px solid var(--color-text-darker);
 }
 
-.select-label:has(select:is(:focus-visible, :hover)):after {
+.select-label:has(select:is(:focus-visible, :hover))::after {
   border-color: #F2F9FF;
 }
 
@@ -371,16 +356,10 @@ main :is(
   font-size: 1.25rem;
   width: 100%;
   margin-bottom: 0;
-
   border: 1px solid #959494;
   color: var(--color-text-lighter);
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
-
   background-color: transparent;
-
   padding: 0.5rem 0.5rem 0.5rem 0.75rem;
 }
 
@@ -408,7 +387,7 @@ main :is(
   position: relative;
 }
 
-.tech-input-wrapper:before {
+.tech-input-wrapper::before {
   content: "";
   display: block;
   width: 2.5rem;
@@ -419,22 +398,18 @@ main :is(
   z-index: 0;
 }
 
-.tech-input-wrapper:after {
+.tech-input-wrapper::after {
   content: "";
   display: block;
-
   width: 0.5rem;
   height: 0.5rem;
-
   position: absolute;
   right: 1rem;
   top: 50%;
   top: calc(50% - 0.25rem);
-
   border-bottom: 1.5px solid var(--color-text-darker);
   border-left: 1.5px solid var(--color-text-darker);
   border-radius: 1px;
-
   transform: rotate(-45deg);
   z-index: 0;
 }
@@ -444,12 +419,12 @@ main :is(
   position: relative;
 }
 
-.tech-input-wrapper:has(select:is(:focus-visible, :hover)):before {
+.tech-input-wrapper:has(select:is(:focus-visible, :hover))::before {
   background-color: var(--color-text-darker);
   border-left: 1px solid var(--color-text-darker);
 }
 
-.tech-input-wrapper:has(select:is(:focus-visible, :hover)):after {
+.tech-input-wrapper:has(select:is(:focus-visible, :hover))::after {
   border-color: #F2F9FF;
 }
 
@@ -480,28 +455,19 @@ main :is(
 .categories-selector-group label {
   font-weight: 400;
   font-size: 0.825rem;
-
   margin-bottom: 0;
 }
 
 .categories-selector-group select {
   margin-bottom: 0;
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
-
   background-color: transparent;
   color: var(--color-text-lighter);
-
   border: none;
   font-size: 0.825rem;
-
   padding: 0;
-
   border-radius: 0;
   width: 15ch;
-
   border-bottom: 1px solid #959494;
 }
 
@@ -543,25 +509,16 @@ select {
 }
 
 .client-breakdown-wrapper select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
-
   background-color: transparent;
   z-index: 1;
   border-radius: 0;
   border: none;
-
   color: var(--color-text);
-
   padding: 0;
-
   width: 5rem;
-
   border-bottom: 1px solid var(--color-text-lighter);
-
   display: block;
-
   font-size: 1rem;
 }
 
@@ -617,8 +574,7 @@ select {
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  column-gap: 1rem;
-  row-gap: 1rem;
+  gap: 1rem 1rem;
 }
 
 .summary-grid + .card {
@@ -652,16 +608,10 @@ select {
 .subcategory-selector-wrapper select {
   margin-bottom: 0;
   border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
-
   background-color: transparent;
-
   color: var(--color-text);
-
   padding-right: 3rem;
-
   z-index: 2;
   position: relative;
   display: unset;
@@ -677,28 +627,23 @@ select {
 }
 
 
-.subcategory-selector-wrapper:after {
+.subcategory-selector-wrapper::after {
   content: "";
   display: block;
-
   width: 0.5rem;
   height: 0.5rem;
-
   position: absolute;
   right: 1rem;
   top: 50%;
   top: calc(50% - 0.25rem);
-
   border-bottom: 1.5px solid var(--color-text-darker);
   border-left: 1.5px solid var(--color-text-darker);
   border-radius: 1px;
-
   transform: rotate(-45deg);
-
   z-index: 1;
 }
 
-.subcategory-selector-wrapper:has(select:is(:focus-visible, :hover)):before {
+.subcategory-selector-wrapper:has(select:is(:focus-visible, :hover))::before {
   content: "";
   display: block;
   height: 100%;
@@ -711,7 +656,7 @@ select {
   z-index: 0;
 }
 
-.subcategory-selector-wrapper:has(select:is(:focus-visible, :hover)):after {
+.subcategory-selector-wrapper:has(select:is(:focus-visible, :hover))::after {
   border-color: #F2F9FF;
 }
 
@@ -915,7 +860,7 @@ select {
   display: block;
 }
 
-.table-ui td.pct-value[data-value] span:after {
+.table-ui td.pct-value[data-value] span::after {
   content: '';
   display: block;
   height: 0.5rem;
@@ -1109,14 +1054,13 @@ select {
   margin-right: 3rem;
 }
 
-.data-summary .breakdown-label:after {
+.data-summary .breakdown-label::after {
   content: "";
   display: block;
   width: 2rem;
   height: 0.17rem;
   background-color: black;
   background-color: var(--breakdown-color);
-
   position: absolute;
   top: 0.7rem;
   left: 100%;
@@ -1251,7 +1195,7 @@ path.highcharts-tick {
 }
 
 .progress-chart.poor .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #FF3333;
+  stroke: #F33;
 }
 
 .progress-chart.good .lighthouse-progress:not(.border-1, .border-2) {
@@ -1303,7 +1247,7 @@ path.highcharts-tick {
   height: 0;
 }
 
-.check-wrapper input:after {
+.check-wrapper input::after {
   position: absolute;
   top: 0;
   left: 0;
@@ -1313,7 +1257,7 @@ path.highcharts-tick {
   height: 100%;
 }
 
-.check-wrapper:before {
+.check-wrapper::before {
   content: "";
   display: block;
   width: 1rem;
@@ -1329,7 +1273,7 @@ path.highcharts-tick {
   background-color: var(--color-checkbox-button-selected);
 }
 
-.check-wrapper:has(input:checked):before {
+.check-wrapper:has(input:checked)::before {
   background-color: var(--color-checkbox-selected);
   border-color: var(--color-checkbox-selected);
   box-shadow: 0 0 0 1.5px var(--color-checkbox-button-selected) inset;
@@ -1400,7 +1344,7 @@ path.highcharts-tick {
     min-width: 10rem;
   }
 
-  .table-ui td.pct-value[data-value] span:after {
+  .table-ui td.pct-value[data-value] span::after {
     display: none;
   }
 
