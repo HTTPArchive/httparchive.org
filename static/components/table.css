@@ -29,6 +29,7 @@
 
 .table-ui :is(td, th) {
   min-width: 5rem;
+  text-align: left;
 }
 
 .table-ui :is(td, th):not(:last-child) {
@@ -41,10 +42,6 @@
 
 .table-ui tbody th {
   font-weight: normal;
-}
-
-.table-ui :is(td, th) {
-  text-align: left;
 }
 
 .table-ui :is(td, th) strong {
