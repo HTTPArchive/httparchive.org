@@ -1,7 +1,7 @@
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions, drawMetricSummary } from './utils';
+import { el, prettyDate, chartExportOptions, drawMetricSummary, callOnceWhenVisible } from './utils';
 
 
 const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
@@ -24,7 +24,7 @@ function histogram(metric, date, options) {
       drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
     }).catch(e => {
       const chart = document.getElementById(`${metric}-chart`);
-      chart.innerText = `Error loading data: ${e}. Try a more recent start date.`;
+      chart.textContent = `Error loading data: ${e}. Try a more recent start date.`;
     });
 }
 
@@ -262,7 +262,10 @@ function drawHistogram(data, containerId, options) {
     });
   }
 
-  drawChart(series, containerId, options);
+  const chart = document.getElementById(`${options.metric}-chart`);
+  callOnceWhenVisible(chart, () => {
+    drawChart(series, containerId, options);
+  });
 };
 
 function drawChart(series, containerId, options) {
