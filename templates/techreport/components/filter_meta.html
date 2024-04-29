@@ -1,0 +1,11 @@
+<ul class="meta">
+  <li>
+    Client: <span data-slot="client">{{ request.args.get('client', '')  or 'mobile' }}</span>
+  </li>
+  <li>
+    Geo: <span data-slot="geo">{{ request.args.get('geo', '')  or 'ALL' }}</span>
+  </li>
+  <li>
+    Rank: <span data-slot="rank">{{ request.args.get('rank', '')  or 'ALL' }}</span>
+  </li>
+</ul>

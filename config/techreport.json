@@ -1,0 +1,1246 @@
+{
+  "id": "techreport",
+  "name": "Technology Report",
+  "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
+  "config": {
+    "cwv_subcategories": [
+      "FID",
+      "CLS",
+      "LCP",
+      "FCP",
+      "INP",
+      "TTFB"
+    ],
+    "lighthouse_subcategories": [
+      "accessibility",
+      "best_practices",
+      "performance",
+      "seo"
+    ],
+    "lighthouse_brackets": [
+      {
+        "name": "poor",
+        "min": 0,
+        "max": 49
+      },
+      {
+        "name": "improvement",
+        "min": 50,
+        "max": 89
+      },
+      {
+        "name": "good",
+        "min": 90,
+        "max": 100
+      }
+    ]
+  },
+  "pages": {
+    "landing": {
+      "id": "landing",
+      "title": "Technology Report",
+      "subtitle": "Report",
+      "description": "This is placeholder text about how the report works",
+      "data": {},
+      "filters": {
+        "technologies": ["WordPress", "Squarespace", "Drupal"]
+      },
+      "config": {
+        "default": {
+          "app": ["WordPress", "Squarespace", "Drupal"]
+        },
+        "popular_tech": {
+          "id": "popular_tech",
+          "title": "Popular technologies",
+          "description": "To write",
+          "caption": "popular technologies table caption todo",
+          "filters": {
+            "app": ["WordPress", "Squarespace", "Drupal"]
+          },
+          "ctaLabel": "Compare technologies",
+          "ctaUrl": "/reports/techreport/comparison?app=WordPress,Squarespace,Drupal"
+        }
+      }
+    },
+    "drilldown": {
+      "id": "drilldown",
+      "title": "Drilldown",
+      "subtitle": "Technology Report",
+      "description": "Drilldown placeholder",
+      "config": {
+        "default": {
+          "app": ["ALL"],
+          "series": {
+            "breakdown": "client",
+            "breakdown_values": [
+              {
+                "name": "desktop",
+                "color": "#669E8E",
+                "suffix": "%"
+              },
+              {
+                "name": "mobile",
+                "color": "#BD6EBE",
+                "suffix": "%"
+              }
+            ]
+          }
+        },
+        "summary": [
+          {
+            "endpoint": "vitals",
+            "category": "overall",
+            "metric": "good_pct",
+            "label": "Overall good CWVs",
+            "suffix": "%",
+            "description": "Origins with overall good core web vitals.",
+            "url": "#good-cwvs"
+          },
+          {
+            "endpoint": "lighthouse",
+            "category": "performance",
+            "metric": "median_score_pct",
+            "label": "Lighthouse performance",
+            "suffix": "",
+            "description": "Median lighthouse performance score across tested origins.",
+            "url": "#lighthouse"
+          },
+          {
+            "endpoint": "lighthouse",
+            "category": "accessibility",
+            "metric": "median_score_pct",
+            "label": "Lighthouse accessibility",
+            "suffix": "",
+            "description": "Median lighthouse accessibility score across tested origins.",
+            "url": "#lighthouse&median-lighthouse-over-time=accessibility"
+          },
+          {
+            "endpoint": "lighthouse",
+            "category": "seo",
+            "metric": "median_score_pct",
+            "label": "Page weight",
+            "suffix": "kB",
+            "description": "Median total bytes per page for across tested origins.",
+            "url": "#page-weight"
+          }
+        ],
+        "adoption_timeseries": {
+          "title": "All usage",
+          "description": "Information about how ",
+          "id": "adoption_timeseries",
+          "endpoint": "adoption",
+          "default": "adoption",
+          "metric": "origins",
+          "table": {
+            "param": "",
+            "default": "adoption",
+            "caption": "Usage placeholder",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date"
+              },
+              {
+                "key": "origins",
+                "name": "Origins"
+              },
+              {
+                "key": "client",
+                "name": "Client"
+              }
+            ]
+          },
+          "viz": {
+            "title": "Origins over time",
+            "metric": "origins",
+            "default": "adoption",
+            "series": {
+              "breakdown": "client",
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#669E8E"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#BD6EBE"
+                }
+              ],
+              "defaults": [
+                {
+                  "name": "Desktop",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "Mobile",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Amount of origins",
+              "tickAmount": 3
+            }
+          }
+        },
+        "good_cwv_summary": {
+          "title": "Latest Core Web Vitals",
+          "cards": [
+            {
+              "endpoint": "vitals",
+              "category": "overall",
+              "metric": "good_pct",
+              "label": "Good CWVs",
+              "suffix": "%",
+              "description": "Origins with overall good core web vitals.",
+              "url": "?good-cwv-over-time=overall#good-cwvs"
+            },
+            {
+              "endpoint": "vitals",
+              "category": "LCP",
+              "metric": "good_pct",
+              "label": "Good LCP",
+              "suffix": "%",
+              "description": "Percentage of origins with good LCP scores (under 0.25s).",
+              "url": "?good-cwv-over-time=LCP#good-cwvs"
+            },
+            {
+              "endpoint": "vitals",
+              "category": "FID",
+              "metric": "good_pct",
+              "label": "Good FID",
+              "suffix": "%",
+              "description": "Percentage of origins with good FID scores (under 100ms).",
+              "url": "?good-cwv-over-time=FID#good-cwvs"
+            },
+            {
+              "endpoint": "vitals",
+              "category": "CLS",
+              "metric": "good_pct",
+              "label": "Good CLS",
+              "suffix": "%",
+              "description": "Percentage of origins with good CLS scores (under 0.1).",
+              "url": "?good-cwv-over-time=CLS#good-cwvs"
+            },
+            {
+              "endpoint": "vitals",
+              "category": "INP",
+              "metric": "good_pct",
+              "label": "Good INP",
+              "suffix": "%",
+              "description": "Percentage of origins with good INP scores (under 200ms).",
+              "url": "?good-cwv-over-time=INP#good-cwvs"
+            }
+          ]
+        },
+        "good_cwv_timeseries": {
+          "title": "Good Core Web Vitals over time",
+          "description": "Placeholder - combination of several metrics",
+          "id": "good_cwv_timeseries",
+          "endpoint": "vitals",
+          "metric": "good_pct",
+          "subcategory": {
+            "base": "pct_good_",
+            "param": "good-cwv-over-time",
+            "default": "overall",
+            "options": [
+              {
+                "label": "Overall good CWVs",
+                "value": "overall"
+              },
+              {
+                "label": "LCP",
+                "value": "LCP"
+              },
+              {
+                "label": "FID",
+                "value": "FID"
+              },
+              {
+                "label": "CLS",
+                "value": "CLS"
+              },
+              {
+                "label": "FCP",
+                "value": "FCP"
+              },
+              {
+                "label": "TTFB",
+                "value": "TTFB"
+              },
+              {
+                "label": "INP",
+                "value": "INP"
+              }
+            ]
+          },
+          "table": {
+            "param":"good-cwv-over-time",
+            "default": "overall",
+            "caption": "Good Core Web Vitals",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date",
+                "type": "heading"
+              },
+              {
+                "key": "good_pct",
+                "name": "% Good scores",
+                "suffix": "%",
+                "className": "main-cell pct-value"
+              },
+              {
+                "key": "good_number",
+                "name": "Good scores",
+                "className": "good-scores",
+                "hiddenSuffix": "/"
+              },
+              {
+                "key": "tested",
+                "name": "Eligible",
+                "className": "eligible"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          },
+          "summary": true,
+          "viz": {
+            "base": "pct_good_",
+            "default": "overall",
+            "param": "good-cwv-over-time",
+            "title": "Origins with good scores over time",
+            "metric": "good_pct",
+            "height": 600,
+            "series": {
+              "breakdown": "client",
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#669E8E",
+                  "suffix": "%"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#BD6EBE",
+                  "suffix": "%"
+                }
+              ],
+              "defaults": [
+                {
+                  "name": "desktop",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "mobile",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "% Origins with good scores"
+            }
+          }
+        },
+        "lighthouse_summary": {
+          "title": "Latest lighthouse scores",
+          "cards": [
+            {
+              "endpoint": "lighthouse",
+              "category": "performance",
+              "metric": "median_score_pct",
+              "label": "Performance",
+              "url": "?median-lighthouse-over-time=performance#lighthouse"
+            },
+            {
+              "endpoint": "lighthouse",
+              "category": "accessibility",
+              "metric": "median_score_pct",
+              "label": "Accessibility",
+              "url": "?median-lighthouse-over-time=accessibility#lighthouse"
+            },
+            {
+              "endpoint": "lighthouse",
+              "category": "seo",
+              "metric": "median_score_pct",
+              "label": "SEO",
+              "url": "?median-lighthouse-over-time=seo#lighthouse"
+            },
+            {
+              "endpoint": "lighthouse",
+              "category": "best_practices",
+              "metric": "median_score_pct",
+              "label": "Best Practices",
+              "url": "?median-lighthouse-over-time=best_practices#lighthouse"
+            }
+          ]
+        },
+        "lighthouse_timeseries": {
+          "title": "Lighthouse over time",
+          "description": "Placeholder text",
+          "id": "lighthouse_timeseries",
+          "endpoint": "lighthouse",
+          "metric": "median_score_pct",
+          "summary": true,
+          "subcategory": {
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "options": [
+              {
+                "label": "Performance",
+                "value": "performance"
+              },
+              {
+                "label": "Accessibility",
+                "value": "accessibility"
+              },
+              {
+                "label": "SEO (Search Engine Optimisation)",
+                "value": "seo"
+              },
+              {
+                "label": "Best practices",
+                "value": "best_practices"
+              }
+            ]
+          },
+          "table": {
+            "param":"median-lighthouse-over-time",
+            "default": "performance",
+            "caption": "Lighthouse scores",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date"
+              },
+              {
+                "key": "median_score_pct",
+                "name": "Median score",
+                "className": "main-cell"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          },
+          "viz": {
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "title": "Scores over time",
+            "metric": "median_score_pct",
+            "height": 600,
+            "series": {
+              "breakdown": "client",
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#669E8E"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#BD6EBE"
+                }
+              ],
+              "defaults": [
+                {
+                  "name": "Desktop",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "Mobile",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Lighthouse Score"
+            }
+          }
+        },
+        "weight_summary": {
+          "title": "Latest page weight",
+          "cards": [
+            {
+              "endpoint": "pageWeight",
+              "category": "images",
+              "metric": "median_bytes",
+              "label": "Image Weight",
+              "url": "?weight-over-time=image#page-weight",
+              "suffix": " kB"
+            },
+            {
+              "endpoint": "pageWeight",
+              "category": "js",
+              "metric": "median_bytes",
+              "label": "JavaScript Size",
+              "url": "?weight-over-time=js#page-weight",
+              "suffix": " kB"
+            },
+            {
+              "endpoint": "pageWeight",
+              "category": "total",
+              "metric": "median_bytes",
+              "label": "Total Page Weight",
+              "url": "?weight-over-time=total#page-weight",
+              "suffix": " kB"
+            }
+          ]
+        },
+        "weight_timeseries": {
+          "title": "Weight over time",
+          "description": "Placeholder text",
+          "id": "weight_timeseries",
+          "summary": true,
+          "endpoint": "pageWeight",
+          "default": "images",
+          "metric": "median_bytes",
+          "subcategory": {
+            "base": "median_bytes_",
+            "param": "weight-over-time",
+            "default": "total",
+            "options": [
+              {
+                "label": "Total page weight",
+                "value": "total"
+              },
+              {
+                "label": "Image weight",
+                "value": "images"
+              },
+              {
+                "label": "JavaScript transfer size",
+                "value": "js"
+              }
+            ]
+          },
+          "table": {
+            "param":"weight-over-time",
+            "default": "images",
+            "caption": "Weight",
+            "columns": [
+              {
+                "name": "Date",
+                "key": "date"
+              },
+              {
+                "name": "Median Bytes",
+                "key": "median_bytes",
+                "suffix": "kB",
+                "className": "main-cell"
+              },
+              {
+                "name": "Client",
+                "key": "client",
+                "className": "client"
+              }
+            ]
+          },
+          "viz": {
+            "base": "median_bytes_",
+            "param": "weight-over-time",
+            "default": "images",
+            "title": "Image weight over time",
+            "metric": "median_bytes",
+            "height": 600,
+            "series": {
+              "breakdown": "client",
+              "values": [
+                {
+                  "name": "desktop",
+                  "color": "#669E8E",
+                  "suffix": " kB"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#BD6EBE",
+                  "suffix": " kB"
+                }
+              ],
+              "defaults": [
+                {
+                  "name": "Desktop",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "Mobile",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Weight in kB"
+            }
+          }
+        }
+      }
+    },
+    "comparison": {
+      "id": "comparison",
+      "title": "Comparison",
+      "subtitle": "Technology Report",
+      "config": {
+        "colors": {
+          "app": [
+            "#5980EB",
+            "#D55316",
+            "#2C2F70",
+            "#68A16D",
+            "#B979A7",
+            "#AC8D1C",
+            "#742F53",
+            "#449DB1",
+            "#8E3496",
+            "#CB377C"
+          ],
+          "overrides": {
+            "WordPress": "#ff0000"
+          }
+        },
+        "default": {
+          "app": ["ALL", "WordPress", "Drupal"],
+          "series": {
+            "breakdown": "app"
+          }
+        },
+        "tech_comparison_summary": {
+          "id": "tech_comparison_summary",
+          "table": {
+            "caption": "Summary",
+            "columns": [
+              {
+                "key": "technology",
+                "name": "Tech",
+                "type": "heading"
+              },
+              {
+                "key": "origins",
+                "name": "Origins",
+                "breakdown": "subcategory",
+                "subcategory": "adoption",
+                "endpoint": "adoption",
+                "metric": "origins"
+              },
+              {
+                "key": "good_pct",
+                "name": "Overall good CWV",
+                "breakdown": "subcategory",
+                "subcategory": "overall",
+                "suffix": "%",
+                "className": "main-cell pct-value",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "FID",
+                "breakdown": "subcategory",
+                "subcategory": "FID",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "medium_score_pct",
+                "name": "Accessibility",
+                "breakdown": "subcategory",
+                "subcategory": "accessibility",
+                "endpoint": "lighthouse",
+                "metric": "median_score_pct"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          }
+        },
+        "good_cwv_timeseries": {
+          "title": "Good Core Web Vitals over time",
+          "description": "Placeholder - combination of several metrics",
+          "id": "good_cwv_timeseries",
+          "endpoint": "vitals",
+          "metric": "good_pct",
+          "default": "overall",
+          "subcategory": {
+            "base": "pct_good_",
+            "param": "good-cwv-over-time",
+            "default": "overall",
+            "options": [
+              {
+                "label": "Overall good CWVs",
+                "value": "overall"
+              },
+              {
+                "label": "LCP",
+                "value": "LCP"
+              },
+              {
+                "label": "FID",
+                "value": "FID"
+              },
+              {
+                "label": "CLS",
+                "value": "CLS"
+              },
+              {
+                "label": "FCP",
+                "value": "FCP"
+              },
+              {
+                "label": "TTFB",
+                "value": "TTFB"
+              },
+              {
+                "label": "INP",
+                "value": "INP"
+              }
+            ]
+          },
+          "table": {
+            "param": "good-cwv-over-time",
+            "default": "overall",
+            "caption": "Good Core Web Vitals placeholder",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date",
+                "type": "heading"
+              },
+              {
+                "key": "good_pct",
+                "name": "Good scores",
+                "breakdown": "app",
+                "suffix": "%",
+                "className": "main-cell pct-value"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          },
+          "summary": true,
+          "viz": {
+            "title": "Origins with good core web vitals over time",
+            "base": "pct_good_",
+            "param": "good-cwv-over-time",
+            "default": "overall",
+            "metric": "good_pct",
+            "height": 600,
+            "series": {
+              "breakdown": "app",
+              "suffix": "%",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ],
+              "xAxis": {
+                "title": "Monthly entries",
+                "tickAmount": 12,
+                "defaults": [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                  "Oct",
+                  "Nov",
+                  "Dec"
+                ]
+              },
+              "yAxis": {
+                "title": "% Origins with good scores"
+              }
+            }
+          }
+        },
+        "lighthouse_timeseries": {
+          "title": "Lighthouse over time",
+          "description": "Placeholder text",
+          "id": "lighthouse_timeseries",
+          "endpoint": "lighthouse",
+          "metric": "median_score_pct",
+          "subcategory": {
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "options": [
+              {
+                "label": "Performance",
+                "value": "performance"
+              },
+              {
+                "label": "Accessibility",
+                "value": "accessibility"
+              },
+              {
+                "label": "SEO (Search Engine Optimisation)",
+                "value": "seo"
+              },
+              {
+                "label": "Best practices",
+                "value": "best_practices"
+              }
+            ]
+          },
+          "table": {
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "caption": "Lighthouse placeholder",
+            "columns": [
+              {
+                "key": "date",
+                "name": "Date",
+                "type": "heading"
+              },
+              {
+                "key": "median_score_pct",
+                "name": "Median lighthouse score",
+                "breakdown": "app",
+                "className": "main-cell"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          },
+          "summary": true,
+          "viz": {
+            "title": "Lighthouse scores over time",
+            "base": "median_lighthouse_score_",
+            "param": "median-lighthouse-over-time",
+            "default": "performance",
+            "metric": "median_score_pct",
+            "series": {
+              "breakdown": "app",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Lighthouse Score"
+            }
+          }
+        },
+        "weight_timeseries": {
+          "title": "Page weight over time",
+          "description": "Placeholder text",
+          "id": "weight_timeseries",
+          "endpoint": "pageWeight",
+          "metric": "median_bytes",
+          "default": "total",
+          "subcategory": {
+            "base": "median_bytes_",
+            "param": "median-weight-over-time",
+            "default": "performance",
+            "options": [
+              {
+                "label": "Total page weight",
+                "value": "total"
+              },
+              {
+                "label": "Image weight",
+                "value": "images"
+              },
+              {
+                "label": "JavaScript transfer size",
+                "value": "js"
+              }
+            ]
+          },
+          "table": {
+            "param":"median-weight-over-time",
+            "default": "total",
+            "caption": "Weight",
+            "columns": [
+              {
+                "name": "Date",
+                "key": "date"
+              },
+              {
+                "name": "Median Bytes",
+                "key": "median_bytes",
+                "suffix": "kB",
+                "className": "main-cell",
+                "breakdown": "app"
+              },
+              {
+                "name": "Client",
+                "key": "client",
+                "className": "client"
+              }
+            ]
+          },
+          "summary": true,
+          "viz": {
+            "title": "Median page weight over time",
+            "base": "median_bytes",
+            "param": "median-weight-over-time",
+            "default": "total",
+            "metric": "median_bytes",
+            "series": {
+              "breakdown": "app",
+              "suffix": " kB",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ]
+            },
+            "xAxis": {
+              "title": "Monthly entries",
+              "tickAmount": 12,
+              "defaults": [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+              ]
+            },
+            "yAxis": {
+              "title": "Weight in kB"
+            }
+          }
+        },
+        "adoption_timeseries": {
+          "title": "Origins over time",
+          "description": "Placeholder text",
+          "id": "adoption_timeseries",
+          "endpoint": "adoption",
+          "metric": "origins",
+          "default": "adoption",
+          "table": {
+            "param":"",
+            "caption": "Adoption",
+            "default": "adoption",
+            "columns": [
+              {
+                "name": "Date",
+                "key": "date"
+              },
+              {
+                "name": "Usage",
+                "key": "origins",
+                "className": "main-cell",
+                "breakdown": "app"
+              },
+              {
+                "name": "Client",
+                "key": "client",
+                "className": "client"
+              }
+            ]
+          },
+          "summary": true,
+          "viz": {
+            "title": "Origins over time",
+            "metric": "origins",
+            "default": "adoption",
+            "series": {
+              "breakdown": "app",
+              "defaults": [
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                },
+                {
+                  "name": "App",
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                }
+              ],
+              "xAxis": {
+                "title": "Monthly entries",
+                "tickAmount": 12,
+                "defaults": [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                  "Oct",
+                  "Nov",
+                  "Dec"
+                ]
+              },
+              "yAxis": {
+                "title": "Amount of origins",
+                "tickAmount": 3
+              }
+            }
+          }
+        }
+      },
+      "description": "Comparison placeholder"
+    }
+  },
+
+  "labels": {
+    "metrics": {
+      "lighthouse": {
+        "general": {
+          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here."
+        },
+        "performance": {
+          "title": "Performance",
+          "description": "In general, only metrics contribute to your Lighthouse Performance score, not the results of Opportunities or Diagnostics. "
+        },
+        "accessibility": {
+          "title": "Accessibility",
+          "description": "The Lighthouse Accessibility score is a weighted average of all accessibility audits. Weighting is based on axe user impact assessments. Each accessibility audit is pass or fail. Unlike the Performance audits, a page doesn't get points for partially passing an accessibility audit."
+        },
+        "seo": {
+          "title": "SEO",
+          "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on Core Web Vitals."
+        },
+        "best_practices": {
+          "title": "Best Practices",
+          "description": "This ensures that your page is built using modern web development best practices."
+        }
+      },
+      "vitals": {
+        "overall": {
+          "label": "Overall Core Web Vitals",
+          "title": "Passes Core Web Vitals",
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a good experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics."
+        },
+        "LCP": {
+          "label": "LCP",
+          "title": "Good Largest Contentful Paint",
+          "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful. Good experiences are less than or equal to 2.5 seconds."
+        },
+        "FID": {
+          "label": "FID",
+          "title": "Good First Input Delay",
+          "description": "First Input Delay (FID) measures the time from when a user first interacts with a page, to the time when the browser is actually able to begin processing event handlers in response to that interaction. Sites should strive to have a First Input Delay of 100 milliseconds or less. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
+        },
+        "CLS": {
+          "label": "CLS",
+          "title": "Good Cumulative Layout Shift",
+          "description": "The Cumulative Layout Shift (CLS) score is a unitless value based on a calculation of how much content is shifting and by how far. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits."
+        },
+        "FCP": {
+          "label": "FCP",
+          "value": "fcp",
+          "title": "Good First Contentful Paint",
+          "description": "The percentage of origins with good FCP experiences, less than or equal to 1.8 seconds"
+        },
+        "TTFB": {
+          "label": "TTFB",
+          "title": "Good Time To First Byte",
+          "description": "TTFB is a metric that measures the time between the request for a resource and when the first byte of a response begins to arrive. A good TTFB is less than or equal to 800ms."
+        },
+        "INP": {
+          "label": "INP",
+          "title": "Good Interaction to Next Paint",
+          "description": "INP is a metric that assesses a page's overall responsiveness to user interactions by observing the latency of all click, tap, and keyboard interactions that occur throughout the lifespan of a user's visit to a page. The final INP value is the longest interaction observed, ignoring outliers. A good experience is less than or equal to 200ms."
+        }
+      },
+      "pageWeight": {
+        "images": {
+          "title": "Image Weight",
+          "description": "todo"
+        },
+        "js": {
+          "title": "JavaScript Transfer Size",
+          "description": "todo"
+        },
+        "total": {
+          "title": "Total Page Weight",
+          "description": "todo"
+        }
+      },
+      "adoption": {
+        "adoption": {
+          "title": "Adoption",
+          "description": "Todo"
+        }
+      }
+    },
+    "values": {
+      "date": "Date",
+      "client": "Client",
+      "origins": "Origins",
+
+      "origins_eligible_for_cwv": "Eligible",
+      "origins_eligible_for_fid": "Eligible",
+      "origins_eligible_for_cls": "Eligible",
+      "origins_eligible_for_lcp": "Eligible",
+      "origins_eligible_for_fcp": "Eligible",
+      "origins_eligible_for_inp": "Eligible",
+      "origins_eligible_for_ttfb": "Eligible",
+
+      "origins_with_good_cwv": "Having good CWVs",
+      "origins_with_good_fid": "Having good FID",
+      "origins_with_good_cls": "Having good CLS",
+      "origins_with_good_lcp": "Having good LCP",
+      "origins_with_good_fcp": "Having good FCP",
+      "origins_with_good_inp": "Having good INP",
+      "origins_with_good_ttfb": "Having good TTFB",
+
+      "pct_good_cwv": "% Good CWVs",
+      "pct_good_fid": "% Good FID",
+      "pct_good_cls": "% Good CLS",
+      "pct_good_lcp": "% Good LCP",
+      "pct_good_fcp": "% Good FCP",
+      "pct_good_inp": "% Good INP",
+      "pct_good_ttfb": "% Good TTFB",
+
+      "median_lighthouse_score_accessibility": "Median accessibility",
+      "median_lighthouse_score_performance": "Median performance",
+      "median_lighthouse_score_pwa": "Median PWA",
+      "median_lighthouse_score_seo": "Median SEO",
+      "median_lighthouse_score_best_practices": "Median best practices",
+
+      "median_bytes_image":"Median bytes image",
+      "median_bytes_js":"Median bytes js",
+      "median_bytes_total":"Median bytes total"
+    }
+  },
+  "graphic": {
+    "bgcolor": "#fff",
+    "primary": {
+      "color": "#444",
+      "icon": "fas fa-wrench"
+    },
+    "secondary": {
+      "color": "rgba(0, 0, 0, 0.3)",
+      "icon": "fas fa-tachometer-alt"
+    }
+  }
+}

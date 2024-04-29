@@ -1,0 +1,123 @@
+{% extends "techreport/report.html" %}
+
+{% block section %}
+  {{ super() }}
+
+  {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+  {% set technologies_str = ','.join(technologies) %}
+
+  <div class="intro block-m">
+    <div class="info">
+      <h1>
+        <span class="subtitle">Tech Report</span>
+        <span class="main-title">Comparison</span>
+      </h1>
+    </div>
+    <div class="filters">
+      {% include "techreport/templates/filters.html" %}
+    </div>
+  </div>
+
+  {% set filter_tech_title = technologies_str or tech_report_page.filters.app[0] or 'ALL' %}
+  {% include "techreport/components/filter_info_header.html" %}
+
+  <div id="report-content" class="report-content">
+    <!-- Section: Summary of the main metrics -->
+    <div
+      id="comparison-summary"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
+      <h2>Summary ({{ technologies | length }} technologies)</h2>
+      {% set component = tech_report_page.config.tech_comparison_summary %}
+      {% set id = component.id %}
+      {% set client = request.args.get('client', '')  or 'mobile' %}
+
+      {% set table = component.table %}
+      {% include "techreport/components/table_linked.html" %}
+
+      {% include "techreport/components/filter_meta.html" %}
+    </div>
+
+    <!-- Section: Core Web Vitals -->
+    <div
+      id="comparison-good-cwvs"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="cwv"
+    >
+      <h2>Core Web Vitals</h2>
+      <p>Description</p>
+
+      <!-- Timeseries -->
+      <div class="card">
+        {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
+        {% if timeseries %}
+          {% set subcategory = request.args.get('good-cwv-over-time', '')  or 'cwv' %}
+          {% include "techreport/components/timeseries.html" %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Section: Lighthouse -->
+    <div
+      id="comparison-lighthouse"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="lighthouse"
+    >
+      <h2>Lighthouse</h2>
+      <p>Description</p>
+
+      <!-- Timeseries -->
+      <div class="card">
+        {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
+        {% if timeseries %}
+          {% set subcategory = request.args.get('median-lighthouse-over-time', '')  or 'performance' %}
+          {% include "techreport/components/timeseries.html" %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Section: Page weight -->
+    <div
+      id="comparison-page-weight"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="page-weight"
+    >
+      <h2>Page weight</h2>
+      <p>Description</p>
+
+      <!-- Timeseries -->
+      <div class="card">
+        {% set timeseries = tech_report_page.config.weight_timeseries %}
+        {% if timeseries %}
+          {% set subcategory = request.args.get('median-weight-over-time', '')  or 'image' %}
+          {% include "techreport/components/timeseries.html" %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Section: Adoption -->
+    <div
+      id="comparison-adoption"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="adopiton"
+    >
+      <h2>Adoption</h2>
+      <p>Description</p>
+
+      <!-- Timeseries -->
+      <div class="card">
+      {% set timeseries = tech_report_page.config.adoption_timeseries %}
+      {% if timeseries %}
+        {% include "techreport/components/timeseries.html" %}
+      {% endif %}
+    </div>
+    </div>
+  </div>
+
+{% endblock %}

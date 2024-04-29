@@ -10,7 +10,8 @@
     "page-weight",
     "chrome-ux-report",
     "project-fugu",
-    "cwv-tech"
+    "cwv-tech",
+    "cwv-tech-new"
   ],
   "_featured": [
     "state-of-the-web"
@@ -1376,6 +1377,23 @@
         "color": "rgba(0, 0, 0, 0.3)",
         "icon": "fa-tachometer-alt",
         "width": "fa-w-18"
+      }
+    }
+  },
+  "cwv-tech-new": {
+    "name": "BETA: Core Web Vitals Technology Report",
+    "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
+    "url": "/reports/techreport/landing",
+    "metrics": [],
+    "graphic": {
+      "bgcolor": "#fff",
+      "primary": {
+        "color": "#444",
+        "icon": "fas fa-wrench"
+      },
+      "secondary": {
+        "color": "rgba(0, 0, 0, 0.3)",
+        "icon": "fas fa-tachometer-alt"
       }
     }
   }

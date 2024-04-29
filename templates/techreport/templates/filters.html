@@ -1,0 +1,56 @@
+<form id="page-filters" class="card">
+  <div>
+    <fieldset class="technology-filters">
+      <legend class="sr-only">Technologies</legend>
+
+      {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
+      {% if active_page == "drilldown" %}
+        {% set technologies = [technologies[0]] %}
+      {% endif %}
+
+      {% for technology in technologies %}
+        {% set key = loop.index %}
+        {% set technology = technology %}
+        {% set name = "tech-" + key|string %}
+        {% include "techreport/templates/selector_tech.html" %}
+      {% endfor %}
+
+      {% if active_page == "comparison" %}
+        <button id="add-tech">Add another technology</button>
+      {% endif %}
+    </fieldset>
+    <fieldset class="lens">
+      <legend>Lens</legend>
+      <div class="select-label">
+        <label for="geo">Geo</label>
+        <select name="geo" id="geo">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+      <div class="select-label">
+        <label for="rank">Rank</label>
+        <select name="rank" id="rank">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+    </fieldset>
+  </div>
+  <button type="submit" id="submit-form">Update</button>
+</form>
+
+<template id="filter-option">
+  <option value="Option">
+    Option
+  </option>
+</template>
+
+<template id="tech-selector">
+  {% set technology = "ALL" %}
+  {% set name = "tech-new" %}
+  {% set key = 2 %}
+  {% include "techreport/templates/selector_tech.html" %}
+</template>

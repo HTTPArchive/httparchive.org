@@ -1,0 +1,67 @@
+.landing-content {
+  margin-top: 10rem;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem 2rem;
+  margin-bottom: 4rem;
+  margin-top: -15rem;
+}
+
+.choices .card {
+  padding: 1.5rem 1.75rem;
+}
+
+.choices .card h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.choices .card h2 + p {
+  margin: 0;
+  padding: 0;
+}
+
+.choices .card .img-placeholder {
+  display: block;
+  width: 100%;
+  height: 17rem;
+  background-color: #eee;
+  margin-top: 1rem;
+}
+
+.latest-info h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.latest-info .stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.latest-info h3 {
+  font-size: 1.15rem;
+}
+
+.latest-info p.value {
+  font-size: var(--font-size-medium);
+  font-weight: 600;
+}
+
+.report-summary-tables {
+  padding: 4rem 0;
+}
+
+.report-summary-tables .section {
+  margin-top: 2rem;
+}
+
+.report-summary-tables .section + .section {
+  margin-top: 1rem;
+}

@@ -1,0 +1,101 @@
+/* General */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--color-page-background);
+  font-size: 1rem;
+}
+
+main {
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: var(--font-size-xlarge);
+  font-weight: 500;
+}
+
+h2 {
+  font-size: var(--font-size-large);
+}
+
+h2 + p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Overwrite margin that's set elsewhere */
+p {
+  margin: 0;
+}
+
+:is(a, button, select):focus-visible {
+  outline: 1.5px solid var(--color-teal-dark);
+  outline-offset: 1.5px;
+}
+
+/* Hidden visually, but still accessible through screen readers/other AT */
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* Hidden for everyone */
+.hidden {
+  display: none;
+}
+
+.card {
+  padding: 1.5rem;
+  background: var(--color-card-background);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--card-shadow);
+  transition: padding 0.35s;
+}
+
+.card > :is(h2, h3, h4) {
+  margin-top: 0;
+}
+
+.block-s {
+  width: 50rem;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.block-m {
+  width: 70rem;
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.block-l {
+  width: 85rem;
+  max-width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feedback {
+  background-image: linear-gradient(
+    var(--color-page-background),
+    var(--color-card-background)
+  );
+  padding: 4rem 0;
+  margin-top: -4rem;
+}
+
+.feedback h2 {
+  margin-top: 0;
+}

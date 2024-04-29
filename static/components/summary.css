@@ -1,0 +1,21 @@
+.summary-linked-label {
+  font-weight: 600;
+}
+
+.summary-linked-label a {
+  color: var(--color-link);
+}
+
+.summary-linked-label a:is(:hover, :focus) {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.summary-linked-value,
+.summary-suffix {
+  font-size: var(--font-size-medium);
+}
+
+.summary-linked-description {
+  margin-bottom: 0;
+}

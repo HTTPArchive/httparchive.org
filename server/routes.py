@@ -4,6 +4,7 @@ import re
 
 from . import app, talisman, render_template, url_for
 from . import reports as report_util
+from . import techreport as tech_report_util
 from . import faq as faq_util
 
 
@@ -64,6 +65,48 @@ def reports():
         return jsonify(status=200, reports=all_reports)
 
     return render_template("reports.html", reports=all_reports)
+
+
+@app.route("/reports/techreport/<page_id>", strict_slashes=False)
+def techreport(page_id):
+    # Needed for the header dropdown
+    all_reports = report_util.get_reports()
+
+    # Get the configuration for the tech report
+    tech_report = tech_report_util.get_report()
+
+    # Get the settings for the current page
+    active_tech_report = tech_report.get("pages").get(page_id)
+
+    # Add the technologies requested in the URL to the filters
+    # Use the default configured techs as fallback
+    # Use ["ALL"] if there is nothing configured
+    requested_technologies = active_tech_report.get("config").get("default").get(
+        "app"
+    ) or ["ALL"]
+
+    if request.args.get("tech"):
+        requested_technologies = request.args.get("tech").split(",")
+
+    # Get the filters
+    requested_geo = request.args.get("geo") or "ALL"
+    requested_rank = request.args.get("rank") or "ALL"
+    filters = {
+        "geo": requested_geo,
+        "rank": requested_rank,
+        "app": requested_technologies,
+    }
+
+    active_tech_report["filters"] = filters
+
+    return render_template(
+        "techreport/%s.html" % page_id,
+        active_page=page_id,
+        tech_report_labels=tech_report.get("labels"),
+        tech_report_config=tech_report.get("config"),
+        tech_report_page=active_tech_report,
+        reports=all_reports,
+    )
 
 
 @app.route("/reports/<report_id>", strict_slashes=False)

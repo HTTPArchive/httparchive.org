@@ -1,0 +1,71 @@
+{% set category = selected_subcategory or subcategory.default %}
+{% set endpoint = timeseries.endpoint %}
+
+<div data-id="{{ timeseries.id }}" data-component="timeseries" data-endpoint="{{timeseries.endpoint}}" data-category="{{category}}" data-metric="{{timeseries.metric}}" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
+  <div class="component-heading-wrapper">
+    <div class="component-heading">
+      {% set title = timeseries.title %}
+      {% set descr = timeseries.description %}
+      {% if tech_report_labels.metrics[endpoint][selected_subcategory] %}
+        {% set title = tech_report_labels.metrics[endpoint][selected_subcategory].title %}
+        {% set descr = tech_report_labels.metrics[endpoint][selected_subcategory].description %}
+      {% endif %}
+
+      <h3>{{ title }}</h3>
+      <p class="descr">{{ descr }}</p>
+    </div>
+
+    <div class="component-filters">
+      {% if timeseries.subcategory %}
+        {% set subcategory = timeseries.subcategory %}
+        {% set id = timeseries.id %}
+        {% include "techreport/components/subcategory.html" %}
+      {% endif %}
+    </div>
+  </div>
+
+
+  {% if timeseries.viz %}
+    {% if timeseries.summary %}
+      <div class="data-summary">
+        <div class="heading">
+          <h4>
+            Latest data: <span data-slot="timestamp"></span>
+          </h4>
+        </div>
+        <div class="breakdown-list">
+          {% if timeseries.viz.series.breakdown == 'client' %}
+            {% for breakdown in timeseries.viz.series["values"] %}
+              <div class="breakdown-item">
+                <p class="breakdown-label">{{ breakdown.name }}</p>
+                <p class="breakdown-value">00{% if breakdown.suffix == "%" %}.00{% endif %}{{ breakdown.suffix }}</p>
+              </div>
+            {% endfor %}
+          {% elif timeseries.viz.series.breakdown == 'app' %}
+              {% for app in tech_report_page.filters.app %}
+                <div class="breakdown-item" data-app="{{ app }}">
+                  <p class="breakdown-label">{{ app }}</p>
+                  <p class="breakdown-value">00{{ timeseries.viz.series.suffix }}</p>
+                </div>
+              {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  <!-- This will be used to load the Highcharts viz into -->
+  <div id="{{ timeseries.id }}-timeseries"></div>
+
+  <button class="btn show-table" type="button" data-id="{{ timeseries.id }}">Show table</button>
+
+  <div id="{{ timeseries.id }}-table-wrapper" class="hidden">
+    {% set table = timeseries.table %}
+    {% set id = timeseries.id %}
+    {% set metric = timeseries.metric %}
+    {% set client = request.args.get('client', '')  or 'mobile' %}
+    {% include "techreport/components/table.html" %}
+  </div>
+
+  {% include "techreport/components/filter_meta.html" %}
+</div>

@@ -1,8 +1,11 @@
 const fs = require('fs-extra');
 
 node_module_files = [
+  'highcharts/highcharts.js',
   'highcharts/highcharts-more.js',
   'highcharts/highstock.js',
+  'highcharts/modules/accessibility.js',
+  'highcharts/modules/export-data.js',
   'highcharts/modules/exporting.js'
 ];
 

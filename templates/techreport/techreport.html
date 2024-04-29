@@ -1,0 +1,112 @@
+{% extends "main.html" %}
+
+{% block title %}HTTP Archive: Tech Report{% endblock %}
+
+{% block head %}
+  {{ super() }}
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/general.css') }}" />
+  <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/techreport.css') }}" />
+{% endblock %}
+
+{% block report_navigation %}
+  <div class="info-panel">
+    <div class="block-l">
+      <p class="info-label">Beta</p>
+      <p>This dashboard is still under development.</p>
+    </div>
+  </div>
+
+  <nav class="report-navigation">
+    {% set filters = "" %}
+    {% if tech_report_page.filters %}
+      {% set filters = "?geo=" + tech_report_page.filters.geo + "&rank=" + tech_report_page.filters.rank %}
+    {% endif %}
+    <ul class="navigation-items block-l">
+      <li>
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
+        <a
+          href="/reports/techreport/landing"
+          aria-current="{{ ariaCurrent }}"
+        >
+          Home
+        </a>
+      </li>
+      <li>
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "drilldown" %}{% set ariaCurrent = "page" %}{% endif %}
+        <a
+          href="/reports/techreport/drilldown{{ filters }}"
+          aria-current="{{ ariaCurrent }}"
+        >
+          Drilldown
+        </a>
+      </li>
+      <li>
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "comparison" %}{% set ariaCurrent = "page" %}{% endif %}
+        <a
+          href="/reports/techreport/comparison{{ filters }}"
+          aria-current="{{ ariaCurrent }}"
+        >
+          Comparison
+        </a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% block main %}
+  {% block section %}{% endblock %}
+  <div class="feedback">
+    <div class="block-m">
+      <h2>Feedback?</h2>
+      <p>
+        We are still working on this dashboard. The design and functionality can still change, and we're working on accessibility improvements and bugfixes.
+        What you're seeing here is a snapshot of our latest GitHub commit, and are <a href="https://github.com/HTTPArchive/cwv-tech-report/discussions/30">open for feedback</a>.
+      </p>
+    </div>
+  </div>
+
+  <div class="accessibility-options">
+    <div class="wrapper block-m">
+      <h2>Accessibility</h2>
+      <p>Change settings related to accessibility here</p>
+
+      <div class="setting">
+        <div class="check-wrapper">
+          <label for="indicators-check">Show markers</label>
+          <input type="checkbox" name="indicators-check" id="indicators-check" />
+        </div>
+      </div>
+
+      <div class="setting">
+        <button class="theme-switcher">🌚 Switch to dark mode</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <!-- Libraries -->
+  <script src="{{ get_versioned_filename('/static/js/highcharts.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/exporting.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/export-data.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/accessibility.js') }}" nonce="{{ csp_nonce() }}"></script>
+
+  <!-- Import general JS -->
+  <script src="{{ get_versioned_filename('/static/js/techreport/timeseries.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/techreport/section.js') }}" nonce="{{ csp_nonce() }}"></script>
+  <script src="{{ get_versioned_filename('/static/js/techreport.js') }}" nonce="{{ csp_nonce() }}"></script>
+
+  <script nonce="{{ csp_nonce() }}">
+    const reportPage = {{ tech_report_page|tojson }};
+    const config = {{ tech_report_config|tojson }};
+    const labels = {{ tech_report_labels|tojson }};
+
+    const techReport = new TechReport('{{ active_page }}', reportPage, config, labels);
+  </script>
+{% endblock %}
