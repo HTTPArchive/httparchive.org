@@ -171,8 +171,10 @@ class Filters {
   updateCategory(event) {
     // Get the techs associated with the selected category
     const selectedCategory = this.categories.find(category => category.category === event.target.value);
-    const selectedTechs = selectedCategory?.technologies;
-    console.log(selectedCategory, selectedTechs);
+    let selectedTechs = selectedCategory?.technologies;
+    if(event.target.value === 'ALL') {
+      selectedTechs = this.technologies.map(technology => technology.technology);
+    }
 
     // Get the component with the selected tech
     const techSelector = document.getElementById(event.target.dataset.tech);
