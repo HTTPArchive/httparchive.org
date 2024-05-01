@@ -162,18 +162,21 @@ class Filters {
 
   /* Set the selected category */
   updateCategory(event) {
-    const selectedTechs = this.categories.find(category => category.category === event.target.value)?.technologies;
-    const selectedTechInfo = [];
-    selectedTechs.forEach(selectedTech => selectedTechInfo.push(this.technologies.find(tech => tech.technology === selectedTech)));
+    // Get the techs associated with the selected category
+    const selectedCategory = this.categories.find(category => category.category === event.target.value);
+    const selectedTechs = selectedCategory?.technologies;
+    console.log(selectedCategory, selectedTechs);
+
+    // Get the component with the selected tech
     const techSelector = document.getElementById(event.target.dataset.tech);
     techSelector.innerHTML = '';
 
-    selectedTechInfo.forEach((technology) => {
+    // Update the options
+    selectedTechs.forEach((technology) => {
       const option = document.createElement('option');
-      const formattedTech = technology.technology;
-      option.textContent = technology.technology;
-      option.value = formattedTech;
-      if(formattedTech === techSelector.getAttribute('data-selected')) {
+      option.textContent = technology;
+      option.value = technology;
+      if(technology === techSelector.getAttribute('data-selected')) {
         option.selected = true;
       }
       techSelector.append(option);
