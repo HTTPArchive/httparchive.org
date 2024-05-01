@@ -89,7 +89,9 @@ class Filters {
       }
 
       /* Add one option per technology */
-      this.technologies.forEach((technology) => {
+      const techs = this.technologies;
+      const sortedTechs = techs.sort((a, b) => a.technology - b.technology);
+      sortedTechs.forEach((technology) => {
         const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
         const option = optionTmpl.querySelector('option');
         const formattedTech = technology.technology;
@@ -107,7 +109,8 @@ class Filters {
   updateGeo() {
     const select = document.querySelector('select#geo');
     select.innerHTML = '';
-    this.geos.forEach((geo) => {
+    const sortedGeos = this.geos.sort((a, b) => a.geo !== b.geo ? a.geo < b.geo ? -1 : 1 : 0);
+    sortedGeos.forEach((geo) => {
       const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
       const option = optionTmpl.querySelector('option');
       const formattedTech = geo.geo;
@@ -150,7 +153,8 @@ class Filters {
         all.innerHTML = 'ALL';
         select.append(all);
 
-        this.categories.forEach((category) => {
+        const sortedCategories = this.categories.sort((a, b) => a.category !== b.category ? a.category < b.category ? -1 : 1 : 0);
+        sortedCategories.forEach((category) => {
           const option = document.createElement('option');
           option.value = category.category;
           option.innerHTML = category.category;
