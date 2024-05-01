@@ -88,9 +88,12 @@ class Filters {
         techSelector.before(errorMsg);
       }
 
-      /* Add one option per technology */
+      /* Get a list of technologies */
       const techs = this.technologies;
       const sortedTechs = techs.sort((a, b) => a.technology - b.technology);
+      sortedTechs.unshift({ technology: 'ALL' });
+
+      /* Add one option per technology */
       sortedTechs.forEach((technology) => {
         const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
         const option = optionTmpl.querySelector('option');
