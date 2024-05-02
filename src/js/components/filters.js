@@ -90,11 +90,10 @@ class Filters {
 
       /* Get a list of technologies */
       const techs = this.technologies;
-      const sortedTechs = techs.sort((a, b) => a.technology - b.technology);
-      sortedTechs.unshift({ technology: 'ALL' });
+      techs.unshift({ technology: 'ALL' });
 
       /* Add one option per technology */
-      sortedTechs.forEach((technology) => {
+      techs.forEach((technology) => {
         const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
         const option = optionTmpl.querySelector('option');
         const formattedTech = technology.technology;
@@ -112,8 +111,7 @@ class Filters {
   updateGeo() {
     const select = document.querySelector('select#geo');
     select.innerHTML = '';
-    const sortedGeos = this.geos.sort((a, b) => a.geo !== b.geo ? a.geo < b.geo ? -1 : 1 : 0);
-    sortedGeos.forEach((geo) => {
+    this.geos.forEach((geo) => {
       const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
       const option = optionTmpl.querySelector('option');
       const formattedTech = geo.geo;
@@ -171,7 +169,7 @@ class Filters {
   updateCategory(event) {
     // Get the techs associated with the selected category
     const selectedCategory = this.categories.find(category => category.category === event.target.value);
-    let selectedTechs = selectedCategory?.technologies;
+    let selectedTechs = selectedCategory?.technologies || [];
     if(event.target.value === 'ALL') {
       selectedTechs = this.technologies.map(technology => technology.technology);
     }
