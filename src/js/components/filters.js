@@ -63,6 +63,8 @@ class Filters {
     url.searchParams.delete('rank');
     url.searchParams.append('rank', rank);
 
+    /* Scroll to the report content */
+    url.hash = '#report-content';
 
     /* Update the url */
     location.href = url;
