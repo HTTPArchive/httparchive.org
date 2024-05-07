@@ -88,8 +88,12 @@ class Filters {
         techSelector.before(errorMsg);
       }
 
+      /* Get a list of technologies */
+      const techs = this.technologies;
+      techs.unshift({ technology: 'ALL' });
+
       /* Add one option per technology */
-      this.technologies.forEach((technology) => {
+      techs.forEach((technology) => {
         const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
         const option = optionTmpl.querySelector('option');
         const formattedTech = technology.technology;
@@ -150,7 +154,8 @@ class Filters {
         all.innerHTML = 'ALL';
         select.append(all);
 
-        this.categories.forEach((category) => {
+        const sortedCategories = this.categories.sort((a, b) => a.category !== b.category ? a.category < b.category ? -1 : 1 : 0);
+        sortedCategories.forEach((category) => {
           const option = document.createElement('option');
           option.value = category.category;
           option.innerHTML = category.category;
@@ -162,18 +167,23 @@ class Filters {
 
   /* Set the selected category */
   updateCategory(event) {
-    const selectedTechs = this.categories.find(category => category.category === event.target.value)?.technologies;
-    const selectedTechInfo = [];
-    selectedTechs.forEach(selectedTech => selectedTechInfo.push(this.technologies.find(tech => tech.technology === selectedTech)));
+    // Get the techs associated with the selected category
+    const selectedCategory = this.categories.find(category => category.category === event.target.value);
+    let selectedTechs = selectedCategory?.technologies || [];
+    if(event.target.value === 'ALL') {
+      selectedTechs = this.technologies.map(technology => technology.technology);
+    }
+
+    // Get the component with the selected tech
     const techSelector = document.getElementById(event.target.dataset.tech);
     techSelector.innerHTML = '';
 
-    selectedTechInfo.forEach((technology) => {
+    // Update the options
+    selectedTechs.forEach((technology) => {
       const option = document.createElement('option');
-      const formattedTech = technology.technology;
-      option.textContent = technology.technology;
-      option.value = formattedTech;
-      if(formattedTech === techSelector.getAttribute('data-selected')) {
+      option.textContent = technology;
+      option.value = technology;
+      if(technology === techSelector.getAttribute('data-selected')) {
         option.selected = true;
       }
       techSelector.append(option);
