@@ -145,7 +145,6 @@ function sendWebVitals() {
       navigation_type: navigationType,
     }, overrides);
 
-    console.log(name, {params})
     gtag('event', name, params);
 
   }
