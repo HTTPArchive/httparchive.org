@@ -108,6 +108,7 @@ class Timeseries {
     /* Get settings */
     const metric = viz.dataset.metric;
     const endpoint = viz.dataset.endpoint;
+    const summary = viz.dataset.summary;
 
     const app = pageFilters.app[0];
     const filtered = data?.[app]?.filter(entry => entry[endpoint]);
@@ -143,15 +144,23 @@ class Timeseries {
         breakdownLabel.classList.add('breakdown-label');
         itemWrapper.appendChild(breakdownLabel);
 
-        /* Add the value to the wrapper */
-        const valueLabel = document.createElement('p');
-        if(!breakdown.formatted) {
-          valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+        /* If defined, use a different metric for the summary */
+        if(summary) {
+          const valueLabel = document.createElement('p');
+          valueLabel.textContent = categoryData?.[breakdown.name]?.[summary];
+          valueLabel.classList.add('breakdown-value');
+          itemWrapper.appendChild(valueLabel);
+
+          const summaryLabel = document.createElement('p');
+          summaryLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+          itemWrapper.appendChild(summaryLabel);
         } else {
-          valueLabel.textContent = `${formatted}`;
+          /* Add the value to the wrapper */
+          const valueLabel = document.createElement('p');
+          valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+          valueLabel.classList.add('breakdown-value');
+          itemWrapper.appendChild(valueLabel);
         }
-        valueLabel.classList.add('breakdown-value');
-        itemWrapper.appendChild(valueLabel);
 
         /* Add the wrapper to the container */
         container.appendChild(itemWrapper);
@@ -177,6 +186,7 @@ class Timeseries {
     const metric = component.dataset.metric;
     const endpoint = component.dataset.endpoint;
     const client = component.dataset.client;
+    const summary = component.dataset.summary;
 
     pageFilters.app.forEach((app, index) => {
       if(data[app] && data[app].length > 0) {
@@ -188,17 +198,24 @@ class Timeseries {
         const latestSubcategory = latestEndpoint?.find(row => row.name === subcategory);
         const latestClient  = latestSubcategory?.[client];
         const latestValue = latestClient?.[metric];
+        const summaryValue = latestClient?.[summary];
 
         /* Select the container to which we'll add elements. */
         const card = container.querySelector(`[data-app="${app}"]`);
         const timestamp = component.querySelector('[data-slot="timestamp"]');
         const label = card.getElementsByClassName('breakdown-label')[0];
         const value = card.getElementsByClassName('breakdown-value')[0];
+        const secondaryValue = card.getElementsByClassName('breakdown-value-secondary')[0];
 
         /* Update text */
         label.innerHTML = latest.technology;
         if(latestValue) {
-          value.innerHTML = `${latestValue}${config.series.suffix || ''}`;
+          if(summary) {
+            value.innerHTML = `${summaryValue}`;
+            secondaryValue.innerHTML = `${latestValue}${config.series.suffix || ''}`;
+          } else {
+            value.innerHTML = `${latestValue}${config.series.suffix || ''}`;
+          }
         } else {
           value.classList.add('undefined');
           value.innerHTML = 'No data';
