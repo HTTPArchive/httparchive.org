@@ -1134,11 +1134,45 @@ path.highcharts-tick {
   filter: none;
 }
 
-.highcharts-tooltip path {
+.highcharts-tooltip > path {
   fill: var(--color-tooltip-background);
   stroke: var(--color-tooltip-border);
   stroke-width: 1px;
 }
+
+.tooltip-wrapper ul {
+  margin-top: 0.5rem;
+}
+
+.tooltip-wrapper li {
+  position: relative;
+}
+
+.tooltip-wrapper li span {
+  font-weight: 600;
+}
+
+.tooltip-wrapper li svg {
+  position: relative;
+  left: 0;
+  top: 0.05rem;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.tooltip-wrapper svg .point-symbol {
+  fill: var(--color-card-background);
+}
+
+.tooltip-wrapper svg .point-symbol.circle,
+.tooltip-wrapper svg .point-fallback {
+  transform: translateX(0.375rem) translateY(0.375rem);
+}
+
+.tooltip-wrapper svg .point-symbol:is(.diamond, .square, .triangle-down, .triangle-up) {
+  transform: translateX(2px) translateY(2px);
+}
+
 
 /* ------------------------ */
 /* ----- Small charts ----- */

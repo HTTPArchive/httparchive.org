@@ -145,7 +145,11 @@ class Timeseries {
 
         /* Add the value to the wrapper */
         const valueLabel = document.createElement('p');
-        valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+        if(!breakdown.formatted) {
+          valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+        } else {
+          valueLabel.textContent = `${formatted}`;
+        }
         valueLabel.classList.add('breakdown-value');
         itemWrapper.appendChild(valueLabel);
 
@@ -248,6 +252,97 @@ class Timeseries {
       timeseries.series = this.formatSeries();
     }
 
+    timeseries.tooltip = {
+      shared: true,
+      crosshairs: true,
+      useHTML: true,
+      formatter: function() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'tooltip-wrapper';
+
+        const d =  Highcharts.dateFormat('%b %e, %Y', this.x);
+
+        const dateEl = document.createElement('p');
+        dateEl.innerHTML = d;
+
+        wrapper.appendChild(dateEl);
+
+        const pointList = document.createElement('ul');
+
+        this.points.forEach(point => {
+          const pointItem = document.createElement('li');
+          const pointSeries = document.createElement('span');
+
+          const pointSvg = document.createElement('svg');
+          let pointSymbol;
+
+
+          switch(point?.point?.graphic?.symbolName) {
+            case 'circle':
+              pointSymbol = document.createElement('circle');
+              pointSymbol.setAttribute('class', 'point-symbol circle');
+              pointSymbol.setAttribute('r', point.point.graphic.width / 2);
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'diamond':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol diamond');
+              pointSymbol.setAttribute('d', 'M 4 0 L 8 4 L 4 8 L 0 4 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'square':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol square');
+              pointSymbol.setAttribute('d', 'M 0 0 L 8 0 L 8 8 L 0 8 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'triangle-down':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol triangle-down');
+              pointSymbol.setAttribute('d', 'M 0 0 L 8 0 L 4 8 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'triangle':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol triangle-up');
+              pointSymbol.setAttribute('d', 'M 4 0 L 8 8 L 0 8 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+
+            default:
+              pointSymbol = document.createElement('circle');
+              pointSymbol.setAttribute('class', 'point-fallback');
+              pointSymbol.setAttribute('r', '4');
+              pointSymbol.setAttribute('fill', point.color);
+              break;
+          }
+
+          pointSvg.appendChild(pointSymbol);
+
+          document.getElementsByTagName('main')[0].append(pointSvg);
+
+          pointSeries.innerHTML = point.series.name;
+          pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y}`;
+
+          pointList.appendChild(pointItem);
+        });
+
+        wrapper.appendChild(pointList);
+
+        return wrapper.outerHTML;
+      }
+    }
+
     // Render the chart
     Highcharts.chart(`${this.id}-timeseries`, timeseries);
   }
@@ -298,7 +393,7 @@ class Timeseries {
       const data = app.map(row => {
         const value = row?.[endpoint]?.find(row => row.name === subcategory)?.[client]?.[metric];
         return {
-          x: new Date(row.date),
+          x: new Date(row.date).getTime(),
           y: value || 0,
         };
       });
@@ -341,7 +436,7 @@ class Timeseries {
         const clientData = categoryData?.[value.name];
         const y = clientData?.[metric];
         formattedData.push({
-          x: new Date(row.date),
+          x: new Date(row.date).getTime(),
           y: Number(y),
         });
       });
