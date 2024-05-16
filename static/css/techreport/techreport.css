@@ -697,11 +697,9 @@ select {
 }
 
 .info-panel .info-label {
-  margin-right: 1rem;
-  padding: 0.3rem 0.5rem;
-  border-radius: 3px;
-  background-color: white;
-  border: 1px solid black;
+  margin-right: 0.75rem;
+  margin-left: 0.25rem;
+  font-weight: 600;
 }
 
 /* General tables */
