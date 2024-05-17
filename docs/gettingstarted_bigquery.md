@@ -111,6 +111,12 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
     * Lighthouse was intially only run on mobile, but as of May 2021 also runs as part of the desktop crawl.
     * These tables are very large (2.3 TB for Mobile only as of May 2021)
 
+### Other Tables
+
+* `technologies` tables:
+    * Information about the technologies detected on each page (using [Wappalyser rules](https://github.com/HTTPArchive/wappalyzer)).
+    * Table contains a url and a list of names and categories for technologies detected on the page.
+    * These tables are small (15GB as of May 2024).
 
 ## Some Example Queries to Get Started Exploring the Data
 
