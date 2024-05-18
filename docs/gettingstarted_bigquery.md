@@ -116,6 +116,7 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
 * [`technologies`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2stechnologies) tables:
     * Information about the technologies detected on each page (using [Wappalyser rules](https://github.com/HTTPArchive/wappalyzer)).
     * Table contains a url and a list of names and categories for technologies detected on the page.
+    * This data is also available in the HAR of the `pages` table but is extracted into the `technologies` table for easy lookup.
     * These tables are small (15GB as of May 2024).
 
 * [`blink_features.features`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!4m3!1shttparchive!2sblink_features!3sfeatures) tables:
