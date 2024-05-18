@@ -73,13 +73,13 @@ Some of the types of tables you'll find useful when getting started are describe
 
 ### Summary Tables
 
-* `summary_pages` tables:
+* [`summary_pages`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2ssummary_pages) tables:
     * Each row contains details about a single page including timings, # of requests, types of requests and sizes.
     * Information about the page load such # of domains, redirects, errors, https requests, CDN, etc.
     * Summary of different caching parameters.
     * Each page URL is associated with a "pageid".
 
-* `summary_requests` Tables:
+* [`summary_requests`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2ssummary_requests) tables:
     * Every single object loaded by all of the pages.
     * Each object has a requestid and a pageid.  The pageid can be used to JOIN the corresponding summary_pages table.
     * Information about the object, and how it was loaded.
@@ -89,23 +89,23 @@ Some of the types of tables you'll find useful when getting started are describe
 
 The HTTP Archive stores detailed information about each page load in [HAR (HTTP Archive) files](https://en.wikipedia.org/wiki/.har). Each HAR file is JSON formatted and contains detailed performance data about a web page.  The [specification for this format](https://w3c.github.io/web-performance/specs/HAR/Overview.html) is produced by the Web Performance Working Group of the W3C. The HTTP Archive splits each HAR file into multiple BigQuery tables, which are described below.
 
-* `pages` tables
+* [`pages`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2spages) tables
     * HAR extract for each page url.
     * Table contains a url and a JSON-encoded HAR file for the document.
     * These tables are large (~13GB as of Aug 2018).
 
-* `requests` tables:
+* [`requests`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2srequests) tables:
     * HAR extract for each resource.
     * Table contains a document url, resource url and a JSON-encoded HAR extract for each resource.
     * These tables are very large (810GB as of Aug 2018)
 
-* `response_bodies` tables:
+* [`response_bodies`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2sresponse_bodies) tables:
     * HAR extract containing response bodies for each request.
     * Table contains a document url, resource url and a JSON-encoded HAR extract containing the first 2MB of each response body.
     * Payloads are truncated at 2MB, and there is a column to indicate whether the payload was truncated.
     * These tables are extremely large (2.5TB as of Aug 2018).
 
-* `lighthouse` tables:
+* [`lighthouse`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2slighthouse) tables:
     * Results from a [Lighthouse](https://developers.google.com/web/tools/lighthouse/) audit of a page.
     * Table contains a url, and a JSON-encoded copy of the lighthouse report.
     * Lighthouse was intially only run on mobile, but as of May 2021 also runs as part of the desktop crawl.
@@ -113,12 +113,12 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
 
 ### Other Tables
 
-* `technologies` tables:
+* [`technologies`](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1shttparchive!2stechnologies) tables:
     * Information about the technologies detected on each page (using [Wappalyser rules](https://github.com/HTTPArchive/wappalyzer)).
     * Table contains a url and a list of names and categories for technologies detected on the page.
     * These tables are small (15GB as of May 2024).
 
-* `blink_features.features` tables:
+* [`blink_features.features`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!4m3!1shttparchive!2sblink_features!3sfeatures) tables:
     * Information about the [Blink features](https://chromestatus.com/roadmap) detected on each page.
     * Table contains a url and Blink feature names detected on the page.
     * These tables are 300GB per single platform as of May 2024.
