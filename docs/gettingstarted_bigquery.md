@@ -116,6 +116,7 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
 * `technologies` tables:
     * Information about the technologies detected on each page (using [Wappalyser rules](https://github.com/HTTPArchive/wappalyzer)).
     * Table contains a url and a list of names and categories for technologies detected on the page.
+    * This data is also available in the HAR of the `pages` table but is extracted into the `technologies` table for easy lookup.
     * These tables are small (15GB as of May 2024).
 
 ## Some Example Queries to Get Started Exploring the Data
