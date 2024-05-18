@@ -118,6 +118,11 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
     * Table contains a url and a list of names and categories for technologies detected on the page.
     * These tables are small (15GB as of May 2024).
 
+* `blink_features.features` tables:
+    * Information about the [Blink features](https://chromestatus.com/roadmap) detected on each page.
+    * Table contains a url and Blink feature names detected on the page.
+    * These tables are 300GB per single platform as of May 2024.
+
 ## Some Example Queries to Get Started Exploring the Data
 
 The [HTTP Archive Discuss section](https://discuss.httparchive.org/) has lots of useful examples and discussion on how to analyze this data.
