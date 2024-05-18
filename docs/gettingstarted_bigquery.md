@@ -15,7 +15,7 @@ This document is an update to [Ilya Grigorik's 2013 introduction](https://www.ig
 
 In order to access the HTTP Archive via BigQuery, you'll need a Google account.  To document this process for new visitors, this example uses a new Google account that has never logged into any Google Cloud services.
 
-1. Navigate to the [Google Cloud Projects Page](https://console.cloud.google.com/start) and log in with your Google account if prompted.  If this is your first time accessing Google Cloud, you may be prompted to accept the terms of service. Once you are logged in, you'll see a page like this -
+1. Navigate to the [Google Cloud Projects Page](https://console.cloud.google.com/welcome) and log in with your Google account if prompted.  If this is your first time accessing Google Cloud, you may be prompted to accept the terms of service. Once you are logged in, you'll see a page like this -
 
   <img src="images/google-cloud-welcome.png" width="630" alt="Google Cloud Welcome">
 
@@ -215,5 +215,3 @@ When analyzing the results from this, you can see the % of websites that use dif
 To explore more interactive examples, read the [HTTP Archive Guided Tour](./guided_tour.md).
 
 If you want to explore deeper you have everything you need - infrastructure, documentation, community. Enjoy exploring this data and feel free to share your results and ask questions on the [HTTP Archive Discuss section](https://discuss.httparchive.org/).
-
-
