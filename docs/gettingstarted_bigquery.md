@@ -122,6 +122,7 @@ The HTTP Archive stores detailed information about each page load in [HAR (HTTP 
 * [`blink_features.features`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!4m3!1shttparchive!2sblink_features!3sfeatures) tables:
     * Information about the [Blink features](https://chromestatus.com/roadmap) detected on each page.
     * Table contains a url and Blink feature names detected on the page.
+    * This data is also available in the HAR of the `pages` table but is extracted into the `blink_features` tables for easy lookup.
     * These tables are 300GB per single platform as of May 2024.
 
 ## Some Example Queries to Get Started Exploring the Data
