@@ -433,6 +433,11 @@ main :is(a, p a) {
   color: var(--color-text);
 }
 
+[data-theme="dark"] select option,
+[data-theme="dark"] .tech-input-wrapper:has(select:focus-visible) select {
+  color: var(--color-page-background) !important;
+}
+
 .tech-selector-group .content {
   position: relative;
   width: 100%;
