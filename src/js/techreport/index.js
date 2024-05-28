@@ -309,6 +309,7 @@ class TechReport {
     const body = document.querySelector('body');
     if(series?.breakdown == 'client') {
       series?.breakdown_values?.forEach((breakdown) => {
+        console.log('set breakdown color', breakdown.color)
         body.style.setProperty(`--breakdown-color-${breakdown.name}`, breakdown.color);
       });
     }

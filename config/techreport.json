@@ -76,11 +76,13 @@
               {
                 "name": "desktop",
                 "color": "#669E8E",
+                "color_dark": "#fff000",
                 "suffix": "%"
               },
               {
                 "name": "mobile",
                 "color": "#BD6EBE",
+                "color_dark": "#ff00f0",
                 "suffix": "%"
               }
             ]
@@ -159,11 +161,13 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#669E8E"
+                  "color": "#669E8E",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
-                  "color": "#BD6EBE"
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -340,11 +344,13 @@
                 {
                   "name": "desktop",
                   "color": "#669E8E",
+                  "color_dark": "#fff000",
                   "suffix": "%"
                 },
                 {
                   "name": "mobile",
                   "color": "#BD6EBE",
+                  "color_dark": "#ff00f0",
                   "suffix": "%"
                 }
               ],
@@ -478,11 +484,13 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#669E8E"
+                  "color": "#669E8E",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
-                  "color": "#BD6EBE"
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -610,11 +618,13 @@
                 {
                   "name": "desktop",
                   "color": "#669E8E",
+                  "color_dark": "#fff000",
                   "suffix": " kB"
                 },
                 {
                   "name": "mobile",
                   "color": "#BD6EBE",
+                  "color_dark": "#ff00f0",
                   "suffix": " kB"
                 }
               ],
@@ -673,7 +683,7 @@
             "#CB377C"
           ],
           "overrides": {
-            "WordPress": "#ff0000"
+            "WordPress": "#fff000"
           }
         },
         "default": {

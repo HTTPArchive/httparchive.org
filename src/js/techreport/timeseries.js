@@ -135,7 +135,11 @@ class Timeseries {
         /* Create a wrapper */
         const itemWrapper = document.createElement('div');
         itemWrapper.classList.add('breakdown-item');
-        itemWrapper.style.setProperty('--breakdown-color', breakdown.color);
+
+        /* Set the breakdown color depending on chosen theme */
+        const theme = document.querySelector('html').dataset.theme;
+        const themeColor = theme === 'dark' ? breakdown.color_dark : breakdown.color;
+        itemWrapper.style.setProperty('--breakdown-color', themeColor);
 
         /* Add a text label to the wrapper */
         const breakdownLabel = document.createElement('p');
@@ -328,6 +332,9 @@ class Timeseries {
 
     const category = this.getCategory(config);
 
+    // Get color scheme
+    const theme = document.querySelector('html').dataset.theme;
+
     // Breakdown data by categories defined in config
     config?.series?.values?.forEach((value, index) => {
       // Filter by selected client & sort
@@ -348,14 +355,18 @@ class Timeseries {
 
       const sortedData = formattedData.sort((a, b) => new Date(a.x) - new Date(b.x));
 
+      // Pick color from settings depending on theme
       const colors = this.defaults(config)?.chart?.colors;
+      const colorDark = value.color_dark;
+      const colorLight = value.color;
+      const seriesColor = theme === "dark" ? colorDark : colorLight;
 
       // Push the configurations and formatted data to the series array
       series.push(
         {
           name: value.name,
           data: sortedData,
-          color: value.color || colors[index],
+          color: seriesColor || colors?.[index],
           lineWidth: 2,
         }
       )
