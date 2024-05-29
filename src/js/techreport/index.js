@@ -174,7 +174,7 @@ class TechReport {
       },
     ];
 
-    const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
+    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
 
     const technology = technologies.join('%2C')
       .replaceAll(" ", "%20");
@@ -239,7 +239,7 @@ class TechReport {
   // Fetch the data for the filter dropdowns
   getFilterInfo() {
     const filterData = {};
-    const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
+    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
 
     const filterApis = ['categories', 'technologies', 'ranks', 'geos'];
 
