@@ -172,6 +172,11 @@ class TechReport {
         metric: 'pageWeight',
         parse: DataUtils.parsePageWeightData,
       },
+      {
+        endpoint: 'technologies',
+        metric: 'technologies',
+        parse: DataUtils.parseTechnologyData,
+      },
     ];
 
     const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
@@ -191,6 +196,7 @@ class TechReport {
       return fetch(url)
         .then(result => result.json())
         .then(result => {
+          console.log('api result for', api, result);
           result.forEach(row => {
             const parsedRow = {
               ...row,

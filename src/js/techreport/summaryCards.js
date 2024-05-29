@@ -59,7 +59,6 @@ class SummaryCard {
           const scoreCategoryName = scoreCategory?.name;
           circle.setAttribute('style', `--offset: ${100 - latestValue};`);
           const chart = card.querySelector('svg.progress-chart');
-          console.log('chart', chart);
           chart.classList.add(scoreCategoryName);
         });
 

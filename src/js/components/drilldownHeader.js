@@ -4,6 +4,7 @@ function setTitle(title) {
 }
 
 function setCategories(categories) {
+  console.log('set categories', categories)
   if(categories?.length > 0) {
     /* Fetch the category list element and empty it. */
     const list = document.querySelector('.intro .category-list');
@@ -35,6 +36,8 @@ function update(data, filters) {
   if(app) {
     setTitle(app);
   }
+
+  console.log('data, app, data[app]', data, app, data[app]);
 
   if(data[app]) {
     setCategories(data[app][0]?.category?.split(", "));
