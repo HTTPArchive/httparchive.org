@@ -62,7 +62,7 @@ const parsePageWeightData = (metric, date) => {
       ...submetric,
       desktop: {
         ...submetric.desktop,
-        median_bytes_formatted: submetric.desktop.median_bytes > 1024 ? `${Math.round(submetric.desktop.median_bytes / 1024)} KB` : submetric.desktop.median_bytes > 1048576 ? `${Math.round(submetric.desktop.median_bytes / 1048576)} MB` : `${submetric.desktop.median_bytes} bytes`,
+        median_bytes_formatted: submetric.desktop.median_bytes > 1048576 ? `${Math.round(submetric.desktop.median_bytes / 1048576)} MB` : submetric.desktop.median_bytes > 1024 ? `${Math.round(submetric.desktop.median_bytes / 1024)} KB` : `${submetric.desktop.median_bytes} bytes`,
         client: 'desktop',
         date: date,
       },
