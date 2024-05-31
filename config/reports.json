@@ -281,19 +281,6 @@
         ]
       }
     },
-    "pctVuln": {
-      "name": "Pages with Vulnerable JS",
-      "type": "%",
-      "description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://web.dev/no-vulnerable-libraries/) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "tcp": {
       "name": "TCP Connections Per Page",
       "type": "",
@@ -783,18 +770,6 @@
         ]
       }
     },
-    "vulnJs": {
-      "name": "Vulnerable JavaScript Libraries Per Page",
-      "type": "libraries",
-      "singular": "library",
-      "description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://web.dev/no-vulnerable-libraries/) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
-      "histogram": {
-        "minDate": "2017_10_15"
-      },
-      "timeseries": {
-        "enabled": false
-      }
-    },
     "pwaScores": {
       "name": "PWA Scores",
       "type": "%",
@@ -1165,11 +1140,9 @@
       "bytesTotal",
       "reqTotal",
       "pctHttps",
-      "pctVuln",
       "tcp",
       "h2",
       "h3",
-      "vulnJs",
       "fontDisplay"
     ],
     "graphic": {
