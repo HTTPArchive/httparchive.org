@@ -115,11 +115,10 @@
             "url": "#lighthouse&median-lighthouse-over-time=accessibility"
           },
           {
-            "endpoint": "lighthouse",
-            "category": "seo",
-            "metric": "median_score_pct",
+            "endpoint": "pageWeight",
+            "category": "total",
+            "metric": "median_bytes_formatted",
             "label": "Page weight",
-            "suffix": "kB",
             "description": "Median total bytes per page for across tested origins.",
             "url": "#page-weight"
           }
@@ -525,26 +524,23 @@
             {
               "endpoint": "pageWeight",
               "category": "images",
-              "metric": "median_bytes",
+              "metric": "median_bytes_formatted",
               "label": "Image Weight",
-              "url": "?weight-over-time=image#page-weight",
-              "suffix": " kB"
+              "url": "?weight-over-time=image#page-weight"
             },
             {
               "endpoint": "pageWeight",
               "category": "js",
-              "metric": "median_bytes",
+              "metric": "median_bytes_formatted",
               "label": "JavaScript Size",
-              "url": "?weight-over-time=js#page-weight",
-              "suffix": " kB"
+              "url": "?weight-over-time=js#page-weight"
             },
             {
               "endpoint": "pageWeight",
               "category": "total",
-              "metric": "median_bytes",
+              "metric": "median_bytes_formatted",
               "label": "Total Page Weight",
-              "url": "?weight-over-time=total#page-weight",
-              "suffix": " kB"
+              "url": "?weight-over-time=total#page-weight"
             }
           ]
         },
@@ -586,8 +582,7 @@
               },
               {
                 "name": "Median Bytes",
-                "key": "median_bytes",
-                "suffix": "kB",
+                "key": "median_bytes_formatted",
                 "className": "main-cell"
               },
               {
@@ -603,6 +598,8 @@
             "default": "images",
             "title": "Image weight over time",
             "metric": "median_bytes",
+            "suffix": "bytes",
+            "metric_summary": "median_bytes_formatted",
             "height": 600,
             "series": {
               "breakdown": "client",
@@ -610,12 +607,12 @@
                 {
                   "name": "desktop",
                   "color": "#669E8E",
-                  "suffix": " kB"
+                  "suffix": " bytes"
                 },
                 {
                   "name": "mobile",
                   "color": "#BD6EBE",
-                  "suffix": " kB"
+                  "suffix": " bytes"
                 }
               ],
               "defaults": [
@@ -648,7 +645,7 @@
               ]
             },
             "yAxis": {
-              "title": "Weight in kB"
+              "title": "Weight in bytes"
             }
           }
         }
@@ -978,8 +975,7 @@
               },
               {
                 "name": "Median Bytes",
-                "key": "median_bytes",
-                "suffix": "kB",
+                "key": "median_bytes_formatted",
                 "className": "main-cell",
                 "breakdown": "app"
               },
@@ -997,17 +993,20 @@
             "param": "median-weight-over-time",
             "default": "total",
             "metric": "median_bytes",
+            "metric_summary": "median_bytes_formatted",
             "series": {
               "breakdown": "app",
-              "suffix": " kB",
+              "suffix": " bytes",
               "defaults": [
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0],
+                  "suffix": " bytes"
                 },
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0],
+                  "suffix": " bytes"
                 }
               ]
             },
@@ -1030,7 +1029,7 @@
               ]
             },
             "yAxis": {
-              "title": "Weight in kB"
+              "title": "Weight in bytes"
             }
           }
         },

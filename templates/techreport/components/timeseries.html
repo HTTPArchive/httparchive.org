@@ -1,7 +1,7 @@
 {% set category = selected_subcategory or subcategory.default %}
 {% set endpoint = timeseries.endpoint %}
 
-<div data-id="{{ timeseries.id }}" data-component="timeseries" data-endpoint="{{timeseries.endpoint}}" data-category="{{category}}" data-metric="{{timeseries.metric}}" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
+<div data-id="{{ timeseries.id }}" data-component="timeseries" data-endpoint="{{timeseries.endpoint}}" data-category="{{category}}" data-metric="{{timeseries.metric}}" data-summary="{{timeseries.viz.metric_summary}}" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
   <div class="component-heading-wrapper">
     <div class="component-heading">
       {% set title = timeseries.title %}

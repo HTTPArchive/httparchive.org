@@ -49,10 +49,10 @@ class Timeseries {
     const button = event.target;
     const tableWrapper = document.getElementById(`${button.dataset.id}-table-wrapper`);
     if(tableWrapper.classList.contains('hidden')) {
-      button.innerHTML = 'Hide table';
+      button.textContent = 'Hide table';
       tableWrapper.classList.remove('hidden');
     } else {
-      button.innerHTML = 'Show table';
+      button.textContent = 'Show table';
       tableWrapper.classList.add('hidden');
     }
   }
@@ -108,6 +108,7 @@ class Timeseries {
     /* Get settings */
     const metric = viz.dataset.metric;
     const endpoint = viz.dataset.endpoint;
+    const summary = viz.dataset.summary;
 
     const app = pageFilters.app[0];
     const filtered = data?.[app]?.filter(entry => entry[endpoint]);
@@ -143,11 +144,19 @@ class Timeseries {
         breakdownLabel.classList.add('breakdown-label');
         itemWrapper.appendChild(breakdownLabel);
 
-        /* Add the value to the wrapper */
-        const valueLabel = document.createElement('p');
-        valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
-        valueLabel.classList.add('breakdown-value');
-        itemWrapper.appendChild(valueLabel);
+        /* If defined, use a different metric for the summary */
+        if(summary) {
+          const valueLabel = document.createElement('p');
+          valueLabel.textContent = categoryData?.[breakdown.name]?.[summary];
+          valueLabel.classList.add('breakdown-value');
+          itemWrapper.appendChild(valueLabel);
+        } else {
+          /* Add the value to the wrapper */
+          const valueLabel = document.createElement('p');
+          valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+          valueLabel.classList.add('breakdown-value');
+          itemWrapper.appendChild(valueLabel);
+        }
 
         /* Add the wrapper to the container */
         container.appendChild(itemWrapper);
@@ -173,6 +182,7 @@ class Timeseries {
     const metric = component.dataset.metric;
     const endpoint = component.dataset.endpoint;
     const client = component.dataset.client;
+    const summary = component.dataset.summary;
 
     pageFilters.app.forEach((app, index) => {
       if(data[app] && data[app].length > 0) {
@@ -184,6 +194,7 @@ class Timeseries {
         const latestSubcategory = latestEndpoint?.find(row => row.name === subcategory);
         const latestClient  = latestSubcategory?.[client];
         const latestValue = latestClient?.[metric];
+        const summaryValue = latestClient?.[summary];
 
         /* Select the container to which we'll add elements. */
         const card = container.querySelector(`[data-app="${app}"]`);
@@ -192,14 +203,18 @@ class Timeseries {
         const value = card.getElementsByClassName('breakdown-value')[0];
 
         /* Update text */
-        label.innerHTML = latest.technology;
+        label.textContent = latest.technology;
         if(latestValue) {
-          value.innerHTML = `${latestValue}${config.series.suffix || ''}`;
+          if(summary) {
+            value.textContent = `${summaryValue}`;
+          } else {
+            value.textContent = `${latestValue}${config.series.suffix || ''}`;
+          }
         } else {
           value.classList.add('undefined');
-          value.innerHTML = 'No data';
+          value.textContent = 'No data';
         }
-        timestamp.innerHTML = latest.date;
+        timestamp.textContent = latest.date;
         const techColor = UIUtils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
         const fallback = this.pageConfig.colors.app[index];
         card.style.setProperty('--breakdown-color', techColor || fallback);
@@ -246,6 +261,97 @@ class Timeseries {
     // Update the data
     if(this.data) {
       timeseries.series = this.formatSeries();
+    }
+
+    timeseries.tooltip = {
+      shared: true,
+      crosshairs: true,
+      useHTML: true,
+      formatter: function() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'tooltip-wrapper';
+
+        const d =  Highcharts.dateFormat('%b %e, %Y', this.x);
+
+        const dateEl = document.createElement('p');
+        dateEl.innerHTML = d;
+
+        wrapper.appendChild(dateEl);
+
+        const pointList = document.createElement('ul');
+
+        this.points.forEach(point => {
+          const pointItem = document.createElement('li');
+          const pointSeries = document.createElement('span');
+
+          const pointSvg = document.createElement('svg');
+          let pointSymbol;
+
+
+          switch(point?.point?.graphic?.symbolName) {
+            case 'circle':
+              pointSymbol = document.createElement('circle');
+              pointSymbol.setAttribute('class', 'point-symbol circle');
+              pointSymbol.setAttribute('r', point.point.graphic.width / 2);
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'diamond':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol diamond');
+              pointSymbol.setAttribute('d', 'M 4 0 L 8 4 L 4 8 L 0 4 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'square':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol square');
+              pointSymbol.setAttribute('d', 'M 0 0 L 8 0 L 8 8 L 0 8 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'triangle-down':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol triangle-down');
+              pointSymbol.setAttribute('d', 'M 0 0 L 8 0 L 4 8 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+            case 'triangle':
+              pointSymbol = document.createElement('path');
+              pointSymbol.setAttribute('class', 'point-symbol triangle-up');
+              pointSymbol.setAttribute('d', 'M 4 0 L 8 8 L 0 8 Z');
+              pointSymbol.setAttribute('stroke', point.color);
+              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              break;
+
+
+            default:
+              pointSymbol = document.createElement('circle');
+              pointSymbol.setAttribute('class', 'point-fallback');
+              pointSymbol.setAttribute('r', '4');
+              pointSymbol.setAttribute('fill', point.color);
+              break;
+          }
+
+          pointSvg.appendChild(pointSymbol);
+
+          document.getElementsByTagName('main')[0].append(pointSvg);
+
+          pointSeries.innerHTML = point.series.name;
+          pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y}`;
+
+          pointList.appendChild(pointItem);
+        });
+
+        wrapper.appendChild(pointList);
+
+        return wrapper.outerHTML;
+      }
     }
 
     // Render the chart
@@ -298,7 +404,7 @@ class Timeseries {
       const data = app.map(row => {
         const value = row?.[endpoint]?.find(row => row.name === subcategory)?.[client]?.[metric];
         return {
-          x: new Date(row.date),
+          x: new Date(row.date).getTime(),
           y: value || 0,
         };
       });
@@ -341,7 +447,7 @@ class Timeseries {
         const clientData = categoryData?.[value.name];
         const y = clientData?.[metric];
         formattedData.push({
-          x: new Date(row.date),
+          x: new Date(row.date).getTime(),
           y: Number(y),
         });
       });
