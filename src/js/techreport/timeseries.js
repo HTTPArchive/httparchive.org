@@ -205,14 +205,12 @@ class Timeseries {
         const timestamp = component.querySelector('[data-slot="timestamp"]');
         const label = card.getElementsByClassName('breakdown-label')[0];
         const value = card.getElementsByClassName('breakdown-value')[0];
-        const secondaryValue = card.getElementsByClassName('breakdown-value-secondary')[0];
 
         /* Update text */
         label.innerHTML = latest.technology;
         if(latestValue) {
           if(summary) {
             value.innerHTML = `${summaryValue}`;
-            secondaryValue.innerHTML = `${latestValue}${config.series.suffix || ''}`;
           } else {
             value.innerHTML = `${latestValue}${config.series.suffix || ''}`;
           }

@@ -39,7 +39,6 @@
               <div class="breakdown-item">
                 <p class="breakdown-label">{{ breakdown.name }}</p>
                 <p class="breakdown-value">00{% if breakdown.suffix == "%" %}.00{% endif %}{{ breakdown.suffix }}</p>
-                <p class="breakdown-value-secondary"></p>
               </div>
             {% endfor %}
           {% elif timeseries.viz.series.breakdown == 'app' %}
@@ -47,7 +46,6 @@
                 <div class="breakdown-item" data-app="{{ app }}">
                   <p class="breakdown-label">{{ app }}</p>
                   <p class="breakdown-value">00{{ timeseries.viz.series.suffix }}</p>
-                  <p class="breakdown-value-secondary"></p>
                 </div>
               {% endfor %}
           {% endif %}
