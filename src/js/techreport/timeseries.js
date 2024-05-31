@@ -49,10 +49,10 @@ class Timeseries {
     const button = event.target;
     const tableWrapper = document.getElementById(`${button.dataset.id}-table-wrapper`);
     if(tableWrapper.classList.contains('hidden')) {
-      button.innerHTML = 'Hide table';
+      button.textContent = 'Hide table';
       tableWrapper.classList.remove('hidden');
     } else {
-      button.innerHTML = 'Show table';
+      button.textContent = 'Show table';
       tableWrapper.classList.add('hidden');
     }
   }
@@ -203,18 +203,18 @@ class Timeseries {
         const value = card.getElementsByClassName('breakdown-value')[0];
 
         /* Update text */
-        label.innerHTML = latest.technology;
+        label.textContent = latest.technology;
         if(latestValue) {
           if(summary) {
-            value.innerHTML = `${summaryValue}`;
+            value.textContent = `${summaryValue}`;
           } else {
-            value.innerHTML = `${latestValue}${config.series.suffix || ''}`;
+            value.textContent = `${latestValue}${config.series.suffix || ''}`;
           }
         } else {
           value.classList.add('undefined');
-          value.innerHTML = 'No data';
+          value.textContent = 'No data';
         }
-        timestamp.innerHTML = latest.date;
+        timestamp.textContent = latest.date;
         const techColor = UIUtils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
         const fallback = this.pageConfig.colors.app[index];
         card.style.setProperty('--breakdown-color', techColor || fallback);
