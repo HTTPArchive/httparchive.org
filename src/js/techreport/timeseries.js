@@ -150,10 +150,6 @@ class Timeseries {
           valueLabel.textContent = categoryData?.[breakdown.name]?.[summary];
           valueLabel.classList.add('breakdown-value');
           itemWrapper.appendChild(valueLabel);
-
-          const summaryLabel = document.createElement('p');
-          summaryLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
-          itemWrapper.appendChild(summaryLabel);
         } else {
           /* Add the value to the wrapper */
           const valueLabel = document.createElement('p');
