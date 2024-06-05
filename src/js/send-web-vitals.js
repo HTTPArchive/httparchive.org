@@ -2,8 +2,7 @@ function sendWebVitals() {
 
   function getLoafAttribution(attribution) {
     const loafEntriesLength = attribution?.longAnimationFrameEntries?.length || 0;
-    // if (loafEntriesLength === 0) {
-    if (!attribution?.longAnimationFrameEntries) {
+    if (loafEntriesLength === 0) {
       return {};
     }
 
