@@ -24,6 +24,7 @@ class TechReport {
     // Load the page
     this.initializePage();
     this.getAllMetricData();
+    this.getTechInfo();
     this.bindSettingsListeners();
   }
 
@@ -191,13 +192,16 @@ class TechReport {
       return fetch(url)
         .then(result => result.json())
         .then(result => {
+          // Loop through all the rows of the API result
           result.forEach(row => {
             const parsedRow = {
               ...row,
             }
 
+            // Parse the data and add it to the results
             if(api.parse) {
-              parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+              const metric = parsedRow[api.metric] || parsedRow;
+              parsedRow[api.metric] = api.parse(metric, parsedRow?.date);
             }
 
             const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
@@ -213,8 +217,49 @@ class TechReport {
         })
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
+      console.log('ALL RESULTS', allResults);
       this.updateComponents(allResults);
     });
+  }
+
+  // Get the information about the selected technology
+  getTechInfo() {
+    console.log('get tech info');
+
+    const technologies = this.filters.app;
+    const technology = technologies.join('%2C')
+      .replaceAll(" ", "%20");
+
+    console.log('get info for tech', technology);
+
+    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
+    const url = `${base}/technologies?technology=${technology}`;
+
+    console.log('call api by url', url);
+
+    fetch(url)
+      .then(result => result.json())
+      .then(result => {
+        console.log('info result', result);
+        console.log(result);
+        const techInfo = result[0];
+
+        const categoryListEl = document.getElementsByClassName('category-list')[0];
+        categoryListEl.innerHTML = '';
+
+        const categories = techInfo.category.split(', ');
+        categories.forEach(category => {
+          const categoryItemEl = document.createElement('li');
+          categoryItemEl.className = 'cell';
+          categoryItemEl.textContent = category;
+          categoryListEl.append(categoryItemEl);
+        });
+
+        const descriptionEl = document.createElement('p');
+        descriptionEl.className = 'tech-description';
+        descriptionEl.textContent = techInfo.description;
+        categoryListEl.after(descriptionEl);
+      });
   }
 
   // Update components and sections that are relevant to the current page

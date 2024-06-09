@@ -84,6 +84,11 @@ const parsePageWeightData = (metric, date) => {
   });
 }
 
+const parseTechnologyData = (metric, date) => {
+  console.log('parse', metric, date);
+  return metric;
+}
+
 const filterDuplicates = (array, key) => {
   const filtered = [];
   array.forEach((row) => {
@@ -108,4 +113,5 @@ export const DataUtils = {
   filterDuplicates,
   getLighthouseScoreCategories,
   formatAppName,
+  parseTechnologyData,
 };
