@@ -1,4 +1,5 @@
 import { Table } from "./table";
+import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
 class Timeseries {
   // Create the component
@@ -203,7 +204,8 @@ class Timeseries {
         const value = card.getElementsByClassName('breakdown-value')[0];
 
         /* Update text */
-        label.textContent = latest.technology;
+        const formattedApp = DataUtils.formatAppName(latest.technology);
+        label.textContent = formattedApp;
         if(latestValue) {
           if(summary) {
             value.textContent = `${summaryValue}`;
