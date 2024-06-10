@@ -233,8 +233,6 @@ class TechReport {
     fetch(url)
       .then(result => result.json())
       .then(result => {
-        console.log('info result', result);
-        console.log(result);
         const techInfo = result[0];
 
         const categoryListEl = document.getElementsByClassName('category-list')[0];
@@ -347,7 +345,6 @@ class TechReport {
     const body = document.querySelector('body');
     if(series?.breakdown == 'client') {
       series?.breakdown_values?.forEach((breakdown) => {
-        console.log('set breakdown color', breakdown.color)
         body.style.setProperty(`--breakdown-color-${breakdown.name}`, breakdown.color);
       });
     }
