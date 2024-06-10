@@ -217,25 +217,18 @@ class TechReport {
         })
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
-      console.log('ALL RESULTS', allResults);
       this.updateComponents(allResults);
     });
   }
 
   // Get the information about the selected technology
   getTechInfo() {
-    console.log('get tech info');
-
     const technologies = this.filters.app;
     const technology = technologies.join('%2C')
       .replaceAll(" ", "%20");
 
-    console.log('get info for tech', technology);
-
     const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
     const url = `${base}/technologies?technology=${technology}`;
-
-    console.log('call api by url', url);
 
     fetch(url)
       .then(result => result.json())
