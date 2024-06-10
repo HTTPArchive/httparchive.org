@@ -158,7 +158,7 @@ class Timeseries {
         } else {
           /* Add the value to the wrapper */
           const valueLabel = document.createElement('p');
-          valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+          valueLabel.textContent = `${latestValue.toLocaleString()}${breakdown.suffix || ''}`;
           valueLabel.classList.add('breakdown-value');
           itemWrapper.appendChild(valueLabel);
         }
@@ -198,8 +198,8 @@ class Timeseries {
         const latestEndpoint = latest[endpoint];
         const latestSubcategory = latestEndpoint?.find(row => row.name === subcategory);
         const latestClient  = latestSubcategory?.[client];
-        const latestValue = latestClient?.[metric];
-        const summaryValue = latestClient?.[summary];
+        const latestValue = latestClient?.[metric]?.toLocaleString();
+        const summaryValue = latestClient?.[summary]?.toLocaleString();
 
         /* Select the container to which we'll add elements. */
         const card = container.querySelector(`[data-app="${app}"]`);
@@ -349,7 +349,7 @@ class Timeseries {
           document.getElementsByTagName('main')[0].append(pointSvg);
 
           pointSeries.innerHTML = point.series.name;
-          pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y}`;
+          pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y.toLocaleString()}`;
 
           pointList.appendChild(pointItem);
         });
