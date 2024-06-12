@@ -24,7 +24,6 @@ class TechReport {
     // Load the page
     this.initializePage();
     this.getAllMetricData();
-    this.getTechInfo();
     this.bindSettingsListeners();
   }
 
@@ -37,6 +36,7 @@ class TechReport {
 
       case 'drilldown':
         this.initializeReport();
+        this.getTechInfo();
         break;
 
       case 'comparison':
