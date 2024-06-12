@@ -238,7 +238,7 @@ class TechReport {
         const categoryListEl = document.getElementsByClassName('category-list')[0];
         categoryListEl.innerHTML = '';
 
-        const categories = techInfo.category.split(', ');
+        const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
         categories.forEach(category => {
           const categoryItemEl = document.createElement('li');
           categoryItemEl.className = 'cell';
@@ -248,7 +248,7 @@ class TechReport {
 
         const descriptionEl = document.createElement('p');
         descriptionEl.className = 'tech-description';
-        descriptionEl.textContent = techInfo.description;
+        descriptionEl.textContent = techInfo?.description;
         categoryListEl.after(descriptionEl);
       });
   }
