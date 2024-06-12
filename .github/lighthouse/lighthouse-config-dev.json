@@ -27,6 +27,7 @@
         "service-worker": "off",
         "speed-index": "off",
         "splash-screen": "off",
+        "target-size": "off",
         "themed-omnibox": "off",
         "third-party-facades": "off",
         "total-byte-weight": "off",
