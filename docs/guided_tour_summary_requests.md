@@ -1,3 +1,9 @@
+# `summary_requests` are being DEPRECATED
+
+**Please use the `requests` table guide on [har.fyi](http://har.fyi/reference/tables/requests/).**
+
+---
+
 Part 2 - Exploring the Summary Requests Tables
 -------------------
 The `summary_requests` tables contain details about all HTTP requests made by the ~1.3 million pages tracked in the archive. This dataset is quite large, as you can see by the aggregate query that counts all rows in the table
