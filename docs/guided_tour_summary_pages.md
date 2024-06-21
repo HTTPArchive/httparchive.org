@@ -1,3 +1,9 @@
+# `summary_pages` are being DEPRECATED
+
+**Please use the `pages` table guide on [har.fyi](http://har.fyi/reference/tables/pages/).**
+
+---
+
 Part 1 - Exploring the Summary Pages Tables
 ----------------------
 
