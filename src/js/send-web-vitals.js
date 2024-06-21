@@ -54,7 +54,7 @@ function sendWebVitals() {
     }));
   }
 
-  function sendWebVitalsGAEvents({name, delta, id, attribution, navigationType}) {
+  function sendWebVitalsGAEvents({name, value, delta, id, attribution, navigationType}) {
     let overrides = {};
 
     switch (name) {
@@ -136,6 +136,11 @@ function sendWebVitals() {
       event_category: 'Web Vitals',
       event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
       event_label: id,
+      // Repeat with new fields to match web-vitals documentation
+      // TODO deprecate above UA-style names
+      metric_value: Math.round(name === 'CLS' ? value * 1000 : value),
+      metric_delta: Math.round(name === 'CLS' ? delta * 1000 : delta),
+      metric_id: id,
       nonInteraction: true,
 
       effective_type: effectiveType,
