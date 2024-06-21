@@ -18,34 +18,37 @@ The table below details the contents of a single row from the `summary_pages` ta
 
 Let's start exploring this dataset with a simple query and build up to something interesting. How many pages are included in the 2018-Sep-01 Desktop table? To do this, we'll use [COUNT(0)](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#count) in a simple aggregate query.
 
-```
+```sql
 SELECT
   COUNT(0) pages
 FROM
   `httparchive.summary_pages.2018_09_01_desktop`
 ```
+
 ![example results](./images/guided_tour_summary_pages-count.jpg)
 
 Next let's calculate the average number of requests per page across all 1.3 million pages. In the table example shown earlier, the `reqTotal` column contained the total number of requests on the page and Google's homepage had 18 requests. In order to calculate the average, we'll use SQL's [AVG()](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#avg) function.
 
-```
+```sql
 SELECT
   COUNT(0) pages,
   AVG(reqTotal) avg_requests
 FROM
   `httparchive.summary_pages.2018_09_01_desktop`
 ```
+
 ![example results](./images/guided_tour_summary_pages-avg.jpg)
 
 The average number of requests per page is 101.93928270072134. Let's use the [ROUND() function](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#round) to truncate this to two decimal points.
 
-```
+```sql
 SELECT
   COUNT(0) pages,
   ROUND(AVG(reqTotal),2) avg_requests
 FROM
   `httparchive.summary_pages.2018_09_01_desktop`
 ```
+
 ![example results](./images/guided_tour_summary_pages-avg_rounded.jpg)
 
 You may have heard the phrase "averages are misleading", and that's certainly true here. While it's very easy and familiar to represent stats as averages, it hides a lot of detail and is easily skewed by outliers. Let's explore the number of requests per page with percentiles now.
@@ -54,7 +57,7 @@ In Standard SQL, we can use the [APPROX_QUANTILES()](https://cloud.google.com/bi
 
 Let's do this for the 25th, 50th, 75th and 95th percentiles and see how that compares to the average.
 
-```
+```sql
 SELECT
   COUNT(0) pages,
   ROUND(AVG(reqTotal),2) avg_requests,
@@ -65,13 +68,14 @@ SELECT
 FROM
   `httparchive.summary_pages.2018_09_01_desktop`
 ```
+
 ![example results](./images/guided_tour_summary_pages-percentiles.jpg)
 
 When we look at the results from this query, the median number of requests per page was 73. The average was in fact skewed by outliers. Also, since the 25th percentile is 39 requests and the 75th percentile is 126 requests, that tells us that 50% of the 1.3 million pages tracked by the HTTP Archive have between 39 and 126 requests. This is also known as the [interquartile range](https://en.wikipedia.org/wiki/Interquartile_range).
 
 Now let's add another dimension to this query. The numDomains column counts the number of unique domain names used across all the page's requests. If we add numDomains to the query, and GROUP BY it then we can see these stats broken down by the number of domains per page. In this next example, we'll use the `HAVING` clause to limit the results to domain counts that have at least 1000 pages.
 
-```
+```sql
 SELECT
   numDomains,
   COUNT(0) pages,
@@ -89,6 +93,7 @@ HAVING
 ORDER BY
   numDomains ASC
 ```
+
 ![example results](./images/guided_tour_summary_pages-numDomains_percentiles.jpg)
 
 The result contained 90 rows of data.  Now that we're dealing with larger result sets, it's time to start graphing them!
@@ -96,7 +101,7 @@ In BigQuery you can save your query results to a CSV file, to a Google Sheet or 
 
 When we look at the relationship between the number of domains and the pages it looks like a fair numbers of sites load content from less than 20 unique domains. Using the same technique we practiced above, we can validate this by calculating the percentiles for the number of domains.
 
-```
+```sql
 SELECT
   APPROX_QUANTILES(numDomains, 100)[SAFE_ORDINAL(25)] p25_numDomains,
   APPROX_QUANTILES(numDomains, 100)[SAFE_ORDINAL(50)] p50_numDomains,
@@ -105,19 +110,20 @@ SELECT
 FROM
   `httparchive.summary_pages.2018_09_01_desktop`
 ```
+
 ![example results](./images/guided_tour_summary_pages-numDomains.jpg)
 
 When we put all of this together, we can see some interesting patterns. For example:
+
 - The number of requests per page increases linearly with respect to the number of domains.
 - The long tail of the histogram of domains per site represents a fairly large percentage of sites. 25% of sites have more than 24 domains.
 - The median number of requests per page tracks very close to the average
 - There is a wide gap between the 75th percentile and 95th percentile requests per page, which remains consistent for all domain groupings
 ![example results](./images/guided_tour_summary_pages-numDomains_requests_graph.jpg)
 
-
 Let's step back and look at another example. In the `summary_pages` table, there are columns named `num_scripts_sync` and `num_scripts_async`, which indicate the number of async and sync scripts per page. We can run a simple query using the techniques you learned above to see how they relate to each other.
 
-```
+```sql
 SELECT
   num_scripts_async,
   num_scripts_sync,
