@@ -1,3 +1,9 @@
+# `summary_pages` and `summary_requests` are being DEPRECATED
+
+**Please use the `pages` and `requests` tables correspondingly. Follow the migration guide on [har.fyi](http://har.fyi/guides/migrating-to-all-dataset/).**
+
+---
+
 Part 3 - Joining Summary Page and Requests tables
 -------------------
 
