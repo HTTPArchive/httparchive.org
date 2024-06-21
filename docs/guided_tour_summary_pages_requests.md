@@ -1,4 +1,4 @@
-`summary_pages` and `summary_requests` datasets are being DEPRECATED
+`summary_pages` and `summary_requests` datasets are OUTDATED
 ===============
 
 **Please use the `httparchive.all.pages` and `httparchive.all.requests` tables correspondingly. Follow the migration guide on [har.fyi](http://har.fyi/guides/migrating-to-all-dataset/).**

@@ -1,4 +1,4 @@
-`summary_requests` dataset is being DEPRECATED
+`summary_requests` dataset is OUTDATED
 ===============
 
 **Please use the `httparchive.all.requests` table guide on [har.fyi](http://har.fyi/reference/tables/requests/).**
