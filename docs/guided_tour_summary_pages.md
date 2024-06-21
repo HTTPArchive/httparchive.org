@@ -1,7 +1,7 @@
-`summary_pages` are being DEPRECATED
+`summary_pages` dataset is being DEPRECATED
 ===============
 
-**Please use the `pages` table guide on [har.fyi](http://har.fyi/reference/tables/pages/).**
+**Please use the `httparchive.all.pages` table guide on [har.fyi](http://har.fyi/reference/tables/pages/).**
 
 ---
 
