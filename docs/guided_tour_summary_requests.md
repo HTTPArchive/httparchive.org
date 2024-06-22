@@ -1,4 +1,4 @@
-`summary_requests` dataset is OUTDATED
+This guide has been moved to [har.fyi](https://har.fyi/guides/guided-tour/)
 ===============
 
 **Please use the `httparchive.all.requests` table guide on [har.fyi](http://har.fyi/reference/tables/requests/).**

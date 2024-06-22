@@ -1,4 +1,4 @@
-`summary_pages` and `summary_requests` datasets are OUTDATED
+This guide has been moved to [har.fyi](https://har.fyi/guides/guided-tour/)
 ===============
 
 **Please use the `httparchive.all.pages` and `httparchive.all.requests` tables correspondingly. Follow the migration guide on [har.fyi](http://har.fyi/guides/migrating-to-all-dataset/).**
