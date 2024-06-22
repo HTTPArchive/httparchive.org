@@ -9,16 +9,13 @@
         <span class="subtitle">Tech Report</span>
         <span class="">Drilldown</span>
       </h1>
-      <!-- <ul class="category-list categories">
-        <li class="cell">Placeholder</li>
-      </ul> -->
     </div>
     <div class="filters">
       {% include "techreport/templates/filters.html" %}
     </div>
   </div>
 
-  {% set filter_tech_title = tech_report_page.filters.app[0] or 'ALL' %}
+  {% set filter_tech_title = tech_report_page.filters.app[0] or 'All technologies' %}
   {% include "techreport/components/filter_info_header.html" %}
 
   <div id="report-content" class="report-content">
@@ -28,7 +25,7 @@
         <span class="main-title">ALL</span>
       </h2>
       <ul class="category-list categories">
-        <li class="cell">Placeholder</li>
+        <li class="cell">Uncategorized</li>
       </ul>
     </div>
 

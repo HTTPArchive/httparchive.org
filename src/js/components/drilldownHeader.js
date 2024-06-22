@@ -1,3 +1,5 @@
+import { DataUtils } from "../techreport/utils/data";
+
 function setTitle(title) {
   const mainTitle = document.querySelector('h2 span.main-title');
   mainTitle.textContent = title;
@@ -33,7 +35,8 @@ function update(data, filters) {
   const app = filters.app[0];
 
   if(app) {
-    setTitle(app);
+    const formattedApp = DataUtils.formatAppName(app);
+    setTitle(formattedApp);
   }
 
   if(data[app]) {

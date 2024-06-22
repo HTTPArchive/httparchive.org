@@ -99,7 +99,7 @@ class Filters {
         const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
         const option = optionTmpl.querySelector('option');
         const formattedTech = technology.technology;
-        option.textContent = technology.technology;
+        option.textContent = DataUtils.formatAppName(technology.technology);
         option.value = formattedTech;
         if(formattedTech === techSelector.getAttribute('data-selected')) {
           option.selected = true;

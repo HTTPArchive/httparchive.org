@@ -11,13 +11,6 @@
 {% endblock %}
 
 {% block report_navigation %}
-  <div class="info-panel">
-    <div class="block-l">
-      <p class="info-label">Beta version</p>
-      <p>This dashboard is still under development.</p>
-    </div>
-  </div>
-
   <nav class="report-navigation">
     {% set filters = "" %}
     {% if tech_report_page.filters %}
@@ -56,6 +49,13 @@
       </li>
     </ul>
   </nav>
+
+  <div class="info-panel">
+    <div class="block-l">
+      <p class="info-label">Beta version</p>
+      <p>This dashboard is still under development.</p>
+    </div>
+  </div>
 {% endblock %}
 
 {% block main %}

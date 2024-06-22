@@ -5,6 +5,9 @@ const getAppColor = (tech, technologies, colors) => {
   const sortedTechs = [...technologies].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
   const techIndex = sortedTechs.indexOf(tech);
 
+  // Get color scheme
+  const theme = document.querySelector('html').dataset.theme;
+
   // Return custom colors if configured
   if(colors.overrides && colors.overrides[tech]) {
     return colors.overrides[tech];
@@ -12,7 +15,8 @@ const getAppColor = (tech, technologies, colors) => {
 
   // Otherwise reutrn based on alphabetic position
   if(techIndex < colors.app.length) {
-    return colors.app[techIndex];
+    const appColors = theme === "dark" ? colors.app_dark : colors.app;
+    return appColors[techIndex];
   }
 }
 
