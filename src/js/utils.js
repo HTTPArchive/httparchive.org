@@ -77,6 +77,12 @@ export const drawMetricSummary = (options, client, value, isMedian=true, change=
  * @param {Function} callback
  */
 export function callOnceWhenVisible(element, callback) {
+  // If the document is prerendering, don't wait until the charts are visible.
+  if (document.prerendering) {
+    callback();
+    return;
+  }
+
   new IntersectionObserver((entries, observer) => {
     if (!entries[0].isIntersecting) {
       return;
