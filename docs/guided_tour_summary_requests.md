@@ -1,8 +1,16 @@
+This guide has been moved to [har.fyi](https://har.fyi/guides/guided-tour/)
+===============
+
+**Please use the `httparchive.all.requests` table guide on [har.fyi](http://har.fyi/reference/tables/requests/).**
+
+---
+
 Part 2 - Exploring the Summary Requests Tables
--------------------
+
+---
 The `summary_requests` tables contain details about all HTTP requests made by the ~1.3 million pages tracked in the archive. This dataset is quite large, as you can see by the aggregate query that counts all rows in the table
 
-```
+```sql
 SELECT
   COUNT(0)
 FROM
@@ -16,19 +24,19 @@ In [Part 1](./guided_tour_summary_pages.md) we looked at a sample of what the `s
 
 Since each page tracked by the HTTP Archive has a unique pageid, we can also summarize these results by the number of distinct pageid's.  For example, the following query tells us that there are 129,629,152 requests in this dataset and that they're loaded from 1,271,631 pages.
 
-```
+```sql
 SELECT
   COUNT(0) requests,
   COUNT(DISTINCT pageid) pages
 FROM
   `httparchive.summary_requests.2018_09_01_desktop`
 ```
-![example results](./images/guided_tour_summary_requests-count_pageids.jpg)
 
+![example results](./images/guided_tour_summary_requests-count_pageids.jpg)
 
 We already knew the number of pages from previous queries, but now lets add a dimension to the query to explore this table some more. The following query adds the 'type' column, which indicates the type of resource loaded (ie, script, image, css, etc)
 
-```
+```sql
 SELECT
   type,
   COUNT(0) requests,
@@ -40,11 +48,12 @@ GROUP BY
 ORDER BY
   requests DESC
 ```
+
 ![example results](./images/guided_tour_summary_requests-count_reqtype.jpg)
 
 When we look at this data we can see counts of requests and pages for each content type. But what if we want the percentage of total? You could divide by the numbers that we know. But a more repeatable way of doing this would be to include a subquery. In the following query you'll notice that the number of requests per type is divided by the total number of requests. And likewise the same is done for pages.
 
-```
+```sql
 SELECT
   type,
   COUNT(0) requests,
@@ -63,7 +72,7 @@ ORDER BY
 
 As we learned in Part 1, we can use the ROUND() function to trim the result to 2 decimal points for readability.
 
-```
+```sql
 SELECT
   type,
   COUNT(0) requests,
@@ -77,8 +86,8 @@ GROUP BY
 ORDER BY
   requests DESC
 ```
-![example results](./images/guided_tour_summary_requests-count_reqtype_perc_rounded.jpg)
 
+![example results](./images/guided_tour_summary_requests-count_reqtype_perc_rounded.jpg)
 
 Graphing this we can see both the distribution of content types across all requests in the archive as well as the popularity of certain types of content on each site.  For example, 100% of sites contained images and HTML.  96% contain JavaScript and CSS. 67% contain custom webfonts and 4% contain video files.
 
@@ -86,7 +95,7 @@ Graphing this we can see both the distribution of content types across all reque
 
 Let's say we want to extend this query some more and look at the formats of each type. Now we have a query that is summarizing the % of requests and pages for each file type and format.
 
-```
+```sql
 SELECT
   type,
   format,
@@ -102,11 +111,12 @@ GROUP BY
 ORDER BY
   requests DESC
 ```
+
 ![example results](./images/guided_tour_summary_requests-count_reqtypeformat_perc_rounded.jpg)
 
 Using a WHERE clause we can filter out all of the non-Image content and examine the popularity of various image formats. For example, how often is jpg, gif, webp, etc used.
 
-```
+```sql
 SELECT
   type,
   format,
@@ -136,7 +146,7 @@ Let's explore a simple histogram of the requests dataset by looking at the distr
 
 In the example below, we'll be using a histogram to visualize the size of individual requests served from websites across the entire dataset. To do this, we'll be using the respBodySize column. This column represents the size of the response payload in bytes. Since 1 byte is very granular, we'll divide by 1024 to get to 1 KB and then by 100 so that we are looking at this data with bin sizes of 100KB. We'll also wrap this in a `ROUND()` function to remove the decimal points and then multiply the result by 100. Using this technique, 1234567 bytes would be rounded to a bin of 1200 KB.
 
-```
+```sql
 SELECT
   ROUND(respBodySize/(1024*100))*100 responseSize100KB,
   COUNT(0) requests
@@ -149,6 +159,7 @@ HAVING
 ORDER BY
   responseSize100KB ASC
 ```
+
 ![example results](./images/guided_tour_summary_requests-histogram.jpg)
 
 If we export the result to Google Sheets, we can work with the data some more. For example, we can added a column with the % of requests, and use a simple formula to calcuate the percentages. In Google Sheets you can copy/paste the formula for the entire column to quickly populate the % Requests column. When we analyze this data we can see that that 70% of requests have a response size less than 100KB. Try repeating this with 10KB bin sizes and you'll be able to see the spread of response sizes with more granularity.
