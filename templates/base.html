@@ -29,10 +29,6 @@
       gtag('config', 'G-D66RRD8GF2');
     </script>
 
-    <link rel="prefetch" href="{{ get_versioned_filename('/static/js/highstock.js') }}">
-    <link rel="prefetch" href="{{ get_versioned_filename('/static/js/highcharts-more.js') }}">
-    <link rel="prefetch" href="{{ get_versioned_filename('/static/js/report.js') }}">
-    <link rel="prefetch" href="{{ get_versioned_filename('/static/js/timeseries.js') }}">
   </head>
   <body>
     {% block content %}{% endblock %}
@@ -41,22 +37,13 @@
     <script defer src="{{ get_versioned_filename('/static/js/send-web-vitals.js') }}" nonce="{{ csp_nonce() }}"></script>
     <script type="speculationrules" nonce="{{ csp_nonce() }}">
     {
-      "prefetch": [{
-        "source": "document",
-        "where": {
-          "href_matches": "/reports/*"
-        },
-        "eagerness": "eager"
-      }],
-
       "prerender": [{
-        "source": "document",
-        "where": {
-          "href_matches": "/reports/*"
-        },
-        "eagerness": "moderate"
-      }]
-    }
+        "urls": [
+          "/reports/state-of-the-web",
+          "/reports/page-weight",
+          "/reports/loading-speed"
+        ]
+      }
     </script>
     {% endblock %}
   </body>
