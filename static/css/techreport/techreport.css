@@ -406,7 +406,7 @@ nav {
   position: absolute;
   right: 0;
   border-radius: 0 4px 4px 0;
-  z-index: 0;
+  z-index: 2;
 }
 
 .tech-input-wrapper::after {
@@ -422,7 +422,7 @@ nav {
   border-left: 1.5px solid var(--color-text-darker);
   border-radius: 1px;
   transform: rotate(-45deg);
-  z-index: 0;
+  z-index: 3;
 }
 
 .tech-input-wrapper select {
@@ -451,6 +451,7 @@ nav {
 [data-theme="dark"] select option,
 [data-theme="dark"] .tech-input-wrapper:has(select:focus-visible) select {
   color: var(--color-page-background) !important;
+  background-color: var(--color-text-darker) !important;
 }
 
 .tech-selector-group .content {
