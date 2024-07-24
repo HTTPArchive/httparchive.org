@@ -47,7 +47,24 @@
       },
       "config": {
         "default": {
-          "app": ["WordPress", "Squarespace", "Drupal"]
+          "app": ["WordPress", "Squarespace", "Drupal"],
+          "series": {
+              "breakdown": "client",
+              "breakdown_values": [
+                {
+                  "name": "desktop",
+                  "color": "#669E8E",
+                  "color_dark": "#fff000",
+                  "suffix": "%"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0",
+                  "suffix": "%"
+                }
+              ]
+            }
         },
         "popular_tech": {
           "id": "popular_tech",

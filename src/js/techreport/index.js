@@ -25,10 +25,14 @@ class TechReport {
     this.initializePage();
     this.getAllMetricData();
     this.bindSettingsListeners();
+    this.initializeAccessibility();
   }
 
   // Initialize the sections for the different pages
   initializePage() {
+    console.log('initialize page');
+    this.updateStyling();
+
     switch(this.pageId) {
       case 'landing':
         this.initializeLanding();
@@ -45,18 +49,14 @@ class TechReport {
     }
   }
 
-  // TODO
-  initializeLanding() {
-  }
-
-  // TODO
-  initializeReport() {
-    // TODO: Move to function
+  // Load accessibility/themeing info
+  initializeAccessibility() {
+    // Show indicators?
     const showIndicators = localStorage.getItem('showIndicators');
     document.querySelector('main').dataset.showIndicators = showIndicators;
     document.querySelector('#indicators-check').checked = showIndicators === 'true';
 
-    // TODO: Move to function
+    // Dark or light mode?
     const theme = localStorage.getItem('haTheme');
     document.querySelector('html').dataset.theme = theme;
     const btn = document.querySelector('.theme-switcher');
@@ -65,7 +65,13 @@ class TechReport {
     } else if(theme === 'light') {
       btn.innerHTML = '🌚 Switch to dark theme';
     }
+  }
 
+  initializeLanding() {
+  }
+
+  // TODO
+  initializeReport() {
     const sections = document.querySelectorAll('[data-type="section"]');
     // TODO: add general config too
     sections.forEach(section => {
@@ -80,7 +86,6 @@ class TechReport {
     });
 
     this.bindClientListener();
-    this.updateStyling();
   }
 
   // Watch for changes in the client dropdown
