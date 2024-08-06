@@ -31,7 +31,6 @@ class TechReport {
 
   // Initialize the sections for the different pages
   initializePage() {
-    console.log('initialize page');
     this.updateStyling();
 
     switch(this.pageId) {
