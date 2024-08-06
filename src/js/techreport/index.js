@@ -1,4 +1,5 @@
 import Filters from '../components/filters';
+import { Constants } from './utils/constants';
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { DataUtils } = require("./utils/data");
 const { UIUtils } = require("./utils/ui");
@@ -180,8 +181,6 @@ class TechReport {
       },
     ];
 
-    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
-
     const technology = technologies.join('%2C')
       .replaceAll(" ", "%20");
 
@@ -192,7 +191,7 @@ class TechReport {
     technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
-      const url = `${base}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
+      const url = `${Constants.apiBase}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
 
       return fetch(url)
         .then(result => result.json())
@@ -232,8 +231,7 @@ class TechReport {
     const technology = technologies.join('%2C')
       .replaceAll(" ", "%20");
 
-    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
-    const url = `${base}/technologies?technology=${technology}`;
+    const url = `${Constants.apiBase}/technologies?technology=${technology}`;
 
     fetch(url)
       .then(result => result.json())
@@ -280,12 +278,11 @@ class TechReport {
   // Fetch the data for the filter dropdowns
   getFilterInfo() {
     const filterData = {};
-    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
 
     const filterApis = ['categories', 'technologies', 'ranks', 'geos'];
 
     Promise.all(filterApis.map(api => {
-      const url = `${base}/${api}`;
+      const url = `${Constants.apiBase}/${api}`;
 
       return fetch(url)
         .then(result => result.json())

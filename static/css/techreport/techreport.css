@@ -314,6 +314,10 @@ nav {
   outline-offset: 2px;
 }
 
+.dropdown-content {
+  z-index: 2;
+}
+
 .select-label::before {
   content: "";
   display: block;
