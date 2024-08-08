@@ -35,6 +35,16 @@
     {% block scripts %}
     <script defer src="{{ get_versioned_filename('/static/js/web-vitals.js') }}" nonce="{{ csp_nonce() }}"></script>
     <script defer src="{{ get_versioned_filename('/static/js/send-web-vitals.js') }}" nonce="{{ csp_nonce() }}"></script>
+    <script type="speculationrules" nonce="{{ csp_nonce() }}">
+    {
+      "prerender": [{
+        "urls": [
+          "/reports/state-of-the-web",
+          "/reports/page-weight",
+          "/reports/loading-speed"
+        ]
+      }
+    </script>
     {% endblock %}
   </body>
 </html>
