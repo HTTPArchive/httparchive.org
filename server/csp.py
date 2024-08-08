@@ -26,6 +26,7 @@ csp = {
         "*.analytics.google.com",
         "*.google-analytics.com",
         "*.googletagmanager.com",
+        "stats.g.doubleclick.net",
         "*.speedcurve.com",
         "dev-gw-2vzgiib6.ue.gateway.dev",
         "prod-gw-2vzgiib6.ue.gateway.dev",
@@ -36,7 +37,7 @@ csp = {
         "*.google-analytics.com",
         "*.googletagmanager.com",
     ],
-    "frame-src": ["'self'"],
+    "frame-src": ["'none'"],
     "object-src": ["'none'"],
     "base-uri": ["'none'"],
 }
