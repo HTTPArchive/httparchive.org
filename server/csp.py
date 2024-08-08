@@ -31,7 +31,7 @@ csp = {
         "prod-gw-2vzgiib6.ue.gateway.dev",
     ],
     "img-src": ["'self'", "https:"],
-    "frame-src": ["'none'"],
+    "frame-src": ["'self'", "td.doubleclick.net"],
     "object-src": ["'none'"],
     "base-uri": ["'none'"],
 }
