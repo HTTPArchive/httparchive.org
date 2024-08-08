@@ -6,28 +6,35 @@ function sendWebVitals() {
       return {};
     }
 
-    let loafAttribution = {
-      debug_loaf_script_total_duration: 0
-    };
-
     // The last LoAF entry is usually the most relevant.
     const loaf = attribution.longAnimationFrameEntries.at(-1);
     const loafEndTime = loaf.startTime + loaf.duration;
-    loaf.scripts.forEach(script => {
-      if (script.duration <= loafAttribution.debug_loaf_script_total_duration) {
-        return;
-      }
-      loafAttribution = {
-        // Stats for the LoAF entry itself.
-        debug_loaf_entry_start_time: loaf.startTime,
-        debug_loaf_entry_end_time: loafEndTime,
-        debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
-        debug_loaf_entry_render_duration: loaf.renderStart ? loafEndTime - loaf.renderStart : 0,
-        debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
-        debug_loaf_entry_pre_layout_duration: loaf.styleAndLayoutStart ? loaf.styleAndLayoutStart - loaf.renderStart : 0,
-        debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loafEndTime - loaf.styleAndLayoutStart : 0,
 
-        // Stats for the longest script in the LoAF entry.
+    const loafAttribution = {
+      // Stats for the LoAF entry itself.
+      debug_loaf_entry_start_time: loaf.startTime,
+      debug_loaf_entry_end_time: loafEndTime,
+      debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
+      debug_loaf_entry_render_duration: loaf.renderStart ? loafEndTime - loaf.renderStart : 0,
+      debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
+      debug_loaf_entry_pre_layout_duration: loaf.styleAndLayoutStart ? loaf.styleAndLayoutStart - loaf.renderStart : 0,
+      debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loafEndTime - loaf.styleAndLayoutStart : 0,
+
+      // LoAF metadata.
+      debug_loaf_meta_length: loafEntriesLength,
+      debug_loaf_meta_script_length: loaf.scripts.length,
+    };
+    
+    // Stats for the slowest script in the LoAF entry.
+    let scriptAttribution = {};
+    let slowestScriptDuration = 0;
+    loaf.scripts.forEach(script => {
+      if (script.duration <= slowestScriptDuration) {
+        return {};
+      }
+
+      slowestScriptDuration = script.duration;
+      scriptAttribution = {
         debug_loaf_script_total_duration: script.duration,
         debug_loaf_script_compile_duration: script.executionStart - script.startTime,
         debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
@@ -37,9 +44,6 @@ function sendWebVitals() {
         debug_loaf_script_source_url: script.sourceURL,
         debug_loaf_script_source_function_name: script.sourceFunctionName,
         debug_loaf_script_source_char_position: script.sourceCharPosition,
-
-        // LoAF metadata.
-        debug_loaf_meta_length: loafEntriesLength,
       }
     });
 
@@ -73,7 +77,6 @@ function sendWebVitals() {
           debug_target: attribution.loadState || '(not set)',
         };
         break;
-      case 'FID':
       case 'INP':
         const loafAttribution = getLoafAttribution(attribution);
         overrides = {
@@ -83,7 +86,7 @@ function sendWebVitals() {
           debug_target: attribution.interactionTarget || '(not set)',
           debug_interaction_delay: Math.round(attribution.inputDelay),
           debug_processing_duration: Math.round(attribution.processingDuration),
-          debug_presentation_delay:  Math.round(attribution.presentationDelay),
+          debug_presentation_delay: Math.round(attribution.presentationDelay),
           ...loafAttribution
         };
         break;
@@ -161,7 +164,6 @@ function sendWebVitals() {
     webVitals.onLCP(sendWebVitalsGAEvents);
     webVitals.onCLS(sendWebVitalsGAEvents);
     webVitals.onTTFB(sendWebVitalsGAEvents);
-    webVitals.onFID(sendWebVitalsGAEvents);
     webVitals.onINP(sendWebVitalsGAEvents);
   } else {
     console.error('Web Vitals is not loaded!!');
