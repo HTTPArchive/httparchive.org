@@ -24,7 +24,7 @@ function sendWebVitals() {
       debug_loaf_meta_length: loafEntriesLength,
       debug_loaf_meta_script_length: loaf.scripts.length,
     };
-    
+
     // Stats for the slowest script in the LoAF entry.
     let scriptAttribution = {};
     let slowestScriptDuration = 0;
