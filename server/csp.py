@@ -26,6 +26,7 @@ csp = {
         "analytics.google.com",
         "*.analytics.google.com",
         "stats.g.doubleclick.net",
+        "*.speedcurve.com",
         "dev-gw-2vzgiib6.ue.gateway.dev",
         "prod-gw-2vzgiib6.ue.gateway.dev",
     ],
