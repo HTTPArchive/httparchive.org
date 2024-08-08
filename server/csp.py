@@ -37,7 +37,10 @@ csp = {
         "*.google-analytics.com",
         "*.googletagmanager.com",
     ],
-    "frame-src": ["'none'"],
+    "frame-src": [
+        "'self'",
+        "td.doubleclick.net",
+    ],
     "object-src": ["'none'"],
     "base-uri": ["'none'"],
 }
