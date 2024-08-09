@@ -22,11 +22,9 @@ csp = {
         "dev.to",
         "cdn.rawgit.com",
         "www.webpagetest.org",
-        "analytics.google.com",
         "*.analytics.google.com",
         "*.google-analytics.com",
         "*.googletagmanager.com",
-        "stats.g.doubleclick.net",
         "*.speedcurve.com",
         "dev-gw-2vzgiib6.ue.gateway.dev",
         "prod-gw-2vzgiib6.ue.gateway.dev",
@@ -37,10 +35,7 @@ csp = {
         "*.google-analytics.com",
         "*.googletagmanager.com",
     ],
-    "frame-src": [
-        "'self'",
-        "td.doubleclick.net",
-    ],
+    "frame-src": ["'none'"],
     "object-src": ["'none'"],
     "base-uri": ["'none'"],
 }
