@@ -11,7 +11,7 @@ function sendWebVitals() {
     const loafEndTime = loaf.startTime + loaf.duration;
 
     let totalReflow = null;
-    if (loaf.scripts.length ) {
+    if (loaf.scripts.length) {
       totalReflow = loaf.scripts.reduce((sum, script) => {
         return sum + script.forcedStyleAndLayoutDuration;
       }, 0);
