@@ -47,7 +47,24 @@
       },
       "config": {
         "default": {
-          "app": ["WordPress", "Squarespace", "Drupal"]
+          "app": ["WordPress", "Squarespace", "Drupal"],
+          "series": {
+              "breakdown": "client",
+              "breakdown_values": [
+                {
+                  "name": "desktop",
+                  "color": "#669E8E",
+                  "color_dark": "#fff000",
+                  "suffix": "%"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0",
+                  "suffix": "%"
+                }
+              ]
+            }
         },
         "popular_tech": {
           "id": "popular_tech",
@@ -76,11 +93,13 @@
               {
                 "name": "desktop",
                 "color": "#669E8E",
+                "color_dark": "#fff000",
                 "suffix": "%"
               },
               {
                 "name": "mobile",
                 "color": "#BD6EBE",
+                "color_dark": "#ff00f0",
                 "suffix": "%"
               }
             ]
@@ -158,11 +177,13 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#669E8E"
+                  "color": "#669E8E",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
-                  "color": "#BD6EBE"
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -339,11 +360,13 @@
                 {
                   "name": "desktop",
                   "color": "#669E8E",
+                  "color_dark": "#fff000",
                   "suffix": "%"
                 },
                 {
                   "name": "mobile",
                   "color": "#BD6EBE",
+                  "color_dark": "#ff00f0",
                   "suffix": "%"
                 }
               ],
@@ -477,11 +500,13 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#669E8E"
+                  "color": "#669E8E",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
-                  "color": "#BD6EBE"
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -607,12 +632,14 @@
                 {
                   "name": "desktop",
                   "color": "#669E8E",
-                  "suffix": " bytes"
+                  "suffix": " bytes",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
                   "color": "#BD6EBE",
-                  "suffix": " bytes"
+                  "suffix": " bytes",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -669,8 +696,20 @@
             "#8E3496",
             "#CB377C"
           ],
+          "app_dark": [
+            "#5980EB",
+            "#D55316",
+            "#A8A9CA",
+            "#68A16D",
+            "#B979A7",
+            "#AC8D1C",
+            "#947786",
+            "#449DB1",
+            "#C861D2",
+            "#E24070"
+          ],
           "overrides": {
-            "WordPress": "#ff0000"
+            "WordPress": "#fff000"
           }
         },
         "default": {
