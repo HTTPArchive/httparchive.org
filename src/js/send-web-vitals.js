@@ -10,13 +10,20 @@ function sendWebVitals() {
     const loaf = attribution.longAnimationFrameEntries.at(-1);
     const loafEndTime = loaf.startTime + loaf.duration;
 
+    let totalReflow = null;
+    if (loaf.scripts.length) {
+      totalReflow = loaf.scripts.reduce((sum, script) => {
+        return sum + script.forcedStyleAndLayoutDuration;
+      }, 0);
+    }
+
     const loafAttribution = {
       // Stats for the LoAF entry itself.
       debug_loaf_entry_start_time: loaf.startTime,
       debug_loaf_entry_end_time: loafEndTime,
       debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
       debug_loaf_entry_render_duration: loaf.renderStart ? loafEndTime - loaf.renderStart : 0,
-      debug_loaf_entry_total_forced_style_and_layout_duration: loaf.scripts.reduce((sum, script) => sum + script.forcedStyleAndLayoutDuration, 0),
+      debug_loaf_entry_total_forced_style_and_layout_duration: totalReflow,
       debug_loaf_entry_pre_layout_duration: loaf.styleAndLayoutStart ? loaf.styleAndLayoutStart - loaf.renderStart : 0,
       debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loafEndTime - loaf.styleAndLayoutStart : 0,
 
@@ -47,12 +54,8 @@ function sendWebVitals() {
       }
     });
 
-    if (!loafAttribution.debug_loaf_script_total_duration) {
-      return {};
-    }
-
     // The LoAF script with the single longest total duration.
-    return Object.fromEntries(Object.entries(loafAttribution).map(([k, v]) => {
+    return Object.fromEntries(Object.entries({...loafAttribution, ...scriptAttribution}).map(([k, v]) => {
       // Convert all floats to ints.
       return [k, typeof v == 'number' ? Math.floor(v) : v];
     }));
