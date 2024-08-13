@@ -23,7 +23,7 @@ LENSES="drupal magento wordpress top1k top10k top100k top1m"
 # We test the first and last report for each lens
 REPORT_MONTHLY_URLS=$(cat <<-END
 https://cdn.httparchive.org/reports/${REPORT_DATE}/bootupJs.json
-https://cdn.httparchive.org/reports/${REPORT_DATE}/webSocketStream.json
+https://cdn.httparchive.org/reports/${REPORT_DATE}/tcp.json
 https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxCls.json
 https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxOl.json
 END
@@ -33,7 +33,7 @@ for LENS in ${LENSES}
 do
 REPORT_MONTHLY_URLS_LENS=$(cat <<-END
 https://cdn.httparchive.org/reports/${LENS}/${REPORT_DATE}/bootupJs.json
-https://cdn.httparchive.org/reports/${LENS}/${REPORT_DATE}/webSocketStream.json
+https://cdn.httparchive.org/reports/${LENS}/${REPORT_DATE}/tcp.json
 https://cdn.httparchive.org/reports/${LENS}/${CRUX_REPORT_DATE}/cruxCls.json
 https://cdn.httparchive.org/reports/${LENS}/${CRUX_REPORT_DATE}/cruxOl.json
 END
