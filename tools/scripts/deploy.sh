@@ -88,7 +88,7 @@ git pull
 
 if [ "$(pgrep -if 'python main.py')" ]; then
   echo "Killing existing server to run a fresh version"
-  pkill -9 python main.py
+  pkill -9 -if "python main.py"
 fi
 
 echo "Run and test website"
@@ -109,7 +109,7 @@ echo "Y" | gcloud app deploy --project httparchive
 
 if [ "$(pgrep -if 'python main.py')" ]; then
   echo "Killing server so backgrounded version isn't left there"
-  pkill -9 -f "python main.py"
+  pkill -9 -if "python main.py"
 fi
 
 echo
