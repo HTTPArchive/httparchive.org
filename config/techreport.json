@@ -4,7 +4,6 @@
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "config": {
     "cwv_subcategories": [
-      "FID",
       "CLS",
       "LCP",
       "FCP",
@@ -244,15 +243,6 @@
             },
             {
               "endpoint": "vitals",
-              "category": "FID",
-              "metric": "good_pct",
-              "label": "Good FID",
-              "suffix": "%",
-              "description": "Percentage of origins with good FID scores (under 100ms).",
-              "url": "?good-cwv-over-time=FID#good-cwvs"
-            },
-            {
-              "endpoint": "vitals",
               "category": "CLS",
               "metric": "good_pct",
               "label": "Good CLS",
@@ -289,10 +279,6 @@
               {
                 "label": "LCP",
                 "value": "LCP"
-              },
-              {
-                "label": "FID",
-                "value": "FID"
               },
               {
                 "label": "CLS",
@@ -747,15 +733,6 @@
                 "metric": "good_pct"
               },
               {
-                "key": "good_pct",
-                "name": "FID",
-                "breakdown": "subcategory",
-                "subcategory": "FID",
-                "suffix": "%",
-                "endpoint": "vitals",
-                "metric": "good_pct"
-              },
-              {
                 "key": "medium_score_pct",
                 "name": "Accessibility",
                 "breakdown": "subcategory",
@@ -790,10 +767,6 @@
               {
                 "label": "LCP",
                 "value": "LCP"
-              },
-              {
-                "label": "FID",
-                "value": "FID"
               },
               {
                 "label": "CLS",
@@ -1175,17 +1148,12 @@
         "overall": {
           "label": "Overall Core Web Vitals",
           "title": "Passes Core Web Vitals",
-          "description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a good experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics."
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics."
         },
         "LCP": {
           "label": "LCP",
           "title": "Good Largest Contentful Paint",
           "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful. Good experiences are less than or equal to 2.5 seconds."
-        },
-        "FID": {
-          "label": "FID",
-          "title": "Good First Input Delay",
-          "description": "First Input Delay (FID) measures the time from when a user first interacts with a page, to the time when the browser is actually able to begin processing event handlers in response to that interaction. Sites should strive to have a First Input Delay of 100 milliseconds or less. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
         },
         "CLS": {
           "label": "CLS",
@@ -1236,7 +1204,6 @@
       "origins": "Origins",
 
       "origins_eligible_for_cwv": "Eligible",
-      "origins_eligible_for_fid": "Eligible",
       "origins_eligible_for_cls": "Eligible",
       "origins_eligible_for_lcp": "Eligible",
       "origins_eligible_for_fcp": "Eligible",
@@ -1244,7 +1211,6 @@
       "origins_eligible_for_ttfb": "Eligible",
 
       "origins_with_good_cwv": "Having good CWVs",
-      "origins_with_good_fid": "Having good FID",
       "origins_with_good_cls": "Having good CLS",
       "origins_with_good_lcp": "Having good LCP",
       "origins_with_good_fcp": "Having good FCP",
@@ -1252,7 +1218,6 @@
       "origins_with_good_ttfb": "Having good TTFB",
 
       "pct_good_cwv": "% Good CWVs",
-      "pct_good_fid": "% Good FID",
       "pct_good_cls": "% Good CLS",
       "pct_good_lcp": "% Good LCP",
       "pct_good_fcp": "% Good FCP",
