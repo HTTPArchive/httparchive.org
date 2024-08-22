@@ -56,8 +56,8 @@
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-08-07T00:00:00.000Z",
-    "hash": "93f9befbac818c77b5452bb0fb954965"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "a2e0e54b48ff9f500d55df991e391cd7"
   },
   "/static/js/accessibility.js.map": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -66,13 +66,13 @@
   },
   "/static/js/export-data.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-08-07T00:00:00.000Z",
-    "hash": "242d22c2fbccb1bb3e78f810670b8acf"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "6ab079c8b6178af93b28a458d2b137f6"
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2024-08-07T00:00:00.000Z",
-    "hash": "4f8eae472d2c377ef9fbd39753837a59"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "4df785ffea703190bc54ac4eb99a52b3"
   },
   "/static/js/exporting.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -86,8 +86,8 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2024-08-07T00:00:00.000Z",
-    "hash": "b81ca331f01095a1e608f4695b7c04d3"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "844ad62698238300de237a6e0492c38b"
   },
   "/static/js/highcharts-more.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -96,13 +96,13 @@
   },
   "/static/js/highcharts.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-08-07T00:00:00.000Z",
-    "hash": "1f15404f621da6730000a1e6805d18b7"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "22d474941adbb8f92dcf227990f22d19"
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2024-08-07T00:00:00.000Z",
-    "hash": "d336c67dcc1104d671a5ca85c7223387"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "b90cacaa020fed90502dfa195e3b4de0"
   },
   "/static/js/highstock.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -196,8 +196,8 @@
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-02-23T00:00:00.000Z",
-    "hash": "1f7d91b52fbf96b1ae5044c3e10c8b70"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "0eaa860bbe2b94a9adcf9f1fdfcb73c8"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -246,8 +246,8 @@
   },
   "reports/project-fugu": {
     "date_published": "2020-07-31T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "0cb0fbbd2b60c712d42ee3af404fcfb1"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "a6f426ff18df76a4c8d85cad0fa9e17a"
   },
   "reports/search-engine-optimization": {
     "date_published": "2018-05-08T00:00:00.000Z",
