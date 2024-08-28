@@ -57,7 +57,7 @@ const parseAdoptionData = (submetric, date) => {
 }
 
 const formatBytes = (value) => {
-  return value > 1048576 ? `${Math.round(value / 1048576)} MB` : value > 1024 ? `${Math.round(value / 1024)} KB` : `${submetric.desktop.median_bytes} bytes`;
+  return value > 1048576 ? `${Math.round(value / 1048576)} MB` : value > 1024 ? `${Math.round(value / 1024)} KB` : `${value} bytes`;
 };
 
 const parsePageWeightData = (metric, date) => {
@@ -65,14 +65,14 @@ const parsePageWeightData = (metric, date) => {
     return {
       ...submetric,
       desktop: {
-        ...submetric.desktop,
-        median_bytes_formatted: formatBytes(submetric.desktop.median_bytes),
+        ...submetric?.desktop,
+        median_bytes_formatted: formatBytes(submetric?.desktop?.median_bytes),
         client: 'desktop',
         date: date,
       },
       mobile: {
-        ...submetric.mobile,
-        median_bytes_formatted: formatBytes(submetric.mobile.median_bytes),
+        ...submetric?.mobile,
+        median_bytes_formatted: formatBytes(submetric?.mobile?.median_bytes),
         client: 'mobile',
         date: date,
       },

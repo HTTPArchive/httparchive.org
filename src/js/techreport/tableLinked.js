@@ -10,7 +10,7 @@ class TableLinked {
   }
 
   // Update content in the table
-  updateContent() {
+  updateContent(content) {
     // Select a table based on the passed in id
     const component = document.getElementById(`table-${this.id}`);
     const tbody = component?.querySelector('tbody');
@@ -19,12 +19,16 @@ class TableLinked {
       // Reset what's in the table before adding new content
       tbody.innerHTML = '';
 
+      const tableApps = content?.apps || this.pageFilters.app;
+
       // Collect the settings in an object
       const tableConfig = {
-        apps: this.pageFilters.app,
+        apps: tableApps,
         config: this.pageConfig?.[this.id]?.table,
         id: this.id,
       };
+
+      console.log('this.pageFilters.app', this.pageFilters.app);
 
       tableConfig.apps.forEach(app => {
         const data = this.data[app];

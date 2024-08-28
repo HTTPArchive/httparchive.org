@@ -23,7 +23,12 @@ class TechReport {
 
     // Load the page
     this.initializePage();
-    this.getAllMetricData();
+
+    // Apply settings
+    this.loadTheme();
+    this.loadIndicators();
+
+    // Watch for settings updates
     this.bindSettingsListeners();
   }
 
@@ -32,30 +37,30 @@ class TechReport {
     switch(this.pageId) {
       case 'landing':
         this.initializeLanding();
+        this.getAllMetricData();
         break;
 
       case 'drilldown':
         this.initializeReport();
+        this.getAllMetricData();
         break;
 
       case 'comparison':
         this.initializeReport();
+        this.getAllMetricData();
+        break;
+
+      case 'category':
+        console.log('>>> FILTERS', this.filters);
+        const category = this.filters.category || 'CMS';
+        this.initializeReport();
+        this.getCategoryData(category);
         break;
     }
   }
 
-  // TODO
-  initializeLanding() {
-  }
-
-  // TODO
-  initializeReport() {
-    // TODO: Move to function
-    const showIndicators = localStorage.getItem('showIndicators');
-    document.querySelector('main').dataset.showIndicators = showIndicators;
-    document.querySelector('#indicators-check').checked = showIndicators === 'true';
-
-    // TODO: Move to function
+  // Apply saved theme to the layout
+  loadTheme() {
     const theme = localStorage.getItem('haTheme');
     document.querySelector('html').dataset.theme = theme;
     const btn = document.querySelector('.theme-switcher');
@@ -64,9 +69,25 @@ class TechReport {
     } else if(theme === 'light') {
       btn.innerHTML = '🌚 Switch to dark theme';
     }
+  }
 
+  // Apply settings to the line charts (a11y)
+  loadIndicators() {
+    const showIndicators = localStorage.getItem('showIndicators');
+    document.querySelector('main').dataset.showIndicators = showIndicators;
+    document.querySelector('#indicators-check').checked = showIndicators === 'true';
+  }
+
+  // Initialize the landing page
+  initializeLanding() {
+  }
+
+  // Initialize the report pages
+  initializeReport() {
+    // Get all the components defined as a section
     const sections = document.querySelectorAll('[data-type="section"]');
-    // TODO: add general config too
+
+    // Create new class for each of the sections
     sections.forEach(section => {
       const reportSection = new Section(
         section.id,
@@ -78,6 +99,7 @@ class TechReport {
       this.sections[section.id] = reportSection;
     });
 
+    // Apply settings and watch for updates
     this.bindClientListener();
     this.updateStyling();
   }
@@ -91,6 +113,7 @@ class TechReport {
     }
   }
 
+  // Watch for changes in the accessibility/UI settings
   bindSettingsListeners() {
     const indicatorSetting = document.querySelector('input[name="indicators-check"]');
     if(indicatorSetting) {
@@ -123,6 +146,7 @@ class TechReport {
     }
   }
 
+  // Update which client is selected
   updateClient(event) {
     const client = event.target.value;
 
@@ -151,6 +175,7 @@ class TechReport {
   getAllMetricData() {
     const technologies = this.filters.app;
 
+    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
     const apis = [
       {
         endpoint: 'cwv',
@@ -174,19 +199,19 @@ class TechReport {
       },
     ];
 
-    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
-
-    const technology = technologies.join('%2C')
+    const technologyFormatted = technologies.join('%2C')
       .replaceAll(" ", "%20");
 
     const geo = this.filters.geo.replaceAll(" ", "%20");
-    const rank = this.filters.rank.replaceAll(" ", "%20")
+    const rank = this.filters.rank.replaceAll(" ", "%20");
+    const geoFormatted = geo.replaceAll(" ", "%20");
+    const rankFormatted = rank.replaceAll(" ", "%20");
 
     let allResults = {};
     technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
-      const url = `${base}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
+      const url = `${base}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
 
       return fetch(url)
         .then(result => result.json())
@@ -217,8 +242,93 @@ class TechReport {
     });
   }
 
+  getCategoryData(category) {
+    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
+    const url = `${base}/categories?category=${category}`;
+    const apis = [
+      {
+        endpoint: 'cwv',
+        metric: 'vitals',
+        parse: DataUtils.parseVitalsData,
+      },
+      {
+        endpoint: 'lighthouse',
+        metric: 'lighthouse',
+        parse: DataUtils.parseLighthouseData,
+      },
+      {
+        endpoint: 'adoption',
+        metric: 'adoption',
+        parse: DataUtils.parseAdoptionData,
+      },
+      {
+        endpoint: 'page-weight',
+        metric: 'pageWeight',
+        parse: DataUtils.parsePageWeightData,
+      },
+    ];
+
+    fetch(url)
+      .then(result => result.json())
+      .then(result => {
+        const category = result[0];
+        const technologyFormatted = category?.technologies?.join('%2C')
+          .replaceAll(" ", "%20");
+
+          const geo = this.filters.geo.replaceAll(" ", "%20");
+          const rank = this.filters.rank.replaceAll(" ", "%20");
+          const geoFormatted = geo.replaceAll(" ", "%20");
+          const rankFormatted = rank.replaceAll(" ", "%20");
+
+          let allResults = {};
+          category.technologies.forEach(tech => allResults[tech] = []);
+
+          Promise.all(apis.map(api => {
+            const url = `${base}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
+
+            return fetch(url)
+              .then(techResult => techResult.json())
+              .then(techResult => {
+                techResult.forEach(row => {
+                  const parsedRow = {
+                    ...row,
+                  }
+
+                  if(api.parse) {
+                    parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+                  }
+
+                  const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
+                  if(resIndex > -1) {
+                    allResults[row.technology][resIndex] = {
+                      ...allResults[row.technology][resIndex],
+                      ...parsedRow
+                    }
+                  } else {
+                    allResults[row.technology].push(parsedRow);
+                  }
+                });
+              });
+          })).then(() => {
+            category.data = {
+              technologies: allResults,
+              summary: 'todo',
+            };
+            console.log('CATEGORY IS', category);
+            this.updateCategoryComponents(category);
+          });
+      });
+  }
+
+  updateCategoryComponents (category) {
+    console.log('updateCategoryComponents', category.data);
+    this.updateComponents(category.data.technologies);
+  }
+
   // Update components and sections that are relevant to the current page
   updateComponents(data) {
+    console.log('updateComponents WITH', data);
+    console.log('this.pageId is', this.pageId);
     switch(this.pageId) {
       case 'landing':
         this.updateLandingComponents(data);
@@ -232,6 +342,11 @@ class TechReport {
       case 'comparison':
         this.updateComparisonComponents(data);
         this.getFilterInfo();
+        break;
+
+      case 'category':
+        console.log('we need to call updateComparisonComponents');
+        this.updateComparisonComponents(data);
         break;
     }
   }
@@ -272,6 +387,7 @@ class TechReport {
     });
   }
 
+  // Update drilldown page components
   updateDrilldownComponents(data) {
     DrilldownHeader.update(data, this.filters);
 
@@ -284,8 +400,11 @@ class TechReport {
     }
   }
 
+  // Update comparison components
   updateComparisonComponents(data) {
+    console.log('inside updateComparisonComponents', data);
     if(data && Object.keys(data).length > 0) {
+      console.log('we will call utils with', this.sections, data, data, this.page, this.labels);
       UIUtils.updateReportComponents(this.sections, data, data, this.page, this.labels);
     } else {
       this.updateWithEmptyData();

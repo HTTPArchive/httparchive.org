@@ -145,7 +145,8 @@ class Filters {
 
   /* Update the list with categories */
   updateCategories() {
-    const selects = document.querySelectorAll('select[name="categories"]');
+    const selects = document.querySelectorAll('select[name="categories"]') || document.querySelectorAll('select[name="category"]');
+    console.log('selects', selects);
 
     if(this.categories) {
       selects.forEach(select => {

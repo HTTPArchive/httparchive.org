@@ -91,10 +91,12 @@ def techreport(page_id):
     # Get the filters
     requested_geo = request.args.get("geo") or "ALL"
     requested_rank = request.args.get("rank") or "ALL"
+    requested_category = request.args.get("category") or "ALL"
     filters = {
         "geo": requested_geo,
         "rank": requested_rank,
         "app": requested_technologies,
+        "category": requested_category,
     }
 
     active_tech_report["filters"] = filters
@@ -105,6 +107,7 @@ def techreport(page_id):
         tech_report_labels=tech_report.get("labels"),
         tech_report_config=tech_report.get("config"),
         tech_report_page=active_tech_report,
+        custom_navigation=True,
         reports=all_reports,
     )
 

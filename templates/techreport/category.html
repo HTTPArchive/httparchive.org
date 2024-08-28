@@ -1,0 +1,48 @@
+{% extends "techreport/report.html" %}
+
+
+{% block section %}
+  {{ super() }}
+
+  <div class="intro block-m">
+    <div class="info">
+      <h1>
+        <span class="subtitle">Tech Report</span>
+        <span class="">Category: {{ tech_report_page.filters.category or 'CMS' }}</span>
+      </h1>
+    </div>
+  </div>
+
+  <form id="page-filters" class="card">
+    <div>
+      <fieldset class="technology-filters">
+        <legend class="sr-only">Technologies</legend>
+
+        <div class="">
+          <label for="categories-{{ name }}">Category</label>
+          <select name="category" class="categories-selector" id="categories-{{ name }}" data-tech="{{ name }}">
+            <option value="ALL" selected="true">
+              ALL
+            </option>
+          </select>
+        </div>
+      </fieldset>
+    </div>
+    <button type="submit" id="submit-form">Update</button>
+  </form>
+
+  <div
+    id="comparison-summary"
+    class="block-m summary report-section"
+    data-type="section"
+    data-api="cwv,lighthouse,page-weight"
+  >
+    <h2>Summary</h2>
+    {% set component = tech_report_page.config.tech_comparison_summary %}
+    {% set id = component.id %}
+    {% set client = request.args.get('client', '')  or 'mobile' %}
+
+    {% set table = component.table %}
+    {% include "techreport/components/table_linked.html" %}
+  </div>
+{% endblock %}
