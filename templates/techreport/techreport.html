@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/techreport.css') }}" />
 {% endblock %}
 
-{% block report_navigation %}
+{% block custom_navigation %}
   <div class="info-panel">
     <div class="block-l">
       <p class="info-label">Beta version</p>
@@ -19,11 +19,15 @@
   </div>
 
   <nav class="report-navigation">
+    <a href="{{ url_for('index') }}">
+      <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+    </a>
     {% set filters = "" %}
     {% if tech_report_page.filters %}
       {% set filters = "?geo=" + tech_report_page.filters.geo + "&rank=" + tech_report_page.filters.rank %}
     {% endif %}
-    <ul class="navigation-items block-l">
+    <ul class="navigation-items">
+      <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
       <li>
         {% set ariaCurrent = "false" %}
         {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
@@ -31,7 +35,7 @@
           href="/reports/techreport/landing"
           aria-current="{{ ariaCurrent }}"
         >
-          Home
+          <span>Home</span>
         </a>
       </li>
       <li>
@@ -41,7 +45,7 @@
           href="/reports/techreport/drilldown{{ filters }}"
           aria-current="{{ ariaCurrent }}"
         >
-          Drilldown
+          <span>Drilldown</span>
         </a>
       </li>
       <li>
@@ -51,7 +55,17 @@
           href="/reports/techreport/comparison{{ filters }}"
           aria-current="{{ ariaCurrent }}"
         >
-          Comparison
+          <span>Comparison</span>
+        </a>
+      </li>
+      <li>
+        {% set ariaCurrent = "false" %}
+        {% if active_page == "category" %}{% set ariaCurrent = "page" %}{% endif %}
+        <a
+          href="/reports/techreport/category{{ filters }}"
+          aria-current="{{ ariaCurrent }}"
+        >
+          <span>Categories</span>
         </a>
       </li>
     </ul>

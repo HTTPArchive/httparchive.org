@@ -3,6 +3,7 @@
   /* Main colors to use */
   --color-teal-faded: #c0ced0;
   --color-teal-medium: #6a797c;
+  --color-teal-accent: #4E848B;
   --color-teal-dark: #3a5c63;
   --color-teal-darker: #1c4750;
   --color-blue-dark: #3a7098;
@@ -29,8 +30,12 @@
   --color-page-border: var(--color-teal-medium);
   --color-tooltip-background: var(--color-card-background);
   --color-tooltip-border: var(--color-card-border);
+  --color-nav-active: var(--color-teal-accent);
+  --color-nav-inactive: var(--color-teal-medium);
 
   /* Font sizes */
+  --font-size-small: 0.875rem;
+  --font-size-regular: 1rem;
   --font-size-medium: 1.75rem;
   --font-size-large: 2.15rem;
   --font-size-xlarge: 2.35rem;
@@ -160,6 +165,10 @@ main :is(a, p a) {
   background-color: var(--color-card-background);
   border-top: 1px solid var(--color-page-background);
   border-bottom: 1px solid var(--color-page-background);
+  display: flex;
+  justify-content: space-between;
+
+  padding: 0 2.5vw;
 }
 
 .report-navigation-content {
@@ -170,18 +179,54 @@ main :is(a, p a) {
 
 .report-navigation ul li {
   text-transform: none;
+  margin-right: 1rem;
+}
+
+.report-navigation ul li:last-of-type {
+  margin-right: 0;
 }
 
 .report-navigation ul li a {
-  padding: 0.75rem 0.25rem;
+  padding: 1rem 0.25rem;
+  font-size: var(--font-size-small);
+  color: var(--color-nav-inactive);
 }
 
-.report-navigation ul li a[aria-current="page"] {
-  border-bottom: 3px solid var(--color-text);
+.report-navigation ul li a[aria-current="page"] span {
+  padding-bottom: 0.1rem;
+  border-bottom: 2px solid var(--color-nav-active);
+  font-weight: 600;
+  color: var(--color-text);
 }
 
-.report-navigation ul li:hover {
+.report-navigation ul li.all-reports {
+  position: relative;
+  padding-right: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.report-navigation ul li.all-reports:after {
+  content: "";
+  display: block;
+  height: 1.5rem;
+  width: 2px;
+  background-color: var(--color-card-border);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.report-navigation ul li:focus-within {
   background-color: transparent;
+}
+
+.report-navigation ul li a:focus-visible {
+  text-decoration: none;
+  padding: 0.25rem;
+  outline-color: var(--color-nav-inactive);
+  border-radius: 3px;
+  color: var(--color-text);
 }
 
 .report-navigation ul li a:hover {
@@ -190,8 +235,17 @@ main :is(a, p a) {
   text-decoration: none;
 }
 
-.report-navigation ul li a:not([aria-current="page"]):hover {
-  border-bottom: 3px solid var(--color-teal-faded);
+.report-navigation ul li a:not([aria-current="page"]):hover span {
+  padding-bottom: 0.1rem;
+  border-bottom: 2px solid var(--color-teal-faded);
+  color: var(--color-text);
+}
+
+.report-navigation img {
+  max-height: 2rem;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* Page Filters */
