@@ -73,7 +73,16 @@
 {% endblock %}
 
 {% block main %}
-  {% block section %}{% endblock %}
+  <div class="split-view">
+    <div class="filters">
+      {% block filters %}{% endblock %}
+    </div>
+
+    <div class="content">
+      {% block section %}{% endblock %}
+    </div>
+  </div>
+
   <div class="feedback">
     <div class="block-m">
       <h2>Feedback?</h2>

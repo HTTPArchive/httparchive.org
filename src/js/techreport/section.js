@@ -66,7 +66,6 @@ class Section {
   }
 
   updateSection(content) {
-    console.log('pageFilters', this.pageFilters);
     Object.values(this.components).forEach(component => {
       if(component.data !== this.data) {
         component.data = this.data;

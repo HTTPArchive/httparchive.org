@@ -75,6 +75,12 @@ def techreport(page_id):
     # Get the configuration for the tech report
     tech_report = tech_report_util.get_report()
 
+    # Get the current page_id
+    if request.args.get("tech"):
+        requested_technologies = request.args.get("tech").split(",")
+    if len(requested_technologies) >  1:
+        page_id = "comparison"
+
     # Get the settings for the current page
     active_tech_report = tech_report.get("pages").get(page_id)
 
@@ -100,6 +106,9 @@ def techreport(page_id):
     }
 
     active_tech_report["filters"] = filters
+
+    print(requested_technologies)
+    print(len(requested_technologies))
 
     return render_template(
         "techreport/%s.html" % page_id,

@@ -1,32 +1,21 @@
 {% extends "techreport/report.html" %}
 
+{% block filters %}
+  {% include "techreport/templates/filters.html" %}
+{% endblock %}
+
 {% block section %}
   {{ super() }}
-
-  <div class="intro block-m">
-    <div class="info">
-      <h1>
-        <span class="subtitle">Tech Report</span>
-        <span class="">Drilldown</span>
-      </h1>
-      <!-- <ul class="category-list categories">
-        <li class="cell">Placeholder</li>
-      </ul> -->
-    </div>
-    <div class="filters">
-      {% include "techreport/templates/filters.html" %}
-    </div>
-  </div>
 
   {% set filter_tech_title = tech_report_page.filters.app[0] or 'ALL' %}
   {% include "techreport/components/filter_info_header.html" %}
 
   <div id="report-content" class="report-content">
     <div class="info intro block-m">
-      <h2>
+      <h1>
         <span class="subtitle">Results for</span>
         <span class="main-title">ALL</span>
-      </h2>
+      </h1>
       <ul class="category-list categories">
         <li class="cell">Placeholder</li>
       </ul>

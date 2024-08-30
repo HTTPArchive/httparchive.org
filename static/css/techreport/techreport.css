@@ -11,6 +11,9 @@
   --color-blue-light: #e1f1ff;
   --color-gray-medium: #5c5c5d;
 
+  --color-teal-vibrant: #1C818D;
+  --color-teal-vibrant-darker: #136e78;
+
   /* Colors based on function */
   --color-link: var(--color-blue-dark);
   --color-text: #444;
@@ -32,6 +35,9 @@
   --color-tooltip-border: var(--color-card-border);
   --color-nav-active: var(--color-teal-accent);
   --color-nav-inactive: var(--color-teal-medium);
+  --color-button-background: var(--color-teal-vibrant);
+  --color-button-background-hover: var(--color-teal-vibrant-darker);
+  --color-button-text: #fff;
 
   /* Font sizes */
   --font-size-small: 0.875rem;
@@ -250,26 +256,32 @@ main :is(a, p a) {
 
 /* Page Filters */
 #page-filters {
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
+  padding-right: 0.75rem;
 }
 
-#page-filters button:not(.remove-tech) {
-  background-color: var(--color-teal-darker);
-  border-radius: 3px;
-  color: var(--color-blue-100);
-  font-weight: 600;
+#page-filters button[type="submit"] {
+  background-color: var(--color-button-background);
+  border-radius: 4px;
+  color: var(--color-button-text);
+  font-weight: 400;
   border: none;
   padding: 0.25rem 0.5rem;
+  transition: background 0.15s ease-in;
+}
+
+#page-filters button[type="submit"]:is(:hover, :focus-visible) {
+  background-color: var(--color-button-background-hover);
 }
 
 .remove-tech {
   background: none;
   border: none;
   border-radius: 10rem;
-  width: 44px;
-  height: 44px;
+  width: 1.5rem;
+  height: 1.5rem;
   position: relative;
-  top: -0.15rem;
+  top: -0.75rem;
 }
 
 .remove-tech:is(:hover, :focus) img {
@@ -283,8 +295,8 @@ main :is(a, p a) {
 }
 
 #page-filters button[type="submit"] {
-  font-size: 1.25rem;
-  padding: 0.5rem;
+  font-size: 1rem;
+  padding: 0.65rem;
   width: 100%;
   margin-top: 1rem;
 }
@@ -297,26 +309,40 @@ main :is(a, p a) {
   font-weight: 600;
 }
 
-/* Page filters: Geo and rank */
-#page-filters .lens {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
-  margin: 0;
-  gap: 0.5rem 0.5rem;
-  margin-bottom: 0.5rem;
-  margin-right: 0;
-  margin-top: 2rem;
+#page-filters legend.form-title {
+  font-size: 1.125rem;
+  font-weight: 400;
+  margin-bottom: 4.5rem;
+  color: var(--color-text-darker);
 }
 
-#page-filters .lens label,
-#page-filters .lens select {
-  color: var(--color-text-lighter);
-  font-size: 0.8rem;
+/* Page filters: Geo and rank */
+#page-filters .lens {
+  margin-bottom: 1.5rem;
+  margin-right: 0;
+  margin-top: 2rem;
+  border-bottom: 1px solid var(--color-card-border);
+  padding-bottom: 2.5rem;
+}
+
+
+#page-filters .lens label {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
   width: 100%;
 }
 
-#page-filters .lens select {
+#page-filters .lens .select-label select {
+  color: var(--color-text-darker);
+  font-size: 0.9rem;
+  width: 100%;
   border-color: var(--color-text-lighter);
+  padding: 0.825rem;
+}
+
+#page-filters .lens .select-label:not(:last-of-type) {
+  margin-bottom: 2rem;
 }
 
 .select-label {
@@ -395,10 +421,16 @@ main :is(a, p a) {
   color: var(--color-text) !important;
 }
 
+.technology-filters {
+  border-bottom: 1px solid var(--color-card-border);
+  padding-bottom: 2.5rem;
+}
+
 .technology-filters label.tech {
-  font-size: 1.15rem;
-  font-weight: normal;
   margin-bottom: 0.5rem;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
   width: 100%;
 }
 
@@ -411,11 +443,15 @@ main :is(a, p a) {
   appearance: none;
   background-color: transparent;
   padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+
+  color: var(--color-text-darker);
+  font-size: 0.9rem;
+  width: 100%;
+  border-color: var(--color-text-lighter);
+  padding: 0.5rem;
 }
 
 .technology-filters .tech-selector-group {
-  border-bottom: 1px solid #eee;
-  padding-bottom: 2rem;
   padding-top: 1.5rem;
 }
 
@@ -423,13 +459,9 @@ main :is(a, p a) {
   margin-top: -1.5rem;
 }
 
-.tech-selector-group:has(.remove-tech:is(:focus, :hover)) {
-  background-color: #f2f9ff;
-}
-
 .tech-selector-group {
   display: flex;
-  column-gap: 1rem;
+  column-gap: 0.5rem;
   align-items: end;
 }
 
@@ -505,12 +537,14 @@ main :is(a, p a) {
   right: 0;
   top: 0.4rem;
   text-align: right;
+  padding-right: 0.15rem;
 }
 
 .categories-selector-group label {
   font-weight: 400;
   font-size: 0.825rem;
   margin-bottom: 0;
+  margin-top: -0.1rem;
 }
 
 .categories-selector-group select {
@@ -522,8 +556,8 @@ main :is(a, p a) {
   font-size: 0.825rem;
   padding: 0;
   border-radius: 0;
-  width: 15ch;
-  border-bottom: 1px solid #959494;
+  width: 12ch;
+  margin-top: 0rem;
 }
 
 select {
@@ -532,6 +566,18 @@ select {
 
 #add-tech {
   margin-top: 1.5rem;
+  border-radius: 3rem;
+  border: 1px dashed var(--color-nav-inactive);
+  background-color: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-nav-inactive);
+  padding: 0.35rem 1rem;
+}
+
+#add-tech span {
+  margin-right: 0.25rem;
+  font-weight: 800;
 }
 
 /* Results header */

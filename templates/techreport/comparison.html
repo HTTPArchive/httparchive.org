@@ -1,22 +1,14 @@
 {% extends "techreport/report.html" %}
 
+{% block filters %}
+  {% include "techreport/templates/filters.html" %}
+{% endblock %}
+
 {% block section %}
   {{ super() }}
 
   {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
   {% set technologies_str = ','.join(technologies) %}
-
-  <div class="intro block-m">
-    <div class="info">
-      <h1>
-        <span class="subtitle">Tech Report</span>
-        <span class="main-title">Comparison</span>
-      </h1>
-    </div>
-    <div class="filters">
-      {% include "techreport/templates/filters.html" %}
-    </div>
-  </div>
 
   {% set filter_tech_title = technologies_str or tech_report_page.filters.app[0] or 'ALL' %}
   {% include "techreport/components/filter_info_header.html" %}
@@ -29,7 +21,7 @@
       data-type="section"
       data-api="cwv,lighthouse,page-weight"
     >
-      <h2>Summary ({{ technologies | length }} technologies)</h2>
+      <h1>Summary ({{ technologies | length }} technologies)</h1>
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
       {% set client = request.args.get('client', '')  or 'mobile' %}

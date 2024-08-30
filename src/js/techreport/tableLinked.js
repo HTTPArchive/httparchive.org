@@ -28,8 +28,6 @@ class TableLinked {
         id: this.id,
       };
 
-      console.log('this.pageFilters.app', this.pageFilters.app);
-
       tableConfig.apps.forEach(app => {
         const data = this.data[app];
         const sorted = data?.sort((a, b) => new Date(b.date) - new Date(a.date));

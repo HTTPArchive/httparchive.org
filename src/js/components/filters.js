@@ -146,7 +146,6 @@ class Filters {
   /* Update the list with categories */
   updateCategories() {
     const selects = document.querySelectorAll('select[name="categories"]') || document.querySelectorAll('select[name="category"]');
-    console.log('selects', selects);
 
     if(this.categories) {
       selects.forEach(select => {
@@ -196,6 +195,7 @@ class Filters {
 
   /* Duplicate the technology dropdowns */
   addTechnologySelector(event) {
+    console.log('> addTechnologySelector', event);
     event.preventDefault();
 
     const selectorTemplate = document.getElementById('tech-selector').content.cloneNode(true);
@@ -213,16 +213,18 @@ class Filters {
     const techId = `tech-${document.querySelectorAll('select.tech[name="tech"]').length + 1}`;
     selectElement.setAttribute('id', techId);
     labelElement.setAttribute('for', techId);
-    removeButton.dataset.tech = techId;
 
     categorySelect.setAttribute('id', `${techId}-category`);
     categoryLabel.setAttribute('for', `${techId}-category`);
     categorySelect.setAttribute('data-tech', techId);
 
-    removeButton.classList.remove('hidden');
+    if(removeButton) {
+      removeButton.dataset.tech = techId;
+      removeButton.classList.remove('hidden');
 
-    /* Bind functionality to the button */
-    removeButton.addEventListener('click', this.removeTechnology);
+      /* Bind functionality to the button */
+      removeButton.addEventListener('click', this.removeTechnology);
+    }
 
     /* Fill in all techs and select the first one */
     selectElement.innerHTML = document.querySelector('select.tech').innerHTML;
@@ -233,6 +235,7 @@ class Filters {
 
     /* Add the new tech to the end of the list */
     const techs = document.getElementsByClassName('tech-selector-group');
+    console.log('> techs', techs);
     const last = techs[techs.length - 1];
     last.after(selectorTemplate);
 

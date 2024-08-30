@@ -51,7 +51,6 @@ class TechReport {
         break;
 
       case 'category':
-        console.log('>>> FILTERS', this.filters);
         const category = this.filters.category || 'CMS';
         this.initializeReport();
         this.getCategoryData(category);
@@ -314,21 +313,17 @@ class TechReport {
               technologies: allResults,
               summary: 'todo',
             };
-            console.log('CATEGORY IS', category);
             this.updateCategoryComponents(category);
           });
       });
   }
 
   updateCategoryComponents (category) {
-    console.log('updateCategoryComponents', category.data);
     this.updateComponents(category.data.technologies);
   }
 
   // Update components and sections that are relevant to the current page
   updateComponents(data) {
-    console.log('updateComponents WITH', data);
-    console.log('this.pageId is', this.pageId);
     switch(this.pageId) {
       case 'landing':
         this.updateLandingComponents(data);
@@ -345,7 +340,6 @@ class TechReport {
         break;
 
       case 'category':
-        console.log('we need to call updateComparisonComponents');
         this.updateComparisonComponents(data);
         break;
     }
@@ -402,9 +396,7 @@ class TechReport {
 
   // Update comparison components
   updateComparisonComponents(data) {
-    console.log('inside updateComparisonComponents', data);
     if(data && Object.keys(data).length > 0) {
-      console.log('we will call utils with', this.sections, data, data, this.page, this.labels);
       UIUtils.updateReportComponents(this.sections, data, data, this.page, this.labels);
     } else {
       this.updateWithEmptyData();
