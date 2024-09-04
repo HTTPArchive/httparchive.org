@@ -2,6 +2,7 @@
 :root {
   /* Main colors to use */
   --color-teal-faded: #c0ced0;
+  --color-teal-light: #ebf6f8;
   --color-teal-medium: #6a797c;
   --color-teal-accent: #4E848B;
   --color-teal-dark: #3a5c63;
@@ -14,41 +15,57 @@
   --color-teal-vibrant: #1C818D;
   --color-teal-vibrant-darker: #136e78;
 
+
   /* Colors based on function */
   --color-link: var(--color-blue-dark);
+
   --color-text: #444;
   --color-text-lighter: #5f6768;
   --color-text-darker: #1e1e1e;
   --color-text-inverted: #fff;
+
   --color-card-background: #fff;
   --color-card-border: #cdd4d6;
+  --color-card-border-light: #e8e8e8;
+
   --color-page-background: #f4f4f4;
+
   --color-checkbox: var(--color-blue-dark);
   --color-checkbox-selected: var(--color-blue-dark);
   --color-checkbox-button-selected: var(--color-blue-light);
   --color-checkbox-button-label: var(--color-text);
   --color-checkbox-button-label-selected: var(--color-text);
+
   --color-theme-toggle-background: #f4f4f4;
+
   --color-bg-gradient: var(--color-teal-faded);
+
   --color-page-border: var(--color-teal-medium);
+
   --color-tooltip-background: var(--color-card-background);
   --color-tooltip-border: var(--color-card-border);
+
   --color-nav-active: var(--color-teal-accent);
   --color-nav-inactive: var(--color-teal-medium);
+
   --color-button-background: var(--color-teal-vibrant);
   --color-button-background-hover: var(--color-teal-vibrant-darker);
   --color-button-text: #fff;
+
+  --color-progress-basic-border: #8e9799;
+  --color-progress-basic-bg: #eee;
+  --color-progress-basic-fill: #3A5C63;
 
   /* Font sizes */
   --font-size-small: 0.875rem;
   --font-size-regular: 1rem;
   --font-size-medium: 1.75rem;
   --font-size-large: 2.15rem;
-  --font-size-xlarge: 2.35rem;
+  --font-size-xlarge: 2.25rem;
 
   /* Components */
-  --card-shadow: 0 2px 7px 0px rgba(143, 149, 150, 0.05);
-  --card-radius: 0.25rem;
+  --card-shadow: 0 3px 12px 0px rgba(106, 121, 124, 0.2);
+  --card-radius: 0.625rem;
   --table-row-hover: var(--color-blue-100);
 
   /* Graph colors */
@@ -258,6 +275,7 @@ main :is(a, p a) {
 #page-filters {
   padding: 1.5rem 1rem;
   padding-right: 0.75rem;
+  height: 100%;
 }
 
 #page-filters button[type="submit"] {
@@ -274,6 +292,12 @@ main :is(a, p a) {
   background-color: var(--color-button-background-hover);
 }
 
+#page-filters .meta {
+  position: sticky;
+  top: 0;
+  padding-top: 1rem;
+}
+
 .remove-tech {
   background: none;
   border: none;
@@ -281,17 +305,31 @@ main :is(a, p a) {
   width: 1.5rem;
   height: 1.5rem;
   position: relative;
-  top: -0.75rem;
+  top: -0.5rem;
 }
 
-.remove-tech:is(:hover, :focus) img {
+.remove-tech:is(:hover, :focus-visible) {
+  outline: none;
+}
+
+.remove-tech:is(:hover, :focus-visible) img {
   background: #fcc9c4;
   border-radius: 3rem;
+}
+
+.remove-tech:focus-visible img {
+  box-shadow: 0 0 0 1.5px var(--color-card-background),
+    0 0 0 3px #aa4239;
+}
+
+.tech-selector-group:has(.remove-tech:is(:hover, :focus-visible)) select[name="tech"] {
+  background-color: var(--color-teal-light);
 }
 
 .remove-tech img {
   width: 100%;
   max-width: 1.75rem;
+  height: auto;
 }
 
 #page-filters button[type="submit"] {
@@ -477,7 +515,7 @@ main :is(a, p a) {
   position: absolute;
   right: 0;
   border-radius: 0 4px 4px 0;
-  z-index: 0;
+  z-index: 1;
 }
 
 .tech-input-wrapper::after {
@@ -493,7 +531,7 @@ main :is(a, p a) {
   border-left: 1.5px solid var(--color-text-darker);
   border-radius: 1px;
   transform: rotate(-45deg);
-  z-index: 0;
+  z-index: 1;
 }
 
 .tech-input-wrapper select {
@@ -573,6 +611,10 @@ select {
   font-weight: 600;
   color: var(--color-nav-inactive);
   padding: 0.35rem 1rem;
+}
+
+#add-tech:is(:hover, :focus-visible) {
+  background-color: var(--color-teal-light);
 }
 
 #add-tech span {
@@ -908,6 +950,10 @@ select {
   list-style-type: none;
 }
 
+.table-ui :is(th, td):is([data-app], .pct-value) {
+  min-width: 7.5rem;
+}
+
 .table-ui .no-data {
   color: var(--color-text-lighter);
 }
@@ -954,15 +1000,16 @@ select {
   display: block;
   height: 0.5rem;
   width: 100%;
-  width: calc(100% - 4.5rem);
+  width: calc(100% - 4.95rem);
   position: absolute;
   top: 1.5rem;
-  right: 0;
-  border: 1px solid var(--color-teal-dark);
+  right: 2.5rem;
+  border: 1px solid var(--color-progress-basic-border);
+  border-radius: 3px;
   background-image: linear-gradient(
     90deg,
-    var(--color-teal-dark) 0% var(--cell-value),
-    transparent var(--cell-value) 100%
+    var(--color-progress-basic-fill) 0% var(--cell-value),
+    var(--color-progress-basic-bg) var(--cell-value) 100%
   );
 }
 
@@ -1034,7 +1081,7 @@ select {
 }
 
 .intro .categories {
-  margin: 1rem 0;
+  margin: -1rem 0 3.5rem 0;
 }
 
 .intro .categories .cell {
@@ -1050,12 +1097,12 @@ select {
   background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
+  background-position: 0 25rem;
   padding-top: 3rem;
 }
 
 .report-content .intro {
   padding: 0;
-  margin-bottom: 4rem;
 }
 
 .report-section {
@@ -1331,9 +1378,8 @@ path.highcharts-tick {
 
 .accessibility-options {
   background-color: var(--color-card-background);
-  border-top: 1px solid var(--color-card-border);
   border-bottom: 1px solid var(--color-card-border);
-  padding: 2rem 0;
+  padding-bottom: 4rem;
 }
 
 .accessibility-options h2 {

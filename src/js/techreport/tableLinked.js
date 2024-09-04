@@ -28,6 +28,10 @@ class TableLinked {
         id: this.id,
       };
 
+      const filters = new URLSearchParams(window.location.search);
+      const geo = filters.get('geo') || 'ALL';
+      const rank = filters.get('rank') || 'ALL';
+
       tableConfig.apps.forEach(app => {
         const data = this.data[app];
         const sorted = data?.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -41,7 +45,7 @@ class TableLinked {
             if(column.type === 'heading') {
               cell = document.createElement('th');
               const link = document.createElement('a');
-              link.setAttribute('href', `?tech=${app}`);
+              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
               link.innerHTML = app;
               cell.append(link);
             } else if(column.key === 'client') {

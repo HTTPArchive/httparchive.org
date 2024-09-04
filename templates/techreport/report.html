@@ -4,4 +4,14 @@
   {{ super() }}
 {% endblock %}
 
-{% block section %}{% endblock %}
+{% block report_content %}
+  <div class="split-view">
+    <div class="filters">
+      {% block filters %}{% endblock %}
+    </div>
+
+    <div class="content">
+      {% block section %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

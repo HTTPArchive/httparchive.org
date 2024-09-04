@@ -24,7 +24,7 @@
     </a>
     {% set filters = "" %}
     {% if tech_report_page.filters %}
-      {% set filters = "?geo=" + tech_report_page.filters.geo + "&rank=" + tech_report_page.filters.rank %}
+      {% set filters = "?geo=ALL&rank=ALL" %}
     {% endif %}
     <ul class="navigation-items">
       <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
@@ -40,29 +40,19 @@
       </li>
       <li>
         {% set ariaCurrent = "false" %}
-        {% if active_page == "drilldown" %}{% set ariaCurrent = "page" %}{% endif %}
+        {% if active_page == "technology" or requested_page == "technology" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
-          href="/reports/techreport/drilldown{{ filters }}"
+          href="/reports/techreport/tech{{ filters }}&tech=ALL"
           aria-current="{{ ariaCurrent }}"
         >
-          <span>Drilldown</span>
-        </a>
-      </li>
-      <li>
-        {% set ariaCurrent = "false" %}
-        {% if active_page == "comparison" %}{% set ariaCurrent = "page" %}{% endif %}
-        <a
-          href="/reports/techreport/comparison{{ filters }}"
-          aria-current="{{ ariaCurrent }}"
-        >
-          <span>Comparison</span>
+          <span>Technologies</span>
         </a>
       </li>
       <li>
         {% set ariaCurrent = "false" %}
         {% if active_page == "category" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
-          href="/reports/techreport/category{{ filters }}"
+          href="/reports/techreport/category{{ filters }}&category=CMS"
           aria-current="{{ ariaCurrent }}"
         >
           <span>Categories</span>
@@ -73,15 +63,7 @@
 {% endblock %}
 
 {% block main %}
-  <div class="split-view">
-    <div class="filters">
-      {% block filters %}{% endblock %}
-    </div>
-
-    <div class="content">
-      {% block section %}{% endblock %}
-    </div>
-  </div>
+  {% block report_content %}{% endblock %}
 
   <div class="feedback">
     <div class="block-m">

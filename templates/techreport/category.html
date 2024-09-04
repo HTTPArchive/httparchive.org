@@ -1,48 +1,91 @@
 {% extends "techreport/report.html" %}
 
+{% block filters %}
+<form id="page-filters">
+  <div>
+    <fieldset class="technology-filters">
+      <legend class="form-title">Choose a dataset</legend>
 
-{% block section %}
-  {{ super() }}
-
-  <div class="intro block-m">
-    <div class="info">
-      <h1>
-        <span class="subtitle">Tech Report</span>
-        <span class="">Category: {{ tech_report_page.filters.category or 'CMS' }}</span>
-      </h1>
-    </div>
-  </div>
-
-  <form id="page-filters" class="card">
-    <div>
-      <fieldset class="technology-filters">
-        <legend class="sr-only">Technologies</legend>
-
-        <div class="">
-          <label for="categories-{{ name }}">Category</label>
-          <select name="category" class="categories-selector" id="categories-{{ name }}" data-tech="{{ name }}">
-            <option value="ALL" selected="true">
-              ALL
+      <div class="tech-selector">
+        <label for="categories_selector" class="tech">Category</label>
+        <div class="tech-input-wrapper">
+          {% set category_selected = tech_report_page.filters.category or tech_report_config.default_category %}
+          <select name="categories" class="tech" data-selected="{{ category_selected }}" id="categories_selector">
+            <option value="{{ category_selected }}" selected="true">
+              {{ category_selected }}
             </option>
           </select>
         </div>
-      </fieldset>
+      </div>
+
+    </fieldset>
+    <fieldset class="lens">
+      <legend class="sr-only">Lens</legend>
+
+      <label for="geo">Geo</label>
+      <div class="select-label">
+        <select name="geo" id="geo">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+
+      <label for="rank">Rank</label>
+      <div class="select-label">
+        <select name="rank" id="rank">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+    </fieldset>
+  </div>
+  <button type="submit" id="submit-form">Update</button>
+  {% include "techreport/components/filter_meta.html" %}
+</form>
+
+
+<template id="filter-option">
+  <option value="Option">
+    Option
+  </option>
+</template>
+
+<template id="tech-selector">
+  {% set technology = "ALL" %}
+  {% set name = "tech-new" %}
+  {% set key = 2 %}
+  {% include "techreport/templates/selector_tech.html" %}
+</template>
+
+{% endblock %}
+
+{% block section %}
+  {{ super() }}
+  <div class="report-content">
+    <div class="intro block-m">
+      <div class="info">
+        <h1>
+          <span class="subtitle">Category</span>
+          <span class="">{{ tech_report_page.filters.category or 'CMS' }}</span>
+        </h1>
+      </div>
     </div>
-    <button type="submit" id="submit-form">Update</button>
-  </form>
 
-  <div
-    id="comparison-summary"
-    class="block-m summary report-section"
-    data-type="section"
-    data-api="cwv,lighthouse,page-weight"
-  >
-    <h2>Summary</h2>
-    {% set component = tech_report_page.config.tech_comparison_summary %}
-    {% set id = component.id %}
-    {% set client = request.args.get('client', '')  or 'mobile' %}
+    <div
+      id="comparison-summary"
+      class="card block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
+      <h2>Summary</h2>
+      {% set component = tech_report_page.config.tech_comparison_summary %}
+      {% set id = component.id %}
+      {% set client = request.args.get('client', '')  or 'mobile' %}
 
-    {% set table = component.table %}
-    {% include "techreport/components/table_linked.html" %}
+      {% set table = component.table %}
+      {% include "techreport/components/table_linked.html" %}
+    </div>
   </div>
 {% endblock %}

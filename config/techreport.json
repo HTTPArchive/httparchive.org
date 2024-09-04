@@ -3,6 +3,11 @@
   "name": "Technology Report",
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "config": {
+    "default_apps": {
+      "drilldown": [ "ALL" ],
+      "comparison": [ "ALL", "WordPress", "Wix", "Next.js" ]
+    },
+    "default_category": "CMS",
     "cwv_subcategories": [
       "FID",
       "CLS",

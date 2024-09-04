@@ -341,6 +341,7 @@ class TechReport {
 
       case 'category':
         this.updateComparisonComponents(data);
+        this.getFilterInfo();
         break;
     }
   }

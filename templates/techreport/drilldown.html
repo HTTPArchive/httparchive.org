@@ -7,13 +7,10 @@
 {% block section %}
   {{ super() }}
 
-  {% set filter_tech_title = tech_report_page.filters.app[0] or 'ALL' %}
-  {% include "techreport/components/filter_info_header.html" %}
-
   <div id="report-content" class="report-content">
     <div class="info intro block-m">
       <h1>
-        <span class="subtitle">Results for</span>
+        <span class="subtitle">Technology</span>
         <span class="main-title">ALL</span>
       </h1>
       <ul class="category-list categories">

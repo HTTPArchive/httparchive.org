@@ -45,6 +45,7 @@ class Filters {
     /* Get the geo and rank filter */
     const geo = document.getElementsByName('geo')[0].value;
     const rank = document.getElementsByName('rank')[0].value;
+    const categories = document.getElementsByName('categories')[0].value;
 
     /* Create a string of technologies */
     let technologies = [];
@@ -63,8 +64,13 @@ class Filters {
     url.searchParams.delete('rank');
     url.searchParams.append('rank', rank);
 
-    /* Scroll to the report content */
-    url.hash = '#report-content';
+    if(categories) {
+      url.searchParams.delete('category');
+      url.searchParams.append('category', categories);
+    }
+
+    // /* Scroll to the report content */
+    // url.hash = '#report-content';
 
     /* Update the url */
     location.href = url;
@@ -75,7 +81,7 @@ class Filters {
     this.technologies = DataUtils.filterDuplicates(this.technologies, 'technology');
 
     /* Get existing tech selectors on the page */
-    const allTechSelectors = document.querySelectorAll('select.tech');
+    const allTechSelectors = document.querySelectorAll('select[name="tech"]');
     const techNames = this.technologies.map(element => element.app);
 
     /* Update the options inside all of the selectors */
@@ -95,17 +101,19 @@ class Filters {
       techs.unshift({ technology: 'ALL' });
 
       /* Add one option per technology */
-      techs.forEach((technology) => {
-        const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
-        const option = optionTmpl.querySelector('option');
-        const formattedTech = technology.technology;
-        option.textContent = technology.technology;
-        option.value = formattedTech;
-        if(formattedTech === techSelector.getAttribute('data-selected')) {
-          option.selected = true;
-        }
-        techSelector.append(optionTmpl);
-      });
+      if(document.getElementById('filter-option')) {
+        techs.forEach((technology) => {
+          const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
+          const option = optionTmpl.querySelector('option');
+          const formattedTech = technology.technology;
+          option.textContent = technology.technology;
+          option.value = formattedTech;
+          if(formattedTech === techSelector.getAttribute('data-selected')) {
+            option.selected = true;
+          }
+          techSelector.append(optionTmpl);
+        });
+      }
     });
   }
 
@@ -159,6 +167,9 @@ class Filters {
         const sortedCategories = this.categories.sort((a, b) => a.category !== b.category ? a.category < b.category ? -1 : 1 : 0);
         sortedCategories.forEach((category) => {
           const option = document.createElement('option');
+          if(category.category === select.getAttribute('data-selected')) {
+            option.selected = true;
+          }
           option.value = category.category;
           option.innerHTML = category.category;
           select.append(option);
@@ -195,7 +206,6 @@ class Filters {
 
   /* Duplicate the technology dropdowns */
   addTechnologySelector(event) {
-    console.log('> addTechnologySelector', event);
     event.preventDefault();
 
     const selectorTemplate = document.getElementById('tech-selector').content.cloneNode(true);
@@ -235,7 +245,6 @@ class Filters {
 
     /* Add the new tech to the end of the list */
     const techs = document.getElementsByClassName('tech-selector-group');
-    console.log('> techs', techs);
     const last = techs[techs.length - 1];
     last.after(selectorTemplate);
 
