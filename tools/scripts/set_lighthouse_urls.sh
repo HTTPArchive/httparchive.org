@@ -38,8 +38,8 @@ http://127.0.0.1:8080/
 http://127.0.0.1:8080/reports
 http://127.0.0.1:8080/reports/state-of-the-web
 http://127.0.0.1:8080/reports/techreport/landing
-http://127.0.0.1:8080/reports/techreport/drilldown?geo=ALL&rank=ALL
-http://127.0.0.1:8080/reports/techreport/comparison?geo=ALL&rank=ALL
+http://127.0.0.1:8080/reports/techreport/drilldown
+http://127.0.0.1:8080/reports/techreport/comparison
 END
 )
 
