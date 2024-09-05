@@ -568,6 +568,7 @@ select {
   display: flex;
   column-gap: 1rem;
   font-size: 0.825rem;
+  padding: 0.625rem 0;
 }
 
 /* Table */
