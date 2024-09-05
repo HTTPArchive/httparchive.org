@@ -51,13 +51,13 @@
   },
   "/static/css/techreport/techreport.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-08-09T00:00:00.000Z",
-    "hash": "54f24df0251bbdcb0dbb9734b45a32d5"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "fb8f43f47a5668db3d585cafe59e1136"
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-08-22T00:00:00.000Z",
-    "hash": "a2e0e54b48ff9f500d55df991e391cd7"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "78966303745305d33cbf19e9d09b259d"
   },
   "/static/js/accessibility.js.map": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -66,13 +66,13 @@
   },
   "/static/js/export-data.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-08-22T00:00:00.000Z",
-    "hash": "6ab079c8b6178af93b28a458d2b137f6"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "8bf4bd3a46a407db8981da5ccc6802e3"
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2024-08-22T00:00:00.000Z",
-    "hash": "4df785ffea703190bc54ac4eb99a52b3"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "2d92935c9a67ad644811dd0cb7c59dd8"
   },
   "/static/js/exporting.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -86,8 +86,8 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2024-08-22T00:00:00.000Z",
-    "hash": "844ad62698238300de237a6e0492c38b"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "6aeff6fa017e791c3a2a81abe0163b12"
   },
   "/static/js/highcharts-more.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -96,13 +96,13 @@
   },
   "/static/js/highcharts.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-08-22T00:00:00.000Z",
-    "hash": "22d474941adbb8f92dcf227990f22d19"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "2bc563cd141851943c15d52a34379894"
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2024-08-22T00:00:00.000Z",
-    "hash": "b90cacaa020fed90502dfa195e3b4de0"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "76ffeccbe92601f700b569d7cc51b2da"
   },
   "/static/js/highstock.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
