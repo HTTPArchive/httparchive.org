@@ -5,12 +5,15 @@
 {% endblock %}
 
 {% block report_content %}
+  <button id="open-filters" class="hidden">
+    <img src="/static/img/open-filters.svg" alt="Expand filters" />
+  </button>
   <div class="split-view">
     <div class="filters">
       {% block filters %}{% endblock %}
     </div>
 
-    <div class="content">
+    <div class="content page-content">
       {% block section %}{% endblock %}
     </div>
   </div>

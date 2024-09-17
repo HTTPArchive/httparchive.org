@@ -142,6 +142,10 @@ main :is(a, p a) {
   margin-top: 1rem;
 }
 
+.hidden {
+  display: none;
+}
+
 /* Filter info */
 .meta {
   font-size: 0.75rem;
@@ -622,6 +626,36 @@ select {
   font-weight: 800;
 }
 
+#close-filters,
+#open-filters {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  background-color: var(--color-card-background);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 3rem;
+  position: absolute;
+}
+
+#close-filters {
+  right: 1rem;
+  top: 1rem;
+}
+
+#open-filters {
+  z-index: 9;
+  top: 1rem;
+  left: 2.25rem;
+  border: 1px solid var(--color-text-lighter);
+}
+
+#close-filters:is(:hover, :focus) {
+   border: 1px solid var(--color-button-background);
+}
+
 /* Results header */
 .results-header {
   position: sticky;
@@ -1093,6 +1127,12 @@ select {
   margin-bottom: 0.5rem;
 }
 
+.page-content {
+  display: block;
+  position: relative;
+  overflow: auto;
+}
+
 .report-content {
   background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
   background-size: 100% 50rem;
@@ -1497,6 +1537,27 @@ path.highcharts-tick {
   .tech-selector-group .actions {
     position: relative;
     top: 2.25rem;
+  }
+
+  .split-view:has(.filters) {
+    display: block;
+  }
+
+  .split-view:has(.filters:not(.hidden)) .page-content {
+    display: none;
+  }
+
+  .filters:not(.hidden) {
+    width: 100%;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  #open-filters {
+    left: unset;
+    right: 1rem;
   }
 }
 

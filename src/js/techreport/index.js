@@ -30,6 +30,28 @@ class TechReport {
 
     // Watch for settings updates
     this.bindSettingsListeners();
+    this.initializeFilters();
+  }
+
+  // Initialize the filter toggle
+  initializeFilters() {
+    const closeButton = document.getElementById('close-filters');
+    const openButton = document.getElementById('open-filters');
+    const filters = document.getElementsByClassName('filters')[0];
+
+    closeButton.addEventListener('click', () => {
+      filters.classList.add('hidden');
+      openButton.classList.remove('hidden');
+      closeButton.classList.add('hidden');
+      openButton.focus();
+    });
+
+    openButton.addEventListener('click', () => {
+      filters.classList.remove('hidden');
+      closeButton.classList.remove('hidden');
+      openButton.classList.add('hidden');
+      closeButton.focus();
+    });
   }
 
   // Initialize the sections for the different pages
