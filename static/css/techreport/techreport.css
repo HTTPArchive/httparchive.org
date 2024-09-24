@@ -652,7 +652,32 @@ select {
   border: 1px solid var(--color-text-lighter);
 }
 
-#close-filters:is(:hover, :focus) {
+.filter-bar {
+  background-color: var(--color-card-background);
+}
+
+.filter-bar .wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-bar .open-filters {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.filter-bar .open-filters:is(:hover, :focus-visible) {
+  background-color: var(--color-blue-light);
+  border: 1px solid var(--color-button-background);
+}
+
+#close-filters:is(:hover, :focus-visible) {
    border: 1px solid var(--color-button-background);
 }
 
@@ -1506,6 +1531,17 @@ path.highcharts-tick {
   border-radius: 3px;
 }
 
+.mobile-filters {
+  display: none;
+}
+
+#mobile-filter-container {
+  background-color: var(--color-card-background);
+  border-top: 1px solid var(--color-page-background);
+  border-bottom: 1px solid var(--color-card-border);
+  position: relative;
+}
+
 /* ----------------------- */
 /* ---- Media queries ---- */
 /* ----------------------- */
@@ -1543,21 +1579,16 @@ path.highcharts-tick {
     display: block;
   }
 
-  .split-view:has(.filters:not(.hidden)) .page-content {
+  .split-view .filters {
     display: none;
   }
 
-  .filters:not(.hidden) {
-    width: 100%;
-  }
-
-  .filters {
-    width: 100%;
+  .mobile-filters {
+    display: block;
   }
 
   #open-filters {
-    left: unset;
-    right: 1rem;
+    display: none;
   }
 }
 

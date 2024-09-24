@@ -38,19 +38,40 @@ class TechReport {
     const closeButton = document.getElementById('close-filters');
     const openButton = document.getElementById('open-filters');
     const filters = document.getElementsByClassName('filters')[0];
+    const mobileFilterBar = document.getElementById('mobile-filter-bar');
+    const mobileFilters = document.getElementById('mobile-filter-container');
+    const reportFilters = document.getElementById('report-filters');
+    const openButtonMobile = document.getElementById('open-filters-mobile');
 
-    closeButton.addEventListener('click', () => {
-      filters.classList.add('hidden');
-      openButton.classList.remove('hidden');
-      closeButton.classList.add('hidden');
-      openButton.focus();
+    closeButton?.addEventListener('click', () => {
+      if(mobileFilterBar && !mobileFilterBar.classList.contains('hidden')) {
+        mobileFilters.innerHTML = '';
+        mobileFilters.classList.add('hidden');
+        openButtonMobile.focus();
+      } else {
+        filters.classList.add('hidden');
+        openButton.classList.remove('hidden');
+        openButton.focus();
+      }
     });
 
-    openButton.addEventListener('click', () => {
+    openButton?.addEventListener('click', () => {
       filters.classList.remove('hidden');
-      closeButton.classList.remove('hidden');
       openButton.classList.add('hidden');
       closeButton.focus();
+    });
+
+    openButtonMobile?.addEventListener('click', () => {
+      if(mobileFilters.classList.contains('hidden')) {
+        mobileFilters.innerHTML = reportFilters.innerHTML;
+        mobileFilters.classList.remove('hidden');
+        document.getElementById('close-filters').classList.remove('hidden');
+      } else {
+        mobileFilters.innerHTML = '';
+        mobileFilters.classList.add('hidden');
+      }
+
+
     });
   }
 
