@@ -44,16 +44,9 @@ class TechReport {
     const openButtonMobile = document.getElementById('open-filters-mobile');
 
     closeButton?.addEventListener('click', () => {
-      console.log(mobileFilterBar, mobileFilters.classList);
-      if(mobileFilterBar && !mobileFilters.classList.contains('hidden')) {
-        mobileFilters.innerHTML = '';
-        mobileFilters.classList.add('hidden');
-        openButtonMobile.focus();
-      } else {
-        filters.classList.add('hidden');
-        openButton.classList.remove('hidden');
-        openButton.focus();
-      }
+      filters.classList.add('hidden');
+      openButton.classList.remove('hidden');
+      openButton.focus();
     });
 
     openButton?.addEventListener('click', () => {
@@ -67,9 +60,11 @@ class TechReport {
         mobileFilters.innerHTML = reportFilters.innerHTML;
         mobileFilters.classList.remove('hidden');
         document.getElementById('close-filters').classList.remove('hidden');
+        openButtonMobile.setAttribute('aria-expanded', true);
       } else {
         mobileFilters.innerHTML = '';
         mobileFilters.classList.add('hidden');
+        openButtonMobile.setAttribute('aria-expanded', false);
       }
 
 

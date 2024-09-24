@@ -648,7 +648,7 @@ select {
 #open-filters {
   z-index: 9;
   top: 1rem;
-  left: 2.25rem;
+  right: 1.5rem;
   border: 1px solid var(--color-text-lighter);
 }
 
