@@ -44,7 +44,8 @@ class TechReport {
     const openButtonMobile = document.getElementById('open-filters-mobile');
 
     closeButton?.addEventListener('click', () => {
-      if(mobileFilterBar && !mobileFilterBar.classList.contains('hidden')) {
+      console.log(mobileFilterBar, mobileFilters.classList);
+      if(mobileFilterBar && !mobileFilters.classList.contains('hidden')) {
         mobileFilters.innerHTML = '';
         mobileFilters.classList.add('hidden');
         openButtonMobile.focus();
