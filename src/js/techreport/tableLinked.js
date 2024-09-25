@@ -12,7 +12,7 @@ class TableLinked {
   }
 
   // Update content in the table
-  updateContent() {
+  updateContent(content) {
     // Select a table based on the passed in id
     const component = document.getElementById(`table-${this.id}`);
     const tbody = component?.querySelector('tbody');
@@ -21,12 +21,18 @@ class TableLinked {
       // Reset what's in the table before adding new content
       tbody.innerHTML = '';
 
+      const tableApps = content?.apps || this.pageFilters.app;
+
       // Collect the settings in an object
       const tableConfig = {
-        apps: this.pageFilters.app,
+        apps: tableApps,
         config: this.pageConfig?.[this.id]?.table,
         id: this.id,
       };
+
+      const filters = new URLSearchParams(window.location.search);
+      const geo = filters.get('geo') || 'ALL';
+      const rank = filters.get('rank') || 'ALL';
 
       tableConfig.apps.forEach(app => {
         const data = this.data[app];
@@ -41,9 +47,9 @@ class TableLinked {
             if(column.type === 'heading') {
               cell = document.createElement('th');
               const link = document.createElement('a');
-              link.setAttribute('href', `?tech=${app}`);
               const formattedApp = DataUtils.formatAppName(app);
-              link.textContent = formattedApp;
+              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
+              link.innerHTML = formattedApp;
               cell.append(link);
             } else if(column.key === 'client') {
               cell = document.createElement('td');
