@@ -23,7 +23,12 @@
                 data-metric="{{column.metric}}"
                 class="{{ column.className }}"
               >
-                {{ app }}
+                {% if app == 'ALL' %}
+                  All technologies
+                {% else %}
+                  {{ app }}
+                {% endif %}
+
                 {% if column.hiddenSuffix %}
                   <span aria-hidden="true">
                       {{ column.hiddenSuffix }}

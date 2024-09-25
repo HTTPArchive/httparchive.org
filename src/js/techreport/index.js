@@ -1,4 +1,5 @@
 import Filters from '../components/filters';
+import { Constants } from './utils/constants';
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { DataUtils } = require("./utils/data");
 const { UIUtils } = require("./utils/ui");
@@ -23,14 +24,11 @@ class TechReport {
 
     // Load the page
     this.initializePage();
-
-    // Apply settings
-    this.loadTheme();
-    this.loadIndicators();
+    this.initializeFilters();
+    this.initializeAccessibility();
 
     // Watch for settings updates
     this.bindSettingsListeners();
-    this.initializeFilters();
   }
 
   // Initialize the filter toggle
@@ -38,7 +36,6 @@ class TechReport {
     const closeButton = document.getElementById('close-filters');
     const openButton = document.getElementById('open-filters');
     const filters = document.getElementsByClassName('filters')[0];
-    const mobileFilterBar = document.getElementById('mobile-filter-bar');
     const mobileFilters = document.getElementById('mobile-filter-container');
     const reportFilters = document.getElementById('report-filters');
     const openButtonMobile = document.getElementById('open-filters-mobile');
@@ -66,13 +63,13 @@ class TechReport {
         mobileFilters.classList.add('hidden');
         openButtonMobile.setAttribute('aria-expanded', false);
       }
-
-
     });
   }
 
   // Initialize the sections for the different pages
   initializePage() {
+    this.updateStyling();
+
     switch(this.pageId) {
       case 'landing':
         this.initializeLanding();
@@ -82,6 +79,7 @@ class TechReport {
       case 'drilldown':
         this.initializeReport();
         this.getAllMetricData();
+        this.getTechInfo();
         break;
 
       case 'comparison':
@@ -97,8 +95,14 @@ class TechReport {
     }
   }
 
-  // Apply saved theme to the layout
-  loadTheme() {
+  // Load accessibility/themeing info
+  initializeAccessibility() {
+    // Show indicators?
+    const showIndicators = localStorage.getItem('showIndicators');
+    document.querySelector('main').dataset.showIndicators = showIndicators;
+    document.querySelector('#indicators-check').checked = showIndicators === 'true';
+
+    // Dark or light mode?
     const theme = localStorage.getItem('haTheme');
     document.querySelector('html').dataset.theme = theme;
     const btn = document.querySelector('.theme-switcher');
@@ -109,20 +113,11 @@ class TechReport {
     }
   }
 
-  // Apply settings to the line charts (a11y)
-  loadIndicators() {
-    const showIndicators = localStorage.getItem('showIndicators');
-    document.querySelector('main').dataset.showIndicators = showIndicators;
-    document.querySelector('#indicators-check').checked = showIndicators === 'true';
-  }
-
-  // Initialize the landing page
   initializeLanding() {
   }
 
   // Initialize the report pages
   initializeReport() {
-    // Get all the components defined as a section
     const sections = document.querySelectorAll('[data-type="section"]');
 
     // Create new class for each of the sections
@@ -139,7 +134,6 @@ class TechReport {
 
     // Apply settings and watch for updates
     this.bindClientListener();
-    this.updateStyling();
   }
 
   // Watch for changes in the client dropdown
@@ -237,30 +231,31 @@ class TechReport {
       },
     ];
 
-    const technologyFormatted = technologies.join('%2C')
+    const technology = technologies.join('%2C')
       .replaceAll(" ", "%20");
 
     const geo = this.filters.geo.replaceAll(" ", "%20");
     const rank = this.filters.rank.replaceAll(" ", "%20");
-    const geoFormatted = geo.replaceAll(" ", "%20");
-    const rankFormatted = rank.replaceAll(" ", "%20");
 
     let allResults = {};
     technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
-      const url = `${base}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
+      const url = `${Constants.apiBase}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
 
       return fetch(url)
         .then(result => result.json())
         .then(result => {
+          // Loop through all the rows of the API result
           result.forEach(row => {
             const parsedRow = {
               ...row,
             }
 
+            // Parse the data and add it to the results
             if(api.parse) {
-              parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+              const metric = parsedRow[api.metric] || parsedRow;
+              parsedRow[api.metric] = api.parse(metric, parsedRow?.date);
             }
 
             const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
@@ -357,6 +352,37 @@ class TechReport {
       });
   }
 
+  // Get the information about the selected technology
+  getTechInfo() {
+    const technologies = this.filters.app;
+    const technology = technologies.join('%2C')
+      .replaceAll(" ", "%20");
+
+    const url = `${Constants.apiBase}/technologies?technology=${technology}`;
+
+    fetch(url)
+      .then(result => result.json())
+      .then(result => {
+        const techInfo = result[0];
+
+        const categoryListEl = document.getElementsByClassName('category-list')[0];
+        categoryListEl.innerHTML = '';
+
+        const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
+        categories.forEach(category => {
+          const categoryItemEl = document.createElement('li');
+          categoryItemEl.className = 'cell';
+          categoryItemEl.textContent = category;
+          categoryListEl.append(categoryItemEl);
+        });
+
+        const descriptionEl = document.createElement('p');
+        descriptionEl.className = 'tech-description';
+        descriptionEl.textContent = techInfo?.description;
+        categoryListEl.after(descriptionEl);
+      });
+  }
+
   updateCategoryComponents (category) {
     this.updateComponents(category.data.technologies);
   }
@@ -388,12 +414,11 @@ class TechReport {
   // Fetch the data for the filter dropdowns
   getFilterInfo() {
     const filterData = {};
-    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
 
     const filterApis = ['categories', 'technologies', 'ranks', 'geos'];
 
     Promise.all(filterApis.map(api => {
-      const url = `${base}/${api}`;
+      const url = `${Constants.apiBase}/${api}`;
 
       return fetch(url)
         .then(result => result.json())

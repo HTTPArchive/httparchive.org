@@ -51,13 +51,13 @@
   },
   "/static/css/techreport/techreport.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "029e355ee02259070eeae49b26af9c49"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "fb8f43f47a5668db3d585cafe59e1136"
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "ae8fac6de3dbbcaf11ec3729097902af"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "78966303745305d33cbf19e9d09b259d"
   },
   "/static/js/accessibility.js.map": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -66,13 +66,13 @@
   },
   "/static/js/export-data.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "4b22f9147bc576469eedf019c2801ce8"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "8bf4bd3a46a407db8981da5ccc6802e3"
   },
   "/static/js/exporting.js": {
     "date_published": "2021-05-19T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "a704bf8a08efd20d51c91f85d2a7788a"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "2d92935c9a67ad644811dd0cb7c59dd8"
   },
   "/static/js/exporting.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -86,8 +86,8 @@
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "360600fb3681844d47c4ea906020aebe"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "6aeff6fa017e791c3a2a81abe0163b12"
   },
   "/static/js/highcharts-more.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -96,13 +96,13 @@
   },
   "/static/js/highcharts.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "f20980031dac5961ea8344b522a1cf79"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "2bc563cd141851943c15d52a34379894"
   },
   "/static/js/highstock.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "14773aef0d1233376df42f110f56a8dd"
+    "date_modified": "2024-09-05T00:00:00.000Z",
+    "hash": "76ffeccbe92601f700b569d7cc51b2da"
   },
   "/static/js/highstock.js.map": {
     "date_published": "2024-04-05T00:00:00.000Z",
@@ -131,8 +131,8 @@
   },
   "/static/js/send-web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2024-06-05T00:00:00.000Z",
-    "hash": "c468af1b2ac8681da4927af4a5de0a5a"
+    "date_modified": "2024-08-09T00:00:00.000Z",
+    "hash": "9147783165b4358e6faf3ff6c3310954"
   },
   "/static/js/summaryLinked.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -166,18 +166,18 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "2de9980fe1428a97844ee7b131ceb48f"
+    "date_modified": "2024-08-09T00:00:00.000Z",
+    "hash": "6d803c7f113dbeb414f23793b7e13d92"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-05-08T00:00:00.000Z",
-    "hash": "ebc3d7272d6325baab2c87d518e308eb"
+    "date_modified": "2024-08-09T00:00:00.000Z",
+    "hash": "cec26ecb9da1cc0ad101fcb3f366dae7"
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "3502b98e60e819e4a58fcf3ccaf51b5f"
+    "date_modified": "2024-08-09T00:00:00.000Z",
+    "hash": "ac55a9a5ceadd7ebc0577189f1804784"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -186,8 +186,8 @@
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2024-05-31T00:00:00.000Z",
-    "hash": "10638eba1611ff0dc07edbe721e3eb45"
+    "date_modified": "2024-08-07T00:00:00.000Z",
+    "hash": "94d123623c67f0e7774480cf1ad078cd"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -196,8 +196,8 @@
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-02-23T00:00:00.000Z",
-    "hash": "1f7d91b52fbf96b1ae5044c3e10c8b70"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "0eaa860bbe2b94a9adcf9f1fdfcb73c8"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -246,8 +246,8 @@
   },
   "reports/project-fugu": {
     "date_published": "2020-07-31T00:00:00.000Z",
-    "date_modified": "2021-04-26T00:00:00.000Z",
-    "hash": "0cb0fbbd2b60c712d42ee3af404fcfb1"
+    "date_modified": "2024-08-22T00:00:00.000Z",
+    "hash": "a6f426ff18df76a4c8d85cad0fa9e17a"
   },
   "reports/search-engine-optimization": {
     "date_published": "2018-05-08T00:00:00.000Z",

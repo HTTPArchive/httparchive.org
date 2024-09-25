@@ -1,4 +1,5 @@
 import { Table } from "./table";
+import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
 class Timeseries {
   // Create the component
@@ -136,7 +137,11 @@ class Timeseries {
         /* Create a wrapper */
         const itemWrapper = document.createElement('div');
         itemWrapper.classList.add('breakdown-item');
-        itemWrapper.style.setProperty('--breakdown-color', breakdown.color);
+
+        /* Set the breakdown color depending on chosen theme */
+        const theme = document.querySelector('html').dataset.theme;
+        const themeColor = theme === 'dark' ? breakdown.color_dark : breakdown.color;
+        itemWrapper.style.setProperty('--breakdown-color', themeColor);
 
         /* Add a text label to the wrapper */
         const breakdownLabel = document.createElement('p');
@@ -153,7 +158,7 @@ class Timeseries {
         } else {
           /* Add the value to the wrapper */
           const valueLabel = document.createElement('p');
-          valueLabel.textContent = `${latestValue}${breakdown.suffix || ''}`;
+          valueLabel.textContent = `${latestValue.toLocaleString()}${breakdown.suffix || ''}`;
           valueLabel.classList.add('breakdown-value');
           itemWrapper.appendChild(valueLabel);
         }
@@ -193,8 +198,8 @@ class Timeseries {
         const latestEndpoint = latest[endpoint];
         const latestSubcategory = latestEndpoint?.find(row => row.name === subcategory);
         const latestClient  = latestSubcategory?.[client];
-        const latestValue = latestClient?.[metric];
-        const summaryValue = latestClient?.[summary];
+        const latestValue = latestClient?.[metric]?.toLocaleString();
+        const summaryValue = latestClient?.[summary]?.toLocaleString();
 
         /* Select the container to which we'll add elements. */
         const card = container.querySelector(`[data-app="${app}"]`);
@@ -203,7 +208,8 @@ class Timeseries {
         const value = card.getElementsByClassName('breakdown-value')[0];
 
         /* Update text */
-        label.textContent = latest.technology;
+        const formattedApp = DataUtils.formatAppName(latest.technology);
+        label.textContent = formattedApp;
         if(latestValue) {
           if(summary) {
             value.textContent = `${summaryValue}`;
@@ -343,7 +349,7 @@ class Timeseries {
           document.getElementsByTagName('main')[0].append(pointSvg);
 
           pointSeries.innerHTML = point.series.name;
-          pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y}`;
+          pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y.toLocaleString()}`;
 
           pointList.appendChild(pointItem);
         });
@@ -434,6 +440,9 @@ class Timeseries {
 
     const category = this.getCategory(config);
 
+    // Get color scheme
+    const theme = document.querySelector('html').dataset.theme;
+
     // Breakdown data by categories defined in config
     config?.series?.values?.forEach((value, index) => {
       // Filter by selected client & sort
@@ -454,14 +463,18 @@ class Timeseries {
 
       const sortedData = formattedData.sort((a, b) => new Date(a.x) - new Date(b.x));
 
+      // Pick color from settings depending on theme
       const colors = this.defaults(config)?.chart?.colors;
+      const colorDark = value.color_dark;
+      const colorLight = value.color;
+      const seriesColor = theme === "dark" ? colorDark : colorLight;
 
       // Push the configurations and formatted data to the series array
       series.push(
         {
           name: value.name,
           data: sortedData,
-          color: value.color || colors[index],
+          color: seriesColor || colors?.[index],
           lineWidth: 2,
         }
       )

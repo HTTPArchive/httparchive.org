@@ -11,6 +11,10 @@
       {% for technology in technologies %}
         {% set key = loop.index %}
         {% set technology = technology %}
+        {% set technologyName = technology %}
+        {% if technology == "ALL" %}
+          {% set technologyName = "All technologies" %}
+        {% endif %}
         {% set name = "tech-" + key|string %}
         {% include "techreport/templates/selector_tech.html" %}
       {% endfor %}

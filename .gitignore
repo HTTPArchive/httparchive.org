@@ -9,3 +9,4 @@ templates/sitemap.xml
 *.pyc
 **/.DS_Store
 .coverage
+.idx/dev.nix

@@ -1,3 +1,5 @@
+import { DataUtils } from "./utils/data";
+
 class TableLinked {
   constructor(id, config, filters, data) {
     this.id = id;
@@ -45,8 +47,9 @@ class TableLinked {
             if(column.type === 'heading') {
               cell = document.createElement('th');
               const link = document.createElement('a');
+              const formattedApp = DataUtils.formatAppName(app);
               link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
-              link.innerHTML = app;
+              link.innerHTML = formattedApp;
               cell.append(link);
             } else if(column.key === 'client') {
               cell = document.createElement('td');

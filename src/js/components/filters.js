@@ -101,6 +101,7 @@ class Filters {
       techs.unshift({ technology: 'ALL' });
 
       /* Add one option per technology */
+<<<<<<< HEAD
       if(document.getElementById('filter-option')) {
         techs.forEach((technology) => {
           const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
@@ -114,6 +115,19 @@ class Filters {
           techSelector.append(optionTmpl);
         });
       }
+=======
+      techs.forEach((technology) => {
+        const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
+        const option = optionTmpl.querySelector('option');
+        const formattedTech = technology.technology;
+        option.textContent = DataUtils.formatAppName(technology.technology);
+        option.value = formattedTech;
+        if(formattedTech === techSelector.getAttribute('data-selected')) {
+          option.selected = true;
+        }
+        techSelector.append(optionTmpl);
+      });
+>>>>>>> main
     });
   }
 

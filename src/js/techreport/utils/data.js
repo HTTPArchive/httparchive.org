@@ -60,6 +60,10 @@ const formatBytes = (value) => {
   return value > 1048576 ? `${Math.round(value / 1048576)} MB` : value > 1024 ? `${Math.round(value / 1024)} KB` : `${value} bytes`;
 };
 
+const formatAppName = (app) => {
+  return app === 'ALL' ? 'All technologies' : app;
+}
+
 const parsePageWeightData = (metric, date) => {
   return metric.map(submetric => {
     return {
@@ -103,4 +107,5 @@ export const DataUtils = {
   parsePageWeightData,
   filterDuplicates,
   getLighthouseScoreCategories,
+  formatAppName,
 };

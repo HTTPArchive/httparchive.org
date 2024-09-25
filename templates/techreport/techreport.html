@@ -11,13 +11,6 @@
 {% endblock %}
 
 {% block custom_navigation %}
-  <div class="info-panel">
-    <div class="block-l">
-      <p class="info-label">Beta version</p>
-      <p>This dashboard is still under development.</p>
-    </div>
-  </div>
-
   <nav class="report-navigation">
     <a href="{{ url_for('index') }}">
       <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
@@ -63,6 +56,7 @@
 {% endblock %}
 
 {% block main %}
+
   {% block report_content %}{% endblock %}
 
   <div class="feedback">
