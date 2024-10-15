@@ -109,5 +109,10 @@
         "date": 1672531200000,
         "title": "Upgrade agents to Ubuntu 22.04",
         "desc": "Upgraded the test agents from Ubuntu 18.04 to 22.04."
+    },
+    {
+        "date": 1722470400000,
+        "title": "DNS detection unavailable for August 2024",
+        "desc": "DNS detection unavailable for August 2024 leading to a temporary drop in some detections."
     }
 ]
