@@ -42,7 +42,7 @@
       data-api="cwv"
     >
       <h2>Core Web Vitals</h2>
-      <p>Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome. A good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices.</p>
+      <p>{{ tech_report_labels.metrics.vitals.general.description }}</p>
 
       {% if tech_report_page.config.good_cwv_summary %}
         <h3>{{ tech_report_page.config.good_cwv_summary.title }}</h3>
@@ -96,7 +96,7 @@
       data-api="page-weight"
     >
       <h2>Page weight</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.pageWeight.general.description }}</p>
 
       {% if tech_report_page.config.weight_summary %}
       {% set section_prefix = "weight" %}
@@ -123,7 +123,7 @@
       data-api="adoption"
     >
       <h2>Adoption</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.adoption.general.description }}</p>
 
       <div class="card">
         {% set timeseries = tech_report_page.config.adoption_timeseries %}

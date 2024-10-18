@@ -312,8 +312,7 @@ nav {
 }
 
 #page-filters .meta {
-  position: sticky;
-  top: 0;
+
   padding-top: 1rem;
 }
 
@@ -518,6 +517,16 @@ nav {
 
 .technology-filters .tech-selector-group:first-of-type {
   margin-top: -1.5rem;
+}
+
+.breakdown {
+  margin-top: 2.5rem;
+}
+
+.breakdown legend {
+  border-top: 1px solid var(--color-card-border) !important;
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .tech-selector-group:has(.remove-tech:is(:focus-visible, :hover)) {
@@ -1181,6 +1190,7 @@ select {
   display: block;
   position: relative;
   overflow: auto;
+  width: 100%;
 }
 
 .report-content {
@@ -1603,7 +1613,9 @@ path.highcharts-tick {
     position: relative;
     top: 2.25rem;
   }
+}
 
+@media screen and (max-width: 50rem) {
   .split-view:has(.filters) {
     display: block;
   }
@@ -1619,9 +1631,7 @@ path.highcharts-tick {
   #open-filters {
     display: none;
   }
-}
 
-@media screen and (max-width: 50rem) {
   .table-ui td.pct-value[data-value] span {
     width: 100%;
   }

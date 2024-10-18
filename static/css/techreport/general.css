@@ -121,6 +121,7 @@ nav li:hover {
 .split-view > .filters {
   background-color: var(--color-card-background);
   min-width: 20rem;
+  width: 25rem;
   max-width: 100vw;
   position: relative;
 }

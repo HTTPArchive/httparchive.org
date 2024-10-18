@@ -268,7 +268,7 @@
         },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
-          "description": "Placeholder - combination of several metrics",
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics.",
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
@@ -1142,6 +1142,12 @@
             "caption": "Summary",
             "columns": [
               {
+                "key": "selectTech",
+                "name": "Select technology",
+                "hiddenName": true,
+                "type": "checkbox"
+              },
+              {
                 "key": "technology",
                 "name": "Tech",
                 "type": "heading"
@@ -1156,7 +1162,7 @@
               },
               {
                 "key": "good_pct",
-                "name": "Overall good CWV",
+                "name": "Good CWV",
                 "breakdown": "subcategory",
                 "subcategory": "overall",
                 "suffix": "%",
@@ -1166,20 +1172,30 @@
               },
               {
                 "key": "good_pct",
-                "name": "FID",
+                "name": "LCP",
                 "breakdown": "subcategory",
-                "subcategory": "FID",
+                "subcategory": "LCP",
                 "suffix": "%",
                 "endpoint": "vitals",
                 "metric": "good_pct"
               },
               {
-                "key": "medium_score_pct",
-                "name": "Accessibility",
+                "key": "good_pct",
+                "name": "INP",
                 "breakdown": "subcategory",
-                "subcategory": "accessibility",
-                "endpoint": "lighthouse",
-                "metric": "median_score_pct"
+                "subcategory": "INP",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "CLS",
+                "breakdown": "subcategory",
+                "subcategory": "CLS",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
               },
               {
                 "key": "client",
@@ -1217,6 +1233,9 @@
         }
       },
       "vitals": {
+        "general": {
+          "description": "Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome. A good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices."
+        },
         "overall": {
           "label": "Overall Core Web Vitals",
           "title": "Passes Core Web Vitals",
@@ -1250,23 +1269,29 @@
         }
       },
       "pageWeight": {
+        "general": {
+          "description": ""
+        },
         "images": {
           "title": "Image Weight",
-          "description": "todo"
+          "description": ""
         },
         "js": {
           "title": "JavaScript Transfer Size",
-          "description": "todo"
+          "description": ""
         },
         "total": {
           "title": "Total Page Weight",
-          "description": "todo"
+          "description": ""
         }
       },
       "adoption": {
+        "general": {
+          "description": ""
+        },
         "adoption": {
           "title": "Adoption",
-          "description": "Todo"
+          "description": "The amount of origins using this technology over time."
         }
       }
     },
