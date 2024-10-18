@@ -3,6 +3,11 @@
   "name": "Technology Report",
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "config": {
+    "default_apps": {
+      "drilldown": [ "ALL" ],
+      "comparison": [ "ALL", "WordPress", "Wix", "Next.js" ]
+    },
+    "default_category": "CMS",
     "cwv_subcategories": [
       "CLS",
       "LCP",
@@ -263,7 +268,7 @@
         },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
-          "description": "Placeholder - combination of several metrics",
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics.",
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
@@ -1118,6 +1123,89 @@
         }
       },
       "description": "Comparison placeholder"
+    },
+    "category": {
+      "id": "category",
+      "title": "Categories",
+      "subtitle": "Technology Report",
+      "config": {
+        "default": {
+          "category": "CMS",
+          "app": ["ALL", "WordPress", "Drupal"],
+          "series": {
+            "breakdown": "app"
+          }
+        },
+        "tech_comparison_summary": {
+          "id": "tech_comparison_summary",
+          "table": {
+            "caption": "Summary",
+            "columns": [
+              {
+                "key": "selectTech",
+                "name": "Select technology",
+                "hiddenName": true,
+                "type": "checkbox"
+              },
+              {
+                "key": "technology",
+                "name": "Tech",
+                "type": "heading"
+              },
+              {
+                "key": "origins",
+                "name": "Origins",
+                "breakdown": "subcategory",
+                "subcategory": "adoption",
+                "endpoint": "adoption",
+                "metric": "origins"
+              },
+              {
+                "key": "good_pct",
+                "name": "Good CWV",
+                "breakdown": "subcategory",
+                "subcategory": "overall",
+                "suffix": "%",
+                "className": "main-cell pct-value",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "LCP",
+                "breakdown": "subcategory",
+                "subcategory": "LCP",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "INP",
+                "breakdown": "subcategory",
+                "subcategory": "INP",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "CLS",
+                "breakdown": "subcategory",
+                "subcategory": "CLS",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          }
+        }
+      }
     }
   },
 
@@ -1145,6 +1233,9 @@
         }
       },
       "vitals": {
+        "general": {
+          "description": "Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome. A good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices."
+        },
         "overall": {
           "label": "Overall Core Web Vitals",
           "title": "Passes Core Web Vitals",
@@ -1178,23 +1269,29 @@
         }
       },
       "pageWeight": {
+        "general": {
+          "description": ""
+        },
         "images": {
           "title": "Image Weight",
-          "description": "todo"
+          "description": ""
         },
         "js": {
           "title": "JavaScript Transfer Size",
-          "description": "todo"
+          "description": ""
         },
         "total": {
           "title": "Total Page Weight",
-          "description": "todo"
+          "description": ""
         }
       },
       "adoption": {
+        "general": {
+          "description": ""
+        },
         "adoption": {
           "title": "Adoption",
-          "description": "Todo"
+          "description": "The amount of origins using this technology over time."
         }
       }
     },

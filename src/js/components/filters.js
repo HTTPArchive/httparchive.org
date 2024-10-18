@@ -45,6 +45,7 @@ class Filters {
     /* Get the geo and rank filter */
     const geo = document.getElementsByName('geo')[0].value;
     const rank = document.getElementsByName('rank')[0].value;
+    const categories = document.getElementsByName('categories')[0].value;
 
     /* Create a string of technologies */
     let technologies = [];
@@ -63,8 +64,13 @@ class Filters {
     url.searchParams.delete('rank');
     url.searchParams.append('rank', rank);
 
-    /* Scroll to the report content */
-    url.hash = '#report-content';
+    if(categories) {
+      url.searchParams.delete('category');
+      url.searchParams.append('category', categories);
+    }
+
+    // /* Scroll to the report content */
+    // url.hash = '#report-content';
 
     /* Update the url */
     location.href = url;
@@ -75,7 +81,7 @@ class Filters {
     this.technologies = DataUtils.filterDuplicates(this.technologies, 'technology');
 
     /* Get existing tech selectors on the page */
-    const allTechSelectors = document.querySelectorAll('select.tech');
+    const allTechSelectors = document.querySelectorAll('select[name="tech"]');
     const techNames = this.technologies.map(element => element.app);
 
     /* Update the options inside all of the selectors */
@@ -95,17 +101,19 @@ class Filters {
       techs.unshift({ technology: 'ALL' });
 
       /* Add one option per technology */
-      techs.forEach((technology) => {
-        const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
-        const option = optionTmpl.querySelector('option');
-        const formattedTech = technology.technology;
-        option.textContent = DataUtils.formatAppName(technology.technology);
-        option.value = formattedTech;
-        if(formattedTech === techSelector.getAttribute('data-selected')) {
-          option.selected = true;
-        }
-        techSelector.append(optionTmpl);
-      });
+      if(document.getElementById('filter-option')) {
+        techs.forEach((technology) => {
+          const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
+          const option = optionTmpl.querySelector('option');
+          const formattedTech = technology.technology;
+          option.textContent = technology.technology;
+          option.value = formattedTech;
+          if(formattedTech === techSelector.getAttribute('data-selected')) {
+            option.selected = true;
+          }
+          techSelector.append(optionTmpl);
+        });
+      }
     });
   }
 
@@ -145,7 +153,7 @@ class Filters {
 
   /* Update the list with categories */
   updateCategories() {
-    const selects = document.querySelectorAll('select[name="categories"]');
+    const selects = document.querySelectorAll('select[name="categories"]') || document.querySelectorAll('select[name="category"]');
 
     if(this.categories) {
       selects.forEach(select => {
@@ -159,6 +167,9 @@ class Filters {
         const sortedCategories = this.categories.sort((a, b) => a.category !== b.category ? a.category < b.category ? -1 : 1 : 0);
         sortedCategories.forEach((category) => {
           const option = document.createElement('option');
+          if(category.category === select.getAttribute('data-selected')) {
+            option.selected = true;
+          }
           option.value = category.category;
           option.innerHTML = category.category;
           select.append(option);
@@ -212,16 +223,18 @@ class Filters {
     const techId = `tech-${document.querySelectorAll('select.tech[name="tech"]').length + 1}`;
     selectElement.setAttribute('id', techId);
     labelElement.setAttribute('for', techId);
-    removeButton.dataset.tech = techId;
 
     categorySelect.setAttribute('id', `${techId}-category`);
     categoryLabel.setAttribute('for', `${techId}-category`);
     categorySelect.setAttribute('data-tech', techId);
 
-    removeButton.classList.remove('hidden');
+    if(removeButton) {
+      removeButton.dataset.tech = techId;
+      removeButton.classList.remove('hidden');
 
-    /* Bind functionality to the button */
-    removeButton.addEventListener('click', this.removeTechnology);
+      /* Bind functionality to the button */
+      removeButton.addEventListener('click', this.removeTechnology);
+    }
 
     /* Fill in all techs and select the first one */
     selectElement.innerHTML = document.querySelector('select.tech').innerHTML;
