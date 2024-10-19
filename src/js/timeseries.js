@@ -283,7 +283,12 @@ function drawChart(options, series) {
     metric: options.metric,
     type: 'timeseries',
     chart: {
-      zoomType: 'x'
+      zoomType: 'x',
+      zooming: {
+        mouseWheel: {
+          enabled: false
+        }
+      }
     },
     title: {
       text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Timeseries of ${options.name}`,
@@ -420,6 +425,7 @@ function drawChart(options, series) {
       }]
     });
   };
+  chart.zooming.mousewheel.enabled = false;
   window.charts = window.charts || {};
   window.charts[options.metric] = chart;
 }

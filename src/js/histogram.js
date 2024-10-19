@@ -281,6 +281,11 @@ function drawChart(series, containerId, options) {
           x: 0,
           y: -50
         }
+      },
+      zooming: {
+        mouseWheel: {
+          enabled: false
+        }
       }
     },
     title: {
