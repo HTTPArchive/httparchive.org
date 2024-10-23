@@ -45,7 +45,7 @@ class Filters {
     /* Get the geo and rank filter */
     const geo = document.getElementsByName('geo')[0].value;
     const rank = document.getElementsByName('rank')[0].value;
-    const categories = document.getElementsByName('categories')[0].value;
+    const categories = document.getElementsByName('categories')[0]?.value;
 
     /* Create a string of technologies */
     let technologies = [];
@@ -114,6 +114,13 @@ class Filters {
           techSelector.append(optionTmpl);
         });
       }
+
+      console.log('set selected tech')
+      /* Get the selected technology */
+      const selected = techSelector.dataset.selected;
+      console.log('selected', selected);
+      console.log(techSelector.querySelector(`option[value="${selected}"]`));
+      techSelector.querySelector(`option[value="${selected}"]`).selected = true;
     });
   }
 
@@ -214,19 +221,22 @@ class Filters {
     const labelElement = selectorTemplate.querySelector('label.tech');
     const removeButton = selectorTemplate.querySelector('.remove-tech');
 
-    const categorySelect = selectorTemplate.querySelector('select.categories-selector');
-    const categoryLabel = selectorTemplate.querySelector('label[for="categories-tech-new"]');
-    categorySelect.innerHTML = document.querySelector('select.categories-selector').innerHTML;
-    categorySelect.addEventListener('change', this.updateCategory);
-
     /* Set a unique name on the new element (based on the amount of techs) */
     const techId = `tech-${document.querySelectorAll('select.tech[name="tech"]').length + 1}`;
     selectElement.setAttribute('id', techId);
     labelElement.setAttribute('for', techId);
 
-    categorySelect.setAttribute('id', `${techId}-category`);
-    categoryLabel.setAttribute('for', `${techId}-category`);
-    categorySelect.setAttribute('data-tech', techId);
+    /* Controls for filtering the techs by category */
+    // const categorySelect = selectorTemplate.querySelector('select.categories-selector');
+    // const categoryLabel = selectorTemplate.querySelector('label[for="categories-tech-new"]');
+    // categorySelect.innerHTML = document.querySelector('select.categories-selector').innerHTML;
+    // categorySelect.addEventListener('change', this.updateCategory);
+    // categorySelect.setAttribute('id', `${techId}-category`);
+    // categoryLabel.setAttribute('for', `${techId}-category`);
+    // categorySelect.setAttribute('data-tech', techId);
+    /* Set the selected element */
+    // categorySelect.innerHTML = document.querySelector('select.categories-selector')?.innerHTML;
+    // categorySelect.getElementsByTagName('option')[0].selected = true;
 
     if(removeButton) {
       removeButton.dataset.tech = techId;
@@ -239,9 +249,6 @@ class Filters {
     /* Fill in all techs and select the first one */
     selectElement.innerHTML = document.querySelector('select.tech').innerHTML;
     selectElement.getElementsByTagName('option')[0].selected = true;
-
-    categorySelect.innerHTML = document.querySelector('select.categories-selector')?.innerHTML;
-    categorySelect.getElementsByTagName('option')[0].selected = true;
 
     /* Add the new tech to the end of the list */
     const techs = document.getElementsByClassName('tech-selector-group');

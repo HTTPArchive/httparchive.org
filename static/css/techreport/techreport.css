@@ -1198,11 +1198,11 @@ select {
   background-size: 100% 50rem;
   background-repeat: no-repeat;
   background-position: 0 25rem;
-  padding-top: 3rem;
 }
 
 .report-content .intro {
   padding: 0;
+  margin-top: 3rem;
 }
 
 .report-section {

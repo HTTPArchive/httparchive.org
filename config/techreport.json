@@ -44,7 +44,7 @@
       "id": "landing",
       "title": "Technology Report",
       "subtitle": "Report",
-      "description": "This is placeholder text about how the report works",
+      "description": "",
       "data": {},
       "filters": {
         "technologies": ["WordPress", "Squarespace", "Drupal"]
@@ -430,7 +430,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -562,7 +562,7 @@
         },
         "weight_timeseries": {
           "title": "Weight over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "weight_timeseries",
           "summary": true,
           "endpoint": "pageWeight",
@@ -700,7 +700,8 @@
             "#E24070"
           ],
           "overrides": {
-            "WordPress": "#fff000"
+            "WordPress": "#3858e9",
+            "ALL": "#69797e"
           }
         },
         "default": {
@@ -862,7 +863,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -957,7 +958,7 @@
         },
         "weight_timeseries": {
           "title": "Page weight over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "weight_timeseries",
           "endpoint": "pageWeight",
           "metric": "median_bytes",
@@ -1052,7 +1053,7 @@
         },
         "adoption_timeseries": {
           "title": "Origins over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "adoption_timeseries",
           "endpoint": "adoption",
           "metric": "origins",
