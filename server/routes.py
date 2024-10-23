@@ -77,7 +77,7 @@ def techreportlanding(page_id):
     # Get the settings for the current page
     active_tech_report = tech_report.get("pages").get(page_id)
 
-     # Add the technologies requested in the URL to the filters
+    # Add the technologies requested in the URL to the filters
     # Use the default configured techs as fallback
     # Use ["ALL"] if there is nothing configured
     requested_technologies = active_tech_report.get("config").get("default").get(

@@ -114,13 +114,6 @@ class Filters {
           techSelector.append(optionTmpl);
         });
       }
-
-      console.log('set selected tech')
-      /* Get the selected technology */
-      const selected = techSelector.dataset.selected;
-      console.log('selected', selected);
-      console.log(techSelector.querySelector(`option[value="${selected}"]`));
-      techSelector.querySelector(`option[value="${selected}"]`).selected = true;
     });
   }
 

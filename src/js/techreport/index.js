@@ -207,7 +207,6 @@ class TechReport {
   getAllMetricData() {
     const technologies = this.filters.app;
 
-    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
     const apis = [
       {
         endpoint: 'cwv',
@@ -276,8 +275,7 @@ class TechReport {
   }
 
   getCategoryData(category) {
-    const base = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
-    const url = `${base}/categories?category=${category}`;
+    const url = `${Constants.apiBase}/categories?category=${category}`;
     const apis = [
       {
         endpoint: 'cwv',
@@ -317,7 +315,7 @@ class TechReport {
           category.technologies.forEach(tech => allResults[tech] = []);
 
           Promise.all(apis.map(api => {
-            const url = `${base}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
+            const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
 
             return fetch(url)
               .then(techResult => techResult.json())

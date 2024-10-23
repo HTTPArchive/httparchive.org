@@ -288,7 +288,6 @@ nav {
 }
 
 #page-filters .meta {
-
   padding-top: 1rem;
 }
 
@@ -687,7 +686,7 @@ select {
 }
 
 #close-filters:is(:hover, :focus-visible) {
-   border: 1px solid var(--color-button-background);
+  border: 1px solid var(--color-button-background);
 }
 
 /* Results header */
