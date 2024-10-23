@@ -11,6 +11,7 @@ body {
 
 main {
   color: var(--color-text);
+  position: relative;
 }
 
 h1 {
@@ -19,7 +20,8 @@ h1 {
 }
 
 h2 {
-  font-size: var(--font-size-large);
+  font-size: 2rem;
+  margin-bottom: var(--font-size-regular);
 }
 
 h2 + p {
@@ -32,9 +34,18 @@ p {
   margin: 0;
 }
 
+strong {
+  font-weight: 600;
+}
+
 :is(a, button, select):focus-visible {
   outline: 1.5px solid var(--color-teal-dark);
   outline-offset: 1.5px;
+  border-radius: 3px;
+}
+
+nav li:hover {
+  background-color: transparent;
 }
 
 /* Hidden visually, but still accessible through screen readers/other AT */
@@ -57,13 +68,18 @@ p {
   padding: 1.5rem;
   background: var(--color-card-background);
   border-radius: var(--card-radius);
-  border: 1px solid var(--color-card-border);
+  border: 1px solid var(--color-card-border-light);
   box-shadow: var(--card-shadow);
   transition: padding 0.35s;
 }
 
 .card > :is(h2, h3, h4) {
   margin-top: 0;
+}
+
+.card :is(h2, h3) {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .block-s {
@@ -88,14 +104,28 @@ p {
 }
 
 .feedback {
-  background-image: linear-gradient(
-    var(--color-page-background),
-    var(--color-card-background)
-  );
+  background-color: var(--color-card-background);
   padding: 4rem 0;
-  margin-top: -4rem;
+  border-top: 1px solid var(--color-card-border);
 }
 
 .feedback h2 {
   margin-top: 0;
+}
+
+.split-view {
+  display: flex;
+  column-gap: 0;
+}
+
+.split-view > .filters {
+  background-color: var(--color-card-background);
+  min-width: 20rem;
+  width: 25rem;
+  max-width: 100vw;
+  position: relative;
+}
+
+.split-view:has(.filters.hidden) .page-content {
+  width: 100%;
 }

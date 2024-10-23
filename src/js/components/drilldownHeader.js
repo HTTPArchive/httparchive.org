@@ -1,7 +1,7 @@
 import { DataUtils } from "../techreport/utils/data";
 
 function setTitle(title) {
-  const mainTitle = document.querySelector('h2 span.main-title');
+  const mainTitle = document.querySelector('h1 span.main-title');
   mainTitle.textContent = title;
 }
 
