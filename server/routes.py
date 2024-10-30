@@ -66,6 +66,7 @@ def reports():
 
     return render_template("reports.html", reports=all_reports)
 
+
 @app.route("/reports/techreport/<page_id>", strict_slashes=False)
 def techreportlanding(page_id):
     # Needed for the header dropdown
@@ -110,6 +111,7 @@ def techreportlanding(page_id):
         reports=all_reports,
     )
 
+
 @app.route("/reports/techreport/tech", strict_slashes=False)
 def techreport():
     # Needed for the header dropdown
@@ -123,7 +125,7 @@ def techreport():
     if request.args.get("tech"):
         requested_technologies = request.args.get("tech").split(",")
 
-    if len(requested_technologies) >  1:
+    if len(requested_technologies) > 1:
         page_id = "comparison"
     else:
         page_id = "drilldown"
