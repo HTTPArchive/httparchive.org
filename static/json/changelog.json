@@ -109,5 +109,15 @@
         "date": 1672531200000,
         "title": "Upgrade agents to Ubuntu 22.04",
         "desc": "Upgraded the test agents from Ubuntu 18.04 to 22.04."
+    },
+    {
+        "date": 1722470400000,
+        "title": "DNS detection unavailable for August 2024",
+        "desc": "DNS detection unavailable for August 2024 leading to a temporary drop in some detections."
+    },
+    {
+        "date": 1727740800000,
+        "title": "IPv6 Support added",
+        "desc": "IPv6 Support added was added to the crawler allowing it to crawl sites using IPv4 or IPv6 based on Chrome's heuristics."
     }
 ]
