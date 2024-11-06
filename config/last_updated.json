@@ -111,8 +111,8 @@
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-03-14T00:00:00.000Z",
-    "hash": "be48931b9eb42ac667a3c1280c75efc2"
+    "date_modified": "2024-11-06T00:00:00.000Z",
+    "hash": "6c6cec120d7eb49c94a1932ea2214ebb"
   },
   "/static/js/index.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -181,13 +181,13 @@
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-03-14T00:00:00.000Z",
-    "hash": "a57eec4d3d8726626465c8a4c9b7fd4e"
+    "date_modified": "2024-11-06T00:00:00.000Z",
+    "hash": "3d5bdd62f027aa29cd42d69a2b8f3ec6"
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2024-08-07T00:00:00.000Z",
-    "hash": "94d123623c67f0e7774480cf1ad078cd"
+    "date_modified": "2024-11-06T00:00:00.000Z",
+    "hash": "f6f30f40e7d014a2d38f1362c5eb6244"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -216,8 +216,8 @@
   },
   "reports/chrome-ux-report": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-03-09T00:00:00.000Z",
-    "hash": "446e414773294f1cb7a5d5f1125f695f"
+    "date_modified": "2024-11-06T00:00:00.000Z",
+    "hash": "8e9534ce5c7e68caea1a97bfe2747f7a"
   },
   "reports/cwv-tech": {
     "date_published": "2021-09-20T00:00:00.000Z",
