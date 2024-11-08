@@ -368,7 +368,8 @@ function drawChart(series, containerId, options) {
       },
       labels: {
         format: '{value}%'
-      }
+      },
+      tickAmount: 6,
     }, {
       title: {
         text: 'Cumulative Density'
@@ -377,6 +378,7 @@ function drawChart(series, containerId, options) {
         format: '{value}%'
       },
       max: 100,
+      tickAmount: 6,
       opposite: true
     }],
     series,
