@@ -38,7 +38,7 @@ Given these conditions it's virtually impossible to compare the HTTP Archive's t
 
 The HTTP Archive dataset is available on BigQuery. Be aware that as a consequence of collecting so much metadata from millions of websites each month, the dataset is _extremely large_—multiple petabytes. Care _must_ be taken to set up [cost controls](https://cloud.google.com/bigquery/docs/custom-quotas) to avoid unexpected bills. Also see our guide to [minimizing query costs](https://har.fyi/guides/minimizing-costs/) for tips on staying under the 1 TB per month free quota.
 
-Check out [Getting Started Accessing the HTTP Archive with BigQuery]([https://github.com/HTTPArchive/httparchive.org/blob/main/docs/gettingstarted_bigquery.md](https://har.fyi/guides/getting-started/)), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
+Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://har.fyi/guides/getting-started/), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
 
 For a guided walkthrough of the project, watch this in-depth [30 minute video](https://www.youtube.com/watch?v=00f9kza3BJ0) featuring HTTP Archive maintainer [Rick Viscomi](https://twitter.com/rick_viscomi).
 
