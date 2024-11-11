@@ -298,6 +298,7 @@ def sitemap():
     resp.mimetype = "text/xml"
     return resp
 
+
 @app.route("/.well-known/<file>")
 def wellknown(file):
     return send_from_directory(app.static_folder, ("well-known/%s" % file))
