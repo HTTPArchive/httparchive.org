@@ -1,4 +1,4 @@
-Flask==3.0.3
+Flask==3.1.0
 flask-talisman==1.1.0
 google-cloud-storage==2.18.2
 gunicorn==23.0.0
