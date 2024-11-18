@@ -247,3 +247,8 @@ def test_tech_report_drilldown_wordpress(client):
         "/reports/techreport/drilldown?tech=WordPress&geo=ALL&rank=ALL"
     )
     assert response.status_code == 200
+
+
+def test_well_known_atproto_did(client):
+    response = client.get("/.well-known/atproto-did")
+    assert response.status_code == 200
