@@ -27,7 +27,6 @@ function timeseries(metric, options, start, end) {
 
       // Ensure null values are filtered out.
       data = data.filter(o => getUnformattedPrimaryMetric(o, options) !== null);
-      console.log(`BARRY:${metric}:`, data);
 
       drawTimeseries(data, options);
       drawTimeseriesTable(data, options, [options.min, options.max]);
@@ -111,14 +110,17 @@ function getUnformattedPrimaryMetric(o, options) {
 }
 
 function drawTimeseries(data, options) {
-
-   window.barry = data;
-
   data = data.map(toNumeric);
   const desktop = data.filter(isDesktop);
   const mobile = data.filter(isMobile);
 
   const series = [];
+  if (desktop.length || mobile.length) {
+    // Set the axis axis to the combination of both desktop and mobile
+    const dates = [...new Set(data.map(item => item.timestamp))];
+    const xaxis = {name: 'xaxis', data: dates};
+    series.push(xaxis);
+  }
   if (desktop.length) {
     if (options.timeseries && options.timeseries.fields) {
       options.timeseries.fields.forEach(field => {
@@ -539,7 +541,7 @@ async function drawChart(options, series) {
             intersect: false,
             callbacks: {
               title: function (context) {
-                return formatDateLong(parseInt(context[0].label)) + '-' + context[0].label;
+                return formatDateLong(parseInt(context[0].label));
               },
               afterBody: function (context) {
                 const date = parseInt(context[0].label);
@@ -579,8 +581,8 @@ async function drawChart(options, series) {
               drawOnChartArea: false,
               drawTicks: true,
             },
-            min: series[0].data.length - 88,
-            max: series[0].data.length - 1,
+            min: series.find((data) => data.name === 'Desktop' && data.type === 'line').data.length - 88,
+            max: series.find((data) => data.name === 'Desktop' && data.type === 'line').data.length - 1,
             ticks: {
               // autoSkip: false,
               maxRotation: 0, // Prevent rotation
@@ -685,18 +687,18 @@ async function drawChart(options, series) {
         }
       ],
       data: {
-        labels: [...new Set([...series[0].data.map(row => row[0]), series.length === 5 ? series[2].data.map(row => row[0]) : series[1].data.map(row => row[0])])],
+        labels: series.find((data) => data.name === 'xaxis').data,
         datasets: [
           {
             label: 'Desktop',
-            data: series[0].data,
+            data:  series.find((data) => data.name === 'Desktop' && data.type === 'line').data,
             backgroundColor:Colors.DESKTOP,
             borderColor: Colors.DESKTOP,
             pointStyle: false
           },
           {
             label: 'Mobile',
-            data: series.length === 5 ? series[2].data : series[1].data,
+            data:  series.find((data) => data.name === 'Mobile' && data.type === 'line').data,
             backgroundColor: Colors.MOBILE,
             borderColor: Colors.MOBILE,
             pointStyle: false
@@ -719,23 +721,18 @@ async function drawChart(options, series) {
     switch (range) {
         case 'ytd':
             start = new Date(endDate.getFullYear(), 0, 1).getTime();
-            console.log(start);
             break;
         case '1y':
             start = new Date(endDate.getFullYear() - 1, endDate.getMonth(), 1).getTime();
-            console.log(start);
             break;
         case '3y':
             start = new Date(endDate.getFullYear() - 3, endDate.getMonth(), 1).getTime();
-            console.log(start);
             break;
         case '5y':
             start = new Date(endDate.getFullYear() - 5, endDate.getMonth(), 1).getTime();
-            console.log(start);
             break;
         case '10y':
             start = new Date(endDate.getFullYear() - 10, endDate.getMonth(), 1).getTime();
-            console.log(start);
             break;
         case 'all':
             start = Math.min(...dataLabels);
