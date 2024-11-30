@@ -13,7 +13,17 @@
     {% if metric[viz]['enabled'] %}
       <section id="{{ metric.id }}" class="report-metric">
         {{ metric_info(metric, viz) }}
-        <div id="{{ metric.id }}-chart" class="chart"></div>
+        <div class="chart-buttons">
+          <!-- Zoom buttons -->
+          <div id="{{ metric.id }}-zoom-buttons">
+          </div>
+          <!-- Export and query buttons -->
+          <div id="{{ metric.id }}-other-buttons">
+            <button id="{{ metric.id }}-chart-download-png">Download Png</button>
+            <button id="{{ metric.id }}-chart-show-query">Show query</button>
+          </div>
+        </div>
+        <div class="chart"><canvas id="{{ metric.id }}-chart"></canvas></div>
         <button class="btn show-hide">Show Tables</button>
         <div class="table-wrapper">
           <table id="{{ metric.id }}-table-desktop" class="table hidden"></table>

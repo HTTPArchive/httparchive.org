@@ -1,14 +1,21 @@
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { el, formatDateShort, formatDateLong, formatNumber, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
+import Chart from 'chart.js/auto'
+import zoomPlugin from 'chartjs-plugin-zoom';
+import 'chartjs-adapter-date-fns';
 
+// Register all Chart.js components and the Zoom plugin
+Chart.register(zoomPlugin);
 
-const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({rgba: true});
+const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT, COLOR_DESKTOP_DIM, COLOR_MOBILE_DIM, COLOR_DESKTOP_ALT_DIM, COLOR_MOBILE_ALT_DIM] = Colors.getAll({rgba: true});
 
 function histogram(metric, date, options) {
   options.date = date;
   options.metric = metric;
+  options.chartId = `${metric}-chart`;
+
   const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens.id}/` : ''}${date}/${metric}.json`;
   fetch(dataUrl)
     .then(response => {
@@ -62,7 +69,7 @@ class Bin {
   }
 
   toPoint() {
-    return [this.bin, this.pdf * 100];
+    return {x: this.bin, y: this.pdf * 100};
   }
 
   toCdfPoint() {
@@ -209,40 +216,21 @@ function drawHistogram(data, containerId, options) {
   drawClientSummary(mobile, options, 'mobile');
 
   const series = [];
-  if (desktop.length) {
-    series.push({
-      data: desktop.map((data) => data.toPoint()),
-      pointPadding: 0,
-      groupPadding: 0,
-      pointPlacement: 'between',
-      name: 'Desktop',
-      color: COLOR_DESKTOP
-    });
-    series.push({
-      data: desktopCDF,
-      type: 'line',
-      marker: {
-        enabled: false,
-        states: {
-          hover: {
-            enabled: false
-          }
-        }
-      },
-      name: 'Desktop CDF',
-      color: COLOR_DESKTOP_ALT,
-      yAxis: 1,
-      showInLegend: false
-    });
+  if (desktop.length || mobile.length) {
+    // Set the axis axis to the combination of both desktop and mobile
+    const values = [...new Set(data.map(datapoint => datapoint.bin))];
+    const xaxis = {label: 'xaxis', data: values};
+    options.xaxis = xaxis;
   }
   if (mobile.length) {
     series.push({
       data: mobile.map((data) => data.toPoint()),
-      pointPadding: 0,
-      groupPadding: 0,
-      pointPlacement: 'between',
-      name: 'Mobile',
-      color: COLOR_MOBILE
+      type: 'bar',
+      label: 'Mobile',
+      backgroundColor: COLOR_MOBILE_ALT,
+      borderColor: '#fff',
+      pointStyle: false,
+      yAxisID: 'y',
     });
     series.push({
       data: mobileCDF,
@@ -255,11 +243,44 @@ function drawHistogram(data, containerId, options) {
           }
         }
       },
-      name: 'Mobile CDF',
-      color: COLOR_MOBILE_ALT,
-      yAxis: 1,
+      legend: false,
+      label: 'Mobile Cumulative',
+      backgroundColor: COLOR_MOBILE_ALT,
+      borderColor: COLOR_MOBILE_ALT,
+      pointStyle: false,
+      yAxisID: 'y2',
       showInLegend: false
     });
+    if (desktop.length) {
+      series.push({
+        data: desktop.map((data) => data.toPoint()),
+        type: 'bar',
+        pointPlacement: 'between',
+        label: 'Desktop',
+        backgroundColor: COLOR_DESKTOP_ALT,
+        borderColor: '#fff',
+        pointStyle: false,
+        yAxisID: 'y',
+      });
+      series.push({
+        data: desktopCDF,
+        type: 'line',
+        marker: {
+          enabled: false,
+          states: {
+            hover: {
+              enabled: false
+            }
+          }
+        },
+        label: 'Desktop Cumulative',
+        backgroundColor: COLOR_DESKTOP_ALT,
+        borderColor: COLOR_DESKTOP_ALT,
+        pointStyle: false,
+        yAxisID: 'y2',
+        showInLegend: false
+      });
+    }
   }
 
   const chart = document.getElementById(`${options.metric}-chart`);
@@ -269,140 +290,211 @@ function drawHistogram(data, containerId, options) {
 };
 
 function drawChart(series, containerId, options) {
-  const chart = Highcharts.chart(containerId, {
-    metric: options.metric,
-    type: 'histogram',
-    date: options.date,
-    chart: {
-      type: 'column',
-      zoomType: 'x',
-      resetZoomButton: {
-        position: {
-          x: 0,
-          y: -50
-        }
-      },
-      zooming: {
-        mouseWheel: {
-          enabled: false
-        }
-      }
-    },
-    title: {
-      text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Histogram of ${options.name}`,
-      style: {
-        "font-weight": "normal"
-      }
-    },
-    subtitle: {
-      text: `Source: <a href="http://httparchive.org">httparchive.org</a> (${prettyDate(options.date)})`,
-      useHTML: true
-    },
-    plotOptions: {
-      column: {
-        grouping: false
-      },
-      series: {
-        events: {
-          // Keep CDF visibility in sync.
-          hide: function() {
-            const cdf = chart.series.find(s => s.name === `${this.name} CDF`);
-            if (cdf) {
-              cdf.hide();
+  console.log('Options:', options);
+  console.log('Series:', series);
+
+  const axis = options.xaxis;
+  const chartData = []
+  chartData.labels = axis.data;
+  chartData.datasets = series;
+
+  const chart = new Chart(
+    document.getElementById(options.chartId),
+    {
+      options: {
+        responsive: true,
+        layout: {
+          padding: {
+            bottom: 20,
+          },
+        },
+        legend: {
+          labels: {
+            padding: {
+                top: 20,
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              filter: function (legendItem, data) {
+                const showInLegend = data.datasets[legendItem.datasetIndex]?.showInLegend ?? true;
+                return showInLegend;
+              },
+            },
+          },
+          title: {
+            display: true,
+            text: options.lens ? `${options.lens.name}: ` : '' + `Histogram of ${options.name}`,
+            font: {
+              family: 'Helvetica, Arial, sans-serif',
+              size: 16,
+              weight: 'normal',
+            },
+            padding: {
+                top: 20,
+            },
+          },
+          subtitle: {
+            display: true,
+            text: `Source: httparchive.org (${prettyDate(options.date)})`,
+            font: {
+              family: 'Helvetica, Arial, sans-serif',
+              size: 13,
+              weight: 'normal',
+            },
+            padding: {
+                bottom: 20,
+            },
+          },
+          tooltip: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false,
+            titleAlign: 'center',
+            callbacks: {
+              title: function (context) {
+                return `${context[0]?.label} ${options.type}`;
+              },
+              label: function(context) {
+                if (context.dataset?.tooltip?.enabled == false) {
+                  return null;
+                }
+                if (context.dataset.type === 'bar') {
+                  return ` ${context.dataset.label}: ${context.raw.y.toFixed(2)}%`;
+                }
+                return ` ${context.dataset.label}: ${context.raw[1].toFixed(0)}%`;
+              },
             }
           },
-          show: function() {
-            const cdf = chart.series.find(s => s.name === `${this.name} CDF`);
-            if (cdf) {
-              cdf.show();
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x',
+            },
+            zoom: {
+              drag: {
+                enabled: true,
+                modifierKey: 'shift',
+              },
+              wheel: {
+                enabled: false,
+              },
+              pinch: {
+                enabled: false,
+              },
+              mode: 'x',
+            },
+          },
+        },
+        scales: {
+          x: {
+            type: 'linear',
+            grid: {
+              drawOnChartArea: false,
+              drawTicks: true,
+            },
+            ticks: {
+              maxRotation: 0,
+              minRotation: 0,
+              length: 10,
+              callback: function (value, index, ticks) {
+                return formatNumber(value);
+              }
+            },
+            offset: 0,
+          },
+          y: {
+            title : {
+              display: true,
+              text: 'Density',
+            },
+            beginAtZero: true,
+          },
+          y2: {
+            title : {
+              display: true,
+              text: 'Cumulative Density',
+            },
+            position: 'right',
+            min: 0,
+            max: 100,
+            ticks: {
+              callback: function (value, index, ticks) {
+                return `${value}%`;
+              },
+            },
+          }
+        },
+        datasets: {
+          bar: {
+            barPercentage: 0.95, // Bars occupy the full category space
+            categoryPercentage: 1.0, // Bars overlap completely
+            grouped: false,
+          },
+        },
+        transitions: {
+          zoom: {
+            animation: {
+              duration: 0
+            },
+          },
+        },
+      },
+      plugins: [
+        {
+          id: 'canvasBackgroundColor',
+          beforeDraw: (chart) => {
+            const { ctx, width, height } = chart;
+            ctx.save();
+            ctx.fillStyle = 'white'; // Set the entire canvas background color to white
+            ctx.fillRect(0, 0, width, height);
+            ctx.restore();
+          },
+        },
+        {
+          id: 'crosshair',
+          beforeDraw: function(chart) {
+            if (chart.tooltip._active && chart.tooltip._active.length) {
+              const ctx = chart.ctx;
+              const tooltip = chart.tooltip._active[0];
+              const x = tooltip.element.x;
+              const y = tooltip.element.y;
+
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(x, chart.chartArea.top);
+              ctx.lineTo(x, chart.chartArea.bottom);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+              ctx.stroke();
+              ctx.restore();
             }
           }
         }
-      }
-    },
-    tooltip: {
-      shared: true,
-      useHTML: true,
-      borderColor: 'rgba(247,247,247,0.85)',
-      formatter: function() {
-        const metric = new Metric(options, Math.round(this.points[0].x * 100) / 100);
-        const tooltips = this.points.filter(p => !p.series.name.includes('CDF')).map((point, points) => {
-          const cdf = this.points.find(p => p.series.name == `${point.series.name} CDF`);
-          return `<td>
-            <p style="text-transform: uppercase; font-size: 10px;">
-              ${point.series.name}
-            </p>
-            <p style="color: ${point.color.replace('0.4', '1')}; font-size: 20px;">
-              ${(point.y).toFixed(2)}%
-            </p>
-            ${cdf ?
-            `<p style="text-transform: uppercase; font-size: 8px; color: #777;">
-              Cumulative
-            </p>
-            <p style="color: ${point.color.replace('0.4', '1')}; font-size: 14px;">
-              ${(cdf.y).toFixed(2)}%
-            </p>` : ''}
-          </td>`;
-        });
-        return `<p style="text-align: center;">
-          ${metric.toString()}
-        </p>
-        <table cellpadding="5" style="text-align: center;">
-          <tr>
-            ${tooltips.join('')}
-          </tr>
-        </table>`;
-      }
-    },
-    xAxis: {
-      title: {
-        text: options.type
-      },
-      events: {
-        setExtremes: e => redrawHistogramTable([e.min || -Infinity, e.max || Infinity])
-      }
-    },
-    yAxis: [{
-      title: {
-        text: 'Density'
-      },
-      labels: {
-        format: '{value}%'
-      },
-      tickAmount: 6,
-    }, {
-      title: {
-        text: 'Cumulative Density'
-      },
-      labels: {
-        format: '{value}%'
-      },
-      max: 100,
-      tickAmount: 6,
-      opposite: true
-    }],
-    series,
-    credits: {
-      text: 'highcharts.com',
-      href: 'http://highcharts.com'
-    },
-    exporting: chartExportOptions
+      ],
+      data: chartData,
+    }
+  );
+
+  // Export as Png
+  document.getElementById(`${options.chartId}-download-png`).addEventListener('click', function() {
+    const link = document.createElement('a');
+    link.href = chart.toBase64Image();
+    const filename = options.name.replace(' ','') + 'Histogram.png';
+    link.download = filename;
+    link.click();
   });
-  chart.drawBenchmark = (name, value, color) => {
-    chart.xAxis[0].update({
-      plotLines: [{
-        value,
-        color,
-        dashStyle: 'dash',
-        width: 2,
-        label: {
-          text: name
-        }
-      }]
-    });
-  };
-  window.charts = window.charts || {};
-  window.charts[options.metric] = chart;
+
+  // Show Query
+  document.getElementById(`${options.chartId}-show-query`).addEventListener('click', function() {
+    const {metric} = options;
+    const url = `https://github.com/HTTPArchive/bigquery/blob/master/sql/timeseries/${metric}.sql`;
+    window.open(url, '_blank');
+  });
 }
 
 // Export directly to global scope for use by Jinja template.

@@ -289,8 +289,6 @@ const getFlagSeries = () => loadChangelog().then(data => {
 });
 
 async function drawChart(options, series) {
-  console.log('Options:', options);
-  console.log('Series:', series);
 
   const axis = options.xaxis;
   const chartData = []
@@ -347,6 +345,7 @@ async function drawChart(options, series) {
             mode: 'nearest',
             axis: 'x',
             intersect: false,
+            titleAlign: 'center',
             callbacks: {
               title: function (context) {
                 return context[0]?.raw[0] ? formatDateLong(context[0]?.raw[0]) : formatDateLong(context[0]?.raw[0]);
@@ -362,7 +361,7 @@ async function drawChart(options, series) {
               afterBody: function (context) {
                 const date = context[0].raw[0];
                 const matchingFlag = options.flags.data.find((flag) => {
-                  // So compare if a 28 days
+                  // So compare if with 28 days
                   return Math.abs(date - flag.x) < 1296000000;
                 });
 
