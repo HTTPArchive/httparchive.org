@@ -5,6 +5,7 @@ import { Metric } from './metric';
 import { el, formatDateShort, formatDateLong, formatNumber, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
 import Chart from 'chart.js/auto'
 import zoomPlugin from 'chartjs-plugin-zoom';
+import 'chartjs-adapter-date-fns';
 
 // Register all Chart.js components and the Zoom plugin
 Chart.register(zoomPlugin);
@@ -276,6 +277,7 @@ const getFlagSeries = () => loadChangelog().then(data => {
     data: data.map((change, i) => ({
       x: change.date,
       label: String.fromCharCode(65 + (i % 26)),
+      date: formatDateShort(change.date),
       title: change.title,
       desc: change.desc,
     })),
@@ -347,7 +349,7 @@ async function drawChart(options, series) {
             intersect: false,
             callbacks: {
               title: function (context) {
-                return formatDateLong(parseInt(context[0].label));
+                return context[0]?.raw[0] ? formatDateLong(context[0]?.raw[0]) : formatDateLong(context[0]?.raw[0]);
               },
               label: function(context) {
                 // Exclude range datasets from tooltip
@@ -356,10 +358,12 @@ async function drawChart(options, series) {
                 }
                 return ` ${context.dataset.label}: ${context.formattedValue}`;
               },
+              // Display a changelog if there is one
               afterBody: function (context) {
-                const date = parseInt(context[0].label);
+                const date = context[0].raw[0];
                 const matchingFlag = options.flags.data.find((flag) => {
-                  return date === flag.x
+                  // So compare if a 28 days
+                  return Math.abs(date - flag.x) < 1296000000;
                 });
 
                 const extraMessage = matchingFlag ? matchingFlag.label + ': ' + matchingFlag.title : '';
@@ -389,6 +393,10 @@ async function drawChart(options, series) {
         },
         scales: {
           x: {
+            type: 'time',
+            time: {
+              unit: 'day',
+            },
             grid: {
               drawOnChartArea: false,
               drawTicks: true,
@@ -400,7 +408,7 @@ async function drawChart(options, series) {
               minRotation: 0,
               length: 10,
               callback: function (value, index, ticks) {
-                return formatDateShort(this.getLabelForValue(value));
+                return formatDateShort(value);
               }
             },
             padding: {
@@ -447,59 +455,33 @@ async function drawChart(options, series) {
           id: 'extraLabelsPlugin',
           afterDraw(chart) {
               const { ctx, chartArea: { left, right, bottom }, scales: { x } } = chart;
-              // Store stacked labels for each visible tick
-              const stackedLabels = {};
 
               ctx.save();
               ctx.font = '12px Arial';
               ctx.textAlign = 'center';
               ctx.fillStyle = 'black';
 
+              let lastPixel = 0;
+
               for (const flagLabel of Object.entries(options.flags.data)) {
                 const timestamp = flagLabel[1].x;
                 const label = flagLabel[1].label;
-                const title = flagLabel[1].title;
-                const desc = flagLabel[1].desc;
-                const date = flagLabel[1].x;
-                let nearestTickIndex = null;
-                let nearestDistance = Infinity;
 
-                if (timestamp < chart.data.labels[x.ticks[0].value] || timestamp > chart.data.labels[x.ticks.at(-1).value]) {
-                  continue;
+                // Skip labels outside the chart's visible range
+                if (timestamp < x.min || timestamp > x.max) continue;
+
+                // Interpolate x position for the timestamp
+                let xPosition = x.getPixelForValue(timestamp);
+                if (xPosition < lastPixel + 10) {
+                  xPosition = lastPixel + 10;
                 }
+                lastPixel = xPosition;
 
-                // Find the nearest visible tick
-                x.ticks.forEach((tick, index) => {
-                    const tickDate = chart.data.labels[tick.value];
-                    const distance = Math.abs(timestamp - tickDate);
-                    if (distance < nearestDistance) {
-                        nearestDistance = distance;
-                        nearestTickIndex = index;
-                    }
-                });
+                const yPosition = bottom + 40; // Fixed position below the chart
 
-                if (nearestTickIndex !== null) {
-                  const tickValue = x.ticks[nearestTickIndex].value;
-                  if (!stackedLabels[tickValue]) {
-                      stackedLabels[tickValue] = [];
-                  }
-                  stackedLabels[tickValue].push({label,title,desc, date});
-                }
+                // Draw the label
+                ctx.fillText(label, xPosition, yPosition);
 
-                // Draw stacked labels for each tick
-                x.ticks.forEach((tick, index) => {
-                  const tickValue = tick.value;
-                  const labels = stackedLabels[tickValue];
-
-                  if (labels) {
-                    const xPosition = x.getPixelForTick(index);
-                    labels.forEach((label, labelIndex) => {
-                      const xPositionAdjusted = xPosition + labelIndex * 15;
-                      const yPosition = bottom + 40;
-                      ctx.fillText(label.label, xPositionAdjusted, yPosition);
-                    });
-                  }
-                });
               }
 
               ctx.restore();
