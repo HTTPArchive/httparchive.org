@@ -3,7 +3,11 @@ import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
 import { el, prettyDate, chartExportOptions, drawMetricSummary, callOnceWhenVisible } from './utils';
+import Chart from 'chart.js/auto'
+import zoomPlugin from 'chartjs-plugin-zoom';
 
+// Register all Chart.js components and the Zoom plugin
+Chart.register(zoomPlugin);
 
 function timeseries(metric, options, start, end) {
   const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
@@ -23,6 +27,7 @@ function timeseries(metric, options, start, end) {
 
       // Ensure null values are filtered out.
       data = data.filter(o => getUnformattedPrimaryMetric(o, options) !== null);
+      console.log(`BARRY:${metric}:`, data);
 
       drawTimeseries(data, options);
       drawTimeseriesTable(data, options, [options.min, options.max]);
@@ -106,6 +111,9 @@ function getUnformattedPrimaryMetric(o, options) {
 }
 
 function drawTimeseries(data, options) {
+
+   window.barry = data;
+
   data = data.map(toNumeric);
   const desktop = data.filter(isDesktop);
   const mobile = data.filter(isMobile);
@@ -278,7 +286,9 @@ const getFlagSeries = () => loadChangelog().then(data => {
   };
 });
 
-function drawChart(options, series) {
+async function drawChart(options, series) {
+
+  /*
   const chart = Highcharts.stockChart(options.chartId, {
     metric: options.metric,
     type: 'timeseries',
@@ -428,6 +438,352 @@ function drawChart(options, series) {
   chart.zooming.mousewheel.enabled = false;
   window.charts = window.charts || {};
   window.charts[options.metric] = chart;
+  */
+
+  const data = [
+    { year: 2010, count: 10 },
+    { year: 2011, count: 20 },
+    { year: 2012, count: 15 },
+    { year: 2013, count: 25 },
+    { year: 2014, count: 22 },
+    { year: 2015, count: 30 },
+    { year: 2016, count: 28 },
+  ];
+
+  console.log('Options:', options);
+  console.log('Series:', series);
+
+  // Create the DateTimeFormat instance once
+  const dateFormatterShort = new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    year: '2-digit',
+  });
+
+  // Function to format dates
+  function formatDateShort(timestamp) {
+    return dateFormatterShort.format(new Date(timestamp));
+  }
+
+  // Create the DateTimeFormat instance once
+  const dateFormatterLong = new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
+  // Function to format dates
+  function formatDateLong(timestamp) {
+    return dateFormatterLong.format(new Date(timestamp));
+  }
+
+  const numberFormatter = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    compactDisplay: 'short', // Use 'long' for "Million", 'short' for "M"
+  });
+
+  // Function to format dates
+  function formatNumber(number) {
+    return numberFormatter.format(number);
+  }
+
+  const chart = new Chart(
+    document.getElementById(options.chartId),
+    {
+      type: 'line',
+      options: {
+        responsive: true,
+        layout: {
+          padding: {
+            bottom: 20,
+          },
+        },
+        legend: {
+          labels: {
+            padding: {
+                top: 20, // Creates a gap between the chart and the legend above it
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+          title: {
+            display: true,
+            text: options.lens ? `${options.lens.name}: ` : '' + `Timeseries of ${options.name}`,
+            font: {
+              family: 'Helvetica, Arial, sans-serif',
+              size: 16,
+              weight: 'normal',
+            },
+            padding: {
+                top: 20, // Creates a gap between the chart and the legend above it
+            },
+          },
+          subtitle: {
+            display: true,
+            text: 'Source: httparchive.org',
+            font: {
+              family: 'Helvetica, Arial, sans-serif',
+              size: 13,
+              weight: 'normal',
+            },
+            padding: {
+                bottom: 20, // Creates a gap between the chart and the legend above it
+            },
+          },
+          tooltip: {
+            // mode: 'index',
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false,
+            callbacks: {
+              title: function (context) {
+                return formatDateLong(parseInt(context[0].label)) + '-' + context[0].label;
+              },
+              afterBody: function (context) {
+                const date = parseInt(context[0].label);
+                const matchingFlag = series.at(-1).data.find((flag) => {
+                  return date === flag.x
+                });
+
+                const extraMessage = matchingFlag ? matchingFlag.title + ': ' + flags[matchingFlag.x]?.title : '';
+                return `${extraMessage}`;
+              },
+            }
+          },
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x',
+              // modifierKey: 'shift',
+            },
+            zoom: {
+              drag: {
+                enabled: true, // Enable zooming with drag
+                modifierKey: 'shift',
+              },
+              wheel: {
+                enabled: false, // Enable zooming with the mouse wheel
+              },
+              pinch: {
+                enabled: false, // Enable zooming with touch gestures
+              },
+              mode: 'x', // Zoom in the X-axis only
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              drawOnChartArea: false,
+              drawTicks: true,
+            },
+            min: series[0].data.length - 88,
+            max: series[0].data.length - 1,
+            ticks: {
+              // autoSkip: false,
+              maxRotation: 0, // Prevent rotation
+              minRotation: 0, // Prevent rotation
+              length: 10, // Length of the tick lines (in pixels,
+              callback: function (value, index, ticks) {
+                return formatDateShort(this.getLabelForValue(value));
+              }
+            },
+            padding: {
+              bottom: 80,
+            },
+          },
+          y: {
+            grid: {
+              drawBorder: false,
+            },
+            ticks: {
+              callback: function (value) {
+                return formatNumber(value);
+              },
+            },
+          }
+        },
+        transitions: {
+          zoom: {
+            animation: {
+              duration: 0
+            },
+          },
+        },
+      },
+      plugins: [
+        {
+          id: 'canvasBackgroundColor',
+          beforeDraw: (chart) => {
+            const { ctx, width, height } = chart;
+            ctx.save();
+            ctx.fillStyle = 'white'; // Set the entire canvas background color to white
+            ctx.fillRect(0, 0, width, height);
+            ctx.restore();
+          },
+        },
+        {
+          id: 'extraLabelsPlugin',
+          afterDraw(chart) {
+              const { ctx, chartArea: { left, right, bottom }, scales: { x } } = chart;
+              // Store stacked labels for each visible tick
+              const stackedLabels = {};
+
+              ctx.save();
+              ctx.font = '12px Arial';
+              ctx.textAlign = 'center';
+              ctx.fillStyle = 'black';
+
+              for (const flagLabel of Object.entries(series.at(-1).data)) {
+                const timestamp = flagLabel[1].x;
+                const label = flagLabel[1].title;
+                let nearestTickIndex = null;
+                let nearestDistance = Infinity;
+
+                if (timestamp < chart.data.labels[x.ticks[0].value] || timestamp > chart.data.labels[x.ticks.at(-1).value]) {
+                  continue;
+                }
+
+                // Find the nearest visible tick
+                x.ticks.forEach((tick, index) => {
+                    const tickDate = chart.data.labels[tick.value];
+                    const distance = Math.abs(timestamp - tickDate);
+                    if (distance < nearestDistance) {
+                        nearestDistance = distance;
+                        nearestTickIndex = index;
+                    }
+                });
+
+                if (nearestTickIndex !== null) {
+                  const tickValue = x.ticks[nearestTickIndex].value;
+                  if (!stackedLabels[tickValue]) {
+                      stackedLabels[tickValue] = [];
+                  }
+                  stackedLabels[tickValue].push(label);
+                }
+
+                // Draw stacked labels for each tick
+                x.ticks.forEach((tick, index) => {
+                  const tickValue = tick.value;
+                  const labels = stackedLabels[tickValue];
+
+                  if (labels) {
+                    const xPosition = x.getPixelForTick(index);
+                    labels.forEach((label, labelIndex) => {
+                      const xPositionAdjusted = xPosition + labelIndex * 15;
+                      const yPosition = bottom + 40;
+                      ctx.fillText(label, xPositionAdjusted, yPosition);
+                    });
+                  }
+                });
+              }
+
+              ctx.restore();
+          }
+        }
+      ],
+      data: {
+        labels: [...new Set([...series[0].data.map(row => row[0]), series.length === 5 ? series[2].data.map(row => row[0]) : series[1].data.map(row => row[0])])],
+        datasets: [
+          {
+            label: 'Desktop',
+            data: series[0].data,
+            backgroundColor:Colors.DESKTOP,
+            borderColor: Colors.DESKTOP,
+            pointStyle: false
+          },
+          {
+            label: 'Mobile',
+            data: series.length === 5 ? series[2].data : series[1].data,
+            backgroundColor: Colors.MOBILE,
+            borderColor: Colors.MOBILE,
+            pointStyle: false
+          }
+        ]
+      }
+    }
+  );
+
+
+
+  const setZoom = (range) => {
+    const xScale = chart.scales.x;
+    const now = new Date();
+
+    const dataLabels = chart.data.labels;
+    let start, end = Math.max(...dataLabels);
+    let endDate = new Date(end);
+
+    switch (range) {
+        case 'ytd':
+            start = new Date(endDate.getFullYear(), 0, 1).getTime();
+            console.log(start);
+            break;
+        case '1y':
+            start = new Date(endDate.getFullYear() - 1, endDate.getMonth(), 1).getTime();
+            console.log(start);
+            break;
+        case '3y':
+            start = new Date(endDate.getFullYear() - 3, endDate.getMonth(), 1).getTime();
+            console.log(start);
+            break;
+        case '5y':
+            start = new Date(endDate.getFullYear() - 5, endDate.getMonth(), 1).getTime();
+            console.log(start);
+            break;
+        case '10y':
+            start = new Date(endDate.getFullYear() - 10, endDate.getMonth(), 1).getTime();
+            console.log(start);
+            break;
+        case 'all':
+            start = Math.min(...dataLabels);
+            break;
+    }
+    // Programmatically zoom to the specified range
+    chart.zoomScale('x', { min: start, max: end });
+  };
+
+  // Zoom button functionality
+  document.getElementById(`${options.chartId}-ytd-zoom`).addEventListener('click', () => {
+    setZoom("ytd");
+  });
+
+  document.getElementById(`${options.chartId}-1y-zoom`).addEventListener('click', () => {
+    setZoom("1y");
+  });
+
+  document.getElementById(`${options.chartId}-3y-zoom`).addEventListener('click', () => {
+    setZoom("3y");
+  });
+
+  document.getElementById(`${options.chartId}-5y-zoom`).addEventListener('click', () => {
+    setZoom("5y");
+  });
+
+  document.getElementById(`${options.chartId}-5y-zoom`).addEventListener('click', () => {
+    setZoom("10y");
+  });
+
+  document.getElementById(`${options.chartId}-all-zoom`).addEventListener('click', () => {
+    setZoom("all");
+  });
+
+
+    // Custom scroll bar logic
+  const scrollBar = document.getElementById(`${options.chartId}-scrollBar`);
+
+  // Adjust scroll bar range dynamically
+  scrollBar.max = series[1].data.length - 96;
+  scrollBar.value = series[1].data.length - 96; // Number of labels - initially visible range (20)
+
+  scrollBar.addEventListener('input', (e) => {
+      const start = parseInt(e.target.value);
+      chart.options.scales.x.min = start;
+      chart.options.scales.x.max = start + 96; // Maintain a fixed visible range
+      chart.update();
+  });
 }
 
 const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];
