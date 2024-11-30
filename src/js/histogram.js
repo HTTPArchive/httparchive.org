@@ -243,7 +243,6 @@ function drawHistogram(data, containerId, options) {
           }
         }
       },
-      legend: false,
       label: 'Mobile Cumulative',
       backgroundColor: COLOR_MOBILE_ALT,
       borderColor: COLOR_MOBILE_ALT,
@@ -316,16 +315,6 @@ function drawChart(series, containerId, options) {
           },
         },
         plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-              filter: function (legendItem, data) {
-                const showInLegend = data.datasets[legendItem.datasetIndex]?.showInLegend ?? true;
-                return showInLegend;
-              },
-            },
-          },
           title: {
             display: true,
             text: options.lens ? `${options.lens.name}: ` : '' + `Histogram of ${options.name}`,
@@ -369,6 +358,16 @@ function drawChart(series, containerId, options) {
                 return ` ${context.dataset.label}: ${context.raw[1].toFixed(0)}%`;
               },
             }
+          },
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              filter: function (legendItem, data) {
+                const showInLegend = data.datasets[legendItem.datasetIndex]?.showInLegend ?? true;
+                return showInLegend;
+              },
+            },
           },
           zoom: {
             pan: {

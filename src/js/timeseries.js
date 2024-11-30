@@ -306,17 +306,7 @@ async function drawChart(options, series) {
             bottom: 20,
           },
         },
-        legend: {
-          labels: {
-            padding: {
-                top: 20,
-            },
-          },
-        },
         plugins: {
-          legend: {
-            display: false,
-          },
           title: {
             display: true,
             text: options.lens ? `${options.lens.name}: ` : '' + `Timeseries of ${options.name}`,
@@ -369,6 +359,17 @@ async function drawChart(options, series) {
                 return `${extraMessage}`;
               },
             }
+          },
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              padding: 30,
+              filter: function (legendItem, data) {
+                const showInLegend = data.datasets[legendItem.datasetIndex]?.showInLegend ?? true;
+                return showInLegend;
+              },
+            },
           },
           zoom: {
             pan: {
