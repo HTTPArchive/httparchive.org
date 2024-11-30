@@ -240,7 +240,8 @@ const getLineSeries = (name, data, color) => ({
 });
 const getAreaSeries = (name, data, color, opacity=0.1) => ({
   name,
-  type: 'areasplinerange',
+  type: 'line',
+  subtype: 'areasplinerange',
   linkedTo: ':previous',
   data,
   lineWidth: 0,
@@ -488,6 +489,91 @@ async function drawChart(options, series) {
     return numberFormatter.format(number);
   }
 
+  const chartData = {};
+
+  const axis = series.find((data) => data.name === 'xaxis');
+  if (axis) chartData.labels = axis.data;
+
+  chartData.datasets = [];
+  const desktopLineData = series.find((data) => data.name === 'Desktop' && data.type === 'line');
+  if (desktopLineData) {
+    const data = {
+      label: 'Desktop',
+      data:  desktopLineData.data,
+      backgroundColor:Colors.DESKTOP,
+      borderColor: Colors.DESKTOP,
+      pointStyle: false
+    }
+
+    chartData.datasets.push(data);
+  }
+  const mobileLineData = series.find((data) => data.name === 'Mobile' && data.type === 'line');
+  if (mobileLineData) {
+    const data = {
+      label: 'Mobile',
+      data:  mobileLineData.data,
+      backgroundColor:Colors.MOBILE,
+      borderColor: Colors.MOBILE,
+      pointStyle: false
+    }
+
+    chartData.datasets.push(data);
+  }
+  const desktopRangeData = series.find((data) => data.name === 'Desktop' && data.subtype === 'areasplinerange');
+  if (desktopRangeData) {
+    const lowerRange = {
+      label: 'DesktopLower',
+      data:  desktopRangeData.data,
+      backgroundColor: '#fff',
+      borderColor: 'rgba(4, 199, 253, 0.1)', //opacity
+      pointStyle: false,
+      fill: true,
+      tooltip: {
+        enabled: false
+      }
+    }
+    chartData.datasets.push(lowerRange);
+    const upperRange = {
+      label: 'DesktopUpper',
+      data:  desktopRangeData.data.map((datapoint) => [datapoint[0], datapoint[2]]),
+      backgroundColor: 'rgba(4, 199, 253, 0.1)',
+      borderColor: 'rgba(4, 199, 253, 0.1)',
+      pointStyle: false,
+      fill: '-1',
+      tooltip: {
+        enabled: false,
+      }
+    }
+    chartData.datasets.push(upperRange);
+  }
+  const mobileRangeData = series.find((data) => data.name === 'Mobile' && data.subtype === 'areasplinerange');
+  if (mobileRangeData) {
+    const lowerRange = {
+      label: 'MobileLower',
+      data:  mobileRangeData.data,
+      backgroundColor: '#fff',
+      borderColor: 'rgba(166, 42, 164, 0.1)',
+      pointStyle: false,
+      fill: true,
+      tooltip: {
+        enabled: false
+      }
+    }
+    chartData.datasets.push(lowerRange);
+    const upperRange = {
+      label: 'MobileUpper',
+      data:  mobileRangeData.data.map((datapoint) => [datapoint[0], datapoint[2]]),
+      backgroundColor: 'rgba(166, 42, 164, 0.1)',
+      borderColor: 'rgba(166, 42, 164, 0.1)',
+      pointStyle: false,
+      fill: '-1',
+      tooltip: {
+        enabled: false,
+      }
+    }
+    chartData.datasets.push(upperRange);
+  }
+
   const chart = new Chart(
     document.getElementById(options.chartId),
     {
@@ -519,7 +605,7 @@ async function drawChart(options, series) {
               weight: 'normal',
             },
             padding: {
-                top: 20, // Creates a gap between the chart and the legend above it
+                top: 20,
             },
           },
           subtitle: {
@@ -531,17 +617,23 @@ async function drawChart(options, series) {
               weight: 'normal',
             },
             padding: {
-                bottom: 20, // Creates a gap between the chart and the legend above it
+                bottom: 20,
             },
           },
           tooltip: {
-            // mode: 'index',
             mode: 'nearest',
             axis: 'x',
             intersect: false,
             callbacks: {
               title: function (context) {
                 return formatDateLong(parseInt(context[0].label));
+              },
+              label: function(context) {
+                // Exclude range datasets from tooltip
+                if (context.dataset?.tooltip?.enabled == false) {
+                  return null;
+                }
+                return ` ${context.dataset.label}: ${context.formattedValue}`;
               },
               afterBody: function (context) {
                 const date = parseInt(context[0].label);
@@ -686,25 +778,7 @@ async function drawChart(options, series) {
           }
         }
       ],
-      data: {
-        labels: series.find((data) => data.name === 'xaxis').data,
-        datasets: [
-          {
-            label: 'Desktop',
-            data:  series.find((data) => data.name === 'Desktop' && data.type === 'line').data,
-            backgroundColor:Colors.DESKTOP,
-            borderColor: Colors.DESKTOP,
-            pointStyle: false
-          },
-          {
-            label: 'Mobile',
-            data:  series.find((data) => data.name === 'Mobile' && data.type === 'line').data,
-            backgroundColor: Colors.MOBILE,
-            borderColor: Colors.MOBILE,
-            pointStyle: false
-          }
-        ]
-      }
+      data: chartData,
     }
   );
 
