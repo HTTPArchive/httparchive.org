@@ -7,14 +7,43 @@ const prettyDateFormatter = new Intl.DateTimeFormat(undefined, {
   timeZone: 'UTC'
 });
 
+export const getFullDate = d => {
+  return prettyDateFormatter.format(d);
+}
+
 export const prettyDate = YYYY_MM_DD => {
   const [YYYY, MM, DD] = YYYY_MM_DD.split('_');
   const d = new Date(Date.UTC(YYYY, MM - 1, DD));
   return getFullDate(d);
 };
 
-export const getFullDate = d => {
-  return prettyDateFormatter.format(d);
+const dateFormatterShort = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  year: '2-digit',
+});
+
+export function formatDateShort(timestamp) {
+  return dateFormatterShort.format(new Date(timestamp));
+}
+
+// Use UK to get `d mon yyyy` format
+const dateFormatterLong = new Intl.DateTimeFormat('UTC', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+
+export function formatDateLong(timestamp) {
+  return dateFormatterLong.format(new Date(timestamp));
+}
+
+const numberFormatter = new Intl.NumberFormat('en-US', {
+  notation: 'compact',
+  compactDisplay: 'short',
+});
+
+export function formatNumber(number) {
+  return numberFormatter.format(number);
 }
 
 export const chartExportOptions = {

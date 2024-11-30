@@ -2,7 +2,7 @@ import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { el, formatDateShort, formatDateLong, formatNumber, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
 import Chart from 'chart.js/auto'
 import zoomPlugin from 'chartjs-plugin-zoom';
 
@@ -288,39 +288,6 @@ async function drawChart(options, series) {
   console.log('Options:', options);
   console.log('Series:', series);
 
-  // Create the DateTimeFormat instance once
-  const dateFormatterShort = new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    year: '2-digit',
-  });
-
-  // Function to format dates
-  function formatDateShort(timestamp) {
-    return dateFormatterShort.format(new Date(timestamp));
-  }
-
-  // Create the DateTimeFormat instance once
-  const dateFormatterLong = new Intl.DateTimeFormat('en-US', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
-
-  // Function to format dates
-  function formatDateLong(timestamp) {
-    return dateFormatterLong.format(new Date(timestamp));
-  }
-
-  const numberFormatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    compactDisplay: 'short', // Use 'long' for "Million", 'short' for "M"
-  });
-
-  // Function to format dates
-  function formatNumber(number) {
-    return numberFormatter.format(number);
-  }
-
   const axis = options.xaxis;
   const chartData = []
   chartData.labels = axis.data;
@@ -546,8 +513,6 @@ async function drawChart(options, series) {
               ctx.beginPath();
               ctx.moveTo(x, chart.chartArea.top);
               ctx.lineTo(x, chart.chartArea.bottom);
-              ctx.moveTo(chart.chartArea.left, y);
-              ctx.lineTo(chart.chartArea.right, y);
               ctx.lineWidth = 1;
               ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
               ctx.stroke();
@@ -631,20 +596,6 @@ async function drawChart(options, series) {
     const {metric} = options;
     const url = `https://github.com/HTTPArchive/bigquery/blob/master/sql/timeseries/${metric}.sql`;
     window.open(url, '_blank');
-  });
-
-    // Custom scroll bar logic
-  const scrollBar = document.getElementById(`${options.chartId}-scrollBar`);
-
-  // Adjust scroll bar range dynamically
-  scrollBar.max = series[1].data.length - 96;
-  scrollBar.value = series[1].data.length - 96; // Number of labels - initially visible range (20)
-
-  scrollBar.addEventListener('input', (e) => {
-      const start = parseInt(e.target.value);
-      chart.options.scales.x.min = start;
-      chart.options.scales.x.max = start + 96; // Maintain a fixed visible range
-      chart.update();
   });
 }
 
