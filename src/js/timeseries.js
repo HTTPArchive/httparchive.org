@@ -275,7 +275,9 @@ const getFlagSeries = () => loadChangelog().then(data => {
     label: 'Changelog',
     data: data.map((change, i) => ({
       x: change.date,
-      title: String.fromCharCode(65 + (i % 26))
+      label: String.fromCharCode(65 + (i % 26)),
+      title: change.title,
+      desc: change.desc,
     })),
     clip: false,
     color: '#90b1b6',
@@ -360,7 +362,7 @@ async function drawChart(options, series) {
                   return date === flag.x
                 });
 
-                const extraMessage = matchingFlag ? matchingFlag.title + ': ' + flags[matchingFlag.x]?.title : '';
+                const extraMessage = matchingFlag ? matchingFlag.label + ': ' + matchingFlag.title : '';
                 return `${extraMessage}`;
               },
             }
@@ -455,7 +457,10 @@ async function drawChart(options, series) {
 
               for (const flagLabel of Object.entries(options.flags.data)) {
                 const timestamp = flagLabel[1].x;
-                const label = flagLabel[1].title;
+                const label = flagLabel[1].label;
+                const title = flagLabel[1].title;
+                const desc = flagLabel[1].desc;
+                const date = flagLabel[1].x;
                 let nearestTickIndex = null;
                 let nearestDistance = Infinity;
 
@@ -478,7 +483,7 @@ async function drawChart(options, series) {
                   if (!stackedLabels[tickValue]) {
                       stackedLabels[tickValue] = [];
                   }
-                  stackedLabels[tickValue].push(label);
+                  stackedLabels[tickValue].push({label,title,desc, date});
                 }
 
                 // Draw stacked labels for each tick
@@ -491,14 +496,14 @@ async function drawChart(options, series) {
                     labels.forEach((label, labelIndex) => {
                       const xPositionAdjusted = xPosition + labelIndex * 15;
                       const yPosition = bottom + 40;
-                      ctx.fillText(label, xPositionAdjusted, yPosition);
+                      ctx.fillText(label.label, xPositionAdjusted, yPosition);
                     });
                   }
                 });
               }
 
               ctx.restore();
-          }
+          },
         },
         {
           id: 'crosshair',
