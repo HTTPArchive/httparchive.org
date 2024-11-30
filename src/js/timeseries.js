@@ -2,7 +2,7 @@ import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { el, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
 import Chart from 'chart.js/auto'
 import zoomPlugin from 'chartjs-plugin-zoom';
 
@@ -118,8 +118,8 @@ function drawTimeseries(data, options) {
   if (desktop.length || mobile.length) {
     // Set the axis axis to the combination of both desktop and mobile
     const dates = [...new Set(data.map(item => item.timestamp))];
-    const xaxis = {name: 'xaxis', data: dates};
-    series.push(xaxis);
+    const xaxis = {label: 'xaxis', data: dates};
+    options.xaxis = xaxis;
   }
   if (desktop.length) {
     if (options.timeseries && options.timeseries.fields) {
@@ -128,7 +128,8 @@ function drawTimeseries(data, options) {
       });
     } else {
       series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
-      series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
+      series.push(getAreaSeries('DesktopLower', desktop.map(toLower), 'rgba(255,255,255,0.1)', true));
+      series.push(getAreaSeries('DesktopUpper', desktop.map(toUpper), Colors.DESKTOP_DIM, '-1'));
     }
   }
   if (mobile.length) {
@@ -138,7 +139,8 @@ function drawTimeseries(data, options) {
       });
     } else {
       series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
-      series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
+      series.push(getAreaSeries('MobileLower', mobile.map(toLower), 'rgba(255,255,255,0.1)', true));
+      series.push(getAreaSeries('MobileUpper', mobile.map(toUpper), Colors.MOBILE_DIM, '-1'));
     }
   }
 
@@ -148,7 +150,7 @@ function drawTimeseries(data, options) {
   }
 
   getFlagSeries()
-    .then(flagSeries => series.push(flagSeries))
+    .then(flagSeries => options.flags = flagSeries)
     // If the getFlagSeries request fails (503), catch so we can still draw the chart
     .catch(console.error)
     .then(_ => {
@@ -226,35 +228,28 @@ const toNumeric = ({client, date, ...other}) => {
     return o;
   }, {client});
 };
-const toIQR = o => [o.timestamp, o.p25, o.p75];
+const toUpper = o => [o.timestamp, o.p75];
+const toLower = o => [o.timestamp, o.p25];
 const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
-  name,
+  label: name,
   type: 'line',
   data,
-  color,
-  zIndex: 1,
-  marker: {
-    enabled: false
-  }
+  backgroundColor: color,
+  borderColor: color,
+  pointStyle: false
 });
-const getAreaSeries = (name, data, color, opacity=0.1) => ({
-  name,
+const getAreaSeries = (name, data, color, fill=false) => ({
+  label: name,
   type: 'line',
   subtype: 'areasplinerange',
-  linkedTo: ':previous',
   data,
-  lineWidth: 0,
-  color,
-  fillOpacity: opacity,
-  zIndex: 0,
-  marker: {
-    enabled: false,
-    states: {
-      hover: {
-        enabled: false
-      }
-    }
+  backgroundColor: color,
+  borderColor: 'transparent',
+  pointStyle: false,
+  fill: fill,
+  tooltip: {
+    enabled: false
   }
 });
 const flags = {};
@@ -277,7 +272,7 @@ const getFlagSeries = () => loadChangelog().then(data => {
   data = data.filter(o => o.displayInTimeSeries !== false);
   return {
     type: 'flags',
-    name: 'Changelog',
+    label: 'Changelog',
     data: data.map((change, i) => ({
       x: change.date,
       title: String.fromCharCode(65 + (i % 26))
@@ -489,90 +484,10 @@ async function drawChart(options, series) {
     return numberFormatter.format(number);
   }
 
-  const chartData = {};
-
-  const axis = series.find((data) => data.name === 'xaxis');
-  if (axis) chartData.labels = axis.data;
-
-  chartData.datasets = [];
-  const desktopLineData = series.find((data) => data.name === 'Desktop' && data.type === 'line');
-  if (desktopLineData) {
-    const data = {
-      label: 'Desktop',
-      data:  desktopLineData.data,
-      backgroundColor:Colors.DESKTOP,
-      borderColor: Colors.DESKTOP,
-      pointStyle: false
-    }
-
-    chartData.datasets.push(data);
-  }
-  const mobileLineData = series.find((data) => data.name === 'Mobile' && data.type === 'line');
-  if (mobileLineData) {
-    const data = {
-      label: 'Mobile',
-      data:  mobileLineData.data,
-      backgroundColor:Colors.MOBILE,
-      borderColor: Colors.MOBILE,
-      pointStyle: false
-    }
-
-    chartData.datasets.push(data);
-  }
-  const desktopRangeData = series.find((data) => data.name === 'Desktop' && data.subtype === 'areasplinerange');
-  if (desktopRangeData) {
-    const lowerRange = {
-      label: 'DesktopLower',
-      data:  desktopRangeData.data,
-      backgroundColor: '#fff',
-      borderColor: 'rgba(4, 199, 253, 0.1)', //opacity
-      pointStyle: false,
-      fill: true,
-      tooltip: {
-        enabled: false
-      }
-    }
-    chartData.datasets.push(lowerRange);
-    const upperRange = {
-      label: 'DesktopUpper',
-      data:  desktopRangeData.data.map((datapoint) => [datapoint[0], datapoint[2]]),
-      backgroundColor: 'rgba(4, 199, 253, 0.1)',
-      borderColor: 'rgba(4, 199, 253, 0.1)',
-      pointStyle: false,
-      fill: '-1',
-      tooltip: {
-        enabled: false,
-      }
-    }
-    chartData.datasets.push(upperRange);
-  }
-  const mobileRangeData = series.find((data) => data.name === 'Mobile' && data.subtype === 'areasplinerange');
-  if (mobileRangeData) {
-    const lowerRange = {
-      label: 'MobileLower',
-      data:  mobileRangeData.data,
-      backgroundColor: '#fff',
-      borderColor: 'rgba(166, 42, 164, 0.1)',
-      pointStyle: false,
-      fill: true,
-      tooltip: {
-        enabled: false
-      }
-    }
-    chartData.datasets.push(lowerRange);
-    const upperRange = {
-      label: 'MobileUpper',
-      data:  mobileRangeData.data.map((datapoint) => [datapoint[0], datapoint[2]]),
-      backgroundColor: 'rgba(166, 42, 164, 0.1)',
-      borderColor: 'rgba(166, 42, 164, 0.1)',
-      pointStyle: false,
-      fill: '-1',
-      tooltip: {
-        enabled: false,
-      }
-    }
-    chartData.datasets.push(upperRange);
-  }
+  const axis = options.xaxis;
+  const chartData = []
+  chartData.labels = axis.data;
+  chartData.datasets = series;
 
   const chart = new Chart(
     document.getElementById(options.chartId),
@@ -588,7 +503,7 @@ async function drawChart(options, series) {
         legend: {
           labels: {
             padding: {
-                top: 20, // Creates a gap between the chart and the legend above it
+                top: 20,
             },
           },
         },
@@ -637,7 +552,7 @@ async function drawChart(options, series) {
               },
               afterBody: function (context) {
                 const date = parseInt(context[0].label);
-                const matchingFlag = series.at(-1).data.find((flag) => {
+                const matchingFlag = options.flags.data.find((flag) => {
                   return date === flag.x
                 });
 
@@ -650,20 +565,19 @@ async function drawChart(options, series) {
             pan: {
               enabled: true,
               mode: 'x',
-              // modifierKey: 'shift',
             },
             zoom: {
               drag: {
-                enabled: true, // Enable zooming with drag
+                enabled: true,
                 modifierKey: 'shift',
               },
               wheel: {
-                enabled: false, // Enable zooming with the mouse wheel
+                enabled: false,
               },
               pinch: {
-                enabled: false, // Enable zooming with touch gestures
+                enabled: false,
               },
-              mode: 'x', // Zoom in the X-axis only
+              mode: 'x',
             },
           },
         },
@@ -673,13 +587,12 @@ async function drawChart(options, series) {
               drawOnChartArea: false,
               drawTicks: true,
             },
-            min: series.find((data) => data.name === 'Desktop' && data.type === 'line').data.length - 88,
-            max: series.find((data) => data.name === 'Desktop' && data.type === 'line').data.length - 1,
+            min: options.min,
+            max: options.max,
             ticks: {
-              // autoSkip: false,
-              maxRotation: 0, // Prevent rotation
-              minRotation: 0, // Prevent rotation
-              length: 10, // Length of the tick lines (in pixels,
+              maxRotation: 0,
+              minRotation: 0,
+              length: 10,
               callback: function (value, index, ticks) {
                 return formatDateShort(this.getLabelForValue(value));
               }
@@ -730,7 +643,7 @@ async function drawChart(options, series) {
               ctx.textAlign = 'center';
               ctx.fillStyle = 'black';
 
-              for (const flagLabel of Object.entries(series.at(-1).data)) {
+              for (const flagLabel of Object.entries(options.flags.data)) {
                 const timestamp = flagLabel[1].x;
                 const label = flagLabel[1].title;
                 let nearestTickIndex = null;
@@ -781,8 +694,6 @@ async function drawChart(options, series) {
       data: chartData,
     }
   );
-
-
 
   const setZoom = (range) => {
     const xScale = chart.scales.x;
@@ -841,6 +752,21 @@ async function drawChart(options, series) {
     setZoom("all");
   });
 
+  // Export as Png
+  document.getElementById(`${options.chartId}-download-png`).addEventListener('click', function() {
+    const link = document.createElement('a');
+    link.href = chart.toBase64Image();
+    const filename = options.name.replace(' ','') + '.png';
+    link.download = filename;
+    link.click();
+  });
+
+  // Show Query
+  document.getElementById(`${options.chartId}-show-query`).addEventListener('click', function() {
+    const {metric} = options;
+    const url = `https://github.com/HTTPArchive/bigquery/blob/master/sql/timeseries/${metric}.sql`;
+    window.open(url, '_blank');
+  });
 
     // Custom scroll bar logic
   const scrollBar = document.getElementById(`${options.chartId}-scrollBar`);

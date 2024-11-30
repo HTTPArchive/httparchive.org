@@ -190,6 +190,11 @@ th {
   z-index: 1;
 }
 
+.chart-buttons {
+  display: flex;
+  justify-content: space-between
+}
+
 .chart {
   min-width: 310px;
   margin: 0 auto;

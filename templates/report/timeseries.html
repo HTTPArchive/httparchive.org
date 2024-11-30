@@ -6,16 +6,22 @@
     {% if metric[viz]['enabled'] %}
       <section id="{{ metric.id }}" class="report-metric">
         {{ metric_info(metric, viz) }}
-        <!-- <div id="{{ metric.id }}-chart" class="chart"></div> -->
-        <div>
-          Zoom:
-          <button id='{{ metric.id }}-chart-ytd-zoom'>YTD</button>
-          <button id='{{ metric.id }}-chart-1y-zoom'>1y</button>
-          <button id='{{ metric.id }}-chart-3y-zoom'>3y</button>
-          <button id='{{ metric.id }}-chart-5y-zoom'>5y</button>
-          <button id='{{ metric.id }}-chart-10y-zoom'>10y</button>
-          <button id='{{ metric.id }}-chart-all-zoom'>All</button>
-      </div>
+        <div class="chart-buttons">
+          <div id="{{ metric.id }}-zoom-buttons">
+            Zoom:
+            <button id='{{ metric.id }}-chart-ytd-zoom'>YTD</button>
+            <button id='{{ metric.id }}-chart-1y-zoom'>1y</button>
+            <button id='{{ metric.id }}-chart-3y-zoom'>3y</button>
+            <button id='{{ metric.id }}-chart-5y-zoom'>5y</button>
+            <button id='{{ metric.id }}-chart-10y-zoom'>10y</button>
+            <button id='{{ metric.id }}-chart-all-zoom'>All</button>
+          </div>
+          <!-- Custom Menu for exporting -->
+          <div id="{{ metric.id }}-other-buttons">
+            <button id="{{ metric.id }}-chart-download-png">Download Png</button>
+            <button id="{{ metric.id }}-chart-show-query">Show query</button>
+          </div>
+        </div>
         <div class="chart"><canvas id="{{ metric.id }}-chart"></canvas></div>
         <input type="range" id="{{ metric.id }}-chart-scrollBar" min="0" max="100" value="0" class="chart">
         <button class="btn show-hide" data-metric="{{ metric.id }}">Show Table</button>
