@@ -35,7 +35,6 @@
 
 {% block scripts %}
   {{ super() }}
-  <script src="{{ get_versioned_filename('/static/js/highcharts-more.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script src="{{ get_versioned_filename('/static/js/timeseries.js') }}" nonce="{{ csp_nonce() }}"></script>
   <script nonce="{{ csp_nonce() }}">
 {% for metric in report.metrics %}
