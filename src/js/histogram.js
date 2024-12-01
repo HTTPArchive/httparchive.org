@@ -496,6 +496,9 @@ function drawChart(series, containerId, options) {
     const url = `https://github.com/HTTPArchive/bigquery/blob/master/sql/timeseries/${metric}.sql`;
     window.open(url, '_blank');
   });
+
+  // Show Buttons now chart is active
+  document.getElementById(`${options.chartId}-buttons`)?.classList.remove('hidden');
 }
 
 // Export directly to global scope for use by Jinja template.

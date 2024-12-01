@@ -360,7 +360,7 @@ async function drawChart(options, series) {
                 const extraMessage = matchingFlag ? matchingFlag.label + ': ' + matchingFlag.title : '';
                 return `${extraMessage}`;
               },
-            }
+            },
           },
           legend: {
             display: true,
@@ -601,6 +601,9 @@ async function drawChart(options, series) {
     const url = `https://github.com/HTTPArchive/bigquery/blob/master/sql/timeseries/${metric}.sql`;
     window.open(url, '_blank');
   });
+
+  // Show Buttons now chart is active
+  document.getElementById(`${options.chartId}-buttons`)?.classList.remove('hidden');
 }
 
 const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];
