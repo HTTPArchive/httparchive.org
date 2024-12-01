@@ -330,7 +330,6 @@ th {
   #report-metrics.grid-view .report-metric.expanded {
     grid-column: auto / span 2;
   }
-
 }
 
 @media (max-width: 767px) {
