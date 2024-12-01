@@ -29,6 +29,7 @@
   --color-page-border: var(--color-teal-medium);
   --color-tooltip-background: var(--color-card-background);
   --color-tooltip-border: var(--color-card-border);
+  --color-nav: #667a7d;
 
   /* Font sizes */
   --font-size-medium: 1.75rem;
@@ -39,6 +40,8 @@
   --card-shadow: 0 2px 7px 0px rgba(143, 149, 150, 0.05);
   --card-radius: 0.25rem;
   --table-row-hover: var(--color-blue-100);
+  --color-panel-text: #203b40;
+  --color-panel-background: #bfe1e7;
 
   /* Graph colors */
   --graph-color-primary: var(--color-teal-dark);
@@ -66,6 +69,9 @@
   --color-bg-gradient: #111;
   --color-page-border: #000;
   --color-tooltip-border: var(--color-page-background);
+  --color-panel-text: #bfe1e7;
+  --color-panel-background: #203b40;
+  --color-nav: #bfe1e7;
 
   /* Graph colors */
   --graph-color-labels: #a6bbbe;
@@ -84,6 +90,15 @@ body > :is(header, footer) {
 /* Links */
 main :is(a, p a) {
   color: var(--color-link);
+}
+
+main :is(a, p a):is(:hover, :focus) {
+  color: var(--color-text);
+  text-decoration-thickness: 2px;
+}
+
+nav {
+  color: var(--color-nav);
 }
 
 /* CTA */
@@ -299,6 +314,10 @@ main :is(a, p a) {
   outline-offset: 2px;
 }
 
+.dropdown-content {
+  z-index: 2;
+}
+
 .select-label::before {
   content: "";
   display: block;
@@ -330,11 +349,11 @@ main :is(a, p a) {
 }
 
 .select-label:has(select:is(:focus-visible, :hover))::after {
-  border-color: #f2f9ff;
+  border-color: var(--color-page-background);
 }
 
 .select-label:has(select:focus-visible) {
-  background-color: #f2f9ff;
+  background-color: var(--color-page-background);
 }
 
 .select-label:has(select:focus-visible) label {
@@ -370,7 +389,7 @@ main :is(a, p a) {
 }
 
 .tech-selector-group:has(.remove-tech:is(:focus, :hover)) {
-  background-color: #f2f9ff;
+  background-color: var(--color-page-background);
 }
 
 .tech-selector-group {
@@ -391,7 +410,7 @@ main :is(a, p a) {
   position: absolute;
   right: 0;
   border-radius: 0 4px 4px 0;
-  z-index: 0;
+  z-index: 2;
 }
 
 .tech-input-wrapper::after {
@@ -407,7 +426,7 @@ main :is(a, p a) {
   border-left: 1.5px solid var(--color-text-darker);
   border-radius: 1px;
   transform: rotate(-45deg);
-  z-index: 0;
+  z-index: 3;
 }
 
 .tech-input-wrapper select {
@@ -421,11 +440,11 @@ main :is(a, p a) {
 }
 
 .tech-input-wrapper:has(select:is(:focus-visible, :hover))::after {
-  border-color: #f2f9ff;
+  border-color: var(--color-page-background);
 }
 
 .tech-input-wrapper:has(select:focus-visible) {
-  background-color: #f2f9ff;
+  background-color: var(--color-page-background);
   color: var(--color-text);
 }
 
@@ -436,6 +455,7 @@ main :is(a, p a) {
 [data-theme="dark"] select option,
 [data-theme="dark"] .tech-input-wrapper:has(select:focus-visible) select {
   color: var(--color-page-background) !important;
+  background-color: var(--color-text-darker) !important;
 }
 
 .tech-selector-group .content {
@@ -548,6 +568,7 @@ select {
   display: flex;
   column-gap: 1rem;
   font-size: 0.825rem;
+  padding: 0.625rem 0;
 }
 
 /* Table */
@@ -653,11 +674,11 @@ select {
 }
 
 .subcategory-selector-wrapper:has(select:is(:focus-visible, :hover))::after {
-  border-color: #f2f9ff;
+  border-color: var(--color-page-background);
 }
 
 .subcategory-selector-wrapper:has(select:focus-visible) {
-  background-color: #f2f9ff;
+  background-color: var(--color-page-background);
 }
 
 .subcategory-selector-wrapper:has(select:focus-visible) label {
@@ -686,8 +707,8 @@ select {
 
 /* Info message */
 .info-panel {
-  background: #bfe1e7;
-  color: #203b40;
+  background: var(--color-panel-background);
+  color: var(--color-panel-text);
   font-weight: 400;
   padding: 0.5rem;
 }
@@ -1141,6 +1162,10 @@ path.highcharts-tick {
   fill: var(--color-tooltip-background);
   stroke: var(--color-tooltip-border);
   stroke-width: 1px;
+}
+
+.tooltip-wrapper {
+  color: var(--color-text);
 }
 
 .tooltip-wrapper ul {

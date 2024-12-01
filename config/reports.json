@@ -518,17 +518,6 @@
         "scale": 0.001
       }
     },
-    "cruxFid": {
-      "name": "First Input Delay",
-      "type": "ms",
-      "description": "The number of milliseconds from the time the user initiates their first interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
-      "timeseries": {
-        "enabled": false
-      },
-      "histogram": {
-        "minDate": "2018_06_01"
-      }
-    },
     "cruxInp": {
       "name": "Interaction to Next Paint",
       "type": "ms",
@@ -621,20 +610,6 @@
         ]
       }
     },
-    "cruxFastFid": {
-      "name": "Good First Input Delay",
-      "type": "%",
-      "description": "The percentage of origins with \"good\" FID experiences, less than or equal to 100 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
-      "downIsBad": true,
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "cruxFastInp": {
       "name": "Good Interaction to Next Paint",
       "type": "%",
@@ -695,19 +670,6 @@
       "name": "Poor First Contentful Paint",
       "type": "%",
       "description": "The percentage of origins with \"poor\" FCP experiences, greater than 3 seconds.",
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
-    "cruxSlowFid": {
-      "name": "Poor First Input Delay",
-      "type": "%",
-      "description": "The percentage of origins with \"poor\" FID experiences, greater than 250 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
       "histogram": {
         "enabled": false
       },
@@ -998,20 +960,6 @@
         ]
       }
     },
-    "webSocketStream": {
-      "name": "WebSocketStream",
-      "type": "%",
-      "downIsBad": true,
-      "description": "This metric tracks the percentage of pages that transmit messages via the [WebSocketStream API](https://web.dev/websocketstream/).",
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "screenWakeLock": {
       "name": "Screen Wake Lock",
       "type": "%",
@@ -1222,8 +1170,6 @@
       "cruxLargeCls",
       "cruxFastInp",
       "cruxSlowInp",
-      "cruxFastFid",
-      "cruxSlowFid",
       "cruxFastTtfb",
       "cruxSlowTtfb",
       "cruxFastFp",
@@ -1232,7 +1178,6 @@
       "cruxFcp",
       "cruxLcp",
       "cruxCls",
-      "cruxFid",
       "cruxInp",
       "cruxTtfb",
       "cruxFp",
@@ -1319,8 +1264,7 @@
       "contentIndex",
       "notificationTriggers",
       "quicTransport",
-      "idleDetection",
-      "webSocketStream"
+      "idleDetection"
     ],
     "graphic": {
       "bgcolor": "#97b5b9",

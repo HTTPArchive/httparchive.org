@@ -38,7 +38,7 @@ Given these conditions it's virtually impossible to compare the HTTP Archive's t
 
 The HTTP Archive dataset is available on BigQuery. Be aware that as a consequence of collecting so much metadata from millions of websites each month, the dataset is _extremely large_—multiple petabytes. Care _must_ be taken to set up [cost controls](https://cloud.google.com/bigquery/docs/custom-quotas) to avoid unexpected bills. Also see our guide to [minimizing query costs](https://har.fyi/guides/minimizing-costs/) for tips on staying under the 1 TB per month free quota.
 
-Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://github.com/HTTPArchive/httparchive.org/blob/main/docs/gettingstarted_bigquery.md), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
+Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://har.fyi/guides/getting-started/), a guide for first-time users written by [Paul Calvano](https://twitter.com/paulcalvano).
 
 For a guided walkthrough of the project, watch this in-depth [30 minute video](https://www.youtube.com/watch?v=00f9kza3BJ0) featuring HTTP Archive maintainer [Rick Viscomi](https://twitter.com/rick_viscomi).
 
@@ -78,9 +78,9 @@ Donations in support of the HTTP Archive can be made through the [Open Collectiv
 
 ## Who maintains the HTTP Archive?
 
-The current core maintainers are [Pat Meenan](https://twitter.com/patmeenan), [Rick Viscomi](https://twitter.com/rick_viscomi), [Paul Calvano](https://twitter.com/paulcalvano), and [Barry Pollard](https://twitter.com/tunetheweb).
+The current core maintainers are [Pat Meenan](https://x.com/patmeenan), [Rick Viscomi](https://x.com/rick_viscomi), [Paul Calvano](https://x.com/paulcalvano), [Barry Pollard](https://x.com/tunetheweb), and [Max Ostapenko](https://x.com/themax_o).
 
-Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://twitter.com/Souders), who started the project in 2010, [Pat Meenan](https://twitter.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, [Ilya Grigorik](https://twitter.com/igrigorik), a long-time core maintainer, and Guy Leech and Stephen Hay for design help along the way.
+Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://x.com/Souders), who started the project in 2010, [Pat Meenan](https://x.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, [Ilya Grigorik](https://x.com/igrigorik), a long-time core maintainer, and Guy Leech and Stephen Hay for design help along the way.
 
 
 ## Who do I contact for more information?
