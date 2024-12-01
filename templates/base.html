@@ -35,6 +35,22 @@
     {% block scripts %}
     <script defer src="{{ get_versioned_filename('/static/js/web-vitals.js') }}" nonce="{{ csp_nonce() }}"></script>
     <script defer src="{{ get_versioned_filename('/static/js/send-web-vitals.js') }}" nonce="{{ csp_nonce() }}"></script>
+    <script type="speculationrules" nonce="{{ csp_nonce() }}">
+      {
+        "prefetch": [{
+          "where": {
+            "href_matches": "/reports/*"
+          },
+          "eagerness": "eager"
+        }],
+        "prerender": [{
+          "where": {
+            "href_matches": "/*"
+          },
+          "eagerness": "moderate"
+        }]
+      }
+    </script>
     {% endblock %}
   </body>
 </html>
