@@ -1,15 +1,13 @@
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, formatDateShort, formatDateLong, formatNumber, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { el, formatNumber, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
 import Chart from 'chart.js/auto'
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
 
 // Register all Chart.js components and the Zoom plugin
 Chart.register(zoomPlugin);
-
-const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT, COLOR_DESKTOP_DIM, COLOR_MOBILE_DIM, COLOR_DESKTOP_ALT_DIM, COLOR_MOBILE_ALT_DIM] = Colors.getAll({rgba: true});
 
 function histogram(metric, date, options) {
   options.date = date;
@@ -227,7 +225,7 @@ function drawHistogram(data, containerId, options) {
       data: mobile.map((data) => data.toPoint()),
       type: 'bar',
       label: 'Mobile',
-      backgroundColor: COLOR_MOBILE_ALT,
+      backgroundColor: Colors.MOBILE_ALT,
       borderColor: '#fff',
       pointStyle: false,
       yAxisID: 'y',
@@ -244,8 +242,8 @@ function drawHistogram(data, containerId, options) {
         }
       },
       label: 'Mobile Cumulative',
-      backgroundColor: COLOR_MOBILE_ALT,
-      borderColor: COLOR_MOBILE_ALT,
+      backgroundColor: Colors.MOBILE_ALT,
+      borderColor: Colors.MOBILE_ALT,
       pointStyle: false,
       yAxisID: 'y2',
       showInLegend: false,
@@ -256,7 +254,7 @@ function drawHistogram(data, containerId, options) {
         type: 'bar',
         pointPlacement: 'between',
         label: 'Desktop',
-        backgroundColor: COLOR_DESKTOP_ALT,
+        backgroundColor: Colors.DESKTOP_ALT,
         borderColor: '#fff',
         pointStyle: false,
         yAxisID: 'y',
@@ -273,8 +271,8 @@ function drawHistogram(data, containerId, options) {
           }
         },
         label: 'Desktop Cumulative',
-        backgroundColor: COLOR_DESKTOP_ALT,
-        borderColor: COLOR_DESKTOP_ALT,
+        backgroundColor: Colors.DESKTOP_ALT,
+        borderColor: Colors.DESKTOP_ALT,
         pointStyle: false,
         yAxisID: 'y2',
         showInLegend: false
@@ -293,7 +291,7 @@ function drawChart(series, containerId, options) {
   console.log('Series:', series);
 
   const axis = options.xaxis;
-  const chartData = []
+  const chartData = [];
   chartData.labels = axis.data;
   chartData.datasets = series;
 
@@ -463,7 +461,6 @@ function drawChart(series, containerId, options) {
               const ctx = chart.ctx;
               const tooltip = chart.tooltip._active[0];
               const x = tooltip.element.x;
-              const y = tooltip.element.y;
 
               ctx.save();
               ctx.beginPath();

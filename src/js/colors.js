@@ -29,6 +29,14 @@ export class Colors {
     return HEX[1];
   }
 
+  static get DESKTOP_ALT() {
+    return RGBA[2];
+  }
+
+  static get MOBILE_ALT() {
+    return RGBA[3];
+  }
+
   static get DESKTOP_DIM() {
     return RGBA[4];
   }

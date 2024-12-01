@@ -292,7 +292,7 @@ const getFlagSeries = () => loadChangelog().then(data => {
 async function drawChart(options, series) {
 
   const axis = options.xaxis;
-  const chartData = []
+  const chartData = [];
   chartData.labels = axis.data;
   chartData.datasets = series;
 
@@ -455,7 +455,7 @@ async function drawChart(options, series) {
         {
           id: 'extraLabelsPlugin',
           afterDraw(chart) {
-              const { ctx, chartArea: { left, right, bottom }, scales: { x } } = chart;
+              const { ctx, chartArea: { bottom }, scales: { x } } = chart;
 
               ctx.save();
               ctx.font = '12px Arial';
@@ -511,7 +511,6 @@ async function drawChart(options, series) {
               const ctx = chart.ctx;
               const tooltip = chart.tooltip._active[0];
               const x = tooltip.element.x;
-              const y = tooltip.element.y;
 
               ctx.save();
               ctx.beginPath();
@@ -530,9 +529,6 @@ async function drawChart(options, series) {
   );
 
   const setZoom = (range) => {
-    const xScale = chart.scales.x;
-    const now = new Date();
-
     const dataLabels = chart.data.labels;
     let start, end = Math.max(...dataLabels);
     let endDate = new Date(end);
