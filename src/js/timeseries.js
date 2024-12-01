@@ -251,7 +251,8 @@ const getAreaSeries = (name, data, color, fill=false) => ({
   fill: fill,
   tooltip: {
     enabled: false
-  }
+  },
+  showInLegend: false,
 });
 const flags = {};
 let changelog = null;
@@ -301,6 +302,7 @@ async function drawChart(options, series) {
       type: 'line',
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         layout: {
           padding: {
             bottom: 20,
@@ -328,7 +330,7 @@ async function drawChart(options, series) {
               weight: 'normal',
             },
             padding: {
-                bottom: 20,
+                bottom: 60,
             },
           },
           tooltip: {
@@ -364,7 +366,6 @@ async function drawChart(options, series) {
             display: true,
             position: 'bottom',
             labels: {
-              padding: 30,
               filter: function (legendItem, data) {
                 const showInLegend = data.datasets[legendItem.datasetIndex]?.showInLegend ?? true;
                 return showInLegend;
@@ -422,7 +423,7 @@ async function drawChart(options, series) {
             },
             grid: {
               drawBorder: false,
-              drawOnChartArea: true, // Crosshair-like effect
+              drawOnChartArea: true,
               color: 'rgba(0, 0, 0, 0.1)',
             },
             ticks: {
@@ -470,15 +471,31 @@ async function drawChart(options, series) {
                 // Skip labels outside the chart's visible range
                 if (timestamp < x.min || timestamp > x.max) continue;
 
-                // Interpolate x position for the timestamp
                 let xPosition = x.getPixelForValue(timestamp);
                 if (xPosition < lastPixel + 10) {
                   xPosition = lastPixel + 10;
                 }
                 lastPixel = xPosition;
 
-                const yPosition = bottom + 40; // Fixed position below the chart
+                const textWidth = ctx.measureText(label).width;
+                const padding = 5;
+                const boxWidth = textWidth + padding * 2;
+                const boxHeight = 15;
 
+                const yPosition = bottom;
+                const rectYPosition = yPosition - boxHeight / 2;
+
+                // Draw the background rectangle
+                ctx.fillStyle = 'white'; // Background color
+                ctx.fillRect(xPosition - boxWidth / 2, rectYPosition, boxWidth, boxHeight);
+
+                // Draw the border
+                ctx.strokeStyle = 'grey'; // Border color
+                ctx.lineWidth = 1; // Border width
+                ctx.strokeRect(xPosition - boxWidth / 2, rectYPosition, boxWidth, boxHeight);
+
+                // Draw the text
+                ctx.fillStyle = 'black'; // Text color
                 // Draw the label
                 ctx.fillText(label, xPosition, yPosition);
 
@@ -490,7 +507,7 @@ async function drawChart(options, series) {
         {
           id: 'crosshair',
           beforeDraw: function(chart) {
-            if (chart.tooltip._active && chart.tooltip._active.length) {
+            if (chart.tooltip?._active?.length) {
               const ctx = chart.ctx;
               const tooltip = chart.tooltip._active[0];
               const x = tooltip.element.x;

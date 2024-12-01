@@ -248,7 +248,7 @@ function drawHistogram(data, containerId, options) {
       borderColor: COLOR_MOBILE_ALT,
       pointStyle: false,
       yAxisID: 'y2',
-      showInLegend: false
+      showInLegend: false,
     });
     if (desktop.length) {
       series.push({
@@ -302,6 +302,7 @@ function drawChart(series, containerId, options) {
     {
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         layout: {
           padding: {
             bottom: 20,
@@ -311,6 +312,7 @@ function drawChart(series, containerId, options) {
           labels: {
             padding: {
                 top: 20,
+                bottom: 20,
             },
           },
         },
@@ -336,7 +338,7 @@ function drawChart(series, containerId, options) {
               weight: 'normal',
             },
             padding: {
-                bottom: 20,
+                bottom: 70,
             },
           },
           tooltip: {
@@ -457,7 +459,7 @@ function drawChart(series, containerId, options) {
         {
           id: 'crosshair',
           beforeDraw: function(chart) {
-            if (chart.tooltip._active && chart.tooltip._active.length) {
+            if (chart.tooltip?._active?.length) {
               const ctx = chart.ctx;
               const tooltip = chart.tooltip._active[0];
               const x = tooltip.element.x;

@@ -6,24 +6,30 @@
     {% if metric[viz]['enabled'] %}
       <section id="{{ metric.id }}" class="report-metric">
         {{ metric_info(metric, viz) }}
-        <div class="chart-buttons">
-          <!-- Zoom buttons -->
-          <div id="{{ metric.id }}-zoom-buttons">
-            Zoom:
-            <button id='{{ metric.id }}-chart-ytd-zoom'>YTD</button>
-            <button id='{{ metric.id }}-chart-1y-zoom'>1y</button>
-            <button id='{{ metric.id }}-chart-3y-zoom'>3y</button>
-            <button id='{{ metric.id }}-chart-5y-zoom'>5y</button>
-            <button id='{{ metric.id }}-chart-10y-zoom'>10y</button>
-            <button id='{{ metric.id }}-chart-all-zoom'>All</button>
+        <div class="chart">
+          <div class="chart-buttons">
+            <!-- Zoom buttons -->
+            <div id="{{ metric.id }}-zoom-buttons" class="zoom-buttons">
+              <div class="zoom-label">Zoom:</div>
+              <div>
+                <button id='{{ metric.id }}-chart-ytd-zoom'>YTD</button>
+                <button id='{{ metric.id }}-chart-1y-zoom'>1y</button>
+                <button id='{{ metric.id }}-chart-3y-zoom'>3y</button>
+                <button id='{{ metric.id }}-chart-5y-zoom'>5y</button>
+                <button id='{{ metric.id }}-chart-10y-zoom'>10y</button>
+                <button id='{{ metric.id }}-chart-all-zoom'>All</button>
+              </div>
+            </div>
+            <!-- Export and query buttons -->
+            <div id="{{ metric.id }}-other-buttons">
+              <div>
+                <button id="{{ metric.id }}-chart-download-png" class="download-chart">Download Png</button>
+                <button id="{{ metric.id }}-chart-show-query">Show query</button>
+              </div>
+            </div>
           </div>
-          <!-- Export and query buttons -->
-          <div id="{{ metric.id }}-other-buttons">
-            <button id="{{ metric.id }}-chart-download-png">Download Png</button>
-            <button id="{{ metric.id }}-chart-show-query">Show query</button>
-          </div>
+          <canvas id="{{ metric.id }}-chart"></canvas>
         </div>
-        <div class="chart"><canvas id="{{ metric.id }}-chart"></canvas></div>
         <button class="btn show-hide" data-metric="{{ metric.id }}">Show Table</button>
         <div class="table-wrapper">
           <table id="{{ metric.id }}-table" class="table hidden"></table>

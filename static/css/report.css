@@ -193,13 +193,33 @@ th {
 
 .chart-buttons {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  padding: 10px;
+  position: relative;
+  margin-top: -40px;
+  top: 100px;
+  font-size: 0.8rem;
+}
+
+.chart-buttons button {
+  border: none;
+}
+
+.zoom-buttoms {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-around;
 }
 
 .chart {
   min-width: 310px;
   margin: 0 auto;
   aspect-ratio: 2/1;
+}
+
+.chart canvas {
+  max-height: 600px;
 }
 
 .highcharts-range-selector {
@@ -310,6 +330,7 @@ th {
   #report-metrics.grid-view .report-metric.expanded {
     grid-column: auto / span 2;
   }
+
 }
 
 @media (max-width: 767px) {
@@ -334,5 +355,14 @@ th {
 
   #report-metrics.grid-view .grid-expansion {
     display: inline-block;
+  }
+
+  .chart {
+    aspect-ratio: 1/1;
+  }
+
+  .zoom-label,
+  .download-chart {
+    display: none;
   }
 }
