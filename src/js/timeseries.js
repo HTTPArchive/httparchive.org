@@ -427,11 +427,11 @@ async function drawChart(options, series) {
               color: 'rgba(0, 0, 0, 0.1)',
             },
             ticks: {
+              precision: 0,
               callback: function (value) {
                 return formatNumber(value);
               },
             },
-            beginAtZero: true,
           }
         },
         transitions: {
