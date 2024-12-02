@@ -204,15 +204,25 @@ th {
 
 .chart-buttons button {
   border: none;
+  padding: 5px;
+}
+
+.chart-buttons button:hover {
+  background-color: #ddd;
 }
 
 .zoom-buttons,
 .other-buttons {
   display: flex;
   flex-wrap: wrap;
-  align-content: flex-start;
+  align-content: center;
   justify-content: space-around;
 }
+
+.zoom-buttons div {
+  padding: 2px;
+}
+
 
 .other-buttons div {
   display: flex;
