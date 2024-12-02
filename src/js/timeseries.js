@@ -330,7 +330,7 @@ async function drawChart(options, series) {
               weight: 'normal',
             },
             padding: {
-                bottom: 60,
+                bottom: 80,
             },
           },
           tooltip: {

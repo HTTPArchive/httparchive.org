@@ -193,11 +193,12 @@ th {
 
 .chart-buttons {
   display: flex;
+  gap: 5px;
   justify-content: space-between;
   padding: 10px;
   position: relative;
   margin-top: -40px;
-  top: 100px;
+  top: 120px;
   font-size: 0.8rem;
 }
 
@@ -205,11 +206,17 @@ th {
   border: none;
 }
 
-.zoom-buttoms {
+.zoom-buttons,
+.other-buttons {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
   justify-content: space-around;
+}
+
+.other-buttons div {
+  display: flex;
+  gap: 5px;
 }
 
 .chart {

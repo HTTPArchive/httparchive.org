@@ -336,7 +336,7 @@ function drawChart(series, containerId, options) {
               weight: 'normal',
             },
             padding: {
-                bottom: 70,
+                bottom: 80,
             },
           },
           tooltip: {
