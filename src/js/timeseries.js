@@ -431,6 +431,7 @@ async function drawChart(options, series) {
                 return formatNumber(value);
               },
             },
+            beginAtZero: true,
           }
         },
         transitions: {
