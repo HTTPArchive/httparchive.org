@@ -2,8 +2,13 @@ import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, chartExportOptions, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { el, formatDateShort, formatDateLong, formatNumber, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
+import Chart from 'chart.js/auto'
+import zoomPlugin from 'chartjs-plugin-zoom';
+import 'chartjs-adapter-date-fns';
 
+// Register all Chart.js components and the Zoom plugin
+Chart.register(zoomPlugin);
 
 function timeseries(metric, options, start, end) {
   const dataUrl = `https://cdn.httparchive.org/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
@@ -111,6 +116,12 @@ function drawTimeseries(data, options) {
   const mobile = data.filter(isMobile);
 
   const series = [];
+  if (desktop.length || mobile.length) {
+    // Set the axis axis to the combination of both desktop and mobile
+    const dates = [...new Set(data.map(item => item.timestamp))];
+    const xaxis = {label: 'xaxis', data: dates};
+    options.xaxis = xaxis;
+  }
   if (desktop.length) {
     if (options.timeseries && options.timeseries.fields) {
       options.timeseries.fields.forEach(field => {
@@ -118,7 +129,8 @@ function drawTimeseries(data, options) {
       });
     } else {
       series.push(getLineSeries('Desktop', desktop.map(toLine), Colors.DESKTOP));
-      series.push(getAreaSeries('Desktop', desktop.map(toIQR), Colors.DESKTOP));
+      series.push(getAreaSeries('DesktopLower', desktop.map(toLower), 'rgba(255,255,255,0.1)', true));
+      series.push(getAreaSeries('DesktopUpper', desktop.map(toUpper), Colors.DESKTOP_DIM, '-1'));
     }
   }
   if (mobile.length) {
@@ -128,7 +140,8 @@ function drawTimeseries(data, options) {
       });
     } else {
       series.push(getLineSeries('Mobile', mobile.map(toLine), Colors.MOBILE));
-      series.push(getAreaSeries('Mobile', mobile.map(toIQR), Colors.MOBILE));
+      series.push(getAreaSeries('MobileLower', mobile.map(toLower), 'rgba(255,255,255,0.1)', true));
+      series.push(getAreaSeries('MobileUpper', mobile.map(toUpper), Colors.MOBILE_DIM, '-1'));
     }
   }
 
@@ -138,7 +151,7 @@ function drawTimeseries(data, options) {
   }
 
   getFlagSeries()
-    .then(flagSeries => series.push(flagSeries))
+    .then(flagSeries => options.flags = flagSeries)
     // If the getFlagSeries request fails (503), catch so we can still draw the chart
     .catch(console.error)
     .then(_ => {
@@ -216,35 +229,30 @@ const toNumeric = ({client, date, ...other}) => {
     return o;
   }, {client});
 };
-const toIQR = o => [o.timestamp, o.p25, o.p75];
+const toUpper = o => [o.timestamp, o.p75];
+const toLower = o => [o.timestamp, o.p25];
 const toLine = o => [o.timestamp, o.p50];
 const getLineSeries = (name, data, color) => ({
-  name,
+  label: name,
   type: 'line',
   data,
-  color,
-  zIndex: 1,
-  marker: {
-    enabled: false
-  }
+  backgroundColor: color,
+  borderColor: color,
+  radius: 0,
 });
-const getAreaSeries = (name, data, color, opacity=0.1) => ({
-  name,
-  type: 'areasplinerange',
-  linkedTo: ':previous',
+const getAreaSeries = (name, data, color, fill=false) => ({
+  label: name,
+  type: 'line',
+  subtype: 'areasplinerange',
   data,
-  lineWidth: 0,
-  color,
-  fillOpacity: opacity,
-  zIndex: 0,
-  marker: {
-    enabled: false,
-    states: {
-      hover: {
-        enabled: false
-      }
-    }
-  }
+  backgroundColor: color,
+  borderColor: 'transparent',
+  pointStyle: false,
+  fill: fill,
+  tooltip: {
+    enabled: false
+  },
+  showInLegend: false,
 });
 const flags = {};
 let changelog = null;
@@ -266,10 +274,13 @@ const getFlagSeries = () => loadChangelog().then(data => {
   data = data.filter(o => o.displayInTimeSeries !== false);
   return {
     type: 'flags',
-    name: 'Changelog',
+    label: 'Changelog',
     data: data.map((change, i) => ({
       x: change.date,
-      title: String.fromCharCode(65 + (i % 26))
+      label: String.fromCharCode(65 + (i % 26)),
+      date: formatDateShort(change.date),
+      title: change.title,
+      desc: change.desc,
     })),
     clip: false,
     color: '#90b1b6',
@@ -278,156 +289,334 @@ const getFlagSeries = () => loadChangelog().then(data => {
   };
 });
 
-function drawChart(options, series) {
-  const chart = Highcharts.stockChart(options.chartId, {
-    metric: options.metric,
-    type: 'timeseries',
-    chart: {
-      zoomType: 'x',
-      zooming: {
-        mouseWheel: {
-          enabled: false
-        }
-      }
-    },
-    title: {
-      text: `${options.lens ? `${options.lens.name}: ` : '' }` + `Timeseries of ${options.name}`,
-      style: {
-        "font-weight": "normal"
-      }
-    },
-    subtitle: {
-      text: 'Source: <a href="http://httparchive.org">httparchive.org</a>',
-      useHTML: true
-    },
-    legend: {
-      enabled: true
-    },
-    tooltip: {
-      crosshairs: true,
-      shared: true,
-      useHTML: true,
-      borderColor: 'rgba(247,247,247,0.85)',
-      formatter: function() {
-        function getChangelog(changelog) {
-          if (!changelog) return '';
-          return `<p class="changelog">${changelog.title}</p>`;
-        }
+async function drawChart(options, series) {
 
-        const changelog = flags[this.x];
-        const tooltip = `<p style="font-size: smaller; text-align: center;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
+  const axis = options.xaxis;
+  const chartData = [];
+  chartData.labels = axis.data;
+  chartData.datasets = series;
 
-        // Handle changelog tooltips first.
-        if (!this.points) {
-          return `${tooltip} ${getChangelog(changelog)}`
-        }
+  const chart = new Chart(
+    document.getElementById(options.chartId),
+    {
+      type: 'line',
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            bottom: 20,
+          },
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: false,
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: options.lens ? `${options.lens.name}: ` : '' + `Timeseries of ${options.name}`,
+            font: {
+              family: 'Helvetica, Arial, sans-serif',
+              size: 16,
+              weight: 'normal',
+            },
+            padding: {
+                top: 20,
+            },
+          },
+          subtitle: {
+            display: true,
+            text: 'Source: httparchive.org',
+            font: {
+              family: 'Helvetica, Arial, sans-serif',
+              size: 13,
+              weight: 'normal',
+            },
+            padding: {
+                bottom: 80,
+            },
+          },
+          tooltip: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false,
+            animation: false,
+            titleAlign: 'center',
+            callbacks: {
+              title: function (context) {
+                return context[0]?.raw[0] ? formatDateLong(context[0]?.raw[0]) : formatDateLong(context[0]?.raw[0]);
+              },
+              label: function(context) {
+                // Exclude range datasets from tooltip
+                if (context.dataset?.tooltip?.enabled == false) {
+                  return null;
+                }
+                return ` ${context.dataset.label}: ${context.formattedValue}`;
+              },
+              // Display a changelog if there is one
+              afterBody: function (context) {
+                const date = context[0].raw[0];
+                const matchingFlag = options.flags.data.find((flag) => {
+                  // So compare if with 28 days
+                  return Math.abs(date - flag.x) < 1296000000;
+                });
 
-        function getRow(points) {
-          if (!points.length) return '';
-          let label;
-          let data;
-          if (options.timeseries && options.timeseries.fields) {
-            label = points[0].series.name;
-            const formatter = formatters[options.timeseries.fields[0]];
-            if (formatter) {
-              data = formatter(points[0].point.y);
-            } else {
-              data = points[0].point.y.toFixed(1);
-            }
-          } else {
-            const [median] = points;
-            label = `Median ${median.series.name}`;
-            data = median.point.y.toFixed(1);
+                const extraMessage = matchingFlag ? matchingFlag.label + ': ' + matchingFlag.title : '';
+                return `${extraMessage}`;
+              },
+            },
+          },
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              filter: function (legendItem, data) {
+                const showInLegend = data.datasets[legendItem.datasetIndex]?.showInLegend ?? true;
+                return showInLegend;
+              },
+            },
+          },
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x',
+            },
+            zoom: {
+              drag: {
+                enabled: true,
+                modifierKey: 'shift',
+              },
+              wheel: {
+                enabled: false,
+              },
+              pinch: {
+                enabled: false,
+              },
+              mode: 'x',
+            },
+          },
+        },
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day',
+            },
+            grid: {
+              drawOnChartArea: false,
+              drawTicks: true,
+            },
+            min: options.min,
+            max: options.max,
+            ticks: {
+              maxRotation: 0,
+              minRotation: 0,
+              length: 10,
+              callback: function (value, index, ticks) {
+                return formatDateShort(value);
+              }
+            },
+            padding: {
+              bottom: 80,
+            },
+          },
+          y: {
+            title : {
+              display: true,
+              text: `${options.name}${options.redundant ? '' : ` (${options.type})`}`,
+            },
+            grid: {
+              drawBorder: false,
+              drawOnChartArea: true,
+              color: 'rgba(0, 0, 0, 0.1)',
+            },
+            ticks: {
+              precision: 0,
+              callback: function (value) {
+                return formatNumber(value);
+              },
+            },
           }
-          const metric = new Metric(options, data);
-          return `<td>
-            <p style="text-transform: uppercase; font-size: 10px;">
-              ${label}
-            </p>
-            <p style="color: ${points[0].series.color}; font-size: 20px;">
-              ${metric.toString()}
-            </p>
-          </td>`;
-        }
-        const desktop = this.points.filter(o => o.series.name == 'Desktop');
-        const mobile = this.points.filter(o => o.series.name == 'Mobile');
-        return `${tooltip}
-        <table cellpadding="5" style="text-align: center;">
-          <tr>
-            ${getRow(desktop)}
-            ${getRow(mobile)}
-          </tr>
-        </table>
-        ${getChangelog(changelog)}`;
-      }
-    },
-    rangeSelector: {
-      buttons: [{
-        type: 'month',
-        count: 1,
-        text: '1m'
-      }, {
-        type: 'month',
-        count: 3,
-        text: '3m'
-      }, {
-        type: 'month',
-        count: 6,
-        text: '6m'
-      }, {
-        type: 'ytd',
-        text: 'YTD'
-      }, {
-        type: 'year',
-        count: 1,
-        text: '1y'
-      }, {
-        type: 'year',
-        count: 3,
-        text: '3y'
-      }, {
-        type: 'all',
-        text: 'All'
-      }]
-    },
-    xAxis: {
-      type: 'datetime',
-      events: {
-        setExtremes: e => redrawTimeseriesTable[options.metric]([e.min, e.max])
+        },
+        transitions: {
+          zoom: {
+            animation: {
+              duration: 0
+            },
+          },
+        },
       },
-      min: options.min,
-      max: options.max
-    },
-    yAxis: {
-      title: {
-        text: `${options.name}${options.redundant ? '' : ` (${options.type})`}`
-      },
-      opposite: false,
-      min: 0
-    },
-    series,
-    credits: {
-      text: 'highcharts.com',
-      href: 'http://highcharts.com'
-    },
-    exporting: chartExportOptions
-  });
-  chart.drawBenchmark = (name, value, color) => {
-    chart.yAxis[0].update({
-      plotLines: [{
-        value,
-        color,
-        dashStyle: 'dash',
-        width: 2,
-        label: {
-          text: name
+      plugins: [
+        {
+          id: 'canvasBackgroundColor',
+          beforeDraw: (chart) => {
+            const { ctx, width, height } = chart;
+            ctx.save();
+            ctx.fillStyle = 'white'; // Set the entire canvas background color to white
+            ctx.fillRect(0, 0, width, height);
+            ctx.restore();
+          },
+        },
+        {
+          id: 'extraLabelsPlugin',
+          afterDraw(chart) {
+              const { ctx, chartArea: { bottom }, scales: { x } } = chart;
+
+              ctx.save();
+              ctx.font = '12px Arial';
+              ctx.textAlign = 'center';
+              ctx.fillStyle = 'black';
+
+              let lastPixel = 0;
+
+              for (const flagLabel of Object.entries(options.flags.data)) {
+                const timestamp = flagLabel[1].x;
+                const label = flagLabel[1].label;
+
+                // Skip labels outside the chart's visible range
+                if (timestamp < x.min || timestamp > x.max) continue;
+
+                let xPosition = x.getPixelForValue(timestamp);
+                if (xPosition < lastPixel + 10) {
+                  xPosition = lastPixel + 10;
+                }
+                lastPixel = xPosition;
+
+                const textWidth = ctx.measureText(label).width;
+                const padding = 5;
+                const boxWidth = textWidth + padding * 2;
+                const boxHeight = 15;
+
+                const yPosition = bottom;
+                const rectYPosition = yPosition - boxHeight / 2;
+
+                // Draw the background rectangle
+                ctx.fillStyle = 'white'; // Background color
+                ctx.fillRect(xPosition - boxWidth / 2, rectYPosition, boxWidth, boxHeight);
+
+                // Draw the border
+                ctx.strokeStyle = 'grey'; // Border color
+                ctx.lineWidth = 1; // Border width
+                ctx.strokeRect(xPosition - boxWidth / 2, rectYPosition, boxWidth, boxHeight);
+
+                // Draw the text
+                ctx.fillStyle = 'black'; // Text color
+                // Draw the label
+                ctx.fillText(label, xPosition, yPosition);
+
+              }
+
+              ctx.restore();
+          },
+        },
+        {
+          id: 'crosshair',
+          beforeDraw: function(chart) {
+            if (chart.tooltip?._active?.length) {
+              const ctx = chart.ctx;
+              const tooltip = chart.tooltip._active[0];
+              const x = tooltip.element.x;
+
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(x, chart.chartArea.top);
+              ctx.lineTo(x, chart.chartArea.bottom);
+              ctx.lineWidth = 1;
+              ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+              ctx.stroke();
+              ctx.restore();
+
+
+              // Highlight data points for all datasets
+              const timestamp = tooltip.element.$context.raw[0];
+              chart.data.datasets.forEach((dataset, _) => {
+                dataset.radius = dataset.data.map((point, _) => {
+                  return point[0] === timestamp ? 5 : 0;
+                });
+              });
+
+              chart.update('none');
+            }
+          }
         }
-      }]
-    });
+      ],
+      data: chartData,
+    }
+  );
+
+  const setZoom = (range) => {
+    const dataLabels = chart.data.labels;
+    let start, end = Math.max(...dataLabels);
+    let endDate = new Date(end);
+
+    switch (range) {
+        case 'ytd':
+            start = new Date(endDate.getFullYear(), 0, 1).getTime();
+            break;
+        case '1y':
+            start = new Date(endDate.getFullYear() - 1, endDate.getMonth(), 1).getTime();
+            break;
+        case '3y':
+            start = new Date(endDate.getFullYear() - 3, endDate.getMonth(), 1).getTime();
+            break;
+        case '5y':
+            start = new Date(endDate.getFullYear() - 5, endDate.getMonth(), 1).getTime();
+            break;
+        case '10y':
+            start = new Date(endDate.getFullYear() - 10, endDate.getMonth(), 1).getTime();
+            break;
+        case 'all':
+            start = Math.min(...dataLabels);
+            break;
+    }
+    // Programmatically zoom to the specified range
+    chart.zoomScale('x', { min: start, max: end });
   };
-  chart.zooming.mousewheel.enabled = false;
-  window.charts = window.charts || {};
-  window.charts[options.metric] = chart;
+
+  // Zoom button functionality
+  document.getElementById(`${options.chartId}-ytd-zoom`).addEventListener('click', () => {
+    setZoom("ytd");
+  });
+
+  document.getElementById(`${options.chartId}-1y-zoom`).addEventListener('click', () => {
+    setZoom("1y");
+  });
+
+  document.getElementById(`${options.chartId}-3y-zoom`).addEventListener('click', () => {
+    setZoom("3y");
+  });
+
+  document.getElementById(`${options.chartId}-5y-zoom`).addEventListener('click', () => {
+    setZoom("5y");
+  });
+
+  document.getElementById(`${options.chartId}-5y-zoom`).addEventListener('click', () => {
+    setZoom("10y");
+  });
+
+  document.getElementById(`${options.chartId}-all-zoom`).addEventListener('click', () => {
+    setZoom("all");
+  });
+
+  // Export as Png
+  document.getElementById(`${options.chartId}-download-png`).addEventListener('click', function() {
+    const link = document.createElement('a');
+    link.href = chart.toBase64Image();
+    const filename = options.name.replace(' ','') + '.png';
+    link.download = filename;
+    link.click();
+  });
+
+  // Show Query
+  document.getElementById(`${options.chartId}-show-query`).addEventListener('click', function() {
+    const {metric} = options;
+    const url = `https://github.com/HTTPArchive/bigquery/blob/master/sql/timeseries/${metric}.sql`;
+    window.open(url, '_blank');
+  });
+
+  // Show Buttons now chart is active
+  document.getElementById(`${options.chartId}-buttons`)?.classList.remove('hidden');
 }
 
 const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];

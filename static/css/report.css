@@ -99,6 +99,7 @@ h2 + p {
 }
 
 .metric-summaries {
+  min-height: 80px;
   display: flex;
   justify-content: center;
 }
@@ -190,10 +191,51 @@ th {
   z-index: 1;
 }
 
+.chart-buttons {
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  padding: 10px;
+  position: relative;
+  margin-top: -40px;
+  top: 120px;
+  font-size: 0.8rem;
+}
+
+.chart-buttons button {
+  border: none;
+  padding: 5px;
+}
+
+.chart-buttons button:hover {
+  background-color: #ddd;
+}
+
+.zoom-buttons,
+.other-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-around;
+}
+
+.zoom-buttons div {
+  padding: 2px;
+}
+
+.other-buttons div {
+  display: flex;
+  gap: 5px;
+}
+
 .chart {
   min-width: 310px;
-  height: 600px;
   margin: 0 auto;
+  aspect-ratio: 2/1;
+}
+
+.chart canvas {
+  max-height: 600px;
 }
 
 .highcharts-range-selector {
@@ -328,5 +370,14 @@ th {
 
   #report-metrics.grid-view .grid-expansion {
     display: inline-block;
+  }
+
+  .chart {
+    aspect-ratio: 1/1;
+  }
+
+  .zoom-label,
+  .download-chart {
+    display: none;
   }
 }
