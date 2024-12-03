@@ -36,8 +36,8 @@
   },
   "/static/css/styles.css": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-04-26T00:00:00.000Z",
-    "hash": "1d22c6afc3a451844da89684d7ad84ef"
+    "date_modified": "2024-11-26T00:00:00.000Z",
+    "hash": "57d554e9ab5cdb5a086b78e21cb9390e"
   },
   "/static/css/techreport/general.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -191,18 +191,18 @@
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2022-07-27T00:00:00.000Z",
-    "hash": "7e8a9d902265793cdd2d34b608906e83"
+    "date_modified": "2024-11-26T00:00:00.000Z",
+    "hash": "3ec5925cd5c7b098c4784210f7c13658"
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-11-17T00:00:00.000Z",
-    "hash": "d685d24114d58d7948e8ed405b9e2e2b"
+    "date_modified": "2024-12-01T00:00:00.000Z",
+    "hash": "2f3c6542153263c07ac6e3574fd2cf37"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-11-12T00:00:00.000Z",
-    "hash": "1a7e0a2c7230009f6c9ddf81b809676f"
+    "date_modified": "2024-12-01T00:00:00.000Z",
+    "hash": "506389530b2e8e7fee59fdd272507466"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
