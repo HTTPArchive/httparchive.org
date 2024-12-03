@@ -343,6 +343,7 @@ function drawChart(series, containerId, options) {
             mode: 'nearest',
             axis: 'x',
             intersect: false,
+            animation: false,
             titleAlign: 'center',
             callbacks: {
               title: function (context) {

@@ -238,7 +238,7 @@ const getLineSeries = (name, data, color) => ({
   data,
   backgroundColor: color,
   borderColor: color,
-  pointStyle: false
+  radius: 0,
 });
 const getAreaSeries = (name, data, color, fill=false) => ({
   label: name,
@@ -308,6 +308,10 @@ async function drawChart(options, series) {
             bottom: 20,
           },
         },
+        hover: {
+          mode: 'nearest',
+          intersect: false,
+        },
         plugins: {
           title: {
             display: true,
@@ -337,6 +341,7 @@ async function drawChart(options, series) {
             mode: 'nearest',
             axis: 'x',
             intersect: false,
+            animation: false,
             titleAlign: 'center',
             callbacks: {
               title: function (context) {
@@ -521,6 +526,17 @@ async function drawChart(options, series) {
               ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
               ctx.stroke();
               ctx.restore();
+
+
+              // Highlight data points for all datasets
+              const timestamp = tooltip.element.$context.raw[0];
+              chart.data.datasets.forEach((dataset, _) => {
+                dataset.radius = dataset.data.map((point, _) => {
+                  return point[0] === timestamp ? 5 : 0;
+                });
+              });
+
+              chart.update('none');
             }
           }
         }
