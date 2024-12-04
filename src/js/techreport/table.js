@@ -58,7 +58,18 @@ function formatData(tableConfig, data) {
     table.push(row);
   }
 
-  return table;
+  const sorted = sortTableBy(table, 'date');
+
+  return sorted;
+}
+
+function sortTableBy(dataset, key) {
+  return dataset.sort((a, b) => {
+    const selectedA = a.find(obj => obj.key === key);
+    const selectedB = b.find(obj => obj.key === key);
+
+    return selectedA.value > selectedB.value ? -1 : 1;
+  });
 }
 
 function getColumnCell(columnConfig, data, date) {

@@ -4,11 +4,15 @@
   <table
     class="table-ui"
     data-breakdown="{{ tech_report_page.config.default.series.breakdown }}"
-    data-category="{{category}}"
+    data-category="{{ category }}"
     data-client="{{ client }}"
     data-component="table"
-    data-endpoint="{{endpoint}}"
+    data-endpoint="{{ endpoint }}"
     data-id="{{ id }}"
+    data-sort-endpoint="{{ sort_endpoint }}"
+    data-sort-metric="{{ sort_metric }}"
+    data-sort-key="{{ sort_key }}"
+    data-sort-order="{{ sort_order }}"
     id="table-{{ id }}"
   >
     <caption class="sr-only">{{ table.caption }}</caption>
@@ -21,11 +25,15 @@
             data-endpoint="{{ column.endpoint }}"
             class="{{ column.className }}"
           >
-            {{ column.name }}
-            {% if column.hiddenSuffix %}
-              <span aria-hidden="true">
-                  {{ column.hiddenSuffix }}
-              </span>
+            {% if column.hiddenName %}
+              <span class="sr-only">{{ column.name }}</span>
+            {% else %}
+              {{ column.name }}
+              {% if column.hiddenSuffix %}
+                <span aria-hidden="true">
+                    {{ column.hiddenSuffix }}
+                </span>
+              {% endif %}
             {% endif %}
           </th>
         {% endfor %}
