@@ -85,9 +85,6 @@ def techreportlanding(page_id):
         "app"
     ) or ["ALL"]
 
-    if request.args.get("tech"):
-        requested_technologies = request.args.get("tech").split(",")
-
     # Get the filters
     requested_geo = request.args.get("geo") or "ALL"
     requested_rank = request.args.get("rank") or "ALL"
