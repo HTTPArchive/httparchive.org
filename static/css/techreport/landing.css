@@ -1,13 +1,8 @@
-.landing-content {
-  margin-top: 10rem;
-}
-
 .choices {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1rem 2rem;
   margin-bottom: 4rem;
-  margin-top: -15rem;
 }
 
 .choices .card {
