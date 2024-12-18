@@ -44,7 +44,6 @@ class TableLinked {
       const sortKey = component.dataset.sortKey;
       const client = component.dataset.client;
 
-      console.log(sortMetric);
       if(sortMetric) {
         this.dataArray = this.dataArray.sort((techA, techB) => {
           // Sort techs by date to get the latest
