@@ -65,12 +65,15 @@ class Section {
     );
   }
 
-  updateSection() {
+  updateSection(content) {
     Object.values(this.components).forEach(component => {
       if(component.data !== this.data) {
         component.data = this.data;
       }
-      component.updateContent();
+      if(component.pageFilters !== this.pageFilters) {
+        component.pageFilters = this.pageFilters;
+      }
+      component.updateContent(content);
     });
   }
 }

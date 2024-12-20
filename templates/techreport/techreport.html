@@ -10,13 +10,17 @@
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/techreport.css') }}" />
 {% endblock %}
 
-{% block report_navigation %}
+{% block custom_navigation %}
   <nav class="report-navigation">
+    <a href="{{ url_for('index') }}">
+      <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+    </a>
     {% set filters = "" %}
     {% if tech_report_page.filters %}
-      {% set filters = "?geo=" + tech_report_page.filters.geo + "&rank=" + tech_report_page.filters.rank %}
+      {% set filters = "?geo=ALL&rank=ALL" %}
     {% endif %}
-    <ul class="navigation-items block-l">
+    <ul class="navigation-items">
+      <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
       <li>
         {% set ariaCurrent = "false" %}
         {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
@@ -24,42 +28,37 @@
           href="/reports/techreport/landing"
           aria-current="{{ ariaCurrent }}"
         >
-          Home
+          <span>Home</span>
         </a>
       </li>
       <li>
         {% set ariaCurrent = "false" %}
-        {% if active_page == "drilldown" %}{% set ariaCurrent = "page" %}{% endif %}
+        {% if active_page == "technology" or requested_page == "technology" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
-          href="/reports/techreport/drilldown{{ filters }}"
+          href="/reports/techreport/tech{{ filters }}&tech=ALL"
           aria-current="{{ ariaCurrent }}"
         >
-          Drilldown
+          <span>Technologies</span>
         </a>
       </li>
       <li>
         {% set ariaCurrent = "false" %}
-        {% if active_page == "comparison" %}{% set ariaCurrent = "page" %}{% endif %}
+        {% if active_page == "category" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
-          href="/reports/techreport/comparison{{ filters }}"
+          href="/reports/techreport/category{{ filters }}&category=CMS"
           aria-current="{{ ariaCurrent }}"
         >
-          Comparison
+          <span>Categories</span>
         </a>
       </li>
     </ul>
   </nav>
-
-  <div class="info-panel">
-    <div class="block-l">
-      <p class="info-label">Beta version</p>
-      <p>This dashboard is still under development.</p>
-    </div>
-  </div>
 {% endblock %}
 
 {% block main %}
-  {% block section %}{% endblock %}
+
+  {% block report_content %}{% endblock %}
+
   <div class="feedback">
     <div class="block-m">
       <h2>Feedback?</h2>
