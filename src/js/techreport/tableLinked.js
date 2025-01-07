@@ -7,19 +7,25 @@ class TableLinked {
     this.pageFilters = filters;
     this.submetric = ''; // TODO: Fetch the default one from somewhere
     this.data = data;
-    this.dataArray = Object.values(data) || [];
+    this.dataArray = [];
 
     this.updateContent();
   }
 
   // Update content in the table
   updateContent(content) {
-    // Temp, move to its own function
-    this.dataArray = Object.values(this.data);
-
     // Select a table based on the passed in id
     const component = document.getElementById(`table-${this.id}`);
     const tbody = component?.querySelector('tbody');
+    const key = component.dataset.key;
+
+    if(key) {
+      this.dataArray = this.data[key] ? Object.values(this.data[key]) : [];
+    } else {
+      this.dataArray = Object.values(this.data);
+    }
+
+    TouchList.dataArray = [];
 
     if(tbody) {
       // Reset what's in the table before adding new content
@@ -53,11 +59,11 @@ class TableLinked {
           const bLatest = bSortedDate[0];
 
           // Get the correct endpoint & metric
-          const aMetric = aLatest[sortEndpoint].find(row => row.name === sortMetric);
-          const bMetric = bLatest[sortEndpoint].find(row => row.name === sortMetric);
+          const aMetric = aLatest?.[sortEndpoint]?.find(row => row?.name === sortMetric);
+          const bMetric = bLatest?.[sortEndpoint]?.find(row => row?.name === sortMetric);
 
-          const aValue = aMetric[client][sortKey];
-          const bValue = bMetric[client][sortKey];
+          const aValue = aMetric?.[client]?.[sortKey];
+          const bValue = bMetric?.[client]?.[sortKey];
 
           return bValue - aValue > 0 ? 1 : -1;
         });
@@ -66,7 +72,7 @@ class TableLinked {
       this.dataArray.forEach(technology => {
         // Set the data and the app name
         const data = technology;
-        const app = technology[0].technology;
+        const app = technology[0]?.technology;
         const formattedApp = DataUtils.formatAppName(app);
 
         // Select the latest entry for each technology

@@ -343,7 +343,9 @@ class TechReport {
           })).then(() => {
             category.data = {
               technologies: allResults,
-              summary: 'todo',
+              info: {
+                origins: category.origins,
+              },
             };
             this.updateCategoryComponents(category);
           });
@@ -367,22 +369,12 @@ class TechReport {
         categoryListEl.innerHTML = '';
 
         const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
-        categories.forEach(category => {
-          const categoryItemEl = document.createElement('li');
-          categoryItemEl.className = 'cell';
-          categoryItemEl.textContent = category;
-          categoryListEl.append(categoryItemEl);
-        });
-
-        const descriptionEl = document.createElement('p');
-        descriptionEl.className = 'tech-description';
-        descriptionEl.textContent = techInfo?.description;
-        categoryListEl.after(descriptionEl);
+        DrilldownHeader.setCategories(categories);
       });
   }
 
   updateCategoryComponents (category) {
-    this.updateComponents(category.data.technologies);
+    this.updateComponents(category.data);
   }
 
   // Update components and sections that are relevant to the current page
@@ -446,7 +438,7 @@ class TechReport {
 
   // Update drilldown page components
   updateDrilldownComponents(data) {
-    DrilldownHeader.update(data, this.filters);
+    DrilldownHeader.update(this.filters);
 
     const app = this.filters.app[0];
 
@@ -460,7 +452,7 @@ class TechReport {
   // Update comparison components
   updateComparisonComponents(data) {
     if(data && Object.keys(data).length > 0) {
-      UIUtils.updateReportComponents(this.sections, data, data, this.page, this.labels);
+      UIUtils.updateReportComponents(this.sections, data);
     } else {
       this.updateWithEmptyData();
     }

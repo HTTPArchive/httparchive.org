@@ -15,9 +15,10 @@
     <a href="{{ url_for('index') }}">
       <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
     </a>
-    {% set filters = "" %}
-    {% if tech_report_page.filters %}
-      {% set filters = "?geo=ALL&rank=ALL" %}
+    {% set params = "?geo=ALL&rank=ALL" %}
+    {% if tech_report_page.params %}
+      {% set filterObj = tech_report_page.params %}
+      {% set params = "?geo=" + filterObj.geo + "&rank=" + filterObj.rank %}
     {% endif %}
     <ul class="navigation-items">
       <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
@@ -35,7 +36,7 @@
         {% set ariaCurrent = "false" %}
         {% if active_page == "technology" or requested_page == "technology" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
-          href="/reports/techreport/tech{{ filters }}&tech=ALL"
+          href="/reports/techreport/tech{{ params }}&tech=ALL"
           aria-current="{{ ariaCurrent }}"
         >
           <span>Technologies</span>
@@ -45,7 +46,7 @@
         {% set ariaCurrent = "false" %}
         {% if active_page == "category" %}{% set ariaCurrent = "page" %}{% endif %}
         <a
-          href="/reports/techreport/category{{ filters }}&category=CMS"
+          href="/reports/techreport/category{{ params }}&category=CMS"
           aria-current="{{ ariaCurrent }}"
         >
           <span>Categories</span>

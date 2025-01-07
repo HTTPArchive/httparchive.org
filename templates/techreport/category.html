@@ -94,12 +94,26 @@
     </div>
 
     <div
+      id="cateogry-summary"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="category"
+    >
+      <h2>Summary</h2>
+      <div class="summary-grid">
+        {% for summary in tech_report_page.config.summary %}
+          {% include "techreport/components/summary_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div
       id="comparison-summary"
       class="card block-m summary report-section"
       data-type="section"
       data-api="cwv,lighthouse,page-weight"
     >
-      <h2>Summary</h2>
+      <h2>Technologies</h2>
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
       {% set client = request.args.get('client', '')  or 'mobile' %}

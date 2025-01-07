@@ -30,22 +30,27 @@ class SummaryCard {
       const metric = card.dataset.metric;
       const category = card.dataset.category;
       const endpoint = card.dataset.endpoint;
-
-      const dataApp = this.data?.[app];
-      const latestToOldest = [...dataApp].sort((a, b) => new Date(b.date) - new Date(a.date));
-      const latestEndpoint = latestToOldest[0]?.[endpoint];
+      const key = card.dataset.key;
 
       let latestValue;
 
-      if(category) {
-        const latestCategory = latestEndpoint?.find(row => row.name === category)?.[client];
-        if(metric) {
-          latestValue = latestCategory?.[metric];
-        } else {
-          latestValue = latestCategory;
-        }
+      if(key) {
+        latestValue = this.data[key][metric];
       } else {
-        latestValue = latestEndpoint?.[client];
+        const dataApp = this.data?.[app];
+        const latestToOldest = [...dataApp].sort((a, b) => new Date(b.date) - new Date(a.date));
+        const latestEndpoint = latestToOldest[0]?.[endpoint];
+
+        if(category) {
+          const latestCategory = latestEndpoint?.find(row => row.name === category)?.[client];
+          if(metric) {
+            latestValue = latestCategory?.[metric];
+          } else {
+            latestValue = latestCategory;
+          }
+        } else {
+          latestValue = latestEndpoint?.[client];
+        }
       }
 
       // Update the html
@@ -64,7 +69,6 @@ class SummaryCard {
 
       }
     }
-
   }
 
 }

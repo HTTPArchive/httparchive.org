@@ -1150,15 +1150,16 @@ select {
 
 .intro .categories {
   margin: -1rem 0 3.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .intro .categories .cell {
-  display: inline-block;
   padding: 0.25rem 0.75rem;
   border-radius: 1rem;
   border: 1px solid var(--color-text);
   font-size: 0.875rem;
-  margin-bottom: 0.5rem;
 }
 
 .page-content {
@@ -1172,7 +1173,7 @@ select {
   background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
-  background-position: 0 25rem;
+  background-position: 0 20rem;
 }
 
 .report-content .intro {
@@ -1182,6 +1183,16 @@ select {
 
 .report-section {
   margin-bottom: 6rem;
+}
+
+#drilldown-summary h2 {
+  margin-top: 4rem;
+  font-size: var(--font-size-regular);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-text-lighter);
+  margin-bottom: 0.5rem;
 }
 
 .report-section > .card {

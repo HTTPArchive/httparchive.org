@@ -95,8 +95,13 @@ def techreportlanding(page_id):
         "app": requested_technologies,
         "category": requested_category,
     }
+    params = {
+        "geo": requested_geo.replace(" ", "+"),
+        "rank": requested_rank.replace(" ", "+"),
+    }
 
     active_tech_report["filters"] = filters
+    active_tech_report["params"] = params
 
     return render_template(
         "techreport/%s.html" % page_id,
@@ -150,8 +155,13 @@ def techreport():
         "app": requested_technologies,
         "category": requested_category,
     }
+    params = {
+        "geo": requested_geo.replace(" ", "+"),
+        "rank": requested_rank.replace(" ", "+"),
+    }
 
     active_tech_report["filters"] = filters
+    active_tech_report["params"] = params
 
     return render_template(
         "techreport/%s.html" % page_id,
