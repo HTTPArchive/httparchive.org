@@ -345,6 +345,7 @@ class TechReport {
               technologies: allResults,
               info: {
                 origins: category.origins,
+                technologies: Object.keys(allResults).length,
               },
             };
             this.updateCategoryComponents(category);
