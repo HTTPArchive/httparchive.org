@@ -20,8 +20,6 @@ class TableLinked {
     const timestamp = document.querySelector('[data-slot="timestamp"]');
     const key = component.dataset.key;
 
-    console.log('timestamp', timestamp);
-
     if(key) {
       this.dataArray = this.data[key] ? Object.values(this.data[key]) : [];
     } else {
