@@ -17,15 +17,16 @@ class TableLinked {
     // Select a table based on the passed in id
     const component = document.getElementById(`table-${this.id}`);
     const tbody = component?.querySelector('tbody');
+    const timestamp = document.querySelector('[data-slot="timestamp"]');
     const key = component.dataset.key;
+
+    console.log('timestamp', timestamp);
 
     if(key) {
       this.dataArray = this.data[key] ? Object.values(this.data[key]) : [];
     } else {
       this.dataArray = Object.values(this.data);
     }
-
-    TouchList.dataArray = [];
 
     if(tbody) {
       // Reset what's in the table before adding new content
@@ -67,6 +68,10 @@ class TableLinked {
 
           return bValue - aValue > 0 ? 1 : -1;
         });
+      }
+
+      if(timestamp) {
+        timestamp.textContent = this.dataArray[1]?.[0].date;
       }
 
       this.dataArray.forEach(technology => {
@@ -132,9 +137,9 @@ class TableLinked {
               let value = dataset?.find(entry => entry.name === column.subcategory);
               value = value?.[component.dataset.client]?.[column?.metric];
               if(column.suffix) {
-                cell.innerHTML = `${value}${column.suffix}`;
+                cell.innerHTML = `${value?.toLocaleString()}${column.suffix}`;
               } else {
-                cell.innerHTML = `${value}`;
+                cell.innerHTML = `${value?.toLocaleString()}`;
               }
             }
 

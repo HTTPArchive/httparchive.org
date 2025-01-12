@@ -99,7 +99,7 @@
       data-type="section"
       data-api="category"
     >
-      <h2>Summary</h2>
+      <h2 class="summary-heading">Summary</h2>
       <div class="summary-grid">
         {% for summary in tech_report_page.config.summary %}
           {% include "techreport/components/summary_card.html" %}
@@ -121,6 +121,10 @@
       {% set sort_metric = "adoption" %}
       {% set sort_key = "origins" %}
       {% set sort_order = "desc" %}
+
+      <p class="heading">
+        Latest data: <span data-slot="timestamp"></span>
+      </p>
 
       {% set table = component.table %}
       {% include "techreport/components/table_linked.html" %}

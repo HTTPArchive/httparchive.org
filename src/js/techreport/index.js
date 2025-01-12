@@ -315,7 +315,7 @@ class TechReport {
           category.technologies.forEach(tech => allResults[tech] = []);
 
           Promise.all(apis.map(api => {
-            const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
+            const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
 
             return fetch(url)
               .then(techResult => techResult.json())

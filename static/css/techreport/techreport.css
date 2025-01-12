@@ -172,6 +172,14 @@ nav {
 /* ---- Components ---- */
 /* -------------------- */
 
+/* Small headings */
+.heading {
+  font-size: 0.875rem;
+  color: var(--color-text-lighter);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
 /* Overwriting the current HA header */
 :is(header, footer) {
   padding: 1rem 0;
@@ -1185,7 +1193,11 @@ select {
   margin-bottom: 6rem;
 }
 
-#drilldown-summary h2 {
+#cateogry-summary {
+  margin-bottom: 1rem;
+}
+
+h2.summary-heading {
   margin-top: 4rem;
   font-size: var(--font-size-regular);
   text-transform: uppercase;
@@ -1247,13 +1259,6 @@ select {
 /* Chart summary list */
 .data-summary {
   margin-top: 2rem;
-}
-
-.data-summary .heading h4 {
-  font-size: 0.875rem;
-  color: var(--color-text-lighter);
-  text-transform: uppercase;
-  font-weight: 600;
 }
 
 .data-summary .breakdown-list {

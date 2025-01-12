@@ -56,7 +56,7 @@ class SummaryCard {
       // Update the html
       if(latestValue) {
         const valueSlot = card.querySelector('[data-slot="value"]');
-        valueSlot.innerHTML = latestValue;
+        valueSlot.innerHTML = latestValue?.toLocaleString();
 
         const progress = card.querySelectorAll('.lighthouse-progress');
         progress.forEach(circle => {
