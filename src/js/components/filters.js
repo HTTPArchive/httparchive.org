@@ -105,9 +105,9 @@ class Filters {
         techs.forEach((technology) => {
           const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
           const option = optionTmpl.querySelector('option');
-          const formattedTech = technology.technology;
-          option.textContent = technology.technology;
-          option.value = formattedTech;
+          const formattedTech = DataUtils.formatAppName(technology.technology);
+          option.textContent = formattedTech;
+          option.value = technology.technology;
           if(formattedTech === techSelector.getAttribute('data-selected')) {
             option.selected = true;
           }
@@ -206,6 +206,8 @@ class Filters {
 
   /* Duplicate the technology dropdowns */
   addTechnologySelector(event) {
+    console.log('add tech selector');
+
     event.preventDefault();
 
     const selectorTemplate = document.getElementById('tech-selector').content.cloneNode(true);
@@ -215,21 +217,12 @@ class Filters {
     const removeButton = selectorTemplate.querySelector('.remove-tech');
 
     /* Set a unique name on the new element (based on the amount of techs) */
-    const techId = `tech-${document.querySelectorAll('select.tech[name="tech"]').length + 1}`;
+    const techCount = document.querySelectorAll('select.tech[name="tech"]').length;
+    const techNr = techCount + 1;
+    const techId = `tech-${techNr}`;
     selectElement.setAttribute('id', techId);
     labelElement.setAttribute('for', techId);
-
-    /* Controls for filtering the techs by category */
-    // const categorySelect = selectorTemplate.querySelector('select.categories-selector');
-    // const categoryLabel = selectorTemplate.querySelector('label[for="categories-tech-new"]');
-    // categorySelect.innerHTML = document.querySelector('select.categories-selector').innerHTML;
-    // categorySelect.addEventListener('change', this.updateCategory);
-    // categorySelect.setAttribute('id', `${techId}-category`);
-    // categoryLabel.setAttribute('for', `${techId}-category`);
-    // categorySelect.setAttribute('data-tech', techId);
-    /* Set the selected element */
-    // categorySelect.innerHTML = document.querySelector('select.categories-selector')?.innerHTML;
-    // categorySelect.getElementsByTagName('option')[0].selected = true;
+    labelElement.textContent = `Technology ${techNr}`;
 
     if(removeButton) {
       removeButton.dataset.tech = techId;
