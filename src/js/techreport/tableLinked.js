@@ -92,6 +92,15 @@ class TableLinked {
             let cell;
             if(column.type === 'heading') {
               cell = document.createElement('th');
+              cell.classList.add('app-cell');
+
+              const img = document.createElement('span');
+              const imgUrl = `https://cdn.httparchive.org/static/icons/${formattedApp}.png`;
+              img.setAttribute('aria-hidden', 'true');
+              img.setAttribute('style', `background-image: url(${imgUrl})`);
+              img.classList.add('app-img');
+              cell.append(img);
+
               const link = document.createElement('a');
               link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
               link.innerHTML = formattedApp;
@@ -123,24 +132,32 @@ class TableLinked {
               cell.append(checkbox);
 
               const label = document.createElement('label');
-              label.innerHTML = formattedApp;
+              label.innerHTML = `Select ${formattedApp}`;
               label.classList.add('sr-only');
               label.setAttribute('for', `${app}-table-${this.id}`);
               cell.append(label);
-
+              cell.classList.add('check-cell');
             } else if(column.key === 'client') {
               cell = document.createElement('td');
               cell.innerHTML = component.dataset.client;
             } else {
+              const cellContent = document.createElement('span');
               cell = document.createElement('td');
               const dataset = latest?.[column?.endpoint];
               let value = dataset?.find(entry => entry.name === column.subcategory);
               value = value?.[component.dataset.client]?.[column?.metric];
               if(column.suffix) {
-                cell.innerHTML = `${value?.toLocaleString()}${column.suffix}`;
+                cellContent.innerHTML = `${value?.toLocaleString()}${column.suffix}`;
               } else {
-                cell.innerHTML = `${value?.toLocaleString()}`;
+                cellContent.innerHTML = `${value?.toLocaleString()}`;
               }
+
+              if(column.viz === "progress") {
+                cell.setAttribute('style', `--cell-value: ${value}%`);
+                cell.dataset.value = value;
+              }
+
+              cell.append(cellContent);
             }
 
             if(column.className) {

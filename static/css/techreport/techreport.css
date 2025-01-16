@@ -1029,6 +1029,34 @@ select {
   outline-style: dotted;
 }
 
+.table-ui .app-cell .app-img {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.75rem;
+  position: relative;
+  top: -0.12rem;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+
+.table-ui .app-cell a {
+  display: inline-block;
+  width: 20rem;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.table-ui .check-cell {
+  min-width: 2rem;
+}
+
+.table-ui .check-cell input[type=checkbox] {
+  margin: 0;
+}
+
 .table-ui td ul {
   height: 30px;
   display: flex;
@@ -1086,6 +1114,10 @@ select {
 
 .table-ui td.pct-value {
   position: relative;
+}
+
+.table-ui td.cwv-cell {
+  min-width: 12rem;
 }
 
 .table-ui td.pct-value[data-value] span {
