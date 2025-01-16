@@ -87,7 +87,7 @@
       "id": "drilldown",
       "title": "Drilldown",
       "subtitle": "Technology Report",
-      "description": "Drilldown placeholder",
+      "description": "View detailed information about one technology and compare mobile and desktop data over time.",
       "config": {
         "default": {
           "app": ["ALL"],
@@ -156,7 +156,7 @@
           "table": {
             "param": "",
             "default": "adoption",
-            "caption": "Usage placeholder",
+            "caption": "Amount of origins a technology has over time.",
             "columns": [
               {
                 "key": "date",
@@ -756,7 +756,7 @@
         },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
-          "description": "Placeholder - combination of several metrics",
+          "description": "Comparison of the percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics.",
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
@@ -795,7 +795,7 @@
           "table": {
             "param": "good-cwv-over-time",
             "default": "overall",
-            "caption": "Good Core Web Vitals placeholder",
+            "caption": "Comparison of the percentage of origins of the different technologies passing all three Core Web Vitals (LCP, INP, CLS), visualized over time.",
             "columns": [
               {
                 "key": "date",
@@ -863,7 +863,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "",
+          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here.",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -893,7 +893,7 @@
           "table": {
             "param": "median-lighthouse-over-time",
             "default": "performance",
-            "caption": "Lighthouse placeholder",
+            "caption": "Comparing the Lighthouse scores of the different selected technologies over time.",
             "columns": [
               {
                 "key": "date",
@@ -1123,7 +1123,7 @@
           }
         }
       },
-      "description": "Comparison placeholder"
+      "description": "Get a detailed comparison for 2 to 10 technologies."
     },
     "category": {
       "id": "category",
