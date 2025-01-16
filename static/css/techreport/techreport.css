@@ -1205,6 +1205,11 @@ select {
   padding: 0;
 }
 
+.intro .app-description {
+  margin-top: -1.5rem;
+  margin-bottom: 2rem;
+}
+
 .intro ul {
   padding-left: 0;
   margin-left: 0;
@@ -1235,7 +1240,7 @@ select {
   background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
-  background-position: 0 20rem;
+  background-position: 0 25rem;
 }
 
 .report-content .intro {

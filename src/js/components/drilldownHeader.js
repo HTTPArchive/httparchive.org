@@ -30,6 +30,13 @@ function setCategories(categories) {
   }
 }
 
+function setDescription(description) {
+  if(description && description !== "") {
+    const descr = document.querySelector('p.app-description');
+    descr.textContent = description;
+  }
+}
+
 function update(filters) {
   const app = filters.app[0];
 
@@ -42,4 +49,5 @@ function update(filters) {
 export const DrilldownHeader = {
   update,
   setCategories,
+  setDescription,
 }
