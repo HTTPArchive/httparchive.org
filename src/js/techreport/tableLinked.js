@@ -26,6 +26,8 @@ class TableLinked {
       this.dataArray = Object.values(this.data);
     }
 
+    this.dataArray = this.dataArray.filter(row => row.length > 0);
+
     if(tbody) {
       // Reset what's in the table before adding new content
       tbody.innerHTML = '';
@@ -69,7 +71,7 @@ class TableLinked {
       }
 
       if(timestamp) {
-        timestamp.textContent = this.dataArray[1]?.[0].date;
+        timestamp.textContent = this.dataArray[1]?.[0]?.date;
       }
 
       this.dataArray.forEach(technology => {
