@@ -218,13 +218,18 @@ class Filters {
     const techCount = document.querySelectorAll('select.tech[name="tech"]').length;
     const techNr = techCount + 1;
     const techId = `tech-${techNr}`;
+    const techLabel = `Technology ${techNr}`;
     selectElement.setAttribute('id', techId);
     labelElement.setAttribute('for', techId);
-    labelElement.textContent = `Technology ${techNr}`;
+    labelElement.textContent = techLabel;
 
     if(removeButton) {
       removeButton.dataset.tech = techId;
       removeButton.classList.remove('hidden');
+
+      const removeIcon = removeButton.querySelector('img');
+      const removeIconAlt = removeIcon.getAttribute('alt');
+      removeIcon.setAttribute('alt', `${removeIconAlt} ${techLabel}`);
 
       /* Bind functionality to the button */
       removeButton.addEventListener('click', this.removeTechnology);
