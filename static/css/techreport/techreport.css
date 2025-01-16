@@ -98,7 +98,7 @@
 /* ------------------------- */
 
 /* Page header and footer */
-body > :is(header, footer) {
+body footer {
   background-color: var(--color-card-background);
 }
 
@@ -282,6 +282,23 @@ nav {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.report-navigation .hamburger {
+  padding: 1rem;
+  color: var(--color-text-lighter);
+}
+
+.report-navigation .hamburger:is(:hover, :focus-visible) {
+  color: var(--color-text-darker);
+}
+
+.report-navigation .hamburger:focus-visible {
+  outline: 1px solid var(--color-text-darker);
+}
+
+.report-navigation .hamburger svg {
+  height: 1.75rem;
 }
 
 /* Page Filters */

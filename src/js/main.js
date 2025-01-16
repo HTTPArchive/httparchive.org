@@ -1,11 +1,13 @@
-const nav = document.querySelector('header nav');
+const nav = document.querySelector('#desktop');
 const mobileNav = document.querySelector('nav#mobile');
-const hamburger = document.querySelector('header .hamburger');
+const hamburger = document.querySelector('.hamburger');
 
 if (mobileNav) {
   if (hamburger) {
     hamburger.addEventListener('click', (e) => {
+      const expanded = hamburger.getAttribute('aria-expanded');
       mobileNav.classList.toggle('active');
+      hamburger.ariaExpanded = expanded === 'true' ? 'false' : 'true';
     });
   }
 

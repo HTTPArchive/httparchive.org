@@ -206,8 +206,6 @@ class Filters {
 
   /* Duplicate the technology dropdowns */
   addTechnologySelector(event) {
-    console.log('add tech selector');
-
     event.preventDefault();
 
     const selectorTemplate = document.getElementById('tech-selector').content.cloneNode(true);
