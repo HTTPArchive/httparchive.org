@@ -285,7 +285,7 @@ nav {
 }
 
 .report-navigation .hamburger {
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   color: var(--color-text-lighter);
 }
 
@@ -683,6 +683,11 @@ select {
   top: 0.75rem;
   left: 2.5rem;
   border: 1px solid var(--color-text-lighter);
+}
+
+:is(#open-filters, .open-filters) img {
+  width: 1rem;
+  height: 1rem;
 }
 
 .filter-bar {

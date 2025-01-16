@@ -22,7 +22,7 @@
   padding: 0;
 }
 
-.choices .card h2 a:before {
+.choices .card h2 a::before {
   content: "";
   display: block;
   width: 100%;
