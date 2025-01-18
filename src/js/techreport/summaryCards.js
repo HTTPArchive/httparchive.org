@@ -58,13 +58,12 @@ class SummaryCard {
         const valueSlot = card.querySelector('[data-slot="value"]');
         valueSlot.innerHTML = latestValue?.toLocaleString();
 
-        const progress = card.querySelectorAll('.lighthouse-progress');
+        const progress = card.querySelectorAll('.progress-circle');
         progress.forEach(circle => {
           const scoreCategory = DataUtils.getLighthouseScoreCategories(latestValue, this.config.lighthouse_brackets);
           const scoreCategoryName = scoreCategory?.name;
-          circle.setAttribute('style', `--offset: ${100 - latestValue};`);
-          const chart = card.querySelector('svg.progress-chart');
-          chart.classList.add(scoreCategoryName);
+          circle.setAttribute('style', `--offset: ${latestValue}%;`);
+          circle.classList.add(scoreCategoryName);
         });
 
       }

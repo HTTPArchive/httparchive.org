@@ -1297,8 +1297,7 @@ h2.summary-heading {
   text-decoration: none;
 }
 
-.summary-linked-value,
-.summary-suffix {
+.summary-value {
   font-size: var(--font-size-medium);
 }
 
@@ -1480,50 +1479,47 @@ path.highcharts-tick {
 /* ------------------------ */
 /* ----- Small charts ----- */
 /* ------------------------ */
-.progress-chart {
-  transform: rotate(-90deg);
-}
 
-.summary-value:has(.progress-chart) {
-  position: relative;
-  margin-top: 1rem;
-}
-
-.summary-value:has(.progress-chart) > p {
+.progress-circle {
+  display: inline-block;
+  background: yellow;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 4em;
+  padding-top: 0.525em;
   text-align: center;
-  width: 50%;
-  height: 100%;
-  height: calc(100% - 0.5rem);
-  position: absolute;
-  top: 0;
-  padding-top: 25%;
-  padding-top: calc(25% - 0.55rem);
-  line-height: 100%;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  background-color: var(--progess-color);
+
+  --progress-start: calc(70% - 1px);
+  --progess-width: calc(70% - 0.25em);
+  --progress-end: calc(70% - 0.25em + 1.5px);
+  --progess-color-empty: #E8E8E8;
+  --offset-start: 0.75%;
+  --offset-end: calc(var(--offset) - var(--offset-start));
+  background-image: radial-gradient(white 0% var(--progess-width), transparent var(--progess-width) 100%),
+    conic-gradient(transparent 0% var(--offset), var(--progess-color-empty) var(--offset) 100%),
+    conic-gradient(var(--progess-color-border) 0% var(--offset-start), transparent var(--offset-start) 100%),
+    conic-gradient(transparent 0% var(--offset-end), var(--progess-color-border) var(--offset-end) 100%),
+    radial-gradient(transparent 0% var(--progress-start), var(--progess-color-border) var(--progress-start) 100%),
+    radial-gradient(var(--progess-color-border) 0% var(--progress-end), transparent var(--progress-end) 100%);
 }
 
-.lighthouse-progress {
-  stroke-dashoffset: var(--offset);
-  transform-origin: center;
+.progress-circle.poor {
+  --progess-color: #E35D4B;
+  --progess-color-border: #C94635;
 }
 
-.lighthouse-progress.border-1 {
-  transform: rotate(-1deg);
+.progress-circle.good {
+  --progess-color: #5DA471;
+  --progess-color-border: #38894F;
 }
 
-.lighthouse-progress.border-2 {
-  transform: rotate(1deg);
-}
-
-.progress-chart.poor .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #f33;
-}
-
-.progress-chart.good .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #18a975;
-}
-
-.progress-chart.improvement .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #c7870b;
+.progress-circle.improvement {
+  --progess-color: #D2AC4C;
+  --progess-color-border: #BA8D1E;
 }
 
 /* ----------------------- */

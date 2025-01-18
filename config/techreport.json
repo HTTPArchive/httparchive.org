@@ -403,28 +403,32 @@
               "category": "performance",
               "metric": "median_score_pct",
               "label": "Performance",
-              "url": "?median-lighthouse-over-time=performance#lighthouse"
+              "url": "?median-lighthouse-over-time=performance#lighthouse",
+              "description": "Median Lighthouse <strong>performance</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "accessibility",
               "metric": "median_score_pct",
               "label": "Accessibility",
-              "url": "?median-lighthouse-over-time=accessibility#lighthouse"
+              "url": "?median-lighthouse-over-time=accessibility#lighthouse",
+              "description": "Median Lighthouse <strong>accessibility</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "seo",
               "metric": "median_score_pct",
               "label": "SEO",
-              "url": "?median-lighthouse-over-time=seo#lighthouse"
+              "url": "?median-lighthouse-over-time=seo#lighthouse",
+              "description": "Median Lighthouse <strong>SEO</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "best_practices",
               "metric": "median_score_pct",
               "label": "Best Practices",
-              "url": "?median-lighthouse-over-time=best_practices#lighthouse"
+              "url": "?median-lighthouse-over-time=best_practices#lighthouse",
+              "description": "Median Lighthouse <strong>best practices</strong> score."
             }
           ]
         },
