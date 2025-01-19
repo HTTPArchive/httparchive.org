@@ -818,6 +818,11 @@ select {
   margin-top: 1rem;
 }
 
+.summary-grid .card .progress-circle {
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
 /* Submetric selector */
 .subcategory-selector-wrapper {
   border: 1px solid #959494;
@@ -986,6 +991,10 @@ select {
   padding: 1rem 1rem 1rem 0;
 }
 
+.table-ui :is(td, th):has(.progress-circle) {
+  padding: 0.5rem 1rem 0.5rem 0;
+}
+
 .table-ui tbody tr {
   border-bottom: 1px solid var(--color-card-border);
 }
@@ -1132,8 +1141,9 @@ select {
   width: 100%;
   width: calc(100% - 4.95rem);
   position: absolute;
-  top: 1.5rem;
+  top: 50%;
   right: 2.5rem;
+  transform: translateY(-50%);
   border: 1px solid var(--color-progress-basic-border);
   border-radius: 3px;
   background-image: linear-gradient(
@@ -1480,26 +1490,23 @@ path.highcharts-tick {
 /* ----- Small charts ----- */
 /* ------------------------ */
 
-.progress-circle {
+:not(th).progress-circle {
   display: inline-block;
-  background: yellow;
   width: 2.5em;
   height: 2.5em;
   border-radius: 4em;
   padding-top: 0.525em;
   text-align: center;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
 
   background-color: var(--progess-color);
 
   --progress-start: calc(70% - 1px);
   --progess-width: calc(70% - 0.25em);
   --progress-end: calc(70% - 0.25em + 1.5px);
-  --progess-color-empty: #E8E8E8;
+  --progess-color-empty: var(--color-progress-basic-bg);
   --offset-start: 0.75%;
   --offset-end: calc(var(--offset) - var(--offset-start));
-  background-image: radial-gradient(white 0% var(--progess-width), transparent var(--progess-width) 100%),
+  background-image: radial-gradient(var(--color-card-background) 0% var(--progess-width), transparent var(--progess-width) 100%),
     conic-gradient(transparent 0% var(--offset), var(--progess-color-empty) var(--offset) 100%),
     conic-gradient(var(--progess-color-border) 0% var(--offset-start), transparent var(--offset-start) 100%),
     conic-gradient(transparent 0% var(--offset-end), var(--progess-color-border) var(--offset-end) 100%),

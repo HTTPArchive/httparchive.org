@@ -1,9 +1,10 @@
 import { DataUtils } from "./utils/data";
 
 class TableLinked {
-  constructor(id, config, filters, data) {
+  constructor(id, pageConfig, globalConfig, filters, data) {
     this.id = id;
-    this.pageConfig = config;
+    this.config = globalConfig;
+    this.pageConfig = pageConfig;
     this.pageFilters = filters;
     this.submetric = ''; // TODO: Fetch the default one from somewhere
     this.data = data;
@@ -152,9 +153,13 @@ class TableLinked {
                 cellContent.innerHTML = `${value?.toLocaleString()}`;
               }
 
-              if(column.viz === "progress") {
+              if(column.viz === 'progress') {
                 cell.setAttribute('style', `--cell-value: ${value}%`);
                 cell.dataset.value = value;
+              } else if(column.viz === 'progress-circle') {
+                const score = DataUtils.getLighthouseScoreCategories(value, this.config.lighthouse_brackets);
+                cellContent.classList.add('progress-circle', score.name);
+                cellContent.setAttribute('style', `--offset: ${value}%`);
               }
 
               cell.append(cellContent);
