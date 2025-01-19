@@ -387,14 +387,14 @@ nav {
   padding-bottom: 2.5rem;
 }
 
-#page-filters .lens label {
+#page-filters .lens label, #page-filters .breakdown label {
   color: var(--color-text);
   font-size: 0.875rem;
   font-weight: 600;
   width: 100%;
 }
 
-#page-filters .lens .select-label select {
+#page-filters .lens .select-label select, #page-filters .breakdown select {
   color: var(--color-text-darker);
   font-size: 0.9rem;
   width: 100%;
@@ -432,8 +432,6 @@ nav {
   position: relative;
   border: none;
   margin-bottom: 0;
-  padding: 1.75rem 0.5rem 0.5rem 0.75rem;
-  font-size: 1rem;
   line-height: 100%;
   color: var(--color-text-darker);
   border-radius: 3px;
@@ -737,50 +735,6 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.client-breakdown-wrapper label {
-  display: block;
-  font-size: 0.825rem;
-  font-weight: 600;
-  color: var(--color-text-lighter);
-  width: 100%;
-  margin-bottom: 0;
-}
-
-.client-breakdown-wrapper select {
-  appearance: none;
-  background-color: transparent;
-  z-index: 1;
-  border-radius: 0;
-  border: none;
-  color: var(--color-text);
-  padding: 0;
-  width: 5rem;
-  border-bottom: 1px solid var(--color-text-lighter);
-  display: block;
-  font-size: 1rem;
-}
-
-.client-breakdown-wrapper:has(select:focus) {
-  border: 1px solid var(--color-teal-darker);
-  border-radius: 3px;
-}
-
-/* So that the outline only gets removed if :has is supported */
-.client-breakdown-wrapper:has(select:focus) select {
-  outline: none;
-  border: none;
-  position: relative;
-  left: 1px;
-  top: -1px;
-  margin-bottom: -1px;
-}
-
-.client-breakdown-wrapper:has(select:focus) label {
-  position: relative;
-  left: 1px;
-  top: -1px;
 }
 
 .result-info > div {

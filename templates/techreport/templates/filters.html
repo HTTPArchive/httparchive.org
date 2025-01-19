@@ -47,8 +47,8 @@
   {% include "techreport/components/filter_meta.html" %}
   <fieldset class="breakdown">
     <legend>Breakdown</legend>
-    <div class="client-breakdown-wrapper">
-      <label for="client-breakdown">Client</label>
+    <label for="client-breakdown">Client</label>
+    <div class="select-label">
       <select name="client-breakdown" id="client-breakdown">
         {% if request.args.get('client', '') == 'desktop' %}
         <option value="mobile">Mobile</option>
