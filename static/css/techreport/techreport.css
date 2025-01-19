@@ -387,19 +387,26 @@ nav {
   padding-bottom: 2.5rem;
 }
 
-#page-filters .lens label, #page-filters .breakdown label {
+#page-filters .lens label, .breakdown label {
   color: var(--color-text);
   font-size: 0.875rem;
   font-weight: 600;
   width: 100%;
 }
 
-#page-filters .lens .select-label select, #page-filters .breakdown select {
+#page-filters .lens .select-label select, .breakdown select {
   color: var(--color-text-darker);
   font-size: 0.9rem;
   width: 100%;
   border-color: var(--color-text-lighter);
   padding: 0.825rem;
+}
+
+.breakdown select {
+  background-color: transparent;
+  appearance: none;
+  margin: 0;
+  border: none;
 }
 
 #page-filters .lens .select-label:not(:last-of-type) {
@@ -515,10 +522,6 @@ nav {
 
 .technology-filters .tech-selector-group:first-of-type {
   margin-top: -1.5rem;
-}
-
-.breakdown {
-  margin-top: 2.5rem;
 }
 
 .breakdown legend {
@@ -1142,12 +1145,25 @@ select {
   margin-top: 0;
   background-color: transparent;
   padding: 4rem 0;
+  margin-bottom: 2.5rem;
 }
 
 .intro h1 {
   font-size: var(--font-size-xlarge);
-  margin-bottom: 2.5rem;
   margin-top: 0;
+}
+
+.intro .heading-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+  row-gap: 0.5rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.intro .heading-wrapper .breakdown {
+  min-width: 17ch;
 }
 
 .intro h2 {
@@ -1170,7 +1186,6 @@ select {
 }
 
 .intro .app-description {
-  margin-top: -1.5rem;
   margin-bottom: 2rem;
 }
 

@@ -12,10 +12,13 @@
 
   <div id="report-content" class="report-content">
     <div class="info intro block-m">
-      <h1>
-        <span class="subtitle">Technology</span>
-        <span class="main-title">Compare {{ technologies | length }} technologies</span>
-      </h1>
+      <div class="heading-wrapper">
+        <h1>
+          <span class="subtitle">Technology</span>
+          <span class="main-title">Compare {{ technologies | length }} technologies</span>
+        </h1>
+        {% include "techreport/components/filter_breakdown.html" %}
+      </div>
     </div>
 
     <!-- Section: Summary of the main metrics -->
