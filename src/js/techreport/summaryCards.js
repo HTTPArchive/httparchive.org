@@ -35,7 +35,7 @@ class SummaryCard {
       let latestValue;
 
       if(key) {
-        latestValue = this.data[key][metric];
+        latestValue = this.data[key][metric][client] || this.data[key][metric];
       } else {
         const dataApp = this.data?.[app];
         const latestToOldest = [...dataApp].sort((a, b) => new Date(b.date) - new Date(a.date));
