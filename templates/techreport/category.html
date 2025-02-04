@@ -72,10 +72,13 @@
     <div class="intro block-m">
       <div class="info">
         <div class="heading-wrapper">
-          <h1>
-            <span class="subtitle">Category</span>
-            <span class="">{{ tech_report_page.filters.category or 'CMS' }}</span>
-          </h1>
+          <div>
+            <h1>
+              <span class="subtitle">Category</span>
+              <span class="">{{ tech_report_page.filters.category or 'CMS' }}</span>
+            </h1>
+            <p class="app-description"></p>
+          </div>
           {% include "techreport/components/filter_breakdown.html" %}
         </div>
       </div>

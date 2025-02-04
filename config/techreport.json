@@ -474,7 +474,8 @@
               {
                 "key": "median_score_pct",
                 "name": "Median score",
-                "className": "main-cell"
+                "className": "main-cell",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",
@@ -704,7 +705,6 @@
             "#E24070"
           ],
           "overrides": {
-            "WordPress": "#3858e9",
             "ALL": "#69797e"
           }
         },
@@ -919,7 +919,8 @@
                 "key": "median_score_pct",
                 "name": "Median lighthouse score",
                 "breakdown": "app",
-                "className": "main-cell"
+                "className": "main-cell",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",

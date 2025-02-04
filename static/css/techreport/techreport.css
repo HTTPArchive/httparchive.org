@@ -1006,7 +1006,6 @@ select {
   background-size: 100% 100%;
 }
 
-
 .table-ui .app-cell a {
   display: inline-block;
   width: 20rem;
@@ -1151,6 +1150,13 @@ select {
 .intro h1 {
   font-size: var(--font-size-xlarge);
   margin-top: 0;
+}
+
+.title-img {
+  max-height: 1.5rem;
+  margin-left: 0.5rem;
+  position: relative;
+  top: -0.1rem;
 }
 
 .intro .heading-wrapper {
