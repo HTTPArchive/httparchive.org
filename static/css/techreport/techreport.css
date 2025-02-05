@@ -387,14 +387,16 @@ nav {
   padding-bottom: 2.5rem;
 }
 
-#page-filters .lens label, .breakdown label {
+#page-filters .lens label,
+.breakdown label {
   color: var(--color-text);
   font-size: 0.875rem;
   font-weight: 600;
   width: 100%;
 }
 
-#page-filters .lens .select-label select, .breakdown select {
+#page-filters .lens .select-label select,
+.breakdown select {
   color: var(--color-text-darker);
   font-size: 0.9rem;
   width: 100%;
@@ -1018,7 +1020,7 @@ select {
   min-width: 2rem;
 }
 
-.table-ui .check-cell input[type=checkbox] {
+.table-ui .check-cell input[type="checkbox"] {
   margin: 0;
 }
 
@@ -1362,6 +1364,7 @@ h2.summary-heading {
 
 .highcharts-grid-line {
   stroke: var(--graph-color-line) !important;
+  stroke-dasharray: 3 5;
 }
 
 svg.highcharts-root text {
@@ -1472,7 +1475,6 @@ path.highcharts-tick {
   border-radius: 4em;
   padding-top: 0.525em;
   text-align: center;
-
   background-color: var(--progess-color);
 
   --progress-start: calc(70% - 1px);
@@ -1481,6 +1483,7 @@ path.highcharts-tick {
   --progess-color-empty: var(--color-progress-basic-bg);
   --offset-start: 0.75%;
   --offset-end: calc(var(--offset) - var(--offset-start));
+
   background-image: radial-gradient(var(--color-card-background) 0% var(--progess-width), transparent var(--progess-width) 100%),
     conic-gradient(transparent 0% var(--offset), var(--progess-color-empty) var(--offset) 100%),
     conic-gradient(var(--progess-color-border) 0% var(--offset-start), transparent var(--offset-start) 100%),
@@ -1490,18 +1493,18 @@ path.highcharts-tick {
 }
 
 .progress-circle.poor {
-  --progess-color: #E35D4B;
-  --progess-color-border: #C94635;
+  --progess-color: #e35d4b;
+  --progess-color-border: #c94635;
 }
 
 .progress-circle.good {
-  --progess-color: #5DA471;
-  --progess-color-border: #38894F;
+  --progess-color: #5da471;
+  --progess-color-border: #38894f;
 }
 
 .progress-circle.improvement {
-  --progess-color: #D2AC4C;
-  --progess-color-border: #BA8D1E;
+  --progess-color: #d2ac4c;
+  --progess-color-border: #ba8d1e;
 }
 
 /* ----------------------- */
