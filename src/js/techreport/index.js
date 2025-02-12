@@ -303,7 +303,17 @@ class TechReport {
       .then(result => result.json())
       .then(result => {
         const category = result[0];
-        const technologyFormatted = category?.technologies?.join('%2C')
+        console.log('techs to cut', category.technologies, category.technologies.length);
+
+        const rows = 10;
+        const pageNr = this.filters.page;
+        const firstTechNr = (pageNr - 1) * rows;
+        const lastTechNr = pageNr * rows;
+        const paginatedTechs = category?.technologies?.slice(firstTechNr, lastTechNr);
+
+        console.log('paginated', paginatedTechs);
+
+        const technologyFormatted = paginatedTechs?.join('%2C')
           .replaceAll(" ", "%20");
 
           const geo = this.filters.geo.replaceAll(" ", "%20");
@@ -312,7 +322,7 @@ class TechReport {
           const rankFormatted = rank.replaceAll(" ", "%20");
 
           let allResults = {};
-          category.technologies.forEach(tech => allResults[tech] = []);
+          paginatedTechs.forEach(tech => allResults[tech] = []);
 
           Promise.all(apis.map(api => {
             const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
@@ -345,7 +355,7 @@ class TechReport {
               technologies: allResults,
               info: {
                 origins: category.origins,
-                technologies: Object.keys(allResults).length,
+                technologies: category?.technologies?.length,
               },
             };
             this.updateCategoryComponents(category);

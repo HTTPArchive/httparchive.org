@@ -121,6 +121,21 @@
       {% include "techreport/components/table_linked.html" %}
 
       <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
+
+      <div class="table-pagination">
+          {% set filters = tech_report_page.filters %}
+          <p data-pagination="previous">
+            {% if filters.page and filters.page > 1 %}
+              <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}">Previous page </a>
+            {% endif %}
+          </p>
+        <p data-pagination="next">
+          {% if not filters.last_page and filters.last_page == False  %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}">Next page</a>
+          {% endif %}
+          </p>
+      </div>
     </div>
+
   </div>
 {% endblock %}
