@@ -1,29 +1,18 @@
 {% extends "techreport/report.html" %}
 
+{% block filters %}
+  {% include "techreport/templates/filters.html" %}
+{% endblock %}
+
 {% block section %}
   {{ super() }}
 
-  <div class="intro block-m">
-    <div class="info">
-      <h1>
-        <span class="subtitle">Tech Report</span>
-        <span class="">Drilldown</span>
-      </h1>
-    </div>
-    <div class="filters">
-      {% include "techreport/templates/filters.html" %}
-    </div>
-  </div>
-
-  {% set filter_tech_title = tech_report_page.filters.app[0] or 'All technologies' %}
-  {% include "techreport/components/filter_info_header.html" %}
-
   <div id="report-content" class="report-content">
     <div class="info intro block-m">
-      <h2>
-        <span class="subtitle">Results for</span>
+      <h1>
+        <span class="subtitle">Technology</span>
         <span class="main-title">ALL</span>
-      </h2>
+      </h1>
       <ul class="category-list categories">
         <li class="cell">Uncategorized</li>
       </ul>
@@ -36,7 +25,7 @@
       data-type="section"
       data-api="cwv,lighthouse,page-weight"
     >
-      <h2>Summary</h2>
+      <h2 class="summary-heading">Summary</h2>
       <div class="summary-grid">
         {% for summary in tech_report_page.config.summary %}
           {% include "techreport/components/summary_card.html" %}
@@ -53,7 +42,7 @@
       data-api="cwv"
     >
       <h2>Core Web Vitals</h2>
-      <p>Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome. A good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices.</p>
+      <p>{{ tech_report_labels.metrics.vitals.general.description }}</p>
 
       {% if tech_report_page.config.good_cwv_summary %}
         <h3>{{ tech_report_page.config.good_cwv_summary.title }}</h3>
@@ -107,7 +96,7 @@
       data-api="page-weight"
     >
       <h2>Page weight</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.pageWeight.general.description }}</p>
 
       {% if tech_report_page.config.weight_summary %}
       {% set section_prefix = "weight" %}
@@ -134,7 +123,7 @@
       data-api="adoption"
     >
       <h2>Adoption</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.adoption.general.description }}</p>
 
       <div class="card">
         {% set timeseries = tech_report_page.config.adoption_timeseries %}

@@ -1,17 +1,14 @@
-.landing-content {
-  margin-top: 10rem;
-}
-
 .choices {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1rem 2rem;
   margin-bottom: 4rem;
-  margin-top: -15rem;
 }
 
 .choices .card {
   padding: 1.5rem 1.75rem;
+  transition: background-color 0.25s, border 0.25s;
+  position: relative;
 }
 
 .choices .card h2 {
@@ -23,6 +20,21 @@
 .choices .card h2 + p {
   margin: 0;
   padding: 0;
+}
+
+.choices .card h2 a::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.choices .card:has(h2 a:is(:hover, :focus-visible)) {
+  background-color: var(--color-blue-light);
+  border: 1px solid var(--color-blue-dark);
 }
 
 .latest-info h2 {

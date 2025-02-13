@@ -22,10 +22,14 @@ const getAppColor = (tech, technologies, colors) => {
 
 // Loop through all the sections in the report
 // Pass in the new data and config, and re-render
-const updateReportComponents = (sections, data, allData, page, labels) => {
+const updateReportComponents = (sections, data) => {
   // Update sections
   Object.values(sections).forEach(section => {
     section.data = data;
+    section.pageFilters = {
+      ...section.pageFilters,
+      app: Object.keys(data),
+    };
     section.updateSection();
   });
 }

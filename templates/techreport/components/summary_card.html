@@ -6,6 +6,7 @@
 <div
   class="card"
   data-component="summaryCard"
+  data-key="{{ summary.key }}"
   data-metric="{{ summary.metric }}"
   data-endpoint="{{ summary.endpoint }}"
   data-category="{{ summary.category }}"
@@ -13,7 +14,15 @@
   data-client="{{ request.args.get('client', '')  or 'mobile' }}"
 >
   <p class="summary-linked-label">
-    <a href="{{ summary.url }}{{ filters }}" data-slot="label">{{ summary.label }}</a>
+    {% if summary.url %}
+      <a href="{{ summary.url }}{{ filters }}" data-slot="label">
+        {{ summary.label }}
+      </a>
+    {% else %}
+      <span data-slot="label">
+        {{ summary.label }}
+      </span>
+    {% endif %}
   </p>
   <div class="summary-value">
     <p>

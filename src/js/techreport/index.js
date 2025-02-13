@@ -24,9 +24,46 @@ class TechReport {
 
     // Load the page
     this.initializePage();
-    this.getAllMetricData();
-    this.bindSettingsListeners();
+    this.initializeFilters();
     this.initializeAccessibility();
+
+    // Watch for settings updates
+    this.bindSettingsListeners();
+  }
+
+  // Initialize the filter toggle
+  initializeFilters() {
+    const closeButton = document.getElementById('close-filters');
+    const openButton = document.getElementById('open-filters');
+    const filters = document.getElementsByClassName('filters')[0];
+    const mobileFilters = document.getElementById('mobile-filter-container');
+    const reportFilters = document.getElementById('report-filters');
+    const openButtonMobile = document.getElementById('open-filters-mobile');
+
+    closeButton?.addEventListener('click', () => {
+      filters.classList.add('hidden');
+      openButton.classList.remove('hidden');
+      openButton.focus();
+    });
+
+    openButton?.addEventListener('click', () => {
+      filters.classList.remove('hidden');
+      openButton.classList.add('hidden');
+      closeButton.focus();
+    });
+
+    openButtonMobile?.addEventListener('click', () => {
+      if(mobileFilters.classList.contains('hidden')) {
+        mobileFilters.innerHTML = reportFilters.innerHTML;
+        mobileFilters.classList.remove('hidden');
+        document.getElementById('close-filters').classList.remove('hidden');
+        openButtonMobile.setAttribute('aria-expanded', true);
+      } else {
+        mobileFilters.innerHTML = '';
+        mobileFilters.classList.add('hidden');
+        openButtonMobile.setAttribute('aria-expanded', false);
+      }
+    });
   }
 
   // Initialize the sections for the different pages
@@ -36,15 +73,24 @@ class TechReport {
     switch(this.pageId) {
       case 'landing':
         this.initializeLanding();
+        this.getAllMetricData();
         break;
 
       case 'drilldown':
         this.initializeReport();
+        this.getAllMetricData();
         this.getTechInfo();
         break;
 
       case 'comparison':
         this.initializeReport();
+        this.getAllMetricData();
+        break;
+
+      case 'category':
+        const category = this.filters.category || 'CMS';
+        this.initializeReport();
+        this.getCategoryData(category);
         break;
     }
   }
@@ -70,10 +116,11 @@ class TechReport {
   initializeLanding() {
   }
 
-  // TODO
+  // Initialize the report pages
   initializeReport() {
     const sections = document.querySelectorAll('[data-type="section"]');
-    // TODO: add general config too
+
+    // Create new class for each of the sections
     sections.forEach(section => {
       const reportSection = new Section(
         section.id,
@@ -85,6 +132,7 @@ class TechReport {
       this.sections[section.id] = reportSection;
     });
 
+    // Apply settings and watch for updates
     this.bindClientListener();
   }
 
@@ -97,6 +145,7 @@ class TechReport {
     }
   }
 
+  // Watch for changes in the accessibility/UI settings
   bindSettingsListeners() {
     const indicatorSetting = document.querySelector('input[name="indicators-check"]');
     if(indicatorSetting) {
@@ -129,6 +178,7 @@ class TechReport {
     }
   }
 
+  // Update which client is selected
   updateClient(event) {
     const client = event.target.value;
 
@@ -184,7 +234,7 @@ class TechReport {
       .replaceAll(" ", "%20");
 
     const geo = this.filters.geo.replaceAll(" ", "%20");
-    const rank = this.filters.rank.replaceAll(" ", "%20")
+    const rank = this.filters.rank.replaceAll(" ", "%20");
 
     let allResults = {};
     technologies.forEach(tech => allResults[tech] = []);
@@ -224,6 +274,85 @@ class TechReport {
     });
   }
 
+  getCategoryData(category) {
+    const url = `${Constants.apiBase}/categories?category=${category}`;
+    const apis = [
+      {
+        endpoint: 'cwv',
+        metric: 'vitals',
+        parse: DataUtils.parseVitalsData,
+      },
+      {
+        endpoint: 'lighthouse',
+        metric: 'lighthouse',
+        parse: DataUtils.parseLighthouseData,
+      },
+      {
+        endpoint: 'adoption',
+        metric: 'adoption',
+        parse: DataUtils.parseAdoptionData,
+      },
+      {
+        endpoint: 'page-weight',
+        metric: 'pageWeight',
+        parse: DataUtils.parsePageWeightData,
+      },
+    ];
+
+    fetch(url)
+      .then(result => result.json())
+      .then(result => {
+        const category = result[0];
+        const technologyFormatted = category?.technologies?.join('%2C')
+          .replaceAll(" ", "%20");
+
+          const geo = this.filters.geo.replaceAll(" ", "%20");
+          const rank = this.filters.rank.replaceAll(" ", "%20");
+          const geoFormatted = geo.replaceAll(" ", "%20");
+          const rankFormatted = rank.replaceAll(" ", "%20");
+
+          let allResults = {};
+          category.technologies.forEach(tech => allResults[tech] = []);
+
+          Promise.all(apis.map(api => {
+            const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
+
+            return fetch(url)
+              .then(techResult => techResult.json())
+              .then(techResult => {
+                techResult.forEach(row => {
+                  const parsedRow = {
+                    ...row,
+                  }
+
+                  if(api.parse) {
+                    parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+                  }
+
+                  const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
+                  if(resIndex > -1) {
+                    allResults[row.technology][resIndex] = {
+                      ...allResults[row.technology][resIndex],
+                      ...parsedRow
+                    }
+                  } else {
+                    allResults[row.technology].push(parsedRow);
+                  }
+                });
+              });
+          })).then(() => {
+            category.data = {
+              technologies: allResults,
+              info: {
+                origins: category.origins,
+                technologies: Object.keys(allResults).length,
+              },
+            };
+            this.updateCategoryComponents(category);
+          });
+      });
+  }
+
   // Get the information about the selected technology
   getTechInfo() {
     const technologies = this.filters.app;
@@ -241,18 +370,12 @@ class TechReport {
         categoryListEl.innerHTML = '';
 
         const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
-        categories.forEach(category => {
-          const categoryItemEl = document.createElement('li');
-          categoryItemEl.className = 'cell';
-          categoryItemEl.textContent = category;
-          categoryListEl.append(categoryItemEl);
-        });
-
-        const descriptionEl = document.createElement('p');
-        descriptionEl.className = 'tech-description';
-        descriptionEl.textContent = techInfo?.description;
-        categoryListEl.after(descriptionEl);
+        DrilldownHeader.setCategories(categories);
       });
+  }
+
+  updateCategoryComponents (category) {
+    this.updateComponents(category.data);
   }
 
   // Update components and sections that are relevant to the current page
@@ -268,6 +391,11 @@ class TechReport {
         break;
 
       case 'comparison':
+        this.updateComparisonComponents(data);
+        this.getFilterInfo();
+        break;
+
+      case 'category':
         this.updateComparisonComponents(data);
         this.getFilterInfo();
         break;
@@ -309,8 +437,9 @@ class TechReport {
     });
   }
 
+  // Update drilldown page components
   updateDrilldownComponents(data) {
-    DrilldownHeader.update(data, this.filters);
+    DrilldownHeader.update(this.filters);
 
     const app = this.filters.app[0];
 
@@ -321,9 +450,10 @@ class TechReport {
     }
   }
 
+  // Update comparison components
   updateComparisonComponents(data) {
     if(data && Object.keys(data).length > 0) {
-      UIUtils.updateReportComponents(this.sections, data, data, this.page, this.labels);
+      UIUtils.updateReportComponents(this.sections, data);
     } else {
       this.updateWithEmptyData();
     }
