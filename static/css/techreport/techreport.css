@@ -197,6 +197,32 @@ nav {
 }
 
 /* Report navigation */
+.skip {
+  position: absolute;
+  z-index: 999;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+
+  text-decoration: none;
+}
+
+.skip:focus-visible {
+  clip: unset;
+  clip-path: unset;
+  width: unset;
+  height: unset;
+  overflow: unset;
+  white-space: unset;
+  top: 0.35rem;
+  left: 0.35rem;
+}
+
 .report-navigation {
   color: var(--color-text);
   background-color: var(--color-card-background);
@@ -308,8 +334,9 @@ nav {
   height: 100%;
 }
 
-#page-filters button[type="submit"]:is(:hover, :focus-visible) {
+.main-btn:is(:hover, :focus-visible) {
   background-color: var(--color-button-background-hover);
+  color: var(--color-button-text);
 }
 
 #page-filters .meta {
@@ -350,17 +377,20 @@ nav {
   height: auto;
 }
 
-#page-filters button[type="submit"] {
+.main-btn {
   background-color: var(--color-button-background);
   border-radius: 4px;
   color: var(--color-button-text);
   font-weight: 400;
   font-size: 1rem;
-  border: none;
   padding: 0.65rem;
+  transition: background 0.15s ease-in;
+}
+
+#page-filters button[type="submit"] {
+  border: none;
   width: 100%;
   margin-top: 1rem;
-  transition: background 0.15s ease-in;
 }
 
 #page-filters legend {
