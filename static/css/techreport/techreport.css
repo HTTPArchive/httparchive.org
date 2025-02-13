@@ -526,6 +526,10 @@ nav {
   margin-top: -1.5rem;
 }
 
+.breakdown {
+  margin-top: 2.5rem;
+}
+
 .breakdown legend {
   border-top: 1px solid var(--color-card-border) !important;
   padding-top: 1.5rem;
