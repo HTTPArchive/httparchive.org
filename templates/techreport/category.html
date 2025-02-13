@@ -105,6 +105,9 @@
       data-api="cwv,lighthouse,page-weight"
     >
       <h2>Technologies</h2>
+      <p>Overview of the Core Web Vitals of all technologies within this category, displaying <strong>10</strong> per page.</p>
+      <p>Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong> (10 technologies per page).</p>
+
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
       {% set client = request.args.get('client', '')  or 'mobile' %}
@@ -123,17 +126,20 @@
       <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
 
       <div class="table-pagination">
-          {% set filters = tech_report_page.filters %}
-          <p data-pagination="previous">
-            {% if filters.page and filters.page > 1 %}
-              <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}">Previous page </a>
-            {% endif %}
-          </p>
+        {% set filters = tech_report_page.filters %}
+        <p data-pagination="previous">
+          {% if filters.page and filters.page > 1 %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}">Previous page </a>
+          {% endif %}
+        </p>
+        <p>
+          <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+        </p>
         <p data-pagination="next">
           {% if not filters.last_page and filters.last_page == False  %}
             <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}">Next page</a>
           {% endif %}
-          </p>
+        </p>
       </div>
     </div>
 

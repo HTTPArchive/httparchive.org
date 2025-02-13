@@ -303,15 +303,12 @@ class TechReport {
       .then(result => result.json())
       .then(result => {
         const category = result[0];
-        console.log('techs to cut', category.technologies, category.technologies.length);
 
         const rows = 10;
         const pageNr = this.filters.page;
         const firstTechNr = (pageNr - 1) * rows;
         const lastTechNr = pageNr * rows;
         const paginatedTechs = category?.technologies?.slice(firstTechNr, lastTechNr);
-
-        console.log('paginated', paginatedTechs);
 
         const technologyFormatted = paginatedTechs?.join('%2C')
           .replaceAll(" ", "%20");
@@ -358,6 +355,14 @@ class TechReport {
                 technologies: category?.technologies?.length,
               },
             };
+
+            /* Update the pagination info */
+            const current = document.querySelectorAll('[data-page="current"]');
+            const total = document.querySelectorAll('[data-page="total"]');
+            current.forEach(c => c.innerHTML = pageNr);
+            total.forEach(t => t.innerHTML = Math.ceil(category?.technologies?.length / rows));
+
+            /* Update components */
             this.updateCategoryComponents(category);
           });
       });
