@@ -105,8 +105,11 @@
       data-api="cwv,lighthouse,page-weight"
     >
       <h2>Technologies</h2>
-      <p>Overview of the Core Web Vitals of all technologies within this category, displaying <strong>10</strong> per page.</p>
-      <p>Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong> (10 technologies per page).</p>
+
+      <div class="table-descr">
+        <p>Overview of the Core Web Vitals of all technologies within this category, displaying <strong>10</strong> per page.</p>
+        <p>Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>.</p>
+      </div>
 
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
@@ -133,7 +136,7 @@
           {% endif %}
         </p>
         <p>
-          <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+          Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
         </p>
         <p data-pagination="next">
           {% if not filters.last_page and filters.last_page == False  %}

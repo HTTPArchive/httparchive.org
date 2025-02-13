@@ -1158,14 +1158,14 @@
             "endpoint": "category",
             "metric": "origins",
             "label": "Origins",
-            "description": "Origins analyzed in this category.",
+            "description": "Total amount of origins analyzed in this category.",
             "key": "info"
           },
           {
             "endpoint": "category",
             "metric": "technologies",
             "label": "Technologies",
-            "description": "Amount of technologies in this category.",
+            "description": "Total number of technologies tagged with this category.",
             "key": "info"
           }
         ],

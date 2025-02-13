@@ -1261,6 +1261,14 @@ h2.summary-heading {
   margin-bottom: 0.5rem;
 }
 
+.table-descr {
+  margin-bottom: 1.5rem;
+}
+
+.table-descr p + p {
+  margin-top: 0.25rem;
+}
+
 .report-section > .card {
   margin-top: 2rem;
 }
