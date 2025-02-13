@@ -266,7 +266,8 @@ class Timeseries {
 
     // Update the data
     if(this.data) {
-      timeseries.series = this.formatSeries();
+      const formatted = this.formatSeries();
+      timeseries.series = formatted;
     }
 
     timeseries.tooltip = {
@@ -292,7 +293,6 @@ class Timeseries {
 
           const pointSvg = document.createElement('svg');
           let pointSymbol;
-
 
           switch(point?.point?.graphic?.symbolName) {
             case 'circle':
@@ -415,9 +415,11 @@ class Timeseries {
         };
       });
 
+      const sortedData = data.sort((a, b) => new Date(a.x) - new Date(b.x) ? -1 : 1);
+
       series.push({
         name: tech,
-        data: data,
+        data: sortedData,
         color: techColor || colors[index]
       });
     });
@@ -433,11 +435,8 @@ class Timeseries {
     // Get the viz settings
     const config = this.pageConfig[this.id]?.viz;
     const app = this.pageFilters.app[0];
-
-    // TODO: Replace with info from component or config
     const endpoint = this.pageConfig[this.id]?.endpoint;
     const metric = this.pageConfig[this.id]?.metric;
-
     const category = this.getCategory(config);
 
     // Get color scheme

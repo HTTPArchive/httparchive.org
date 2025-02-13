@@ -4,4 +4,35 @@
   {{ super() }}
 {% endblock %}
 
-{% block section %}{% endblock %}
+{% block report_content %}
+  <button id="open-filters" class="hidden">
+    <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+  </button>
+  <div class="mobile-filters">
+    <div class="filter-bar" id="mobile-filter-bar">
+      <div class="wrapper block-m">
+        <p>Filters</p>
+        <button aria-expanded="false" class="open-filters" id="open-filters-mobile">
+          <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+        </button>
+      </div>
+    </div>
+    <div class="hidden" id="mobile-filter-container"></div>
+  </div>
+
+
+  <div class="split-view">
+    <div class="filters">
+      <button id="close-filters">
+        <img src="/static/img/close-filters.svg" alt="Collapse filters" width="16px" height="16px" />
+      </button>
+      <div id="report-filters">
+        {% block filters %}{% endblock %}
+      </div>
+    </div>
+
+    <div class="content page-content">
+      {% block section %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

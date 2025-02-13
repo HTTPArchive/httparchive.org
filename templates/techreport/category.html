@@ -1,0 +1,135 @@
+{% extends "techreport/report.html" %}
+
+{% block filters %}
+<form id="page-filters">
+  <div>
+    <fieldset class="technology-filters">
+      <legend class="form-title">Choose a dataset</legend>
+
+      <div class="tech-selector">
+        <label for="categories_selector" class="tech">Category</label>
+        <div class="tech-input-wrapper">
+          {% set category_selected = tech_report_page.filters.category or tech_report_config.default_category %}
+          <select name="categories" class="tech" data-selected="{{ category_selected }}" id="categories_selector">
+            <option value="{{ category_selected }}" selected="true">
+              {{ category_selected }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </fieldset>
+    <fieldset class="lens">
+      <legend class="sr-only">Lens</legend>
+
+      <label for="geo">Geo</label>
+      <div class="select-label">
+        <select name="geo" id="geo">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+
+      <label for="rank">Rank</label>
+      <div class="select-label">
+        <select name="rank" id="rank">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+    </fieldset>
+  </div>
+  <button type="submit" id="submit-form">Update</button>
+  {% include "techreport/components/filter_meta.html" %}
+  <fieldset class="breakdown">
+    <legend>Breakdown</legend>
+    <div class="client-breakdown-wrapper">
+      <label for="client-breakdown">Client</label>
+      <select name="client-breakdown" id="client-breakdown">
+        {% if request.args.get('client', '') == 'desktop' %}
+        <option value="mobile">Mobile</option>
+        <option value="desktop" selected>Desktop</option>
+        {% else %}
+        <option value="mobile" selected>Mobile</option>
+        <option value="desktop">Desktop</option>
+        {% endif %}
+      </select>
+    </div>
+  </fieldset>
+</form>
+
+<template id="filter-option">
+  <option value="Option">
+    Option
+  </option>
+</template>
+
+<template id="tech-selector">
+  {% set technology = "ALL" %}
+  {% set name = "tech-new" %}
+  {% set key = 2 %}
+  {% include "techreport/templates/selector_tech.html" %}
+</template>
+{% endblock %}
+
+{% block section %}
+  {{ super() }}
+  <div class="report-content">
+    <div class="info-panel">
+      <div class="block-l">
+        <p class="info-label">Beta</p>
+        <p>We're still actively working on the categories page.</p>
+      </div>
+    </div>
+
+    <div class="intro block-m">
+      <div class="info">
+        <h1>
+          <span class="subtitle">Category</span>
+          <span class="">{{ tech_report_page.filters.category or 'CMS' }}</span>
+        </h1>
+      </div>
+    </div>
+
+    <div
+      id="cateogry-summary"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="category"
+    >
+      <h2 class="summary-heading">Summary</h2>
+      <div class="summary-grid">
+        {% for summary in tech_report_page.config.summary %}
+          {% include "techreport/components/summary_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div
+      id="comparison-summary"
+      class="card block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
+      <h2>Technologies</h2>
+      {% set component = tech_report_page.config.tech_comparison_summary %}
+      {% set id = component.id %}
+      {% set client = request.args.get('client', '')  or 'mobile' %}
+      {% set sort_endpoint = "adoption" %}
+      {% set sort_metric = "adoption" %}
+      {% set sort_key = "origins" %}
+      {% set sort_order = "desc" %}
+
+      <p class="heading">
+        Latest data: <span data-slot="timestamp"></span>
+      </p>
+
+      {% set table = component.table %}
+      {% include "techreport/components/table_linked.html" %}
+
+      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
+    </div>
+  </div>
+{% endblock %}

@@ -3,6 +3,11 @@
   "name": "Technology Report",
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "config": {
+    "default_apps": {
+      "drilldown": [ "ALL" ],
+      "comparison": [ "ALL", "WordPress", "Wix", "Next.js" ]
+    },
+    "default_category": "CMS",
     "cwv_subcategories": [
       "CLS",
       "LCP",
@@ -39,7 +44,7 @@
       "id": "landing",
       "title": "Technology Report",
       "subtitle": "Report",
-      "description": "This is placeholder text about how the report works",
+      "description": "",
       "data": {},
       "filters": {
         "technologies": ["WordPress", "Squarespace", "Drupal"]
@@ -82,7 +87,7 @@
       "id": "drilldown",
       "title": "Drilldown",
       "subtitle": "Technology Report",
-      "description": "Drilldown placeholder",
+      "description": "View detailed information about one technology and compare mobile and desktop data over time.",
       "config": {
         "default": {
           "app": ["ALL"],
@@ -151,7 +156,7 @@
           "table": {
             "param": "",
             "default": "adoption",
-            "caption": "Usage placeholder",
+            "caption": "Amount of origins a technology has over time.",
             "columns": [
               {
                 "key": "date",
@@ -263,7 +268,7 @@
         },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
-          "description": "Placeholder - combination of several metrics",
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics.",
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
@@ -425,7 +430,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -557,7 +562,7 @@
         },
         "weight_timeseries": {
           "title": "Weight over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "weight_timeseries",
           "summary": true,
           "endpoint": "pageWeight",
@@ -695,7 +700,8 @@
             "#E24070"
           ],
           "overrides": {
-            "WordPress": "#fff000"
+            "WordPress": "#3858e9",
+            "ALL": "#69797e"
           }
         },
         "default": {
@@ -750,7 +756,7 @@
         },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
-          "description": "Placeholder - combination of several metrics",
+          "description": "Comparison of the percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics.",
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
@@ -789,7 +795,7 @@
           "table": {
             "param": "good-cwv-over-time",
             "default": "overall",
-            "caption": "Good Core Web Vitals placeholder",
+            "caption": "Comparison of the percentage of origins of the different technologies passing all three Core Web Vitals (LCP, INP, CLS), visualized over time.",
             "columns": [
               {
                 "key": "date",
@@ -857,7 +863,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Placeholder text",
+          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here.",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -887,7 +893,7 @@
           "table": {
             "param": "median-lighthouse-over-time",
             "default": "performance",
-            "caption": "Lighthouse placeholder",
+            "caption": "Comparing the Lighthouse scores of the different selected technologies over time.",
             "columns": [
               {
                 "key": "date",
@@ -952,7 +958,7 @@
         },
         "weight_timeseries": {
           "title": "Page weight over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "weight_timeseries",
           "endpoint": "pageWeight",
           "metric": "median_bytes",
@@ -1047,7 +1053,7 @@
         },
         "adoption_timeseries": {
           "title": "Origins over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "adoption_timeseries",
           "endpoint": "adoption",
           "metric": "origins",
@@ -1117,7 +1123,107 @@
           }
         }
       },
-      "description": "Comparison placeholder"
+      "description": "Get a detailed comparison for 2 to 10 technologies."
+    },
+    "category": {
+      "id": "category",
+      "title": "Categories",
+      "subtitle": "Technology Report",
+      "config": {
+        "default": {
+          "category": "CMS",
+          "app": ["ALL", "WordPress", "Drupal"],
+          "series": {
+            "breakdown": "app"
+          }
+        },
+        "summary": [
+          {
+            "endpoint": "category",
+            "metric": "origins",
+            "label": "Origins",
+            "description": "Origins analyzed in this category.",
+            "key": "info"
+          },
+          {
+            "endpoint": "category",
+            "metric": "technologies",
+            "label": "Technologies",
+            "description": "Amount of technologies in this category.",
+            "key": "info"
+          }
+        ],
+        "tech_comparison_summary": {
+          "id": "tech_comparison_summary",
+          "table": {
+            "caption": "Summary",
+            "key": "technologies",
+            "columns": [
+              {
+                "key": "selectTech",
+                "name": "Select technology",
+                "hiddenName": true,
+                "type": "checkbox"
+              },
+              {
+                "key": "technology",
+                "name": "Tech",
+                "type": "heading"
+              },
+              {
+                "key": "origins",
+                "name": "Origins",
+                "breakdown": "subcategory",
+                "subcategory": "adoption",
+                "endpoint": "adoption",
+                "metric": "origins"
+              },
+              {
+                "key": "good_pct",
+                "name": "Good CWV",
+                "breakdown": "subcategory",
+                "subcategory": "overall",
+                "suffix": "%",
+                "className": "main-cell pct-value",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "LCP",
+                "breakdown": "subcategory",
+                "subcategory": "LCP",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "INP",
+                "breakdown": "subcategory",
+                "subcategory": "INP",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "CLS",
+                "breakdown": "subcategory",
+                "subcategory": "CLS",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          }
+        }
+      }
     }
   },
 
@@ -1145,6 +1251,9 @@
         }
       },
       "vitals": {
+        "general": {
+          "description": "Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome. A good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices."
+        },
         "overall": {
           "label": "Overall Core Web Vitals",
           "title": "Passes Core Web Vitals",
@@ -1178,23 +1287,29 @@
         }
       },
       "pageWeight": {
+        "general": {
+          "description": ""
+        },
         "images": {
           "title": "Image Weight",
-          "description": "todo"
+          "description": ""
         },
         "js": {
           "title": "JavaScript Transfer Size",
-          "description": "todo"
+          "description": ""
         },
         "total": {
           "title": "Total Page Weight",
-          "description": "todo"
+          "description": ""
         }
       },
       "adoption": {
+        "general": {
+          "description": ""
+        },
         "adoption": {
           "title": "Adoption",
-          "description": "Todo"
+          "description": "The amount of origins using this technology over time."
         }
       }
     },

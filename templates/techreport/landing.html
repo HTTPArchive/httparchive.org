@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/landing.css') }}" />
 {% endblock %}
 
-{% block section %}
+{% block report_content %}
   <div class="intro block-m">
     <div>
       <h1>
@@ -21,12 +21,20 @@
   <div class="report-content landing-content">
     <div class="choices block-m">
       <div class="card">
-        <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
+        {% set techs = tech_report_config.default_apps.drilldown %}
+        {% set techs = ','.join(techs) %}
+        <h2><a href="/reports/techreport/tech?tech={{ techs }}">Technology Drilldown</a></h2>
         <p>Get detailed information about <strong>one</strong> technology. </p>
       </div>
       <div class="card">
-        <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
+        {% set techs = tech_report_config.default_apps.comparison %}
+        {% set techs = ','.join(techs) %}
+        <h2><a href="/reports/techreport/tech?tech={{ techs }}">Technology Comparison</a></h2>
         <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
+      </div>
+      <div class="card">
+        <h2><a href="/reports/techreport/category?category=CMS">Category info</a></h2>
+        <p>Get detailed information about <strong>a category</strong> and its technologies. </p>
       </div>
     </div>
   </div>

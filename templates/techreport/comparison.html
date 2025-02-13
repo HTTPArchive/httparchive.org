@@ -1,35 +1,32 @@
 {% extends "techreport/report.html" %}
 
+{% block filters %}
+  {% include "techreport/templates/filters.html" %}
+{% endblock %}
+
 {% block section %}
   {{ super() }}
 
   {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
   {% set technologies_str = ','.join(technologies) %}
 
-  <div class="intro block-m">
-    <div class="info">
+  <div id="report-content" class="report-content">
+    <div class="info intro block-m">
       <h1>
-        <span class="subtitle">Tech Report</span>
-        <span class="main-title">Comparison</span>
+        <span class="subtitle">Technology</span>
+        <span class="main-title">Compare {{ technologies | length }} technologies</span>
       </h1>
     </div>
-    <div class="filters">
-      {% include "techreport/templates/filters.html" %}
-    </div>
-  </div>
 
-  {% set filter_tech_title = technologies_str or tech_report_page.filters.app[0] or 'All Technologies' %}
-  {% include "techreport/components/filter_info_header.html" %}
-
-  <div id="report-content" class="report-content">
     <!-- Section: Summary of the main metrics -->
     <div
       id="comparison-summary"
-      class="block-m summary report-section"
+      class="card block-m summary report-section"
       data-type="section"
       data-api="cwv,lighthouse,page-weight"
     >
-      <h2>Summary ({{ technologies | length }} technologies)</h2>
+      <h2>Summary</h2>
+      <p>Showing the latest data for <strong>{{ technologies | length }} technologies</strong>.</p>
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
       {% set client = request.args.get('client', '')  or 'mobile' %}
@@ -48,7 +45,7 @@
       data-api="cwv"
     >
       <h2>Core Web Vitals</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.vitals.general.description }}</p>
 
       <!-- Timeseries -->
       <div class="card">
@@ -68,7 +65,7 @@
       data-api="lighthouse"
     >
       <h2>Lighthouse</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.lighthouse.general.description }}</p>
 
       <!-- Timeseries -->
       <div class="card">
@@ -88,7 +85,7 @@
       data-api="page-weight"
     >
       <h2>Page weight</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.pageWeight.general.description }}</p>
 
       <!-- Timeseries -->
       <div class="card">
@@ -108,7 +105,7 @@
       data-api="adopiton"
     >
       <h2>Adoption</h2>
-      <p>Description</p>
+      <p>{{ tech_report_labels.metrics.adoption.general.description }}</p>
 
       <!-- Timeseries -->
       <div class="card">

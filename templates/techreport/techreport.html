@@ -10,56 +10,67 @@
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/techreport.css') }}" />
 {% endblock %}
 
-{% block report_navigation %}
+{% block custom_navigation %}
   <nav class="report-navigation">
-    {% set filters = "" %}
-    {% if tech_report_page.filters %}
-      {% set filters = "?geo=" + tech_report_page.filters.geo + "&rank=" + tech_report_page.filters.rank %}
-    {% endif %}
-    <ul class="navigation-items block-l">
-      <li>
-        {% set ariaCurrent = "false" %}
-        {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
-        <a
-          href="/reports/techreport/landing"
-          aria-current="{{ ariaCurrent }}"
-        >
-          Home
-        </a>
-      </li>
-      <li>
-        {% set ariaCurrent = "false" %}
-        {% if active_page == "drilldown" %}{% set ariaCurrent = "page" %}{% endif %}
-        <a
-          href="/reports/techreport/drilldown{{ filters }}"
-          aria-current="{{ ariaCurrent }}"
-        >
-          Drilldown
-        </a>
-      </li>
-      <li>
-        {% set ariaCurrent = "false" %}
-        {% if active_page == "comparison" %}{% set ariaCurrent = "page" %}{% endif %}
-        <a
-          href="/reports/techreport/comparison{{ filters }}"
-          aria-current="{{ ariaCurrent }}"
-        >
-          Comparison
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="info-panel">
-    <div class="block-l">
-      <p class="info-label">Beta version</p>
-      <p>This dashboard is still under development.</p>
+    <a href="{{ url_for('index') }}">
+      <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+    </a>
+    <div class="hidden-xs">
+      {% set params = "?geo=ALL&rank=ALL" %}
+      {% if tech_report_page.params %}
+        {% set filterObj = tech_report_page.params %}
+        {% set params = "?geo=" + filterObj.geo + "&rank=" + filterObj.rank %}
+      {% endif %}
+      <ul id="desktop" class="navigation-items">
+        <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
+        <li>
+          {% set ariaCurrent = "false" %}
+          {% if active_page == "landing" %}{% set ariaCurrent = "page" %}{% endif %}
+          <a
+            href="/reports/techreport/landing"
+            aria-current="{{ ariaCurrent }}"
+          >
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          {% set ariaCurrent = "false" %}
+          {% if active_page == "technology" or requested_page == "technology" %}{% set ariaCurrent = "page" %}{% endif %}
+          <a
+            href="/reports/techreport/tech{{ params }}&tech=ALL"
+            aria-current="{{ ariaCurrent }}"
+          >
+            <span>Technologies</span>
+          </a>
+        </li>
+        <li>
+          {% set ariaCurrent = "false" %}
+          {% if active_page == "category" %}{% set ariaCurrent = "page" %}{% endif %}
+          <a
+            href="/reports/techreport/category{{ params }}&category=CMS"
+            aria-current="{{ ariaCurrent }}"
+          >
+            <span>Categories</span>
+          </a>
+        </li>
+      </ul>
     </div>
-  </div>
+    <div class="visible-xs">
+      <button class="hamburger">
+        <span class="sr-only">Menu</span>
+        <svg aria-hidden="true" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
 {% endblock %}
 
 {% block main %}
-  {% block section %}{% endblock %}
+
+  {% block report_content %}{% endblock %}
+
   <div class="feedback">
     <div class="block-m">
       <h2>Feedback?</h2>
