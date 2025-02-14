@@ -1,7 +1,7 @@
-<form id="page-filters" class="card">
+<form id="page-filters">
   <div>
     <fieldset class="technology-filters">
-      <legend class="sr-only">Technologies</legend>
+      <legend class="form-title">Choose a dataset</legend>
 
       {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
       {% if active_page == "drilldown" %}
@@ -11,26 +11,30 @@
       {% for technology in technologies %}
         {% set key = loop.index %}
         {% set technology = technology %}
+        {% set technologyName = technology %}
+        {% if technology == "ALL" %}
+          {% set technologyName = "All technologies" %}
+        {% endif %}
         {% set name = "tech-" + key|string %}
         {% include "techreport/templates/selector_tech.html" %}
       {% endfor %}
 
-      {% if active_page == "comparison" %}
-        <button id="add-tech">Add another technology</button>
-      {% endif %}
+      <button id="add-tech"><span aria-hidden="true">+</span> Add another technology</button>
     </fieldset>
     <fieldset class="lens">
-      <legend>Lens</legend>
+      <legend class="sr-only">Lens</legend>
+
+      <label for="geo">Geo</label>
       <div class="select-label">
-        <label for="geo">Geo</label>
         <select name="geo" id="geo">
           <option value="ALL" selected="true">
             ALL
           </option>
         </select>
       </div>
+
+      <label for="rank">Rank</label>
       <div class="select-label">
-        <label for="rank">Rank</label>
         <select name="rank" id="rank">
           <option value="ALL" selected="true">
             ALL
@@ -39,7 +43,8 @@
       </div>
     </fieldset>
   </div>
-  <button type="submit" id="submit-form">Update</button>
+  <button type="submit" id="submit-form" class="main-btn">Update</button>
+  {% include "techreport/components/filter_meta.html" %}
 </form>
 
 <template id="filter-option">

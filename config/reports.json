@@ -281,19 +281,6 @@
         ]
       }
     },
-    "pctVuln": {
-      "name": "Pages with Vulnerable JS",
-      "type": "%",
-      "description": "The percent of crawled pages that contain at least one known third-party JavaScript vulnerability. Vulnerabilities are detected by [Lighthouse](https://web.dev/no-vulnerable-libraries/) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "tcp": {
       "name": "TCP Connections Per Page",
       "type": "",
@@ -531,17 +518,6 @@
         "scale": 0.001
       }
     },
-    "cruxFid": {
-      "name": "First Input Delay",
-      "type": "ms",
-      "description": "The number of milliseconds from the time the user initiates their first interaction to the time the page responds. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
-      "timeseries": {
-        "enabled": false
-      },
-      "histogram": {
-        "minDate": "2018_06_01"
-      }
-    },
     "cruxInp": {
       "name": "Interaction to Next Paint",
       "type": "ms",
@@ -634,20 +610,6 @@
         ]
       }
     },
-    "cruxFastFid": {
-      "name": "Good First Input Delay",
-      "type": "%",
-      "description": "The percentage of origins with \"good\" FID experiences, less than or equal to 100 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
-      "downIsBad": true,
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "cruxFastInp": {
       "name": "Good Interaction to Next Paint",
       "type": "%",
@@ -717,19 +679,6 @@
         ]
       }
     },
-    "cruxSlowFid": {
-      "name": "Poor First Input Delay",
-      "type": "%",
-      "description": "The percentage of origins with \"poor\" FID experiences, greater than 250 ms. See [FID in CrUX](https://developers.google.com/web/updates/2018/07/first-input-delay-in-crux).",
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "cruxSlowInp": {
       "name": "Poor Interaction to Next Paint",
       "type": "%",
@@ -781,18 +730,6 @@
         "fields": [
           "percent"
         ]
-      }
-    },
-    "vulnJs": {
-      "name": "Vulnerable JavaScript Libraries Per Page",
-      "type": "libraries",
-      "singular": "library",
-      "description": "The number of known third-party JavaScript vulnerabilities per page. Vulnerabilities are detected by [Lighthouse](https://web.dev/no-vulnerable-libraries/) using data from [Snyk](https://snyk.io/vuln?packageManager=all).",
-      "histogram": {
-        "minDate": "2017_10_15"
-      },
-      "timeseries": {
-        "enabled": false
       }
     },
     "pwaScores": {
@@ -1023,20 +960,6 @@
         ]
       }
     },
-    "webSocketStream": {
-      "name": "WebSocketStream",
-      "type": "%",
-      "downIsBad": true,
-      "description": "This metric tracks the percentage of pages that transmit messages via the [WebSocketStream API](https://web.dev/websocketstream/).",
-      "histogram": {
-        "enabled": false
-      },
-      "timeseries": {
-        "fields": [
-          "percent"
-        ]
-      }
-    },
     "screenWakeLock": {
       "name": "Screen Wake Lock",
       "type": "%",
@@ -1165,11 +1088,9 @@
       "bytesTotal",
       "reqTotal",
       "pctHttps",
-      "pctVuln",
       "tcp",
       "h2",
       "h3",
-      "vulnJs",
       "fontDisplay"
     ],
     "graphic": {
@@ -1249,8 +1170,6 @@
       "cruxLargeCls",
       "cruxFastInp",
       "cruxSlowInp",
-      "cruxFastFid",
-      "cruxSlowFid",
       "cruxFastTtfb",
       "cruxSlowTtfb",
       "cruxFastFp",
@@ -1259,7 +1178,6 @@
       "cruxFcp",
       "cruxLcp",
       "cruxCls",
-      "cruxFid",
       "cruxInp",
       "cruxTtfb",
       "cruxFp",
@@ -1346,8 +1264,7 @@
       "contentIndex",
       "notificationTriggers",
       "quicTransport",
-      "idleDetection",
-      "webSocketStream"
+      "idleDetection"
     ],
     "graphic": {
       "bgcolor": "#97b5b9",

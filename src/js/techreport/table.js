@@ -1,3 +1,5 @@
+import { DataUtils } from "./utils/data";
+
 function formatData(tableConfig, data) {
   const { id, config, apps } = tableConfig;
 
@@ -58,7 +60,18 @@ function formatData(tableConfig, data) {
     table.push(row);
   }
 
-  return table;
+  const sorted = sortTableBy(table, 'date');
+
+  return sorted;
+}
+
+function sortTableBy(dataset, key) {
+  return dataset.sort((a, b) => {
+    const selectedA = a.find(obj => obj.key === key);
+    const selectedB = b.find(obj => obj.key === key);
+
+    return selectedA.value > selectedB.value ? -1 : 1;
+  });
 }
 
 function getColumnCell(columnConfig, data, date) {
@@ -89,7 +102,7 @@ function getSubcategory(config) {
 }
 
 // Update the table
-function updateTable(id, config, apps, data) {
+function updateTable(id, config, appConfig, apps, data) {
   // Select a table based on the passed in id
   const component = document.getElementById(`table-${id}`)
   const tbody = component.querySelector('tbody');
@@ -165,6 +178,12 @@ function updateTable(id, config, apps, data) {
       // Add classnames from the config
       if(className) {
         cell.className = className;
+      }
+
+      if(column.viz === 'progress-circle' && value) {
+        const score = DataUtils.getLighthouseScoreCategories(value, appConfig.lighthouse_brackets);
+        wrapper.classList.add('progress-circle', score.name);
+        wrapper.setAttribute('style', `--offset: ${value}%`);
       }
 
       // Add cell to the row

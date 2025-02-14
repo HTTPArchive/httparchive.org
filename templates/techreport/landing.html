@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="{{ get_versioned_filename('/static/css/techreport/landing.css') }}" />
 {% endblock %}
 
-{% block section %}
+{% block report_content %}
   <div class="intro block-m">
     <div>
       <h1>
@@ -13,7 +13,7 @@
         <span class="title">Tech Report</span>
       </h1>
       <p>
-        Placeholder text: A short description about what it is that we display in the Core Web Vitals report, and how it can be used. There should probably be links here to the individual technology pages and a few interesting comparison pages, as well as to the methodology page and the discussions etc like the reports have today.
+        Track and compare web technology performance and adoption. Real-world Core Web Vitals performance data is provided by the Chrome UX Report at the origin level, and technologies are identified by HTTP Archive on the home page and one interior page.
       </p>
     </div>
   </div>
@@ -21,14 +21,20 @@
   <div class="report-content landing-content">
     <div class="choices block-m">
       <div class="card">
-        <h2><a href="/reports/techreport/drilldown">Technology Drilldown</a></h2>
+        {% set techs = tech_report_config.default_apps.drilldown %}
+        {% set techs = ','.join(techs) %}
+        <h2><a href="/reports/techreport/tech?tech={{ techs }}">Technology Drilldown</a></h2>
         <p>Get detailed information about <strong>one</strong> technology. </p>
-        <span class="img-placeholder"></span>
       </div>
       <div class="card">
-        <h2><a href="/reports/techreport/comparison">Technology Comparison</a></h2>
+        {% set techs = tech_report_config.default_apps.comparison %}
+        {% set techs = ','.join(techs) %}
+        <h2><a href="/reports/techreport/tech?tech={{ techs }}">Technology Comparison</a></h2>
         <p>Get detailed information about <strong>two to ten</strong> technologies. </p>
-        <span class="img-placeholder"></span>
+      </div>
+      <div class="card">
+        <h2><a href="/reports/techreport/category?category=CMS">Category info</a></h2>
+        <p>Get detailed information about <strong>a category</strong> and its technologies. </p>
       </div>
     </div>
   </div>

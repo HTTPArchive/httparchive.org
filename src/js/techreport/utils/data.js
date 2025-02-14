@@ -56,17 +56,27 @@ const parseAdoptionData = (submetric, date) => {
   ];
 }
 
+const formatBytes = (value) => {
+  return value > 1048576 ? `${Math.round(value / 1048576)} MB` : value > 1024 ? `${Math.round(value / 1024)} KB` : `${value} bytes`;
+};
+
+const formatAppName = (app) => {
+  return app === 'ALL' ? 'All technologies' : app;
+}
+
 const parsePageWeightData = (metric, date) => {
   return metric.map(submetric => {
     return {
       ...submetric,
       desktop: {
-        ...submetric.desktop,
+        ...submetric?.desktop,
+        median_bytes_formatted: formatBytes(submetric?.desktop?.median_bytes),
         client: 'desktop',
         date: date,
       },
       mobile: {
-        ...submetric.mobile,
+        ...submetric?.mobile,
+        median_bytes_formatted: formatBytes(submetric?.mobile?.median_bytes),
         client: 'mobile',
         date: date,
       },
@@ -97,4 +107,5 @@ export const DataUtils = {
   parsePageWeightData,
   filterDuplicates,
   getLighthouseScoreCategories,
+  formatAppName,
 };

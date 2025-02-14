@@ -232,18 +232,26 @@ def test_render_js_cache_control(client):
 
 def test_tech_report_compare(client):
     response = client.get(
-        "/reports/techreport/comparison?tech=jQuery%2CWordPress&geo=ALL&rank=ALL"
+        "/reports/techreport/tech?tech=jQuery%2CWordPress&geo=ALL&rank=ALL"
     )
     assert response.status_code == 200
 
 
 def test_tech_report_drilldown(client):
-    response = client.get("/reports/techreport/drilldown?geo=ALL&rank=ALL")
+    response = client.get("/reports/techreport/tech?geo=ALL&rank=ALL")
     assert response.status_code == 200
 
 
 def test_tech_report_drilldown_wordpress(client):
-    response = client.get(
-        "/reports/techreport/drilldown?tech=WordPress&geo=ALL&rank=ALL"
-    )
+    response = client.get("/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL")
+    assert response.status_code == 200
+
+
+def test_tech_report_category(client):
+    response = client.get("/reports/techreport/category?geo=ALL&rank=ALL&category=CMS")
+    assert response.status_code == 200
+
+
+def test_well_known_atproto_did(client):
+    response = client.get("/.well-known/atproto-did")
     assert response.status_code == 200

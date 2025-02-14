@@ -1,4 +1,5 @@
 import Filters from '../components/filters';
+import { Constants } from './utils/constants';
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { DataUtils } = require("./utils/data");
 const { UIUtils } = require("./utils/ui");
@@ -23,39 +24,85 @@ class TechReport {
 
     // Load the page
     this.initializePage();
-    this.getAllMetricData();
+    this.initializeFilters();
+    this.initializeAccessibility();
+
+    // Watch for settings updates
     this.bindSettingsListeners();
+  }
+
+  // Initialize the filter toggle
+  initializeFilters() {
+    const closeButton = document.getElementById('close-filters');
+    const openButton = document.getElementById('open-filters');
+    const filters = document.getElementsByClassName('filters')[0];
+    const mobileFilters = document.getElementById('mobile-filter-container');
+    const reportFilters = document.getElementById('report-filters');
+    const openButtonMobile = document.getElementById('open-filters-mobile');
+
+    closeButton?.addEventListener('click', () => {
+      filters.classList.add('hidden');
+      openButton.classList.remove('hidden');
+      openButton.focus();
+    });
+
+    openButton?.addEventListener('click', () => {
+      filters.classList.remove('hidden');
+      openButton.classList.add('hidden');
+      closeButton.focus();
+    });
+
+    openButtonMobile?.addEventListener('click', () => {
+      if(mobileFilters.classList.contains('hidden')) {
+        mobileFilters.innerHTML = reportFilters.innerHTML;
+        mobileFilters.classList.remove('hidden');
+        document.getElementById('close-filters').classList.remove('hidden');
+        openButtonMobile.setAttribute('aria-expanded', true);
+      } else {
+        mobileFilters.innerHTML = '';
+        mobileFilters.classList.add('hidden');
+        openButtonMobile.setAttribute('aria-expanded', false);
+      }
+    });
   }
 
   // Initialize the sections for the different pages
   initializePage() {
+    this.updateStyling();
+
     switch(this.pageId) {
       case 'landing':
         this.initializeLanding();
+        this.getAllMetricData();
         break;
 
       case 'drilldown':
         this.initializeReport();
+        this.getAllMetricData();
+        this.getTechInfo();
         break;
 
       case 'comparison':
         this.initializeReport();
+        this.getAllMetricData();
+        break;
+
+      case 'category':
+        const category = this.filters.category || 'CMS';
+        this.initializeReport();
+        this.getCategoryData(category);
         break;
     }
   }
 
-  // TODO
-  initializeLanding() {
-  }
-
-  // TODO
-  initializeReport() {
-    // TODO: Move to function
+  // Load accessibility/themeing info
+  initializeAccessibility() {
+    // Show indicators?
     const showIndicators = localStorage.getItem('showIndicators');
     document.querySelector('main').dataset.showIndicators = showIndicators;
     document.querySelector('#indicators-check').checked = showIndicators === 'true';
 
-    // TODO: Move to function
+    // Dark or light mode?
     const theme = localStorage.getItem('haTheme');
     document.querySelector('html').dataset.theme = theme;
     const btn = document.querySelector('.theme-switcher');
@@ -64,9 +111,16 @@ class TechReport {
     } else if(theme === 'light') {
       btn.innerHTML = '🌚 Switch to dark theme';
     }
+  }
 
+  initializeLanding() {
+  }
+
+  // Initialize the report pages
+  initializeReport() {
     const sections = document.querySelectorAll('[data-type="section"]');
-    // TODO: add general config too
+
+    // Create new class for each of the sections
     sections.forEach(section => {
       const reportSection = new Section(
         section.id,
@@ -78,8 +132,8 @@ class TechReport {
       this.sections[section.id] = reportSection;
     });
 
+    // Apply settings and watch for updates
     this.bindClientListener();
-    this.updateStyling();
   }
 
   // Watch for changes in the client dropdown
@@ -91,6 +145,7 @@ class TechReport {
     }
   }
 
+  // Watch for changes in the accessibility/UI settings
   bindSettingsListeners() {
     const indicatorSetting = document.querySelector('input[name="indicators-check"]');
     if(indicatorSetting) {
@@ -123,6 +178,7 @@ class TechReport {
     }
   }
 
+  // Update which client is selected
   updateClient(event) {
     const client = event.target.value;
 
@@ -174,30 +230,31 @@ class TechReport {
       },
     ];
 
-    const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
-
     const technology = technologies.join('%2C')
       .replaceAll(" ", "%20");
 
     const geo = this.filters.geo.replaceAll(" ", "%20");
-    const rank = this.filters.rank.replaceAll(" ", "%20")
+    const rank = this.filters.rank.replaceAll(" ", "%20");
 
     let allResults = {};
     technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
-      const url = `${base}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
+      const url = `${Constants.apiBase}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
 
       return fetch(url)
         .then(result => result.json())
         .then(result => {
+          // Loop through all the rows of the API result
           result.forEach(row => {
             const parsedRow = {
               ...row,
             }
 
+            // Parse the data and add it to the results
             if(api.parse) {
-              parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+              const metric = parsedRow[api.metric] || parsedRow;
+              parsedRow[api.metric] = api.parse(metric, parsedRow?.date);
             }
 
             const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
@@ -217,6 +274,127 @@ class TechReport {
     });
   }
 
+  getCategoryData(category) {
+    const url = `${Constants.apiBase}/categories?category=${category}`;
+    const apis = [
+      {
+        endpoint: 'cwv',
+        metric: 'vitals',
+        parse: DataUtils.parseVitalsData,
+      },
+      {
+        endpoint: 'lighthouse',
+        metric: 'lighthouse',
+        parse: DataUtils.parseLighthouseData,
+      },
+      {
+        endpoint: 'adoption',
+        metric: 'adoption',
+        parse: DataUtils.parseAdoptionData,
+      },
+      {
+        endpoint: 'page-weight',
+        metric: 'pageWeight',
+        parse: DataUtils.parsePageWeightData,
+      },
+    ];
+
+    fetch(url)
+      .then(result => result.json())
+      .then(result => {
+        const category = result[0];
+
+        const rows = 10;
+        const pageNr = this.filters.page;
+        const firstTechNr = (pageNr - 1) * rows;
+        const lastTechNr = pageNr * rows;
+        const paginatedTechs = category?.technologies?.slice(firstTechNr, lastTechNr);
+
+        const technologyFormatted = paginatedTechs?.join('%2C')
+          .replaceAll(" ", "%20");
+
+          const geo = this.filters.geo.replaceAll(" ", "%20");
+          const rank = this.filters.rank.replaceAll(" ", "%20");
+          const geoFormatted = geo.replaceAll(" ", "%20");
+          const rankFormatted = rank.replaceAll(" ", "%20");
+
+          let allResults = {};
+          paginatedTechs.forEach(tech => allResults[tech] = []);
+
+          Promise.all(apis.map(api => {
+            const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
+
+            return fetch(url)
+              .then(techResult => techResult.json())
+              .then(techResult => {
+                techResult.forEach(row => {
+                  const parsedRow = {
+                    ...row,
+                  }
+
+                  if(api.parse) {
+                    parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+                  }
+
+                  const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
+                  if(resIndex > -1) {
+                    allResults[row.technology][resIndex] = {
+                      ...allResults[row.technology][resIndex],
+                      ...parsedRow
+                    }
+                  } else {
+                    allResults[row.technology].push(parsedRow);
+                  }
+                });
+              });
+          })).then(() => {
+            category.data = {
+              technologies: allResults,
+              info: {
+                origins: category.origins,
+                technologies: category?.technologies?.length,
+              },
+            };
+
+            /* Update the pagination info */
+            const current = document.querySelectorAll('[data-page="current"]');
+            const total = document.querySelectorAll('[data-page="total"]');
+            current.forEach(c => c.innerHTML = pageNr);
+            total.forEach(t => t.innerHTML = Math.ceil(category?.technologies?.length / rows));
+
+            /* Update components */
+            this.updateCategoryComponents(category);
+          });
+      });
+  }
+
+  // Get the information about the selected technology
+  getTechInfo() {
+    const technologies = this.filters.app;
+    const technology = technologies.join('%2C')
+      .replaceAll(" ", "%20");
+
+    const url = `${Constants.apiBase}/technologies?technology=${technology}`;
+
+    fetch(url)
+      .then(result => result.json())
+      .then(result => {
+        const techInfo = result[0];
+
+        const categoryListEl = document.getElementsByClassName('category-list')[0];
+        categoryListEl.innerHTML = '';
+
+        const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
+        DrilldownHeader.setCategories(categories);
+        DrilldownHeader.setDescription(techInfo.description);
+      });
+  }
+
+  updateCategoryComponents (category) {
+    this.updateComponents(category.data);
+    DrilldownHeader.setDescription(category.description);
+  }
+
   // Update components and sections that are relevant to the current page
   updateComponents(data) {
     switch(this.pageId) {
@@ -233,18 +411,22 @@ class TechReport {
         this.updateComparisonComponents(data);
         this.getFilterInfo();
         break;
+
+      case 'category':
+        this.updateComparisonComponents(data);
+        this.getFilterInfo();
+        break;
     }
   }
 
   // Fetch the data for the filter dropdowns
   getFilterInfo() {
     const filterData = {};
-    const base = 'https://dev-gw-2vzgiib6.ue.gateway.dev/v1';
 
     const filterApis = ['categories', 'technologies', 'ranks', 'geos'];
 
     Promise.all(filterApis.map(api => {
-      const url = `${base}/${api}`;
+      const url = `${Constants.apiBase}/${api}`;
 
       return fetch(url)
         .then(result => result.json())
@@ -272,8 +454,9 @@ class TechReport {
     });
   }
 
+  // Update drilldown page components
   updateDrilldownComponents(data) {
-    DrilldownHeader.update(data, this.filters);
+    DrilldownHeader.update(this.filters);
 
     const app = this.filters.app[0];
 
@@ -284,9 +467,10 @@ class TechReport {
     }
   }
 
+  // Update comparison components
   updateComparisonComponents(data) {
     if(data && Object.keys(data).length > 0) {
-      UIUtils.updateReportComponents(this.sections, data, data, this.page, this.labels);
+      UIUtils.updateReportComponents(this.sections, data);
     } else {
       this.updateWithEmptyData();
     }

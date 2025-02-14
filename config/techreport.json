@@ -3,8 +3,12 @@
   "name": "Technology Report",
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "config": {
+    "default_apps": {
+      "drilldown": [ "ALL" ],
+      "comparison": [ "ALL", "WordPress", "Wix", "Next.js" ]
+    },
+    "default_category": "CMS",
     "cwv_subcategories": [
-      "FID",
       "CLS",
       "LCP",
       "FCP",
@@ -40,14 +44,31 @@
       "id": "landing",
       "title": "Technology Report",
       "subtitle": "Report",
-      "description": "This is placeholder text about how the report works",
+      "description": "",
       "data": {},
       "filters": {
         "technologies": ["WordPress", "Squarespace", "Drupal"]
       },
       "config": {
         "default": {
-          "app": ["WordPress", "Squarespace", "Drupal"]
+          "app": ["WordPress", "Squarespace", "Drupal"],
+          "series": {
+              "breakdown": "client",
+              "breakdown_values": [
+                {
+                  "name": "desktop",
+                  "color": "#669E8E",
+                  "color_dark": "#fff000",
+                  "suffix": "%"
+                },
+                {
+                  "name": "mobile",
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0",
+                  "suffix": "%"
+                }
+              ]
+            }
         },
         "popular_tech": {
           "id": "popular_tech",
@@ -66,7 +87,7 @@
       "id": "drilldown",
       "title": "Drilldown",
       "subtitle": "Technology Report",
-      "description": "Drilldown placeholder",
+      "description": "View detailed information about one technology and compare mobile and desktop data over time.",
       "config": {
         "default": {
           "app": ["ALL"],
@@ -76,11 +97,13 @@
               {
                 "name": "desktop",
                 "color": "#669E8E",
+                "color_dark": "#fff000",
                 "suffix": "%"
               },
               {
                 "name": "mobile",
                 "color": "#BD6EBE",
+                "color_dark": "#ff00f0",
                 "suffix": "%"
               }
             ]
@@ -115,11 +138,10 @@
             "url": "#lighthouse&median-lighthouse-over-time=accessibility"
           },
           {
-            "endpoint": "lighthouse",
-            "category": "seo",
-            "metric": "median_score_pct",
+            "endpoint": "pageWeight",
+            "category": "total",
+            "metric": "median_bytes_formatted",
             "label": "Page weight",
-            "suffix": "kB",
             "description": "Median total bytes per page for across tested origins.",
             "url": "#page-weight"
           }
@@ -134,7 +156,7 @@
           "table": {
             "param": "",
             "default": "adoption",
-            "caption": "Usage placeholder",
+            "caption": "Amount of origins a technology has over time.",
             "columns": [
               {
                 "key": "date",
@@ -159,11 +181,13 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#669E8E"
+                  "color": "#669E8E",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
-                  "color": "#BD6EBE"
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -224,15 +248,6 @@
             },
             {
               "endpoint": "vitals",
-              "category": "FID",
-              "metric": "good_pct",
-              "label": "Good FID",
-              "suffix": "%",
-              "description": "Percentage of origins with good FID scores (under 100ms).",
-              "url": "?good-cwv-over-time=FID#good-cwvs"
-            },
-            {
-              "endpoint": "vitals",
               "category": "CLS",
               "metric": "good_pct",
               "label": "Good CLS",
@@ -253,7 +268,7 @@
         },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
-          "description": "Placeholder - combination of several metrics",
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics.",
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
@@ -269,10 +284,6 @@
               {
                 "label": "LCP",
                 "value": "LCP"
-              },
-              {
-                "label": "FID",
-                "value": "FID"
               },
               {
                 "label": "CLS",
@@ -340,11 +351,13 @@
                 {
                   "name": "desktop",
                   "color": "#669E8E",
+                  "color_dark": "#fff000",
                   "suffix": "%"
                 },
                 {
                   "name": "mobile",
                   "color": "#BD6EBE",
+                  "color_dark": "#ff00f0",
                   "suffix": "%"
                 }
               ],
@@ -390,34 +403,38 @@
               "category": "performance",
               "metric": "median_score_pct",
               "label": "Performance",
-              "url": "?median-lighthouse-over-time=performance#lighthouse"
+              "url": "?median-lighthouse-over-time=performance#lighthouse",
+              "description": "Median Lighthouse <strong>performance</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "accessibility",
               "metric": "median_score_pct",
               "label": "Accessibility",
-              "url": "?median-lighthouse-over-time=accessibility#lighthouse"
+              "url": "?median-lighthouse-over-time=accessibility#lighthouse",
+              "description": "Median Lighthouse <strong>accessibility</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "seo",
               "metric": "median_score_pct",
               "label": "SEO",
-              "url": "?median-lighthouse-over-time=seo#lighthouse"
+              "url": "?median-lighthouse-over-time=seo#lighthouse",
+              "description": "Median Lighthouse <strong>SEO</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "best_practices",
               "metric": "median_score_pct",
               "label": "Best Practices",
-              "url": "?median-lighthouse-over-time=best_practices#lighthouse"
+              "url": "?median-lighthouse-over-time=best_practices#lighthouse",
+              "description": "Median Lighthouse <strong>best practices</strong> score."
             }
           ]
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -457,7 +474,8 @@
               {
                 "key": "median_score_pct",
                 "name": "Median score",
-                "className": "main-cell"
+                "className": "main-cell",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",
@@ -478,11 +496,13 @@
               "values": [
                 {
                   "name": "desktop",
-                  "color": "#669E8E"
+                  "color": "#669E8E",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
-                  "color": "#BD6EBE"
+                  "color": "#BD6EBE",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -525,32 +545,29 @@
             {
               "endpoint": "pageWeight",
               "category": "images",
-              "metric": "median_bytes",
+              "metric": "median_bytes_formatted",
               "label": "Image Weight",
-              "url": "?weight-over-time=image#page-weight",
-              "suffix": " kB"
+              "url": "?weight-over-time=image#page-weight"
             },
             {
               "endpoint": "pageWeight",
               "category": "js",
-              "metric": "median_bytes",
+              "metric": "median_bytes_formatted",
               "label": "JavaScript Size",
-              "url": "?weight-over-time=js#page-weight",
-              "suffix": " kB"
+              "url": "?weight-over-time=js#page-weight"
             },
             {
               "endpoint": "pageWeight",
               "category": "total",
-              "metric": "median_bytes",
+              "metric": "median_bytes_formatted",
               "label": "Total Page Weight",
-              "url": "?weight-over-time=total#page-weight",
-              "suffix": " kB"
+              "url": "?weight-over-time=total#page-weight"
             }
           ]
         },
         "weight_timeseries": {
           "title": "Weight over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "weight_timeseries",
           "summary": true,
           "endpoint": "pageWeight",
@@ -586,8 +603,7 @@
               },
               {
                 "name": "Median Bytes",
-                "key": "median_bytes",
-                "suffix": "kB",
+                "key": "median_bytes_formatted",
                 "className": "main-cell"
               },
               {
@@ -603,6 +619,8 @@
             "default": "images",
             "title": "Image weight over time",
             "metric": "median_bytes",
+            "suffix": "bytes",
+            "metric_summary": "median_bytes_formatted",
             "height": 600,
             "series": {
               "breakdown": "client",
@@ -610,12 +628,14 @@
                 {
                   "name": "desktop",
                   "color": "#669E8E",
-                  "suffix": " kB"
+                  "suffix": " bytes",
+                  "color_dark": "#fff000"
                 },
                 {
                   "name": "mobile",
                   "color": "#BD6EBE",
-                  "suffix": " kB"
+                  "suffix": " bytes",
+                  "color_dark": "#ff00f0"
                 }
               ],
               "defaults": [
@@ -648,7 +668,7 @@
               ]
             },
             "yAxis": {
-              "title": "Weight in kB"
+              "title": "Weight in bytes"
             }
           }
         }
@@ -661,19 +681,31 @@
       "config": {
         "colors": {
           "app": [
+            "#ED5FB4",
+            "#322288",
+            "#6DA072",
+            "#E47112",
+            "#4E9CC8",
+            "#e51607",
+            "#616F0D",
+            "#7D58CD",
+            "#ba7cb0",
+            "#882155"
+          ],
+          "app_dark": [
             "#5980EB",
             "#D55316",
-            "#2C2F70",
+            "#A8A9CA",
             "#68A16D",
             "#B979A7",
             "#AC8D1C",
-            "#742F53",
+            "#947786",
             "#449DB1",
-            "#8E3496",
-            "#CB377C"
+            "#C861D2",
+            "#E24070"
           ],
           "overrides": {
-            "WordPress": "#ff0000"
+            "ALL": "#69797e"
           }
         },
         "default": {
@@ -702,30 +734,32 @@
               },
               {
                 "key": "good_pct",
-                "name": "Overall good CWV",
+                "name": "Good CWVs",
                 "breakdown": "subcategory",
                 "subcategory": "overall",
                 "suffix": "%",
-                "className": "main-cell pct-value",
-                "endpoint": "vitals",
-                "metric": "good_pct"
-              },
-              {
-                "key": "good_pct",
-                "name": "FID",
-                "breakdown": "subcategory",
-                "subcategory": "FID",
-                "suffix": "%",
+                "viz": "progress",
+                "className": "cwv-cell main-cell pct-value",
                 "endpoint": "vitals",
                 "metric": "good_pct"
               },
               {
                 "key": "medium_score_pct",
-                "name": "Accessibility",
+                "name": "Perf.",
+                "breakdown": "subcategory",
+                "subcategory": "performance",
+                "endpoint": "lighthouse",
+                "metric": "median_score_pct",
+                "viz": "progress-circle"
+              },
+              {
+                "key": "medium_score_pct",
+                "name": "A11Y",
                 "breakdown": "subcategory",
                 "subcategory": "accessibility",
                 "endpoint": "lighthouse",
-                "metric": "median_score_pct"
+                "metric": "median_score_pct",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",
@@ -737,7 +771,7 @@
         },
         "good_cwv_timeseries": {
           "title": "Good Core Web Vitals over time",
-          "description": "Placeholder - combination of several metrics",
+          "description": "Comparison of the percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics.",
           "id": "good_cwv_timeseries",
           "endpoint": "vitals",
           "metric": "good_pct",
@@ -754,10 +788,6 @@
               {
                 "label": "LCP",
                 "value": "LCP"
-              },
-              {
-                "label": "FID",
-                "value": "FID"
               },
               {
                 "label": "CLS",
@@ -780,7 +810,7 @@
           "table": {
             "param": "good-cwv-over-time",
             "default": "overall",
-            "caption": "Good Core Web Vitals placeholder",
+            "caption": "Comparison of the percentage of origins of the different technologies passing all three Core Web Vitals (LCP, INP, CLS), visualized over time.",
             "columns": [
               {
                 "key": "date",
@@ -848,7 +878,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Placeholder text",
+          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here.",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -878,7 +908,7 @@
           "table": {
             "param": "median-lighthouse-over-time",
             "default": "performance",
-            "caption": "Lighthouse placeholder",
+            "caption": "Comparing the Lighthouse scores of the different selected technologies over time.",
             "columns": [
               {
                 "key": "date",
@@ -889,7 +919,8 @@
                 "key": "median_score_pct",
                 "name": "Median lighthouse score",
                 "breakdown": "app",
-                "className": "main-cell"
+                "className": "main-cell",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",
@@ -943,7 +974,7 @@
         },
         "weight_timeseries": {
           "title": "Page weight over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "weight_timeseries",
           "endpoint": "pageWeight",
           "metric": "median_bytes",
@@ -978,8 +1009,7 @@
               },
               {
                 "name": "Median Bytes",
-                "key": "median_bytes",
-                "suffix": "kB",
+                "key": "median_bytes_formatted",
                 "className": "main-cell",
                 "breakdown": "app"
               },
@@ -997,17 +1027,20 @@
             "param": "median-weight-over-time",
             "default": "total",
             "metric": "median_bytes",
+            "metric_summary": "median_bytes_formatted",
             "series": {
               "breakdown": "app",
-              "suffix": " kB",
+              "suffix": " bytes",
               "defaults": [
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0],
+                  "suffix": " bytes"
                 },
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [0,0,0,0,0,0,0,0,0,0,0,0],
+                  "suffix": " bytes"
                 }
               ]
             },
@@ -1030,13 +1063,13 @@
               ]
             },
             "yAxis": {
-              "title": "Weight in kB"
+              "title": "Weight in bytes"
             }
           }
         },
         "adoption_timeseries": {
           "title": "Origins over time",
-          "description": "Placeholder text",
+          "description": "",
           "id": "adoption_timeseries",
           "endpoint": "adoption",
           "metric": "origins",
@@ -1106,7 +1139,109 @@
           }
         }
       },
-      "description": "Comparison placeholder"
+      "description": "Get a detailed comparison for 2 to 10 technologies."
+    },
+    "category": {
+      "id": "category",
+      "title": "Categories",
+      "subtitle": "Technology Report",
+      "config": {
+        "default": {
+          "category": "CMS",
+          "app": ["ALL", "WordPress", "Drupal"],
+          "series": {
+            "breakdown": "app"
+          }
+        },
+        "summary": [
+          {
+            "endpoint": "category",
+            "metric": "origins",
+            "label": "Origins",
+            "description": "Total amount of origins analyzed in this category.",
+            "key": "info"
+          },
+          {
+            "endpoint": "category",
+            "metric": "technologies",
+            "label": "Technologies",
+            "description": "Total number of technologies tagged with this category.",
+            "key": "info"
+          }
+        ],
+        "tech_comparison_summary": {
+          "id": "tech_comparison_summary",
+          "table": {
+            "caption": "Summary",
+            "key": "technologies",
+            "columns": [
+              {
+                "key": "selectTech",
+                "name": "Select technology",
+                "hiddenName": true,
+                "type": "checkbox",
+                "className": "check-cell"
+              },
+              {
+                "key": "technology",
+                "name": "Tech",
+                "type": "heading"
+              },
+              {
+                "key": "origins",
+                "name": "Origins",
+                "breakdown": "subcategory",
+                "subcategory": "adoption",
+                "endpoint": "adoption",
+                "metric": "origins"
+              },
+              {
+                "key": "good_pct",
+                "name": "Good CWVs",
+                "breakdown": "subcategory",
+                "subcategory": "overall",
+                "suffix": "%",
+                "viz": "progress",
+                "className": "cwv-cell main-cell pct-value",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "LCP",
+                "breakdown": "subcategory",
+                "subcategory": "LCP",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "INP",
+                "breakdown": "subcategory",
+                "subcategory": "INP",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "good_pct",
+                "name": "CLS",
+                "breakdown": "subcategory",
+                "subcategory": "CLS",
+                "suffix": "%",
+                "endpoint": "vitals",
+                "metric": "good_pct"
+              },
+              {
+                "key": "client",
+                "name": "Client",
+                "className": "client"
+              }
+            ]
+          }
+        }
+      }
     }
   },
 
@@ -1134,20 +1269,18 @@
         }
       },
       "vitals": {
+        "general": {
+          "description": "Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome. A good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices."
+        },
         "overall": {
           "label": "Overall Core Web Vitals",
           "title": "Passes Core Web Vitals",
-          "description": "The percentage of origins passing all three Core Web Vitals (LCP, FID, CLS) with a good experience. Note that if an origin is missing FID data, it's assessed based on the performance of the remaining metrics."
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics."
         },
         "LCP": {
           "label": "LCP",
           "title": "Good Largest Contentful Paint",
           "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful. Good experiences are less than or equal to 2.5 seconds."
-        },
-        "FID": {
-          "label": "FID",
-          "title": "Good First Input Delay",
-          "description": "First Input Delay (FID) measures the time from when a user first interacts with a page, to the time when the browser is actually able to begin processing event handlers in response to that interaction. Sites should strive to have a First Input Delay of 100 milliseconds or less. FID will be replaced by Interaction to Next Paint (INP) as a Core Web Vital in March 2024."
         },
         "CLS": {
           "label": "CLS",
@@ -1172,23 +1305,29 @@
         }
       },
       "pageWeight": {
+        "general": {
+          "description": ""
+        },
         "images": {
           "title": "Image Weight",
-          "description": "todo"
+          "description": ""
         },
         "js": {
           "title": "JavaScript Transfer Size",
-          "description": "todo"
+          "description": ""
         },
         "total": {
           "title": "Total Page Weight",
-          "description": "todo"
+          "description": ""
         }
       },
       "adoption": {
+        "general": {
+          "description": ""
+        },
         "adoption": {
           "title": "Adoption",
-          "description": "Todo"
+          "description": "The amount of origins using this technology over time."
         }
       }
     },
@@ -1198,7 +1337,6 @@
       "origins": "Origins",
 
       "origins_eligible_for_cwv": "Eligible",
-      "origins_eligible_for_fid": "Eligible",
       "origins_eligible_for_cls": "Eligible",
       "origins_eligible_for_lcp": "Eligible",
       "origins_eligible_for_fcp": "Eligible",
@@ -1206,7 +1344,6 @@
       "origins_eligible_for_ttfb": "Eligible",
 
       "origins_with_good_cwv": "Having good CWVs",
-      "origins_with_good_fid": "Having good FID",
       "origins_with_good_cls": "Having good CLS",
       "origins_with_good_lcp": "Having good LCP",
       "origins_with_good_fcp": "Having good FCP",
@@ -1214,7 +1351,6 @@
       "origins_with_good_ttfb": "Having good TTFB",
 
       "pct_good_cwv": "% Good CWVs",
-      "pct_good_fid": "% Good FID",
       "pct_good_cls": "% Good CLS",
       "pct_good_lcp": "% Good LCP",
       "pct_good_fcp": "% Good FCP",

@@ -41,6 +41,7 @@ class Section {
     this.components[component.dataset.id] = new TableLinked(
       component.dataset.id,
       this.pageConfig,
+      this.config,
       this.pageFilters,
       this.data
     );
@@ -60,17 +61,21 @@ class Section {
     this.components[component.dataset.id] = new Timeseries(
       component.dataset.id,
       this.pageConfig,
+      this.config,
       this.pageFilters,
       this.data
     );
   }
 
-  updateSection() {
+  updateSection(content) {
     Object.values(this.components).forEach(component => {
       if(component.data !== this.data) {
         component.data = this.data;
       }
-      component.updateContent();
+      if(component.pageFilters !== this.pageFilters) {
+        component.pageFilters = this.pageFilters;
+      }
+      component.updateContent(content);
     });
   }
 }

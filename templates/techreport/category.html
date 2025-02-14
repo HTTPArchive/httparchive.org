@@ -1,0 +1,143 @@
+{% extends "techreport/report.html" %}
+
+{% block filters %}
+<form id="page-filters">
+  <div>
+    <fieldset class="technology-filters">
+      <legend class="form-title">Choose a dataset</legend>
+
+      <div class="tech-selector">
+        <label for="categories_selector" class="tech">Category</label>
+        <div class="tech-input-wrapper">
+          {% set category_selected = tech_report_page.filters.category or tech_report_config.default_category %}
+          <select name="categories" class="tech" data-selected="{{ category_selected }}" id="categories_selector">
+            <option value="{{ category_selected }}" selected="true">
+              {{ category_selected }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </fieldset>
+    <fieldset class="lens">
+      <legend class="sr-only">Lens</legend>
+
+      <label for="geo">Geo</label>
+      <div class="select-label">
+        <select name="geo" id="geo">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+
+      <label for="rank">Rank</label>
+      <div class="select-label">
+        <select name="rank" id="rank">
+          <option value="ALL" selected="true">
+            ALL
+          </option>
+        </select>
+      </div>
+    </fieldset>
+  </div>
+  <button type="submit" id="submit-form" class="main-btn">Update</button>
+  {% include "techreport/components/filter_meta.html" %}
+</form>
+
+<template id="filter-option">
+  <option value="Option">
+    Option
+  </option>
+</template>
+
+<template id="tech-selector">
+  {% set technology = "ALL" %}
+  {% set name = "tech-new" %}
+  {% set key = 2 %}
+  {% include "techreport/templates/selector_tech.html" %}
+</template>
+{% endblock %}
+
+{% block section %}
+  {{ super() }}
+  <div class="report-content">
+    <div class="intro block-m">
+      <div class="info">
+        <div class="heading-wrapper">
+          <div>
+            <h1>
+              <span class="subtitle">Category</span>
+              <span class="">{{ tech_report_page.filters.category or 'CMS' }}</span>
+            </h1>
+            <p class="app-description"></p>
+          </div>
+          {% include "techreport/components/filter_breakdown.html" %}
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="cateogry-summary"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="category"
+    >
+      <h2 class="summary-heading">Summary</h2>
+      <div class="summary-grid">
+        {% for summary in tech_report_page.config.summary %}
+          {% include "techreport/components/summary_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div
+      id="comparison-summary"
+      class="card block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
+      <h2>Technologies</h2>
+
+      <div class="table-descr">
+        <p>Overview of the Core Web Vitals of all technologies within this category, displaying <strong>10</strong> per page.</p>
+        <p>Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>.</p>
+      </div>
+
+      {% set component = tech_report_page.config.tech_comparison_summary %}
+      {% set id = component.id %}
+      {% set client = request.args.get('client', '')  or 'mobile' %}
+      {% set sort_endpoint = "adoption" %}
+      {% set sort_metric = "adoption" %}
+      {% set sort_key = "origins" %}
+      {% set sort_order = "desc" %}
+
+      <p class="heading">
+        Latest data: <span data-slot="timestamp"></span>
+      </p>
+
+      {% set table = component.table %}
+      {% include "techreport/components/table_linked.html" %}
+
+      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
+
+      <div class="table-pagination">
+        {% set filters = tech_report_page.filters %}
+        <p data-pagination="previous">
+          {% if filters.page and filters.page > 1 %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}">Previous page </a>
+          {% endif %}
+        </p>
+        <p>
+          Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+        </p>
+        <p data-pagination="next">
+          {% if not filters.last_page and filters.last_page == False  %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}">Next page</a>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

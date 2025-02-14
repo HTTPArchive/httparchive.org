@@ -1,6 +1,16 @@
+import { DataUtils } from "../techreport/utils/data";
+
 function setTitle(title) {
-  const mainTitle = document.querySelector('h2 span.main-title');
+  const mainTitle = document.querySelector('h1 span.main-title');
   mainTitle.textContent = title;
+
+  const img = document.createElement('img');
+  const imgUrl = `https://cdn.httparchive.org/static/icons/${title}.png`;
+  img.setAttribute('aria-hidden', 'true');
+  img.setAttribute('alt', '');
+  img.setAttribute('src', imgUrl);
+  img.classList.add('title-img');
+  mainTitle.append(img);
 }
 
 function setCategories(categories) {
@@ -13,7 +23,7 @@ function setCategories(categories) {
     const _categories = categories.slice(0,5);
     _categories.forEach((category)  => {
       const cellTemplate = document.createElement('li');
-      cellTemplate.className('cell');
+      cellTemplate.className = 'cell';
       cellTemplate.textContent = category;
       list.appendChild(cellTemplate);
     });
@@ -22,25 +32,30 @@ function setCategories(categories) {
     if(categories.length > 5) {
       const more = categories.length - 5;
       const cellTemplate = document.createElement('li');
-      cellTemplate.className('cell');
       cellTemplate.textContent = `+ ${more} more`;
       list.appendChild(cellTemplate);
     }
   }
 }
 
-function update(data, filters) {
+function setDescription(description) {
+  if(description && description !== "") {
+    const descr = document.querySelector('p.app-description');
+    descr.textContent = description;
+  }
+}
+
+function update(filters) {
   const app = filters.app[0];
 
   if(app) {
-    setTitle(app);
-  }
-
-  if(data[app]) {
-    setCategories(data[app][0]?.category?.split(", "));
+    const formattedApp = DataUtils.formatAppName(app);
+    setTitle(formattedApp);
   }
 }
 
 export const DrilldownHeader = {
   update,
+  setCategories,
+  setDescription,
 }

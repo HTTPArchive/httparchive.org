@@ -44,7 +44,7 @@
 {% block scripts %}
 {{ super() }}
 <script nonce="{{ csp_nonce() }}">
-  gtag('event', '{{ HTTP_STATUS_CODES[error.code] }}' {
+  gtag('event', '{{ HTTP_STATUS_CODES[error.code] }}', {
     'event_category': 'error',
     'event_label': '{{ request.path }}',
     'value': 1
