@@ -45,21 +45,6 @@
   </div>
   <button type="submit" id="submit-form">Update</button>
   {% include "techreport/components/filter_meta.html" %}
-  <fieldset class="breakdown">
-    <legend>Breakdown</legend>
-    <div class="client-breakdown-wrapper">
-      <label for="client-breakdown">Client</label>
-      <select name="client-breakdown" id="client-breakdown">
-        {% if request.args.get('client', '') == 'desktop' %}
-        <option value="mobile">Mobile</option>
-        <option value="desktop" selected>Desktop</option>
-        {% else %}
-        <option value="mobile" selected>Mobile</option>
-        <option value="desktop">Desktop</option>
-        {% endif %}
-      </select>
-    </div>
-  </fieldset>
 </form>
 
 <template id="filter-option">
