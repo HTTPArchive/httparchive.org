@@ -41,6 +41,7 @@ class Section {
     this.components[component.dataset.id] = new TableLinked(
       component.dataset.id,
       this.pageConfig,
+      this.config,
       this.pageFilters,
       this.data
     );
@@ -60,6 +61,7 @@ class Section {
     this.components[component.dataset.id] = new Timeseries(
       component.dataset.id,
       this.pageConfig,
+      this.config,
       this.pageFilters,
       this.data
     );

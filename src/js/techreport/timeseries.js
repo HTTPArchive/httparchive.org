@@ -3,9 +3,10 @@ import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
 class Timeseries {
   // Create the component
-  constructor(id, config, filters, data) {
+  constructor(id, pageConfig, config, filters, data) {
     this.id = id;
-    this.pageConfig = config;
+    this.pageConfig = pageConfig;
+    this.config = config;
     this.pageFilters = filters;
     this.submetric = ''; // TODO: Fetch the default one from somewhere
     this.data = data;
@@ -80,7 +81,7 @@ class Timeseries {
       this.updateSummary();
     }
     this.updateViz();
-    Table.updateTable(this.id, this.pageConfig[this.id]?.table, this.pageFilters.app, this.data);
+    Table.updateTable(this.id, this.pageConfig[this.id]?.table, this.config, this.pageFilters.app, this.data);
   }
 
   // Update the summary with the latest data for all categories

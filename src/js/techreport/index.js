@@ -371,11 +371,13 @@ class TechReport {
 
         const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
         DrilldownHeader.setCategories(categories);
+        DrilldownHeader.setDescription(techInfo.description);
       });
   }
 
   updateCategoryComponents (category) {
     this.updateComponents(category.data);
+    DrilldownHeader.setDescription(category.description);
   }
 
   // Update components and sections that are relevant to the current page

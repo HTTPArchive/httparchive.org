@@ -403,28 +403,32 @@
               "category": "performance",
               "metric": "median_score_pct",
               "label": "Performance",
-              "url": "?median-lighthouse-over-time=performance#lighthouse"
+              "url": "?median-lighthouse-over-time=performance#lighthouse",
+              "description": "Median Lighthouse <strong>performance</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "accessibility",
               "metric": "median_score_pct",
               "label": "Accessibility",
-              "url": "?median-lighthouse-over-time=accessibility#lighthouse"
+              "url": "?median-lighthouse-over-time=accessibility#lighthouse",
+              "description": "Median Lighthouse <strong>accessibility</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "seo",
               "metric": "median_score_pct",
               "label": "SEO",
-              "url": "?median-lighthouse-over-time=seo#lighthouse"
+              "url": "?median-lighthouse-over-time=seo#lighthouse",
+              "description": "Median Lighthouse <strong>SEO</strong> score."
             },
             {
               "endpoint": "lighthouse",
               "category": "best_practices",
               "metric": "median_score_pct",
               "label": "Best Practices",
-              "url": "?median-lighthouse-over-time=best_practices#lighthouse"
+              "url": "?median-lighthouse-over-time=best_practices#lighthouse",
+              "description": "Median Lighthouse <strong>best practices</strong> score."
             }
           ]
         },
@@ -470,7 +474,8 @@
               {
                 "key": "median_score_pct",
                 "name": "Median score",
-                "className": "main-cell"
+                "className": "main-cell",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",
@@ -676,16 +681,16 @@
       "config": {
         "colors": {
           "app": [
-            "#5980EB",
-            "#D55316",
-            "#2C2F70",
-            "#68A16D",
-            "#B979A7",
-            "#AC8D1C",
-            "#742F53",
-            "#449DB1",
-            "#8E3496",
-            "#CB377C"
+            "#ED5FB4",
+            "#322288",
+            "#6DA072",
+            "#E47112",
+            "#4E9CC8",
+            "#e51607",
+            "#616F0D",
+            "#7D58CD",
+            "#ba7cb0",
+            "#882155"
           ],
           "app_dark": [
             "#5980EB",
@@ -730,21 +735,32 @@
               },
               {
                 "key": "good_pct",
-                "name": "Overall good CWV",
+                "name": "Good CWVs",
                 "breakdown": "subcategory",
                 "subcategory": "overall",
                 "suffix": "%",
-                "className": "main-cell pct-value",
+                "viz": "progress",
+                "className": "cwv-cell main-cell pct-value",
                 "endpoint": "vitals",
                 "metric": "good_pct"
               },
               {
                 "key": "medium_score_pct",
-                "name": "Accessibility",
+                "name": "Perf.",
+                "breakdown": "subcategory",
+                "subcategory": "performance",
+                "endpoint": "lighthouse",
+                "metric": "median_score_pct",
+                "viz": "progress-circle"
+              },
+              {
+                "key": "medium_score_pct",
+                "name": "A11Y",
                 "breakdown": "subcategory",
                 "subcategory": "accessibility",
                 "endpoint": "lighthouse",
-                "metric": "median_score_pct"
+                "metric": "median_score_pct",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",
@@ -904,7 +920,8 @@
                 "key": "median_score_pct",
                 "name": "Median lighthouse score",
                 "breakdown": "app",
-                "className": "main-cell"
+                "className": "main-cell",
+                "viz": "progress-circle"
               },
               {
                 "key": "client",
@@ -1163,7 +1180,8 @@
                 "key": "selectTech",
                 "name": "Select technology",
                 "hiddenName": true,
-                "type": "checkbox"
+                "type": "checkbox",
+                "className": "check-cell"
               },
               {
                 "key": "technology",
@@ -1180,11 +1198,12 @@
               },
               {
                 "key": "good_pct",
-                "name": "Good CWV",
+                "name": "Good CWVs",
                 "breakdown": "subcategory",
                 "subcategory": "overall",
                 "suffix": "%",
-                "className": "main-cell pct-value",
+                "viz": "progress",
+                "className": "cwv-cell main-cell pct-value",
                 "endpoint": "vitals",
                 "metric": "good_pct"
               },

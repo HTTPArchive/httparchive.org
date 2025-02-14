@@ -9,10 +9,14 @@
 
   <div id="report-content" class="report-content">
     <div class="info intro block-m">
-      <h1>
-        <span class="subtitle">Technology</span>
-        <span class="main-title">ALL</span>
-      </h1>
+      <div class="heading-wrapper">
+        <h1>
+          <span class="subtitle">Technology</span>
+          <span class="main-title">ALL</span>
+        </h1>
+        {% include "techreport/components/filter_breakdown.html" %}
+      </div>
+      <p class="app-description"></p>
       <ul class="category-list categories">
         <li class="cell">Uncategorized</li>
       </ul>

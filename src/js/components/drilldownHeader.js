@@ -3,6 +3,14 @@ import { DataUtils } from "../techreport/utils/data";
 function setTitle(title) {
   const mainTitle = document.querySelector('h1 span.main-title');
   mainTitle.textContent = title;
+
+  const img = document.createElement('img');
+  const imgUrl = `https://cdn.httparchive.org/static/icons/${title}.png`;
+  img.setAttribute('aria-hidden', 'true');
+  img.setAttribute('alt', '');
+  img.setAttribute('src', imgUrl);
+  img.classList.add('title-img');
+  mainTitle.append(img);
 }
 
 function setCategories(categories) {
@@ -30,6 +38,13 @@ function setCategories(categories) {
   }
 }
 
+function setDescription(description) {
+  if(description && description !== "") {
+    const descr = document.querySelector('p.app-description');
+    descr.textContent = description;
+  }
+}
+
 function update(filters) {
   const app = filters.app[0];
 
@@ -42,4 +57,5 @@ function update(filters) {
 export const DrilldownHeader = {
   update,
   setCategories,
+  setDescription,
 }

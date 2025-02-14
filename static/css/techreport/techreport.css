@@ -387,19 +387,28 @@ nav {
   padding-bottom: 2.5rem;
 }
 
-#page-filters .lens label {
+#page-filters .lens label,
+.breakdown label {
   color: var(--color-text);
   font-size: 0.875rem;
   font-weight: 600;
   width: 100%;
 }
 
-#page-filters .lens .select-label select {
+#page-filters .lens .select-label select,
+.breakdown select {
   color: var(--color-text-darker);
   font-size: 0.9rem;
   width: 100%;
   border-color: var(--color-text-lighter);
   padding: 0.825rem;
+}
+
+.breakdown select {
+  background-color: transparent;
+  appearance: none;
+  margin: 0;
+  border: none;
 }
 
 #page-filters .lens .select-label:not(:last-of-type) {
@@ -432,8 +441,6 @@ nav {
   position: relative;
   border: none;
   margin-bottom: 0;
-  padding: 1.75rem 0.5rem 0.5rem 0.75rem;
-  font-size: 1rem;
   line-height: 100%;
   color: var(--color-text-darker);
   border-radius: 3px;
@@ -739,50 +746,6 @@ select {
   align-items: center;
 }
 
-.client-breakdown-wrapper label {
-  display: block;
-  font-size: 0.825rem;
-  font-weight: 600;
-  color: var(--color-text-lighter);
-  width: 100%;
-  margin-bottom: 0;
-}
-
-.client-breakdown-wrapper select {
-  appearance: none;
-  background-color: transparent;
-  z-index: 1;
-  border-radius: 0;
-  border: none;
-  color: var(--color-text);
-  padding: 0;
-  width: 5rem;
-  border-bottom: 1px solid var(--color-text-lighter);
-  display: block;
-  font-size: 1rem;
-}
-
-.client-breakdown-wrapper:has(select:focus) {
-  border: 1px solid var(--color-teal-darker);
-  border-radius: 3px;
-}
-
-/* So that the outline only gets removed if :has is supported */
-.client-breakdown-wrapper:has(select:focus) select {
-  outline: none;
-  border: none;
-  position: relative;
-  left: 1px;
-  top: -1px;
-  margin-bottom: -1px;
-}
-
-.client-breakdown-wrapper:has(select:focus) label {
-  position: relative;
-  left: 1px;
-  top: -1px;
-}
-
 .result-info > div {
   display: flex;
   column-gap: 1rem;
@@ -816,6 +779,11 @@ select {
 
 .summary-grid + .card {
   margin-top: 1rem;
+}
+
+.summary-grid .card .progress-circle {
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Submetric selector */
@@ -986,6 +954,10 @@ select {
   padding: 1rem 1rem 1rem 0;
 }
 
+.table-ui :is(td, th):has(.progress-circle) {
+  padding: 0.5rem 1rem 0.5rem 0;
+}
+
 .table-ui tbody tr {
   border-bottom: 1px solid var(--color-card-border);
 }
@@ -1027,6 +999,33 @@ select {
 .table-ui tr:has(.row-link:focus) .row-link:focus {
   /* So the outline only gets removed in browsers that support :has */
   outline-style: dotted;
+}
+
+.table-ui .app-cell .app-img {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.75rem;
+  position: relative;
+  top: -0.12rem;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.table-ui .app-cell a {
+  display: inline-block;
+  width: 20rem;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.table-ui .check-cell {
+  min-width: 2rem;
+}
+
+.table-ui .check-cell input[type="checkbox"] {
+  margin: 0;
 }
 
 .table-ui td ul {
@@ -1088,6 +1087,10 @@ select {
   position: relative;
 }
 
+.table-ui td.cwv-cell {
+  min-width: 12rem;
+}
+
 .table-ui td.pct-value[data-value] span {
   width: 4.5rem;
   display: block;
@@ -1100,8 +1103,9 @@ select {
   width: 100%;
   width: calc(100% - 4.95rem);
   position: absolute;
-  top: 1.5rem;
+  top: 50%;
   right: 2.5rem;
+  transform: translateY(-50%);
   border: 1px solid var(--color-progress-basic-border);
   border-radius: 3px;
   background-image: linear-gradient(
@@ -1146,12 +1150,32 @@ select {
   margin-top: 0;
   background-color: transparent;
   padding: 4rem 0;
+  margin-bottom: 2.5rem;
 }
 
 .intro h1 {
   font-size: var(--font-size-xlarge);
-  margin-bottom: 2.5rem;
   margin-top: 0;
+}
+
+.title-img {
+  max-height: 1.5rem;
+  margin-left: 0.5rem;
+  position: relative;
+  top: -0.1rem;
+}
+
+.intro .heading-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+  row-gap: 0.5rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.intro .heading-wrapper .breakdown {
+  min-width: 17ch;
 }
 
 .intro h2 {
@@ -1171,6 +1195,10 @@ select {
 
 .intro h1 + p {
   padding: 0;
+}
+
+.intro .app-description {
+  margin-bottom: 2rem;
 }
 
 .intro ul {
@@ -1203,7 +1231,7 @@ select {
   background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
-  background-position: 0 20rem;
+  background-position: 0 25rem;
 }
 
 .report-content .intro {
@@ -1260,8 +1288,7 @@ h2.summary-heading {
   text-decoration: none;
 }
 
-.summary-linked-value,
-.summary-suffix {
+.summary-value {
   font-size: var(--font-size-medium);
 }
 
@@ -1341,6 +1368,7 @@ h2.summary-heading {
 
 .highcharts-grid-line {
   stroke: var(--graph-color-line) !important;
+  stroke-dasharray: 3 5;
 }
 
 svg.highcharts-root text {
@@ -1443,50 +1471,44 @@ path.highcharts-tick {
 /* ------------------------ */
 /* ----- Small charts ----- */
 /* ------------------------ */
-.progress-chart {
-  transform: rotate(-90deg);
-}
 
-.summary-value:has(.progress-chart) {
-  position: relative;
-  margin-top: 1rem;
-}
-
-.summary-value:has(.progress-chart) > p {
+:not(th).progress-circle {
+  display: inline-block;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 4em;
+  padding-top: 0.525em;
   text-align: center;
-  width: 50%;
-  height: 100%;
-  height: calc(100% - 0.5rem);
-  position: absolute;
-  top: 0;
-  padding-top: 25%;
-  padding-top: calc(25% - 0.55rem);
-  line-height: 100%;
+  background-color: var(--progess-color);
+
+  --progress-start: calc(70% - 1px);
+  --progess-width: calc(70% - 0.25em);
+  --progress-end: calc(70% - 0.25em + 1.5px);
+  --progess-color-empty: var(--color-progress-basic-bg);
+  --offset-start: 0.75%;
+  --offset-end: calc(var(--offset) - var(--offset-start));
+
+  background-image: radial-gradient(var(--color-card-background) 0% var(--progess-width), transparent var(--progess-width) 100%),
+    conic-gradient(transparent 0% var(--offset), var(--progess-color-empty) var(--offset) 100%),
+    conic-gradient(var(--progess-color-border) 0% var(--offset-start), transparent var(--offset-start) 100%),
+    conic-gradient(transparent 0% var(--offset-end), var(--progess-color-border) var(--offset-end) 100%),
+    radial-gradient(transparent 0% var(--progress-start), var(--progess-color-border) var(--progress-start) 100%),
+    radial-gradient(var(--progess-color-border) 0% var(--progress-end), transparent var(--progress-end) 100%);
 }
 
-.lighthouse-progress {
-  stroke-dashoffset: var(--offset);
-  transform-origin: center;
+.progress-circle.poor {
+  --progess-color: #e35d4b;
+  --progess-color-border: #c94635;
 }
 
-.lighthouse-progress.border-1 {
-  transform: rotate(-1deg);
+.progress-circle.good {
+  --progess-color: #5da471;
+  --progess-color-border: #38894f;
 }
 
-.lighthouse-progress.border-2 {
-  transform: rotate(1deg);
-}
-
-.progress-chart.poor .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #f33;
-}
-
-.progress-chart.good .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #18a975;
-}
-
-.progress-chart.improvement .lighthouse-progress:not(.border-1, .border-2) {
-  stroke: #c7870b;
+.progress-circle.improvement {
+  --progess-color: #d2ac4c;
+  --progess-color-border: #ba8d1e;
 }
 
 /* ----------------------- */
