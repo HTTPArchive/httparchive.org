@@ -20,6 +20,7 @@ As of March 1 2016, the tests are performed on Chrome for desktop and emulated A
 
 The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates various tables in BigQuery.
 
+
 ## How accurate is the data, in particular the time measurements?
 
 Some metrics like the number of bytes, HTTP headers, etc are accurate at the time the test was performed. It's entirely possible that the web page has changed since it was tested. The tests were performed using a single browser. If the page's content varies by browser this could be a source of differences.
@@ -32,13 +33,6 @@ The time measurements are gathered in a test environment, and thus have all the 
 - **Internet connection** - The connection speed, latency, and packet loss from the test location is another variable that affects time measurements.
 
 Given these conditions it's virtually impossible to compare the HTTP Archive's time measurements with those gathered in other browsers, locations or connection speeds. They are best used as a source of comparison only within the HTTP Archive dataset.
-
-
-## How do I use BigQuery to write custom queries over the data?
-
-The HTTP Archive dataset is available publicly on BigQuery. Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://har.fyi/guides/getting-started/).
-
-For a guided walkthrough of the project, watch this in-depth [30 minute video](https://www.youtube.com/watch?v=00f9kza3BJ0) featuring HTTP Archive maintainer [Rick Viscomi](https://twitter.com/rick_viscomi).
 
 
 ## What changes have been made to the test environment that might affect the data?
