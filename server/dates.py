@@ -51,7 +51,7 @@ except DefaultCredentialsError:  # pragma: no cover
     # Setup the mock dates
     import datetime
 
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(datetime.timezone.utc)
     mock_dates = mock_get_dates(2010, now.year, now.day, now.month)
 
 

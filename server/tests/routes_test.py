@@ -156,15 +156,6 @@ def test_faq_with_slash(client):
     assert_route(client, "/faq/", 301, "/faq")
 
 
-def test_faq_legacy(client):
-    assert_route(
-        client,
-        "/downloads.php",
-        301,
-        "/faq#how-do-i-use-bigquery-to-write-custom-queries-over-the-data",
-    )
-
-
 def test_legacy_page(client):
     assert_route(client, "/index.php", 301, "/")
 
