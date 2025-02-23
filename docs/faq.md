@@ -35,6 +35,11 @@ The time measurements are gathered in a test environment, and thus have all the 
 Given these conditions it's virtually impossible to compare the HTTP Archive's time measurements with those gathered in other browsers, locations or connection speeds. They are best used as a source of comparison only within the HTTP Archive dataset.
 
 
+## How do I use BigQuery to write custom queries over the data?
+
+The HTTP Archive dataset is available publicly on BigQuery. Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://har.fyi/guides/getting-started/).
+
+
 ## What changes have been made to the test environment that might affect the data?
 
 See [changelog.json](https://github.com/HTTPArchive/httparchive/blob/main/docs/changelog.json)
