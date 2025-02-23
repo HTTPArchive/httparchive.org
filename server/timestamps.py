@@ -17,14 +17,14 @@ def get_timestamps_config():
     return timestamps_json
 
 
-def get_file_date_info(file, type):
+def get_file_date_info(file_name, file_type):
     timestamps_config = get_timestamps_config()
     # Default Published and Last Updated to today
-    today = datetime.datetime.utcnow().isoformat()
-    if type == "date_published" or type == "date_modified":
-        return timestamps_config.get(file, {}).get(type, today)
+    today = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    if file_type == "date_published" or type == "date_modified":
+        return timestamps_config.get(file_name, {}).get(file_type, today)
     else:
-        return timestamps_config.get(file, {}).get(type)
+        return timestamps_config.get(file_name, {}).get(file_type)
 
 
 def get_versioned_filename(path):
