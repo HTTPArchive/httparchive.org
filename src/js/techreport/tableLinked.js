@@ -79,7 +79,6 @@ class TableLinked {
         // Set the data and the app name
         const data = technology;
         const app = technology[0]?.technology;
-        const formattedApp = DataUtils.formatAppName(app);
 
         // Select the latest entry for each technology
         const sorted = data?.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -96,12 +95,13 @@ class TableLinked {
               cell.classList.add('app-cell');
 
               const img = document.createElement('span');
-              const imgUrl = `https://cdn.httparchive.org/static/icons/${formattedApp}.png`;
+              const imgUrl = `https://cdn.httparchive.org/static/icons/${app.replaceAll(' ','%20')}.png`;
               img.setAttribute('aria-hidden', 'true');
               img.setAttribute('style', `background-image: url(${imgUrl})`);
               img.classList.add('app-img');
               cell.append(img);
 
+              const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
               link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
               link.innerHTML = formattedApp;
