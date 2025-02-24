@@ -41,7 +41,7 @@
       </div>
     </fieldset>
   </div>
-  <button type="submit" id="submit-form">Update</button>
+  <button type="submit" id="submit-form" class="main-btn">Update</button>
   {% include "techreport/components/filter_meta.html" %}
 </form>
 
@@ -62,13 +62,6 @@
 {% block section %}
   {{ super() }}
   <div class="report-content">
-    <div class="info-panel">
-      <div class="block-l">
-        <p class="info-label">Beta</p>
-        <p>We're still actively working on the categories page.</p>
-      </div>
-    </div>
-
     <div class="intro block-m">
       <div class="info">
         <div class="heading-wrapper">
@@ -105,6 +98,11 @@
       data-api="cwv,lighthouse,page-weight"
     >
       <h2>Technologies</h2>
+      <div class="table-descr">
+        <p>Overview of the Core Web Vitals of all technologies within this category, displaying <strong>10</strong> per page.</p>
+        <p>Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>.</p>
+      </div>
+      
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
       {% set client = request.args.get('client', '')  or 'mobile' %}
@@ -121,6 +119,22 @@
       {% include "techreport/components/table_linked.html" %}
 
       <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
+      <div class="table-pagination">
+        {% set filters = tech_report_page.filters %}
+        <p data-pagination="previous">
+          {% if filters.page and filters.page > 1 %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}">Previous page </a>
+          {% endif %}
+        </p>
+        <p>
+          Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+        </p>
+        <p data-pagination="next">
+          {% if not filters.last_page and filters.last_page == False  %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}">Next page</a>
+          {% endif %}
+        </p>
+      </div>
     </div>
   </div>
 {% endblock %}
