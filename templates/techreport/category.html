@@ -98,12 +98,11 @@
       data-api="cwv,lighthouse,page-weight"
     >
       <h2>Technologies</h2>
-
       <div class="table-descr">
         <p>Overview of the Core Web Vitals of all technologies within this category, displaying <strong>10</strong> per page.</p>
         <p>Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>.</p>
       </div>
-
+      
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
       {% set client = request.args.get('client', '')  or 'mobile' %}
@@ -120,7 +119,6 @@
       {% include "techreport/components/table_linked.html" %}
 
       <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
-
       <div class="table-pagination">
         {% set filters = tech_report_page.filters %}
         <p data-pagination="previous">
@@ -138,6 +136,5 @@
         </p>
       </div>
     </div>
-
   </div>
 {% endblock %}

@@ -10,3 +10,4 @@ templates/sitemap.xml
 **/.DS_Store
 .coverage
 .idx/dev.nix
+.coverage.*
