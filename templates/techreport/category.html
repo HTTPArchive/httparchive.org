@@ -100,8 +100,13 @@
       <h2>Technologies</h2>
 
       <div class="table-descr">
-        <p>Overview of the Core Web Vitals of all technologies within this category, displaying <strong>10</strong> per page.</p>
-        <p>Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>.</p>
+        <p>
+          Overview of the latest Core Web Vitals of all technologies within this category, sorted by number of origins.
+          Select up to 10 technologies to compare their Core Web Vitals, Lighthouse scores, adoption, and page weight over time, or view details about a single technology.
+        </p>
+        <p>
+          Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>.
+        </p>
       </div>
 
       {% set component = tech_report_page.config.tech_comparison_summary %}
@@ -112,20 +117,21 @@
       {% set sort_key = "origins" %}
       {% set sort_order = "desc" %}
 
-      <p class="heading">
-        Latest data: <span data-slot="timestamp"></span>
-      </p>
+      <div class="table-info-grid">
+        <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
+        <p class="heading">
+          Latest data: <span data-slot="timestamp"></span>
+        </p>
+      </div>
 
       {% set table = component.table %}
       {% include "techreport/components/table_linked.html" %}
-
-      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
 
       <div class="table-pagination">
         {% set filters = tech_report_page.filters %}
         <p data-pagination="previous">
           {% if filters.page and filters.page > 1 %}
-            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}">Previous page </a>
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}&selected={{ filters.selected }}">Previous page </a>
           {% endif %}
         </p>
         <p>
@@ -133,7 +139,7 @@
         </p>
         <p data-pagination="next">
           {% if not filters.last_page and filters.last_page == False  %}
-            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}">Next page</a>
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}&selected={{ filters.selected }}">Next page</a>
           {% endif %}
         </p>
       </div>

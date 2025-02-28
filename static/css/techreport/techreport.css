@@ -1658,6 +1658,19 @@ path.highcharts-tick {
   position: relative;
 }
 
+.table-info-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.table-info-grid .cta-link {
+  border: 1.5px solid var(--color-teal-dark);
+  background-color: transparent;
+  color: var(--color-teal-dark);
+}
+
 /* ----------------------- */
 /* ---- Media queries ---- */
 /* ----------------------- */

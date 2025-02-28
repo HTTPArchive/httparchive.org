@@ -313,58 +313,61 @@ class TechReport {
         const technologyFormatted = paginatedTechs?.join('%2C')
           .replaceAll(" ", "%20");
 
-          const geo = this.filters.geo.replaceAll(" ", "%20");
-          const rank = this.filters.rank.replaceAll(" ", "%20");
-          const geoFormatted = geo.replaceAll(" ", "%20");
-          const rankFormatted = rank.replaceAll(" ", "%20");
+        const compare = document.querySelector('[data-name="selected-apps"]');
+        compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyFormatted}`);
 
-          let allResults = {};
-          paginatedTechs.forEach(tech => allResults[tech] = []);
+        const geo = this.filters.geo.replaceAll(" ", "%20");
+        const rank = this.filters.rank.replaceAll(" ", "%20");
+        const geoFormatted = geo.replaceAll(" ", "%20");
+        const rankFormatted = rank.replaceAll(" ", "%20");
 
-          Promise.all(apis.map(api => {
-            const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
+        let allResults = {};
+        paginatedTechs.forEach(tech => allResults[tech] = []);
 
-            return fetch(url)
-              .then(techResult => techResult.json())
-              .then(techResult => {
-                techResult.forEach(row => {
-                  const parsedRow = {
-                    ...row,
+        Promise.all(apis.map(api => {
+          const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
+
+          return fetch(url)
+            .then(techResult => techResult.json())
+            .then(techResult => {
+              techResult.forEach(row => {
+                const parsedRow = {
+                  ...row,
+                }
+
+                if(api.parse) {
+                  parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+                }
+
+                const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
+                if(resIndex > -1) {
+                  allResults[row.technology][resIndex] = {
+                    ...allResults[row.technology][resIndex],
+                    ...parsedRow
                   }
-
-                  if(api.parse) {
-                    parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
-                  }
-
-                  const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
-                  if(resIndex > -1) {
-                    allResults[row.technology][resIndex] = {
-                      ...allResults[row.technology][resIndex],
-                      ...parsedRow
-                    }
-                  } else {
-                    allResults[row.technology].push(parsedRow);
-                  }
-                });
+                } else {
+                  allResults[row.technology].push(parsedRow);
+                }
               });
-          })).then(() => {
-            category.data = {
-              technologies: allResults,
-              info: {
-                origins: category.origins,
-                technologies: category?.technologies?.length,
-              },
-            };
+            });
+        })).then(() => {
+          category.data = {
+            technologies: allResults,
+            info: {
+              origins: category.origins,
+              technologies: category?.technologies?.length,
+            },
+          };
 
-            /* Update the pagination info */
-            const current = document.querySelectorAll('[data-page="current"]');
-            const total = document.querySelectorAll('[data-page="total"]');
-            current.forEach(c => c.innerHTML = pageNr);
-            total.forEach(t => t.innerHTML = Math.ceil(category?.technologies?.length / rows));
+          /* Update the pagination info */
+          const current = document.querySelectorAll('[data-page="current"]');
+          const total = document.querySelectorAll('[data-page="total"]');
+          current.forEach(c => c.innerHTML = pageNr);
+          total.forEach(t => t.innerHTML = Math.ceil(category?.technologies?.length / rows));
 
-            /* Update components */
-            this.updateCategoryComponents(category);
-          });
+          /* Update components */
+          this.updateCategoryComponents(category);
+        });
       });
   }
 
