@@ -25,8 +25,8 @@
     "deploy": "./tools/scripts/deploy.sh",
     "timestamps": "node ./tools/generate/generate_timestamps",
     "lint": "run-script-os",
-    "lint:darwin:linux": "docker container run -it --rm -v \"$PWD\":/app -w /app --entrypoint=./tools/scripts/run_linter_locally.sh super-linter/super-linter",
-    "lint:win32": "docker container run --rm -v \"%cd%\":/app -w /app/ --entrypoint=./tools/scripts/run_linter_locally.sh super-linter/super-linter",
+    "lint:darwin:linux": "docker container run -it --rm -v \"$PWD\":/app -w /app --entrypoint=./tools/scripts/run_linter_locally.sh ghcr.io/super-linter/super-linter",
+    "lint:win32": "docker container run --rm -v \"%cd%\":/app -w /app/ --entrypoint=./tools/scripts/run_linter_locally.sh ghcr.io/super-linter/super-linter",
     "pytest": "pytest --cov server --cov-fail-under=100 --cov-report=term-missing -s",
     "test": "node ./tools/test"
   },
