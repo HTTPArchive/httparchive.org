@@ -200,15 +200,12 @@ nav {
 .skip {
   position: absolute;
   z-index: 999;
-
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
   overflow: hidden;
-  position: absolute;
   white-space: nowrap;
   width: 1px;
-
   text-decoration: none;
 }
 
@@ -1144,7 +1141,7 @@ select {
 .table-pagination {
   display: flex;
   justify-content: space-between;
-  padding: 1.5rem 0 1rem 0;
+  padding: 1.5rem 0 1rem;
   margin-top: 2.5rem;
   border-top: 1px solid var(--color-card-border);
 }
@@ -1551,6 +1548,11 @@ path.highcharts-tick {
 .progress-circle.improvement {
   --progess-color: #d2ac4c;
   --progess-color-border: #ba8d1e;
+}
+
+.progress-circle .summary-linked-value {
+  background-color: var(--color-card-background);
+  border-radius: 2rem;
 }
 
 /* ----------------------- */
