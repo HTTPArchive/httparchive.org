@@ -1,3 +1,5 @@
+/* global Highcharts */
+
 import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';

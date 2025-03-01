@@ -1,3 +1,5 @@
+/* global charts */
+
 import { Colors } from './colors';
 import { Metric } from './metric';
 import { prettyDate, drawMetricSummary } from './utils';

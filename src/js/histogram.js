@@ -1,3 +1,5 @@
+/* global Highcharts */
+
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
@@ -265,7 +267,7 @@ function drawHistogram(data, containerId, options) {
   const chart = document.getElementById(`${options.metric}-chart`);
   callOnceWhenVisible(chart, () => {
     drawChart(series, containerId, options);
-  });
+  })
 };
 
 function drawChart(series, containerId, options) {

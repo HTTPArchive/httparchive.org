@@ -1,3 +1,5 @@
+/* global gtag, webVitals */
+
 function sendWebVitals() {
 
   function getLoafAttribution(attribution) {

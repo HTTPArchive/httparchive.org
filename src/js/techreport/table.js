@@ -96,7 +96,7 @@ function getColumnCell(columnConfig, data, date) {
 function getSubcategory(config) {
   const urlParams = new URLSearchParams(window.location.search);
   const urlSubcategory = urlParams.get(config.param);
-  const subcategory = urlSubcategory || config.default || '';
+  const subcategory = urlSubcategory || config.default || '';
 
   return subcategory;
 }

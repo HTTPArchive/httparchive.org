@@ -1,3 +1,5 @@
+/* global Timeseries */
+
 import SummaryCard from "./summaryCards";
 import TableLinked from "./tableLinked";
 
