@@ -112,12 +112,13 @@ class Bin {
   format(property) {
     switch(property) {
       case 'pdf':
-      case 'cdf':
+      case 'cdf': {
         let value = (Math.floor(this[property] * 10000) / 100).toFixed(2);
         if (value < 10) {
           value = '0' + value;
         }
         return value + '%';
+      }
       case 'volume':
         return this[property].toLocaleString();
       default:
@@ -268,7 +269,7 @@ function drawHistogram(data, containerId, options) {
   callOnceWhenVisible(chart, () => {
     drawChart(series, containerId, options);
   })
-};
+}
 
 function drawChart(series, containerId, options) {
   const chart = Highcharts.chart(containerId, {
@@ -328,7 +329,7 @@ function drawChart(series, containerId, options) {
       borderColor: 'rgba(247,247,247,0.85)',
       formatter: function() {
         const metric = new Metric(options, Math.round(this.points[0].x * 100) / 100);
-        const tooltips = this.points.filter(p => !p.series.name.includes('CDF')).map((point, points) => {
+        const tooltips = this.points.filter(p => !p.series.name.includes('CDF')).map((point) => {
           const cdf = this.points.find(p => p.series.name == `${point.series.name} CDF`);
           return `<td>
             <p style="text-transform: uppercase; font-size: 10px;">

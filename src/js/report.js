@@ -85,7 +85,7 @@ class Report {
   }
 
   bindPermalinkClick() {
-    this.permalink.addEventListener('click', _ => {
+    this.permalink.addEventListener('click', () => {
       this.permalink.select();
     });
   }
