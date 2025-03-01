@@ -82,7 +82,7 @@ function sendWebVitals() {
           debug_target: attribution.loadState || '(not set)',
         };
         break;
-      case 'INP':
+      case 'INP': {
         const loafAttribution = getLoafAttribution(attribution);
         overrides = {
           debug_event: attribution.interactionType,
@@ -95,6 +95,7 @@ function sendWebVitals() {
           ...loafAttribution
         };
         break;
+      }
       case 'LCP':
         overrides = {
           debug_url: attribution.url,

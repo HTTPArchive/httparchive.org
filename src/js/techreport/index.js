@@ -89,11 +89,12 @@ class TechReport {
         this.getAllMetricData();
         break;
 
-      case 'category':
+      case 'category': {
         const category = this.filters.category || 'CMS';
         this.initializeReport();
         this.getCategoryData(category);
         break;
+      }
     }
   }
 

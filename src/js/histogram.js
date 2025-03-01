@@ -40,13 +40,13 @@ function drawClientSummary(data, options, client) {
 }
 
 function getSummary(data, options) {
-  const summary = getPrimaryMetric(data, options);
+  const summary = getPrimaryMetric(data);
   const metric = new Metric(options, summary);
 
   return metric.toString();
 }
 
-function getPrimaryMetric(data, options) {
+function getPrimaryMetric(data) {
   data = data.filter(o => +o.cdf > 0.5);
   if (!data.length) {
     return '?';
