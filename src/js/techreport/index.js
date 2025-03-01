@@ -303,7 +303,6 @@ class TechReport {
       .then(result => result.json())
       .then(result => {
         const category = result[0];
-
         const rows = 10;
         const pageNr = this.filters.page;
         const firstTechNr = (pageNr - 1) * rows;

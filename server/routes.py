@@ -93,6 +93,7 @@ def techreportlanding(page_id):
     selected_techs = request.args.get("selected")
     requested_page = int(requested_page)
     last_page = request.args.get("last_page") or False
+
     filters = {
         "geo": requested_geo,
         "rank": requested_rank,
