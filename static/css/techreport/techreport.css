@@ -1530,7 +1530,7 @@ path.highcharts-tick {
   --progress-end: calc(70% - 0.25em + 1.5px);
   --progess-color-empty: var(--color-progress-basic-bg);
   --offset-start: 0.75%;
-  --offset-end: calc(var(--offset) - var(--offset-start))
+  --offset-end: calc(var(--offset) - var(--offset-start));
   background-image: radial-gradient(var(--color-card-background) 0% var(--progess-width), transparent var(--progess-width) 100%),
     conic-gradient(transparent 0% var(--offset), var(--progess-color-empty) var(--offset) 100%),
     conic-gradient(var(--progess-color-border) 0% var(--offset-start), transparent var(--offset-start) 100%),

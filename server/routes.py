@@ -101,7 +101,7 @@ def techreportlanding(page_id):
         "category": requested_category,
         "page": requested_page,
         "last_page": last_page,
-        "selected": selected_techs
+        "selected": selected_techs,
     }
     params = {
         "geo": requested_geo.replace(" ", "+"),
