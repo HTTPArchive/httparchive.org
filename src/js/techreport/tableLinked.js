@@ -115,7 +115,7 @@ class TableLinked {
               checkbox.setAttribute('data-name', `table-${this.id}`);
               checkbox.setAttribute('id', `${app}-table-${this.id}`);
               checkbox.setAttribute('name', `${app}-table-${this.id}`);
-              checkbox.addEventListener('change', (e) => {
+              checkbox.addEventListener('change', () => {
                 const appLinks = document.querySelectorAll('[data-name="selected-apps"]');
                 const selectedApps = document.querySelectorAll(`[data-name="table-${this.id}"]:checked`);
 
