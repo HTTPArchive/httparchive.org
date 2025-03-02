@@ -1,3 +1,5 @@
+/* global Highcharts */
+
 import { Table } from "./table";
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
@@ -120,7 +122,7 @@ class Timeseries {
       /* Get the currently selected subcategory based on the URL */
       const urlParams = new URLSearchParams(window.location.search);
       const urlSubcategory = urlParams.get(config.param);
-      const subcategory = urlSubcategory || config.default;
+      const subcategory = urlSubcategory || config.default;
 
       /* Remove the previous content */
       container.innerHTML = '';
@@ -182,7 +184,7 @@ class Timeseries {
     /* Get the currently selected subcategory based on the URL */
     const urlParams = new URLSearchParams(window.location.search);
     const urlSubcategory = urlParams.get(config.param);
-    const subcategory = urlSubcategory || config.default;
+    const subcategory = urlSubcategory || config.default;
 
     /* Get settings */
     const metric = component.dataset.metric;
@@ -398,7 +400,7 @@ class Timeseries {
     const config = this.pageConfig[this.id]?.viz;
     const urlParams = new URLSearchParams(window.location.search);
     const urlSubcategory = urlParams.get(config.param);
-    const subcategory = urlSubcategory || config.default;
+    const subcategory = urlSubcategory || config.default;
 
     // Get default colors
     const colors = this.defaults(config)?.chart?.colors;
@@ -412,7 +414,7 @@ class Timeseries {
         const value = row?.[endpoint]?.find(row => row.name === subcategory)?.[client]?.[metric];
         return {
           x: new Date(row.date).getTime(),
-          y: value || 0,
+          y: value || 0,
         };
       });
 

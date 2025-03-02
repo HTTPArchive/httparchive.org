@@ -1,3 +1,5 @@
+/* global Section */
+
 import Filters from '../components/filters';
 import { Constants } from './utils/constants';
 const { DrilldownHeader } = require("../components/drilldownHeader");
@@ -87,11 +89,12 @@ class TechReport {
         this.getAllMetricData();
         break;
 
-      case 'category':
-        const category = this.filters.category || 'CMS';
+      case 'category': {
+        const category = this.filters.category || 'CMS';
         this.initializeReport();
         this.getCategoryData(category);
         break;
+      }
     }
   }
 

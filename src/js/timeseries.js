@@ -1,3 +1,5 @@
+/* global Highcharts */
+
 import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
@@ -141,7 +143,7 @@ function drawTimeseries(data, options) {
     .then(flagSeries => series.push(flagSeries))
     // If the getFlagSeries request fails (503), catch so we can still draw the chart
     .catch(console.error)
-    .then(_ => {
+    .then( () => {
       const chart = document.getElementById(options.chartId);
       callOnceWhenVisible(chart, () => drawChart(options, series));
     });
@@ -175,7 +177,7 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
     if (!options.timeseries || !options.timeseries.fields) {
       const trMeta = el('tr');
       trMeta.classList.add('meta-row');
-      DEFAULT_COLS.map(col => {
+      DEFAULT_COLS.map(() => {
         return el('td');
       }).forEach(td => trMeta.appendChild(td));
       const th = el('th');
@@ -210,7 +212,7 @@ function drawTimeseriesTable(data, options, [start, end]=[-Infinity, Infinity]) 
 
 const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
-const toNumeric = ({client, date, ...other}) => {
+const toNumeric = ({client, ...other}) => {
   return Object.entries(other).reduce((o, [k, v]) => {
     o[k] = +v;
     return o;
@@ -450,7 +452,7 @@ const zip = data => {
     let row = dates[o.timestamp];
     if (row) {
       row.push(o);
-      row.sort((a, b) => a.client == 'desktop' ? -1 : 1)
+      row.sort((a) => a.client == 'desktop' ? -1 : 1)
       return;
     }
     dates[o.timestamp] = [o];
