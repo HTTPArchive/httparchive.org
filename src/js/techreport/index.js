@@ -425,14 +425,31 @@ class TechReport {
   getFilterInfo() {
     const filterData = {};
 
-    const filterApis = ['categories', 'technologies', 'ranks', 'geos'];
+    const filterApis = [
+      {
+        name: 'categories',
+        endpoint: 'categories?onlyname',
+      },
+      {
+        name: 'technologies',
+        endpoint: 'technologies?onlyname',
+      },
+      {
+        name: 'ranks',
+        endpoint: 'ranks',
+      },
+      {
+        name: 'geos',
+        endpoint: 'geos',
+      },
+    ];
 
     Promise.all(filterApis.map(api => {
-      const url = `${Constants.apiBase}/${api}`;
+      const url = `${Constants.apiBase}/${api.endpoint}`;
 
       return fetch(url)
         .then(result => result.json())
-        .then(result => filterData[api] = result)
+        .then(result => filterData[api.name] = result)
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
       const FilterComponent = new Filters(filterData, this.filters);
