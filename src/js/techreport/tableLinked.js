@@ -152,7 +152,7 @@ class TableLinked {
 
   getTechsFromURL() {
     const url = new URL(window.location);
-    return url.searchParams.get('selected');
+    return url.searchParams.get('selected') || null;
   }
 
   addColumnCheckbox(app) {
@@ -229,8 +229,17 @@ class TableLinked {
   updateSelectionText(allSelectedApps) {
     const appLinks = document.querySelectorAll('[data-name="selected-apps"]');
     appLinks.forEach(appLinkEl => {
-      appLinkEl.setAttribute('href', `/reports/techreport/tech?tech=${allSelectedApps}`);
-      appLinkEl.innerHTML = `Compare ${this.selectedTechs.length} technologies`;
+      let label = 'Compare all technologies on this page';
+      let href = '';
+      if(this.selectedTechs.length > 0) {
+        href = `/reports/techreport/tech?tech=${allSelectedApps}`;
+        label = `Compare ${this.selectedTechs.length} technologies`;
+      } else if(this.data.technologies) {
+        href = `/reports/techreport/tech?tech=${Object.keys(this.data.technologies).join(',')}`;
+      }
+
+      appLinkEl.setAttribute('href', href);
+      appLinkEl.innerHTML = label;
     });
   }
 
