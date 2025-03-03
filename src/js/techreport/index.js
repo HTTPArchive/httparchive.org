@@ -372,6 +372,7 @@ class TechReport {
         const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
         DrilldownHeader.setCategories(categories);
         DrilldownHeader.setDescription(techInfo.description);
+        DrilldownHeader.setIcon(techInfo.icon);
       });
   }
 
@@ -441,9 +442,9 @@ class TechReport {
 
   // Update drilldown page components
   updateDrilldownComponents(data) {
-    DrilldownHeader.update(this.filters);
-
     const app = this.filters.app[0];
+    DrilldownHeader.update(this.filters);
+    DrilldownHeader.setIcon(`${encodeURI(app)}.png`);
 
     if(data && data[app]) {
       UIUtils.updateReportComponents(this.sections, data, data[app], this.page, this.labels);

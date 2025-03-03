@@ -4,13 +4,12 @@ function setTitle(title) {
   const mainTitle = document.querySelector('h1 span.main-title');
   mainTitle.textContent = title;
 
-  const img = document.createElement('img');
-  const imgUrl = `https://cdn.httparchive.org/static/icons/${title}.png`;
-  img.setAttribute('aria-hidden', 'true');
-  img.setAttribute('alt', '');
-  img.setAttribute('src', imgUrl);
-  img.classList.add('title-img');
-  mainTitle.append(img);
+}
+
+function setIcon(icon) {
+  const img = document.querySelector('h1 .title-img');
+  const imgUrl = `https://cdn.httparchive.org/static/icons/${icon}`;
+  img.setAttribute('style', `background-image: url(${imgUrl})`);
 }
 
 function setCategories(categories) {
@@ -51,6 +50,7 @@ function update(filters) {
   if(app) {
     const formattedApp = DataUtils.formatAppName(app);
     setTitle(formattedApp);
+    console.log(app, filters);
   }
 }
 
@@ -58,4 +58,5 @@ export const DrilldownHeader = {
   update,
   setCategories,
   setDescription,
+  setIcon,
 }
