@@ -50,7 +50,6 @@ function update(filters) {
   if(app) {
     const formattedApp = DataUtils.formatAppName(app);
     setTitle(formattedApp);
-    console.log(app, filters);
   }
 }
 

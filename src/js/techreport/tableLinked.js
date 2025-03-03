@@ -95,7 +95,7 @@ class TableLinked {
               cell.classList.add('app-cell');
 
               const img = document.createElement('span');
-              const imgUrl = `https://cdn.httparchive.org/static/icons/${encodeURI(app)}.png`;
+              const imgUrl = `https://cdn.httparchive.org/static/icons/${encodeURI(technology[0]?.icon)}`;
               img.setAttribute('aria-hidden', 'true');
               img.setAttribute('style', `background-image: url(${imgUrl})`);
               img.classList.add('app-img');

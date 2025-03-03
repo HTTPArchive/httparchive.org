@@ -209,6 +209,10 @@ class TechReport {
 
     const apis = [
       {
+        endpoint: 'technologies',
+        metric: 'technologies',
+      },
+      {
         endpoint: 'cwv',
         metric: 'vitals',
         parse: DataUtils.parseVitalsData,
@@ -237,6 +241,7 @@ class TechReport {
     const rank = this.filters.rank.replaceAll(" ", "%20");
 
     let allResults = {};
+    let techInfo = {};
     technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
@@ -257,14 +262,19 @@ class TechReport {
               parsedRow[api.metric] = api.parse(metric, parsedRow?.date);
             }
 
-            const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
-            if(resIndex > -1) {
-              allResults[row.technology][resIndex] = {
-                ...allResults[row.technology][resIndex],
-                ...parsedRow
-              }
+            if(api.endpoint === 'technologies') {
+              techInfo[row.technology] = row;
             } else {
-              allResults[row.technology].push(parsedRow);
+              const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
+              if(resIndex > -1) {
+                allResults[row.technology][resIndex] = {
+                  ...allResults[row.technology][resIndex],
+                  ...techInfo[row.technology],
+                  ...parsedRow
+                }
+              } else {
+                allResults[row.technology].push(parsedRow);
+              }
             }
           });
         })
