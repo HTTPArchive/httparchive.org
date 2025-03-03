@@ -15,7 +15,7 @@ function renderBlogPosts() {
   }
 
   const blog = new BlogRenderer();
-  blog.renderPosts(blog_posts, template).then(_ => blog_section.classList.remove('hidden'));
+  blog.renderPosts(blog_posts, template).then(() => blog_section.classList.remove('hidden'));
 }
 
 function getDiscussTopics() {
@@ -27,12 +27,12 @@ function getDiscussTopics() {
     const topics = r.topic_list.topics.slice(0, 2);
     topics.forEach(topic => latestTopicIds.add(topic.id));
     drawTopics(topics, r.users);
-  }).then(_ => {
+  }).then(() => {
     return fetch(`${Discussion.ORIGIN}/top.json`);
   }).then(r => r.json()).then(r => {
     const topics = r.topic_list.topics.filter(topic => !latestTopicIds.has(topic.id)).slice(0, 3);
     drawTopics(topics, r.users);
-  }).then(_ => discuss_section.classList.remove('hidden'));
+  }).then(() => discuss_section.classList.remove('hidden'));
 }
 
 function drawTopics(topics, rUsers) {

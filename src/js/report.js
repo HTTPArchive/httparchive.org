@@ -1,3 +1,5 @@
+/* global charts */
+
 import { Colors } from './colors';
 import { Metric } from './metric';
 import { prettyDate, drawMetricSummary } from './utils';
@@ -32,21 +34,21 @@ class Report {
   }
 
   bindChangeListener(id) {
-    document.getElementById(id).addEventListener('change', e => {
+    document.getElementById(id).addEventListener('change', (e) => {
       this[id] = e.target.value
       this.updatePermalink();
     });
   }
 
   bindUpdateListener() {
-    document.getElementById('update').addEventListener('click', _ => {
+    document.getElementById('update').addEventListener('click', () => {
       // TODO: Consider using history.replaceState on field changes instead.
       location.href = this.permalink.value;
     });
   }
 
   bindTableVisibilityToggle() {
-    document.body.addEventListener('click', e => {
+    document.body.addEventListener('click', (e) => {
       if (!e.target.classList.contains('show-hide')) {
         return;
       }
@@ -83,7 +85,7 @@ class Report {
   }
 
   bindPermalinkClick() {
-    this.permalink.addEventListener('click', _ => {
+    this.permalink.addEventListener('click', () => {
       this.permalink.select();
     });
   }
@@ -180,7 +182,7 @@ class Report {
     const gridExpanderSelector = '.grid-expansion, .metric-header a';
     Array.from(document.querySelectorAll(gridExpanderSelector)).forEach(btn => {
       const metricId = btn.dataset.metric;
-      btn.addEventListener('click', e => {
+      btn.addEventListener('click', () => {
         this.toggleMetricExpansion(metricId);
       });
     });
@@ -208,7 +210,7 @@ class Report {
 
   getWPT(wptId) {
     const wpt = new WPT(wptId);
-    wpt.fetchResults().then(results => {
+    wpt.fetchResults().then(() => {
       const metrics = wpt.getMetrics(this.report);
       Object.entries(metrics).forEach(([metric, value]) => {
         const options = this.report.metrics.find(m => m.id === metric);

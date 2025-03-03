@@ -177,7 +177,7 @@ class Filters {
   updateCategory(event) {
     // Get the techs associated with the selected category
     const selectedCategory = this.categories.find(category => category.category === event.target.value);
-    let selectedTechs = selectedCategory?.technologies || [];
+    let selectedTechs = selectedCategory?.technologies || [];
     if(event.target.value === 'ALL') {
       selectedTechs = this.technologies.map(technology => technology.technology);
     }

@@ -745,18 +745,18 @@
               },
               {
                 "key": "medium_score_pct",
-                "name": "Perf.",
+                "name": "A11Y",
                 "breakdown": "subcategory",
-                "subcategory": "performance",
+                "subcategory": "accessibility",
                 "endpoint": "lighthouse",
                 "metric": "median_score_pct",
                 "viz": "progress-circle"
               },
               {
                 "key": "medium_score_pct",
-                "name": "A11Y",
+                "name": "SEO",
                 "breakdown": "subcategory",
-                "subcategory": "accessibility",
+                "subcategory": "seo",
                 "endpoint": "lighthouse",
                 "metric": "median_score_pct",
                 "viz": "progress-circle"
