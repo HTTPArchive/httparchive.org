@@ -241,6 +241,20 @@ class TableLinked {
       appLinkEl.setAttribute('href', href);
       appLinkEl.innerHTML = label;
     });
+
+    if(this.selectedTechs.length > 0) {
+      const selectionOverview = document.querySelector('[data-name="selected-apps-overview"]');
+      selectionOverview.innerHTML = '';
+      this.selectedTechs.forEach(tech => {
+        const li = document.createElement('li');
+        li.textContent = tech;
+        selectionOverview.append(li);
+      });
+      document.querySelector('.selected-apps').setAttribute('style', 'display: block;');
+    } else {
+      document.querySelector('.selected-apps').setAttribute('style', 'display: none;');
+    }
+
   }
 
   // Update pagination URLs

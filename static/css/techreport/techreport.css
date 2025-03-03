@@ -1678,6 +1678,15 @@ path.highcharts-tick {
   color: var(--color-teal-dark);
 }
 
+.selected-apps ul li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.selected-apps ul li:not(:last-of-type) {
+  margin-right: 1rem;
+}
+
 /* ----------------------- */
 /* ---- Media queries ---- */
 /* ----------------------- */
