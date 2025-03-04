@@ -11,6 +11,8 @@
 {% endblock %}
 
 {% block custom_navigation %}
+  <a href="#main" class="skip main-btn">Skip to main content</a>
+  <a href="#results" class="skip main-btn">Skip to results</a>
   <nav class="report-navigation">
     <a href="{{ url_for('index') }}">
       <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
