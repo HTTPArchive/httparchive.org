@@ -147,6 +147,7 @@ class TableLinked {
         }
       });
 
+      this.disableCheckboxes(this.selectedTechs);
     }
   }
 
@@ -208,6 +209,7 @@ class TableLinked {
     this.updatePaginationUrl('[data-pagination="previous"] a', allSelectedApps);
     this.updateSelectionText(allSelectedApps);
     this.updateURL(allSelectedApps);
+    this.disableCheckboxes(this.selectedTechs);
   }
 
   // Checkbox is unchecked
@@ -218,6 +220,18 @@ class TableLinked {
     this.updatePaginationUrl('[data-pagination="next"] a', selectedTechsStr);
     this.updatePaginationUrl('[data-pagination="previous"] a', selectedTechsStr);
     this.updateURL(selectedTechsStr);
+    this.disableCheckboxes(this.selectedTechs);
+  }
+
+  disableCheckboxes(techs) {
+    const checkbox = 'input[type="checkbox"][data-name="table-tech_comparison_summary"]';
+    if(techs.length >= 10) {
+      const checkboxes = document.querySelectorAll(`${checkbox}:not(:checked)`);
+      checkboxes.forEach(box => box.setAttribute('disabled', 'true'));
+    } else {
+      const checkboxes = document.querySelectorAll(`${checkbox}[disabled]`);
+      checkboxes.forEach(box => box.removeAttribute('disabled'));
+    }
   }
 
   updateURL(selectedTechsStr) {
@@ -247,7 +261,18 @@ class TableLinked {
       selectionOverview.innerHTML = '';
       this.selectedTechs.forEach(tech => {
         const li = document.createElement('li');
-        li.textContent = tech;
+        const remove = document.createElement('button');
+        const label = document.createElement('img');
+        label.setAttribute('alt', 'Remove');
+        label.setAttribute('src', '/static/img/close-filters.svg');
+        remove.textContent = tech;
+        remove.addEventListener('click', () => {
+          this.untickCheckbox(tech);
+          const checkbox = document.querySelector(`input[type="checkbox"][data-name="table-tech_comparison_summary"][data-app="${tech}"]`);
+          checkbox.checked = false;
+        });
+        remove.append(label);
+        li.append(remove);
         selectionOverview.append(li);
       });
       document.querySelector('.selected-apps').setAttribute('style', 'display: block;');

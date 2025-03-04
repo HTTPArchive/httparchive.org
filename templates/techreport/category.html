@@ -104,7 +104,7 @@
           Select up to 10 technologies to compare their Core Web Vitals, Lighthouse scores, adoption, and page weight over time, or view details about a single technology.
         </p>
         <p>
-          Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>.
+          Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>, based on the latest data (<span data-slot="timestamp"></span>).
         </p>
       </div>
 
@@ -116,12 +116,7 @@
       {% set sort_key = "origins" %}
       {% set sort_order = "desc" %}
 
-      <div class="table-info-grid">
-        <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
-        <p class="heading">
-          Latest data: <span data-slot="timestamp"></span>
-        </p>
-      </div>
+      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
 
       <div class="selected-apps">
         <p>

@@ -1672,19 +1672,42 @@ path.highcharts-tick {
   margin-bottom: 1.5rem;
 }
 
-.table-info-grid .cta-link {
+.cta-link[data-name="selected-apps"] {
   border: 1.5px solid var(--color-teal-dark);
   background-color: transparent;
   color: var(--color-teal-dark);
 }
 
+.selected-apps {
+  margin-top: 1.5rem;
+  font-size: var(--font-size-small);
+}
+
+.selected-apps p {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
 .selected-apps ul li {
   list-style-type: none;
   display: inline-block;
+  margin-bottom: 0.5em;
 }
 
 .selected-apps ul li:not(:last-of-type) {
-  margin-right: 1rem;
+  margin-right: 1em;
+}
+
+.selected-apps ul li button {
+  padding: 0.1em 0.5em;
+  border-radius: 2rem;
+  border: 1px solid var(--color-text-lighter);
+  background-color: transparent;
+  color: var(--color-text-lighter);
+}
+
+.selected-apps ul li button img {
+  padding-left: 0.25em;
 }
 
 /* ----------------------- */
