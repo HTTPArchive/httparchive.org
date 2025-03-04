@@ -275,9 +275,9 @@ class TableLinked {
         li.append(remove);
         selectionOverview.append(li);
       });
-      document.querySelector('.selected-apps').setAttribute('style', 'display: block;');
+      document.querySelector('.selected-apps')?.setAttribute('style', 'display: block;');
     } else {
-      document.querySelector('.selected-apps').setAttribute('style', 'display: none;');
+      document.querySelector('.selected-apps')?.setAttribute('style', 'display: none;');
     }
 
   }
