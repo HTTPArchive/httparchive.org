@@ -22,7 +22,6 @@ class TableLinked {
 
   // Update content in the table
   updateContent(content) {
-    console.log('update content', content, this.data);
     // Select a table based on the passed in id
     const component = document.getElementById(`table-${this.id}`);
     const tbody = component?.querySelector('tbody');
@@ -311,7 +310,6 @@ class TableLinked {
   updateRowData(result) {
     this.data = result.data;
     this.updateContent();
-    console.log('UPDATE ROW DATA', this.rows);
     const rowsAnnouncement = document.getElementById('rows-announcement');
     rowsAnnouncement.innerHTML = `Showing ${this.rows} rows.`;
   }
