@@ -1151,6 +1151,19 @@ select {
   border-top: 1px solid var(--color-card-border);
 }
 
+.table-page-info p {
+  text-align: center;
+}
+
+.table-row-count {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.table-row-count label {
+  font-weight: normal;
+}
+
 /* Metric components */
 .component-heading-wrapper {
   display: flex;

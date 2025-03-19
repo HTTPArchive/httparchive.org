@@ -88,10 +88,13 @@ def techreportlanding(page_id):
     # Get the filters
     requested_geo = request.args.get("geo") or "ALL"
     requested_rank = request.args.get("rank") or "ALL"
-    requested_category = request.args.get("category") or "ALL"
+    requested_category = request.args.get("category") or "CMS"
     requested_page = request.args.get("page") or 1
-    selected_techs = request.args.get("selected")
     requested_page = int(requested_page)
+    selected_techs = request.args.get("selected")
+    selected_rows = request.args.get("rows") or 10
+    selected_rows = int(selected_rows)
+
     last_page = request.args.get("last_page") or False
 
     filters = {
@@ -102,6 +105,7 @@ def techreportlanding(page_id):
         "page": requested_page,
         "last_page": last_page,
         "selected": selected_techs,
+        "rows": selected_rows,
     }
     params = {
         "geo": requested_geo.replace(" ", "+"),

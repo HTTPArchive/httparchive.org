@@ -1,3 +1,4 @@
+import { Constants } from "./utils/constants";
 import { DataUtils } from "./utils/data";
 
 class TableLinked {
@@ -10,13 +11,18 @@ class TableLinked {
     this.data = data;
     this.dataArray = [];
     this.selectedTechs = this.getTechsFromURL()?.split(',') || [];
+    this.rows = filters.rows || 10;
 
     this.updateContent();
     this.updateSelectionText(this.getTechsFromURL());
+
+    const rowCount = document.getElementById('rowsPerPage');
+    rowCount.addEventListener('change', (e) => this.updateRowsPerPage(e));
   }
 
   // Update content in the table
   updateContent(content) {
+    console.log('update content', content, this.data);
     // Select a table based on the passed in id
     const component = document.getElementById(`table-${this.id}`);
     const tbody = component?.querySelector('tbody');
@@ -205,10 +211,9 @@ class TableLinked {
 
     const allSelectedApps = this.selectedTechs.join(',');
 
-    this.updatePaginationUrl('[data-pagination="next"] a', allSelectedApps);
-    this.updatePaginationUrl('[data-pagination="previous"] a', allSelectedApps);
+    this.updatePaginationUrl('selected', allSelectedApps);
     this.updateSelectionText(allSelectedApps);
-    this.updateURL(allSelectedApps);
+    this.updateURL('selected', allSelectedApps);
     this.disableCheckboxes(this.selectedTechs);
   }
 
@@ -217,9 +222,8 @@ class TableLinked {
     this.selectedTechs = this.selectedTechs.filter(selected => selected !== app);
     const selectedTechsStr = this.selectedTechs.join(',');
     this.updateSelectionText(selectedTechsStr);
-    this.updatePaginationUrl('[data-pagination="next"] a', selectedTechsStr);
-    this.updatePaginationUrl('[data-pagination="previous"] a', selectedTechsStr);
-    this.updateURL(selectedTechsStr);
+    this.updatePaginationUrl('selected', selectedTechsStr);
+    this.updateURL('selected', selectedTechsStr);
     this.disableCheckboxes(this.selectedTechs);
   }
 
@@ -234,9 +238,9 @@ class TableLinked {
     }
   }
 
-  updateURL(selectedTechsStr) {
+  updateURL(param, value) {
     const url = new URL(window.location);
-    url.searchParams.set('selected', selectedTechsStr);
+    url.searchParams.set(param, value);
     window.history.replaceState(null, null, url);
   }
 
@@ -282,15 +286,34 @@ class TableLinked {
 
   }
 
-  // Update pagination URLs
-  updatePaginationUrl(element, allSelectedApps) {
-    const paginationEl = document.querySelector(element);
-    if(paginationEl) {
-      let params = paginationEl.getAttribute('href').split('?')[1];
-      params = new URLSearchParams(params);
-      params.set('selected', allSelectedApps);
-      paginationEl.setAttribute('href', `/reports/techreport/category?${params}`);
-    }
+  updatePaginationUrl(param, value) {
+    const pagination = ['[data-pagination="next"] a', '[data-pagination="previous"] a'];
+    pagination.forEach((element) => {
+      const paginationEl = document.querySelector(element);
+      if(paginationEl) {
+        let params = paginationEl.getAttribute('href').split('?')[1];
+        params = new URLSearchParams(params);
+        params.set(param, value);
+        paginationEl.setAttribute('href', `/reports/techreport/category?${params}`);
+      }
+    });
+  }
+
+  updateRowsPerPage(e) {
+    const rows = parseInt(e.target.value);
+    this.rows = rows;
+    this.updateURL('rows', rows);
+    this.updatePaginationUrl('rows', rows);
+
+    DataUtils.fetchCategoryData(rows, this.pageFilters, this.updateRowData.bind(this));
+  }
+
+  updateRowData(result) {
+    this.data = result.data;
+    this.updateContent();
+    console.log('UPDATE ROW DATA', this.rows);
+    const rowsAnnouncement = document.getElementById('rows-announcement');
+    rowsAnnouncement.innerHTML = `Showing ${this.rows} rows.`;
   }
 }
 

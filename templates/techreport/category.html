@@ -132,15 +132,30 @@
         {% set filters = tech_report_page.filters %}
         <p data-pagination="previous">
           {% if filters.page and filters.page > 1 %}
-            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}&selected={{ filters.selected }}">Previous page </a>
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Previous page </a>
           {% endif %}
         </p>
-        <p>
-          Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
-        </p>
+        <div class="table-page-info">
+          <p>
+            Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+          </p>
+          <div class="table-row-count">
+            <label for="rowsPerPage">
+              Rows
+            </label>
+            <select id="rowsPerPage">
+              <option {% if filters.rows == 10 %}selected{% endif %}>10</option>
+              <option {% if filters.rows == 25 %}selected{% endif %}>25</option>
+              <option {% if filters.rows == 50 %}selected{% endif %}>50</option>
+            </select>
+          </div>
+          <p class="sr-only" aria-live="polite">
+            <span id="rows-announcement"></span>
+          </p>
+        </div>
         <p data-pagination="next">
           {% if not filters.last_page and filters.last_page == False  %}
-            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}&selected={{ filters.selected }}">Next page</a>
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Next page</a>
           {% endif %}
         </p>
       </div>
