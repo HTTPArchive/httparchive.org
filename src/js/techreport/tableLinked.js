@@ -1,4 +1,3 @@
-import { Constants } from "./utils/constants";
 import { DataUtils } from "./utils/data";
 
 class TableLinked {
