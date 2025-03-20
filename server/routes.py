@@ -93,7 +93,7 @@ def techreportlanding(page_id):
     requested_page = int(requested_page)
     selected_techs = request.args.get("selected")
     selected_rows = request.args.get("rows") or 10
-    selected_rows = int(selected_rows)
+    selected_rows = str(selected_rows)
 
     last_page = request.args.get("last_page") or False
 

@@ -10,7 +10,7 @@ class TableLinked {
     this.data = data;
     this.dataArray = [];
     this.selectedTechs = this.getTechsFromURL()?.split(',') || [];
-    this.rows = filters.rows || 10;
+    this.rows = filters.rows || 10;
 
     this.updateContent();
     this.updateSelectionText(this.getTechsFromURL());
