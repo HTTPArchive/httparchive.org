@@ -144,9 +144,21 @@
               Rows
             </label>
             <select id="rowsPerPage">
-              <option value="10" {% if filters.rows == "10" %}selected{% endif %}>10</option>
-              <option value="25" {% if filters.rows == "25" %}selected{% endif %}>25</option>
-              <option value="50" {% if filters.rows == "50" %}selected{% endif %}>50</option>
+              {% if filters.rows == "10" %}
+                <option value="10" selected>10</option>
+              {% else %}
+                <option value="10">10</option>
+              {% endif %}
+              {% if filters.rows == "25" %}
+                <option value="25" selected>25</option>
+              {% else %}
+                <option value="25">25</option>
+              {% endif %}
+              {% if filters.rows == "50" %}
+                <option value="50" selected>50</option>
+              {% else %}
+                <option value="50">50</option>
+              {% endif %}
             </select>
           </div>
           <p class="sr-only" aria-live="polite">
