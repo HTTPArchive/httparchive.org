@@ -188,8 +188,8 @@ const fetchCategoryData = (rows, filters, callback) => {
         /* Update the pagination info */
         const current = document.querySelectorAll('[data-page="current"]');
         const total = document.querySelectorAll('[data-page="total"]');
-        current.forEach(c => c.innerHTML = pageNr);
-        total.forEach(t => t.innerHTML = Math.ceil(category?.technologies?.length / rows));
+        current.forEach(c => c.textContent = pageNr);
+        total.forEach(t => t.textContent = Math.ceil(category?.technologies?.length / rows));
 
         /* Update components */
         callback(category);
