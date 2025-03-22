@@ -166,7 +166,7 @@ class Filters {
             option.selected = true;
           }
           option.value = category;
-          option.innerHTML = category;
+          option.textContent = category;
           select.append(option);
         });
       })
