@@ -103,7 +103,11 @@ const getLighthouseScoreCategories = (score, brackets) => {
 }
 
 const fetchCategoryData = (rows, filters, callback) => {
-  const url = `${Constants.apiBase}/categories?category=${filters.category}`;
+  console.log('fetch filters', filters);
+  const geoFormatted = encodeURI(filters.geo);
+  const rankFormatted = encodeURI(filters.rank);
+  const categoryFormatted = encodeURI(filters.category);
+  const url = `${Constants.apiBase}/categories?category=${categoryFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
   const apis = [
     {
       endpoint: 'cwv',
@@ -136,16 +140,10 @@ const fetchCategoryData = (rows, filters, callback) => {
       const lastTechNr = pageNr * rows;
       const paginatedTechs = category?.technologies?.slice(firstTechNr, lastTechNr);
 
-      const technologyFormatted = paginatedTechs?.join('%2C')
-        .replaceAll(" ", "%20");
+      const technologyFormatted = encodeURI(paginatedTechs?.join('%2C'));
 
       const compare = document.querySelector('[data-name="selected-apps"]');
       compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyFormatted}`);
-
-      const geo = filters.geo.replaceAll(" ", "%20");
-      const rank = filters.rank.replaceAll(" ", "%20");
-      const geoFormatted = geo.replaceAll(" ", "%20");
-      const rankFormatted = rank.replaceAll(" ", "%20");
 
       let allResults = {};
       paginatedTechs.forEach(tech => allResults[tech] = []);
