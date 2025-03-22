@@ -177,7 +177,7 @@ class TableLinked {
     cell.append(checkbox);
 
     const label = document.createElement('label');
-    label.innerHTML = `Select ${formattedApp}`;
+    label.textContent = `Select ${formattedApp}`;
     label.classList.add('sr-only');
     label.setAttribute('for', `${app}-table-${this.id}`);
     cell.append(label);
