@@ -156,7 +156,7 @@ class Filters {
 
         const all = document.createElement('option');
         all.value = 'ALL';
-        all.innerHTML = 'ALL';
+        all.textContent = 'ALL';
         select.append(all);
 
         const sortedCategories = this.categories.sort((a, b) => a !== b ? a < b ? -1 : 1 : 0);
