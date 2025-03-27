@@ -555,7 +555,7 @@ nav {
 }
 
 .breakdown {
-  margin-top: 2.5rem;
+  margin-top: 1rem;
 }
 
 .breakdown legend {
@@ -1224,7 +1224,7 @@ select {
 }
 
 .intro .heading-wrapper .breakdown {
-  min-width: 17ch;
+  width: 10rem;
 }
 
 .intro h2 {
@@ -1247,7 +1247,10 @@ select {
 }
 
 .intro .app-description {
-  margin-bottom: 2rem;
+  margin-top: 1rem;
+  line-height: 160%;
+  display: block;
+  min-height: 3.5rem;
 }
 
 .intro ul {
@@ -1256,7 +1259,7 @@ select {
 }
 
 .intro .categories {
-  margin: -1rem 0 3.5rem;
+  margin: 1rem 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -1754,6 +1757,10 @@ path.highcharts-tick {
   .tech-selector-group .actions {
     position: relative;
     top: 2.25rem;
+  }
+
+  .intro .heading-wrapper {
+    display: block;
   }
 }
 

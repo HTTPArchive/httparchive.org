@@ -16,7 +16,7 @@ class TableLinked {
     this.updateSelectionText(this.getTechsFromURL());
 
     const rowCount = document.getElementById('rowsPerPage');
-    rowCount.addEventListener('change', (e) => this.updateRowsPerPage(e));
+    rowCount?.addEventListener('change', (e) => this.updateRowsPerPage(e));
   }
 
   // Update content in the table
@@ -35,7 +35,11 @@ class TableLinked {
 
     this.dataArray = this.dataArray.filter(row => row.length > 0);
 
-    if(tbody) {
+    console.log('set content', content, this.dataArray);
+
+    const isContent = content?.length > 0 || this.dataArray?.length > 0;
+
+    if(tbody && isContent) {
       // Reset what's in the table before adding new content
       tbody.innerHTML = '';
 
@@ -252,6 +256,7 @@ class TableLinked {
         label = `Compare ${this.selectedTechs.length} technologies`;
       } else if(this.data.technologies) {
         href = `/reports/techreport/tech?tech=${Object.keys(this.data.technologies).join(',')}`;
+        href = encodeURI(href);
       }
 
       appLinkEl.setAttribute('href', href);

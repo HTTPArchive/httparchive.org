@@ -103,7 +103,6 @@ const getLighthouseScoreCategories = (score, brackets) => {
 }
 
 const fetchCategoryData = (rows, filters, callback) => {
-  console.log('fetch filters', filters);
   const geoFormatted = encodeURI(filters.geo);
   const rankFormatted = encodeURI(filters.rank);
   const categoryFormatted = encodeURI(filters.category);

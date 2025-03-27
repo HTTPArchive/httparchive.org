@@ -43,11 +43,40 @@
     <tbody>
       {% if table.rows %}
         {% for row in table.rows %}
-          {% if row.header == "true" %}
-            <th data-key="{{ row.key }}">{{ row.name }}</th>
-          {% else %}
-            <td data-key="{{ row.key }}">{{ row.name }}</td>
-          {% endif %}
+          <tr>
+            {% if row.header == "true" %}
+              <th data-key="{{ row.key }}">{{ row.name }}</th>
+            {% else %}
+              <td data-key="{{ row.key }}">{{ row.name }}</td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      {% elif table.prefill == "tech" %}
+        {% for tech in technologies %}
+          <tr>
+            {% for column in table.columns %}
+              {% if column.key == "technology" %}
+                <th class="app-cell">
+                  <span class="app-img" aria-hidden="true" style="background-image: url(https://cdn.httparchive.org/static/icons/{{ tech }}.png)"></span>
+                  <a href="/reports/techreport/tech?tech={{ tech }}&geo={{ tech_report_page.filters.geo }}&rank={{ tech_report_page.filters.rank }}">{{ tech }}</a>
+                </th>
+              {% elif column.viz == "progress" %}
+                <td style="--cell-value: 43%" data-value="0" class="cwv-cell main-cell pct-value">
+                  <span>--%</span>
+                </td>
+              {% elif column.key == "client" %}
+                <td class="client">--</td>
+              {% else %}
+                <td>
+                  {% if column.viz == "progress-circle" %}
+                   <span class="progress-circle improvement" style="--offset: 1%">--</span>
+                  {% else %}
+                    --
+                  {% endif %}
+                </td>
+              {% endif %}
+            {% endfor %}
+          </tr>
         {% endfor %}
       {% endif %}
     </tbody>
