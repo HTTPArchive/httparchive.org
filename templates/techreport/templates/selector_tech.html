@@ -1,9 +1,9 @@
-<div class="tech-selector-group" data-tech="{{ name }}">
+<div class="default-dropdown-group tech-selector-group" data-tech="{{ name }}">
   <div class="content">
     <div class="tech-selector">
-      <label for="{{ name }}" class="tech">Technology {% if key > 1%}{{ key }}{% endif %}</label>
-      <div class="tech-input-wrapper">
-        <select name="tech" class="tech" data-selected="{{ technologyName }}" id="{{ name }}">
+      <label for="{{ name }}" class="default-dropdown-label tech">Technology {% if key > 1%}{{ key }}{% endif %}</label>
+      <div class="default-dropdown-wrapper">
+        <select class="tech default-dropdown" name="tech" class="tech" data-selected="{{ technologyName }}" id="{{ name }}">
           <option value="{{ technology }}" selected="true">
             {{ technologyName }}
           </option>

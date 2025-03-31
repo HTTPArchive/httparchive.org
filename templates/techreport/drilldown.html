@@ -22,119 +22,121 @@
       </ul>
     </div>
 
-    <!-- Section: Summary of the main metrics -->
-    <div
-      id="drilldown-summary"
-      class="block-m summary report-section"
-      data-type="section"
-      data-api="cwv,lighthouse,page-weight"
-    >
-      <h2 class="summary-heading">Summary</h2>
-      <div class="summary-grid">
-        {% for summary in tech_report_page.config.summary %}
-          {% include "techreport/components/summary_card.html" %}
-        {% endfor %}
-      </div>
-      {% include "techreport/components/filter_meta.html" %}
-    </div>
-
-    <!-- Section: Core Web Vitals -->
-    <div
-      id="good-cwvs"
-      class="block-m report-section"
-      data-type="section"
-      data-api="cwv"
-    >
-      <h2>Core Web Vitals</h2>
-      <p>{{ tech_report_labels.metrics.vitals.general.description }}</p>
-
-      {% if tech_report_page.config.good_cwv_summary %}
-        <h3>{{ tech_report_page.config.good_cwv_summary.title }}</h3>
+    <div class="data-sections">
+      <!-- Section: Summary of the main metrics -->
+      <div
+        id="drilldown-summary"
+        class="block-m summary report-section"
+        data-type="section"
+        data-api="cwv,lighthouse,page-weight"
+      >
+        <h2 class="summary-heading">Summary</h2>
         <div class="summary-grid">
-          {% for summary in tech_report_page.config.good_cwv_summary.cards %}
-            {% set section_prefix = "cwv" %}
+          {% for summary in tech_report_page.config.summary %}
             {% include "techreport/components/summary_card.html" %}
           {% endfor %}
         </div>
-      {% endif %}
-
-      <div class="card">
-        {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
-        {% set selected_subcategory = request.args.get('good-cwv-over-time', '') or tech_report_page.config.good_cwv_timeseries.viz.default or 'overall' %}
-        {% include "techreport/components/timeseries.html" %}
+        {% include "techreport/components/filter_meta.html" %}
       </div>
-    </div>
 
-    <!-- Section: Lighthouse -->
-    <div
-      id="lighthouse"
-      class="block-m report-section"
-      data-type="section"
-      data-api="lighthouse"
-    >
-      <h2>Lighthouse</h2>
-      <p>{{ tech_report_labels.metrics.lighthouse.general.description }}</p>
+      <!-- Section: Core Web Vitals -->
+      <div
+        id="good-cwvs"
+        class="block-m report-section"
+        data-type="section"
+        data-api="cwv"
+      >
+        <h2>Core Web Vitals</h2>
+        <p>{{ tech_report_labels.metrics.vitals.general.description }}</p>
 
-      {% if tech_report_page.config.lighthouse_summary %}
-        {% set section_prefix = "lighthouse" %}
-        <h3>{{ tech_report_page.config.lighthouse_summary.title }}</h3>
-        <div class="summary-grid">
-          {% for summary in tech_report_page.config.lighthouse_summary.cards %}
-            {% include "techreport/components/summary_card.html" %}
-          {% endfor %}
+        {% if tech_report_page.config.good_cwv_summary %}
+          <h3>{{ tech_report_page.config.good_cwv_summary.title }}</h3>
+          <div class="summary-grid">
+            {% for summary in tech_report_page.config.good_cwv_summary.cards %}
+              {% set section_prefix = "cwv" %}
+              {% include "techreport/components/summary_card.html" %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="card">
+          {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
+          {% set selected_subcategory = request.args.get('good-cwv-over-time', '') or tech_report_page.config.good_cwv_timeseries.viz.default or 'overall' %}
+          {% include "techreport/components/timeseries.html" %}
         </div>
-      {% endif %}
-
-      <div class="card">
-        {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
-        {% set selected_subcategory = request.args.get('median-lighthouse-over-time', '')  or 'performance' %}
-        {% include "techreport/components/timeseries.html" %}
       </div>
-    </div>
 
-    <!-- Section: Page Weight -->
-    <div
-      id="page-weight"
-      class="block-m report-section"
-      data-type="section"
-      data-api="page-weight"
-    >
-      <h2>Page weight</h2>
-      <p>{{ tech_report_labels.metrics.pageWeight.general.description }}</p>
+      <!-- Section: Lighthouse -->
+      <div
+        id="lighthouse"
+        class="block-m report-section"
+        data-type="section"
+        data-api="lighthouse"
+      >
+        <h2>Lighthouse</h2>
+        <p>{{ tech_report_labels.metrics.lighthouse.general.description }}</p>
 
-      {% if tech_report_page.config.weight_summary %}
-      {% set section_prefix = "weight" %}
-        <h3>{{ tech_report_page.config.weight_summary.title }}</h3>
-        <div class="summary-grid">
-          {% for summary in tech_report_page.config.weight_summary.cards %}
-            {% include "techreport/components/summary_card.html" %}
-          {% endfor %}
+        {% if tech_report_page.config.lighthouse_summary %}
+          {% set section_prefix = "lighthouse" %}
+          <h3>{{ tech_report_page.config.lighthouse_summary.title }}</h3>
+          <div class="summary-grid">
+            {% for summary in tech_report_page.config.lighthouse_summary.cards %}
+              {% include "techreport/components/summary_card.html" %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="card">
+          {% set timeseries = tech_report_page.config.lighthouse_timeseries %}
+          {% set selected_subcategory = request.args.get('median-lighthouse-over-time', '')  or 'performance' %}
+          {% include "techreport/components/timeseries.html" %}
         </div>
-      {% endif %}
-
-      <div class="card">
-        {% set timeseries = tech_report_page.config.weight_timeseries %}
-        {% set selected_subcategory = request.args.get('weight-over-time', '') or tech_report_page.config.weight_timeseries.viz.default or 'performance' %}
-        {% include "techreport/components/timeseries.html" %}
-      </div>
-    </div>
-
-    <!-- Section: Adoption -->
-    <div
-      id="adoption"
-      class="block-m report-section"
-      data-type="section"
-      data-api="adoption"
-    >
-      <h2>Adoption</h2>
-      <p>{{ tech_report_labels.metrics.adoption.general.description }}</p>
-
-      <div class="card">
-        {% set timeseries = tech_report_page.config.adoption_timeseries %}
-        {% set selected_subcategory = tech_report_page.config.adoption_timeseries.viz.default or 'adoption' %}
-        {% include "techreport/components/timeseries.html" %}
       </div>
 
+      <!-- Section: Page Weight -->
+      <div
+        id="page-weight"
+        class="block-m report-section"
+        data-type="section"
+        data-api="page-weight"
+      >
+        <h2>Page weight</h2>
+        <p>{{ tech_report_labels.metrics.pageWeight.general.description }}</p>
+
+        {% if tech_report_page.config.weight_summary %}
+        {% set section_prefix = "weight" %}
+          <h3>{{ tech_report_page.config.weight_summary.title }}</h3>
+          <div class="summary-grid">
+            {% for summary in tech_report_page.config.weight_summary.cards %}
+              {% include "techreport/components/summary_card.html" %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="card">
+          {% set timeseries = tech_report_page.config.weight_timeseries %}
+          {% set selected_subcategory = request.args.get('weight-over-time', '') or tech_report_page.config.weight_timeseries.viz.default or 'performance' %}
+          {% include "techreport/components/timeseries.html" %}
+        </div>
+      </div>
+
+      <!-- Section: Adoption -->
+      <div
+        id="adoption"
+        class="block-m report-section"
+        data-type="section"
+        data-api="adoption"
+      >
+        <h2>Adoption</h2>
+        <p>{{ tech_report_labels.metrics.adoption.general.description }}</p>
+
+        <div class="card">
+          {% set timeseries = tech_report_page.config.adoption_timeseries %}
+          {% set selected_subcategory = tech_report_page.config.adoption_timeseries.viz.default or 'adoption' %}
+          {% include "techreport/components/timeseries.html" %}
+        </div>
+
+      </div>
     </div>
   </div>
 {% endblock %}
