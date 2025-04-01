@@ -7,15 +7,19 @@
   --color-teal-accent: #4e848b;
   --color-teal-dark: #3a5c63;
   --color-teal-darker: #1c4750;
+  --color-blue-darkest: #0a3555;
   --color-blue-dark: #3a7098;
-  --color-blue-100: #eff7ff;
   --color-blue-light: #e1f1ff;
+  --color-gray-lighter: #747171;
   --color-gray-medium: #5c5c5d;
+  --color-gray-dark: #2f2f30;
   --color-gray-light: #f6f6f7;
   --color-teal-vibrant: #1c818d;
   --color-teal-vibrant-darker: #136e78;
   --color-yellow-light: #fefae5;
   --color-yellow-dark: #B08705;
+  --color-yellow-darker: #705600;
+  --color-yellow-darkest: #352902;
 
   /* Colors based on function */
   /* Regular text */
@@ -34,6 +38,7 @@
   --color-page-background: #f4f4f4;
   --color-bg-gradient: var(--color-teal-faded);
   --color-page-border: var(--color-teal-medium);
+  --color-separator: var(--color-card-border);
 
   /* Checkboxes */
   --color-checkbox: var(--color-blue-dark);
@@ -49,6 +54,7 @@
   --color-theme-toggle-background: #f4f4f4;
   --color-tooltip-background: var(--color-card-background);
   --color-tooltip-border: var(--color-card-border);
+  --color-button-border: var(--color-text-lighter);
 
   /* Dropdowns */
   --color-dropdown-background: transparent;
@@ -56,6 +62,12 @@
   --color-dropdown-text: var(--color-text);
   --color-dropdown-text-disabled: var(--color-text-lighter);
   --color-dropdown-border-disabled: #aeb1b3;
+  --color-dropdown-border: var(--color-text-lighter);
+
+  /* Pills */
+  --color-pillbutton-background: var(--color-gray-light);
+  --color-pillbutton-text: var(--color-text-lighter);
+  --color-pillbutton-border: var(--color-gray-medium);
 
   /* Navigation */
   --color-nav: #667a7d;
@@ -70,6 +82,8 @@
   /* Tables */
   --color-table-selected-bg: var(--color-yellow-light);
   --color-table-selected-border: var(--color-yellow-dark);
+  --table-row-hover: var(--color-blue-light);
+  --table-row-hover-border: var(--color-blue-dark);
 
   /* Font sizes */
   --font-size-small: 0.875rem;
@@ -81,8 +95,6 @@
   /* Components */
   --card-shadow: 0 3px 12px 0px rgba(106, 121, 124, 0.2);
   --card-radius: 0.625rem;
-  --table-row-hover: var(--color-blue-100);
-  --table-row-hover-border: var(--color-blue-dark);
   --color-panel-text: #203b40;
   --color-panel-background: #bfe1e7;
 
@@ -97,14 +109,20 @@
 }
 
 [data-theme="dark"] {
+  /* Text */
   --color-link: var(--color-teal-faded);
   --color-text: #fff;
   --color-text-lighter: #fff;
   --color-text-darker: #fff;
   --color-text-inverted: #000;
+
+  /* Cards */
   --color-card-background: #111;
   --color-card-border: #000;
+  --card-shadow: 0 3px 12px 0px rgba(4, 8, 8, 0.2);
   --color-page-background: #292828;
+
+  /* Checkboxes */
   --color-checkbox-button-label-selected: #292828;
   --color-checkbox: #fff;
   --color-checkbox-selected: #292828;
@@ -116,9 +134,29 @@
   --color-panel-background: #203b40;
   --color-nav: #bfe1e7;
 
+  /* Pills */
+  --color-pillbutton-background: var(--color-page-background);
+  --color-pillbutton-text: var(--color-text-lighter);
+  --color-pillbutton-border: var(--color-gray-medium);
+
+  /* Tables */
+  --color-table-selected-bg: var(--color-yellow-darkest);
+  --color-table-selected-border: var(--color-yellow-darker);
+  --table-row-hover: var(--color-teal-darker);
+  --table-row-hover-border: var(--color-blue-light);
+
   /* Graph colors */
   --graph-color-labels: #a6bbbe;
   --graph-color-line: var(--color-gray-medium);
+
+  /* Dropdowns */
+  --color-dropdown-border: var(--color-gray-lighter);
+
+  /* Buttons */
+  --color-button-border: var(--color-gray-lighter);
+
+  /* Other */
+  --color-separator: var(--color-gray-dark);
 }
 
 /* ------------------------- */
@@ -208,12 +246,11 @@ nav {
 .default-dropdown {
   width: 100%;
   margin-bottom: 0;
-  border: 1px solid #959494;
+  border: 1px solid var(--color-dropdown-border);
   appearance: none;
   background-color: transparent;
   color: var(--color-text-darker);
   font-size: 0.9rem;
-  border-color: var(--color-text-lighter);
   padding: 0.5rem;
   z-index: 4;
   position: relative;
@@ -533,7 +570,7 @@ nav {
   margin-bottom: 1.5rem;
   margin-right: 0;
   margin-top: 2rem;
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
   padding-bottom: 2.5rem;
 }
 
@@ -558,7 +595,7 @@ nav {
 }
 
 .technology-filters {
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
   padding-bottom: 2.5rem;
 }
 
@@ -935,7 +972,7 @@ select {
 }
 
 .table-ui tbody tr {
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
 }
 
 .table-ui tbody th {
@@ -950,8 +987,6 @@ select {
 .table-ui tr a {
   color: var(--color-link);
   text-decoration: underline;
-  width: 100%;
-  display: block;
 }
 
 .table-ui tr:has(.check-cell input[type="checkbox"]:checked) {
@@ -994,6 +1029,7 @@ select {
 .table-ui .app-wrapper {
   display: flex;
   min-width: 15rem;
+  max-width: 25rem;
   align-items: center;
 }
 
@@ -1012,6 +1048,10 @@ select {
   text-overflow: ellipsis;
   text-wrap: nowrap;
   overflow: hidden;
+}
+
+.table-ui .app-cell a:focus-visible {
+  outline-color: var(--table-row-hover-border);
 }
 
 .table-ui .check-cell {
@@ -1116,7 +1156,7 @@ select {
   justify-content: space-between;
   padding: 1.5rem 0 1rem;
   margin-top: 2.5rem;
-  border-top: 1px solid var(--color-card-border);
+  border-top: 1px solid var(--color-separator);
 }
 
 .table-page-info p {
@@ -1253,7 +1293,7 @@ select {
   background-repeat: no-repeat;
   background-position: 0 0;
   padding-top: 2rem;
-  border-top: 1px solid #6A797C;
+  border-top: 1px solid var(--color-page-border);
 }
 
 .data-sections > div:first-of-type {
@@ -1550,7 +1590,7 @@ path.highcharts-tick {
 
 .accessibility-options {
   background-color: var(--color-card-background);
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
   padding-bottom: 4rem;
 }
 
@@ -1564,7 +1604,7 @@ path.highcharts-tick {
 }
 
 .check-wrapper {
-  border: 1px solid var(--color-text-lighter);
+  border: 1px solid var(--color-button-border);
   display: inline-block;
   margin-top: 1rem;
   margin-bottom: 0.25rem;
@@ -1631,7 +1671,7 @@ path.highcharts-tick {
 
 .theme-switcher {
   background-color: var(--color-theme-toggle-background);
-  border: 1px solid var(--color-text-lighter);
+  border: 1px solid var(--color-button-border);
   margin-top: 1rem;
   margin-bottom: 0.25rem;
   padding: 0.5rem 1rem;
@@ -1686,9 +1726,9 @@ path.highcharts-tick {
 .selected-apps ul li button {
   padding: 0.1em 0.5em;
   border-radius: 2rem;
-  border: 1px solid var(--color-gray-medium);
-  background-color: var(--color-gray-light);
-  color: var(--color-text-lighter);
+  border: 1px solid var(--color-pillbutton-border);
+  background-color: var(--color-pillbutton-background);
+  color: var(--color-pillbutton-text);
 }
 
 .selected-apps ul li button img {
