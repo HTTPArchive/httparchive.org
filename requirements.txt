@@ -5,5 +5,5 @@ gunicorn==23.0.0
 markdown==3.7
 pytest==8.3.5
 pytest-watch==4.2.0
-pytest-cov==6.0.0
+pytest-cov==6.1.0
 Werkzeug!=2.2.0
