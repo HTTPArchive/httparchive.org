@@ -288,6 +288,10 @@ class TechReport {
     const url = `${Constants.apiBase}/categories?category=${category}`;
     const apis = [
       {
+        endpoint: 'technologies',
+        metric: 'technologies',
+      },
+      {
         endpoint: 'cwv',
         metric: 'vitals',
         parse: DataUtils.parseVitalsData,
