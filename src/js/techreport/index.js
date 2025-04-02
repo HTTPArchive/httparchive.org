@@ -355,6 +355,8 @@ class TechReport {
       },
     ];
 
+    const filters = document.querySelectorAll('.filters select');
+    filters.forEach(filter => filter.setAttribute('disabled', 'true'));
     Promise.all(filterApis.map(api => {
       const url = `${Constants.apiBase}/${api.endpoint}`;
 
@@ -369,6 +371,8 @@ class TechReport {
       FilterComponent.updateTechnologies();
       FilterComponent.updateRank();
       FilterComponent.updateGeo();
+
+      filters.forEach(filter => filter.removeAttribute('disabled'));
     });
   }
 

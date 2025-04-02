@@ -35,8 +35,6 @@ class TableLinked {
 
     this.dataArray = this.dataArray.filter(row => row.length > 0);
 
-    console.log('set content', content, this.dataArray);
-
     const isContent = content?.length > 0 || this.dataArray?.length > 0;
 
     if(tbody && isContent) {
@@ -105,17 +103,21 @@ class TableLinked {
               cell = document.createElement('th');
               cell.classList.add('app-cell');
 
+              const wrapper = document.createElement('span');
+              wrapper.classList.add('app-wrapper');
+
               const img = document.createElement('span');
               const imgUrl = `https://cdn.httparchive.org/static/icons/${formattedApp}.png`;
               img.setAttribute('aria-hidden', 'true');
               img.setAttribute('style', `background-image: url(${imgUrl})`);
               img.classList.add('app-img');
-              cell.append(img);
+              wrapper.append(img);
 
               const link = document.createElement('a');
               link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
               link.innerHTML = formattedApp;
-              cell.append(link);
+              wrapper.append(link);
+              cell.append(wrapper);
             } else if (column.type === 'checkbox') {
               cell = this.addColumnCheckbox(app);
             } else if(column.key === 'client') {
