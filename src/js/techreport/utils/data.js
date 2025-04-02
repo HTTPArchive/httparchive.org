@@ -139,10 +139,12 @@ const fetchCategoryData = (rows, filters, callback) => {
       const lastTechNr = pageNr * rows;
       const paginatedTechs = category?.technologies?.slice(firstTechNr, lastTechNr);
 
-      const technologyFormatted = encodeURI(paginatedTechs?.join('%2C'));
+      const techsFromUrl = getTechsFromURL();
+      const technologyFormatted = paginatedTechs?.join(',');
+      const technologyUrl = encodeURI(techsFromUrl || technologyFormatted);
 
       const compare = document.querySelector('[data-name="selected-apps"]');
-      compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyFormatted}`);
+      compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyUrl}`);
 
       let allResults = {};
       paginatedTechs.forEach(tech => allResults[tech] = []);
@@ -194,6 +196,11 @@ const fetchCategoryData = (rows, filters, callback) => {
     });
 }
 
+const getTechsFromURL = () => {
+  const url = new URL(window.location);
+  return url.searchParams.get('selected') || null;
+}
+
 export const DataUtils = {
   parseVitalsData,
   parseLighthouseData,
@@ -203,4 +210,5 @@ export const DataUtils = {
   getLighthouseScoreCategories,
   formatAppName,
   fetchCategoryData,
+  getTechsFromURL,
 };

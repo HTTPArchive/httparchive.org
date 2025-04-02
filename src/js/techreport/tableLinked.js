@@ -9,11 +9,11 @@ class TableLinked {
     this.submetric = ''; // TODO: Fetch the default one from somewhere
     this.data = data;
     this.dataArray = [];
-    this.selectedTechs = this.getTechsFromURL()?.split(',') || [];
+    this.selectedTechs = DataUtils.getTechsFromURL()?.split(',') || [];
     this.rows = filters.rows || 10;
 
     this.updateContent();
-    this.updateSelectionText(this.getTechsFromURL());
+    this.updateSelectionText(DataUtils.getTechsFromURL());
 
     const rowCount = document.getElementById('rowsPerPage');
     rowCount?.addEventListener('change', (e) => this.updateRowsPerPage(e));
@@ -34,8 +34,6 @@ class TableLinked {
     }
 
     this.dataArray = this.dataArray.filter(row => row.length > 0);
-
-    console.log('set content', content, this.dataArray);
 
     const isContent = content?.length > 0 || this.dataArray?.length > 0;
 
@@ -159,11 +157,6 @@ class TableLinked {
     }
   }
 
-  getTechsFromURL() {
-    const url = new URL(window.location);
-    return url.searchParams.get('selected') || null;
-  }
-
   addColumnCheckbox(app) {
     const cell = document.createElement('td');
     const formattedApp = DataUtils.formatAppName(app);
@@ -192,7 +185,7 @@ class TableLinked {
 
   // Set selected content
   isTechSelected(app) {
-    const urlSelected = this.getTechsFromURL();
+    const urlSelected = DataUtils.getTechsFromURL();
     return urlSelected?.includes(app) || false;
   }
 
