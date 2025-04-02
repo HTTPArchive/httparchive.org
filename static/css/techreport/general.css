@@ -68,7 +68,6 @@ nav li:hover {
   padding: 1.5rem;
   background: var(--color-card-background);
   border-radius: var(--card-radius);
-  border: 1px solid var(--color-card-border-light);
   border: 1px solid var(--color-card-border);
   box-shadow: var(--card-shadow);
   transition: padding 0.35s;

@@ -327,7 +327,7 @@ nav {
   border-color: var(--color-dropdown-border-disabled);
 }
 
-.default-dropdown-wrapper:has(select:disabled):after {
+.default-dropdown-wrapper:has(select:disabled)::after {
   border-color: var(--color-dropdown-text-disabled);
 }
 
@@ -1005,7 +1005,6 @@ select {
 
 .table-ui tr:has(.app-cell a:is(:hover, :focus-visible)) {
   background-color: var(--table-row-hover);
-
   box-shadow: 0 0 0 1.5px var(--table-row-hover-border) inset,
     0 2px 0 var(--table-row-hover-border) inset;
   border-bottom-color: transparent;
