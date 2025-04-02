@@ -58,6 +58,7 @@
 
   /* Dropdowns */
   --color-dropdown-background: transparent;
+  --color-dropdown-background-hover: var(--color-teal-light);
   --color-dropdown-background-disabled: var(--color-gray-light);
   --color-dropdown-text: var(--color-text);
   --color-dropdown-text-disabled: var(--color-text-lighter);
@@ -103,9 +104,11 @@
   --graph-color-primary-darker: var(--color-teal-darker);
   --graph-color-line: #a6bbbe;
   --graph-color-labels: #62777b;
+  --progess-color-empty: var(--color-progress-basic-bg);
 
   /* Defaults */
   --breakdown-color: var(--color-text);
+  --focus-default: var(--color-teal-dark);
 }
 
 [data-theme="dark"] {
@@ -115,6 +118,7 @@
   --color-text-lighter: #fff;
   --color-text-darker: #fff;
   --color-text-inverted: #000;
+  --color-nav-inactive: #6D8488;
 
   /* Cards */
   --color-card-background: #111;
@@ -151,12 +155,18 @@
 
   /* Dropdowns */
   --color-dropdown-border: var(--color-gray-lighter);
+  --color-dropdown-background-hover: var(--color-page-background);
+  --color-dropdown-text-disabled: var(--color-gray-lighter);
+  --color-dropdown-background-disabled: var(--color-page-background);
+  --color-dropdown-border-disabled: var(--color-gray-medium);;
 
   /* Buttons */
   --color-button-border: var(--color-gray-lighter);
 
   /* Other */
   --color-separator: var(--color-gray-dark);
+  --focus-default: var(--color-text-darker);
+  --progess-color-empty: var(--color-page-background);
 }
 
 /* ------------------------- */
@@ -292,7 +302,7 @@ nav {
 }
 
 .default-dropdown:not(:disabled):is(:focus-visible, :hover) {
-  background-image: linear-gradient(-90deg, var(--color-teal-light), var(--color-teal-light));
+  background-image: linear-gradient(-90deg, var(--color-dropdown-background-hover), var(--color-dropdown-background-hover));
   background-repeat: no-repeat;
   background-size: calc(100% - 2.5rem) 100%;
 }
@@ -309,12 +319,6 @@ nav {
 .default-dropdown-wrapper:has(select:focus-visible) {
   background-color: var(--color-page-background);
   color: var(--color-text);
-}
-
-[data-theme="dark"] select option,
-[data-theme="dark"] .default-dropdown-wrapper:has(select:focus-visible) select {
-  color: var(--color-page-background) !important;
-  background-color: var(--color-text-darker) !important;
 }
 
 .default-dropdown:disabled {
@@ -383,7 +387,7 @@ nav {
   color: var(--color-text);
   background-color: var(--color-card-background);
   border-top: 1px solid var(--color-page-background);
-  border-bottom: 1px solid var(--color-page-background);
+  border-bottom:1px solid var(--color-card-border);
   display: flex;
   justify-content: space-between;
   padding: 0 2.5vw;
@@ -1552,7 +1556,6 @@ path.highcharts-tick {
   --progress-start: calc(70% - 1px);
   --progess-width: calc(70% - 0.25em);
   --progress-end: calc(70% - 0.25em + 1.5px);
-  --progess-color-empty: var(--color-progress-basic-bg);
   --offset-start: 0.75%;
   --offset-end: calc(var(--offset) - var(--offset-start));
 
