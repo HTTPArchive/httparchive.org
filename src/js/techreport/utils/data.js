@@ -1,3 +1,5 @@
+import { Constants } from "./constants";
+
 const parseVitalsData = (metric, date) => {
   return metric.map(submetric => {
     return {
@@ -100,6 +102,98 @@ const getLighthouseScoreCategories = (score, brackets) => {
 
 }
 
+const fetchCategoryData = (rows, filters, callback) => {
+  const geoFormatted = encodeURI(filters.geo);
+  const rankFormatted = encodeURI(filters.rank);
+  const categoryFormatted = encodeURI(filters.category);
+  const url = `${Constants.apiBase}/categories?category=${categoryFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
+  const apis = [
+    {
+      endpoint: 'cwv',
+      metric: 'vitals',
+      parse: DataUtils.parseVitalsData,
+    },
+    {
+      endpoint: 'lighthouse',
+      metric: 'lighthouse',
+      parse: DataUtils.parseLighthouseData,
+    },
+    {
+      endpoint: 'adoption',
+      metric: 'adoption',
+      parse: DataUtils.parseAdoptionData,
+    },
+    {
+      endpoint: 'page-weight',
+      metric: 'pageWeight',
+      parse: DataUtils.parsePageWeightData,
+    },
+  ];
+
+  const pageNr = filters.page;
+  fetch(url)
+    .then(result => result.json())
+    .then(result => {
+      const category = result[0];
+      const firstTechNr = (pageNr - 1) * rows;
+      const lastTechNr = pageNr * rows;
+      const paginatedTechs = category?.technologies?.slice(firstTechNr, lastTechNr);
+
+      const technologyFormatted = encodeURI(paginatedTechs?.join('%2C'));
+
+      const compare = document.querySelector('[data-name="selected-apps"]');
+      compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyFormatted}`);
+
+      let allResults = {};
+      paginatedTechs.forEach(tech => allResults[tech] = []);
+
+      Promise.all(apis.map(api => {
+        const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
+
+        return fetch(url)
+          .then(techResult => techResult.json())
+          .then(techResult => {
+            techResult.forEach(row => {
+              const parsedRow = {
+                ...row,
+              }
+
+              if(api.parse) {
+                parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+              }
+
+              const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
+              if(resIndex > -1) {
+                allResults[row.technology][resIndex] = {
+                  ...allResults[row.technology][resIndex],
+                  ...parsedRow
+                }
+              } else {
+                allResults[row.technology].push(parsedRow);
+              }
+            });
+          });
+      })).then(() => {
+        category.data = {
+          technologies: allResults,
+          info: {
+            origins: category.origins,
+            technologies: category?.technologies?.length,
+          },
+        };
+
+        /* Update the pagination info */
+        const current = document.querySelectorAll('[data-page="current"]');
+        const total = document.querySelectorAll('[data-page="total"]');
+        current.forEach(c => c.textContent = pageNr);
+        total.forEach(t => t.textContent = Math.ceil(category?.technologies?.length / rows));
+
+        /* Update components */
+        callback(category);
+      });
+    });
+}
+
 export const DataUtils = {
   parseVitalsData,
   parseLighthouseData,
@@ -108,4 +202,5 @@ export const DataUtils = {
   filterDuplicates,
   getLighthouseScoreCategories,
   formatAppName,
+  fetchCategoryData,
 };

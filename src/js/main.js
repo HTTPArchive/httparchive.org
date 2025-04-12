@@ -4,7 +4,7 @@ const hamburger = document.querySelector('.hamburger');
 
 if (mobileNav) {
   if (hamburger) {
-    hamburger.addEventListener('click', (e) => {
+    hamburger.addEventListener('click', () => {
       const expanded = hamburger.getAttribute('aria-expanded');
       mobileNav.classList.toggle('active');
       hamburger.ariaExpanded = expanded === 'true' ? 'false' : 'true';

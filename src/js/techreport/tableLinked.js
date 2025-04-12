@@ -9,8 +9,14 @@ class TableLinked {
     this.submetric = ''; // TODO: Fetch the default one from somewhere
     this.data = data;
     this.dataArray = [];
+    this.selectedTechs = this.getTechsFromURL()?.split(',') || [];
+    this.rows = filters.rows || 10;
 
     this.updateContent();
+    this.updateSelectionText(this.getTechsFromURL());
+
+    const rowCount = document.getElementById('rowsPerPage');
+    rowCount?.addEventListener('change', (e) => this.updateRowsPerPage(e));
   }
 
   // Update content in the table
@@ -29,7 +35,11 @@ class TableLinked {
 
     this.dataArray = this.dataArray.filter(row => row.length > 0);
 
-    if(tbody) {
+    console.log('set content', content, this.dataArray);
+
+    const isContent = content?.length > 0 || this.dataArray?.length > 0;
+
+    if(tbody && isContent) {
       // Reset what's in the table before adding new content
       tbody.innerHTML = '';
 
@@ -107,37 +117,7 @@ class TableLinked {
               link.innerHTML = formattedApp;
               cell.append(link);
             } else if (column.type === 'checkbox') {
-              cell = document.createElement('td');
-              const formattedApp = DataUtils.formatAppName(app);
-              const checkbox = document.createElement('input');
-              checkbox.setAttribute('type', 'checkbox');
-              checkbox.setAttribute('data-app', formattedApp);
-              checkbox.setAttribute('data-name', `table-${this.id}`);
-              checkbox.setAttribute('id', `${app}-table-${this.id}`);
-              checkbox.setAttribute('name', `${app}-table-${this.id}`);
-              checkbox.addEventListener('change', (e) => {
-                const appLinks = document.querySelectorAll('[data-name="selected-apps"]');
-                const selectedApps = document.querySelectorAll(`[data-name="table-${this.id}"]:checked`);
-
-                const selectedAppsFormatted = [];
-
-                selectedApps.forEach(selectedApp => {
-                  selectedAppsFormatted.push(selectedApp.dataset.app);
-                });
-
-                appLinks.forEach(appLinkEl => {
-                  appLinkEl.setAttribute('href', `/reports/techreport/tech?tech=${selectedAppsFormatted.join(',')}`);
-                  appLinkEl.innerHTML = `Compare ${selectedApps.length} technologies`;
-                });
-              });
-              cell.append(checkbox);
-
-              const label = document.createElement('label');
-              label.innerHTML = `Select ${formattedApp}`;
-              label.classList.add('sr-only');
-              label.setAttribute('for', `${app}-table-${this.id}`);
-              cell.append(label);
-              cell.classList.add('check-cell');
+              cell = this.addColumnCheckbox(app);
             } else if(column.key === 'client') {
               cell = document.createElement('td');
               cell.innerHTML = component.dataset.client;
@@ -175,7 +155,167 @@ class TableLinked {
         }
       });
 
+      this.disableCheckboxes(this.selectedTechs);
     }
+  }
+
+  getTechsFromURL() {
+    const url = new URL(window.location);
+    return url.searchParams.get('selected') || null;
+  }
+
+  addColumnCheckbox(app) {
+    const cell = document.createElement('td');
+    const formattedApp = DataUtils.formatAppName(app);
+    const checkbox = document.createElement('input');
+    const isChecked = this.isTechSelected(app);
+
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.setAttribute('data-app', formattedApp);
+    checkbox.setAttribute('data-name', `table-${this.id}`);
+    checkbox.setAttribute('id', `${app}-table-${this.id}`);
+    checkbox.setAttribute('name', `${app}-table-${this.id}`);
+    checkbox.checked = isChecked;
+    checkbox.addEventListener('change', (e) => this.changeCheckbox(e));
+
+    cell.append(checkbox);
+
+    const label = document.createElement('label');
+    label.textContent = `Select ${formattedApp}`;
+    label.classList.add('sr-only');
+    label.setAttribute('for', `${app}-table-${this.id}`);
+    cell.append(label);
+    cell.classList.add('check-cell');
+
+    return cell;
+  }
+
+  // Set selected content
+  isTechSelected(app) {
+    const urlSelected = this.getTechsFromURL();
+    return urlSelected?.includes(app) || false;
+  }
+
+  // Checkbox is clicked
+  changeCheckbox(e) {
+    if(e.target.checked) {
+      this.tickCheckbox(e.target.dataset.app);
+    } else {
+      this.untickCheckbox(e.target.dataset.app);
+    }
+  }
+
+  // Checkbox is checked
+  tickCheckbox(app) {
+    if(!this.selectedTechs || !this.selectedTechs.includes(app)) {
+      this.selectedTechs.push(app);
+    }
+
+    const allSelectedApps = this.selectedTechs.join(',');
+
+    this.updatePaginationUrl('selected', allSelectedApps);
+    this.updateSelectionText(allSelectedApps);
+    this.updateURL('selected', allSelectedApps);
+    this.disableCheckboxes(this.selectedTechs);
+  }
+
+  // Checkbox is unchecked
+  untickCheckbox(app) {
+    this.selectedTechs = this.selectedTechs.filter(selected => selected !== app);
+    const selectedTechsStr = this.selectedTechs.join(',');
+    this.updateSelectionText(selectedTechsStr);
+    this.updatePaginationUrl('selected', selectedTechsStr);
+    this.updateURL('selected', selectedTechsStr);
+    this.disableCheckboxes(this.selectedTechs);
+  }
+
+  disableCheckboxes(techs) {
+    const checkbox = 'input[type="checkbox"][data-name="table-tech_comparison_summary"]';
+    if(techs.length >= 10) {
+      const checkboxes = document.querySelectorAll(`${checkbox}:not(:checked)`);
+      checkboxes.forEach(box => box.setAttribute('disabled', 'true'));
+    } else {
+      const checkboxes = document.querySelectorAll(`${checkbox}[disabled]`);
+      checkboxes.forEach(box => box.removeAttribute('disabled'));
+    }
+  }
+
+  updateURL(param, value) {
+    const url = new URL(window.location);
+    url.searchParams.set(param, value);
+    window.history.replaceState(null, null, url);
+  }
+
+  updateSelectionText(allSelectedApps) {
+    const appLinks = document.querySelectorAll('[data-name="selected-apps"]');
+    appLinks.forEach(appLinkEl => {
+      let label = 'Compare all technologies on this page';
+      let href = '';
+      if(this.selectedTechs.length > 0) {
+        href = `/reports/techreport/tech?tech=${allSelectedApps}`;
+        label = `Compare ${this.selectedTechs.length} technologies`;
+      } else if(this.data.technologies) {
+        href = `/reports/techreport/tech?tech=${Object.keys(this.data.technologies).join(',')}`;
+        href = encodeURI(href);
+      }
+
+      appLinkEl.setAttribute('href', href);
+      appLinkEl.innerHTML = label;
+    });
+
+    if(this.selectedTechs.length > 0) {
+      const selectionOverview = document.querySelector('[data-name="selected-apps-overview"]');
+      selectionOverview.innerHTML = '';
+      this.selectedTechs.forEach(tech => {
+        const li = document.createElement('li');
+        const remove = document.createElement('button');
+        const label = document.createElement('img');
+        label.setAttribute('alt', 'Remove');
+        label.setAttribute('src', '/static/img/close-filters.svg');
+        remove.textContent = tech;
+        remove.addEventListener('click', () => {
+          this.untickCheckbox(tech);
+          const checkbox = document.querySelector(`input[type="checkbox"][data-name="table-tech_comparison_summary"][data-app="${tech}"]`);
+          checkbox.checked = false;
+        });
+        remove.append(label);
+        li.append(remove);
+        selectionOverview.append(li);
+      });
+      document.querySelector('.selected-apps')?.setAttribute('style', 'display: block;');
+    } else {
+      document.querySelector('.selected-apps')?.setAttribute('style', 'display: none;');
+    }
+
+  }
+
+  updatePaginationUrl(param, value) {
+    const pagination = ['[data-pagination="next"] a', '[data-pagination="previous"] a'];
+    pagination.forEach((element) => {
+      const paginationEl = document.querySelector(element);
+      if(paginationEl) {
+        let params = paginationEl.getAttribute('href').split('?')[1];
+        params = new URLSearchParams(params);
+        params.set(param, value);
+        paginationEl.setAttribute('href', `/reports/techreport/category?${params}`);
+      }
+    });
+  }
+
+  updateRowsPerPage(e) {
+    const rows = parseInt(e.target.value);
+    this.rows = rows;
+    this.updateURL('rows', rows);
+    this.updatePaginationUrl('rows', rows);
+
+    DataUtils.fetchCategoryData(rows, this.pageFilters, this.updateRowData.bind(this));
+  }
+
+  updateRowData(result) {
+    this.data = result.data;
+    this.updateContent();
+    const rowsAnnouncement = document.getElementById('rows-announcement');
+    rowsAnnouncement.innerHTML = `Showing ${this.rows} rows.`;
   }
 }
 

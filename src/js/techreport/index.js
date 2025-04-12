@@ -1,3 +1,5 @@
+/* global Section */
+
 import Filters from '../components/filters';
 import { Constants } from './utils/constants';
 const { DrilldownHeader } = require("../components/drilldownHeader");
@@ -87,11 +89,11 @@ class TechReport {
         this.getAllMetricData();
         break;
 
-      case 'category':
-        const category = this.filters.category || 'CMS';
+      case 'category': {
         this.initializeReport();
-        this.getCategoryData(category);
+        this.getCategoryData();
         break;
+      }
     }
   }
 
@@ -284,87 +286,9 @@ class TechReport {
     });
   }
 
-  getCategoryData(category) {
-    const url = `${Constants.apiBase}/categories?category=${category}`;
-    const apis = [
-      {
-        endpoint: 'technologies',
-        metric: 'technologies',
-      },
-      {
-        endpoint: 'cwv',
-        metric: 'vitals',
-        parse: DataUtils.parseVitalsData,
-      },
-      {
-        endpoint: 'lighthouse',
-        metric: 'lighthouse',
-        parse: DataUtils.parseLighthouseData,
-      },
-      {
-        endpoint: 'adoption',
-        metric: 'adoption',
-        parse: DataUtils.parseAdoptionData,
-      },
-      {
-        endpoint: 'page-weight',
-        metric: 'pageWeight',
-        parse: DataUtils.parsePageWeightData,
-      },
-    ];
-
-    fetch(url)
-      .then(result => result.json())
-      .then(result => {
-        const category = result[0];
-        const technologyFormatted = category?.technologies?.join('%2C')
-          .replaceAll(" ", "%20");
-
-          const geo = this.filters.geo.replaceAll(" ", "%20");
-          const rank = this.filters.rank.replaceAll(" ", "%20");
-          const geoFormatted = geo.replaceAll(" ", "%20");
-          const rankFormatted = rank.replaceAll(" ", "%20");
-
-          let allResults = {};
-          category.technologies.forEach(tech => allResults[tech] = []);
-
-          Promise.all(apis.map(api => {
-            const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
-
-            return fetch(url)
-              .then(techResult => techResult.json())
-              .then(techResult => {
-                techResult.forEach(row => {
-                  const parsedRow = {
-                    ...row,
-                  }
-
-                  if(api.parse) {
-                    parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
-                  }
-
-                  const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
-                  if(resIndex > -1) {
-                    allResults[row.technology][resIndex] = {
-                      ...allResults[row.technology][resIndex],
-                      ...parsedRow
-                    }
-                  } else {
-                    allResults[row.technology].push(parsedRow);
-                  }
-                });
-              });
-          })).then(() => {
-            category.data = {
-              technologies: allResults,
-              info: {
-                origins: category.origins,
-                technologies: Object.keys(allResults).length,
-              },
-            };
-            this.updateCategoryComponents(category);
-          });
-      });
+  getCategoryData() {
+    const callback = this.updateCategoryComponents.bind(this);
+    DataUtils.fetchCategoryData(this.filters.rows, this.filters, callback)
   }
 
   // Get the information about the selected technology
@@ -423,14 +347,31 @@ class TechReport {
   getFilterInfo() {
     const filterData = {};
 
-    const filterApis = ['categories', 'technologies', 'ranks', 'geos'];
+    const filterApis = [
+      {
+        name: 'categories',
+        endpoint: 'categories?onlyname',
+      },
+      {
+        name: 'technologies',
+        endpoint: 'technologies?onlyname',
+      },
+      {
+        name: 'ranks',
+        endpoint: 'ranks',
+      },
+      {
+        name: 'geos',
+        endpoint: 'geos',
+      },
+    ];
 
     Promise.all(filterApis.map(api => {
-      const url = `${Constants.apiBase}/${api}`;
+      const url = `${Constants.apiBase}/${api.endpoint}`;
 
       return fetch(url)
         .then(result => result.json())
-        .then(result => filterData[api] = result)
+        .then(result => filterData[api.name] = result)
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
       const FilterComponent = new Filters(filterData, this.filters);

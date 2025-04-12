@@ -41,7 +41,7 @@
       </div>
     </fieldset>
   </div>
-  <button type="submit" id="submit-form">Update</button>
+  <button type="submit" id="submit-form" class="main-btn">Update</button>
   {% include "techreport/components/filter_meta.html" %}
 </form>
 
@@ -62,13 +62,6 @@
 {% block section %}
   {{ super() }}
   <div class="report-content">
-    <div class="info-panel">
-      <div class="block-l">
-        <p class="info-label">Beta</p>
-        <p>We're still actively working on the categories page.</p>
-      </div>
-    </div>
-
     <div class="intro block-m">
       <div class="info">
         <div class="heading-wrapper">
@@ -105,6 +98,16 @@
       data-api="cwv,lighthouse,page-weight"
     >
       <h2>Technologies</h2>
+      <div class="table-descr">
+        <p>
+          Overview of the latest Core Web Vitals of all technologies within this category, sorted by number of origins.
+          Select up to 10 technologies to compare their Core Web Vitals, Lighthouse scores, adoption, and page weight over time, or view details about a single technology.
+        </p>
+        <p>
+          Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>, based on the latest data (<span data-slot="timestamp"></span>).
+        </p>
+      </div>
+
       {% set component = tech_report_page.config.tech_comparison_summary %}
       {% set id = component.id %}
       {% set client = request.args.get('client', '')  or 'mobile' %}
@@ -113,14 +116,61 @@
       {% set sort_key = "origins" %}
       {% set sort_order = "desc" %}
 
-      <p class="heading">
-        Latest data: <span data-slot="timestamp"></span>
-      </p>
+      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
+
+      <div class="selected-apps">
+        <p>
+          Selected technologies:
+        </p>
+        <ul data-name="selected-apps-overview"></ul>
+      </div>
 
       {% set table = component.table %}
       {% include "techreport/components/table_linked.html" %}
 
-      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare technologies</a>
+      <div class="table-pagination">
+        {% set filters = tech_report_page.filters %}
+        <p data-pagination="previous">
+          {% if filters.page and filters.page > 1 %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Previous page </a>
+          {% endif %}
+        </p>
+        <div class="table-page-info">
+          <p>
+            Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+          </p>
+          <div class="table-row-count">
+            <label for="rowsPerPage">
+              Rows
+            </label>
+            <select id="rowsPerPage">
+              {% if filters.rows == "10" %}
+                <option value="10" selected>10</option>
+              {% else %}
+                <option value="10">10</option>
+              {% endif %}
+              {% if filters.rows == "25" %}
+                <option value="25" selected>25</option>
+              {% else %}
+                <option value="25">25</option>
+              {% endif %}
+              {% if filters.rows == "50" %}
+                <option value="50" selected>50</option>
+              {% else %}
+                <option value="50">50</option>
+              {% endif %}
+            </select>
+          </div>
+          <p class="sr-only" aria-live="polite">
+            <span id="rows-announcement"></span>
+          </p>
+        </div>
+        <p data-pagination="next">
+          {% if not filters.last_page and filters.last_page == False  %}
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Next page</a>
+          {% endif %}
+        </p>
+      </div>
     </div>
   </div>
 {% endblock %}

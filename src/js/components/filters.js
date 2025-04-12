@@ -78,19 +78,15 @@ class Filters {
 
   /* Update the list of technologies */
   updateTechnologies() {
-    this.technologies = DataUtils.filterDuplicates(this.technologies, 'technology');
-
     /* Get existing tech selectors on the page */
     const allTechSelectors = document.querySelectorAll('select[name="tech"]');
-    const techNames = this.technologies.map(element => element.app);
 
     /* Update the options inside all of the selectors */
     allTechSelectors.forEach(techSelector => {
       techSelector.innerHTML = '';
 
       /* If the technology doesn't exist, throw a warning */
-      const techNamesFiltered = techNames;
-      if(!techNamesFiltered) {
+      if(!this.technologies) {
         const errorMsg = document.createElement('p');
         errorMsg.textContent = 'Technology not found, please select a different one';
         techSelector.before(errorMsg);
@@ -98,16 +94,15 @@ class Filters {
 
       /* Get a list of technologies */
       const techs = this.technologies;
-      techs.unshift({ technology: 'ALL' });
 
       /* Add one option per technology */
       if(document.getElementById('filter-option')) {
         techs.forEach((technology) => {
           const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
           const option = optionTmpl.querySelector('option');
-          const formattedTech = DataUtils.formatAppName(technology.technology);
+          const formattedTech = DataUtils.formatAppName(technology);
           option.textContent = formattedTech;
-          option.value = technology.technology;
+          option.value = technology;
           if(formattedTech === techSelector.getAttribute('data-selected')) {
             option.selected = true;
           }
@@ -161,17 +156,17 @@ class Filters {
 
         const all = document.createElement('option');
         all.value = 'ALL';
-        all.innerHTML = 'ALL';
+        all.textContent = 'ALL';
         select.append(all);
 
-        const sortedCategories = this.categories.sort((a, b) => a.category !== b.category ? a.category < b.category ? -1 : 1 : 0);
+        const sortedCategories = this.categories.sort((a, b) => a !== b ? a < b ? -1 : 1 : 0);
         sortedCategories.forEach((category) => {
           const option = document.createElement('option');
-          if(category.category === select.getAttribute('data-selected')) {
+          if(category === select.getAttribute('data-selected')) {
             option.selected = true;
           }
-          option.value = category.category;
-          option.innerHTML = category.category;
+          option.value = category;
+          option.textContent = category;
           select.append(option);
         });
       })
@@ -182,7 +177,7 @@ class Filters {
   updateCategory(event) {
     // Get the techs associated with the selected category
     const selectedCategory = this.categories.find(category => category.category === event.target.value);
-    let selectedTechs = selectedCategory?.technologies || [];
+    let selectedTechs = selectedCategory?.technologies || [];
     if(event.target.value === 'ALL') {
       selectedTechs = this.technologies.map(technology => technology.technology);
     }

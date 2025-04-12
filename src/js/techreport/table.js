@@ -75,7 +75,7 @@ function sortTableBy(dataset, key) {
 }
 
 function getColumnCell(columnConfig, data, date) {
-  const { config, column, client, app, subcategory, metric, endpoint } = columnConfig;
+  const { column, client, app, subcategory, endpoint } = columnConfig;
 
   const _data = data[app]?.find(entry => entry.date === date);
   const endpointData = _data?.[endpoint];
@@ -96,7 +96,7 @@ function getColumnCell(columnConfig, data, date) {
 function getSubcategory(config) {
   const urlParams = new URLSearchParams(window.location.search);
   const urlSubcategory = urlParams.get(config.param);
-  const subcategory = urlSubcategory || config.default || '';
+  const subcategory = urlSubcategory || config.default || '';
 
   return subcategory;
 }

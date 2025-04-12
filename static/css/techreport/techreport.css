@@ -197,6 +197,29 @@ nav {
 }
 
 /* Report navigation */
+.skip {
+  position: absolute;
+  z-index: 999;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 1px;
+  text-decoration: none;
+}
+
+.skip:focus-visible {
+  clip: unset;
+  clip-path: unset;
+  width: unset;
+  height: unset;
+  overflow: unset;
+  white-space: unset;
+  top: 0.35rem;
+  left: 0.35rem;
+}
+
 .report-navigation {
   color: var(--color-text);
   background-color: var(--color-card-background);
@@ -308,8 +331,9 @@ nav {
   height: 100%;
 }
 
-#page-filters button[type="submit"]:is(:hover, :focus-visible) {
+.main-btn:is(:hover, :focus-visible) {
   background-color: var(--color-button-background-hover);
+  color: var(--color-button-text);
 }
 
 #page-filters .meta {
@@ -350,14 +374,18 @@ nav {
   height: auto;
 }
 
-#page-filters button[type="submit"] {
+.main-btn {
   background-color: var(--color-button-background);
   border-radius: 4px;
   color: var(--color-button-text);
   font-weight: 400;
   font-size: 1rem;
-  border: none;
   padding: 0.65rem;
+  transition: background 0.15s ease-in;
+}
+
+#page-filters button[type="submit"] {
+  border: none;
   width: 100%;
   margin-top: 1rem;
   transition: background 0.15s ease-in;
@@ -527,7 +555,7 @@ nav {
 }
 
 .breakdown {
-  margin-top: 2.5rem;
+  margin-top: 1rem;
 }
 
 .breakdown legend {
@@ -774,7 +802,7 @@ select {
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: 1rem 1rem;
+  gap: 1rem 1rem; /* stylelint-disable shorthand-property-no-redundant-values */
 }
 
 .summary-grid + .card {
@@ -1115,6 +1143,27 @@ select {
   );
 }
 
+.table-pagination {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 0 1rem;
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--color-card-border);
+}
+
+.table-page-info p {
+  text-align: center;
+}
+
+.table-row-count {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.table-row-count label {
+  font-weight: normal;
+}
+
 /* Metric components */
 .component-heading-wrapper {
   display: flex;
@@ -1173,13 +1222,13 @@ select {
   display: flex;
   flex-wrap: wrap;
   column-gap: 2rem;
-  row-gap: 0.5rem;
+  row-gap: 0.5rem; /* stylelint-disable declaration-block-no-redundant-longhand-properties */
   align-items: start;
   justify-content: space-between;
 }
 
 .intro .heading-wrapper .breakdown {
-  min-width: 17ch;
+  width: 10rem;
 }
 
 .intro h2 {
@@ -1202,7 +1251,10 @@ select {
 }
 
 .intro .app-description {
-  margin-bottom: 2rem;
+  margin-top: 1rem;
+  line-height: 160%;
+  display: block;
+  min-height: 3.5rem;
 }
 
 .intro ul {
@@ -1211,7 +1263,7 @@ select {
 }
 
 .intro .categories {
-  margin: -1rem 0 3.5rem;
+  margin: 1rem 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -1259,6 +1311,14 @@ h2.summary-heading {
   letter-spacing: 1px;
   color: var(--color-text-lighter);
   margin-bottom: 0.5rem;
+}
+
+.table-descr {
+  margin-bottom: 1.5rem;
+}
+
+.table-descr p + p {
+  margin-top: 0.25rem;
 }
 
 .report-section > .card {
@@ -1515,6 +1575,11 @@ path.highcharts-tick {
   --progess-color-border: #ba8d1e;
 }
 
+.progress-circle .summary-linked-value {
+  background-color: var(--color-card-background);
+  border-radius: 2rem;
+}
+
 /* ----------------------- */
 /* ---- Accessibility ---- */
 /* ----------------------- */
@@ -1620,6 +1685,51 @@ path.highcharts-tick {
   position: relative;
 }
 
+.table-info-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.cta-link[data-name="selected-apps"] {
+  border: 1.5px solid var(--color-teal-dark);
+  background-color: transparent;
+  color: var(--color-teal-dark);
+}
+
+.selected-apps {
+  margin-top: 1.5rem;
+  font-size: var(--font-size-small);
+}
+
+.selected-apps p {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.selected-apps ul li {
+  list-style-type: none;
+  display: inline-block;
+  margin-bottom: 0.5em;
+}
+
+.selected-apps ul li:not(:last-of-type) {
+  margin-right: 1em;
+}
+
+.selected-apps ul li button {
+  padding: 0.1em 0.5em;
+  border-radius: 2rem;
+  border: 1px solid var(--color-text-lighter);
+  background-color: transparent;
+  color: var(--color-text-lighter);
+}
+
+.selected-apps ul li button img {
+  padding-left: 0.25em;
+}
+
 /* ----------------------- */
 /* ---- Media queries ---- */
 /* ----------------------- */
@@ -1651,6 +1761,10 @@ path.highcharts-tick {
   .tech-selector-group .actions {
     position: relative;
     top: 2.25rem;
+  }
+
+  .intro .heading-wrapper {
+    display: block;
   }
 }
 
