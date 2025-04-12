@@ -236,7 +236,8 @@ class TableLinked {
   updateURL(param, value) {
     const url = new URL(window.location);
     url.searchParams.set(param, value);
-    window.history.replaceState(null, null, url);
+    const styledUrl = url.href.replaceAll('%2C', ',');
+    window.history.replaceState(null, null, styledUrl);
   }
 
   updateSelectionText(allSelectedApps) {
