@@ -198,7 +198,6 @@ const fetchCategoryData = (rows, filters, callback) => {
         total.forEach(t => t.textContent = Math.ceil(category?.technologies?.length / rows));
 
         /* Update components */
-        console.log(category);
         callback(category);
       });
     });
