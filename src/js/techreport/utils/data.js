@@ -109,6 +109,10 @@ const fetchCategoryData = (rows, filters, callback) => {
   const url = `${Constants.apiBase}/categories?category=${categoryFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
   const apis = [
     {
+      endpoint: 'technologies',
+      metric: 'technologies',
+    },
+    {
       endpoint: 'cwv',
       metric: 'vitals',
       parse: DataUtils.parseVitalsData,
@@ -168,6 +172,11 @@ const fetchCategoryData = (rows, filters, callback) => {
                   ...allResults[row.technology][resIndex],
                   ...parsedRow
                 }
+              } else if(allResults[row.technology].length === 1) {
+                allResults[row.technology][0] = {
+                  ...allResults[row.technology][0],
+                  ...parsedRow
+                }
               } else {
                 allResults[row.technology].push(parsedRow);
               }
@@ -189,6 +198,7 @@ const fetchCategoryData = (rows, filters, callback) => {
         total.forEach(t => t.textContent = Math.ceil(category?.technologies?.length / rows));
 
         /* Update components */
+        console.log(category);
         callback(category);
       });
     });
