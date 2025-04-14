@@ -1,6 +1,7 @@
 /* global Section */
 
 import Filters from '../components/filters';
+import ComboBox from './combobox';
 import { Constants } from './utils/constants';
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { DataUtils } = require("./utils/data");
@@ -41,6 +42,9 @@ class TechReport {
     const mobileFilters = document.getElementById('mobile-filter-container');
     const reportFilters = document.getElementById('report-filters');
     const openButtonMobile = document.getElementById('open-filters-mobile');
+
+    const combo = document.querySelectorAll('[data-component="combobox"]');
+    combo.forEach(box => new ComboBox(box, []));
 
     closeButton?.addEventListener('click', () => {
       filters.classList.add('hidden');

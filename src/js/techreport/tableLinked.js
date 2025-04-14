@@ -35,8 +35,6 @@ class TableLinked {
 
     this.dataArray = this.dataArray.filter(row => row.length > 0);
 
-    console.log('set content', content, this.dataArray);
-
     const isContent = content?.length > 0 || this.dataArray?.length > 0;
 
     if(tbody && isContent) {

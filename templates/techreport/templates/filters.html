@@ -19,8 +19,25 @@
         {% include "techreport/templates/selector_tech.html" %}
       {% endfor %}
 
-      <button id="add-tech"><span aria-hidden="true">+</span> Add another technology</button>
+      <button id="add-tech" type="button"><span aria-hidden="true">+</span> Add another technology</button>
     </fieldset>
+    <div data-component="combobox">
+      <label id="combobox-tech-label">Pick one or more technologies</label>
+      <div class="combobox-wrapper">
+        <input
+          aria-controls=""
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-labelledby="combobox-tech-label combobox-tech-selected"
+          role="combobox"
+          type="text"
+          placeholder="Technology"
+        />
+        <div role="listbox" id="listbox-tech" class="hidden"></div>
+      </div>
+      <ul id="combobox-tech-selected"></ul>
+    </div>
+
     <fieldset class="lens">
       <legend class="sr-only">Lens</legend>
 
