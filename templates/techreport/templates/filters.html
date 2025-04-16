@@ -1,6 +1,6 @@
 <form id="page-filters">
   <div>
-    <fieldset class="technology-filters">
+    <!-- <fieldset class="technology-filters">
       <legend class="form-title">Choose a dataset</legend>
 
       {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
@@ -20,9 +20,10 @@
       {% endfor %}
 
       <button id="add-tech" type="button"><span aria-hidden="true">+</span> Add another technology</button>
-    </fieldset>
-    <div data-component="combobox">
-      <label id="combobox-tech-label">Pick one or more technologies</label>
+    </fieldset> -->
+    <fieldset class="technology-filters" data-component="combobox" data-id="tech-selector">
+      <legend class="form-title">Choose a dataset</legend>
+      <label id="combobox-tech-label">Technology</label>
       <div class="combobox-wrapper">
         <input
           aria-controls=""
@@ -31,12 +32,13 @@
           aria-labelledby="combobox-tech-label combobox-tech-selected"
           role="combobox"
           type="text"
-          placeholder="Technology"
+          placeholder="Search a technology"
         />
         <div role="listbox" id="listbox-tech" class="hidden"></div>
       </div>
+      <div data-component="submit-options" style="display: none"></div>
       <ul id="combobox-tech-selected"></ul>
-    </div>
+    </fieldset>
 
     <fieldset class="lens">
       <legend class="sr-only">Lens</legend>

@@ -1,3 +1,5 @@
+import ComboBox from "../techreport/combobox";
+
 const { DataUtils } = require("../techreport/utils/data");
 class Filters {
   constructor(filterData, filters) {
@@ -110,6 +112,9 @@ class Filters {
         });
       }
     });
+
+    const combo = document.querySelectorAll('[data-component="combobox"]');
+    combo.forEach(box => new ComboBox(box, this.technologies));
   }
 
   /* Update the list with geographies */

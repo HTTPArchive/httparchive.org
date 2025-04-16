@@ -51,16 +51,6 @@
   margin-bottom: 0;
 }
 
-[data-component="combobox"] input[type="text"]::before {
-  content: "";
-  display: block;
-  width: 2.5rem;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  border-radius: 0 4px 4px 0;
-}
-
 [data-component="combobox"] [role="listbox"] {
   border: 1px solid var(--color-text-lighter);
   border-radius: 0 0 0.5rem 0.5rem;

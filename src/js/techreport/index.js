@@ -43,9 +43,6 @@ class TechReport {
     const reportFilters = document.getElementById('report-filters');
     const openButtonMobile = document.getElementById('open-filters-mobile');
 
-    const combo = document.querySelectorAll('[data-component="combobox"]');
-    combo.forEach(box => new ComboBox(box, []));
-
     closeButton?.addEventListener('click', () => {
       filters.classList.add('hidden');
       openButton.classList.remove('hidden');

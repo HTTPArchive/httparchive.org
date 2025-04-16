@@ -1,8 +1,9 @@
 class ComboBox {
   constructor(element, data) {
     this.element = element;
-    this.data = data;
     this.data = ['Technology 1', 'testdata', '1-2-3', 'a', 'b', 'tech2', 'crow', 'gull', 'duck', 'swan', 'robot', 'coffee'];
+
+    this.data = data;
     this.focusedOption = -1;
     this.selected = [];
 
@@ -156,6 +157,15 @@ class ComboBox {
     if(!this.selected.includes(option.dataset.name)) {
       this.selected.push(option.dataset.name);
     }
+
+    const submitOption = document.createElement('input');
+    submitOption.setAttribute('value', option.dataset.name);
+    submitOption.setAttribute('type', 'checkbox');
+    submitOption.setAttribute('name', 'tech');
+    submitOption.setAttribute('checked', true);
+    submitOption.textContent = option.dataset.name;
+    const submitOptions = this.element.querySelector('[data-component="submit-options"]');
+    submitOptions.append(submitOption);
   }
 
   unselectElement(optionName) {
@@ -169,6 +179,8 @@ class ComboBox {
       const index = this.selected.indexOf(optionName);
       this.selected = this.selected.slice(index, 1);
     }
+    const submitOption = this.element.querySelector(`[data-component="submit-options"] option[value="${optionName}"]`);
+    submitOption.remove();
   }
 
   scrollToElement(element) {
