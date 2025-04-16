@@ -73,7 +73,8 @@ class Filters {
     // url.hash = '#report-content';
 
     /* Update the url */
-    location.href = url;
+    const styledUrl = url.href.replaceAll('%2C', ',');
+    location.href = styledUrl;
   }
 
   /* Update the list of technologies */

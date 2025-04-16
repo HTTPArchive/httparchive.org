@@ -1219,10 +1219,14 @@ select {
 }
 
 .title-img {
-  max-height: 1.5rem;
   margin-left: 0.5rem;
   position: relative;
   top: -0.1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .intro .heading-wrapper {
