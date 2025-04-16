@@ -10,7 +10,7 @@
         <label for="categories_selector" class="tech default-dropdown-label">Category</label>
         <div class="default-dropdown-wrapper">
           {% set category_selected = tech_report_page.filters.category or tech_report_config.default_category %}
-          <select name="categories" class="default-dropdown tech" data-selected="{{ category_selected }}" id="categories_selector">
+          <select name="categories" class="default-dropdown tech" data-selected="{{ category_selected }}" id="categories_selector" disabled>
             <option value="{{ category_selected }}" selected="true">
               {{ category_selected }}
             </option>
@@ -25,7 +25,7 @@
       <div class="default-dropdown-group">
         <label for="geo">Geo</label>
         <div class="default-dropdown-wrapper">
-          <select class="default-dropdown" name="geo" id="geo">
+          <select class="default-dropdown" name="geo" id="geo" disabled>
             <option value="ALL" selected="true">
               ALL
             </option>
@@ -36,7 +36,7 @@
       <div class="default-dropdown-group">
         <label for="rank">Rank</label>
         <div class="default-dropdown-wrapper">
-          <select class="default-dropdown" name="rank" id="rank">
+          <select class="default-dropdown" name="rank" id="rank" disabled>
             <option value="ALL" selected="true">
               ALL
             </option>
