@@ -1,26 +1,39 @@
 import { Constants } from "./constants";
 
-const parseVitalsData = (metric, date) => {
+const parseVitalsData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
+    const goodPercDesktop = submetric?.desktop?.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0;
+    const goodPercMobile = submetric?.mobile?.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0;
+    const goodPercDesktopPrevious = previousSubmetric?.desktop?.tested > 0 ? parseInt(previousSubmetric.desktop.good_number / previousSubmetric.desktop.tested * 100) : 0;
+    const goodPercMobilePrevious = previousSubmetric?.mobile?.tested > 0 ? parseInt(previousSubmetric.mobile.good_number / previousSubmetric.mobile.tested * 100) : 0;
+
+    const monthOverMonthDesktop = calculateMoM(goodPercDesktop, goodPercDesktopPrevious);
+    const monthOverMonthMobile = calculateMoM(goodPercMobile, goodPercMobilePrevious);
+
     return {
       ...submetric,
       desktop: {
         ...submetric.desktop,
-        good_pct: submetric?.desktop?.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0,
+        good_pct: goodPercDesktop,
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString,
       },
       mobile: {
         ...submetric.mobile,
-        good_pct: submetric?.mobile?.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0,
+        good_pct: goodPercMobile,
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString,
       },
     };
   });
 }
 
-const parseLighthouseData = (metric, date) => {
+const parseLighthouseData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
     return {
       ...submetric,
@@ -40,18 +53,25 @@ const parseLighthouseData = (metric, date) => {
   });
 }
 
-const parseAdoptionData = (submetric, date) => {
+const parseAdoptionData = (submetric, previousMetric, date) => {
+  const monthOverMonthDesktop = calculateMoM(submetric?.desktop, previousMetric?.desktop);
+  const monthOverMonthMobile = calculateMoM(submetric?.mobile, previousMetric?.mobile);
+
   return [
     {
       desktop: {
         origins: submetric.desktop,
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString
       },
       mobile: {
         origins: submetric.mobile,
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString
       },
       name: 'adoption',
     },
@@ -66,7 +86,7 @@ const formatAppName = (app) => {
   return app === 'ALL' ? 'All technologies' : app;
 }
 
-const parsePageWeightData = (metric, date) => {
+const parsePageWeightData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
     return {
       ...submetric,
@@ -208,6 +228,24 @@ const fetchCategoryData = (rows, filters, callback) => {
 const getTechsFromURL = () => {
   const url = new URL(window.location);
   return url.searchParams.get('selected') || null;
+}
+
+function calculateMoM(current, previous) {
+  if(current && previous && previous !== 0) {
+    const absoluteDiff = current - previous;
+    const percDiff = (current - previous) / previous;
+    return {
+      absolute: absoluteDiff,
+      perc: percDiff,
+      percString: `${(percDiff * 100).toFixed(2)}%`
+    };
+  }
+
+  return {
+    absolute: null,
+    perc: null,
+    percString: '-'
+  }
 }
 
 export const DataUtils = {
