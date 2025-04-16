@@ -216,6 +216,7 @@ class Filters {
     const techId = `tech-${techNr}`;
     const techLabel = `Technology ${techNr}`;
     selectElement.setAttribute('id', techId);
+    selectElement.removeAttribute('disabled');
     labelElement.setAttribute('for', techId);
     labelElement.textContent = techLabel;
 
