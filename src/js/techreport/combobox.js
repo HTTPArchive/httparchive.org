@@ -1,10 +1,11 @@
 class ComboBox {
   constructor(element, data) {
     this.element = element;
-    this.data = ['Technology 1', 'testdata', '1-2-3', 'a', 'b', 'tech2', 'crow', 'gull', 'duck', 'swan', 'robot', 'coffee'];
 
     this.data = data;
+    this.filteredData = data;
     this.focusedOption = -1;
+    this.focusedOptionStr = '';
     this.selected = [];
 
     this.keyCodes = {
@@ -79,15 +80,22 @@ class ComboBox {
     const search = e.target.value;
     const options = this.element.querySelector('[role="listbox"]');
 
-    const filtered = this.data.filter(row => {
+    this.filteredData = this.data.filter(row => {
       return row.toLowerCase().includes(search.toLowerCase());
     });
 
     options.textContent = '';
-    this.updateContent(filtered);
+    this.updateContent(this.filteredData);
 
     if(options.classList.contains('hidden')) {
       this.showOptions();
+    }
+
+    if(this.filteredData.includes(this.focusedOptionStr)) {
+      this.focusedOption = this.filteredData.indexOf(this.focusedOptionStr);
+      this.updateHighlightedOption();
+    } else {
+      this.focusedOption = -1;
     }
   }
 
@@ -140,6 +148,7 @@ class ComboBox {
     const option = options.querySelector(`[data-key="${this.focusedOption}"]`);
     option.classList.add('highlighted');
     this.scrollToElement(option);
+    this.focusedOptionStr = this.filteredData[this.focusedOption];
   }
 
   selectElement(option) {
