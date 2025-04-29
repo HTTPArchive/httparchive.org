@@ -156,7 +156,11 @@ class ComboBox {
     const selection = document.createElement('li');
     const deleteSelection = document.createElement('button');
     deleteSelection.setAttribute('type', 'button');
-    deleteSelection.textContent = `${option.dataset.name} [Delete]`;
+    deleteSelection.textContent = `${option.dataset.name}`;
+    const deleteIcon = document.createElement('img');
+    deleteIcon.setAttribute('src', '/static/img/close-filters.svg');
+    deleteIcon.setAttribute('alt', 'delete');
+    deleteSelection.append(deleteIcon);
     deleteSelection.dataset.name = option.dataset.name;
     deleteSelection.addEventListener('click', () => this.unselectElement(option.dataset.name));
     selection.dataset.name = option.dataset.name;

@@ -29,6 +29,10 @@
   border-radius: 0.15em;
   border: 1px solid var(--color-text);
   background-color: var(--color-teal-vibrant);
+  background-image: url('/static/img/checkmark.svg');
+  background-size: 75% 75%;
+  background-repeat: no-repeat;
+  background-position: center center;
   position: absolute;
   left: 0;
   top: 0.2em;
@@ -76,6 +80,10 @@
   border-radius: 0 0 0.5rem 0.5rem;
 }
 
+[data-component="combobox"] [role="listbox"] [role="option"][aria-disabled="true"] {
+  opacity: 0.5;
+}
+
 [data-component="combobox"] ul {
   margin-top: 1rem;
 }
@@ -99,6 +107,12 @@
 
 [data-component="combobox"] ul li button:is(:hover, :focus-visible) {
   background-color: var(--color-teal-light);
+}
+
+[data-component="combobox"] ul li button img {
+  height: 0.85em;
+  margin-top: -0.05em;
+  margin-left: 0.5em;
 }
 
 /* General */
