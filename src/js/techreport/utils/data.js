@@ -35,6 +35,16 @@ const parseVitalsData = (metric, previousMetric, date) => {
 
 const parseLighthouseData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
+
+    const medianScoreDesktop = submetric?.desktop?.median_score || 0;
+    const medianScoreMobile = submetric?.mobile?.median_score || 0;
+    const medianScoreDesktopPrevious = previousSubmetric?.desktop?.median_score || 0;
+    const medianScoreMobilePrevious = previousSubmetric?.mobile?.median_score || 0;
+
+    const monthOverMonthDesktop = calculateMoM(medianScoreDesktop, medianScoreDesktopPrevious);
+    const monthOverMonthMobile = calculateMoM(medianScoreMobile, medianScoreMobilePrevious);
+
     return {
       ...submetric,
       desktop: {
@@ -42,12 +52,16 @@ const parseLighthouseData = (metric, previousMetric, date) => {
         median_score_pct: parseInt(submetric?.desktop?.median_score * 100),
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString,
       },
       mobile: {
         ...submetric.mobile,
         median_score_pct: parseInt(submetric?.mobile?.median_score * 100),
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString,
       },
     };
   });

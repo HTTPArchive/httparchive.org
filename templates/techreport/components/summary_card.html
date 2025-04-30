@@ -35,6 +35,10 @@
         <span class="summary-suffix" data-slot="suffix">{{ summary.suffix or "" }}</span>
       {% endif %}
 
+      {% if summary.change %}
+          <span class="monthchange" data-slot="change"></span>
+      {% endif %}
+
       {% if section_prefix == "lighthouse" %}
         </span>
       {% endif %}

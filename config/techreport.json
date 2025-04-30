@@ -116,6 +116,7 @@
             "metric": "good_pct",
             "label": "Overall good CWVs",
             "suffix": "%",
+            "change": "true",
             "description": "Origins with overall good core web vitals.",
             "url": "#good-cwvs"
           },
@@ -125,6 +126,7 @@
             "metric": "median_score_pct",
             "label": "Lighthouse performance",
             "suffix": "",
+            "change": "true",
             "description": "Median lighthouse performance score across tested origins.",
             "url": "#lighthouse"
           },
@@ -134,6 +136,7 @@
             "metric": "median_score_pct",
             "label": "Lighthouse accessibility",
             "suffix": "",
+            "change": "true",
             "description": "Median lighthouse accessibility score across tested origins.",
             "url": "#lighthouse&median-lighthouse-over-time=accessibility"
           },
