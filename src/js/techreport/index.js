@@ -1,7 +1,6 @@
 /* global Section */
 
 import Filters from '../components/filters';
-import ComboBox from './combobox';
 import { Constants } from './utils/constants';
 const { DrilldownHeader } = require("../components/drilldownHeader");
 const { DataUtils } = require("./utils/data");

@@ -1,5 +1,5 @@
 /* Move */
-.highlighted[role="option"], [role="option"]:hover {
+.highlighted[role="option"]:not([disabled="true"]), [role="option"]:hover:not([disabled="true"]) {
   background-color: var(--color-blue-100);
   cursor: default;
 }
@@ -71,6 +71,13 @@
   padding-left: 2.5rem;
 }
 
+[data-component="combobox"] [role="listbox"] [role="option"] img {
+  margin-left: 0.35em;
+  margin-top: -0.05em;
+  height: 0.75em;
+  width: auto;
+}
+
 [data-component="combobox"] [role="listbox"] [role="option"]::after {
   top: 0.75rem;
   left: 1rem;
@@ -80,7 +87,7 @@
   border-radius: 0 0 0.5rem 0.5rem;
 }
 
-[data-component="combobox"] [role="listbox"] [role="option"][aria-disabled="true"] {
+[data-component="combobox"] [role="listbox"] [role="option"][disabled="true"] {
   opacity: 0.5;
 }
 
@@ -109,10 +116,16 @@
   background-color: var(--color-teal-light);
 }
 
-[data-component="combobox"] ul li button img {
+[data-component="combobox"] ul li button .delete {
   height: 0.85em;
   margin-top: -0.05em;
-  margin-left: 0.5em;
+  margin-left: 0.65em;
+}
+
+[data-component="combobox"] ul li button .logo {
+  height: 0.85em;
+  margin-top: -0.1em;
+  margin-right: 0.35em;
 }
 
 /* General */
