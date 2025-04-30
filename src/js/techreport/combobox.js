@@ -156,7 +156,6 @@ class ComboBox {
     option.classList.add('highlighted');
     this.scrollToElement(option);
     this.focusedOptionStr = this.filteredData[this.focusedOption];
-    console.log('update', this.element, option, option?.id);
     const input = this.element.querySelector('input[type="text"]');
     input.setAttribute('aria-activedescendant',`${option.id}`);
   }
