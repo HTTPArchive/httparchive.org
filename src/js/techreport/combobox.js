@@ -31,6 +31,7 @@ class ComboBox {
       option.dataset.name = row;
       option.dataset.key = index;
       option.textContent = row;
+      option.id = `${this.element.dataset.id}-${row}`;
       const logo = document.createElement('img');
       logo.setAttribute('alt', '');
       logo.setAttribute('src', `https://cdn.httparchive.org/static/icons/${row}.png`);
@@ -62,7 +63,6 @@ class ComboBox {
     input.addEventListener('input', this.filterOptions.bind(this));
     input.addEventListener('blur', this.inputBlur.bind(this));
     input.addEventListener('keydown', this.navigateOptions.bind(this));
-
   }
 
   inputBlur() {
@@ -156,6 +156,9 @@ class ComboBox {
     option.classList.add('highlighted');
     this.scrollToElement(option);
     this.focusedOptionStr = this.filteredData[this.focusedOption];
+    console.log('update', this.element, option, option?.id);
+    const input = this.element.querySelector('input[type="text"]');
+    input.setAttribute('aria-activedescendant',`${option.id}`);
   }
 
   selectElement(option) {

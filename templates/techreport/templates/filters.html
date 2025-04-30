@@ -24,17 +24,21 @@
     <fieldset class="technology-filters" data-component="combobox" data-id="tech-selector">
       <legend class="form-title">Choose a dataset</legend>
       <label id="combobox-tech-label">Technology</label>
-      <div class="combobox-wrapper">
+      <div
+        class="combobox-wrapper"
+        role="combobox"
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-owns="listbox-tech"
+      >
         <input
-          aria-controls=""
-          aria-expanded="false"
-          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          aria-activedescendant=""
           aria-labelledby="combobox-tech-label combobox-tech-selected"
-          role="combobox"
           type="text"
           placeholder="Search a technology"
         />
-        <div role="listbox" id="listbox-tech" class="hidden"></div>
+        <div aria-multiselectable="true" role="listbox" id="listbox-tech" class="hidden"></div>
       </div>
       <div data-component="submit-options" style="display: none"></div>
       <ul id="combobox-tech-selected"></ul>
