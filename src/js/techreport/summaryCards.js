@@ -33,6 +33,7 @@ class SummaryCard {
       const key = card.dataset.key;
 
       let latestValue;
+      let latestChange;
 
       if(key) {
         latestValue = this.data[key][metric][client] || this.data[key][metric];
@@ -45,6 +46,10 @@ class SummaryCard {
           const latestCategory = latestEndpoint?.find(row => row.name === category)?.[client];
           if(metric) {
             latestValue = latestCategory?.[metric];
+            latestChange = {
+              string: latestCategory?.momString,
+              perc: latestCategory?.momPerc,
+            };
           } else {
             latestValue = latestCategory;
           }
@@ -65,7 +70,15 @@ class SummaryCard {
           circle.setAttribute('style', `--offset: ${latestValue}%;`);
           circle.classList.add(scoreCategoryName);
         });
+      }
 
+      if(latestChange && latestChange.string) {
+        const changeSlot = card.querySelector('[data-slot="change"]');
+        if(changeSlot) {
+          changeSlot.textContent = latestChange.string;
+          const direction = latestChange.perc < 0 ? 'negative' : 'positive';
+          changeSlot.classList.add(direction);
+        }
       }
     }
   }
