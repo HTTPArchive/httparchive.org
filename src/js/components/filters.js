@@ -114,7 +114,9 @@ class Filters {
     });
 
     const combo = document.querySelectorAll('[data-component="combobox"]');
-    combo.forEach(box => new ComboBox(box, this.technologies));
+    const url = new URL(location.href);
+    const selected = url.searchParams.get('tech')?.split(',') || [];
+    combo.forEach(box => new ComboBox(box, this.technologies, selected));
   }
 
   /* Update the list with geographies */

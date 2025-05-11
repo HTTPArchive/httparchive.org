@@ -1,23 +1,18 @@
 class ComboBox {
-  constructor(element, data) {
+  constructor(element, data, selected) {
     this.element = element;
 
     this.data = data;
     this.filteredData = data;
     this.focusedOption = -1;
     this.focusedOptionStr = '';
-    this.selected = [];
+    this.selected = selected || [];
     this.maxSelected = 10;
-
-    this.keyCodes = {
-      keyUp: 38,
-      keyDown: 40,
-      ESC: 27,
-      enter: 13,
-    };
 
     this.updateContent();
     this.monitorInput();
+
+    this.selected.forEach(name => this.showSelectedElement(name));
   }
 
   updateContent(data) {
@@ -70,14 +65,14 @@ class ComboBox {
   }
 
   showOptions() {
-    const input = this.element.querySelector('input[type="text"]');
+    const input = this.element.querySelector('[role="combobox"]');
     input.setAttribute('aria-expanded', 'true');
     const listbox = this.element.querySelector('[role="listbox"]');
     listbox.classList.remove('hidden');
   }
 
   hideOptions() {
-    const input = this.element.querySelector('input[type="text"]');
+    const input = this.element.querySelector('[role="combobox"]');
     input.setAttribute('aria-expanded', 'false');
     const options = this.element.querySelector('[role="listbox"]');
     options.classList.add('hidden');
@@ -114,26 +109,26 @@ class ComboBox {
       this.showOptions();
     }
 
-    const key = e.keyCode;
+    const key = e.key;
     switch(key) {
-      case this.keyCodes.keyDown:
+      case 'ArrowDown':
         const nextKey = this.focusedOption + 1;
         if(nextKey < options.length) {
           this.focusedOption = nextKey;
           this.updateHighlightedOption();
         }
         break;
-      case this.keyCodes.keyUp:
+      case 'ArrowUp':
         const previousKey = this.focusedOption - 1;
         if(previousKey > -1) {
           this.focusedOption = previousKey;
           this.updateHighlightedOption();
         }
         break;
-      case this.keyCodes.ESC:
+      case 'Escape':
         this.hideOptions();
         break;
-      case this.keyCodes.enter:
+      case 'Enter':
         e.preventDefault();
         const listbox = this.element.querySelector('[role="listbox"]');
         if(!listbox.classList.contains('hidden')) {
@@ -164,22 +159,38 @@ class ComboBox {
     /* Set the state of the element to selected */
     option.setAttribute('aria-selected', 'true');
 
+
+    /* Keep track of the selected apps */
+    if(!this.selected.includes(option.dataset.name)) {
+      this.selected.push(option.dataset.name);
+    }
+
+    /* Don't allow more than 10 selected */
+    if(this.selected.length >= this.maxSelected) {
+      const unselected = this.element.querySelectorAll('[role="listbox"] [role="option"][aria-selected="false"]');
+      unselected.forEach(element => element.setAttribute('disabled', true));
+    }
+
+    this.showSelectedElement(option.dataset.name);
+  }
+
+  showSelectedElement(name) {
     /* Add selected element to an overview list */
     const selection = document.createElement('li');
-    selection.dataset.name = option.dataset.name;
+    selection.dataset.name = name;
 
     const deleteSelection = document.createElement('button');
     deleteSelection.setAttribute('type', 'button');
-    deleteSelection.textContent = `${option.dataset.name}`;
-    deleteSelection.dataset.name = option.dataset.name;
-    deleteSelection.addEventListener('click', () => this.unselectElement(option.dataset.name));
+    deleteSelection.textContent = `${name}`;
+    deleteSelection.dataset.name = name;
+    deleteSelection.addEventListener('click', () => this.unselectElement(name));
 
     /* Add the app logo */
     const appIcon = document.createElement('img');
-    appIcon.setAttribute('src', `https://cdn.httparchive.org/static/icons/${option.dataset.name}.png`);
+    appIcon.setAttribute('src', `https://cdn.httparchive.org/static/icons/${encodeURI(name)}.png`);
     appIcon.setAttribute('alt', '');
     appIcon.classList.add('logo');
-    deleteSelection.prepend(appIcon);
+    deleteSelection.append(appIcon);
 
     /* Add the delete icon */
     const deleteIcon = document.createElement('img');
@@ -193,25 +204,14 @@ class ComboBox {
     const selectionContainer = this.element.querySelector('#combobox-tech-selected');
     selectionContainer.append(selection);
 
-    /* Keep track of the selected apps */
-    if(!this.selected.includes(option.dataset.name)) {
-      this.selected.push(option.dataset.name);
-    }
-
-    /* Don't allow more than 10 selected*/
-    if(this.selected.length >= this.maxSelected) {
-      const unselected = this.element.querySelectorAll('[role="listbox"] [role="option"][aria-selected="false"]');
-      unselected.forEach(element => element.setAttribute('disabled', true));
-    }
-
     /* Add an invisible input field so the selected techs get submitted */
     const submitOption = document.createElement('input');
-    submitOption.setAttribute('value', option.dataset.name);
+    submitOption.setAttribute('value', name);
     submitOption.setAttribute('type', 'checkbox');
     submitOption.setAttribute('name', 'tech');
     submitOption.setAttribute('checked', true);
     submitOption.setAttribute('tabindex', '-1');
-    submitOption.textContent = option.dataset.name;
+    submitOption.textContent = name;
     const submitOptions = this.element.querySelector('[data-component="submit-options"]');
     submitOptions.append(submitOption);
   }

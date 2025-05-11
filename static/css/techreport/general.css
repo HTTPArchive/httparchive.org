@@ -53,6 +53,31 @@
   padding: 0.65rem 0.825rem;
   position: relative;
   margin-bottom: 0;
+  background-color: rgba(0,0,0,0);
+}
+
+.combobox-wrapper::before {
+  content: "";
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  position: absolute;
+  border-bottom: 1.5px solid var(--color-text-darker);
+  border-left: 1.5px solid var(--color-text-darker);
+  border-radius: 1px;
+  transform: rotate(-45deg);
+  right: 1rem;
+  top: 1rem;
+  z-index: 99999;
+}
+
+.combobox-wrapper[aria-expanded="true"]::before {
+  transform: rotate(135deg);
+  top: 1.25rem;
+}
+
+.combobox-wrapper {
+  position: relative;
 }
 
 [data-component="combobox"] [role="listbox"] {
@@ -125,7 +150,7 @@
 [data-component="combobox"] ul li button .logo {
   height: 0.85em;
   margin-top: -0.1em;
-  margin-right: 0.35em;
+  margin-left: 0.35em;
 }
 
 /* General */
