@@ -3,14 +3,14 @@
 {% block filters %}
 <form id="page-filters">
   <div>
-    <fieldset class="technology-filters">
+    <fieldset class="technology-filters filters">
       <legend class="form-title">Choose a dataset</legend>
 
-      <div class="tech-selector">
-        <label for="categories_selector" class="tech">Category</label>
-        <div class="tech-input-wrapper">
+      <div class="tech-selector default-dropdown-group">
+        <label for="categories_selector" class="tech default-dropdown-label">Category</label>
+        <div class="default-dropdown-wrapper">
           {% set category_selected = tech_report_page.filters.category or tech_report_config.default_category %}
-          <select name="categories" class="tech" data-selected="{{ category_selected }}" id="categories_selector">
+          <select name="categories" class="default-dropdown tech" data-selected="{{ category_selected }}" id="categories_selector" disabled>
             <option value="{{ category_selected }}" selected="true">
               {{ category_selected }}
             </option>
@@ -22,22 +22,26 @@
     <fieldset class="lens">
       <legend class="sr-only">Lens</legend>
 
-      <label for="geo">Geo</label>
-      <div class="select-label">
-        <select name="geo" id="geo">
-          <option value="ALL" selected="true">
-            ALL
-          </option>
-        </select>
+      <div class="default-dropdown-group">
+        <label for="geo">Geo</label>
+        <div class="default-dropdown-wrapper">
+          <select class="default-dropdown" name="geo" id="geo" disabled>
+            <option value="ALL" selected="true">
+              ALL
+            </option>
+          </select>
+        </div>
       </div>
 
-      <label for="rank">Rank</label>
-      <div class="select-label">
-        <select name="rank" id="rank">
-          <option value="ALL" selected="true">
-            ALL
-          </option>
-        </select>
+      <div class="default-dropdown-group">
+        <label for="rank">Rank</label>
+        <div class="default-dropdown-wrapper">
+          <select class="default-dropdown" name="rank" id="rank" disabled>
+            <option value="ALL" selected="true">
+              ALL
+            </option>
+          </select>
+        </div>
       </div>
     </fieldset>
   </div>
@@ -77,99 +81,101 @@
       </div>
     </div>
 
-    <div
-      id="cateogry-summary"
-      class="block-m summary report-section"
-      data-type="section"
-      data-api="category"
-    >
-      <h2 class="summary-heading">Summary</h2>
-      <div class="summary-grid">
-        {% for summary in tech_report_page.config.summary %}
-          {% include "techreport/components/summary_card.html" %}
-        {% endfor %}
-      </div>
-    </div>
-
-    <div
-      id="comparison-summary"
-      class="card block-m summary report-section"
-      data-type="section"
-      data-api="cwv,lighthouse,page-weight"
-    >
-      <h2>Technologies</h2>
-      <div class="table-descr">
-        <p>
-          Overview of the latest Core Web Vitals of all technologies within this category, sorted by number of origins.
-          Select up to 10 technologies to compare their Core Web Vitals, Lighthouse scores, adoption, and page weight over time, or view details about a single technology.
-        </p>
-        <p>
-          Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>, based on the latest data (<span data-slot="timestamp"></span>).
-        </p>
+    <div class="data-sections">
+      <div
+        id="cateogry-summary"
+        class="block-m summary report-section"
+        data-type="section"
+        data-api="category"
+      >
+        <h2 class="summary-heading">Summary</h2>
+        <div class="summary-grid">
+          {% for summary in tech_report_page.config.summary %}
+            {% include "techreport/components/summary_card.html" %}
+          {% endfor %}
+        </div>
       </div>
 
-      {% set component = tech_report_page.config.tech_comparison_summary %}
-      {% set id = component.id %}
-      {% set client = request.args.get('client', '')  or 'mobile' %}
-      {% set sort_endpoint = "adoption" %}
-      {% set sort_metric = "adoption" %}
-      {% set sort_key = "origins" %}
-      {% set sort_order = "desc" %}
-
-      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
-
-      <div class="selected-apps">
-        <p>
-          Selected technologies:
-        </p>
-        <ul data-name="selected-apps-overview"></ul>
-      </div>
-
-      {% set table = component.table %}
-      {% include "techreport/components/table_linked.html" %}
-
-      <div class="table-pagination">
-        {% set filters = tech_report_page.filters %}
-        <p data-pagination="previous">
-          {% if filters.page and filters.page > 1 %}
-            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Previous page </a>
-          {% endif %}
-        </p>
-        <div class="table-page-info">
+      <div
+        id="comparison-summary"
+        class="card block-m summary report-section"
+        data-type="section"
+        data-api="cwv,lighthouse,page-weight"
+      >
+        <h2>Technologies</h2>
+        <div class="table-descr">
           <p>
-            Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+            Overview of the latest Core Web Vitals of all technologies within this category, sorted by number of origins.
+            Select up to 10 technologies to compare their Core Web Vitals, Lighthouse scores, adoption, and page weight over time, or view details about a single technology.
           </p>
-          <div class="table-row-count">
-            <label for="rowsPerPage">
-              Rows
-            </label>
-            <select id="rowsPerPage">
-              {% if filters.rows == "10" %}
-                <option value="10" selected>10</option>
-              {% else %}
-                <option value="10">10</option>
-              {% endif %}
-              {% if filters.rows == "25" %}
-                <option value="25" selected>25</option>
-              {% else %}
-                <option value="25">25</option>
-              {% endif %}
-              {% if filters.rows == "50" %}
-                <option value="50" selected>50</option>
-              {% else %}
-                <option value="50">50</option>
-              {% endif %}
-            </select>
-          </div>
-          <p class="sr-only" aria-live="polite">
-            <span id="rows-announcement"></span>
+          <p>
+            Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>, based on the latest data (<span data-slot="timestamp"></span>).
           </p>
         </div>
-        <p data-pagination="next">
-          {% if not filters.last_page and filters.last_page == False  %}
-            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Next page</a>
-          {% endif %}
-        </p>
+
+        {% set component = tech_report_page.config.tech_comparison_summary %}
+        {% set id = component.id %}
+        {% set client = request.args.get('client', '')  or 'mobile' %}
+        {% set sort_endpoint = "adoption" %}
+        {% set sort_metric = "adoption" %}
+        {% set sort_key = "origins" %}
+        {% set sort_order = "desc" %}
+
+        <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
+
+        <div class="selected-apps">
+          <p>
+            Selected technologies:
+          </p>
+          <ul data-name="selected-apps-overview"></ul>
+        </div>
+
+        {% set table = component.table %}
+        {% include "techreport/components/table_linked.html" %}
+
+        <div class="table-pagination">
+          {% set filters = tech_report_page.filters %}
+          <p data-pagination="previous">
+            {% if filters.page and filters.page > 1 %}
+              <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Previous page </a>
+            {% endif %}
+          </p>
+          <div class="table-page-info">
+            <p>
+              Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+            </p>
+            <div class="table-row-count">
+              <label for="rowsPerPage">
+                Rows
+              </label>
+              <select id="rowsPerPage">
+                {% if filters.rows == "10" %}
+                  <option value="10" selected>10</option>
+                {% else %}
+                  <option value="10">10</option>
+                {% endif %}
+                {% if filters.rows == "20" %}
+                  <option value="20" selected>20</option>
+                {% else %}
+                  <option value="20">20</option>
+                {% endif %}
+                {% if filters.rows == "30" %}
+                  <option value="30" selected>30</option>
+                {% else %}
+                  <option value="30">30</option>
+                {% endif %}
+              </select>
+            </div>
+            <p class="sr-only" aria-live="polite">
+              <span id="rows-announcement"></span>
+            </p>
+          </div>
+          <p data-pagination="next">
+            {% if not filters.last_page and filters.last_page == False  %}
+              <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Next page</a>
+            {% endif %}
+          </p>
+        </div>
       </div>
     </div>
   </div>

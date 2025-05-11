@@ -75,7 +75,8 @@ class Filters {
     // url.hash = '#report-content';
 
     /* Update the url */
-    location.href = url;
+    const styledUrl = url.href.replaceAll('%2C', ',');
+    location.href = styledUrl;
   }
 
   /* Update the list of technologies */
@@ -222,6 +223,7 @@ class Filters {
     const techId = `tech-${techNr}`;
     const techLabel = `Technology ${techNr}`;
     selectElement.setAttribute('id', techId);
+    selectElement.removeAttribute('disabled');
     labelElement.setAttribute('for', techId);
     labelElement.textContent = techLabel;
 

@@ -9,11 +9,11 @@ class TableLinked {
     this.submetric = ''; // TODO: Fetch the default one from somewhere
     this.data = data;
     this.dataArray = [];
-    this.selectedTechs = this.getTechsFromURL()?.split(',') || [];
+    this.selectedTechs = DataUtils.getTechsFromURL()?.split(',') || [];
     this.rows = filters.rows || 10;
 
     this.updateContent();
-    this.updateSelectionText(this.getTechsFromURL());
+    this.updateSelectionText(DataUtils.getTechsFromURL());
 
     const rowCount = document.getElementById('rowsPerPage');
     rowCount?.addEventListener('change', (e) => this.updateRowsPerPage(e));
@@ -87,7 +87,6 @@ class TableLinked {
         // Set the data and the app name
         const data = technology;
         const app = technology[0]?.technology;
-        const formattedApp = DataUtils.formatAppName(app);
 
         // Select the latest entry for each technology
         const sorted = data?.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -103,17 +102,22 @@ class TableLinked {
               cell = document.createElement('th');
               cell.classList.add('app-cell');
 
+              const wrapper = document.createElement('span');
+              wrapper.classList.add('app-wrapper');
+
               const img = document.createElement('span');
-              const imgUrl = `https://cdn.httparchive.org/static/icons/${formattedApp}.png`;
+              const imgUrl = `https://cdn.httparchive.org/static/icons/${encodeURI(technology[0]?.icon)}`;
               img.setAttribute('aria-hidden', 'true');
               img.setAttribute('style', `background-image: url(${imgUrl})`);
               img.classList.add('app-img');
-              cell.append(img);
+              wrapper.append(img);
 
+              const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
               link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
               link.innerHTML = formattedApp;
-              cell.append(link);
+              wrapper.append(link);
+              cell.append(wrapper);
             } else if (column.type === 'checkbox') {
               cell = this.addColumnCheckbox(app);
             } else if(column.key === 'client') {
@@ -157,11 +161,6 @@ class TableLinked {
     }
   }
 
-  getTechsFromURL() {
-    const url = new URL(window.location);
-    return url.searchParams.get('selected') || null;
-  }
-
   addColumnCheckbox(app) {
     const cell = document.createElement('td');
     const formattedApp = DataUtils.formatAppName(app);
@@ -190,7 +189,7 @@ class TableLinked {
 
   // Set selected content
   isTechSelected(app) {
-    const urlSelected = this.getTechsFromURL();
+    const urlSelected = DataUtils.getTechsFromURL();
     return urlSelected?.includes(app) || false;
   }
 
@@ -241,7 +240,8 @@ class TableLinked {
   updateURL(param, value) {
     const url = new URL(window.location);
     url.searchParams.set(param, value);
-    window.history.replaceState(null, null, url);
+    const styledUrl = url.href.replaceAll('%2C', ',');
+    window.history.replaceState(null, null, styledUrl);
   }
 
   updateSelectionText(allSelectedApps) {
