@@ -88,7 +88,7 @@
         data-type="section"
         data-api="category"
       >
-        <h2 class="summary-heading">Summary</h2>
+        <h2 class="summary-heading"><a href="#cateogry-summary" class="anchor">Summary</a></h2>
         <div class="summary-grid">
           {% for summary in tech_report_page.config.summary %}
             {% include "techreport/components/summary_card.html" %}
@@ -102,7 +102,7 @@
         data-type="section"
         data-api="cwv,lighthouse,page-weight"
       >
-        <h2>Technologies</h2>
+        <h2><a href="#comparison-summary" class="anchor">Technologies</a></h2>
         <div class="table-descr">
           <p>
             Overview of the latest Core Web Vitals of all technologies within this category, sorted by number of origins.
