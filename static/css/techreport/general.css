@@ -1,6 +1,7 @@
 /* Move */
 .highlighted[role="option"]:not([disabled="true"]), [role="option"]:hover:not([disabled="true"]) {
-  background-color: var(--color-blue-100);
+  background-color: var(--color-teal-vibrant);
+  color: var(--color-card-background);
   cursor: default;
 }
 
@@ -49,11 +50,21 @@
   color: var(--color-text-darker);
   font-size: 0.9rem;
   width: 100%;
-  border-color: var(--color-text-lighter);
+  border-color: var(--color-input-border);
   padding: 0.65rem 0.825rem;
   position: relative;
   margin-bottom: 0;
-  background-color: rgba(0,0,0,0);
+  background-color: var(--color-card-background);
+}
+
+[data-component="combobox"] input[type="text"]:focus-visible {
+  outline: 1.5px solid var(--color-text);
+  outline-offset: 1.5px;
+  background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
+}
+
+[data-component="combobox"] input[type="text"]:hover {
+  background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
 }
 
 .combobox-wrapper::before {
@@ -68,7 +79,12 @@
   transform: rotate(-45deg);
   right: 1rem;
   top: 1rem;
-  z-index: 99999;
+  z-index: 1;
+}
+
+[data-component="combobox"] .combobox-wrapper:has(input[type="text"]:is(:focus-visible, :hover))::before {
+  border-bottom: 1.5px solid var(--color-card-background);
+  border-left: 1.5px solid var(--color-card-background);
 }
 
 .combobox-wrapper[aria-expanded="true"]::before {
@@ -124,21 +140,22 @@
   display: inline-block;
   margin: 0;
   margin-right: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 [data-component="combobox"] ul li button {
   border-radius: 3rem;
-  border: 1px dashed var(--color-nav-inactive);
+  border: 1px dashed var(--color-tech-btn);
   background-color: transparent;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-nav-inactive);
+  color: var(--color-tech-btn);
   padding: 0.35rem 0.75rem;
 }
 
 [data-component="combobox"] ul li button:is(:hover, :focus-visible) {
-  background-color: var(--color-teal-light);
+  background-color: var(--color-tech-btn-background-hover);
+  border-style: solid;
 }
 
 [data-component="combobox"] ul li button .delete {
@@ -194,7 +211,7 @@ strong {
 }
 
 :is(a, button, select):focus-visible {
-  outline: 1.5px solid var(--color-teal-dark);
+  outline: 1.5px solid var(--color-tech-btn-outline);
   outline-offset: 1.5px;
   border-radius: 3px;
 }

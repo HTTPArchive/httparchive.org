@@ -29,6 +29,7 @@
   --color-checkbox-button-selected: var(--color-blue-light);
   --color-checkbox-button-label: var(--color-text);
   --color-checkbox-button-label-selected: var(--color-text);
+  --color-input-border: #959494;
   --color-theme-toggle-background: #f4f4f4;
   --color-bg-gradient: var(--color-teal-faded);
   --color-page-border: var(--color-teal-medium);
@@ -57,6 +58,10 @@
   --table-row-hover: var(--color-blue-100);
   --color-panel-text: #203b40;
   --color-panel-background: #bfe1e7;
+  --color-tech-btn: var(--color-teal-medium);
+  --color-tech-btn-hover: var(--color-teal-medium);
+  --color-tech-btn-outline: var(--color-teal-dark);
+  --color-tech-btn-background-hover: var(--color-teal-light);
 
   /* Graph colors */
   --graph-color-primary: var(--color-teal-dark);
@@ -91,6 +96,11 @@
   /* Graph colors */
   --graph-color-labels: #a6bbbe;
   --graph-color-line: var(--color-gray-medium);
+
+  --color-tech-btn: var(--color-teal-faded);
+  --color-tech-btn-hover: var(--color-teal-faded);
+  --color-tech-btn-background-hover: var(--color-page-background);
+  --color-tech-btn-outline: #fff;
 }
 
 /* ------------------------- */
@@ -325,6 +335,14 @@ nav {
 }
 
 /* Page Filters */
+#report-filters {
+  position: sticky;
+  width: 20rem;
+  top: 0;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 #page-filters {
   padding: 1.5rem 1rem;
   padding-right: 0.75rem;
@@ -387,7 +405,7 @@ nav {
 #page-filters button[type="submit"] {
   border: none;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   transition: background 0.15s ease-in;
 }
 
@@ -402,7 +420,7 @@ nav {
 #page-filters legend.form-title {
   font-size: 1.125rem;
   font-weight: 400;
-  margin-bottom: 4.5rem;
+  margin-bottom: 2.5rem;
   color: var(--color-text-darker);
 }
 
@@ -410,9 +428,9 @@ nav {
 #page-filters .lens {
   margin-bottom: 1.5rem;
   margin-right: 0;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   border-bottom: 1px solid var(--color-card-border);
-  padding-bottom: 2.5rem;
+  padding-bottom: 2rem;
 }
 
 #page-filters .lens label,
@@ -444,7 +462,7 @@ nav {
 }
 
 .select-label {
-  border: 1px solid #959494;
+  border: 1px solid var(--color-input-border);
   padding: 0;
   line-height: 100%;
   position: relative;
@@ -523,7 +541,7 @@ nav {
 
 .technology-filters {
   border-bottom: 1px solid var(--color-card-border);
-  padding-bottom: 2.5rem;
+  padding-bottom: 1.75rem;
 }
 
 .technology-filters label.tech {
@@ -537,7 +555,7 @@ nav {
 .technology-filters select.tech {
   width: 100%;
   margin-bottom: 0;
-  border: 1px solid #959494;
+  border: 1px solid var(--color-input-border);
   appearance: none;
   background-color: transparent;
   color: var(--color-text-darker);
@@ -819,7 +837,7 @@ select {
 
 /* Submetric selector */
 .subcategory-selector-wrapper {
-  border: 1px solid #959494;
+  border: 1px solid var(--color-input-border);
   padding: 0.5rem 1rem;
   line-height: 100%;
   position: relative;
