@@ -12,7 +12,9 @@ csp = {
         "lux.speedcurve.com",
         "'unsafe-inline'",
         "dev-gw-2vzgiib6.ue.gateway.dev",
+        "dev-gw-2vzgiib6.uc.gateway.dev",
         "prod-gw-2vzgiib6.ue.gateway.dev",
+        "prod-gw-2vzgiib6.uc.gateway.dev",
     ],
     "font-src": ["'self'"],
     "connect-src": [
@@ -27,6 +29,7 @@ csp = {
         "*.googletagmanager.com",
         "*.speedcurve.com",
         "dev-gw-2vzgiib6.ue.gateway.dev",
+        "dev-gw-2vzgiib6.uc.gateway.dev",
         "prod-gw-2vzgiib6.ue.gateway.dev",
     ],
     "img-src": [
