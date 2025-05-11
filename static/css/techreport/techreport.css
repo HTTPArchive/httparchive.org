@@ -229,17 +229,6 @@ nav {
   color: inherit;
 }
 
-/* .anchor:is(:hover, :focus-visible) {
-  position: relative;
-}
-
-.anchor:is(:hover, :focus-visible)::after {
-  content: "🔗" / "";
-  display: inline-block;
-  margin-left: 0.25em;
-  font-size: 1em;
-} */
-
 /* Filter info */
 .meta {
   font-size: 0.75rem;
