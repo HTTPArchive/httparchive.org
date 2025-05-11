@@ -1,26 +1,5 @@
 <form id="page-filters">
   <div>
-    <!-- <fieldset class="technology-filters">
-      <legend class="form-title">Choose a dataset</legend>
-
-      {% set technologies = tech_report_page.filters.app or tech_report_page.config.default.app %}
-      {% if active_page == "drilldown" %}
-        {% set technologies = [technologies[0]] %}
-      {% endif %}
-
-      {% for technology in technologies %}
-        {% set key = loop.index %}
-        {% set technology = technology %}
-        {% set technologyName = technology %}
-        {% if technology == "ALL" %}
-          {% set technologyName = "All technologies" %}
-        {% endif %}
-        {% set name = "tech-" + key|string %}
-        {% include "techreport/templates/selector_tech.html" %}
-      {% endfor %}
-
-      <button id="add-tech" type="button"><span aria-hidden="true">+</span> Add another technology</button>
-    </fieldset> -->
     <fieldset class="technology-filters" data-component="combobox" data-id="tech-selector">
       <legend class="form-title">Choose a dataset</legend>
       <label id="combobox-tech-label">Technology</label>

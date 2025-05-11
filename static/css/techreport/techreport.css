@@ -692,26 +692,6 @@ select {
   max-width: 100%;
 }
 
-#add-tech {
-  margin-top: 1.5rem;
-  border-radius: 3rem;
-  border: 1px dashed var(--color-nav-inactive);
-  background-color: transparent;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-nav-inactive);
-  padding: 0.35rem 1rem;
-}
-
-#add-tech:is(:hover, :focus-visible) {
-  background-color: var(--color-teal-light);
-}
-
-#add-tech span {
-  margin-right: 0.25rem;
-  font-weight: 800;
-}
-
 #close-filters,
 #open-filters {
   appearance: none;
@@ -774,6 +754,179 @@ select {
 #close-filters:focus-visible {
   border: 1px solid var(--color-button-background);
 }
+
+/* Combobox component */
+.highlighted[role="option"]:not([disabled="true"]), [role="option"]:hover:not([disabled="true"]) {
+  background-color: var(--color-teal-vibrant);
+  color: var(--color-card-background);
+  cursor: default;
+}
+
+[role="option"][aria-selected] {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+[role="option"][aria-selected="false"]::after {
+  content: "";
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.15em;
+  border: 1px solid var(--color-text);
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+}
+
+[role="option"][aria-selected="true"]::after {
+  content: "";
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.15em;
+  border: 1px solid var(--color-text);
+  background-color: var(--color-teal-vibrant);
+  background-image: url('/static/img/checkmark.svg');
+  background-size: 75% 75%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+}
+
+[data-component="combobox"] label {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+[data-component="combobox"] input[type="text"] {
+  color: var(--color-text-darker);
+  font-size: 0.9rem;
+  width: 100%;
+  border-color: var(--color-input-border);
+  padding: 0.65rem 0.825rem;
+  position: relative;
+  margin-bottom: 0;
+  background-color: var(--color-card-background);
+}
+
+[data-component="combobox"] input[type="text"]:focus-visible {
+  outline: 1.5px solid var(--color-text);
+  outline-offset: 1.5px;
+  background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
+}
+
+[data-component="combobox"] input[type="text"]:hover {
+  background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
+}
+
+.combobox-wrapper::before {
+  content: "";
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  position: absolute;
+  border-bottom: 1.5px solid var(--color-text-darker);
+  border-left: 1.5px solid var(--color-text-darker);
+  border-radius: 1px;
+  transform: rotate(-45deg);
+  right: 1rem;
+  top: 1rem;
+  z-index: 1;
+}
+
+[data-component="combobox"] .combobox-wrapper:has(input[type="text"]:is(:focus-visible, :hover))::before {
+  border-bottom: 1.5px solid var(--color-card-background);
+  border-left: 1.5px solid var(--color-card-background);
+}
+
+.combobox-wrapper[aria-expanded="true"]::before {
+  transform: rotate(135deg);
+  top: 1.25rem;
+}
+
+.combobox-wrapper {
+  position: relative;
+}
+
+[data-component="combobox"] [role="listbox"] {
+  border: 1px solid var(--color-text-lighter);
+  border-radius: 0 0 0.5rem 0.5rem;
+  z-index: 2;
+  position: relative;
+  top: -4px;
+  background-color: var(--color-card-background);
+  max-height: 12rem;
+  overflow: auto;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"] {
+  padding: 0.5rem;
+  padding-left: 2.5rem;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"] img {
+  margin-left: 0.35em;
+  margin-top: -0.05em;
+  height: 0.75em;
+  width: auto;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"]::after {
+  top: 0.75rem;
+  left: 1rem;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"]:last-of-type {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"][disabled="true"] {
+  opacity: 0.5;
+}
+
+[data-component="combobox"] ul {
+  margin-top: 1rem;
+}
+
+[data-component="combobox"] ul li {
+  display: inline-block;
+  margin: 0;
+  margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+[data-component="combobox"] ul li button {
+  border-radius: 3rem;
+  border: 1px dashed var(--color-tech-btn);
+  background-color: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-tech-btn);
+  padding: 0.35rem 0.75rem;
+}
+
+[data-component="combobox"] ul li button:is(:hover, :focus-visible) {
+  background-color: var(--color-tech-btn-background-hover);
+  border-style: solid;
+}
+
+[data-component="combobox"] ul li button .delete {
+  height: 0.85em;
+  margin-top: -0.05em;
+  margin-left: 0.65em;
+}
+
+[data-component="combobox"] ul li button .logo {
+  height: 0.85em;
+  margin-top: -0.1em;
+  margin-left: 0.35em;
+}
+
 
 /* Results header */
 .results-header {
