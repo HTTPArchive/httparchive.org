@@ -13,6 +13,7 @@ class ComboBox {
     this.monitorInput();
 
     this.selected.forEach(name => this.showSelectedElement(name));
+    this.element.querySelector('input[type="text"][disabled]').removeAttribute('disabled');
   }
 
   updateContent(data) {
@@ -49,7 +50,7 @@ class ComboBox {
         const selected = e.target.getAttribute('aria-selected');
         if(selected === 'true') {
           this.unselectElement(e.target.dataset.name);
-        } else if(!e.target.getAttribute('disabled') || e.target.getAttribute('disabled') === 'false') {
+        } else if(!e.target.getAttribute('disabled') || e.target.getAttribute('disabled') === 'false') {
           this.selectElement(e.target);
         }
       }
@@ -112,34 +113,45 @@ class ComboBox {
     const key = e.key;
     switch(key) {
       case 'ArrowDown':
-        const nextKey = this.focusedOption + 1;
-        if(nextKey < options.length) {
-          this.focusedOption = nextKey;
-          this.updateHighlightedOption();
-        }
+        this.highlightNext(options.length);
         break;
       case 'ArrowUp':
-        const previousKey = this.focusedOption - 1;
-        if(previousKey > -1) {
-          this.focusedOption = previousKey;
-          this.updateHighlightedOption();
-        }
+        this.highlightPrevious(-1);
         break;
       case 'Escape':
         this.hideOptions();
         break;
       case 'Enter':
         e.preventDefault();
-        const listbox = this.element.querySelector('[role="listbox"]');
-        if(!listbox.classList.contains('hidden')) {
-          const option = options[this.focusedOption];
-          const selected = option.getAttribute('aria-selected');
-          if(selected === 'true') {
-            this.unselectElement(option.dataset.name);
-          } else {
-            this.selectElement(option);
-          }
-        }
+        this.selectOption(options[this.focusedOption]);
+    }
+  }
+
+  highlightNext(max) {
+    const nextKey = this.focusedOption + 1;
+    if(nextKey < max) {
+      this.focusedOption = nextKey;
+      this.updateHighlightedOption();
+    }
+  }
+
+  highlightPrevious(min) {
+    const previousKey = this.focusedOption - 1;
+    if(previousKey > min) {
+      this.focusedOption = previousKey;
+      this.updateHighlightedOption();
+    }
+  }
+
+  selectOption(option) {
+    const listbox = this.element.querySelector('[role="listbox"]');
+    if(!listbox.classList.contains('hidden')) {
+      const selected = option.getAttribute('aria-selected');
+      if(selected === 'true') {
+        this.unselectElement(option.dataset.name);
+      } else {
+        this.selectElement(option);
+      }
     }
   }
 

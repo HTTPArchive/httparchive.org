@@ -97,6 +97,7 @@
   --graph-color-labels: #a6bbbe;
   --graph-color-line: var(--color-gray-medium);
 
+  /* Buttons */
   --color-tech-btn: var(--color-teal-faded);
   --color-tech-btn-hover: var(--color-teal-faded);
   --color-tech-btn-background-hover: var(--color-page-background);
@@ -814,13 +815,17 @@ select {
   background-color: var(--color-card-background);
 }
 
-[data-component="combobox"] input[type="text"]:focus-visible {
+[data-component="combobox"] input[type="text"]:disabled {
+  opacity: 0.5;
+}
+
+[data-component="combobox"] input[type="text"]:not(:disabled):focus-visible {
   outline: 1.5px solid var(--color-text);
   outline-offset: 1.5px;
   background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
 }
 
-[data-component="combobox"] input[type="text"]:hover {
+[data-component="combobox"] input[type="text"]:not(:disabled):hover {
   background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
 }
 
