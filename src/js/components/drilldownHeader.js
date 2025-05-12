@@ -4,13 +4,12 @@ function setTitle(title) {
   const mainTitle = document.querySelector('h1 span.main-title');
   mainTitle.textContent = title;
 
-  const img = document.createElement('img');
-  const imgUrl = `https://cdn.httparchive.org/static/icons/${title}.png`;
-  img.setAttribute('aria-hidden', 'true');
-  img.setAttribute('alt', '');
-  img.setAttribute('src', imgUrl);
-  img.classList.add('title-img');
-  mainTitle.append(img);
+}
+
+function setIcon(icon) {
+  const img = document.querySelector('h1 .title-img');
+  const imgUrl = `https://cdn.httparchive.org/static/icons/${icon}`;
+  img.setAttribute('style', `background-image: url(${imgUrl})`);
 }
 
 function setCategories(categories) {
@@ -35,6 +34,9 @@ function setCategories(categories) {
       cellTemplate.textContent = `+ ${more} more`;
       list.appendChild(cellTemplate);
     }
+  } else {
+    const list = document.querySelector('.intro .category-list');
+    list.remove();
   }
 }
 
@@ -42,6 +44,9 @@ function setDescription(description) {
   if(description && description !== "") {
     const descr = document.querySelector('p.app-description');
     descr.textContent = description;
+  } else {
+    const descr = document.querySelector('p.app-description');
+    descr.remove();
   }
 }
 
@@ -58,4 +63,5 @@ export const DrilldownHeader = {
   update,
   setCategories,
   setDescription,
+  setIcon,
 }

@@ -7,43 +7,85 @@
   --color-teal-accent: #4e848b;
   --color-teal-dark: #3a5c63;
   --color-teal-darker: #1c4750;
+  --color-blue-darkest: #0a3555;
   --color-blue-dark: #3a7098;
-  --color-blue-100: #eff7ff;
   --color-blue-light: #e1f1ff;
+  --color-gray-lighter: #747171;
   --color-gray-medium: #5c5c5d;
+  --color-gray-dark: #2f2f30;
+  --color-gray-light: #f6f6f7;
   --color-teal-vibrant: #1c818d;
   --color-teal-vibrant-darker: #136e78;
+  --color-yellow-light: #fefae5;
+  --color-yellow-dark: #B08705;
+  --color-yellow-darker: #705600;
+  --color-yellow-darkest: #352902;
 
   /* Colors based on function */
+  /* Regular text */
   --color-link: var(--color-blue-dark);
   --color-text: #444;
   --color-text-lighter: #5f6768;
   --color-text-darker: #1e1e1e;
   --color-text-inverted: #fff;
+
+  /* Cards */
   --color-card-background: #fff;
   --color-card-border: #cdd4d6;
   --color-card-border-light: #e8e8e8;
+
+  /* Page */
   --color-page-background: #f4f4f4;
+  --color-bg-gradient: var(--color-teal-faded);
+  --color-page-border: var(--color-teal-medium);
+  --color-separator: var(--color-card-border);
+
+  /* Checkboxes */
   --color-checkbox: var(--color-blue-dark);
   --color-checkbox-selected: var(--color-blue-dark);
   --color-checkbox-button-selected: var(--color-blue-light);
   --color-checkbox-button-label: var(--color-text);
   --color-checkbox-button-label-selected: var(--color-text);
   --color-input-border: #959494;
-  --color-theme-toggle-background: #f4f4f4;
-  --color-bg-gradient: var(--color-teal-faded);
-  --color-page-border: var(--color-teal-medium);
-  --color-tooltip-background: var(--color-card-background);
-  --color-tooltip-border: var(--color-card-border);
-  --color-nav: #667a7d;
-  --color-nav-active: var(--color-teal-accent);
-  --color-nav-inactive: var(--color-teal-medium);
+
+  /* Buttons */
   --color-button-background: var(--color-teal-vibrant);
   --color-button-background-hover: var(--color-teal-vibrant-darker);
   --color-button-text: #fff;
-  --color-progress-basic-border: #8e9799;
+  --color-theme-toggle-background: #f4f4f4;
+  --color-tooltip-background: var(--color-card-background);
+  --color-tooltip-border: var(--color-card-border);
+  --color-button-border: var(--color-text-lighter);
+
+  /* Dropdowns */
+  --color-dropdown-background: transparent;
+  --color-dropdown-background-hover: var(--color-teal-light);
+  --color-dropdown-background-disabled: var(--color-gray-light);
+  --color-dropdown-text: var(--color-text);
+  --color-dropdown-text-disabled: var(--color-text-lighter);
+  --color-dropdown-border-disabled: #aeb1b3;
+  --color-dropdown-border: var(--color-text-lighter);
+
+  /* Pills */
+  --color-pillbutton-background: var(--color-gray-light);
+  --color-pillbutton-text: var(--color-text-lighter);
+  --color-pillbutton-border: var(--color-gray-medium);
+
+  /* Navigation */
+  --color-nav: #667a7d;
+  --color-nav-active: var(--color-teal-accent);
+  --color-nav-inactive: var(--color-teal-medium);
+
+  /* Charts */
+  --color-progress-basic-border: #879092;
   --color-progress-basic-bg: #eee;
   --color-progress-basic-fill: #3a5c63;
+
+  /* Tables */
+  --color-table-selected-bg: var(--color-yellow-light);
+  --color-table-selected-border: var(--color-yellow-dark);
+  --table-row-hover: var(--color-blue-light);
+  --table-row-hover-border: var(--color-blue-dark);
 
   /* Font sizes */
   --font-size-small: 0.875rem;
@@ -55,7 +97,6 @@
   /* Components */
   --card-shadow: 0 3px 12px 0px rgba(106, 121, 124, 0.2);
   --card-radius: 0.625rem;
-  --table-row-hover: var(--color-blue-100);
   --color-panel-text: #203b40;
   --color-panel-background: #bfe1e7;
   --color-tech-btn: var(--color-teal-medium);
@@ -68,20 +109,29 @@
   --graph-color-primary-darker: var(--color-teal-darker);
   --graph-color-line: #a6bbbe;
   --graph-color-labels: #62777b;
+  --progess-color-empty: var(--color-progress-basic-bg);
 
   /* Defaults */
   --breakdown-color: var(--color-text);
+  --focus-default: var(--color-teal-dark);
 }
 
 [data-theme="dark"] {
+  /* Text */
   --color-link: var(--color-teal-faded);
   --color-text: #fff;
   --color-text-lighter: #fff;
   --color-text-darker: #fff;
   --color-text-inverted: #000;
+  --color-nav-inactive: #6D8488;
+
+  /* Cards */
   --color-card-background: #111;
   --color-card-border: #000;
+  --card-shadow: 0 3px 12px 0px rgba(4, 8, 8, 0.2);
   --color-page-background: #292828;
+
+  /* Checkboxes */
   --color-checkbox-button-label-selected: #292828;
   --color-checkbox: #fff;
   --color-checkbox-selected: #292828;
@@ -93,6 +143,17 @@
   --color-panel-background: #203b40;
   --color-nav: #bfe1e7;
 
+  /* Pills */
+  --color-pillbutton-background: var(--color-page-background);
+  --color-pillbutton-text: var(--color-text-lighter);
+  --color-pillbutton-border: var(--color-gray-medium);
+
+  /* Tables */
+  --color-table-selected-bg: var(--color-yellow-darkest);
+  --color-table-selected-border: var(--color-yellow-darker);
+  --table-row-hover: var(--color-teal-darker);
+  --table-row-hover-border: var(--color-blue-light);
+
   /* Graph colors */
   --graph-color-labels: #a6bbbe;
   --graph-color-line: var(--color-gray-medium);
@@ -102,6 +163,21 @@
   --color-tech-btn-hover: var(--color-teal-faded);
   --color-tech-btn-background-hover: var(--color-page-background);
   --color-tech-btn-outline: #fff;
+
+  /* Dropdowns */
+  --color-dropdown-border: var(--color-gray-lighter);
+  --color-dropdown-background-hover: var(--color-page-background);
+  --color-dropdown-text-disabled: var(--color-gray-lighter);
+  --color-dropdown-background-disabled: var(--color-page-background);
+  --color-dropdown-border-disabled: var(--color-gray-medium);;
+
+  /* Buttons */
+  --color-button-border: var(--color-gray-lighter);
+
+  /* Other */
+  --color-separator: var(--color-gray-dark);
+  --focus-default: var(--color-text-darker);
+  --progess-color-empty: var(--color-page-background);
 }
 
 /* ------------------------- */
@@ -179,6 +255,93 @@ nav {
   font-weight: 600;
 }
 
+/* Dropdowns */
+.default-dropdown-label {
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.default-dropdown {
+  width: 100%;
+  margin-bottom: 0;
+  border: 1px solid var(--color-dropdown-border);
+  appearance: none;
+  background-color: transparent;
+  color: var(--color-text-darker);
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  z-index: 4;
+  position: relative;
+}
+
+.default-dropdown-group:not(:first-of-type) {
+  margin-top: 1.5rem;
+}
+
+.default-dropdown-wrapper {
+  position: relative;
+}
+
+.default-dropdown-wrapper::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  border-radius: 0 4px 4px 0;
+  z-index: 2;
+}
+
+.default-dropdown-wrapper::after {
+  content: "";
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  top: calc(50% - 0.25rem);
+  border-bottom: 1.5px solid var(--color-text-darker);
+  border-left: 1.5px solid var(--color-text-darker);
+  border-radius: 1px;
+  transform: rotate(-45deg);
+  z-index: 3;
+}
+
+.default-dropdown:not(:disabled):is(:focus-visible, :hover) {
+  background-image: linear-gradient(-90deg, var(--color-dropdown-background-hover), var(--color-dropdown-background-hover));
+  background-repeat: no-repeat;
+  background-size: calc(100% - 2.5rem) 100%;
+}
+
+.default-dropdown-wrapper:has(select:not(:disabled):is(:focus-visible, :hover))::before {
+  background-color: var(--color-text-darker);
+  border-left: 1px solid var(--color-text-darker);
+}
+
+.default-dropdown-wrapper:has(select:is(:focus-visible, :hover))::after {
+  border-color: var(--color-page-background);
+}
+
+.default-dropdown-wrapper:has(select:focus-visible) {
+  background-color: var(--color-page-background);
+  color: var(--color-text);
+}
+
+.default-dropdown:disabled {
+  background-color: var(--color-dropdown-background-disabled);
+  color: var(--color-dropdown-text-disabled);
+  border-color: var(--color-dropdown-border-disabled);
+}
+
+.default-dropdown-wrapper:has(select:disabled)::after {
+  border-color: var(--color-dropdown-text-disabled);
+}
+
 /* -------------------- */
 /* ---- Components ---- */
 /* -------------------- */
@@ -235,7 +398,7 @@ nav {
   color: var(--color-text);
   background-color: var(--color-card-background);
   border-top: 1px solid var(--color-page-background);
-  border-bottom: 1px solid var(--color-page-background);
+  border-bottom:1px solid var(--color-card-border);
   display: flex;
   justify-content: space-between;
   padding: 0 2.5vw;
@@ -430,7 +593,7 @@ nav {
   margin-bottom: 1.5rem;
   margin-right: 0;
   margin-top: 1.5rem;
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
   padding-bottom: 2rem;
 }
 
@@ -442,8 +605,7 @@ nav {
   width: 100%;
 }
 
-#page-filters .lens .select-label select,
-.breakdown select {
+#page-filters .lens .select-label select {
   color: var(--color-text-darker);
   font-size: 0.9rem;
   width: 100%;
@@ -498,50 +660,8 @@ nav {
   z-index: 2;
 }
 
-.select-label::before {
-  content: "";
-  display: block;
-  width: 2.5rem;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  border-radius: 0 4px 4px 0;
-}
-
-.select-label::after {
-  content: "";
-  display: block;
-  width: 0.5rem;
-  height: 0.5rem;
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  top: calc(50% - 0.25rem);
-  border-bottom: 1.5px solid var(--color-text-darker);
-  border-left: 1.5px solid var(--color-text-darker);
-  border-radius: 1px;
-  transform: rotate(-45deg);
-}
-
-.select-label:has(select:is(:focus-visible, :hover))::before {
-  background-color: var(--color-text-darker);
-  border-left: 1px solid var(--color-text-darker);
-}
-
-.select-label:has(select:is(:focus-visible, :hover))::after {
-  border-color: var(--color-page-background);
-}
-
-.select-label:has(select:focus-visible) {
-  background-color: var(--color-page-background);
-}
-
-.select-label:has(select:focus-visible) label {
-  color: var(--color-text) !important;
-}
-
 .technology-filters {
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
   padding-bottom: 1.75rem;
 }
 
@@ -573,6 +693,7 @@ nav {
   margin-top: -1.5rem;
 }
 
+
 .breakdown {
   margin-top: 1rem;
 }
@@ -591,66 +712,6 @@ nav {
   display: flex;
   column-gap: 0.5rem;
   align-items: end;
-}
-
-.tech-input-wrapper {
-  position: relative;
-}
-
-.tech-input-wrapper::before {
-  content: "";
-  display: block;
-  width: 2.5rem;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  border-radius: 0 4px 4px 0;
-  z-index: 2;
-}
-
-.tech-input-wrapper::after {
-  content: "";
-  display: block;
-  width: 0.5rem;
-  height: 0.5rem;
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  top: calc(50% - 0.25rem);
-  border-bottom: 1.5px solid var(--color-text-darker);
-  border-left: 1.5px solid var(--color-text-darker);
-  border-radius: 1px;
-  transform: rotate(-45deg);
-  z-index: 3;
-}
-
-.tech-input-wrapper select {
-  z-index: 1;
-  position: relative;
-}
-
-.tech-input-wrapper:has(select:is(:focus-visible, :hover))::before {
-  background-color: var(--color-text-darker);
-  border-left: 1px solid var(--color-text-darker);
-}
-
-.tech-input-wrapper:has(select:is(:focus-visible, :hover))::after {
-  border-color: var(--color-page-background);
-}
-
-.tech-input-wrapper:has(select:focus-visible) {
-  background-color: var(--color-page-background);
-  color: var(--color-text);
-}
-
-.tech-input-wrapper:has(select:focus-visible) select {
-  color: var(--color-text);
-}
-
-[data-theme="dark"] select option,
-[data-theme="dark"] .tech-input-wrapper:has(select:focus-visible) select {
-  color: var(--color-page-background) !important;
-  background-color: var(--color-text-darker) !important;
 }
 
 .tech-selector-group .content {
@@ -1157,8 +1218,8 @@ select {
   text-align: left;
 }
 
-.table-ui :is(td, th):not(:last-child) {
-  padding: 1rem 1rem 1rem 0;
+.table-ui :is(td, th):not(:last-child, :first-child) {
+  padding: 1rem 0;
 }
 
 .table-ui :is(td, th):has(.progress-circle) {
@@ -1166,7 +1227,7 @@ select {
 }
 
 .table-ui tbody tr {
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
 }
 
 .table-ui tbody th {
@@ -1181,54 +1242,75 @@ select {
 .table-ui tr a {
   color: var(--color-link);
   text-decoration: underline;
-  width: 100%;
+}
+
+.table-ui tr:has(.check-cell input[type="checkbox"]:checked) {
+  background-color: var(--color-table-selected-bg);
+  border: 1px solid var(--color-table-selected-border);
+}
+
+.table-ui tr:has(.check-cell input[type="checkbox"]:checked) :is(th, td) {
+  border-bottom: 1px solid var(--color-table-selected-border);
+  border-top: 1px solid var(--color-table-selected-border);
+}
+
+.table-ui tr:has(.app-cell a:is(:hover, :focus-visible)) {
+  background-color: var(--table-row-hover);
+  box-shadow: 0 0 0 1.5px var(--table-row-hover-border) inset,
+    0 2px 0 var(--table-row-hover-border) inset;
+  border-bottom-color: transparent;
+}
+
+.table-ui td.check-cell {
+  position: relative;
+}
+
+.check-cell input[type="checkbox"]::before {
+  content: "";
   display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
-.table-ui tr .row-link:is(:hover, :focus) {
-  text-decoration-thickness: 3px;
+.check-cell input[type="checkbox"]:is(:hover, :focus) {
+  border-width: 2px;
 }
 
-.table-ui tr:has(.row-link:hover) {
-  background-color: var(--table-row-hover);
-}
-
-.table-ui tr:has(.row-link:focus) {
-  background-color: var(--table-row-hover);
-  border: 1.5px solid var(--color-teal-dark);
-}
-
-.table-ui tr:has(.row-link:focus) :is(th, td) {
-  border-bottom: 1.5px solid var(--color-teal-dark);
-  border-top: 1.5px solid var(--color-teal-dark);
-}
-
-.table-ui tr:has(.row-link:focus) .row-link:focus {
-  /* So the outline only gets removed in browsers that support :has */
-  outline-style: dotted;
+.table-ui .app-wrapper {
+  display: flex;
+  min-width: 15rem;
+  max-width: 25rem;
+  align-items: center;
 }
 
 .table-ui .app-cell .app-img {
-  display: inline-block;
+  display: block;
   height: 1rem;
   width: 1rem;
   margin-right: 0.75rem;
-  position: relative;
-  top: -0.12rem;
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .table-ui .app-cell a {
-  display: inline-block;
-  width: 20rem;
   text-overflow: ellipsis;
   text-wrap: nowrap;
   overflow: hidden;
 }
 
+.table-ui .app-cell a:focus-visible {
+  outline-color: var(--table-row-hover-border);
+}
+
 .table-ui .check-cell {
   min-width: 2rem;
+  padding-left: 0.5rem;
 }
 
 .table-ui .check-cell input[type="checkbox"] {
@@ -1264,6 +1346,7 @@ select {
 
 .table-ui .client {
   text-align: right;
+  padding-right: 0.5rem;
 }
 
 .table-ui .good-scores {
@@ -1327,7 +1410,7 @@ select {
   justify-content: space-between;
   padding: 1.5rem 0 1rem;
   margin-top: 2.5rem;
-  border-top: 1px solid var(--color-card-border);
+  border-top: 1px solid var(--color-separator);
 }
 
 .table-page-info p {
@@ -1376,9 +1459,9 @@ select {
 .intro {
   border: none;
   margin-top: 0;
+  margin-bottom: 3rem;
   background-color: transparent;
-  padding: 4rem 0;
-  margin-bottom: 2.5rem;
+  padding: 3rem 0 7rem 0;
 }
 
 .intro h1 {
@@ -1387,10 +1470,14 @@ select {
 }
 
 .title-img {
-  max-height: 1.5rem;
   margin-left: 0.5rem;
   position: relative;
   top: -0.1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .intro .heading-wrapper {
@@ -1458,16 +1545,17 @@ select {
   width: 100%;
 }
 
-.report-content {
+.data-sections {
   background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
-  background-position: 0 25rem;
+  background-position: 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-page-border);
 }
 
-.report-content .intro {
-  padding: 0;
-  margin-top: 3rem;
+.data-sections > div:first-of-type {
+  margin-top: -10rem;
 }
 
 .report-section {
@@ -1479,7 +1567,6 @@ select {
 }
 
 h2.summary-heading {
-  margin-top: 4rem;
   font-size: var(--font-size-regular);
   text-transform: uppercase;
   font-weight: 600;
@@ -1497,7 +1584,7 @@ h2.summary-heading {
 }
 
 .report-section > .card {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .report-content:has(> .error) {
@@ -1723,7 +1810,6 @@ path.highcharts-tick {
   --progress-start: calc(70% - 1px);
   --progess-width: calc(70% - 0.25em);
   --progress-end: calc(70% - 0.25em + 1.5px);
-  --progess-color-empty: var(--color-progress-basic-bg);
   --offset-start: 0.75%;
   --offset-end: calc(var(--offset) - var(--offset-start));
 
@@ -1761,7 +1847,7 @@ path.highcharts-tick {
 
 .accessibility-options {
   background-color: var(--color-card-background);
-  border-bottom: 1px solid var(--color-card-border);
+  border-bottom: 1px solid var(--color-separator);
   padding-bottom: 4rem;
 }
 
@@ -1775,7 +1861,7 @@ path.highcharts-tick {
 }
 
 .check-wrapper {
-  border: 1px solid var(--color-text-lighter);
+  border: 1px solid var(--color-button-border);
   display: inline-block;
   margin-top: 1rem;
   margin-bottom: 0.25rem;
@@ -1842,7 +1928,7 @@ path.highcharts-tick {
 
 .theme-switcher {
   background-color: var(--color-theme-toggle-background);
-  border: 1px solid var(--color-text-lighter);
+  border: 1px solid var(--color-button-border);
   margin-top: 1rem;
   margin-bottom: 0.25rem;
   padding: 0.5rem 1rem;
@@ -1868,9 +1954,9 @@ path.highcharts-tick {
 }
 
 .cta-link[data-name="selected-apps"] {
-  border: 1.5px solid var(--color-teal-dark);
+  border: 1.5px solid var(--color-button-background);
   background-color: transparent;
-  color: var(--color-teal-dark);
+  color: var(--color-button-background);
 }
 
 .selected-apps {
@@ -1880,7 +1966,8 @@ path.highcharts-tick {
 
 .selected-apps p {
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+  margin-top: 1.75rem;
 }
 
 .selected-apps ul li {
@@ -1890,15 +1977,15 @@ path.highcharts-tick {
 }
 
 .selected-apps ul li:not(:last-of-type) {
-  margin-right: 1em;
+  margin-right: 0.75em;
 }
 
 .selected-apps ul li button {
   padding: 0.1em 0.5em;
   border-radius: 2rem;
-  border: 1px solid var(--color-text-lighter);
-  background-color: transparent;
-  color: var(--color-text-lighter);
+  border: 1px solid var(--color-pillbutton-border);
+  background-color: var(--color-pillbutton-background);
+  color: var(--color-pillbutton-text);
 }
 
 .selected-apps ul li button img {

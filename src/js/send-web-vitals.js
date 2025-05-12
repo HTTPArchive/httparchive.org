@@ -2,69 +2,13 @@
 
 function sendWebVitals() {
 
-  function getLoafAttribution(attribution) {
-    const loafEntriesLength = attribution?.longAnimationFrameEntries?.length || 0;
-    if (loafEntriesLength === 0) {
-      return {};
-    }
+  function sendWebVitalsGAEvents({name, delta, value, id, attribution, navigationType}) {
 
-    // The last LoAF entry is usually the most relevant.
-    const loaf = attribution.longAnimationFrameEntries.at(-1);
-    const loafEndTime = loaf.startTime + loaf.duration;
-
-    let totalReflow = null;
-    if (loaf.scripts.length) {
-      totalReflow = loaf.scripts.reduce((sum, script) => {
-        return sum + script.forcedStyleAndLayoutDuration;
-      }, 0);
-    }
-
-    const loafAttribution = {
-      // Stats for the LoAF entry itself.
-      debug_loaf_entry_start_time: loaf.startTime,
-      debug_loaf_entry_end_time: loafEndTime,
-      debug_loaf_entry_work_duration: loaf.renderStart ? loaf.renderStart - loaf.startTime : loaf.duration,
-      debug_loaf_entry_render_duration: loaf.renderStart ? loafEndTime - loaf.renderStart : 0,
-      debug_loaf_entry_total_forced_style_and_layout_duration: totalReflow,
-      debug_loaf_entry_pre_layout_duration: loaf.styleAndLayoutStart ? loaf.styleAndLayoutStart - loaf.renderStart : 0,
-      debug_loaf_entry_style_and_layout_duration: loaf.styleAndLayoutStart ? loafEndTime - loaf.styleAndLayoutStart : 0,
-
-      // LoAF metadata.
-      debug_loaf_meta_length: loafEntriesLength,
-      debug_loaf_meta_script_length: loaf.scripts.length,
-    };
-
-    // Stats for the slowest script in the LoAF entry.
-    let scriptAttribution = {};
-    let slowestScriptDuration = 0;
-    loaf.scripts.forEach(script => {
-      if (script.duration <= slowestScriptDuration) {
-        return {};
-      }
-
-      slowestScriptDuration = script.duration;
-      scriptAttribution = {
-        debug_loaf_script_total_duration: script.duration,
-        debug_loaf_script_compile_duration: script.executionStart - script.startTime,
-        debug_loaf_script_exec_duration: script.startTime + script.duration - script.executionStart,
-        debug_loaf_script_forced_style_and_layout_duration: script.forcedStyleAndLayoutDuration,
-        debug_loaf_script_type: script.invokerType,
-        debug_loaf_script_invoker: script.invoker,
-        debug_loaf_script_source_url: script.sourceURL,
-        debug_loaf_script_source_function_name: script.sourceFunctionName,
-        debug_loaf_script_source_char_position: script.sourceCharPosition,
-      }
-    });
-
-    // The LoAF script with the single longest total duration.
-    return Object.fromEntries(Object.entries({...loafAttribution, ...scriptAttribution}).map(([k, v]) => {
-      // Convert all floats to ints.
-      return [k, typeof v == 'number' ? Math.floor(v) : v];
-    }));
-  }
-
-  function sendWebVitalsGAEvents({name, value, delta, id, attribution, navigationType}) {
     let overrides = {};
+
+    function roundIfNotNull(x) {
+      return x != null ? Math.round(x) : null;
+    }
 
     switch (name) {
       case 'CLS':
@@ -83,16 +27,23 @@ function sendWebVitals() {
         };
         break;
       case 'INP': {
-        const loafAttribution = getLoafAttribution(attribution);
         overrides = {
           debug_event: attribution.interactionType,
-          debug_time: Math.round(attribution.interactionTime),
+          debug_time: roundIfNotNull(attribution.interactionTime),
           debug_load_state: attribution.loadState,
           debug_target: attribution.interactionTarget || '(not set)',
-          debug_interaction_delay: Math.round(attribution.inputDelay),
-          debug_processing_duration: Math.round(attribution.processingDuration),
-          debug_presentation_delay: Math.round(attribution.presentationDelay),
-          ...loafAttribution
+          debug_interaction_delay: roundIfNotNull(attribution.inputDelay),
+          debug_processing_duration: roundIfNotNull(attribution.processingDuration),
+          debug_presentation_delay:  roundIfNotNull(attribution.presentationDelay),
+          debug_totalPaintDuration: roundIfNotNull(attribution.totalPaintDuration),
+          debug_totalScriptDuration: roundIfNotNull(attribution.totalScriptDuration),
+          debug_totalStyleAndLayoutDuration: roundIfNotNull(attribution.totalStyleAndLayoutDuration),
+          debug_totalUnattributedDuration: roundIfNotNull(attribution.totalUnattributedDuration),
+          debug_longestScriptIntersectingDuration: roundIfNotNull(attribution.longestScript?.intersectingDuration),
+          debug_longestScriptSubPart: attribution.longestScript?.subpart || null,
+          debug_longestScriptInvoker: attribution.longestScript?.entry.invoker || null,
+          debug_longestScriptInvokerType: attribution.longestScript?.entry.invokerType || null,
+          debug_longestScriptName: attribution.longestScript?.entry.name || null,
         };
         break;
       }
@@ -103,7 +54,7 @@ function sendWebVitals() {
           debug_resource_load_delay: attribution.resourceLoadDelay,
           debug_resource_load_time: attribution.resourceLoadTime,
           debug_element_render_delay: attribution.elementRenderDelay,
-          debug_target: attribution.element || '(not set)',
+          debug_target: attribution.target || '(not set)',
           debug_scroll_y: scrollY,
         };
         break;
@@ -146,12 +97,11 @@ function sendWebVitals() {
       event_value: Math.round(name === 'CLS' ? delta * 1000 : delta),
       event_label: id,
       // Repeat with new fields to match web-vitals documentation
-      // TODO deprecate above UA-style names
+      // TODO deprecate above names when no longer required
       metric_value: Math.round(name === 'CLS' ? value * 1000 : value),
       metric_delta: Math.round(name === 'CLS' ? delta * 1000 : delta),
       metric_id: id,
-      nonInteraction: true,
-
+      non_interaction: true,
       effective_type: effectiveType,
       data_saver: dataSaver,
       device_memory: deviceMemory,
