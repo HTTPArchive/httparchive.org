@@ -510,7 +510,7 @@ nav {
 #page-filters {
   padding: 1.5rem 1rem;
   padding-right: 0.75rem;
-  height: 100%;
+  padding-bottom: 5rem;
 }
 
 .main-btn:is(:hover, :focus-visible) {
@@ -836,6 +836,7 @@ select {
   height: 1em;
   border-radius: 0.15em;
   border: 1px solid var(--color-text);
+  background-color: var(--color-card-background);
   position: absolute;
   left: 0;
   top: 0.2em;
@@ -856,6 +857,7 @@ select {
   position: absolute;
   left: 0;
   top: 0.2em;
+  box-shadow: 0 0 0 0.5px var(--color-card-background);
 }
 
 [data-component="combobox"] label {

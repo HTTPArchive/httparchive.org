@@ -105,12 +105,12 @@ class ComboBox {
   navigateOptions(e) {
     const listbox = this.element.querySelector('[role="listbox"]');
     const options = this.element.querySelectorAll('[role="option"]');
+    const key = e.key;
 
-    if(listbox.classList.contains('hidden')) {
+    if(listbox.classList.contains('hidden') && key !== 'ArrowLeft' && key !== 'ArrowRight') {
       this.showOptions();
     }
 
-    const key = e.key;
     switch(key) {
       case 'ArrowDown':
         this.highlightNext(options.length);
