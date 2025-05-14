@@ -181,6 +181,8 @@
               }
             ]
           },
+          "summary": true,
+          "change": true,
           "viz": {
             "title": "Origins over time",
             "metric": "origins",
@@ -355,6 +357,7 @@
             ]
           },
           "summary": true,
+          "change": true,
           "viz": {
             "base": "pct_good_",
             "default": "overall",
@@ -460,6 +463,7 @@
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
           "summary": true,
+          "change": true,
           "subcategory": {
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
@@ -597,6 +601,7 @@
           "description": "",
           "id": "weight_timeseries",
           "summary": true,
+          "change": true,
           "endpoint": "pageWeight",
           "default": "images",
           "metric": "median_bytes",

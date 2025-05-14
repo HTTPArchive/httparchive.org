@@ -123,6 +123,7 @@ class Timeseries {
       const urlParams = new URLSearchParams(window.location.search);
       const urlSubcategory = urlParams.get(config.param);
       const subcategory = urlSubcategory || config.default;
+      const showChange = container.dataset.change;
 
       /* Remove the previous content */
       container.innerHTML = '';
@@ -164,6 +165,17 @@ class Timeseries {
           valueLabel.textContent = `${latestValue.toLocaleString()}${breakdown.suffix || ''}`;
           valueLabel.classList.add('breakdown-value');
           itemWrapper.appendChild(valueLabel);
+        }
+
+        /* Add the month over month change */
+        if(showChange) {
+          const latestMoM = categoryData?.[breakdown.name]?.momPerc;
+          const latestMoMStr = categoryData?.[breakdown.name]?.momString;
+          const styling = UIUtils.getChangeStatus(latestMoM);
+          const monthChange = document.createElement('span');
+          monthChange.textContent = latestMoMStr;
+          monthChange.classList.add('monthchange', styling.color, styling.direction);
+          itemWrapper.appendChild(monthChange);
         }
 
         /* Add the wrapper to the container */

@@ -31,12 +31,15 @@
         <h4 class="heading">
           Latest data: <span data-slot="timestamp"></span>
         </h4>
-        <div class="breakdown-list">
+        <div class="breakdown-list" data-change="{{ timeseries.change }}">
           {% if timeseries.viz.series.breakdown == 'client' %}
             {% for breakdown in timeseries.viz.series["values"] %}
-              <div class="breakdown-item">
+              <div class="breakdown-item" data-change="{{ timeseries.change }}">
                 <p class="breakdown-label">{{ breakdown.name }}</p>
                 <p class="breakdown-value">00{% if breakdown.suffix == "%" %}.00{% endif %}{{ breakdown.suffix }}</p>
+                {% if timeseries.change %}
+                  <span class="monthchange" data-slot="change" data-meaning="{{ timeseries.changeMeaning }}"></span>
+                {% endif %}
               </div>
             {% endfor %}
           {% elif timeseries.viz.series.breakdown == 'app' %}

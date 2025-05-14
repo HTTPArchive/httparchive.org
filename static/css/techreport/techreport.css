@@ -1356,16 +1356,20 @@ h2.summary-heading {
   font-size: var(--font-size-medium);
 }
 
-.summary-value .monthchange {
+.monthchange {
+  position: relative;
   font-size: var(--font-size-small);
   font-weight: 600;
-  margin-left: 1.4em;
-  position: relative;
-  display: inline-block;
-  transform: translateY(calc(-50% + 0.45em));
+  margin-left: 1.15em;
 }
 
-.summary-value .monthchange::before {
+.summary-value .monthchange {
+  display: inline-block;
+  transform: translateY(calc(-50% + 0.45em));
+  margin-left: 1.5em;
+}
+
+.monthchange::before {
   content: "";
   position: absolute;
   left: -1em;
@@ -1374,34 +1378,34 @@ h2.summary-heading {
   height: 0;
 }
 
-.summary-value .monthchange.good {
+.monthchange.good {
   --color-monthchange: #408353;
   color: var(--color-monthchange);
 }
 
-.summary-value .monthchange.bad {
+.monthchange.bad {
   --color-monthchange: #942323;
   color: var(--color-monthchange);
 }
 
-.summary-value .monthchange.neutral {
+.monthchange.neutral {
   --color-monthchange: var(--color-text-lighter);
   color: var(--color-monthchange);
 }
 
-.summary-value .monthchange.positive::before {
+.monthchange.positive::before {
   border-left: 0.4em solid transparent;
   border-right: 0.4em solid transparent;
   border-bottom: 0.6em solid var(--color-monthchange);
 }
 
-.summary-value .monthchange.negative::before {
+.monthchange.negative::before {
   border-left: 0.4em solid transparent;
   border-right: 0.4em solid transparent;
   border-top: 0.6em solid var(--color-monthchange);
 }
 
-.summary-value .monthchange.equal::before {
+.monthchange.equal::before {
   width: 0.6em;
   height: 0.15em;
   top: 0.65em;
