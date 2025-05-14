@@ -173,7 +173,9 @@
               },
               {
                 "key": "momString",
-                "name": "Change"
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
               },
               {
                 "key": "client",
@@ -347,7 +349,10 @@
               },
               {
                 "key": "momString",
-                "name": "MoM Change"
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
+
               },
               {
                 "key": "client",
@@ -503,6 +508,12 @@
                 "viz": "progress-circle"
               },
               {
+                "key": "momString",
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
+              },
+              {
                 "key": "client",
                 "name": "Client",
                 "className": "client"
@@ -637,6 +648,12 @@
                 "name": "Median Bytes",
                 "key": "median_bytes_formatted",
                 "className": "main-cell"
+              },
+              {
+                "key": "momString",
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
               },
               {
                 "name": "Client",
