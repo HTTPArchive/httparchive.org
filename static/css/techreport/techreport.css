@@ -224,6 +224,11 @@ nav {
   display: none;
 }
 
+/* Heading links */
+.anchor {
+  color: inherit;
+}
+
 /* Filter info */
 .meta {
   font-size: 0.75rem;
