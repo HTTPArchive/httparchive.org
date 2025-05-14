@@ -309,7 +309,7 @@ function drawChart(options, series) {
       crosshairs: true,
       shared: true,
       useHTML: true,
-      borderColor: 'rgba(247,247,247,0.85)',
+      borderColor: 'rgb(247,247,247,0.85)',
       formatter: function() {
         function getChangelog(changelog) {
           if (!changelog) return '';

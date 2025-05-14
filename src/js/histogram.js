@@ -326,7 +326,7 @@ function drawChart(series, containerId, options) {
     tooltip: {
       shared: true,
       useHTML: true,
-      borderColor: 'rgba(247,247,247,0.85)',
+      borderColor: 'rgb(247,247,247,0.85)',
       formatter: function() {
         const metric = new Metric(options, Math.round(this.points[0].x * 100) / 100);
         const tooltips = this.points.filter(p => !p.series.name.includes('CDF')).map((point) => {

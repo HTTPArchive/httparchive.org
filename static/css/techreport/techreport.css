@@ -94,7 +94,7 @@
   --font-size-xlarge: 2.25rem;
 
   /* Components */
-  --card-shadow: 0 3px 12px 0px rgba(106, 121, 124, 0.2);
+  --card-shadow: 0 3px 12px 0px rgb(106, 121, 124, 20%);
   --card-radius: 0.625rem;
   --color-panel-text: #203b40;
   --color-panel-background: #bfe1e7;
@@ -123,7 +123,7 @@
   /* Cards */
   --color-card-background: #111;
   --color-card-border: #000;
-  --card-shadow: 0 3px 12px 0px rgba(4, 8, 8, 0.2);
+  --card-shadow: 0 3px 12px 0px rgb(4, 8, 8, 20%);
   --color-page-background: #292828;
 
   /* Checkboxes */
@@ -940,16 +940,26 @@ select {
 /* General tables */
 .table-ui-wrapper {
   overflow: auto;
+  margin: 1rem 0;
+  background: /* Shadow covers */
+    linear-gradient(90deg, var(--color-card-background) 30%, var(--color-card-background)),
+    linear-gradient(90deg, transparent, var(--color-card-background) 70%) 100% 0,
+    /* Shadows */
+    linear-gradient(90deg, rgb(0, 0, 0, 15%), rgb(0, 0, 0, 0%)),
+    linear-gradient(90deg, rgb(0, 0, 0, 0), rgb(0, 0, 0, 15%)) 100% 0;
+  background-repeat: no-repeat;
+  background-color: var(--color-card-background);
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
-.table-ui-wrapper:focus-visible {
-  outline: 1.5px solid var(--color-teal-dark);
+.table-ui-wrapper:focus {
+  outline: 1.5px dotted var(--color-teal-dark);
   outline-offset: 1.5px;
 }
 
 .table-ui {
   width: 100%;
-  margin: 1rem 0;
   border-collapse: collapse;
 }
 
@@ -1203,6 +1213,7 @@ select {
 
 .component-filters select {
   font-size: 1rem;
+  line-height: 1.25em;
 }
 
 /* -------------------- */
@@ -1300,7 +1311,7 @@ select {
 }
 
 .data-sections {
-  background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
+  background-image: linear-gradient(var(--color-bg-gradient), rgb(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
   background-position: 0 0;
@@ -1633,6 +1644,11 @@ path.highcharts-tick {
 .check-wrapper input {
   width: 0;
   height: 0;
+}
+
+.check-wrapper:has(input:focus-visible) {
+  outline: 1.5px solid var(--focus-default);
+  outline-offset: 1.5px;
 }
 
 .check-wrapper input::after {
