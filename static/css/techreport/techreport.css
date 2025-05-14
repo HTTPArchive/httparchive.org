@@ -94,7 +94,7 @@
   --font-size-xlarge: 2.25rem;
 
   /* Components */
-  --card-shadow: 0 3px 12px 0px rgba(106, 121, 124, 0.2);
+  --card-shadow: 0 3px 12px 0px rgba(106 121 124 / 20%);
   --card-radius: 0.625rem;
   --color-panel-text: #203b40;
   --color-panel-background: #bfe1e7;
@@ -123,7 +123,7 @@
   /* Cards */
   --color-card-background: #111;
   --color-card-border: #000;
-  --card-shadow: 0 3px 12px 0px rgba(4, 8, 8, 0.2);
+  --card-shadow: 0 3px 12px 0px rgba(4 8 8 / 20%);
   --color-page-background: #292828;
 
   /* Checkboxes */
