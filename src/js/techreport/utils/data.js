@@ -102,6 +102,10 @@ const formatAppName = (app) => {
 
 const parsePageWeightData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
+    const monthOverMonthDesktop = calculateMoM(submetric?.desktop?.median_bytes, previousSubmetric?.desktop?.median_bytes);
+    const monthOverMonthMobile = calculateMoM(submetric?.mobile?.median_bytes, previousSubmetric?.mobile?.median_bytes);
+
     return {
       ...submetric,
       desktop: {
@@ -109,12 +113,17 @@ const parsePageWeightData = (metric, previousMetric, date) => {
         median_bytes_formatted: formatBytes(submetric?.desktop?.median_bytes),
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString
+
       },
       mobile: {
         ...submetric?.mobile,
         median_bytes_formatted: formatBytes(submetric?.mobile?.median_bytes),
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString
       },
     };
   });

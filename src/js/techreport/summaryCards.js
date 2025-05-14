@@ -3,6 +3,7 @@
  */
 
 import { DataUtils } from "./utils/data";
+import { UIUtils } from "./utils/ui";
 
 class SummaryCard {
   constructor(id, pageConfig, config, filters, data) {
@@ -74,10 +75,12 @@ class SummaryCard {
 
       if(latestChange && latestChange.string) {
         const changeSlot = card.querySelector('[data-slot="change"]');
+        const changeMeaning = changeSlot?.dataset?.meaning;
+
         if(changeSlot) {
           changeSlot.textContent = latestChange.string;
-          const direction = latestChange.perc < 0 ? 'negative' : 'positive';
-          changeSlot.classList.add(direction);
+          const styling = UIUtils.getChangeStatus(latestChange.perc, changeMeaning);
+          changeSlot.classList.add(styling.color, styling.direction);
         }
       }
     }

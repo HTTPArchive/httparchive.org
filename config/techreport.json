@@ -145,6 +145,8 @@
             "category": "total",
             "metric": "median_bytes_formatted",
             "label": "Page weight",
+            "change": "true",
+            "changeMeaning": "inverted",
             "description": "Median total bytes per page for across tested origins.",
             "url": "#page-weight"
           }
@@ -446,7 +448,8 @@
               "metric": "median_score_pct",
               "label": "Best Practices",
               "url": "?median-lighthouse-over-time=best_practices#lighthouse",
-              "description": "Median Lighthouse <strong>best practices</strong> score."
+              "description": "Median Lighthouse <strong>best practices</strong> score.",
+              "change": "true"
             }
           ]
         },
@@ -565,21 +568,27 @@
               "category": "images",
               "metric": "median_bytes_formatted",
               "label": "Image Weight",
-              "url": "?weight-over-time=image#page-weight"
+              "url": "?weight-over-time=image#page-weight",
+              "change": "true",
+              "changeMeaning": "inverted"
             },
             {
               "endpoint": "pageWeight",
               "category": "js",
               "metric": "median_bytes_formatted",
               "label": "JavaScript Size",
-              "url": "?weight-over-time=js#page-weight"
+              "url": "?weight-over-time=js#page-weight",
+              "change": "true",
+              "changeMeaning": "inverted"
             },
             {
               "endpoint": "pageWeight",
               "category": "total",
               "metric": "median_bytes_formatted",
               "label": "Total Page Weight",
-              "url": "?weight-over-time=total#page-weight"
+              "url": "?weight-over-time=total#page-weight",
+              "change": "true",
+              "changeMeaning": "inverted"
             }
           ]
         },
