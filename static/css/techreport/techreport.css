@@ -935,16 +935,27 @@ select {
 /* General tables */
 .table-ui-wrapper {
   overflow: auto;
+  margin: 1rem 0;
+
+  background: /* Shadow covers */
+    linear-gradient(90deg, var(--color-card-background) 30%, var(--color-card-background)),
+    linear-gradient(90deg, transparent, var(--color-card-background) 70%) 100% 0,
+    /* Shadows */
+    linear-gradient(90deg, rgba(0,0,0,.15), rgba(0,0,0,0)),
+    linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,.15)) 100% 0;
+  background-repeat: no-repeat;
+  background-color: var(--color-card-background);
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
-.table-ui-wrapper:focus-visible {
-  outline: 1.5px solid var(--color-teal-dark);
+.table-ui-wrapper:focus {
+  outline: 1.5px dotted var(--color-teal-dark);
   outline-offset: 1.5px;
 }
 
 .table-ui {
   width: 100%;
-  margin: 1rem 0;
   border-collapse: collapse;
 }
 
@@ -1198,6 +1209,7 @@ select {
 
 .component-filters select {
   font-size: 1rem;
+  line-height: 1.25em;
 }
 
 /* -------------------- */
@@ -1628,6 +1640,11 @@ path.highcharts-tick {
 .check-wrapper input {
   width: 0;
   height: 0;
+}
+
+.check-wrapper:has(input:focus-visible) {
+  outline: 1.5px solid var(--focus-default);
+  outline-offset: 1.5px;
 }
 
 .check-wrapper input::after {
