@@ -94,7 +94,7 @@
   --font-size-xlarge: 2.25rem;
 
   /* Components */
-  --card-shadow: 0 3px 12px 0px rgba(106 121 124 / 20%);
+  --card-shadow: 0 3px 12px 0px rgb(106 121 124 / 20%);
   --card-radius: 0.625rem;
   --color-panel-text: #203b40;
   --color-panel-background: #bfe1e7;
@@ -123,7 +123,7 @@
   /* Cards */
   --color-card-background: #111;
   --color-card-border: #000;
-  --card-shadow: 0 3px 12px 0px rgba(4 8 8 / 20%);
+  --card-shadow: 0 3px 12px 0px rgb(4 8 8 / 20%);
   --color-page-background: #292828;
 
   /* Checkboxes */
@@ -941,7 +941,7 @@ select {
     linear-gradient(90deg, transparent, var(--color-card-background) 70%) 100% 0,
     /* Shadows */
     linear-gradient(90deg, rgb(0 0 0 / 15%), rgb(0 0 0 / 0%)),
-    linear-gradient(90deg, rgba(0 0 0 / 0), rgba(0 0 0 / 15%)) 100% 0;
+    linear-gradient(90deg, rgb(0 0 0 / 0), rgb(0 0 0 / 15%)) 100% 0;
   background-repeat: no-repeat;
   background-color: var(--color-card-background);
   background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
@@ -1306,7 +1306,7 @@ select {
 }
 
 .data-sections {
-  background-image: linear-gradient(var(--color-bg-gradient), rgba(238, 238, 238, 0));
+  background-image: linear-gradient(var(--color-bg-gradient), rgb(238, 238, 238, 0));
   background-size: 100% 50rem;
   background-repeat: no-repeat;
   background-position: 0 0;
