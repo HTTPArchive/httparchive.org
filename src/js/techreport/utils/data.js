@@ -2,6 +2,7 @@ import { Constants } from "./constants";
 
 const parseVitalsData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    console.log(previousMetric);
     const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
     const goodPercDesktop = submetric?.desktop?.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0;
     const goodPercMobile = submetric?.mobile?.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0;
@@ -35,6 +36,7 @@ const parseVitalsData = (metric, previousMetric, date) => {
 
 const parseLighthouseData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    console.log(previousMetric);
     const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
 
     const medianScoreDesktop = submetric?.desktop?.median_score || 0;
@@ -208,7 +210,8 @@ const fetchCategoryData = (rows, filters, callback) => {
               }
 
               if(api.parse) {
-                parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+                console.log(parsedRow);
+                parsedRow[api.metric] = api.parse(parsedRow[api.metric], null, parsedRow?.date);
               }
 
               const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
