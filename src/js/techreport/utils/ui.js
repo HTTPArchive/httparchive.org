@@ -34,7 +34,33 @@ const updateReportComponents = (sections, data) => {
   });
 }
 
+const getChangeStatus = (percentage, meaning) => {
+  if(percentage === 0) {
+    return {
+      direction: 'equal',
+      color: 'neutral'
+    }
+  }
+
+  if(percentage > 0) {
+    const color = meaning === 'inverted' ? 'bad' : 'good';
+    return {
+      direction: 'positive',
+      color: color,
+    }
+  }
+
+  if(percentage < 0) {
+    const color =  meaning === 'inverted' ? 'good' : 'bad';
+    return {
+      direction: 'negative',
+      color: color,
+    }
+  };
+}
+
 export const UIUtils = {
   getAppColor,
   updateReportComponents,
+  getChangeStatus,
 }

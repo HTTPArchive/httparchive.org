@@ -1,4 +1,5 @@
 import { DataUtils } from "./utils/data";
+import { UIUtils } from "./utils/ui";
 
 function formatData(tableConfig, data) {
   const { id, config, apps } = tableConfig;
@@ -81,12 +82,18 @@ function getColumnCell(columnConfig, data, date) {
   const endpointData = _data?.[endpoint];
   const subcategoryData = endpointData?.find(row => row.name === subcategory);
   const value = subcategoryData?.[client]?.[column.key];
+  let styling;
+
+  if(column.styleChange && column.keyNr) {
+    styling = UIUtils.getChangeStatus(subcategoryData?.[client]?.[column.keyNr]);
+  }
 
   const cell = {
     ...column,
     formattedKey: column.key,
     value: value,
-    app: app
+    app: app,
+    styling: styling,
   };
 
   return cell;
@@ -184,6 +191,10 @@ function updateTable(id, config, appConfig, apps, data) {
         const score = DataUtils.getLighthouseScoreCategories(value, appConfig.lighthouse_brackets);
         wrapper.classList.add('progress-circle', score.name);
         wrapper.setAttribute('style', `--offset: ${value}%`);
+      }
+
+      if(column.styling) {
+        wrapper.classList.add('monthchange', column.styling.direction, column.styling.color);
       }
 
       // Add cell to the row
