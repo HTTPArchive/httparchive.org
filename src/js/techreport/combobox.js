@@ -31,7 +31,7 @@ class ComboBox {
       const logo = document.createElement('img');
       logo.setAttribute('alt', '');
       logo.setAttribute('src', `https://cdn.httparchive.org/static/icons/${row}.png`);
-      logo.setAttribute('height', '14px');
+      logo.setAttribute('height', '14');
       logo.setAttribute('width', 'auto');
       option.append(logo);
       if(this.selected.includes(row)) {
