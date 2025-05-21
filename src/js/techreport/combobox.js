@@ -33,6 +33,7 @@ class ComboBox {
       logo.setAttribute('src', `https://cdn.httparchive.org/static/icons/${row}.png`);
       logo.setAttribute('height', '14');
       logo.setAttribute('width', 'auto');
+      logo.setAttribute('loading', 'lazy');
       option.append(logo);
       if(this.selected.includes(row)) {
         option.setAttribute('aria-selected', true);
