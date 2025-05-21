@@ -27,7 +27,7 @@ class ComboBox {
       option.dataset.name = row;
       option.dataset.key = index;
       option.textContent = row;
-      option.id = `${this.element.dataset.id}-${row}`;
+      option.id = `${this.element.dataset.id}-${row.replaceAll(' ','-')}`;
       const logo = document.createElement('img');
       logo.setAttribute('alt', '');
       logo.setAttribute('src', `https://cdn.httparchive.org/static/icons/${row}.png`);
