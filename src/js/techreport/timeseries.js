@@ -203,6 +203,7 @@ class Timeseries {
     const endpoint = component.dataset.endpoint;
     const client = component.dataset.client;
     const summary = component.dataset.summary;
+    const showChange = container.dataset.change;
 
     pageFilters.app.forEach((app, index) => {
       if(data[app] && data[app].length > 0) {
@@ -239,6 +240,17 @@ class Timeseries {
         const techColor = UIUtils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
         const fallback = this.pageConfig.colors.app[index];
         card.style.setProperty('--breakdown-color', techColor || fallback);
+
+        /* Add the month over month change */
+        if(showChange) {
+          const latestMoM = latestClient?.momPerc;
+          const latestMoMStr = latestClient?.momString;
+          const styling = UIUtils.getChangeStatus(latestMoM);
+          const monthChange = document.createElement('span');
+          monthChange.textContent = latestMoMStr;
+          monthChange.classList.add('monthchange', styling.color, styling.direction);
+          card.appendChild(monthChange);
+        }
       }
     });
   }

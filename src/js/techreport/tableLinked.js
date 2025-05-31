@@ -1,4 +1,5 @@
 import { DataUtils } from "./utils/data";
+import { UIUtils } from "./utils/ui";
 
 class TableLinked {
   constructor(id, pageConfig, globalConfig, filters, data) {
@@ -124,6 +125,7 @@ class TableLinked {
               cell = document.createElement('td');
               const dataset = latest?.[column?.endpoint];
               let value = dataset?.find(entry => entry.name === column.subcategory);
+              const changeStyle = UIUtils.getChangeStatus(value?.[component.dataset.client]?.momPerc);
               value = value?.[component.dataset.client]?.[column?.metric];
               if(column.suffix) {
                 cellContent.innerHTML = `${value?.toLocaleString()}${column.suffix}`;
@@ -141,6 +143,11 @@ class TableLinked {
               }
 
               cell.append(cellContent);
+              if(column.viz === 'progress') {
+                const monthChange = document.createElement('div');
+                monthChange.classList.add('monthchange', changeStyle?.color, changeStyle?.direction);
+                cell.appendChild(monthChange);
+              }
             }
 
             if(column.className) {

@@ -826,6 +826,7 @@
           "endpoint": "vitals",
           "metric": "good_pct",
           "default": "overall",
+          "change": "true",
           "subcategory": {
             "base": "pct_good_",
             "param": "good-cwv-over-time",
@@ -932,6 +933,7 @@
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
+          "change": "true",
           "subcategory": {
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
@@ -1029,6 +1031,7 @@
           "endpoint": "pageWeight",
           "metric": "median_bytes",
           "default": "total",
+          "change": "true",
           "subcategory": {
             "base": "median_bytes_",
             "param": "median-weight-over-time",
@@ -1124,6 +1127,7 @@
           "endpoint": "adoption",
           "metric": "origins",
           "default": "adoption",
+          "change": "true",
           "table": {
             "param":"",
             "caption": "Adoption",

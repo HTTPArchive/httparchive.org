@@ -1143,6 +1143,13 @@ select {
   );
 }
 
+.table-ui td.pct-value[data-value] .monthchange {
+  position: absolute;
+  right: 0;
+  top: calc(50% - 0.67rem);
+  right: 1.35rem;
+}
+
 .table-pagination {
   display: flex;
   justify-content: space-between;
