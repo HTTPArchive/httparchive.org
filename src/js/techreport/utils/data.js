@@ -42,8 +42,8 @@ const parseLighthouseData = (metric, previousMetric, date) => {
     const medianScoreDesktopPrevious = previousSubmetric?.desktop?.median_score || 0;
     const medianScoreMobilePrevious = previousSubmetric?.mobile?.median_score || 0;
 
-    const monthOverMonthDesktop = calculateMoM(medianScoreDesktop, medianScoreDesktopPrevious);
-    const monthOverMonthMobile = calculateMoM(medianScoreMobile, medianScoreMobilePrevious);
+    const monthOverMonthDesktop = calculateMoM(medianScoreDesktop, medianScoreDesktopPrevious, true);
+    const monthOverMonthMobile = calculateMoM(medianScoreMobile, medianScoreMobilePrevious, true);
 
     return {
       ...submetric,
@@ -253,10 +253,12 @@ const getTechsFromURL = () => {
   return url.searchParams.get('selected') || null;
 }
 
-function calculateMoM(current, previous) {
-  if(current && previous && previous !== 0) {
-    const absoluteDiff = current - previous;
-    const percDiff = (current - previous) / previous;
+function calculateMoM(current, previous, roundDown) {
+  const previousAdjusted = roundDown === true ? (Math.floor(previous * 100) / 100) : previous;
+  const currentAdjusted = roundDown === true ? (Math.floor(current * 100) / 100) : current;
+  if(currentAdjusted && previousAdjusted && previousAdjusted !== 0) {
+    const absoluteDiff = currentAdjusted - previousAdjusted;
+    const percDiff = (currentAdjusted - previousAdjusted) / previousAdjusted;
     return {
       absolute: absoluteDiff,
       perc: percDiff,
