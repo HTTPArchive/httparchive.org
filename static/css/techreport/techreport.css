@@ -1423,16 +1423,19 @@ h2.summary-heading {
 
 .monthchange.good {
   --color-monthchange: var(--color-monthchange-good);
+
   color: var(--color-monthchange);
 }
 
 .monthchange.bad {
   --color-monthchange: var(--color-monthchange-bad);
+
   color: var(--color-monthchange);
 }
 
 .monthchange.neutral {
   --color-monthchange: var(--color-monthchange-neutral);
+
   color: var(--color-monthchange);
 }
 
