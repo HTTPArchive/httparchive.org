@@ -98,7 +98,7 @@
   --graph-color-line: var(--color-gray-medium);
 
   /* Month over month */
-  --color-monthchange-bad: #EE4444;
+  --color-monthchange-bad: #E444;
   --color-monthchange-good: #5eb877;
   --color-monthchange-neutral: #748386;
 }
@@ -1155,7 +1155,6 @@ select {
 
 .table-ui td.pct-value[data-value] .monthchange {
   position: absolute;
-  right: 0;
   top: calc(50% - 0.67rem);
   right: 1.35rem;
 }

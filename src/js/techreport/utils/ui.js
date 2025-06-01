@@ -56,7 +56,7 @@ const getChangeStatus = (percentage, meaning) => {
       direction: 'negative',
       color: color,
     }
-  };
+  }
 }
 
 export const UIUtils = {
