@@ -124,6 +124,7 @@ class Timeseries {
       const urlSubcategory = urlParams.get(config.param);
       const subcategory = urlSubcategory || config.default;
       const showChange = container.dataset.change;
+      const changeMeaning = container?.dataset?.meaning;
 
       /* Remove the previous content */
       container.innerHTML = '';
@@ -171,7 +172,7 @@ class Timeseries {
         if(showChange) {
           const latestMoM = categoryData?.[breakdown.name]?.momPerc;
           const latestMoMStr = categoryData?.[breakdown.name]?.momString;
-          const styling = UIUtils.getChangeStatus(latestMoM);
+          const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
           const monthChange = document.createElement('span');
           monthChange.textContent = latestMoMStr;
           monthChange.classList.add('monthchange', styling.color, styling.direction);
@@ -204,6 +205,7 @@ class Timeseries {
     const client = component.dataset.client;
     const summary = component.dataset.summary;
     const showChange = container.dataset.change;
+    const changeMeaning = container?.dataset?.meaning;
 
     pageFilters.app.forEach((app, index) => {
       if(data[app] && data[app].length > 0) {
@@ -245,7 +247,7 @@ class Timeseries {
         if(showChange) {
           const latestMoM = latestClient?.momPerc;
           const latestMoMStr = latestClient?.momString;
-          const styling = UIUtils.getChangeStatus(latestMoM);
+          const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
           const monthChange = document.createElement('span');
           monthChange.textContent = latestMoMStr;
           monthChange.classList.add('monthchange', styling.color, styling.direction);

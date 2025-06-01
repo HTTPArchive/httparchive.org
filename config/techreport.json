@@ -613,6 +613,7 @@
           "id": "weight_timeseries",
           "summary": true,
           "change": true,
+          "changeMeaning": "inverted",
           "endpoint": "pageWeight",
           "default": "images",
           "metric": "median_bytes",
@@ -1032,6 +1033,7 @@
           "metric": "median_bytes",
           "default": "total",
           "change": "true",
+          "changeMeaning": "inverted",
           "subcategory": {
             "base": "median_bytes_",
             "param": "median-weight-over-time",

@@ -31,7 +31,7 @@
         <h4 class="heading">
           Latest data: <span data-slot="timestamp"></span>
         </h4>
-        <div class="breakdown-list" data-change="{{ timeseries.change }}">
+        <div class="breakdown-list" data-change="{{ timeseries.change }}" data-meaning="{{ timeseries.changeMeaning }}">
           {% if timeseries.viz.series.breakdown == 'client' %}
             {% for breakdown in timeseries.viz.series["values"] %}
               <div class="breakdown-item" data-change="{{ timeseries.change }}">

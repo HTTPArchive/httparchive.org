@@ -263,7 +263,7 @@ class TechReport {
             // Parse the data and add it to the results
             if(api.parse) {
               const metric = parsedRow[api.metric] || parsedRow;
-              const previousMetric = previousRow[api.metric];
+              const previousMetric = previousRow[row.technology]?.[api.metric];
               parsedRow[api.metric] = api.parse(metric, previousMetric, parsedRow?.date);
             }
 
@@ -282,7 +282,7 @@ class TechReport {
               }
             }
 
-            previousRow = row;
+            previousRow[row.technology] = row;
           });
         })
         .catch(error => console.log('Something went wrong', error));
