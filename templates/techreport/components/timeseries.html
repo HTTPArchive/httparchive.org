@@ -1,7 +1,7 @@
 {% set category = selected_subcategory or subcategory.default %}
 {% set endpoint = timeseries.endpoint %}
 
-<div data-id="{{ timeseries.id }}" data-component="timeseries" data-endpoint="{{timeseries.endpoint}}" data-category="{{category}}" data-metric="{{timeseries.metric}}" data-summary="{{timeseries.viz.metric_summary}}" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
+<div id="section-{{ timeseries.id }}" data-id="{{ timeseries.id }}" data-component="timeseries" data-endpoint="{{timeseries.endpoint}}" data-category="{{category}}" data-metric="{{timeseries.metric}}" data-summary="{{timeseries.viz.metric_summary}}" data-client="{{ request.args.get('client', '')  or 'mobile' }}">
   <div class="component-heading-wrapper">
     <div class="component-heading">
       {% set title = timeseries.title %}
@@ -11,7 +11,7 @@
         {% set descr = tech_report_labels.metrics[endpoint][selected_subcategory].description %}
       {% endif %}
 
-      <h3>{{ title }}</h3>
+      <h3><a href="#section-{{ timeseries.id }}" class="anchor">{{ title }}</a></h3>
       <p class="descr">{{ descr }}</p>
     </div>
 

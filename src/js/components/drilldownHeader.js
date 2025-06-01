@@ -34,6 +34,9 @@ function setCategories(categories) {
       cellTemplate.textContent = `+ ${more} more`;
       list.appendChild(cellTemplate);
     }
+  } else {
+    const list = document.querySelector('.intro .category-list');
+    list.remove();
   }
 }
 
@@ -41,6 +44,9 @@ function setDescription(description) {
   if(description && description !== "") {
     const descr = document.querySelector('p.app-description');
     descr.textContent = description;
+  } else {
+    const descr = document.querySelector('p.app-description');
+    descr.remove();
   }
 }
 
