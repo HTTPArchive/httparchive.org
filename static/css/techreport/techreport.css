@@ -66,6 +66,11 @@
 
   /* Defaults */
   --breakdown-color: var(--color-text);
+
+  /* Month over month */
+  --color-monthchange-bad: #942323;
+  --color-monthchange-good: #408353;
+  --color-monthchange-neutral: var(--color-text-lighter);
 }
 
 [data-theme="dark"] {
@@ -91,6 +96,11 @@
   /* Graph colors */
   --graph-color-labels: #a6bbbe;
   --graph-color-line: var(--color-gray-medium);
+
+  /* Month over month */
+  --color-monthchange-bad: #EE4444;
+  --color-monthchange-good: #5eb877;
+  --color-monthchange-neutral: #748386;
 }
 
 /* ------------------------- */
@@ -1386,17 +1396,17 @@ h2.summary-heading {
 }
 
 .monthchange.good {
-  --color-monthchange: #408353;
+  --color-monthchange: var(--color-monthchange-good);
   color: var(--color-monthchange);
 }
 
 .monthchange.bad {
-  --color-monthchange: #942323;
+  --color-monthchange: var(--color-monthchange-bad);
   color: var(--color-monthchange);
 }
 
 .monthchange.neutral {
-  --color-monthchange: var(--color-text-lighter);
+  --color-monthchange: var(--color-monthchange-neutral);
   color: var(--color-monthchange);
 }
 
