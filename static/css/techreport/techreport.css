@@ -113,6 +113,11 @@
 
   /* Defaults */
   --breakdown-color: var(--color-text);
+
+  /* Month over month */
+  --color-monthchange-bad: #942323;
+  --color-monthchange-good: #408353;
+  --color-monthchange-neutral: var(--color-text-lighter);
   --focus-default: var(--color-teal-dark);
 }
 
@@ -163,6 +168,11 @@
   --color-tech-btn-hover: var(--color-teal-faded);
   --color-tech-btn-background-hover: var(--color-page-background);
   --color-tech-btn-outline: #fff;
+
+  /* Month over month */
+  --color-monthchange-bad: #E444;
+  --color-monthchange-good: #5eb877;
+  --color-monthchange-neutral: #748386;
 
   /* Dropdowns */
   --color-dropdown-border: var(--color-gray-lighter);
@@ -1422,6 +1432,12 @@ select {
   );
 }
 
+.table-ui td.pct-value[data-value] .monthchange {
+  position: absolute;
+  top: calc(50% - 0.67rem);
+  right: 1.35rem;
+}
+
 .table-pagination {
   display: flex;
   justify-content: space-between;
@@ -1634,6 +1650,65 @@ h2.summary-heading {
 
 .summary-value {
   font-size: var(--font-size-medium);
+}
+
+.monthchange {
+  position: relative;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  margin-left: 1.15em;
+}
+
+.summary-value .monthchange {
+  display: inline-block;
+  transform: translateY(calc(-50% + 0.45em));
+  margin-left: 1.5em;
+}
+
+.monthchange::before {
+  content: "";
+  position: absolute;
+  left: -1em;
+  top: 0.45em;
+  width: 0;
+  height: 0;
+}
+
+.monthchange.good {
+  --color-monthchange: var(--color-monthchange-good);
+
+  color: var(--color-monthchange);
+}
+
+.monthchange.bad {
+  --color-monthchange: var(--color-monthchange-bad);
+
+  color: var(--color-monthchange);
+}
+
+.monthchange.neutral {
+  --color-monthchange: var(--color-monthchange-neutral);
+
+  color: var(--color-monthchange);
+}
+
+.monthchange.positive::before {
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0.6em solid var(--color-monthchange);
+}
+
+.monthchange.negative::before {
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-top: 0.6em solid var(--color-monthchange);
+}
+
+.monthchange.equal::before {
+  width: 0.6em;
+  height: 0.15em;
+  top: 0.65em;
+  background-color: var(--color-monthchange);
 }
 
 .summary-linked-description {
