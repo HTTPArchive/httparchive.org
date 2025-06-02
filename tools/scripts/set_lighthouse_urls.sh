@@ -40,6 +40,7 @@ http://127.0.0.1:8080/reports/state-of-the-web
 http://127.0.0.1:8080/reports/techreport/landing
 http://127.0.0.1:8080/reports/techreport/drilldown
 http://127.0.0.1:8080/reports/techreport/comparison
+http://127.0.0.1:8080/reports/techreport/category
 END
 )
 

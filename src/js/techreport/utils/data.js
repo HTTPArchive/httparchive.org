@@ -1,27 +1,50 @@
 import { Constants } from "./constants";
 
-const parseVitalsData = (metric, date) => {
+const parseVitalsData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
+    const goodPercDesktop = submetric?.desktop?.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0;
+    const goodPercMobile = submetric?.mobile?.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0;
+    const goodPercDesktopPrevious = previousSubmetric?.desktop?.tested > 0 ? parseInt(previousSubmetric.desktop.good_number / previousSubmetric.desktop.tested * 100) : 0;
+    const goodPercMobilePrevious = previousSubmetric?.mobile?.tested > 0 ? parseInt(previousSubmetric.mobile.good_number / previousSubmetric.mobile.tested * 100) : 0;
+
+    const monthOverMonthDesktop = calculateMoM(goodPercDesktop, goodPercDesktopPrevious);
+    const monthOverMonthMobile = calculateMoM(goodPercMobile, goodPercMobilePrevious);
+
     return {
       ...submetric,
       desktop: {
         ...submetric.desktop,
-        good_pct: submetric?.desktop?.tested > 0 ? parseInt(submetric.desktop.good_number / submetric.desktop.tested * 100) : 0,
+        good_pct: goodPercDesktop,
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString,
       },
       mobile: {
         ...submetric.mobile,
-        good_pct: submetric?.mobile?.tested > 0 ? parseInt(submetric.mobile.good_number / submetric.mobile.tested * 100) : 0,
+        good_pct: goodPercMobile,
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString,
       },
     };
   });
 }
 
-const parseLighthouseData = (metric, date) => {
+const parseLighthouseData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
+
+    const medianScoreDesktop = submetric?.desktop?.median_score || 0;
+    const medianScoreMobile = submetric?.mobile?.median_score || 0;
+    const medianScoreDesktopPrevious = previousSubmetric?.desktop?.median_score || 0;
+    const medianScoreMobilePrevious = previousSubmetric?.mobile?.median_score || 0;
+
+    const monthOverMonthDesktop = calculateMoM(medianScoreDesktop, medianScoreDesktopPrevious, true);
+    const monthOverMonthMobile = calculateMoM(medianScoreMobile, medianScoreMobilePrevious, true);
+
     return {
       ...submetric,
       desktop: {
@@ -29,29 +52,40 @@ const parseLighthouseData = (metric, date) => {
         median_score_pct: parseInt(submetric?.desktop?.median_score * 100),
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString,
       },
       mobile: {
         ...submetric.mobile,
         median_score_pct: parseInt(submetric?.mobile?.median_score * 100),
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString,
       },
     };
   });
 }
 
-const parseAdoptionData = (submetric, date) => {
+const parseAdoptionData = (submetric, previousMetric, date) => {
+  const monthOverMonthDesktop = calculateMoM(submetric?.desktop, previousMetric?.desktop);
+  const monthOverMonthMobile = calculateMoM(submetric?.mobile, previousMetric?.mobile);
+
   return [
     {
       desktop: {
         origins: submetric.desktop,
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString
       },
       mobile: {
         origins: submetric.mobile,
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString
       },
       name: 'adoption',
     },
@@ -66,8 +100,12 @@ const formatAppName = (app) => {
   return app === 'ALL' ? 'All technologies' : app;
 }
 
-const parsePageWeightData = (metric, date) => {
+const parsePageWeightData = (metric, previousMetric, date) => {
   return metric.map(submetric => {
+    const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
+    const monthOverMonthDesktop = calculateMoM(submetric?.desktop?.median_bytes, previousSubmetric?.desktop?.median_bytes);
+    const monthOverMonthMobile = calculateMoM(submetric?.mobile?.median_bytes, previousSubmetric?.mobile?.median_bytes);
+
     return {
       ...submetric,
       desktop: {
@@ -75,12 +113,17 @@ const parsePageWeightData = (metric, date) => {
         median_bytes_formatted: formatBytes(submetric?.desktop?.median_bytes),
         client: 'desktop',
         date: date,
+        momPerc: monthOverMonthDesktop.perc,
+        momString: monthOverMonthDesktop.percString
+
       },
       mobile: {
         ...submetric?.mobile,
         median_bytes_formatted: formatBytes(submetric?.mobile?.median_bytes),
         client: 'mobile',
         date: date,
+        momPerc: monthOverMonthMobile.perc,
+        momString: monthOverMonthMobile.percString
       },
     };
   });
@@ -165,7 +208,7 @@ const fetchCategoryData = (rows, filters, callback) => {
               }
 
               if(api.parse) {
-                parsedRow[api.metric] = api.parse(parsedRow[api.metric], parsedRow?.date);
+                parsedRow[api.metric] = api.parse(parsedRow[api.metric], null, parsedRow?.date);
               }
 
               const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
@@ -208,6 +251,26 @@ const fetchCategoryData = (rows, filters, callback) => {
 const getTechsFromURL = () => {
   const url = new URL(window.location);
   return url.searchParams.get('selected') || null;
+}
+
+function calculateMoM(current, previous, roundDown) {
+  const previousAdjusted = roundDown === true ? (Math.floor(previous * 100) / 100) : previous;
+  const currentAdjusted = roundDown === true ? (Math.floor(current * 100) / 100) : current;
+  if(currentAdjusted && previousAdjusted && previousAdjusted !== 0) {
+    const absoluteDiff = currentAdjusted - previousAdjusted;
+    const percDiff = (currentAdjusted - previousAdjusted) / previousAdjusted;
+    return {
+      absolute: absoluteDiff,
+      perc: percDiff,
+      percString: `${(percDiff * 100).toFixed(2)}%`
+    };
+  }
+
+  return {
+    absolute: null,
+    perc: null,
+    percString: '-'
+  }
 }
 
 export const DataUtils = {
