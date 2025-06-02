@@ -33,8 +33,8 @@
 }
 
 .choices .card:has(h2 a:is(:hover, :focus-visible)) {
-  background-color: var(--color-blue-light);
-  border: 1px solid var(--color-blue-dark);
+  background-color: var(--color-card-background-hover);
+  border: 1px solid var(--color-card-border-hover);
 }
 
 .latest-info h2 {
