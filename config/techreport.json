@@ -430,7 +430,7 @@
               "change": "true",
               "label": "Performance",
               "url": "?median-lighthouse-over-time=performance#lighthouse",
-              "description": "Median Lighthouse <strong>performance</strong> score."
+              "description": "Median Lighthouse <strong>Performance</strong> score."
             },
             {
               "endpoint": "lighthouse",
@@ -439,7 +439,7 @@
               "change": "true",
               "label": "Accessibility",
               "url": "?median-lighthouse-over-time=accessibility#lighthouse",
-              "description": "Median Lighthouse <strong>accessibility</strong> score."
+              "description": "Median Lighthouse <strong>Accessibility</strong> score."
             },
             {
               "endpoint": "lighthouse",
@@ -456,7 +456,7 @@
               "metric": "median_score_pct",
               "label": "Best Practices",
               "url": "?median-lighthouse-over-time=best_practices#lighthouse",
-              "description": "Median Lighthouse <strong>best practices</strong> score.",
+              "description": "Median Lighthouse <strong>Best Practices</strong> score.",
               "change": "true"
             }
           ]
