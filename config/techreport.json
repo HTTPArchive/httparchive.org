@@ -116,6 +116,7 @@
             "metric": "good_pct",
             "label": "Overall good CWVs",
             "suffix": "%",
+            "change": "true",
             "description": "Origins with overall good core web vitals.",
             "url": "#good-cwvs"
           },
@@ -125,6 +126,7 @@
             "metric": "median_score_pct",
             "label": "Lighthouse performance",
             "suffix": "",
+            "change": "true",
             "description": "Median lighthouse performance score across tested origins.",
             "url": "#lighthouse"
           },
@@ -134,6 +136,7 @@
             "metric": "median_score_pct",
             "label": "Lighthouse accessibility",
             "suffix": "",
+            "change": "true",
             "description": "Median lighthouse accessibility score across tested origins.",
             "url": "#lighthouse&median-lighthouse-over-time=accessibility"
           },
@@ -142,6 +145,8 @@
             "category": "total",
             "metric": "median_bytes_formatted",
             "label": "Page weight",
+            "change": "true",
+            "changeMeaning": "inverted",
             "description": "Median total bytes per page for across tested origins.",
             "url": "#page-weight"
           }
@@ -167,11 +172,19 @@
                 "name": "Origins"
               },
               {
+                "key": "momString",
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
+              },
+              {
                 "key": "client",
                 "name": "Client"
               }
             ]
           },
+          "summary": true,
+          "change": true,
           "viz": {
             "title": "Origins over time",
             "metric": "origins",
@@ -234,6 +247,7 @@
               "metric": "good_pct",
               "label": "Good CWVs",
               "suffix": "%",
+              "change": "true",
               "description": "Origins with overall good core web vitals.",
               "url": "?good-cwv-over-time=overall#good-cwvs"
             },
@@ -243,6 +257,7 @@
               "metric": "good_pct",
               "label": "Good LCP",
               "suffix": "%",
+              "change": "true",
               "description": "Percentage of origins with good LCP scores (under 0.25s).",
               "url": "?good-cwv-over-time=LCP#good-cwvs"
             },
@@ -252,6 +267,7 @@
               "metric": "good_pct",
               "label": "Good CLS",
               "suffix": "%",
+              "change": "true",
               "description": "Percentage of origins with good CLS scores (under 0.1).",
               "url": "?good-cwv-over-time=CLS#good-cwvs"
             },
@@ -261,6 +277,7 @@
               "metric": "good_pct",
               "label": "Good INP",
               "suffix": "%",
+              "change": "true",
               "description": "Percentage of origins with good INP scores (under 200ms).",
               "url": "?good-cwv-over-time=INP#good-cwvs"
             }
@@ -331,6 +348,13 @@
                 "className": "eligible"
               },
               {
+                "key": "momString",
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
+
+              },
+              {
                 "key": "client",
                 "name": "Client",
                 "className": "client"
@@ -338,6 +362,7 @@
             ]
           },
           "summary": true,
+          "change": true,
           "viz": {
             "base": "pct_good_",
             "default": "overall",
@@ -402,6 +427,7 @@
               "endpoint": "lighthouse",
               "category": "performance",
               "metric": "median_score_pct",
+              "change": "true",
               "label": "Performance",
               "url": "?median-lighthouse-over-time=performance#lighthouse",
               "description": "Median Lighthouse <strong>performance</strong> score."
@@ -410,6 +436,7 @@
               "endpoint": "lighthouse",
               "category": "accessibility",
               "metric": "median_score_pct",
+              "change": "true",
               "label": "Accessibility",
               "url": "?median-lighthouse-over-time=accessibility#lighthouse",
               "description": "Median Lighthouse <strong>accessibility</strong> score."
@@ -418,6 +445,7 @@
               "endpoint": "lighthouse",
               "category": "seo",
               "metric": "median_score_pct",
+              "change": "true",
               "label": "SEO",
               "url": "?median-lighthouse-over-time=seo#lighthouse",
               "description": "Median Lighthouse <strong>SEO</strong> score."
@@ -428,7 +456,8 @@
               "metric": "median_score_pct",
               "label": "Best Practices",
               "url": "?median-lighthouse-over-time=best_practices#lighthouse",
-              "description": "Median Lighthouse <strong>best practices</strong> score."
+              "description": "Median Lighthouse <strong>best practices</strong> score.",
+              "change": "true"
             }
           ]
         },
@@ -439,6 +468,7 @@
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
           "summary": true,
+          "change": true,
           "subcategory": {
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
@@ -476,6 +506,12 @@
                 "name": "Median score",
                 "className": "main-cell",
                 "viz": "progress-circle"
+              },
+              {
+                "key": "momString",
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
               },
               {
                 "key": "client",
@@ -547,21 +583,27 @@
               "category": "images",
               "metric": "median_bytes_formatted",
               "label": "Image Weight",
-              "url": "?weight-over-time=image#page-weight"
+              "url": "?weight-over-time=image#page-weight",
+              "change": "true",
+              "changeMeaning": "inverted"
             },
             {
               "endpoint": "pageWeight",
               "category": "js",
               "metric": "median_bytes_formatted",
               "label": "JavaScript Size",
-              "url": "?weight-over-time=js#page-weight"
+              "url": "?weight-over-time=js#page-weight",
+              "change": "true",
+              "changeMeaning": "inverted"
             },
             {
               "endpoint": "pageWeight",
               "category": "total",
               "metric": "median_bytes_formatted",
               "label": "Total Page Weight",
-              "url": "?weight-over-time=total#page-weight"
+              "url": "?weight-over-time=total#page-weight",
+              "change": "true",
+              "changeMeaning": "inverted"
             }
           ]
         },
@@ -570,6 +612,8 @@
           "description": "",
           "id": "weight_timeseries",
           "summary": true,
+          "change": true,
+          "changeMeaning": "inverted",
           "endpoint": "pageWeight",
           "default": "images",
           "metric": "median_bytes",
@@ -605,6 +649,12 @@
                 "name": "Median Bytes",
                 "key": "median_bytes_formatted",
                 "className": "main-cell"
+              },
+              {
+                "key": "momString",
+                "name": "Change",
+                "styleChange": true,
+                "keyNr": "momPerc"
               },
               {
                 "name": "Client",
@@ -777,6 +827,7 @@
           "endpoint": "vitals",
           "metric": "good_pct",
           "default": "overall",
+          "change": "true",
           "subcategory": {
             "base": "pct_good_",
             "param": "good-cwv-over-time",
@@ -883,6 +934,7 @@
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
+          "change": "true",
           "subcategory": {
             "base": "median_lighthouse_score_",
             "param": "median-lighthouse-over-time",
@@ -980,6 +1032,8 @@
           "endpoint": "pageWeight",
           "metric": "median_bytes",
           "default": "total",
+          "change": "true",
+          "changeMeaning": "inverted",
           "subcategory": {
             "base": "median_bytes_",
             "param": "median-weight-over-time",
@@ -1075,6 +1129,7 @@
           "endpoint": "adoption",
           "metric": "origins",
           "default": "adoption",
+          "change": "true",
           "table": {
             "param":"",
             "caption": "Adoption",

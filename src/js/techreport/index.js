@@ -252,8 +252,10 @@ class TechReport {
       return fetch(url)
         .then(result => result.json())
         .then(result => {
+          const sortedResult = result.sort((a, b) => new Date(a.date) - new Date(b.date));
+          let previousRow = {};
           // Loop through all the rows of the API result
-          result.forEach(row => {
+          sortedResult.forEach(row => {
             const parsedRow = {
               ...row,
             }
@@ -261,7 +263,8 @@ class TechReport {
             // Parse the data and add it to the results
             if(api.parse) {
               const metric = parsedRow[api.metric] || parsedRow;
-              parsedRow[api.metric] = api.parse(metric, parsedRow?.date);
+              const previousMetric = previousRow[row.technology]?.[api.metric];
+              parsedRow[api.metric] = api.parse(metric, previousMetric, parsedRow?.date);
             }
 
             if(api.endpoint === 'technologies') {
@@ -278,6 +281,8 @@ class TechReport {
                 allResults[row.technology].push(parsedRow);
               }
             }
+
+            previousRow[row.technology] = row;
           });
         })
         .catch(error => console.log('Something went wrong', error));
