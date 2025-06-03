@@ -23,10 +23,11 @@
 
   <div class="split-view">
     <div class="filters">
-      <button id="close-filters">
-        <img src="/static/img/close-filters.svg" alt="Collapse filters" width="16px" height="16px" />
-      </button>
       <div id="report-filters">
+        <button id="close-filters">
+          <img src="/static/img/close-filters.svg" alt="Collapse filters" width="16px" height="16px" />
+        </button>
+
         {% block filters %}{% endblock %}
       </div>
     </div>

@@ -15,6 +15,7 @@
   --color-gray-dark: #2f2f30;
   --color-gray-light: #f6f6f7;
   --color-teal-vibrant: #1c818d;
+  --color-teal-vibrant-lighter: #2095A2;
   --color-teal-vibrant-darker: #136e78;
   --color-yellow-light: #fefae5;
   --color-yellow-dark: #B08705;
@@ -33,6 +34,8 @@
   --color-card-background: #fff;
   --color-card-border: #cdd4d6;
   --color-card-border-light: #e8e8e8;
+  --color-card-background-hover: var(--color-blue-light);
+  --color-card-border-hover: var(--color-blue-dark);
 
   /* Page */
   --color-page-background: #f4f4f4;
@@ -46,6 +49,7 @@
   --color-checkbox-button-selected: var(--color-blue-light);
   --color-checkbox-button-label: var(--color-text);
   --color-checkbox-button-label-selected: var(--color-text);
+  --color-input-border: #959494;
 
   /* Buttons */
   --color-button-background: var(--color-teal-vibrant);
@@ -74,6 +78,7 @@
   --color-nav: #667a7d;
   --color-nav-active: var(--color-teal-accent);
   --color-nav-inactive: var(--color-teal-medium);
+  --color-nav-separator: var(--color-card-border);
 
   /* Charts */
   --color-progress-basic-border: #879092;
@@ -98,6 +103,10 @@
   --card-radius: 0.625rem;
   --color-panel-text: #203b40;
   --color-panel-background: #bfe1e7;
+  --color-tech-btn: var(--color-teal-medium);
+  --color-tech-btn-hover: var(--color-teal-medium);
+  --color-tech-btn-outline: var(--color-teal-dark);
+  --color-tech-btn-background-hover: var(--color-teal-light);
 
   /* Graph colors */
   --graph-color-primary: var(--color-teal-dark);
@@ -108,6 +117,11 @@
 
   /* Defaults */
   --breakdown-color: var(--color-text);
+
+  /* Month over month */
+  --color-monthchange-bad: #942323;
+  --color-monthchange-good: #408353;
+  --color-monthchange-neutral: var(--color-text-lighter);
   --focus-default: var(--color-teal-dark);
 }
 
@@ -118,13 +132,15 @@
   --color-text-lighter: #fff;
   --color-text-darker: #fff;
   --color-text-inverted: #000;
-  --color-nav-inactive: #6D8488;
+  --color-nav-inactive: #8EA1A4;
 
   /* Cards */
   --color-card-background: #111;
   --color-card-border: #000;
   --card-shadow: 0 3px 12px 0px rgb(4, 8, 8, 20%);
   --color-page-background: #292828;
+  --color-card-background-hover: #414040;
+  --color-card-border-hover: #000;
 
   /* Checkboxes */
   --color-checkbox-button-label-selected: #292828;
@@ -149,9 +165,25 @@
   --table-row-hover: var(--color-teal-darker);
   --table-row-hover-border: var(--color-blue-light);
 
+  /* Charts */
+  --color-progress-basic-border: var(--color-gray-medium);
+  --color-progress-basic-bg: var(--color-card-background);
+  --color-progress-basic-fill: var(--color-teal-vibrant-lighter);
+
   /* Graph colors */
   --graph-color-labels: #a6bbbe;
   --graph-color-line: var(--color-gray-medium);
+
+  /* Buttons */
+  --color-tech-btn: var(--color-teal-faded);
+  --color-tech-btn-hover: var(--color-teal-faded);
+  --color-tech-btn-background-hover: var(--color-page-background);
+  --color-tech-btn-outline: #fff;
+
+  /* Month over month */
+  --color-monthchange-bad: #E444;
+  --color-monthchange-good: #5eb877;
+  --color-monthchange-neutral: #748386;
 
   /* Dropdowns */
   --color-dropdown-border: var(--color-gray-lighter);
@@ -167,6 +199,7 @@
   --color-separator: var(--color-gray-dark);
   --focus-default: var(--color-text-darker);
   --progess-color-empty: var(--color-page-background);
+  --color-nav-separator: var(--color-separator);
 }
 
 /* ------------------------- */
@@ -437,7 +470,7 @@ nav {
   display: block;
   height: 1.5rem;
   width: 2px;
-  background-color: var(--color-card-border);
+  background-color: var(--color-nav-separator);
   position: absolute;
   right: 0;
   top: 50%;
@@ -493,10 +526,18 @@ nav {
 }
 
 /* Page Filters */
+#report-filters {
+  position: sticky;
+  width: 20rem;
+  top: 0;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 #page-filters {
   padding: 1.5rem 1rem;
   padding-right: 0.75rem;
-  height: 100%;
+  padding-bottom: 5rem;
 }
 
 .main-btn:is(:hover, :focus-visible) {
@@ -555,7 +596,7 @@ nav {
 #page-filters button[type="submit"] {
   border: none;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   transition: background 0.15s ease-in;
 }
 
@@ -570,7 +611,7 @@ nav {
 #page-filters legend.form-title {
   font-size: 1.125rem;
   font-weight: 400;
-  margin-bottom: 4.5rem;
+  margin-bottom: 2.5rem;
   color: var(--color-text-darker);
 }
 
@@ -578,9 +619,9 @@ nav {
 #page-filters .lens {
   margin-bottom: 1.5rem;
   margin-right: 0;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   border-bottom: 1px solid var(--color-separator);
-  padding-bottom: 2.5rem;
+  padding-bottom: 2rem;
 }
 
 #page-filters .lens label,
@@ -599,14 +640,86 @@ nav {
   padding: 0.825rem;
 }
 
+.breakdown select {
+  background-color: transparent;
+  appearance: none;
+  margin: 0;
+  border: none;
+}
+
+#page-filters .lens .select-label:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+
+.select-label {
+  border: 1px solid var(--color-input-border);
+  padding: 0;
+  line-height: 100%;
+  position: relative;
+  border-radius: 5px;
+}
+
+#page-filters .select-label label {
+  margin-bottom: 0;
+  padding: 0;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+  font-size: 0.825rem;
+  z-index: 0;
+  color: #767474;
+}
+
+#page-filters .select-label select {
+  appearance: none;
+  background-color: transparent;
+  z-index: 1;
+  position: relative;
+  border: none;
+  margin-bottom: 0;
+  line-height: 100%;
+  color: var(--color-text-darker);
+  border-radius: 3px;
+  outline-offset: 2px;
+}
+
 .dropdown-content {
   z-index: 2;
 }
 
 .technology-filters {
   border-bottom: 1px solid var(--color-separator);
-  padding-bottom: 2.5rem;
+  padding-bottom: 1.75rem;
 }
+
+.technology-filters label.tech {
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.technology-filters select.tech {
+  width: 100%;
+  margin-bottom: 0;
+  border: 1px solid var(--color-input-border);
+  appearance: none;
+  background-color: transparent;
+  color: var(--color-text-darker);
+  font-size: 0.9rem;
+  border-color: var(--color-text-lighter);
+  padding: 0.5rem;
+}
+
+.technology-filters .tech-selector-group {
+  padding-top: 1.5rem;
+}
+
+.technology-filters .tech-selector-group:first-of-type {
+  margin-top: -1.5rem;
+}
+
 
 .breakdown {
   margin-top: 1rem;
@@ -668,26 +781,6 @@ select {
   max-width: 100%;
 }
 
-#add-tech {
-  margin-top: 1.5rem;
-  border-radius: 3rem;
-  border: 1px dashed var(--color-nav-inactive);
-  background-color: transparent;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-nav-inactive);
-  padding: 0.35rem 1rem;
-}
-
-#add-tech:is(:hover, :focus-visible) {
-  background-color: var(--color-teal-light);
-}
-
-#add-tech span {
-  margin-right: 0.25rem;
-  font-weight: 800;
-}
-
 #close-filters,
 #open-filters {
   appearance: none;
@@ -712,6 +805,9 @@ select {
   top: 0.75rem;
   left: 2.5rem;
   border: 1px solid var(--color-text-lighter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 :is(#open-filters, .open-filters, #close-filters) img {
@@ -744,9 +840,188 @@ select {
   border: 1px solid var(--color-button-background);
 }
 
-#close-filters:is(:hover, :focus-visible) {
+#close-filters:focus-visible {
   border: 1px solid var(--color-button-background);
 }
+
+/* Combobox component */
+.highlighted[role="option"]:not([disabled="true"]), [role="option"]:hover:not([disabled="true"]) {
+  background-color: var(--color-teal-vibrant);
+  color: var(--color-card-background);
+  cursor: default;
+}
+
+[role="option"][aria-selected] {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+[role="option"][aria-selected="false"]::after {
+  content: "";
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.15em;
+  border: 1px solid var(--color-text);
+  background-color: var(--color-card-background);
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+}
+
+[role="option"][aria-selected="true"]::after {
+  content: "";
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.15em;
+  border: 1px solid var(--color-text);
+  background-color: var(--color-teal-vibrant);
+  background-image: url('/static/img/checkmark.svg');
+  background-size: 75% 75%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  box-shadow: 0 0 0 0.5px var(--color-card-background);
+}
+
+[data-component="combobox"] label {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+[data-component="combobox"] input[type="text"] {
+  color: var(--color-text-darker);
+  font-size: 0.9rem;
+  width: 100%;
+  border-color: var(--color-input-border);
+  padding: 0.65rem 0.825rem;
+  position: relative;
+  margin-bottom: 0;
+  background-color: var(--color-card-background);
+}
+
+[data-component="combobox"] input[type="text"]:disabled {
+  opacity: 0.5;
+}
+
+[data-component="combobox"] input[type="text"]:not(:disabled):focus-visible {
+  outline: 1.5px solid var(--color-text);
+  outline-offset: 1.5px;
+  background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
+}
+
+[data-component="combobox"] input[type="text"]:not(:disabled):hover {
+  background-image: linear-gradient(90deg, transparent calc(100% - 2.5rem), var(--color-text-darker) calc(100% - 2.5rem));
+}
+
+.combobox-wrapper::before {
+  content: "";
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  position: absolute;
+  border-bottom: 1.5px solid var(--color-text-darker);
+  border-left: 1.5px solid var(--color-text-darker);
+  border-radius: 1px;
+  transform: rotate(-45deg);
+  right: 1rem;
+  top: 1rem;
+  z-index: 1;
+}
+
+[data-component="combobox"] .combobox-wrapper:has(input[type="text"]:is(:focus-visible, :hover))::before {
+  border-bottom: 1.5px solid var(--color-card-background);
+  border-left: 1.5px solid var(--color-card-background);
+}
+
+.combobox-wrapper[aria-expanded="true"]::before {
+  transform: rotate(135deg);
+  top: 1.25rem;
+}
+
+.combobox-wrapper {
+  position: relative;
+}
+
+[data-component="combobox"] [role="listbox"] {
+  border: 1px solid var(--color-text-lighter);
+  border-radius: 0 0 0.5rem 0.5rem;
+  z-index: 2;
+  position: relative;
+  top: -4px;
+  background-color: var(--color-card-background);
+  max-height: 12rem;
+  overflow: auto;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"] {
+  padding: 0.5rem;
+  padding-left: 2.5rem;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"] img {
+  margin-left: 0.35em;
+  margin-top: -0.05em;
+  height: 0.75em;
+  width: auto;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"]::after {
+  top: 0.75rem;
+  left: 1rem;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"]:last-of-type {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+[data-component="combobox"] [role="listbox"] [role="option"][disabled="true"] {
+  opacity: 0.5;
+}
+
+[data-component="combobox"] ul {
+  margin-top: 1rem;
+}
+
+[data-component="combobox"] ul li {
+  display: inline-block;
+  margin: 0;
+  margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+[data-component="combobox"] ul li button {
+  border-radius: 3rem;
+  border: 1px dashed var(--color-tech-btn);
+  background-color: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-tech-btn);
+  padding: 0.35rem 0.75rem;
+}
+
+[data-component="combobox"] ul li button:is(:hover, :focus-visible) {
+  background-color: var(--color-tech-btn-background-hover);
+  border-style: solid;
+}
+
+[data-component="combobox"] ul li button .delete {
+  height: 0.85em;
+  margin-top: -0.05em;
+  margin-left: 0.65em;
+}
+
+[data-component="combobox"] ul li button .logo {
+  height: 0.85em;
+  margin-top: -0.1em;
+  margin-left: 0.35em;
+}
+
 
 /* Results header */
 .results-header {
@@ -810,7 +1085,7 @@ select {
 
 /* Submetric selector */
 .subcategory-selector-wrapper {
-  border: 1px solid #959494;
+  border: 1px solid var(--color-input-border);
   padding: 0.5rem 1rem;
   line-height: 100%;
   position: relative;
@@ -1169,6 +1444,12 @@ select {
   );
 }
 
+.table-ui td.pct-value[data-value] .monthchange {
+  position: absolute;
+  top: calc(50% - 0.67rem);
+  right: 1.35rem;
+}
+
 .table-pagination {
   display: flex;
   justify-content: space-between;
@@ -1381,6 +1662,65 @@ h2.summary-heading {
 
 .summary-value {
   font-size: var(--font-size-medium);
+}
+
+.monthchange {
+  position: relative;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  margin-left: 1.15em;
+}
+
+.summary-value .monthchange {
+  display: inline-block;
+  transform: translateY(calc(-50% + 0.45em));
+  margin-left: 1.5em;
+}
+
+.monthchange::before {
+  content: "";
+  position: absolute;
+  left: -1em;
+  top: 0.45em;
+  width: 0;
+  height: 0;
+}
+
+.monthchange.good {
+  --color-monthchange: var(--color-monthchange-good);
+
+  color: var(--color-monthchange);
+}
+
+.monthchange.bad {
+  --color-monthchange: var(--color-monthchange-bad);
+
+  color: var(--color-monthchange);
+}
+
+.monthchange.neutral {
+  --color-monthchange: var(--color-monthchange-neutral);
+
+  color: var(--color-monthchange);
+}
+
+.monthchange.positive::before {
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0.6em solid var(--color-monthchange);
+}
+
+.monthchange.negative::before {
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-top: 0.6em solid var(--color-monthchange);
+}
+
+.monthchange.equal::before {
+  width: 0.6em;
+  height: 0.15em;
+  top: 0.65em;
+  background-color: var(--color-monthchange);
 }
 
 .summary-linked-description {

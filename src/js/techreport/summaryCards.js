@@ -3,6 +3,7 @@
  */
 
 import { DataUtils } from "./utils/data";
+import { UIUtils } from "./utils/ui";
 
 class SummaryCard {
   constructor(id, pageConfig, config, filters, data) {
@@ -33,6 +34,7 @@ class SummaryCard {
       const key = card.dataset.key;
 
       let latestValue;
+      let latestChange;
 
       if(key) {
         latestValue = this.data[key][metric][client] || this.data[key][metric];
@@ -45,6 +47,10 @@ class SummaryCard {
           const latestCategory = latestEndpoint?.find(row => row.name === category)?.[client];
           if(metric) {
             latestValue = latestCategory?.[metric];
+            latestChange = {
+              string: latestCategory?.momString,
+              perc: latestCategory?.momPerc,
+            };
           } else {
             latestValue = latestCategory;
           }
@@ -65,7 +71,17 @@ class SummaryCard {
           circle.setAttribute('style', `--offset: ${latestValue}%;`);
           circle.classList.add(scoreCategoryName);
         });
+      }
 
+      if(latestChange && latestChange.string) {
+        const changeSlot = card.querySelector('[data-slot="change"]');
+        const changeMeaning = changeSlot?.dataset?.meaning;
+
+        if(changeSlot) {
+          changeSlot.textContent = latestChange.string;
+          const styling = UIUtils.getChangeStatus(latestChange.perc, changeMeaning);
+          changeSlot.classList.add(styling.color, styling.direction);
+        }
       }
     }
   }

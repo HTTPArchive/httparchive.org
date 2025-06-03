@@ -13,7 +13,7 @@
   </div>
 
   <div class="actions">
-    <button class="remove-tech {% if technologies|length == 1 %}hidden{% endif %}" data-tech="{{ name }}">
+    <button type="button" class="remove-tech {% if technologies|length == 1 %}hidden{% endif %}" data-tech="{{ name }}">
       <img src="/static/img/icon-delete.svg" alt="Remove" data-tech="{{ name }}" />
     </button>
   </div>
