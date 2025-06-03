@@ -122,23 +122,23 @@
           },
           {
             "endpoint": "lighthouse",
-            "category": "performance",
+            "category": "accessibility",
             "metric": "median_score_pct",
-            "label": "Lighthouse performance",
+            "label": "Lighthouse Accessibility",
             "suffix": "",
             "change": "true",
-            "description": "Median lighthouse performance score across tested origins.",
-            "url": "#lighthouse"
+            "description": "Median Lighthouse Accessibility score across tested origins.",
+            "url": "?median-lighthouse-over-time=accessibility#lighthouse"
           },
           {
             "endpoint": "lighthouse",
-            "category": "accessibility",
+            "category": "seo",
             "metric": "median_score_pct",
-            "label": "Lighthouse accessibility",
+            "label": "Lighthouse SEO",
             "suffix": "",
             "change": "true",
-            "description": "Median lighthouse accessibility score across tested origins.",
-            "url": "#lighthouse&median-lighthouse-over-time=accessibility"
+            "description": "Median Lighthouse SEO score across tested origins.",
+            "url": "?median-lighthouse-over-time=seo#lighthouse"
           },
           {
             "endpoint": "pageWeight",
@@ -421,7 +421,7 @@
           }
         },
         "lighthouse_summary": {
-          "title": "Latest lighthouse scores",
+          "title": "Latest Lighthouse scores",
           "cards": [
             {
               "endpoint": "lighthouse",
@@ -430,7 +430,7 @@
               "change": "true",
               "label": "Performance",
               "url": "?median-lighthouse-over-time=performance#lighthouse",
-              "description": "Median Lighthouse <strong>performance</strong> score."
+              "description": "Median Lighthouse <strong>Performance</strong> score."
             },
             {
               "endpoint": "lighthouse",
@@ -439,7 +439,7 @@
               "change": "true",
               "label": "Accessibility",
               "url": "?median-lighthouse-over-time=accessibility#lighthouse",
-              "description": "Median Lighthouse <strong>accessibility</strong> score."
+              "description": "Median Lighthouse <strong>Accessibility</strong> score."
             },
             {
               "endpoint": "lighthouse",
@@ -456,7 +456,7 @@
               "metric": "median_score_pct",
               "label": "Best Practices",
               "url": "?median-lighthouse-over-time=best_practices#lighthouse",
-              "description": "Median Lighthouse <strong>best practices</strong> score.",
+              "description": "Median Lighthouse <strong>Best Practices</strong> score.",
               "change": "true"
             }
           ]
@@ -483,7 +483,7 @@
                 "value": "accessibility"
               },
               {
-                "label": "SEO (Search Engine Optimisation)",
+                "label": "SEO (Search Engine Optimization)",
                 "value": "seo"
               },
               {
@@ -970,7 +970,7 @@
               },
               {
                 "key": "median_score_pct",
-                "name": "Median lighthouse score",
+                "name": "Median Lighthouse score",
                 "breakdown": "app",
                 "className": "main-cell",
                 "viz": "progress-circle"
