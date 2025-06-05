@@ -1,4 +1,4 @@
-const apiBase = 'https://prod-gw-2vzgiib6.ue.gateway.dev/v1';
+const apiBase = 'https://reports-dev-2vzgiib6.uc.gateway.dev/v1';
 
 export const Constants = {
   apiBase,
