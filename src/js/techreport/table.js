@@ -194,7 +194,7 @@ function updateTable(id, config, appConfig, apps, data) {
       }
 
       if(column.styling) {
-        wrapper.classList.add('monthchange', column.styling.direction, column.styling.color);
+        wrapper.classList.add('monthchange', column.styling?.direction, column.styling?.color);
       }
 
       // Add cell to the row

@@ -73,14 +73,14 @@ class SummaryCard {
         });
       }
 
-      if(latestChange && latestChange.string) {
+      if(latestChange && latestChange.string && latestChange.perc) {
         const changeSlot = card.querySelector('[data-slot="change"]');
         const changeMeaning = changeSlot?.dataset?.meaning;
 
         if(changeSlot) {
           changeSlot.textContent = latestChange.string;
           const styling = UIUtils.getChangeStatus(latestChange.perc, changeMeaning);
-          changeSlot.classList.add(styling.color, styling.direction);
+          changeSlot.classList.add(styling?.color, styling?.direction);
         }
       }
     }
