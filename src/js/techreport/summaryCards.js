@@ -80,7 +80,7 @@ class SummaryCard {
         if(changeSlot) {
           changeSlot.textContent = latestChange.string;
           const styling = UIUtils.getChangeStatus(latestChange.perc, changeMeaning);
-          changeSlot.classList.add(styling.color, styling.direction);
+          changeSlot.className = `monthchange ${styling.color} ${styling.direction}`;
         }
       }
     }
