@@ -73,7 +73,7 @@ class SummaryCard {
         });
       }
 
-      if(latestChange && latestChange.string && latestChange.perc) {
+      if(latestChange && latestChange.string && latestChange.perc != null) {
         const changeSlot = card.querySelector('[data-slot="change"]');
         const changeMeaning = changeSlot?.dataset?.meaning;
 
