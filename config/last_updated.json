@@ -166,18 +166,18 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-06-05T00:00:00.000Z",
-    "hash": "770ab0df4d5c568fc83d355106003249"
+    "date_modified": "2025-06-09T00:00:00.000Z",
+    "hash": "ed8fd3d341f5848676cc4350d9c2261e"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-06-05T00:00:00.000Z",
-    "hash": "f60e5226a54a736afcbafa92b724ac57"
+    "date_modified": "2025-06-09T00:00:00.000Z",
+    "hash": "25c1a0077a70d69ad8f7dcf52f41a919"
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-06-05T00:00:00.000Z",
-    "hash": "a89c8066f46cfc5f1d5b78c76c051e26"
+    "date_modified": "2025-06-09T00:00:00.000Z",
+    "hash": "71c3b5f8be923dca10105353469b6b9c"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
