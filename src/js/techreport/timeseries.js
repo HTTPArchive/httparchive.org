@@ -175,7 +175,7 @@ class Timeseries {
           const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
           const monthChange = document.createElement('span');
           monthChange.textContent = latestMoMStr;
-          monthChange.classList.add('monthchange', styling.color, styling.direction);
+          monthChange.className = `monthchange ${styling?.color} ${styling?.direction}`;
           itemWrapper.appendChild(monthChange);
         }
 
@@ -250,7 +250,7 @@ class Timeseries {
           const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
           const monthChange = document.createElement('span');
           monthChange.textContent = latestMoMStr;
-          monthChange.classList.add('monthchange', styling.color, styling.direction);
+          monthChange.className = `monthchange ${styling?.color} ${styling?.direction}`;
           card.appendChild(monthChange);
         }
       }

@@ -427,7 +427,7 @@ function drawChart(options, series) {
       }]
     });
   };
-  chart.zooming.mousewheel.enabled = false;
+  chart.zooming.mouseWheel.enabled = false;
   window.charts = window.charts || {};
   window.charts[options.metric] = chart;
 }

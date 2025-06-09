@@ -35,13 +35,6 @@ const updateReportComponents = (sections, data) => {
 }
 
 const getChangeStatus = (percentage, meaning) => {
-  if(percentage === 0) {
-    return {
-      direction: 'equal',
-      color: 'neutral'
-    }
-  }
-
   if(percentage > 0) {
     const color = meaning === 'inverted' ? 'bad' : 'good';
     return {
@@ -56,6 +49,11 @@ const getChangeStatus = (percentage, meaning) => {
       direction: 'negative',
       color: color,
     }
+  }
+
+  return {
+    direction: 'equal',
+    color: 'neutral'
   }
 }
 
