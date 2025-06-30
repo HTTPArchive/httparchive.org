@@ -73,7 +73,7 @@ Donations in support of the HTTP Archive can be made through the [Open Collectiv
 
 ## Who maintains the HTTP Archive?
 
-The current core maintainers are [Pat Meenan](https://x.com/patmeenan), [Paul Calvano](https://x.com/paulcalvano), [Barry Pollard](https://bsky.app/profile/tunetheweb.com), and [Max Ostapenko](https://x.com/themax_o).
+The current core maintainers are [Pat Meenan](https://x.com/patmeenan), [Paul Calvano](https://x.com/paulcalvano), [Barry Pollard](https://bsky.app/profile/tunetheweb.com), [Max Ostapenko](https://x.com/themax_o), and [Nurullah Demir](https://www.linkedin.com/in/nurullahdemir/).
 
 Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://x.com/Souders), who started the project in 2010, [Pat Meenan](https://x.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, [Ilya Grigorik](https://x.com/igrigorik) and [Rick Viscomi](https://x.com/rick_viscomi), both long-time core maintainers, and Guy Leech and Stephen Hay for design help along the way.
 
