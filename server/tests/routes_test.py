@@ -234,12 +234,16 @@ def test_tech_report_drilldown(client):
 
 
 def test_tech_report_drilldown_wordpress(client):
-    response = client.get("/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL")
+    response = client.get(
+        "/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL"
+    )
     assert response.status_code == 200
 
 
 def test_tech_report_category(client):
-    response = client.get("/reports/techreport/category?geo=ALL&rank=ALL&category=CMS")
+    response = client.get(
+        "/reports/techreport/category?geo=ALL&rank=ALL&category=CMS"
+    )
     assert response.status_code == 200
 
 
