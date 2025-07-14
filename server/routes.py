@@ -99,7 +99,7 @@ def techreportlanding(page_id):
     requested_geo = request.args.get("geo") or "ALL"
     requested_rank = request.args.get("rank") or "ALL"
     requested_category = request.args.get("category") or "CMS"
-    requested_page = safe_int(request.args.get("page"))
+    requested_page = safe_int(request.args.get("page"))  # TODO: After security scanner is off, return 400 if not an int
     selected_techs = request.args.get("selected")
     selected_rows = str(safe_int(request.args.get("rows"), default=10))
 
