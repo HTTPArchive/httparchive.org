@@ -8,6 +8,16 @@ from . import techreport as tech_report_util
 from . import faq as faq_util
 
 
+def safe_int(value, default=1):
+    """
+    Safely convert a value to integer, default to 1 if conversion fails.
+    """
+    try:
+        return int(value) if value else default
+    except (ValueError, TypeError):
+        return default
+
+
 @app.route("/")
 def index():
     return render_template(
@@ -89,11 +99,11 @@ def techreportlanding(page_id):
     requested_geo = request.args.get("geo") or "ALL"
     requested_rank = request.args.get("rank") or "ALL"
     requested_category = request.args.get("category") or "CMS"
-    requested_page = request.args.get("page") or 1
-    requested_page = int(requested_page)
+    requested_page = safe_int(
+        request.args.get("page")
+    )  # TODO: After security scanner is off, return 400 if not an int
     selected_techs = request.args.get("selected")
-    selected_rows = request.args.get("rows") or 10
-    selected_rows = str(selected_rows)
+    selected_rows = str(safe_int(request.args.get("rows"), default=10))
 
     last_page = request.args.get("last_page") or False
 
