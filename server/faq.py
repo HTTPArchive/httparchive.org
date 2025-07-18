@@ -1,5 +1,5 @@
-from collections import OrderedDict
 import re
+from collections import OrderedDict
 
 ANCHOR_BIGQUERY = None
 
@@ -26,7 +26,6 @@ def load_faq():
 
 # Finds the first anchor whose question contains a given string.
 def find_anchor(query):
-    global anchors
     questions = [question for question in anchors if query.lower() in question.lower()]
     if len(questions):
         return anchors.get(questions[0])
