@@ -8,7 +8,6 @@ def update_report():
 
 
 def get_report():
-    global tech_report_json
     update_report()
 
     return tech_report_json

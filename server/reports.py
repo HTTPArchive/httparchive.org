@@ -2,7 +2,6 @@ import json
 from copy import deepcopy
 from time import time
 
-
 from . import dates as date_util
 
 
@@ -22,7 +21,6 @@ reports_json = {}
 
 
 def update_reports():
-    global MAX_REPORT_STALENESS
     global last_report_update
 
     if (time() - last_report_update) < MAX_REPORT_STALENESS:
@@ -40,28 +38,24 @@ def update_reports():
 
 
 def get_reports():
-    global reports_json
     update_reports()
 
     return list(map(get_report, reports_json.get("_reports")))
 
 
 def get_featured_reports():
-    global reports_json
     update_reports()
 
     return map(get_report, reports_json.get("_featured"))
 
 
 def map_reports(report_id):  # pragma: no cover
-    global reports_json
     report = reports_json.get(report_id)
     report["id"] = report_id
     return report
 
 
 def get_report(report_id):
-    global reports_json
     report = reports_json.get(report_id)
     if not report:
         return None
@@ -72,7 +66,6 @@ def get_report(report_id):
 
 
 def get_metric(metric_id):
-    global reports_json
     metrics = reports_json.get("_metrics")
     metric = deepcopy(metrics.get(metric_id))
     if not metric:  # pragma: no cover
@@ -82,7 +75,6 @@ def get_metric(metric_id):
 
 
 def get_similar_reports(metric_id, current_report_id):
-    global reports_json
     similar_reports = {}
     reports = reports_json.get("_reports", [])
     for report_id in reports:
@@ -98,16 +90,10 @@ def get_similar_reports(metric_id, current_report_id):
 
 
 def get_dates():
-    global report_dates
     return report_dates
 
 
 def get_latest_date(metric_id):
-    global report_dates
-    global latest_metric_dates
-    global latest_metric_check
-    global MAX_REPORT_STALENESS
-
     # Check the cache before hitting GCS.
     latest_date = latest_metric_dates.get(metric_id)
     if latest_date:  # pragma: no cover
@@ -128,7 +114,6 @@ def get_latest_date(metric_id):
 
 
 def get_lenses():
-    global reports_json
     # TODO: Consider sorting the lenses by name.
     return reports_json.get("_lens", {})
 
