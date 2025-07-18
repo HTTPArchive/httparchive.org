@@ -1,5 +1,5 @@
-import json
 import datetime
+import json
 import logging
 
 timestamps_json = {}
@@ -13,7 +13,6 @@ def update_config():
 
 
 def get_timestamps_config():
-    global timestamps_json
     return timestamps_json
 
 
