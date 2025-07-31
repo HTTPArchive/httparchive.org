@@ -135,10 +135,8 @@
 
         <div class="table-pagination">
           {% set filters = tech_report_page.filters %}
-          <p data-pagination="previous">
-            {% if filters.page and filters.page > 1 %}
-              <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Previous page </a>
-            {% endif %}
+          <p data-pagination="previous" style="display: none;">
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Previous page </a>
           </p>
           <div class="table-page-info">
             <p>
@@ -170,10 +168,8 @@
               <span id="rows-announcement"></span>
             </p>
           </div>
-          <p data-pagination="next">
-            {% if not filters.last_page and filters.last_page == False  %}
-              <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Next page</a>
-            {% endif %}
+          <p data-pagination="next" style="display: none;">
+            <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Next page</a>
           </p>
         </div>
       </div>

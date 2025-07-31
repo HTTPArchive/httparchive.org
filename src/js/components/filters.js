@@ -71,6 +71,10 @@ class Filters {
       url.searchParams.append('category', categories);
     }
 
+    // Reset to page 1 when filters change
+    url.searchParams.delete('page');
+    url.searchParams.append('page', '1');
+
     // /* Scroll to the report content */
     // url.hash = '#report-content';
 

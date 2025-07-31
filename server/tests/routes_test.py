@@ -257,6 +257,32 @@ def test_tech_report_category_pages_fallback(client):
     assert response.status_code == 200
 
 
+def test_tech_report_category_pagination_links_initially_hidden(client):
+    """Test that pagination links are initially hidden and controlled by JavaScript."""
+    response = client.get("/reports/techreport/category?geo=ALL&rank=ALL&category=CMS")
+    assert response.status_code == 200
+    content = response.get_data(as_text=True)
+    
+    # Check that pagination links exist but are initially hidden
+    assert 'data-pagination="next"' in content
+    assert 'data-pagination="previous"' in content
+    assert 'style="display: none;"' in content
+
+
+def test_tech_report_category_filters_reset_page_parameter(client):
+    """Test that the template doesn't rely on last_page parameter for pagination control."""
+    response = client.get(
+        "/reports/techreport/category?geo=ALL&rank=ALL&category=CMS&page=2"
+    )
+    assert response.status_code == 200
+    content = response.get_data(as_text=True)
+    
+    # The Next page link should exist regardless of last_page parameter
+    assert 'data-pagination="next"' in content
+    # And should initially be hidden (JavaScript will control visibility)
+    assert 'style="display: none;"' in content
+
+
 def test_well_known_atproto_did(client):
     response = client.get("/.well-known/atproto-did")
     assert response.status_code == 200
