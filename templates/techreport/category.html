@@ -135,7 +135,7 @@
 
         <div class="table-pagination">
           {% set filters = tech_report_page.filters %}
-          <p data-pagination="previous">
+          <p data-pagination="previous" style="display: none;">
             {% if filters.page and filters.page > 1 %}
               <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page - 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Previous page </a>
             {% endif %}
@@ -170,8 +170,8 @@
               <span id="rows-announcement"></span>
             </p>
           </div>
-          <p data-pagination="next">
-            {% if not filters.last_page and filters.last_page == False  %}
+          <p data-pagination="next" style="display: none;">
+            {% if not filters.last_page %}
               <a href="/reports/techreport/category?geo={{ filters.geo }}&rank={{ filters.rank }}&category={{ filters.category }}&page={{ filters.page + 1 }}{%if filters.selected %}&selected={{ filters.selected }}{% endif %}{%if filters.rows %}&rows={{ filters.rows }}{% endif %}">Next page</a>
             {% endif %}
           </p>

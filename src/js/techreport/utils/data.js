@@ -239,8 +239,27 @@ const fetchCategoryData = (rows, filters, callback) => {
         /* Update the pagination info */
         const current = document.querySelectorAll('[data-page="current"]');
         const total = document.querySelectorAll('[data-page="total"]');
+        const totalPages = Math.ceil(category?.technologies?.length / rows);
         current.forEach(c => c.textContent = pageNr);
-        total.forEach(t => t.textContent = Math.ceil(category?.technologies?.length / rows));
+        total.forEach(t => t.textContent = totalPages);
+
+        /* Update pagination links visibility */
+        const nextPageLink = document.querySelector('[data-pagination="next"]');
+        const prevPageLink = document.querySelector('[data-pagination="previous"]');
+        if (prevPageLink) {
+          if (pageNr <= 1) {
+            prevPageLink.style.display = 'none';
+          } else {
+            prevPageLink.style.display = 'block';
+          }
+        }
+        if (nextPageLink) {
+          if (pageNr >= totalPages) {
+            nextPageLink.style.display = 'none';
+          } else {
+            nextPageLink.style.display = 'block';
+          }
+        }
 
         /* Update components */
         callback(category);
