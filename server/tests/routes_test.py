@@ -262,7 +262,7 @@ def test_tech_report_category_pagination_links_initially_hidden(client):
     response = client.get("/reports/techreport/category?geo=ALL&rank=ALL&category=CMS")
     assert response.status_code == 200
     content = response.get_data(as_text=True)
-    
+
     # Check that pagination links exist but are initially hidden
     assert 'data-pagination="next"' in content
     assert 'data-pagination="previous"' in content
@@ -276,7 +276,7 @@ def test_tech_report_category_filters_reset_page_parameter(client):
     )
     assert response.status_code == 200
     content = response.get_data(as_text=True)
-    
+
     # The Next page link should exist regardless of last_page parameter
     assert 'data-pagination="next"' in content
     # And should initially be hidden (JavaScript will control visibility)
