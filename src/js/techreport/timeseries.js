@@ -164,7 +164,7 @@ class Timeseries {
         } else {
           /* Add the value to the wrapper */
           const valueLabel = document.createElement('p');
-          valueLabel.textContent = `${latestValue.toLocaleString()}${breakdown.suffix || ''}`;
+          valueLabel.textContent = `${latestValue?.toLocaleString()}${breakdown.suffix || ''}`;
           valueLabel.classList.add('breakdown-value');
           itemWrapper.appendChild(valueLabel);
         }
