@@ -21,19 +21,20 @@ class ComboBox {
     // Add options in the dropdown list
     const listbox = this.element.querySelector('[role="listbox"]');
     rows.forEach((row, index) => {
+      const icon = row.icon;
       const option = document.createElement('div');
       option.setAttribute('role', 'option');
       option.setAttribute('aria-selected', 'false');
-      option.dataset.name = row;
+      option.dataset.name = row.technology;
       option.dataset.key = index;
-      option.textContent = row;
-      option.id = `${this.element.dataset.id}-${row.replaceAll(' ','-')}`;
+      option.textContent = row.technology;
+      option.id = `${this.element.dataset.id}-${row.technology.replaceAll(' ','-')}`;
       const logo = document.createElement('img');
       logo.setAttribute('alt', '');
-      logo.setAttribute('src', `https://cdn.httparchive.org/static/icons/${row}.png`);
+      logo.setAttribute('src', `https://cdn.httparchive.org/static/icons/${icon}`);
       logo.setAttribute('loading', 'lazy');
       option.append(logo);
-      if(this.selected.includes(row)) {
+      if(this.selected.includes(row.technology)) {
         option.setAttribute('aria-selected', true);
       }
       listbox.append(option);
@@ -83,7 +84,7 @@ class ComboBox {
     const options = this.element.querySelector('[role="listbox"]');
 
     this.filteredData = this.data.filter(row => {
-      return row.toLowerCase().includes(search.toLowerCase());
+      return row.technology.toLowerCase().includes(search.toLowerCase());
     });
 
     options.textContent = '';
@@ -186,6 +187,7 @@ class ComboBox {
   }
 
   showSelectedElement(name) {
+    const icon = this.data.find(((tech) => tech.technology == name))?.icon;
     /* Add selected element to an overview list */
     const selection = document.createElement('li');
     selection.dataset.name = name;
@@ -198,7 +200,7 @@ class ComboBox {
 
     /* Add the app logo */
     const appIcon = document.createElement('img');
-    appIcon.setAttribute('src', `https://cdn.httparchive.org/static/icons/${encodeURI(name)}.png`);
+    appIcon.setAttribute('src', `https://cdn.httparchive.org/static/icons/${encodeURI(icon)}`);
     appIcon.setAttribute('alt', '');
     appIcon.classList.add('logo');
     deleteSelection.append(appIcon);
