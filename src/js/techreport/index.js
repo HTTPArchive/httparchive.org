@@ -406,7 +406,7 @@ class TechReport {
   // Update drilldown page components
   updateDrilldownComponents(data) {
     const app = this.filters.app[0];
-    const icon = data[app].at(-1).icon;
+    const icon = data[app]?.at(-1)?.icon;
     DrilldownHeader.update(this.filters);
     DrilldownHeader.setIcon(`${encodeURI(icon)}`);
 

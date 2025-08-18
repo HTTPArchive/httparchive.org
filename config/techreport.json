@@ -580,6 +580,15 @@
           "cards": [
             {
               "endpoint": "pageWeight",
+              "category": "total",
+              "metric": "median_bytes_formatted",
+              "label": "Total Page Weight",
+              "url": "?weight-over-time=total#page-weight",
+              "change": "true",
+              "changeMeaning": "inverted"
+            },
+            {
+              "endpoint": "pageWeight",
               "category": "images",
               "metric": "median_bytes_formatted",
               "label": "Image Weight",
@@ -595,20 +604,11 @@
               "url": "?weight-over-time=js#page-weight",
               "change": "true",
               "changeMeaning": "inverted"
-            },
-            {
-              "endpoint": "pageWeight",
-              "category": "total",
-              "metric": "median_bytes_formatted",
-              "label": "Total Page Weight",
-              "url": "?weight-over-time=total#page-weight",
-              "change": "true",
-              "changeMeaning": "inverted"
             }
           ]
         },
         "weight_timeseries": {
-          "title": "Weight over time",
+          "title": "Median page weight over time",
           "description": "",
           "id": "weight_timeseries",
           "summary": true,
@@ -666,8 +666,8 @@
           "viz": {
             "base": "median_bytes_",
             "param": "weight-over-time",
-            "default": "images",
-            "title": "Image weight over time",
+            "default": "total",
+            "title": "Weight over time",
             "metric": "median_bytes",
             "suffix": "bytes",
             "metric_summary": "median_bytes_formatted",
@@ -1026,7 +1026,7 @@
           }
         },
         "weight_timeseries": {
-          "title": "Page weight over time",
+          "title": "Total page weight",
           "description": "",
           "id": "weight_timeseries",
           "endpoint": "pageWeight",
