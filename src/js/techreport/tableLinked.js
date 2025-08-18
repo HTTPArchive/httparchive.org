@@ -116,14 +116,14 @@ class TableLinked {
               const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
               link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
-              link.innerHTML = formattedApp;
+              link.innerText = formattedApp;
               wrapper.append(link);
               cell.append(wrapper);
             } else if (column.type === 'checkbox') {
               cell = this.addColumnCheckbox(app);
             } else if(column.key === 'client') {
               cell = document.createElement('td');
-              cell.innerHTML = component.dataset.client;
+              cell.innerText = UIUtils.capitalizeFirstLetter(component.dataset.client);
             } else {
               const cellContent = document.createElement('span');
               cell = document.createElement('td');
@@ -132,9 +132,9 @@ class TableLinked {
               const changeStyle = UIUtils.getChangeStatus(value?.[component.dataset.client]?.momPerc);
               value = value?.[component.dataset.client]?.[column?.metric];
               if(column.suffix) {
-                cellContent.innerHTML = `${value?.toLocaleString()}${column.suffix}`;
+                cellContent.innerText = `${value?.toLocaleString()}${column.suffix}`;
               } else {
-                cellContent.innerHTML = `${value?.toLocaleString()}`;
+                cellContent.innerText = `${value?.toLocaleString()}`;
               }
 
               if(column.viz === 'progress') {
@@ -265,7 +265,7 @@ class TableLinked {
       }
 
       appLinkEl.setAttribute('href', href);
-      appLinkEl.innerHTML = label;
+      appLinkEl.innerText = label;
     });
 
     if(this.selectedTechs.length > 0) {
@@ -320,7 +320,7 @@ class TableLinked {
     this.data = result.data;
     this.updateContent();
     const rowsAnnouncement = document.getElementById('rows-announcement');
-    rowsAnnouncement.innerHTML = `Showing ${this.rows} rows.`;
+    rowsAnnouncement.innerText = `Showing ${this.rows} rows.`;
   }
 }
 

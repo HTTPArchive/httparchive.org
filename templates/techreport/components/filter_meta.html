@@ -1,6 +1,6 @@
 <ul class="meta">
   <li>
-    Client: <span data-slot="client">{{ request.args.get('client', '')  or 'mobile' }}</span>
+    Client: <span data-slot="client">{{ request.args.get('client', '') | capitalize or 'Mobile' }}</span>
   </li>
   <li>
     Geo: <span data-slot="geo">{{ request.args.get('geo', '')  or 'ALL' }}</span>
