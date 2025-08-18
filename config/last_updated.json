@@ -51,8 +51,8 @@
   },
   "/static/css/techreport/techreport.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-06-02T00:00:00.000Z",
-    "hash": "5c32af29ac7f8324e3bfe4c642fb895d"
+    "date_modified": "2025-08-18T00:00:00.000Z",
+    "hash": "7a459f0468cc653876e6a5e91df4babe"
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -166,18 +166,18 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-06-09T00:00:00.000Z",
-    "hash": "ed8fd3d341f5848676cc4350d9c2261e"
+    "date_modified": "2025-08-18T00:00:00.000Z",
+    "hash": "fb9ca3589ee1d214fe96df61d9c639cd"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-06-09T00:00:00.000Z",
-    "hash": "25c1a0077a70d69ad8f7dcf52f41a919"
+    "date_modified": "2025-08-18T00:00:00.000Z",
+    "hash": "1775005cbf8d70f6fc4974781b7e1b51"
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-06-09T00:00:00.000Z",
-    "hash": "71c3b5f8be923dca10105353469b6b9c"
+    "date_modified": "2025-08-18T00:00:00.000Z",
+    "hash": "517a5a14e90ceacf5e930360f6d99807"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -186,8 +186,8 @@
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2025-06-30T00:00:00.000Z",
-    "hash": "8d892f61f132b9a5889c5811203fa593"
+    "date_modified": "2025-08-18T00:00:00.000Z",
+    "hash": "e7b8ecda99703fdc7c6a33b6a3d07cc6"
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -196,13 +196,13 @@
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-06-30T00:00:00.000Z",
-    "hash": "9270dbd5bdc4976f57cceab27b1761ab"
+    "date_modified": "2025-08-18T00:00:00.000Z",
+    "hash": "f14213418e3cd6f4f5b12780f58f3786"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-02-23T00:00:00.000Z",
-    "hash": "9e4764f74ec0ee88e1b063cfd0bd7c65"
+    "date_modified": "2025-08-18T00:00:00.000Z",
+    "hash": "b086fc0f401fd98e59517c60aaa86cbb"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
