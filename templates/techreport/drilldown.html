@@ -118,7 +118,7 @@
 
         <div class="card">
           {% set timeseries = tech_report_page.config.weight_timeseries %}
-          {% set selected_subcategory = request.args.get('weight-over-time', '') or tech_report_page.config.weight_timeseries.viz.default or 'performance' %}
+          {% set selected_subcategory = request.args.get('weight-over-time', '') or tech_report_page.config.weight_timeseries.viz.default or 'total' %}
           {% include "techreport/components/timeseries.html" %}
         </div>
       </div>
