@@ -56,12 +56,12 @@ class TechReport {
 
     openButtonMobile?.addEventListener('click', () => {
       if(mobileFilters.classList.contains('hidden')) {
-        mobileFilters.innerHTML = reportFilters.innerHTML;
+        mobileFilters.replaceChildren(reportFilters);
         mobileFilters.classList.remove('hidden');
         document.getElementById('close-filters').classList.remove('hidden');
         openButtonMobile.setAttribute('aria-expanded', true);
       } else {
-        mobileFilters.innerHTML = '';
+        filters.replaceChildren(reportFilters);
         mobileFilters.classList.add('hidden');
         openButtonMobile.setAttribute('aria-expanded', false);
       }
