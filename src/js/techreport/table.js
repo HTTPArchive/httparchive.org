@@ -192,7 +192,7 @@ function updateTable(id, config, appConfig, apps, data) {
 
       if(column.viz === 'progress-circle' && value) {
         const score = DataUtils.getLighthouseScoreCategories(value, appConfig.lighthouse_brackets);
-        wrapper.classList.add('progress-circle', score.name);
+        wrapper.classList.add('progress-circle', score?.name);
         wrapper.setAttribute('style', `--offset: ${value}%`);
       }
 
