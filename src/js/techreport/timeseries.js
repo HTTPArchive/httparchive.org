@@ -3,6 +3,7 @@
 import { Table } from "./table";
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
+
 class Timeseries {
   // Create the component
   constructor(id, pageConfig, config, filters, data) {
@@ -150,7 +151,7 @@ class Timeseries {
 
         /* Add a text label to the wrapper */
         const breakdownLabel = document.createElement('p');
-        breakdownLabel.textContent = breakdown.name;
+        breakdownLabel.textContent = UIUtils.capitalizeFirstLetter(breakdown.name);
         breakdownLabel.classList.add('breakdown-label');
         itemWrapper.appendChild(breakdownLabel);
 
@@ -377,7 +378,7 @@ class Timeseries {
 
           document.getElementsByTagName('main')[0].append(pointSvg);
 
-          pointSeries.innerHTML = point.series.name;
+          pointSeries.innerHTML = UIUtils.capitalizeFirstLetter(point.series.name);
           pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y.toLocaleString()}`;
 
           pointList.appendChild(pointItem);
@@ -386,6 +387,13 @@ class Timeseries {
         wrapper.appendChild(pointList);
 
         return wrapper.outerHTML;
+      }
+    }
+
+    timeseries.legend = {
+      labelFormatter: function () {
+        const name = this.name || "";
+        return UIUtils.capitalizeFirstLetter(name);
       }
     }
 

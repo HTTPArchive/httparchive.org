@@ -57,8 +57,13 @@ const getChangeStatus = (percentage, meaning) => {
   }
 }
 
+function capitalizeFirstLetter(theString) {
+  return theString && typeof theString === 'string' ? theString.charAt(0)?.toUpperCase() + theString.slice(1) : theString;
+}
+
 export const UIUtils = {
   getAppColor,
   updateReportComponents,
   getChangeStatus,
+  capitalizeFirstLetter,
 }

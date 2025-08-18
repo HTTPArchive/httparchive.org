@@ -139,7 +139,10 @@ function updateTable(id, config, appConfig, apps, data) {
       let text = '';
       let className = column.className;
 
-      const value = column.value;
+      const value =
+        typeof column.value === 'string' ? UIUtils.capitalizeFirstLetter(column.value) :
+        typeof column.value === 'number' ? column.value.toLocaleString() :
+        column.value;
 
       // Fill in the data if it exists
       if(value && value !== '') {
@@ -152,7 +155,7 @@ function updateTable(id, config, appConfig, apps, data) {
 
       // Wrap the text in a span for styling
       const wrapper = document.createElement('span');
-      wrapper.innerHTML = text;
+      wrapper.innerText = text;
       cell.append(wrapper);
 
       // Stylized column groups (eg format `<column 1> / <column 2>`)
@@ -167,7 +170,7 @@ function updateTable(id, config, appConfig, apps, data) {
         hiddenSuffix.innerHTML = column.hiddenSuffix;
 
         const textWrapper = document.createElement('span');
-        textWrapper.innerHTML = text;
+        textWrapper.innerText = text;
 
         const cellWrapper = document.createElement(cellType);
         cellWrapper.appendChild(textWrapper);

@@ -201,7 +201,7 @@ class TechReport {
 
     // Update labels
     document.querySelectorAll('[data-slot="client"]').forEach(component => {
-      component.innerHTML = client;
+      component.innerText = client;
     });
   }
 
