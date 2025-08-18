@@ -359,7 +359,7 @@ class TechReport {
       },
       {
         name: 'technologies',
-        endpoint: 'technologies?onlyname',
+        endpoint: 'technologies?fields=technology,icon',
       },
       {
         name: 'ranks',
@@ -406,8 +406,9 @@ class TechReport {
   // Update drilldown page components
   updateDrilldownComponents(data) {
     const app = this.filters.app[0];
+    const icon = data[app].at(-1).icon;
     DrilldownHeader.update(this.filters);
-    DrilldownHeader.setIcon(`${encodeURI(app)}.png`);
+    DrilldownHeader.setIcon(`${encodeURI(icon)}`);
 
     if(data && data[app]) {
       UIUtils.updateReportComponents(this.sections, data, data[app], this.page, this.labels);
