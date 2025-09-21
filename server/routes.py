@@ -1,11 +1,14 @@
-from flask import redirect, request, jsonify, abort, send_from_directory
 import re
 
+from flask import abort, jsonify, redirect, request, send_from_directory
 
-from . import app, talisman, render_template, url_for
-from . import reports as report_util
-from . import techreport as tech_report_util
+from . import app
 from . import faq as faq_util
+from . import render_template
+from . import reports as report_util
+from . import talisman
+from . import techreport as tech_report_util
+from . import url_for
 
 
 def safe_int(value, default=1):
@@ -87,6 +90,10 @@ def techreportlanding(page_id):
 
     # Get the settings for the current page
     active_tech_report = tech_report.get("pages").get(page_id)
+
+    # Check if the page exists
+    if active_tech_report is None:
+        abort(404)
 
     # Add the technologies requested in the URL to the filters
     # Use the default configured techs as fallback
