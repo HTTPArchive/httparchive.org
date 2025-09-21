@@ -3,7 +3,7 @@ flask-talisman==1.1.0
 google-cloud-storage==3.3.0
 gunicorn==23.0.0
 markdown==3.8.2
-pytest==8.4.1
+pytest==8.4.2
 pytest-watch==4.2.0
 pytest-cov==7.0.0
 Werkzeug!=2.2.0
