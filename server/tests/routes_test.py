@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from server import app, talisman
 import pytest
+
+from server import app, talisman
 
 
 # Create test client without https redirect
@@ -255,6 +256,31 @@ def test_tech_report_category_pages_fallback(client):
         "/reports/techreport/category?geo=ALL&rank=ALL&category=CMS&page=defaults_to_1"
     )
     assert response.status_code == 200
+
+
+def test_tech_report_landing_valid_page(client):
+    response = client.get("/reports/techreport/landing")
+    assert response.status_code == 200
+
+
+def test_tech_report_drilldown_page(client):
+    response = client.get("/reports/techreport/drilldown")
+    assert response.status_code == 200
+
+
+def test_tech_report_comparison_page(client):
+    response = client.get("/reports/techreport/comparison")
+    assert response.status_code == 200
+
+
+def test_tech_report_category_page(client):
+    response = client.get("/reports/techreport/category")
+    assert response.status_code == 200
+
+
+def test_tech_report_invalid_page(client):
+    response = client.get("/reports/techreport/invalid_page_id")
+    assert response.status_code == 404
 
 
 def test_well_known_atproto_did(client):
