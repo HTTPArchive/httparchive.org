@@ -1286,11 +1286,13 @@
       "bgcolor": "#fff",
       "primary": {
         "color": "#444",
-        "icon": "fas fa-wrench"
+        "icon": "fa-wrench",
+        "width": "fa-w-20"
       },
       "secondary": {
         "color": "rgba(0, 0, 0, 0.3)",
-        "icon": "fas fa-tachometer-alt"
+        "icon": "fa-tachometer-alt",
+        "width": "fa-w-20"
       }
     }
   }
