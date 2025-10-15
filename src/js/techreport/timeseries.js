@@ -249,17 +249,16 @@ class Timeseries {
           const latestMoM = latestClient?.momPerc;
           const latestMoMStr = latestClient?.momString;
           const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
-          
-          /* Remove existing monthchange element if present */
-          const existingChange = card.querySelector('.monthchange');
-          if(existingChange) {
-            existingChange.remove();
+
+          /* Add month change element if not already present */
+          let monthChange = card.querySelector('.monthchange');
+          if(!monthChange) {
+            monthChange = document.createElement('span');
+            card.appendChild(monthChange);
           }
-          
-          const monthChange = document.createElement('span');
+
           monthChange.textContent = latestMoMStr;
           monthChange.className = `monthchange ${styling?.color} ${styling?.direction}`;
-          card.appendChild(monthChange);
         }
       }
     });
