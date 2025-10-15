@@ -176,8 +176,8 @@
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "517a5a14e90ceacf5e930360f6d99807"
+    "date_modified": "2025-10-15T00:00:00.000Z",
+    "hash": "66106fc8e5a8ae322d813311e6366657"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -201,8 +201,8 @@
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "b086fc0f401fd98e59517c60aaa86cbb"
+    "date_modified": "2025-10-15T00:00:00.000Z",
+    "hash": "50e70648efa9513087d5af7bb2c99ac7"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -221,8 +221,8 @@
   },
   "reports/cwv-tech": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-04-05T00:00:00.000Z",
-    "hash": "59ca9a96a7a3a9ec1b19bb7aba15f930"
+    "date_modified": "2025-10-15T00:00:00.000Z",
+    "hash": "9c91a62a38f3ebb032e2e7a6f3ad9001"
   },
   "reports/loading-speed": {
     "date_published": "2018-05-08T00:00:00.000Z",
