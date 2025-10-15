@@ -8,4 +8,10 @@
   <li>
     Rank: <span data-slot="rank">{{ request.args.get('rank', '')  or 'ALL' }}</span>
   </li>
+  {# if only one technology (including ALL), then legend is not shown so add label #}
+  {% if ',' not in request.args.get('tech', '') %}
+  <li>
+    Technologies: <span data-slot="tech">{{ request.args.get('tech', '')  or 'ALL' }}</span>
+  </li>
+  {% endif %}
 </ul>
