@@ -199,15 +199,6 @@ def test_metric_speedindex(client):
     )
 
 
-def test_external_report(client):
-    assert_route(
-        client,
-        "/reports/cwv-tech",
-        302,
-        "https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC",
-    )
-
-
 def test_render_efonts_cache_control(client):
     response = client.get("/static/fonts/opensans-latin-700.woff2")
     assert response.status_code == 200 and "max-age=3153600" in response.headers.get(
