@@ -249,10 +249,16 @@ class Timeseries {
           const latestMoM = latestClient?.momPerc;
           const latestMoMStr = latestClient?.momString;
           const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
-          const monthChange = document.createElement('span');
+
+          /* Add month change element if not already present */
+          let monthChange = card.querySelector('.monthchange');
+          if(!monthChange) {
+            monthChange = document.createElement('span');
+            card.appendChild(monthChange);
+          }
+
           monthChange.textContent = latestMoMStr;
           monthChange.className = `monthchange ${styling?.color} ${styling?.direction}`;
-          card.appendChild(monthChange);
         }
       }
     });
