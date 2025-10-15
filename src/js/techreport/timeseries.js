@@ -249,6 +249,13 @@ class Timeseries {
           const latestMoM = latestClient?.momPerc;
           const latestMoMStr = latestClient?.momString;
           const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
+          
+          /* Remove existing monthchange element if present */
+          const existingChange = card.querySelector('.monthchange');
+          if(existingChange) {
+            existingChange.remove();
+          }
+          
           const monthChange = document.createElement('span');
           monthChange.textContent = latestMoMStr;
           monthChange.className = `monthchange ${styling?.color} ${styling?.direction}`;
