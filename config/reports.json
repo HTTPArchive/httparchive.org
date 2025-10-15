@@ -1281,25 +1281,6 @@
   "cwv-tech": {
     "name": "Core Web Vitals Technology Report",
     "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
-    "url": "https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC",
-    "metrics": [],
-    "graphic": {
-      "bgcolor": "#fff",
-      "primary": {
-        "color": "#444",
-        "icon": "fa-wrench",
-        "width": "fa-w-16"
-      },
-      "secondary": {
-        "color": "rgba(0, 0, 0, 0.3)",
-        "icon": "fa-tachometer-alt",
-        "width": "fa-w-18"
-      }
-    }
-  },
-  "cwv-tech-new": {
-    "name": "BETA: Core Web Vitals Technology Report",
-    "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
     "url": "/reports/techreport/landing",
     "metrics": [],
     "graphic": {
