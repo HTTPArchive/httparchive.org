@@ -1587,6 +1587,19 @@ select {
   border-radius: 1rem;
   border: 1px solid var(--color-text);
   font-size: 0.875rem;
+  display:flex;
+  margin-right: 0;
+}
+
+.intro .categories .cell:has(a) {
+  padding: 0;
+}
+
+.intro .categories .cell a {
+  padding: 0.5rem 0.75rem;
+  flex-grow: 1;
+  text-decoration: none;
+  color: inherit;
 }
 
 .page-content {
