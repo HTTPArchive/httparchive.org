@@ -1752,6 +1752,10 @@ h2.summary-heading {
   bottom: 1rem;
 }
 
+[data-component="timeseries"] .meta .client {
+  display: none;
+}
+
 /* Chart summary list */
 .data-summary {
   margin-top: 2rem;
