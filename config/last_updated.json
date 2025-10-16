@@ -51,8 +51,8 @@
   },
   "/static/css/techreport/techreport.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "7a459f0468cc653876e6a5e91df4babe"
+    "date_modified": "2025-10-16T00:00:00.000Z",
+    "hash": "6588ccdfd896d799e6365714c7773918"
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -166,8 +166,8 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "fb9ca3589ee1d214fe96df61d9c639cd"
+    "date_modified": "2025-10-16T00:00:00.000Z",
+    "hash": "0621955a4fd4c1b61e59d19b4efcb38c"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
