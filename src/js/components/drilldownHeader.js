@@ -22,8 +22,18 @@ function setCategories(categories) {
     const _categories = categories.slice(0,5);
     _categories.forEach((category)  => {
       const cellTemplate = document.createElement('li');
-      cellTemplate.className = 'cell';
-      cellTemplate.textContent = category;
+      cellTemplate.className = 'cell btn';
+      const link = document.createElement('a');
+      link.textContent = category;
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set('category', category);
+      const tech = urlParams.get('tech');
+      if (tech) {
+        urlParams.delete('tech');
+        urlParams.set('selected', tech);
+      }
+      link.href=`/reports/techreport/category?${urlParams.toString()}`;
+      cellTemplate.appendChild(link);
       list.appendChild(cellTemplate);
     });
 

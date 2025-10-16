@@ -67,7 +67,6 @@ const test_status_codes = async () => {
   await test_status_code('/reports/techreport/landing', 200);
   await test_status_code('/reports/techreport/drilldown', 200);
   await test_status_code('/reports/techreport/comparison', 200);
-  await test_status_code('/reports/cwv-tech', 302, 'https://datastudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC');
 
   // Test non-sitemap pages
   await test_status_code('/sitemap.xml', 200);

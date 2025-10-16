@@ -268,7 +268,7 @@ function drawHistogram(data, containerId, options) {
   const chart = document.getElementById(`${options.metric}-chart`);
   callOnceWhenVisible(chart, () => {
     drawChart(series, containerId, options);
-  })
+  });
 }
 
 function drawChart(series, containerId, options) {

@@ -51,8 +51,8 @@
   },
   "/static/css/techreport/techreport.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "7a459f0468cc653876e6a5e91df4babe"
+    "date_modified": "2025-10-16T00:00:00.000Z",
+    "hash": "6588ccdfd896d799e6365714c7773918"
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -166,8 +166,8 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "fb9ca3589ee1d214fe96df61d9c639cd"
+    "date_modified": "2025-10-16T00:00:00.000Z",
+    "hash": "0621955a4fd4c1b61e59d19b4efcb38c"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -176,8 +176,8 @@
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "517a5a14e90ceacf5e930360f6d99807"
+    "date_modified": "2025-10-15T00:00:00.000Z",
+    "hash": "66106fc8e5a8ae322d813311e6366657"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -201,8 +201,8 @@
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "b086fc0f401fd98e59517c60aaa86cbb"
+    "date_modified": "2025-10-15T00:00:00.000Z",
+    "hash": "50e70648efa9513087d5af7bb2c99ac7"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -220,14 +220,9 @@
     "hash": "8e9534ce5c7e68caea1a97bfe2747f7a"
   },
   "reports/cwv-tech": {
-    "date_published": "2021-09-20T00:00:00.000Z",
-    "date_modified": "2023-09-07T00:00:00.000Z",
-    "hash": "bb56bcf9203e97fcad14369053f778e3"
-  },
-  "reports/cwv-tech-new": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2024-04-05T00:00:00.000Z",
-    "hash": "59ca9a96a7a3a9ec1b19bb7aba15f930"
+    "date_modified": "2025-10-15T00:00:00.000Z",
+    "hash": "9c91a62a38f3ebb032e2e7a6f3ad9001"
   },
   "reports/loading-speed": {
     "date_published": "2018-05-08T00:00:00.000Z",

@@ -114,10 +114,10 @@
             "endpoint": "vitals",
             "category": "overall",
             "metric": "good_pct",
-            "label": "Overall good CWVs",
+            "label": "Good Core Web Vitals",
             "suffix": "%",
             "change": "true",
-            "description": "Origins with overall good core web vitals.",
+            "description": "Origins with good Core Web Vitals (LCP, INP, CLS).",
             "url": "#good-cwvs"
           },
           {
@@ -245,10 +245,10 @@
               "endpoint": "vitals",
               "category": "overall",
               "metric": "good_pct",
-              "label": "Good CWVs",
+              "label": "Good Core Web Vitals",
               "suffix": "%",
               "change": "true",
-              "description": "Origins with overall good core web vitals.",
+              "description": "Percentage of origins with good in all three Core Web Vitals (LCP, INP, CLS).",
               "url": "?good-cwv-over-time=overall#good-cwvs"
             },
             {
@@ -295,28 +295,28 @@
             "default": "overall",
             "options": [
               {
-                "label": "Overall good CWVs",
+                "label": "Good Core Web Vitals",
                 "value": "overall"
               },
               {
-                "label": "LCP",
+                "label": "Good LCP",
                 "value": "LCP"
               },
               {
-                "label": "CLS",
+                "label": "Good INP",
+                "value": "INP"
+              },
+              {
+                "label": "Good CLS",
                 "value": "CLS"
               },
               {
-                "label": "FCP",
+                "label": "Good FCP",
                 "value": "FCP"
               },
               {
-                "label": "TTFB",
+                "label": "Good TTFB",
                 "value": "TTFB"
-              },
-              {
-                "label": "INP",
-                "value": "INP"
               }
             ]
           },
@@ -785,7 +785,7 @@
               },
               {
                 "key": "good_pct",
-                "name": "Good CWVs",
+                "name": "Good Core Web Vitals",
                 "breakdown": "subcategory",
                 "subcategory": "overall",
                 "suffix": "%",
@@ -834,28 +834,28 @@
             "default": "overall",
             "options": [
               {
-                "label": "Overall good CWVs",
+                "label": "Good Core Web Vitals",
                 "value": "overall"
               },
               {
-                "label": "LCP",
+                "label": "Good LCP",
                 "value": "LCP"
               },
               {
-                "label": "CLS",
+                "label": "Good INP",
+                "value": "INP"
+              },
+              {
+                "label": "Good CLS",
                 "value": "CLS"
               },
               {
-                "label": "FCP",
+                "label": "Good FCP",
                 "value": "FCP"
               },
               {
-                "label": "TTFB",
+                "label": "Good TTFB",
                 "value": "TTFB"
-              },
-              {
-                "label": "INP",
-                "value": "INP"
               }
             ]
           },
@@ -885,7 +885,7 @@
           },
           "summary": true,
           "viz": {
-            "title": "Origins with good core web vitals over time",
+            "title": "Origins with good scores over time",
             "base": "pct_good_",
             "param": "good-cwv-over-time",
             "default": "overall",
@@ -930,7 +930,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here.",
+          "description": "Lighthouse has audits for performance, accessibility, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here.",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -1253,7 +1253,7 @@
               },
               {
                 "key": "good_pct",
-                "name": "Good CWVs",
+                "name": "Good Core Web Vitals",
                 "breakdown": "subcategory",
                 "subcategory": "overall",
                 "suffix": "%",
@@ -1305,7 +1305,7 @@
     "metrics": {
       "lighthouse": {
         "general": {
-          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here."
+          "description": "Lighthouse has audits for performance, accessibility, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here."
         },
         "performance": {
           "title": "Performance",
@@ -1329,35 +1329,35 @@
           "description": "Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome. A good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices."
         },
         "overall": {
-          "label": "Overall Core Web Vitals",
-          "title": "Passes Core Web Vitals",
+          "label": "Good Core Web Vitals",
+          "title": "Good Core Web Vitals",
           "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics."
         },
         "LCP": {
-          "label": "LCP",
+          "label": "Good LCP",
           "title": "Good Largest Contentful Paint",
           "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful. Good experiences are less than or equal to 2.5 seconds."
         },
+        "INP": {
+          "label": "Good INP",
+          "title": "Good Interaction to Next Paint",
+          "description": "INP is a metric that assesses a page's overall responsiveness to user interactions by observing the latency of all click, tap, and keyboard interactions that occur throughout the lifespan of a user's visit to a page. The final INP value is the longest interaction observed, ignoring outliers. A good experience is less than or equal to 200ms."
+        },
         "CLS": {
-          "label": "CLS",
+          "label": "Good CLS",
           "title": "Good Cumulative Layout Shift",
           "description": "The Cumulative Layout Shift (CLS) score is a unitless value based on a calculation of how much content is shifting and by how far. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits."
         },
         "FCP": {
-          "label": "FCP",
+          "label": "Good FCP",
           "value": "fcp",
           "title": "Good First Contentful Paint",
           "description": "The percentage of origins with good FCP experiences, less than or equal to 1.8 seconds"
         },
         "TTFB": {
-          "label": "TTFB",
+          "label": "Good TTFB",
           "title": "Good Time To First Byte",
           "description": "TTFB is a metric that measures the time between the request for a resource and when the first byte of a response begins to arrive. A good TTFB is less than or equal to 800ms."
-        },
-        "INP": {
-          "label": "INP",
-          "title": "Good Interaction to Next Paint",
-          "description": "INP is a metric that assesses a page's overall responsiveness to user interactions by observing the latency of all click, tap, and keyboard interactions that occur throughout the lifespan of a user's visit to a page. The final INP value is the longest interaction observed, ignoring outliers. A good experience is less than or equal to 200ms."
         }
       },
       "pageWeight": {
@@ -1399,14 +1399,14 @@
       "origins_eligible_for_inp": "Eligible",
       "origins_eligible_for_ttfb": "Eligible",
 
-      "origins_with_good_cwv": "Having good CWVs",
+      "origins_with_good_cwv": "Having good Core Web Vitals",
       "origins_with_good_cls": "Having good CLS",
       "origins_with_good_lcp": "Having good LCP",
       "origins_with_good_fcp": "Having good FCP",
       "origins_with_good_inp": "Having good INP",
       "origins_with_good_ttfb": "Having good TTFB",
 
-      "pct_good_cwv": "% Good CWVs",
+      "pct_good_cwv": "% Good Core Web Vitals",
       "pct_good_cls": "% Good CLS",
       "pct_good_lcp": "% Good LCP",
       "pct_good_fcp": "% Good FCP",

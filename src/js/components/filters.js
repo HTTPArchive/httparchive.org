@@ -58,7 +58,11 @@ class Filters {
 
     /* Modify the URL with the tech */
     url.searchParams.delete('tech');
-    url.searchParams.append('tech', technologies);
+    if (technologies.length > 0) {
+      url.searchParams.append('tech', technologies);
+    } else {
+      url.searchParams.append('tech', 'ALL');
+    }
 
     url.searchParams.delete('geo');
     url.searchParams.append('geo', geo);
@@ -120,7 +124,7 @@ class Filters {
 
     const combo = document.querySelectorAll('[data-component="combobox"]');
     const url = new URL(location.href);
-    const selected = url.searchParams.get('tech')?.split(',') || [];
+    const selected = url.searchParams.get('tech')?.split(',') || ["ALL"];
     combo.forEach(box => new ComboBox(box, this.technologies, selected));
   }
 

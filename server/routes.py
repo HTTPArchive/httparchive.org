@@ -1,6 +1,7 @@
 import re
 
 from flask import abort, jsonify, redirect, request, send_from_directory
+from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 
 from . import app
 from . import faq as faq_util
@@ -19,6 +20,36 @@ def safe_int(value, default=1):
         return int(value) if value else default
     except (ValueError, TypeError):
         return default
+
+
+def _add_param_to_url(u: str, key: str, value: str) -> str:
+    """Add or update a single query param on a (possibly relative) URL string."""
+    if not isinstance(u, str) or u == "":
+        return u  # pragma: no cover
+    parts = urlsplit(u)  # works for relative URLs like "?a=b#frag" or "#frag"
+    q = dict(parse_qsl(parts.query, keep_blank_values=True))
+    q[key] = value  # add or replace
+    new_query = urlencode(q, doseq=True)
+    return urlunsplit(parts._replace(query=new_query))
+
+
+def add_param_to_all_urls(obj, key: str, value: str) -> int:
+    """
+    Recursively mutate `obj` in place, adding/updating `key=value` to all fields named "url".
+    """
+
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "url" and isinstance(v, str):
+                obj[k] = _add_param_to_url(v, key, value)
+            else:
+                add_param_to_all_urls(v, key, value)
+
+    elif isinstance(obj, list):
+        for item in obj:
+            add_param_to_all_urls(item, key, value)
+
+    return
 
 
 @app.route("/")
@@ -192,6 +223,16 @@ def techreport():
     active_tech_report["filters"] = filters
     active_tech_report["params"] = params
 
+    # If we're looking at a Drilldown report of a single technology
+    # then we have summary links which may reload the report.
+    # Update all the summary URLs to include filters
+    # See https://github.com/HTTPArchive/httparchive.org/issues/1148
+    if page_id == "drilldown":
+        config = active_tech_report.get("config", {})
+        add_param_to_all_urls(config, "geo", requested_geo)
+        add_param_to_all_urls(config, "rank", requested_rank)
+        add_param_to_all_urls(config, "tech", requested_technologies)
+
     return render_template(
         "techreport/%s.html" % page_id,
         active_page=page_id,
@@ -210,13 +251,14 @@ def report(report_id):
     if request.base_url[-1] == "/":
         return redirect("/reports/%s" % (report_id)), 301
 
+    # tech report is a specl report so if it's called directly
+    # then redirect to landing page
+    if report_id == "techreport":
+        return redirect("/reports/techreport/landing"), 301
+
     report = report_util.get_report(report_id)
     if not report:
         abort(404)
-
-    report_url = report_util.get_report(report_id).get("url")
-    if report_url:
-        return redirect(report_url), 302
 
     dates = report_util.get_dates()
     if not dates:  # pragma: no cover
