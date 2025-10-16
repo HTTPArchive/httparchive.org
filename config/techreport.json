@@ -930,7 +930,7 @@
         },
         "lighthouse_timeseries": {
           "title": "Lighthouse over time",
-          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here.",
+          "description": "Lighthouse has audits for performance, accessibility, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here.",
           "id": "lighthouse_timeseries",
           "endpoint": "lighthouse",
           "metric": "median_score_pct",
@@ -1305,7 +1305,7 @@
     "metrics": {
       "lighthouse": {
         "general": {
-          "description": "Lighthouse has audits for performance, accessibility, progressive web apps, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here."
+          "description": "Lighthouse has audits for performance, accessibility, SEO, and more. Based on the audits, a score is calculated. Currently, this section visualizes median scores, but in the future you'll also be able to explore the details of the audits here."
         },
         "performance": {
           "title": "Performance",
