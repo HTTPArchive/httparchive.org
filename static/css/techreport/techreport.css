@@ -1752,7 +1752,8 @@ h2.summary-heading {
   bottom: 1rem;
 }
 
-[data-component="timeseries"] .meta .client {
+/* Drilldown shows both clients in timeseries so hide client meta for these */
+[data-component="timeseries"] .meta .drilldown.client {
   display: none;
 }
 

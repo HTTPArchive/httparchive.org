@@ -1,5 +1,5 @@
 <ul class="meta">
-  <li class="client">
+  <li class="{{ active_page }} client">
     Client: <span data-slot="client">{{ request.args.get('client', '') | capitalize or 'Mobile' }}</span>
   </li>
   <li>
