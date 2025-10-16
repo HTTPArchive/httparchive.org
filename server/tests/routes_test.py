@@ -254,6 +254,10 @@ def test_tech_report_landing_valid_page(client):
     assert response.status_code == 200
 
 
+def test_tech_report_landing_redirect(client):
+    assert_route(client, "/reports/techreport", 301, "/reports/techreport/landing")
+
+
 def test_tech_report_drilldown_page(client):
     response = client.get("/reports/techreport/drilldown")
     assert response.status_code == 200

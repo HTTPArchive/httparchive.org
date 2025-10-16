@@ -251,6 +251,11 @@ def report(report_id):
     if request.base_url[-1] == "/":
         return redirect("/reports/%s" % (report_id)), 301
 
+    # tech report is a specl report so if it's called directly
+    # then redirect to landing page
+    if report_id == "techreport":
+        return redirect("/reports/techreport/landing"), 301
+
     report = report_util.get_report(report_id)
     if not report:
         abort(404)
