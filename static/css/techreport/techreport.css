@@ -411,7 +411,6 @@ nav {
 }
 
 .skip:focus-visible {
-  clip: unset;
   clip-path: unset;
   width: unset;
   height: unset;
