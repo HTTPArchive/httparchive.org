@@ -1,5 +1,5 @@
 <ul class="meta">
-  <li>
+  <li class="{{ active_page }} client">
     Client: <span data-slot="client">{{ request.args.get('client', '') | capitalize or 'Mobile' }}</span>
   </li>
   <li>
@@ -11,7 +11,8 @@
   {# if only one technology (including ALL), then legend is not shown so add label #}
   {% if ',' not in request.args.get('tech', '') %}
   <li>
-    Technologies: <span data-slot="tech">{{ request.args.get('tech', '')  or 'ALL' }}</span>
+    {% if (request.args.get('tech', '')  or 'ALL') == "ALL" %}Technologies:{% else %}Technology:{% endif %}
+    <span data-slot="tech">{{ request.args.get('tech', '')  or 'ALL' }}</span>
   </li>
   {% endif %}
 </ul>
