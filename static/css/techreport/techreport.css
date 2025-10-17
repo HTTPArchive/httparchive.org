@@ -1508,9 +1508,9 @@ select {
 .intro {
   border: none;
   margin-top: 0;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   background-color: transparent;
-  padding: 3rem 0 7rem 0;
+  padding: 3rem 0 3rem 0;
 }
 
 .intro h1 {
@@ -1598,6 +1598,14 @@ select {
   flex-grow: 1;
   text-decoration: none;
   color: inherit;
+}
+
+.caveats {
+  border: none;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  padding: 0rem 0 3rem 0;
 }
 
 .page-content {
