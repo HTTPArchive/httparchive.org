@@ -51,8 +51,8 @@
   },
   "/static/css/techreport/techreport.css": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-10-16T00:00:00.000Z",
-    "hash": "6588ccdfd896d799e6365714c7773918"
+    "date_modified": "2025-10-19T00:00:00.000Z",
+    "hash": "48093f77656ec4c7c26578deddcf778d"
   },
   "/static/js/accessibility.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -201,8 +201,8 @@
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-10-15T00:00:00.000Z",
-    "hash": "50e70648efa9513087d5af7bb2c99ac7"
+    "date_modified": "2025-10-19T00:00:00.000Z",
+    "hash": "c2b0df4edaa65c181d437626826d6066"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
