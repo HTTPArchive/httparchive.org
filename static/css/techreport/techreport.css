@@ -1510,7 +1510,7 @@ select {
   margin-top: 0;
   margin-bottom: 3rem;
   background-color: transparent;
-  padding: 3rem 0 7rem 0;
+  padding: 3rem 0 3rem 0;
 }
 
 .intro h1 {
@@ -1600,6 +1600,18 @@ select {
   color: inherit;
 }
 
+.caveats {
+  border: none;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  padding: 0rem 0 3rem 0;
+}
+
+.caveats p {
+  font-size: 0.9em;
+}
+
 .page-content {
   display: block;
   position: relative;
@@ -1617,7 +1629,7 @@ select {
 }
 
 .data-sections > div:first-of-type {
-  margin-top: -10rem;
+  margin-top: -6rem;
 }
 
 .report-section {
