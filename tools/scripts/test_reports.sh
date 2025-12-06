@@ -22,20 +22,20 @@ LENSES="drupal magento wordpress top1k top10k top100k top1m"
 # These dated report URLs are tested for 200 status
 # We test the first and last report for each lens
 REPORT_MONTHLY_URLS=$(cat <<-END
-https://cdn.httparchive.org/reports/${REPORT_DATE}/bootupJs.json
-https://cdn.httparchive.org/reports/${REPORT_DATE}/tcp.json
-https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxCls.json
-https://cdn.httparchive.org/reports/${CRUX_REPORT_DATE}/cruxOl.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${REPORT_DATE}/bootupJs.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${REPORT_DATE}/tcp.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${CRUX_REPORT_DATE}/cruxCls.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${CRUX_REPORT_DATE}/cruxOl.json
 END
 )
 
 for LENS in ${LENSES}
 do
 REPORT_MONTHLY_URLS_LENS=$(cat <<-END
-https://cdn.httparchive.org/reports/${LENS}/${REPORT_DATE}/bootupJs.json
-https://cdn.httparchive.org/reports/${LENS}/${REPORT_DATE}/tcp.json
-https://cdn.httparchive.org/reports/${LENS}/${CRUX_REPORT_DATE}/cruxCls.json
-https://cdn.httparchive.org/reports/${LENS}/${CRUX_REPORT_DATE}/cruxOl.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/${REPORT_DATE}/bootupJs.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/${REPORT_DATE}/tcp.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/${CRUX_REPORT_DATE}/cruxCls.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/${CRUX_REPORT_DATE}/cruxOl.json
 END
 )
 REPORT_MONTHLY_URLS="${REPORT_MONTHLY_URLS} ${REPORT_MONTHLY_URLS_LENS}"
@@ -45,16 +45,16 @@ done
 # These timeseries URLs are tested if the date exists in the returned body
 # We test the first and last report for each lens
 TIMESERIES_URLS=$(cat <<-END
-https://cdn.httparchive.org/reports/numUrls.json
-https://cdn.httparchive.org/reports/a11yButtonName.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/numUrls.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/a11yButtonName.json
 END
 )
 
 for LENS in ${LENSES}
 do
 TIMESERIES_URLS_LENS=$(cat <<-END
-https://cdn.httparchive.org/reports/${LENS}/numUrls.json
-https://cdn.httparchive.org/reports/${LENS}/a11yButtonName.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/numUrls.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/a11yButtonName.json
 END
 )
 TIMESERIES_URLS="${TIMESERIES_URLS} ${TIMESERIES_URLS_LENS}"
@@ -64,16 +64,16 @@ done
 # For CrUX we always test the month before (unless an explicit date was passed)
 # We test the first and last report
 CRUX_TIMESERIES_URLS=$(cat <<-END
-https://cdn.httparchive.org/reports/cruxFastDcl.json
-https://cdn.httparchive.org/reports/cruxSmallCls.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/cruxFastDcl.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/cruxSmallCls.json
 END
 )
 
 for LENS in ${LENSES}
 do
 CRUX_TIMESERIES_URLS_LENS=$(cat <<-END
-https://cdn.httparchive.org/reports/${LENS}/cruxFastDcl.json
-https://cdn.httparchive.org/reports/${LENS}/cruxSmallCls.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/cruxFastDcl.json
+https://reports-dev-2vzgiib6.uc.gateway.dev/v1/static/reports/${LENS}/cruxSmallCls.json
 END
 )
 CRUX_TIMESERIES_URLS="${CRUX_TIMESERIES_URLS} ${CRUX_TIMESERIES_URLS_LENS}"
