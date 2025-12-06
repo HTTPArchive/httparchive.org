@@ -111,8 +111,8 @@
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-06-02T00:00:00.000Z",
-    "hash": "58efe705af1fb94fe47af02ffa19fa95"
+    "date_modified": "2025-12-07T00:00:00.000Z",
+    "hash": "762edb2f242b0c9275f64963596288a7"
   },
   "/static/js/index.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -166,23 +166,23 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-10-16T00:00:00.000Z",
-    "hash": "0621955a4fd4c1b61e59d19b4efcb38c"
+    "date_modified": "2025-12-07T00:00:00.000Z",
+    "hash": "f1d524a0c3936491e48e422013548e03"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "1775005cbf8d70f6fc4974781b7e1b51"
+    "date_modified": "2025-12-07T00:00:00.000Z",
+    "hash": "ccd53f137a4aa746f70dd6c90428db3b"
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-10-15T00:00:00.000Z",
-    "hash": "66106fc8e5a8ae322d813311e6366657"
+    "date_modified": "2025-12-07T00:00:00.000Z",
+    "hash": "fffa299ba030c83dbac35f5f81703ce5"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-06-05T00:00:00.000Z",
-    "hash": "88e02e130b048bdbc7797a3c5c369d6d"
+    "date_modified": "2025-12-07T00:00:00.000Z",
+    "hash": "626181398990a64da615b1ab1e5737d3"
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
