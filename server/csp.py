@@ -10,6 +10,8 @@ csp = {
         "spdcrv.global.ssl.fastly.net",
         "lux.speedcurve.com",
         "'unsafe-inline'",
+        "reports-dev-2vzgiib6.uc.gateway.dev",
+        "reports-prod-2vzgiib6.uc.gateway.dev",
     ],
     "font-src": ["'self'"],
     "connect-src": [
