@@ -107,7 +107,7 @@ class TableLinked {
               wrapper.classList.add('app-wrapper');
 
               const img = document.createElement('span');
-              const imgUrl = `https://reports-prod-2vzgiib6.uc.gateway.dev/v1/static/icons/${encodeURI(technology[0]?.icon)}`;
+              const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${encodeURI(technology[0]?.icon)}`;
               img.setAttribute('aria-hidden', 'true');
               img.setAttribute('style', `background-image: url(${imgUrl})`);
               img.classList.add('app-img');

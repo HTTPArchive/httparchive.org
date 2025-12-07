@@ -31,7 +31,7 @@ class ComboBox {
       option.id = `${this.element.dataset.id}-${row.technology.replaceAll(' ','-')}`;
       const logo = document.createElement('img');
       logo.setAttribute('alt', '');
-      logo.setAttribute('src', `https://reports-prod-2vzgiib6.uc.gateway.dev/v1/static/icons/${icon}`);
+      logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${icon}`);
       logo.setAttribute('loading', 'lazy');
       option.append(logo);
       if(this.selected.includes(row.technology)) {
@@ -200,7 +200,7 @@ class ComboBox {
 
     /* Add the app logo */
     const appIcon = document.createElement('img');
-    appIcon.setAttribute('src', `https://reports-prod-2vzgiib6.uc.gateway.dev/v1/static/icons/${encodeURI(icon)}`);
+    appIcon.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
     appIcon.setAttribute('alt', '');
     appIcon.classList.add('logo');
     deleteSelection.append(appIcon);

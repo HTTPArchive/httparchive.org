@@ -8,7 +8,7 @@ import { el, prettyDate, chartExportOptions, drawMetricSummary, callOnceWhenVisi
 
 
 function timeseries(metric, options, start, end) {
-  const dataUrl = `https://reports-prod-2vzgiib6.uc.gateway.dev/v1/static/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
+  const dataUrl = `https://cdn.httparchive.org/v1/static/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
   options.chartId = `${metric}-chart`;
   options.tableId = `${metric}-table`;
   options.metric = metric;
