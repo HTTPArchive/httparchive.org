@@ -106,12 +106,14 @@ class TableLinked {
               const wrapper = document.createElement('span');
               wrapper.classList.add('app-wrapper');
 
-              const img = document.createElement('span');
-              const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${encodeURI(technology[0]?.icon)}`;
-              img.setAttribute('aria-hidden', 'true');
-              img.setAttribute('style', `background-image: url(${imgUrl})`);
-              img.classList.add('app-img');
-              wrapper.append(img);
+              if(technology[0]?.icon) {
+                const img = document.createElement('span');
+                const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${encodeURI(technology[0]?.icon)}`;
+                img.setAttribute('aria-hidden', 'true');
+                img.setAttribute('style', `background-image: url(${imgUrl})`);
+                img.classList.add('app-img');
+                wrapper.append(img);
+              }
 
               const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
