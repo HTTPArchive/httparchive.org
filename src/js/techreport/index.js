@@ -299,9 +299,7 @@ class TechReport {
   // Get the information about the selected technology
   getTechInfo() {
     const technologies = this.filters.app;
-    const technology = technologies.join('%2C')
-      .replaceAll(" ", "%20");
-
+    const technology = technologies.map(encodeURIComponent).join(':');
     const url = `${Constants.apiBase}/technologies?technology=${technology}`;
 
     fetch(url)
@@ -315,7 +313,11 @@ class TechReport {
         const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
         DrilldownHeader.setCategories(categories);
         DrilldownHeader.setDescription(techInfo.description);
-        DrilldownHeader.setIcon(techInfo.icon);
+        if (techInfo.icon) {
+          DrilldownHeader.setIcon(techInfo.icon);
+        } else {
+          console.warn('No icon found for technology:', technologies[0]);
+        }
       });
   }
 
@@ -408,7 +410,11 @@ class TechReport {
     const app = this.filters.app[0];
     const icon = data[app]?.at(-1)?.icon;
     DrilldownHeader.update(this.filters);
-    DrilldownHeader.setIcon(`${encodeURI(icon)}`);
+    if (icon) {
+      DrilldownHeader.setIcon(`${encodeURI(icon)}`);
+    } else {
+      console.warn('No icon found for technology:', app);
+    }
 
     if(data && data[app]) {
       UIUtils.updateReportComponents(this.sections, data, data[app], this.page, this.labels);

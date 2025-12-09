@@ -29,11 +29,15 @@ class ComboBox {
       option.dataset.key = index;
       option.textContent = row.technology;
       option.id = `${this.element.dataset.id}-${row.technology.replaceAll(' ','-')}`;
-      const logo = document.createElement('img');
-      logo.setAttribute('alt', '');
-      logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${icon}`);
-      logo.setAttribute('loading', 'lazy');
-      option.append(logo);
+      if(icon) {
+        const logo = document.createElement('img');
+        logo.setAttribute('alt', '');
+        logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${icon}`);
+        logo.setAttribute('loading', 'lazy');
+        option.append(logo);
+      } else {
+        console.warn('No icon found for technology:', row.technology);
+      }
       if(this.selected.includes(row.technology)) {
         option.setAttribute('aria-selected', true);
       }
@@ -198,12 +202,16 @@ class ComboBox {
     deleteSelection.dataset.name = name;
     deleteSelection.addEventListener('click', () => this.unselectElement(name));
 
-    /* Add the app logo */
-    const appIcon = document.createElement('img');
-    appIcon.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
-    appIcon.setAttribute('alt', '');
-    appIcon.classList.add('logo');
-    deleteSelection.append(appIcon);
+    if (icon) {
+      /* Add the app logo */
+      const appIcon = document.createElement('img');
+      appIcon.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
+      appIcon.setAttribute('alt', '');
+      appIcon.classList.add('logo');
+      deleteSelection.append(appIcon);
+    } else {
+      console.warn('No icon found for technology:', name);
+    }
 
     /* Add the delete icon */
     const deleteIcon = document.createElement('img');
