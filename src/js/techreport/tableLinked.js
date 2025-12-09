@@ -113,8 +113,6 @@ class TableLinked {
                 img.setAttribute('style', `background-image: url(${imgUrl})`);
                 img.classList.add('app-img');
                 wrapper.append(img);
-              } else {
-                console.warn('No icon found for technology:', app);
               }
 
               const formattedApp = DataUtils.formatAppName(app);

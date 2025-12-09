@@ -35,8 +35,6 @@ class ComboBox {
         logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${icon}`);
         logo.setAttribute('loading', 'lazy');
         option.append(logo);
-      } else {
-        console.warn('No icon found for technology:', row.technology);
       }
       if(this.selected.includes(row.technology)) {
         option.setAttribute('aria-selected', true);
@@ -209,8 +207,6 @@ class ComboBox {
       appIcon.setAttribute('alt', '');
       appIcon.classList.add('logo');
       deleteSelection.append(appIcon);
-    } else {
-      console.warn('No icon found for technology:', name);
     }
 
     /* Add the delete icon */

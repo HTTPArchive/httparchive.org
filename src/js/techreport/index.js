@@ -299,7 +299,7 @@ class TechReport {
   // Get the information about the selected technology
   getTechInfo() {
     const technologies = this.filters.app;
-    const technology = technologies.map(encodeURIComponent).join(':');
+    const technology = technologies.map(encodeURIComponent).join(',');
     const url = `${Constants.apiBase}/technologies?technology=${technology}`;
 
     fetch(url)
@@ -315,8 +315,6 @@ class TechReport {
         DrilldownHeader.setDescription(techInfo.description);
         if (techInfo.icon) {
           DrilldownHeader.setIcon(techInfo.icon);
-        } else {
-          console.warn('No icon found for technology:', technologies[0]);
         }
       });
   }
@@ -412,8 +410,6 @@ class TechReport {
     DrilldownHeader.update(this.filters);
     if (icon) {
       DrilldownHeader.setIcon(`${encodeURI(icon)}`);
-    } else {
-      console.warn('No icon found for technology:', app);
     }
 
     if(data && data[app]) {
