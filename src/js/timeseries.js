@@ -318,11 +318,11 @@ function drawChart(options, series) {
 
         const changelog = flags[this.x];
 
-        // Drop the 1st day from dates as data is for month, rather than
-        // specific date. However, include the non-01 dates from when we
-        // used to run an early (01) and late (15 typically) crawl.
-        const formattedDate = Highcharts.dateFormat('%e', this.x) === ' 1' ?
-          Highcharts.dateFormat('%b  %Y', this.x) :
+        // Use short format (month + year) for dates from 2019 onwards when
+        // we switched to monthly crawls. Show full date for older data that
+        // may have had mid-month crawls.
+        const formattedDate = this.x >= Date.UTC(2019, 0, 1) ?
+          Highcharts.dateFormat('%b %Y', this.x) :
           Highcharts.dateFormat('%b %e, %Y', this.x);
         const tooltip = `<p style="font-size: smaller; text-align: center;">${formattedDate}</p>`;
 
