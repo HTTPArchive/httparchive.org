@@ -81,8 +81,8 @@
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2024-03-14T00:00:00.000Z",
-    "hash": "a019c291062d72e6eace21ac47fd8108"
+    "date_modified": "2025-12-12T00:00:00.000Z",
+    "hash": "9ee66d3b8e9b0682d4c8e9a88be3232f"
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
@@ -111,8 +111,8 @@
   },
   "/static/js/histogram.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-12-07T00:00:00.000Z",
-    "hash": "e63fe706198cb8564c6ed7ddd56e66f9"
+    "date_modified": "2025-12-12T00:00:00.000Z",
+    "hash": "ccd0463f05979dcf832675631f2ae784"
   },
   "/static/js/index.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -126,8 +126,8 @@
   },
   "/static/js/report.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-06-02T00:00:00.000Z",
-    "hash": "c7e72680bb11f95afeba1b45efbd8299"
+    "date_modified": "2025-12-12T00:00:00.000Z",
+    "hash": "6042f2a454c5557eda2526bcd3556c85"
   },
   "/static/js/send-web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
@@ -166,23 +166,23 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-12-07T00:00:00.000Z",
-    "hash": "e581a509e8e35ec9645e37c71a5d8677"
+    "date_modified": "2025-12-12T00:00:00.000Z",
+    "hash": "52ef459329da357993079b4d8637bc22"
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-12-07T00:00:00.000Z",
-    "hash": "bf59e4e82aca2efb3d2ffa8be803f456"
+    "date_modified": "2025-12-12T00:00:00.000Z",
+    "hash": "7eb39ea06100280610f8d3d70b4b6e7a"
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2025-12-07T00:00:00.000Z",
-    "hash": "a87f2f0026ad070e4bdf6f2e1c259fc5"
+    "date_modified": "2025-12-12T00:00:00.000Z",
+    "hash": "7dd8e23d0df26b21a298f771ff15645f"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-12-07T00:00:00.000Z",
-    "hash": "1145991117c15864eb7f80febcac9ba4"
+    "date_modified": "2025-12-12T00:00:00.000Z",
+    "hash": "c8e5f0a5274d99739bce7f88da822fd8"
   },
   "/static/js/web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
