@@ -317,7 +317,14 @@ function drawChart(options, series) {
         }
 
         const changelog = flags[this.x];
-        const tooltip = `<p style="font-size: smaller; text-align: center;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
+
+        // Drop the 1st day from dates as data is for month, rather than
+        // specific date. However, include the non-01 dates from when we
+        // used to run an early (01) and late (15 typically) crawl.
+        const formattedDate = Highcharts.dateFormat('%e', this.x) === ' 1' ?
+          Highcharts.dateFormat('%b  %Y', this.x) :
+          Highcharts.dateFormat('%b %e, %Y', this.x);
+        const tooltip = `<p style="font-size: smaller; text-align: center;">${formattedDate}</p>`;
 
         // Handle changelog tooltips first.
         if (!this.points) {
@@ -390,7 +397,8 @@ function drawChart(options, series) {
       }, {
         type: 'all',
         text: 'All'
-      }]
+      }],
+      inputDateFormat: '%b %Y',
     },
     xAxis: {
       type: 'datetime',

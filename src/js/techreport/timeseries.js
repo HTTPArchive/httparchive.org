@@ -131,7 +131,7 @@ class Timeseries {
       container.innerHTML = '';
 
       /* Update the date to the most recent timestamp in the dataset */
-      viz.querySelector('[data-slot="timestamp"]').innerHTML = sorted?.[0]?.date;
+      viz.querySelector('[data-slot="timestamp"]').innerHTML = UIUtils.printMonthYear(sorted?.[0]?.date);
 
       /* For each of the breakdowns, add a component with the latest data */
       config.series.values.forEach(breakdown => {
@@ -239,7 +239,7 @@ class Timeseries {
           value.classList.add('undefined');
           value.textContent = 'No data';
         }
-        timestamp.textContent = latest.date;
+        timestamp.textContent = UIUtils.printMonthYear(latest.date);
         const techColor = UIUtils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
         const fallback = this.pageConfig.colors.app[index];
         card.style.setProperty('--breakdown-color', techColor || fallback);
@@ -314,7 +314,7 @@ class Timeseries {
         const wrapper = document.createElement('div');
         wrapper.className = 'tooltip-wrapper';
 
-        const d =  Highcharts.dateFormat('%b %e, %Y', this.x);
+        const d =  Highcharts.dateFormat('%b %Y', this.x);
 
         const dateEl = document.createElement('p');
         dateEl.innerHTML = d;
