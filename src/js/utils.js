@@ -7,10 +7,21 @@ const prettyDateFormatter = new Intl.DateTimeFormat(undefined, {
   timeZone: 'UTC'
 });
 
+const prettyShortDateFormatter = new Intl.DateTimeFormat(undefined, {
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC'
+});
+
 export const prettyDate = YYYY_MM_DD => {
   const [YYYY, MM, DD] = YYYY_MM_DD.split('_');
-  const d = new Date(Date.UTC(YYYY, MM - 1, DD));
-  return getFullDate(d);
+  if (YYYY > '2018') {
+    const d = new Date(Date.UTC(YYYY, MM - 1));
+    return prettyShortDateFormatter.format(d);
+  } else {
+    const d = new Date(Date.UTC(YYYY, MM - 1, DD));
+    return prettyDateFormatter.format(d);
+  }
 };
 
 export const getFullDate = d => {

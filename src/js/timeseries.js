@@ -317,7 +317,14 @@ function drawChart(options, series) {
         }
 
         const changelog = flags[this.x];
-        const tooltip = `<p style="font-size: smaller; text-align: center;">${Highcharts.dateFormat('%b %e, %Y', this.x)}</p>`;
+
+        // Use short format (month + year) for dates from 2019 onwards when
+        // we switched to monthly crawls. Show full date for older data that
+        // may have had mid-month crawls.
+        const formattedDate = this.x >= Date.UTC(2019, 0, 1) ?
+          Highcharts.dateFormat('%b %Y', this.x) :
+          Highcharts.dateFormat('%b %e, %Y', this.x);
+        const tooltip = `<p style="font-size: smaller; text-align: center;">${formattedDate}</p>`;
 
         // Handle changelog tooltips first.
         if (!this.points) {
@@ -390,7 +397,8 @@ function drawChart(options, series) {
       }, {
         type: 'all',
         text: 'All'
-      }]
+      }],
+      inputDateFormat: '%b %Y',
     },
     xAxis: {
       type: 'datetime',

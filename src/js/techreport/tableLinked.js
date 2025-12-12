@@ -81,7 +81,7 @@ class TableLinked {
       }
 
       if(timestamp) {
-        timestamp.textContent = this.dataArray[1]?.[0]?.date;
+        timestamp.textContent = UIUtils.printMonthYear(this.dataArray[1]?.[0]?.date);
       }
 
       this.dataArray.forEach(technology => {

@@ -61,9 +61,23 @@ function capitalizeFirstLetter(theString) {
   return theString && typeof theString === 'string' ? theString.charAt(0)?.toUpperCase() + theString.slice(1) : theString;
 }
 
+function printMonthYear(theDate) {
+  if (!theDate || theDate.length != 10) return;
+
+  const [year, month] = theDate.split('-');
+  const date = new Date(year, month - 1);
+  const formattedDate = date.toLocaleString('default', {
+    month: 'long',
+    year: 'numeric'
+  });
+
+  return formattedDate;
+}
+
 export const UIUtils = {
   getAppColor,
   updateReportComponents,
   getChangeStatus,
   capitalizeFirstLetter,
+  printMonthYear,
 }
