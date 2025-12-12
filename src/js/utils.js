@@ -15,11 +15,13 @@ const prettyShortDateFormatter = new Intl.DateTimeFormat(undefined, {
 
 export const prettyDate = YYYY_MM_DD => {
   const [YYYY, MM, DD] = YYYY_MM_DD.split('_');
-  const d = new Date(Date.UTC(YYYY, MM - 1, DD));
-  const formattedDate = DD === '01' ?
-    prettyShortDateFormatter.format(d) :
-    prettyDateFormatter.format(d);
-  return formattedDate;
+  if (YYYY > '2018') {
+    const d = new Date(Date.UTC(YYYY, MM - 1));
+    return prettyShortDateFormatter.format(d);
+  } else {
+    const d = new Date(Date.UTC(YYYY, MM - 1, DD));
+    return prettyDateFormatter.format(d);
+  }
 };
 
 export const getFullDate = d => {

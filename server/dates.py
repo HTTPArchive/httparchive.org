@@ -38,9 +38,6 @@ except DefaultCredentialsError:  # pragma: no cover
                 current_month_in_year = "0{}".format(current_month_in_year)
 
             months.append("{}_{}_01".format(year, current_month_in_year))
-            if year == end_year and current_month_in_year == month_delta and today < 15:
-                continue
-            months.append("{}_{}_15".format(year, current_month_in_year))
 
             if month % 12 == 0:
                 year = year + 1
