@@ -299,8 +299,8 @@ class TechReport {
   // Get the information about the selected technology
   getTechInfo() {
     const technologies = this.filters.app;
-    const technology = technologies.map(encodeURIComponent).join(',');
-    const url = `${Constants.apiBase}/technologies?technology=${technology}`;
+    const technology = technologies.join(',');
+    const url = `${Constants.apiBase}/technologies?technology=${encodeURIComponent(technology)}`;
 
     fetch(url)
       .then(result => result.json())
@@ -409,7 +409,7 @@ class TechReport {
     const icon = data[app]?.at(-1)?.icon;
     DrilldownHeader.update(this.filters);
     if (icon) {
-      DrilldownHeader.setIcon(`${encodeURI(icon)}`);
+      DrilldownHeader.setIcon(icon);
     }
 
     if(data && data[app]) {

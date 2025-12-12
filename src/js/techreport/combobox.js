@@ -32,7 +32,7 @@ class ComboBox {
       if(icon) {
         const logo = document.createElement('img');
         logo.setAttribute('alt', '');
-        logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${icon}`);
+        logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURIComponent(icon)}`);
         logo.setAttribute('loading', 'lazy');
         option.append(logo);
       }
@@ -203,7 +203,7 @@ class ComboBox {
     if (icon) {
       /* Add the app logo */
       const appIcon = document.createElement('img');
-      appIcon.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
+      appIcon.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURIComponent(icon)}`);
       appIcon.setAttribute('alt', '');
       appIcon.classList.add('logo');
       deleteSelection.append(appIcon);

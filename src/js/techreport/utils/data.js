@@ -146,10 +146,7 @@ const getLighthouseScoreCategories = (score, brackets) => {
 }
 
 const fetchCategoryData = (rows, filters, callback) => {
-  const geoFormatted = encodeURI(filters.geo);
-  const rankFormatted = encodeURI(filters.rank);
-  const categoryFormatted = encodeURI(filters.category);
-  const url = `${Constants.apiBase}/categories?category=${categoryFormatted}&geo=${geoFormatted}&rank=${rankFormatted}`;
+  const url = `${Constants.apiBase}/categories?category=${encodeURIComponent(filters.category)}&geo=${encodeURIComponent(filters.geo)}&rank=${encodeURIComponent(filters.rank)}`;
   const apis = [
     {
       endpoint: 'technologies',
@@ -187,17 +184,16 @@ const fetchCategoryData = (rows, filters, callback) => {
       const paginatedTechs = category?.technologies?.slice(firstTechNr, lastTechNr);
 
       const techsFromUrl = getTechsFromURL();
-      const technologyFormatted = paginatedTechs?.join(',');
-      const technologyUrl = encodeURI(techsFromUrl || technologyFormatted);
+      const technologyUrl = techsFromUrl || paginatedTechs?.join(',');
 
       const compare = document.querySelector('[data-name="selected-apps"]');
-      compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyUrl}`);
+      compare.setAttribute('href', `/reports/techreport/tech?tech=${encodeURIComponent(technologyUrl)}`);
 
       let allResults = {};
       paginatedTechs.forEach(tech => allResults[tech] = []);
 
       Promise.all(apis.map(api => {
-        const url = `${Constants.apiBase}/${api.endpoint}?technology=${technologyFormatted}&geo=${geoFormatted}&rank=${rankFormatted}&start=latest`;
+        const url = `${Constants.apiBase}/${api.endpoint}?technology=${encodeURIComponent(technologyUrl)}&geo=${encodeURIComponent(filters.geo)}&rank=${encodeURIComponent(filters.rank)}&start=latest`;
 
         return fetch(url)
           .then(techResult => techResult.json())

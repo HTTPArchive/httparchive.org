@@ -8,7 +8,7 @@ function setTitle(title) {
 
 function setIcon(icon) {
   const img = document.querySelector('h1 .title-img');
-  const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${icon}`;
+  const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${encodeURIComponent(icon)}`;
   img.setAttribute('style', `background-image: url(${imgUrl})`);
 }
 
