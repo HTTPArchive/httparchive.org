@@ -64,7 +64,7 @@ function capitalizeFirstLetter(theString) {
 function printMonthYear(theDate) {
   if (!theDate || theDate.length != 10) return;
 
-  const [year, month, day] = theDate.split('-');
+  const [year, month] = theDate.split('-');
   const date = new Date(year, month - 1);
   const formattedDate = date.toLocaleString('default', {
     month: 'long',
