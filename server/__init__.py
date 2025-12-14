@@ -36,6 +36,7 @@ from .legacy import Legacy
 
 
 logging.basicConfig(level=logging.DEBUG)
+logging.getLogger("MARKDOWN").setLevel(logging.INFO)
 
 ROOT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 TEMPLATES_DIR = ROOT_DIR + "/templates"
