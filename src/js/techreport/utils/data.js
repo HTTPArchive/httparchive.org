@@ -101,8 +101,10 @@ const formatAppName = (app) => {
 }
 
 const parsePageWeightData = (metric, previousMetric, date) => {
+  // Handle missing metric data
+  if (!Array.isArray(metric)) return;
   return metric.map(submetric => {
-    const previousSubmetric = previousMetric?.find(row => row.name === submetric.name);
+    const previousSubmetric = previousMetric?.find(row => row.name === submetric?.name);
     const monthOverMonthDesktop = calculateMoM(submetric?.desktop?.median_bytes, previousSubmetric?.desktop?.median_bytes);
     const monthOverMonthMobile = calculateMoM(submetric?.mobile?.median_bytes, previousSubmetric?.mobile?.median_bytes);
 
@@ -206,7 +208,6 @@ const fetchCategoryData = (rows, filters, callback) => {
               const parsedRow = {
                 ...row,
               }
-
               if(api.parse) {
                 parsedRow[api.metric] = api.parse(parsedRow[api.metric], null, parsedRow?.date);
               }
