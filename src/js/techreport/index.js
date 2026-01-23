@@ -300,6 +300,11 @@ class TechReport {
   getTechInfo() {
     const technologies = this.filters.app;
     const technology = technologies.map(encodeURIComponent).join(',');
+
+    if (technology === 'ALL') {
+      return;
+    }
+
     const url = `${Constants.apiBase}/technologies?technology=${technology}`;
 
     fetch(url)
@@ -309,14 +314,11 @@ class TechReport {
 
         const categoryListEl = document.getElementsByClassName('category-list')[0];
         categoryListEl.innerHTML = '';
-
         const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
         DrilldownHeader.setCategories(categories);
-        if (technology !== 'ALL') {
-          DrilldownHeader.setDescription(techInfo.description);
-          if (techInfo.icon) {
-            DrilldownHeader.setIcon(techInfo.icon);
-          }
+        DrilldownHeader.setDescription(techInfo.description);
+        if (techInfo.icon) {
+          DrilldownHeader.setIcon(techInfo.icon);
         }
       });
   }
