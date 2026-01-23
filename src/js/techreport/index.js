@@ -314,6 +314,7 @@ class TechReport {
 
         const categoryListEl = document.getElementsByClassName('category-list')[0];
         categoryListEl.innerHTML = '';
+
         const categories = techInfo && techInfo.category ? techInfo.category.split(', ') : [];
         DrilldownHeader.setCategories(categories);
         DrilldownHeader.setDescription(techInfo.description);
