@@ -300,6 +300,11 @@ class TechReport {
   getTechInfo() {
     const technologies = this.filters.app;
     const technology = technologies.map(encodeURIComponent).join(',');
+
+    if (technology === 'ALL') {
+      return;
+    }
+
     const url = `${Constants.apiBase}/technologies?technology=${technology}`;
 
     fetch(url)
