@@ -32,7 +32,7 @@
     "test": "node ./tools/test"
   },
   "devDependencies": {
-    "ejs": "3.1.10",
+    "ejs": "4.0.1",
     "fs-extra": "11.3.3",
     "highcharts": "11.4.8",
     "node-fetch": "3.3.2",
