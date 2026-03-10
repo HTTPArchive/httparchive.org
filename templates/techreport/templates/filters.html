@@ -58,10 +58,15 @@
       <select name="startDate" id="startDate" class="default-dropdown" disabled>
         <option value=""></option>
         {% for d in all_dates %}
-        <option value="{{ d.value }}" {% if d.value==tech_report_page.filters.start %}selected{% endif %}>
+        {% if d.value==tech_report_page.filters.start %}
+        <option value="{{ d.value }}" selected>
           {{ d.display }}
         </option>
-
+        {% else %}
+        <option value="{{ d.value }}">
+          {{ d.display }}
+        </option>
+        {% endif %}
         {% endfor %}
       </select>
     </div>
@@ -73,10 +78,15 @@
       <select name="endDate" id="endDate" class="default-dropdown" disabled>
         <option value=""></option>
         {% for d in all_dates %}
-        <option value="{{ d.value }}" {% if d.value==tech_report_page.filters.end %}selected{% endif %}>
+        {% if d.value==tech_report_page.filters.end %}
+        <option value="{{ d.value }}" selected>
           {{ d.display }}
         </option>
-
+        {% else %}
+        <option value="{{ d.value }}">
+          {{ d.display }}
+        </option>
+        {% endif %}
         {% endfor %}
       </select>
     </div>
