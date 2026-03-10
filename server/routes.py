@@ -1,4 +1,6 @@
 import re
+from datetime import datetime
+
 
 from flask import abort, jsonify, redirect, request, send_from_directory
 from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
@@ -10,6 +12,7 @@ from . import reports as report_util
 from . import talisman
 from . import techreport as tech_report_util
 from . import url_for
+from .dates import get_dates
 
 
 def safe_int(value, default=1):
@@ -145,6 +148,17 @@ def techreportlanding(page_id):
 
     last_page = request.args.get("last_page") or False
 
+    all_dates = [
+        {
+            "value": d.replace("_", "-"),
+            "display": datetime.strptime(d, "%Y_%m_%d").strftime("%b %Y"),
+        }
+        for d in get_dates()
+    ]
+
+    requested_start = request.args.get("start") or ""
+    requested_end = request.args.get("end") or ""
+
     filters = {
         "geo": requested_geo,
         "rank": requested_rank,
@@ -154,6 +168,8 @@ def techreportlanding(page_id):
         "last_page": last_page,
         "selected": selected_techs,
         "rows": selected_rows,
+        "start": requested_start,
+        "end": requested_end,
     }
     params = {
         "geo": requested_geo.replace(" ", "+"),
@@ -171,6 +187,7 @@ def techreportlanding(page_id):
         tech_report_page=active_tech_report,
         custom_navigation=True,
         reports=all_reports,
+        all_dates=all_dates,
     )
 
 
@@ -209,11 +226,25 @@ def techreport():
     requested_geo = request.args.get("geo") or "ALL"
     requested_rank = request.args.get("rank") or "ALL"
     requested_category = request.args.get("category") or "ALL"
+
+    all_dates = [
+        {
+            "value": d.replace("_", "-"),
+            "display": datetime.strptime(d, "%Y_%m_%d").strftime("%b %Y"),
+        }
+        for d in get_dates()
+    ]
+
+    requested_start = request.args.get("start") or ""
+    requested_end = request.args.get("end") or ""
+
     filters = {
         "geo": requested_geo,
         "rank": requested_rank,
         "app": requested_technologies,
         "category": requested_category,
+        "start": requested_start,
+        "end": requested_end,
     }
     params = {
         "geo": requested_geo.replace(" ", "+"),
@@ -242,6 +273,7 @@ def techreport():
         tech_report_page=active_tech_report,
         custom_navigation=True,
         reports=all_reports,
+        all_dates=all_dates,
     )
 
 

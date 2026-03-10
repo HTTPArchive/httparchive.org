@@ -54,6 +54,8 @@ class TableLinked {
       const filters = new URLSearchParams(window.location.search);
       const geo = filters.get('geo') || 'ALL';
       const rank = filters.get('rank') || 'ALL';
+      const start = filters.get('start') || '';
+      const end = filters.get('end') || '';
 
       // sort data
       const sortEndpoint = component.dataset.sortEndpoint;
@@ -117,7 +119,7 @@ class TableLinked {
 
               const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
-              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}`);
+              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}${start ? '&start=' + start : ''}${end ? '&end=' + end : ''}`);
               link.innerText = formattedApp;
               wrapper.append(link);
               cell.append(wrapper);

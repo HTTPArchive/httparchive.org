@@ -67,6 +67,8 @@ const test_status_codes = async () => {
   await test_status_code('/reports/techreport/landing', 200);
   await test_status_code('/reports/techreport/drilldown', 200);
   await test_status_code('/reports/techreport/comparison', 200);
+  await test_status_code('/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01', 200);
+  await test_status_code('/reports/techreport/tech?tech=jQuery%2CWordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01', 200);
 
   // Test non-sitemap pages
   await test_status_code('/sitemap.xml', 200);

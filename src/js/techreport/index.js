@@ -241,13 +241,21 @@ class TechReport {
 
     const geo = this.filters.geo.replaceAll(" ", "%20");
     const rank = this.filters.rank.replaceAll(" ", "%20");
+    const start = this.filters.start;
+    const end = this.filters.end;
 
     let allResults = {};
     let techInfo = {};
     technologies.forEach(tech => allResults[tech] = []);
 
     Promise.all(apis.map(api => {
-      const url = `${Constants.apiBase}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
+      let url = `${Constants.apiBase}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
+      if (start) {
+        url += `&start=${start}`;
+      }
+      if (end) {
+        url += `&end=${end}`;
+      }
 
       return fetch(url)
         .then(result => result.json())

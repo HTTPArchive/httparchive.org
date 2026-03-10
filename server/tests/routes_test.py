@@ -278,6 +278,29 @@ def test_tech_report_invalid_page(client):
     assert response.status_code == 404
 
 
+def test_tech_report_drilldown_with_dates(client):
+    response = client.get(
+        "/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01"
+    )
+    data = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert 'value="2024-01-01" selected' in data
+    assert 'value="2024-03-01" selected' in data
+    assert 'value="2025-01-01" selected' not in data
+
+
+def test_tech_report_comparison_with_dates(client):
+    response = client.get(
+        "/reports/techreport/tech?tech=jQuery%2CWordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01"
+    )
+    assert response.status_code == 200
+    data = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert 'value="2024-01-01" selected' in data
+    assert 'value="2024-03-01" selected' in data
+    assert 'value="2025-01-01" selected' not in data
+
+
 def test_well_known_atproto_did(client):
     response = client.get("/.well-known/atproto-did")
     assert response.status_code == 200
