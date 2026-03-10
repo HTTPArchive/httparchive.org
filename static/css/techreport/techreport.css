@@ -613,8 +613,7 @@ nav {
   color: var(--color-text-darker);
 }
 
-/* Page filters: Geo and rank */
-#page-filters .lens {
+#page-filters :is(.lens, .date-range) {
   margin-bottom: 1.5rem;
   margin-right: 0;
   margin-top: 1.5rem;
@@ -622,7 +621,7 @@ nav {
   padding-bottom: 2rem;
 }
 
-#page-filters .lens label,
+#page-filters :is(.lens, .date-range) label,
 .breakdown label {
   color: var(--color-text);
   font-size: 0.875rem;
@@ -630,7 +629,7 @@ nav {
   width: 100%;
 }
 
-#page-filters .lens .select-label select {
+#page-filters :is(.lens, .date-range) .select-label select {
   color: var(--color-text-darker);
   font-size: 0.9rem;
   width: 100%;
@@ -645,7 +644,7 @@ nav {
   border: none;
 }
 
-#page-filters .lens .select-label:not(:last-of-type) {
+#page-filters :is(.lens, .date-range) .select-label:not(:last-of-type) {
   margin-bottom: 2rem;
 }
 

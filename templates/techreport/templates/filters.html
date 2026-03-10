@@ -50,6 +50,48 @@
         </div>
       </div>
     </fieldset>
+<fieldset class="date-range">
+  <legend class="sr-only">Date range</legend>
+  <div class="default-dropdown-group">
+    <label for="startDate">Start Date</label>
+    <div class="default-dropdown-wrapper">
+      <select name="startDate" id="startDate" class="default-dropdown" disabled>
+        <option value=""></option>
+        {% for d in all_dates %}
+        {% if d.value==tech_report_page.filters.start %}
+        <option value="{{ d.value }}" selected>
+          {{ d.display }}
+        </option>
+        {% else %}
+        <option value="{{ d.value }}">
+          {{ d.display }}
+        </option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="default-dropdown-group">
+    <label for="endDate">End Date</label>
+    <div class="default-dropdown-wrapper">
+      <select name="endDate" id="endDate" class="default-dropdown" disabled>
+        <option value=""></option>
+        {% for d in all_dates %}
+        {% if d.value==tech_report_page.filters.end %}
+        <option value="{{ d.value }}" selected>
+          {{ d.display }}
+        </option>
+        {% else %}
+        <option value="{{ d.value }}">
+          {{ d.display }}
+        </option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</fieldset>
   </div>
   <button type="submit" id="submit-form" class="main-btn">Update</button>
   {% include "techreport/components/filter_meta.html" %}

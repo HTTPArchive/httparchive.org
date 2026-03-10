@@ -48,6 +48,8 @@ class Filters {
     const geo = document.getElementsByName('geo')[0].value;
     const rank = document.getElementsByName('rank')[0].value;
     const categories = document.getElementsByName('categories')[0]?.value;
+    const startDate = document.getElementsByName('startDate')[0]?.value;
+    const endDate = document.getElementsByName('endDate')[0]?.value;
 
     /* Create a string of technologies */
     let technologies = [];
@@ -73,6 +75,16 @@ class Filters {
     if(categories) {
       url.searchParams.delete('category');
       url.searchParams.append('category', categories);
+    }
+
+    url.searchParams.delete('start');
+    if (startDate) {
+      url.searchParams.append('start', startDate);
+    }
+
+    url.searchParams.delete('end');
+    if (endDate) {
+      url.searchParams.append('end', endDate);
     }
 
     // Reset to page 1 when filters change
