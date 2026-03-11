@@ -39,6 +39,20 @@
     }
   },
   "_metrics": {
+    "llmsTxt": {
+      "name": "llms.txt",
+      "type": "%",
+      "downIsBad": true,
+      "description": "The percent of pages with a `llms.txt` file. The `llms.txt` file is a proposed standard that allows large language models (LLMs) to understand a website's content and structure, which can improve the quality of search results and enable new use cases like chatbots and virtual assistants.",
+      "histogram": {
+        "enabled": false
+      },
+      "timeseries": {
+        "fields": [
+          "percent"
+        ]
+      }
+    },
     "bootupJs": {
       "name": "JavaScript Boot-up Time",
       "type": "seconds",
@@ -1109,7 +1123,8 @@
       "canonical",
       "hreflang",
       "legible",
-      "linkText"
+      "linkText",
+      "llmsTxt"
     ],
     "graphic": {
       "bgcolor": "#97b5b9",
