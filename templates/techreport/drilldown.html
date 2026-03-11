@@ -70,6 +70,23 @@
         </div>
       </div>
 
+      <!-- Section: Geographic Breakdown -->
+      {% if tech_report_page.config.geo_breakdown %}
+      <div
+        id="geo-breakdown"
+        class="block-m report-section"
+        data-type="section"
+        data-api="geo-breakdown"
+      >
+        <h2><a class="anchor" href="#geo-breakdown">Geographic Breakdown</a></h2>
+        <p>Origins and good Core Web Vitals by geography.</p>
+
+        <div class="card">
+          {% include "techreport/components/geo_breakdown.html" %}
+        </div>
+      </div>
+      {% endif %}
+
       <!-- Section: Lighthouse -->
       <div
         id="lighthouse"
