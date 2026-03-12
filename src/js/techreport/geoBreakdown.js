@@ -29,7 +29,7 @@ class GeoBreakdown {
   fetchData() {
     const technology = this.pageFilters.app.map(encodeURIComponent).join(',');
     const rank = encodeURIComponent(this.pageFilters.rank || 'ALL');
-    const url = `${Constants.apiBase}/geo-breakdown?technology=${technology}&rank=${rank}&start=latest`;
+    const url = `${Constants.apiBase}/geo-breakdown?technology=${technology}&rank=${rank}`;
 
     fetch(url)
       .then(r => r.json())
