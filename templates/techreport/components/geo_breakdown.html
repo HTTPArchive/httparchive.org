@@ -1,0 +1,28 @@
+{% set geo_breakdown_config = tech_report_page.config.geo_breakdown %}
+
+<div
+  id="section-{{ geo_breakdown_config.id }}"
+  data-id="{{ geo_breakdown_config.id }}"
+  data-component="geoBreakdown"
+  data-client="{{ request.args.get('client', '') or 'mobile' }}"
+>
+  <div class="component-heading-wrapper">
+    <div class="component-heading">
+      <h3><a href="#section-{{ geo_breakdown_config.id }}" class="anchor">{{ geo_breakdown_config.title }}</a></h3>
+      <p class="descr">{{ geo_breakdown_config.description }}</p>
+    </div>
+
+    <div class="component-filters">
+      <select class="geo-metric-selector" aria-label="Select CWV metric">
+        {% for option in geo_breakdown_config.metric_options %}
+          <option value="{{ option.value }}"{% if option.value == 'overall' %} selected{% endif %}>
+            {{ option.label }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <!-- Highcharts renders into this div -->
+  <div id="{{ geo_breakdown_config.id }}-chart"></div>
+</div>

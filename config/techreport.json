@@ -4,8 +4,15 @@
   "summary": "The Core Web Vitals Technology Report is a dashboard combining the powers of real-user experiences in the [Chrome User Experience Report (CrUX)](https://developers.google.com/web/tools/chrome-user-experience-report/) dataset with web technology detections available in HTTP Archive, to allow analysis of the way websites are both built and experienced.",
   "config": {
     "default_apps": {
-      "drilldown": [ "ALL" ],
-      "comparison": [ "ALL", "WordPress", "Wix", "Next.js" ]
+      "drilldown": [
+        "ALL"
+      ],
+      "comparison": [
+        "ALL",
+        "WordPress",
+        "Wix",
+        "Next.js"
+      ]
     },
     "default_category": "CMS",
     "cwv_subcategories": [
@@ -47,28 +54,36 @@
       "description": "",
       "data": {},
       "filters": {
-        "technologies": ["WordPress", "Squarespace", "Drupal"]
+        "technologies": [
+          "WordPress",
+          "Squarespace",
+          "Drupal"
+        ]
       },
       "config": {
         "default": {
-          "app": ["WordPress", "Squarespace", "Drupal"],
+          "app": [
+            "WordPress",
+            "Squarespace",
+            "Drupal"
+          ],
           "series": {
-              "breakdown": "client",
-              "breakdown_values": [
-                {
-                  "name": "desktop",
-                  "color": "#669E8E",
-                  "color_dark": "#fff000",
-                  "suffix": "%"
-                },
-                {
-                  "name": "mobile",
-                  "color": "#BD6EBE",
-                  "color_dark": "#ff00f0",
-                  "suffix": "%"
-                }
-              ]
-            }
+            "breakdown": "client",
+            "breakdown_values": [
+              {
+                "name": "desktop",
+                "color": "#669E8E",
+                "color_dark": "#fff000",
+                "suffix": "%"
+              },
+              {
+                "name": "mobile",
+                "color": "#BD6EBE",
+                "color_dark": "#ff00f0",
+                "suffix": "%"
+              }
+            ]
+          }
         },
         "popular_tech": {
           "id": "popular_tech",
@@ -76,7 +91,11 @@
           "description": "To write",
           "caption": "popular technologies table caption todo",
           "filters": {
-            "app": ["WordPress", "Squarespace", "Drupal"]
+            "app": [
+              "WordPress",
+              "Squarespace",
+              "Drupal"
+            ]
           },
           "ctaLabel": "Compare technologies",
           "ctaUrl": "/reports/techreport/comparison?app=WordPress,Squarespace,Drupal"
@@ -90,7 +109,9 @@
       "description": "View detailed information about one technology and compare mobile and desktop data over time.",
       "config": {
         "default": {
-          "app": ["ALL"],
+          "app": [
+            "ALL"
+          ],
           "series": {
             "breakdown": "client",
             "breakdown_values": [
@@ -206,11 +227,37 @@
               "defaults": [
                 {
                   "name": "Desktop",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 },
                 {
                   "name": "Mobile",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 }
               ]
             },
@@ -321,7 +368,7 @@
             ]
           },
           "table": {
-            "param":"good-cwv-over-time",
+            "param": "good-cwv-over-time",
             "default": "overall",
             "caption": "Good Core Web Vitals",
             "columns": [
@@ -352,7 +399,6 @@
                 "name": "Change",
                 "styleChange": true,
                 "keyNr": "momPerc"
-
               },
               {
                 "key": "client",
@@ -389,11 +435,37 @@
               "defaults": [
                 {
                   "name": "desktop",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 },
                 {
                   "name": "mobile",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 }
               ]
             },
@@ -493,7 +565,7 @@
             ]
           },
           "table": {
-            "param":"median-lighthouse-over-time",
+            "param": "median-lighthouse-over-time",
             "default": "performance",
             "caption": "Lighthouse scores",
             "columns": [
@@ -544,11 +616,37 @@
               "defaults": [
                 {
                   "name": "Desktop",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 },
                 {
                   "name": "Mobile",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 }
               ]
             },
@@ -637,7 +735,7 @@
             ]
           },
           "table": {
-            "param":"weight-over-time",
+            "param": "weight-over-time",
             "default": "images",
             "caption": "Weight",
             "columns": [
@@ -691,11 +789,37 @@
               "defaults": [
                 {
                   "name": "Desktop",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 },
                 {
                   "name": "Mobile",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 }
               ]
             },
@@ -721,6 +845,37 @@
               "title": "Weight in bytes"
             }
           }
+        },
+        "geo_breakdown": {
+          "id": "geo_breakdown",
+          "title": "Geographic Breakdown",
+          "description": "Each bar shows origins with good CWVs (left) and not passing (right), sorted by total origins. Use the dropdown to switch between CWV metrics.",
+          "metric_options": [
+            {
+              "label": "Overall CWVs",
+              "value": "overall"
+            },
+            {
+              "label": "LCP",
+              "value": "LCP"
+            },
+            {
+              "label": "INP",
+              "value": "INP"
+            },
+            {
+              "label": "CLS",
+              "value": "CLS"
+            },
+            {
+              "label": "FCP",
+              "value": "FCP"
+            },
+            {
+              "label": "TTFB",
+              "value": "TTFB"
+            }
+          ]
         }
       }
     },
@@ -759,7 +914,11 @@
           }
         },
         "default": {
-          "app": ["ALL", "WordPress", "Drupal"],
+          "app": [
+            "ALL",
+            "WordPress",
+            "Drupal"
+          ],
           "series": {
             "breakdown": "app"
           }
@@ -897,11 +1056,37 @@
               "defaults": [
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 },
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 }
               ],
               "xAxis": {
@@ -994,11 +1179,37 @@
               "defaults": [
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 },
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 }
               ]
             },
@@ -1054,7 +1265,7 @@
             ]
           },
           "table": {
-            "param":"median-weight-over-time",
+            "param": "median-weight-over-time",
             "default": "total",
             "caption": "Weight",
             "columns": [
@@ -1089,12 +1300,38 @@
               "defaults": [
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0],
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
                   "suffix": " bytes"
                 },
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0],
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
                   "suffix": " bytes"
                 }
               ]
@@ -1131,7 +1368,7 @@
           "default": "adoption",
           "change": "true",
           "table": {
-            "param":"",
+            "param": "",
             "caption": "Adoption",
             "default": "adoption",
             "columns": [
@@ -1162,11 +1399,37 @@
               "defaults": [
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 },
                 {
                   "name": "App",
-                  "data": [0,0,0,0,0,0,0,0,0,0,0,0]
+                  "data": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
                 }
               ],
               "xAxis": {
@@ -1204,7 +1467,11 @@
       "config": {
         "default": {
           "category": "CMS",
-          "app": ["ALL", "WordPress", "Drupal"],
+          "app": [
+            "ALL",
+            "WordPress",
+            "Drupal"
+          ],
           "series": {
             "breakdown": "app"
           }
@@ -1300,7 +1567,6 @@
       }
     }
   },
-
   "labels": {
     "metrics": {
       "lighthouse": {
@@ -1336,7 +1602,7 @@
         "LCP": {
           "label": "Good LCP",
           "title": "Good Largest Contentful Paint",
-          "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded—a fast LCP helps reassure the user that the page is useful. Good experiences are less than or equal to 2.5 seconds."
+          "description": "Largest Contentful Paint (LCP) is an important, stable Core Web Vital metric for measuring perceived load speed because it marks the point in the page load timeline when the page's main content has likely loaded\u2014a fast LCP helps reassure the user that the page is useful. Good experiences are less than or equal to 2.5 seconds."
         },
         "INP": {
           "label": "Good INP",
@@ -1391,37 +1657,32 @@
       "date": "Date",
       "client": "Client",
       "origins": "Origins",
-
       "origins_eligible_for_cwv": "Eligible",
       "origins_eligible_for_cls": "Eligible",
       "origins_eligible_for_lcp": "Eligible",
       "origins_eligible_for_fcp": "Eligible",
       "origins_eligible_for_inp": "Eligible",
       "origins_eligible_for_ttfb": "Eligible",
-
       "origins_with_good_cwv": "Having good Core Web Vitals",
       "origins_with_good_cls": "Having good CLS",
       "origins_with_good_lcp": "Having good LCP",
       "origins_with_good_fcp": "Having good FCP",
       "origins_with_good_inp": "Having good INP",
       "origins_with_good_ttfb": "Having good TTFB",
-
       "pct_good_cwv": "% Good Core Web Vitals",
       "pct_good_cls": "% Good CLS",
       "pct_good_lcp": "% Good LCP",
       "pct_good_fcp": "% Good FCP",
       "pct_good_inp": "% Good INP",
       "pct_good_ttfb": "% Good TTFB",
-
       "median_lighthouse_score_accessibility": "Median accessibility",
       "median_lighthouse_score_performance": "Median performance",
       "median_lighthouse_score_pwa": "Median PWA",
       "median_lighthouse_score_seo": "Median SEO",
       "median_lighthouse_score_best_practices": "Median best practices",
-
-      "median_bytes_image":"Median bytes image",
-      "median_bytes_js":"Median bytes js",
-      "median_bytes_total":"Median bytes total"
+      "median_bytes_image": "Median bytes image",
+      "median_bytes_js": "Median bytes js",
+      "median_bytes_total": "Median bytes total"
     }
   },
   "graphic": {
