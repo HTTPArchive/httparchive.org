@@ -1499,6 +1499,85 @@ select {
   line-height: 1.25em;
 }
 
+/* Geographic Breakdown */
+
+.geo-breakdown-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.geo-breakdown-meta .heading {
+  margin: 0 0 0.25rem;
+}
+
+
+.geo-sort-arrow {
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+
+.geo-sortable-col:hover {
+  background: var(--table-row-hover);
+  cursor: pointer;
+}
+
+
+/* Geo breakdown table bar cell */
+.table-ui.geo-breakdown-table td.geo-name-cell {
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-ui.geo-breakdown-table th.geo-vital-col,
+.table-ui.geo-breakdown-table td.geo-vital-col {
+  text-align: right;
+  padding-right: 1rem;
+  white-space: nowrap;
+  color: var(--color-text-lighter);
+  font-size: 0.875rem;
+}
+
+.table-ui.geo-breakdown-table th.geo-origins-col,
+.table-ui.geo-breakdown-table td.geo-origins-col {
+  text-align: right;
+  padding-right: 1.5rem;
+  white-space: nowrap;
+}
+
+.table-ui.geo-breakdown-table td.geo-pct-cell {
+  min-width: 16rem;
+  white-space: nowrap;
+}
+
+.table-ui.geo-breakdown-table td.geo-pct-cell .geo-pct-label {
+  display: inline-block;
+  width: 3rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.table-ui.geo-breakdown-table td.geo-pct-cell .geo-bar {
+  display: inline-block;
+  height: 0.5rem;
+  vertical-align: middle;
+  width: calc(var(--bar-total, 1) * (100% - 3.5rem));
+  border: 1px solid var(--color-progress-basic-border);
+  border-radius: 3px;
+  background-image: linear-gradient(
+    90deg,
+    var(--color-progress-basic-fill) 0% var(--good-stop, 0%),
+    var(--color-progress-basic-bg) var(--good-stop, 0%) 100%
+  );
+}
+
 /* -------------------- */
 /* ----- Sections ----- */
 /* -------------------- */
@@ -2207,6 +2286,10 @@ path.highcharts-tick {
 
   .table-ui .good-scores span[aria-hidden] {
     display: none;
+  }
+
+  .table-ui.geo-breakdown-table td.geo-pct-cell {
+    min-width: 8rem;
   }
 
   .card {
