@@ -68,6 +68,12 @@
           {% set selected_subcategory = request.args.get('good-cwv-over-time', '') or tech_report_page.config.good_cwv_timeseries.viz.default or 'overall' %}
           {% include "techreport/components/timeseries.html" %}
         </div>
+
+        {% if tech_report_page.config.geo_breakdown %}
+        <div class="card">
+          {% include "techreport/components/geo_breakdown.html" %}
+        </div>
+        {% endif %}
       </div>
 
       <!-- Section: Lighthouse -->
