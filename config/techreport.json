@@ -721,6 +721,19 @@
               "title": "Weight in bytes"
             }
           }
+        },
+        "geo_breakdown": {
+          "id": "geo_breakdown",
+          "title": "Core Web Vitals geographic breakdown",
+          "description": "Top geographies by number of origins, showing the percentage with good Core Web Vitals and individual metrics.",
+          "metric_options": [
+            { "label": "Good Core Web Vitals", "value": "overall" },
+            { "label": "Good LCP", "value": "LCP" },
+            { "label": "Good INP", "value": "INP" },
+            { "label": "Good CLS", "value": "CLS" },
+            { "label": "Good FCP", "value": "FCP" },
+            { "label": "Good TTFB", "value": "TTFB" }
+          ]
         }
       }
     },

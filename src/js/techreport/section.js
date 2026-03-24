@@ -1,4 +1,4 @@
-/* global Timeseries */
+/* global Timeseries, GeoBreakdown */
 
 import SummaryCard from "./summaryCards";
 import TableLinked from "./tableLinked";
@@ -33,6 +33,10 @@ class Section {
           this.initializeTable(component);
           break;
 
+        case "geoBreakdown":
+          this.initializeGeoBreakdown(component);
+          break;
+
         default:
           break;
       }
@@ -61,6 +65,16 @@ class Section {
 
   initializeTimeseries(component) {
     this.components[component.dataset.id] = new Timeseries(
+      component.dataset.id,
+      this.pageConfig,
+      this.config,
+      this.pageFilters,
+      this.data
+    );
+  }
+
+  initializeGeoBreakdown(component) {
+    this.components[component.dataset.id] = new GeoBreakdown(
       component.dataset.id,
       this.pageConfig,
       this.config,
