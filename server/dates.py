@@ -2,7 +2,8 @@ import re
 import logging
 
 from google.cloud import storage
-from google.auth.exceptions import DefaultCredentialsError
+from google.auth.exceptions import DefaultCredentialsError, RefreshError
+from google.api_core.exceptions import Forbidden
 
 # Create/configure stream handler
 sh = logging.StreamHandler()
@@ -21,7 +22,8 @@ GCS_BUCKET = "httparchive"
 LOAD_DATES_FROM_GCS = True
 try:
     gcs = storage.Client()
-except DefaultCredentialsError:  # pragma: no cover
+    gcs.get_bucket(GCS_BUCKET)  # pragma: no cover
+except (DefaultCredentialsError, RefreshError, Forbidden):  # pragma: no cover
     logger.warning("Unable to authenticate to Google Cloud Storage.")
     LOAD_DATES_FROM_GCS = False
 
