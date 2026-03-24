@@ -376,8 +376,8 @@ class TableLinked {
     const isCurrentCol = isTechColumn
       ? component.dataset.sortMetric === 'technology'
       : (component.dataset.sortEndpoint === endpoint &&
-         component.dataset.sortMetric === subcategory &&
-         component.dataset.sortKey === metric);
+          component.dataset.sortMetric === subcategory &&
+          component.dataset.sortKey === metric);
 
     const newOrder = isCurrentCol && currentOrder === 'desc' ? 'asc' : 'desc';
 
