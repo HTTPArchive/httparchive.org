@@ -24,7 +24,9 @@
             data-key="{{ column.key }}"
             data-metric="{{ column.metric }}"
             data-endpoint="{{ column.endpoint }}"
+            data-subcategory="{{ column.subcategory or '' }}"
             class="{{ column.className }}"
+            scope="col"
           >
             {% if column.hiddenName %}
               <span class="sr-only">{{ column.name }}</span>

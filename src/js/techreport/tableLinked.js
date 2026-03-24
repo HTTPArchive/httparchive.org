@@ -15,6 +15,7 @@ class TableLinked {
 
     this.updateContent();
     this.updateSelectionText(DataUtils.getTechsFromURL());
+    this.initSortHeaders();
 
     const rowCount = document.getElementById('rowsPerPage');
     rowCount?.addEventListener('change', (e) => this.updateRowsPerPage(e));
@@ -61,9 +62,16 @@ class TableLinked {
       const sortEndpoint = component.dataset.sortEndpoint;
       const sortMetric = component.dataset.sortMetric;
       const sortKey = component.dataset.sortKey;
+      const sortOrder = component.dataset.sortOrder || 'desc';
       const client = component.dataset.client;
 
-      if(sortMetric) {
+      if(sortMetric === 'technology') {
+        this.dataArray = this.dataArray.sort((techA, techB) => {
+          const aName = techA[0]?.technology || '';
+          const bName = techB[0]?.technology || '';
+          return sortOrder === 'asc' ? aName.localeCompare(bName) : bName.localeCompare(aName);
+        });
+      } else if(sortMetric) {
         this.dataArray = this.dataArray.sort((techA, techB) => {
           // Sort techs by date to get the latest
           const aSortedDate = techA.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -78,6 +86,9 @@ class TableLinked {
           const aValue = aMetric?.[client]?.[sortKey];
           const bValue = bMetric?.[client]?.[sortKey];
 
+          if (sortOrder === 'asc') {
+            return aValue - bValue > 0 ? 1 : -1;
+          }
           return bValue - aValue > 0 ? 1 : -1;
         });
       }
@@ -325,6 +336,91 @@ class TableLinked {
     this.updateContent();
     const rowsAnnouncement = document.getElementById('rows-announcement');
     rowsAnnouncement.innerText = `Showing ${this.rows} rows.`;
+  }
+
+  initSortHeaders() {
+    const component = document.getElementById(`table-${this.id}`);
+    const headers = component.querySelectorAll('thead th');
+
+    headers.forEach(th => {
+      const endpoint = th.dataset.endpoint;
+      const metric = th.dataset.metric;
+      const key = th.dataset.key;
+
+      const isSortable = (key === 'technology') || (endpoint && metric);
+      if (!isSortable) return;
+
+      const btn = document.createElement('button');
+      btn.className = 'sort-btn';
+      btn.setAttribute('type', 'button');
+      while (th.firstChild) {
+        btn.appendChild(th.firstChild);
+      }
+      th.appendChild(btn);
+      btn.addEventListener('click', () => this.onSortClick(th));
+    });
+
+    this.updateSortIndicators();
+  }
+
+  onSortClick(th) {
+    const component = document.getElementById(`table-${this.id}`);
+    const endpoint = th.dataset.endpoint || '';
+    const subcategory = th.dataset.subcategory || '';
+    const metric = th.dataset.metric || '';
+    const key = th.dataset.key;
+
+    const isTechColumn = key === 'technology';
+    const currentOrder = component.dataset.sortOrder || 'desc';
+
+    const isCurrentCol = isTechColumn
+      ? component.dataset.sortMetric === 'technology'
+      : (component.dataset.sortEndpoint === endpoint &&
+          component.dataset.sortMetric === subcategory &&
+          component.dataset.sortKey === metric);
+
+    const newOrder = isCurrentCol && currentOrder === 'desc' ? 'asc' : 'desc';
+
+    if (isTechColumn) {
+      component.dataset.sortEndpoint = '';
+      component.dataset.sortMetric = 'technology';
+      component.dataset.sortKey = 'technology';
+    } else {
+      component.dataset.sortEndpoint = endpoint;
+      component.dataset.sortMetric = subcategory;
+      component.dataset.sortKey = metric;
+    }
+    component.dataset.sortOrder = newOrder;
+
+    this.updateContent();
+    this.updateSortIndicators();
+  }
+
+  updateSortIndicators() {
+    const component = document.getElementById(`table-${this.id}`);
+    const headers = component.querySelectorAll('thead th');
+    const sortMetric = component.dataset.sortMetric;
+    const sortEndpoint = component.dataset.sortEndpoint || '';
+    const sortKey = component.dataset.sortKey || '';
+    const sortOrder = component.dataset.sortOrder || 'desc';
+
+    headers.forEach(th => {
+      const endpoint = th.dataset.endpoint || '';
+      const subcategory = th.dataset.subcategory || '';
+      const metric = th.dataset.metric || '';
+      const key = th.dataset.key;
+
+      const isTechColumn = key === 'technology';
+      const isActive = isTechColumn
+        ? sortMetric === 'technology'
+        : (endpoint && endpoint === sortEndpoint && subcategory === sortMetric && metric === sortKey);
+
+      if (isActive) {
+        th.setAttribute('aria-sort', sortOrder === 'asc' ? 'ascending' : 'descending');
+      } else {
+        th.removeAttribute('aria-sort');
+      }
+    });
   }
 }
 
