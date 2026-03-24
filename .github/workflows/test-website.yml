@@ -23,11 +23,11 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v6
       with:
-        node-version:  '20'
-    - name: Set up Python 3.12
+        node-version:  '24'
+    - name: Set up Python 3.14
       uses: actions/setup-python@v6
       with:
-        python-version: '3.12'
+        python-version: '3.14'
     - name: Run the website
       run: ./tools/scripts/run_and_test_website.sh
     - name: Remove node modules to avoid linting errors
