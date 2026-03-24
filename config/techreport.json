@@ -724,15 +724,15 @@
         },
         "geo_breakdown": {
           "id": "geo_breakdown",
-          "title": "Geographic Breakdown",
-          "description": "Top geographies by number of origins, showing the percentage with good Core Web Vitals and individual LCP, INP, and CLS scores.",
+          "title": "Core Web Vitals geographic breakdown",
+          "description": "Top geographies by number of origins, showing the percentage with good Core Web Vitals and individual metrics.",
           "metric_options": [
-            { "label": "Overall CWVs", "value": "overall" },
-            { "label": "LCP", "value": "LCP" },
-            { "label": "INP", "value": "INP" },
-            { "label": "CLS", "value": "CLS" },
-            { "label": "FCP", "value": "FCP" },
-            { "label": "TTFB", "value": "TTFB" }
+            { "label": "Good Core Web Vitals", "value": "overall" },
+            { "label": "Good LCP", "value": "LCP" },
+            { "label": "Good INP", "value": "INP" },
+            { "label": "Good CLS", "value": "CLS" },
+            { "label": "Good FCP", "value": "FCP" },
+            { "label": "Good TTFB", "value": "TTFB" }
           ]
         }
       }
