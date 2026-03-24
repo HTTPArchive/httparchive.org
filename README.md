@@ -14,7 +14,7 @@ sudo pip install virtualenv
 2. Create an isolated Python environment, and install dependencies:
 
 ```
-virtualenv --python python3.12 .venv
+virtualenv --python python3.14 .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -43,13 +43,17 @@ Note: Windows users may need to run `npm run watch` and `python main.py` separat
 
 ## Staging
 
-To test changes on a GCP App Engine server without deploying to the production instance, use the staging app at https://httparchive-staging.appspot.com.
+(Only available to maintainers)
+
+To test changes on a GCP App Engine server without deploying to the production instance, use the staging app at https://staging-dot-httparchive.uk.r.appspot.com/
 
 ```
 npm run stage
 ```
 
 ## Deploy
+
+(Only available to maintainers)
 
 To push changes live to the production instance, use the deployment script. Changes will be available on https://httparchive.org.
 
