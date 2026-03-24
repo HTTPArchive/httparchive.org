@@ -721,6 +721,19 @@
               "title": "Weight in bytes"
             }
           }
+        },
+        "geo_breakdown": {
+          "id": "geo_breakdown",
+          "title": "Geographic Breakdown",
+          "description": "Top geographies by number of origins, showing the percentage with good Core Web Vitals and individual LCP, INP, and CLS scores.",
+          "metric_options": [
+            { "label": "Overall CWVs", "value": "overall" },
+            { "label": "LCP", "value": "LCP" },
+            { "label": "INP", "value": "INP" },
+            { "label": "CLS", "value": "CLS" },
+            { "label": "FCP", "value": "FCP" },
+            { "label": "TTFB", "value": "TTFB" }
+          ]
         }
       }
     },

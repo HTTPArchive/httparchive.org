@@ -1,0 +1,49 @@
+{% set geo_breakdown_config = tech_report_page.config.geo_breakdown %}
+
+<div
+  id="section-{{ geo_breakdown_config.id }}"
+  data-id="{{ geo_breakdown_config.id }}"
+  data-component="geoBreakdown"
+  data-client="{{ request.args.get('client', '') or 'mobile' }}"
+>
+  <div class="component-heading-wrapper">
+    <div class="component-heading">
+      <h3><a href="#section-{{ geo_breakdown_config.id }}" class="anchor">{{ geo_breakdown_config.title }}</a></h3>
+      <p class="descr">{{ geo_breakdown_config.description }}</p>
+    </div>
+
+    <div class="component-filters">
+      <div class="subcategory-selector-wrapper">
+        <div class="position-wrapper">
+          <label for="geo-metric-selector-{{ geo_breakdown_config.id }}">Metric</label>
+          <select
+            class="geo-metric-selector"
+            id="geo-metric-selector-{{ geo_breakdown_config.id }}"
+          >
+            {% for option in geo_breakdown_config.metric_options %}
+              {% if option.value == 'overall' %}
+              <option value="{{ option.value }}" selected>{{ option.label }}</option>
+              {% else %}
+              <option value="{{ option.value }}">{{ option.label }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="geo-breakdown-controls">
+    <div class="geo-breakdown-meta">
+      <h4 class="heading">Latest data: <span data-slot="geo-timestamp"></span></h4>
+      <ul class="meta">
+        <li>Client: <span data-slot="client">{{ (request.args.get('client', '') or 'Mobile') | capitalize }}</span></li>
+        <li>Rank: <span data-slot="rank">{{ request.args.get('rank', '') or 'ALL' }}</span></li>
+        {% set tech = request.args.get('tech', '') or 'ALL' %}
+        <li>Technology: <span data-slot="tech">{{ tech }}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="{{ geo_breakdown_config.id }}-table"></div>
+</div>
