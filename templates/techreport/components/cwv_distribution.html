@@ -1,0 +1,44 @@
+{% set cwv_distribution_config = tech_report_page.config.cwv_distribution %}
+
+<button class="btn show-table cwv-distribution-toggle" type="button" id="cwv-distribution-btn">
+  Show distribution
+</button>
+
+<div
+  id="section-{{ cwv_distribution_config.id }}"
+  class="cwv-distribution-wrapper hidden"
+  data-id="{{ cwv_distribution_config.id }}"
+  data-component="cwvDistribution"
+  data-client="{{ request.args.get('client', '') or 'mobile' }}"
+  data-latest-date="{{ all_dates[0].value if all_dates else '' }}"
+>
+  <div class="cwv-distribution-header">
+    <div>
+      <h3><a href="#section-{{ cwv_distribution_config.id }}" class="anchor">{{ cwv_distribution_config.title }}</a></h3>
+      <p class="descr">{{ cwv_distribution_config.description }}</p>
+      <h4 class="heading">Latest data: <span data-slot="cwv-distribution-timestamp"></span></h4>
+      {% include "techreport/components/filter_meta.html" %}
+    </div>
+    <div class="component-filters">
+      <div class="subcategory-selector-wrapper">
+        <div class="position-wrapper">
+          <label for="cwv-distribution-metric-selector">Metric</label>
+          <select
+            class="cwv-distribution-metric-selector"
+            id="cwv-distribution-metric-selector"
+          >
+            {% for option in cwv_distribution_config.metric_options %}
+              {% if option.value == 'LCP' %}
+              <option value="{{ option.value }}" selected>{{ option.label }}</option>
+              {% else %}
+              <option value="{{ option.value }}">{{ option.label }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="{{ cwv_distribution_config.id }}-chart"></div>
+</div>

@@ -1,7 +1,12 @@
 {% set geo_breakdown_config = tech_report_page.config.geo_breakdown %}
 
+<button class="btn show-table geo-breakdown-toggle" type="button" id="geo-breakdown-btn">
+  Show geographic breakdown
+</button>
+
 <div
   id="section-{{ geo_breakdown_config.id }}"
+  class="geo-breakdown-wrapper hidden"
   data-id="{{ geo_breakdown_config.id }}"
   data-component="geoBreakdown"
   data-client="{{ request.args.get('client', '') or 'mobile' }}"

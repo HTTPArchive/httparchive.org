@@ -67,13 +67,46 @@
           {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
           {% set selected_subcategory = request.args.get('good-cwv-over-time', '') or tech_report_page.config.good_cwv_timeseries.viz.default or 'overall' %}
           {% include "techreport/components/timeseries.html" %}
-        </div>
 
-        {% if tech_report_page.config.geo_breakdown %}
-        <div class="card">
-          {% include "techreport/components/geo_breakdown.html" %}
+          {% set ts_id = tech_report_page.config.good_cwv_timeseries.id %}
+          <div class="cwv-button-bar">
+            <button class="btn show-table cwv-show-table-btn" type="button" data-id="{{ ts_id }}">Show table</button>
+            {% if tech_report_page.config.geo_breakdown %}
+              {% include "techreport/components/geo_breakdown.html" %}
+            {% endif %}
+            {% if tech_report_page.config.cwv_distribution %}
+              {% include "techreport/components/cwv_distribution.html" %}
+            {% endif %}
+          </div>
+          <script nonce="{{ csp_nonce() }}">
+            (function() {
+              var bar = document.querySelector('.cwv-button-bar');
+              var tw = document.getElementById('{{ ts_id }}-table-wrapper');
+
+              // Move table wrapper after the button bar so expanding it doesn't push buttons down
+              if (bar && tw) bar.after(tw);
+
+              // Mutual exclusion: only one panel open at a time
+              var panels = [
+                { btn: bar.querySelector('.cwv-show-table-btn'), wrapper: tw, showText: 'Show table', hideText: 'Hide table' },
+                { btn: document.getElementById('geo-breakdown-btn'), wrapper: document.getElementById('section-geo_breakdown'), showText: 'Show geographic breakdown', hideText: 'Hide geographic breakdown' },
+                { btn: document.getElementById('cwv-distribution-btn'), wrapper: document.getElementById('section-cwv_distribution'), showText: 'Show distribution', hideText: 'Hide distribution' }
+              ].filter(function(p) { return p.btn && p.wrapper; });
+
+              panels.forEach(function(panel) {
+                panel.btn.addEventListener('click', function() {
+                  // Close other panels
+                  panels.forEach(function(other) {
+                    if (other !== panel && !other.wrapper.classList.contains('hidden')) {
+                      other.wrapper.classList.add('hidden');
+                      other.btn.textContent = other.showText;
+                    }
+                  });
+                }, true); // capture phase — runs before component handlers
+              });
+            })();
+          </script>
         </div>
-        {% endif %}
       </div>
 
       <!-- Section: Lighthouse -->
