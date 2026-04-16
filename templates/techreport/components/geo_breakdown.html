@@ -1,9 +1,5 @@
 {% set geo_breakdown_config = tech_report_page.config.geo_breakdown %}
 
-<button class="btn show-table geo-breakdown-toggle" type="button" id="geo-breakdown-btn">
-  Show geographic breakdown
-</button>
-
 <div
   id="section-{{ geo_breakdown_config.id }}"
   class="geo-breakdown-wrapper hidden"
@@ -13,28 +9,8 @@
 >
   <div class="component-heading-wrapper">
     <div class="component-heading">
-      <h3><a href="#section-{{ geo_breakdown_config.id }}" class="anchor">{{ geo_breakdown_config.title }}</a></h3>
+      <h3><a href="#section-{{ geo_breakdown_config.id }}" class="anchor"><span data-slot="geo-title-metric">Core Web Vitals</span> geographic breakdown</a></h3>
       <p class="descr">{{ geo_breakdown_config.description }}</p>
-    </div>
-
-    <div class="component-filters">
-      <div class="subcategory-selector-wrapper">
-        <div class="position-wrapper">
-          <label for="geo-metric-selector-{{ geo_breakdown_config.id }}">Metric</label>
-          <select
-            class="geo-metric-selector"
-            id="geo-metric-selector-{{ geo_breakdown_config.id }}"
-          >
-            {% for option in geo_breakdown_config.metric_options %}
-              {% if option.value == 'overall' %}
-              <option value="{{ option.value }}" selected>{{ option.label }}</option>
-              {% else %}
-              <option value="{{ option.value }}">{{ option.label }}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-        </div>
-      </div>
     </div>
   </div>
 

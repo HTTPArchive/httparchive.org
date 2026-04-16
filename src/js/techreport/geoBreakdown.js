@@ -9,11 +9,12 @@ class GeoBreakdown {
     this.pageFilters = filters;
     this.data = data;
     this.geoData = null;
-    this.selectedMetric = 'overall';
+    this.selectedMetric = new URLSearchParams(window.location.search).get('good-cwv-over-time') || 'overall';
     this.sortColumn = 'total';
     this.sortDir = 'desc';
     this.showAll = false;
 
+    this.updateTitle();
     this.bindEventListeners();
 
     // Auto-expand if URL hash targets this section
@@ -37,13 +38,20 @@ class GeoBreakdown {
     }
   }
 
+  updateTitle() {
+    const slot = document.querySelector('[data-slot="geo-title-metric"]');
+    if (!slot) return;
+    slot.textContent = this.selectedMetric === 'overall' ? 'Core Web Vitals' : this.selectedMetric;
+  }
+
   bindEventListeners() {
-    const root = `[data-id="${this.id}"]`;
-    document.querySelectorAll(`${root} .geo-metric-selector`).forEach(dropdown => {
-      dropdown.addEventListener('change', event => {
-        this.selectedMetric = event.target.value;
+    document.addEventListener('cwv-metric-change', (event) => {
+      const value = event.detail?.value;
+      if (value && value !== this.selectedMetric) {
+        this.selectedMetric = value;
+        this.updateTitle();
         if (this.geoData) this.renderTable();
-      });
+      }
     });
 
     const btn = document.getElementById('geo-breakdown-btn');

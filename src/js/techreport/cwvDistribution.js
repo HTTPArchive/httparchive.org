@@ -30,16 +30,16 @@ class CwvDistribution {
     this.id = id;
     this.pageFilters = filters;
     this.distributionData = null;
-    this.selectedMetric = 'LCP';
     this.chart = null;
     this.root = document.querySelector(`[data-id="${this.id}"]`);
     this.date = this.pageFilters.end || this.root?.dataset?.latestDate || '';
+    this.selectedMetric = this.resolveMetric(new URLSearchParams(window.location.search).get('good-cwv-over-time'));
 
     // Populate "Latest data" timestamp immediately
     const tsSlot = this.root?.querySelector('[data-slot="cwv-distribution-timestamp"]');
     if (tsSlot && this.date) tsSlot.textContent = UIUtils.printMonthYear(this.date);
 
-
+    this.updateTitle();
     this.bindEventListeners();
 
     // Auto-expand if URL hash targets this section
@@ -48,14 +48,27 @@ class CwvDistribution {
     }
   }
 
+  // Map the shared metric value (which may be 'overall') to a metric this chart can show
+  resolveMetric(value) {
+    if (value && METRIC_CONFIG[value]) return value;
+    return 'LCP';
+  }
+
+  updateTitle() {
+    const slot = this.root?.querySelector('[data-slot="cwv-distribution-title-metric"]');
+    if (slot) slot.textContent = this.selectedMetric;
+  }
+
   bindEventListeners() {
     if (!this.root) return;
 
-    this.root.querySelectorAll('.cwv-distribution-metric-selector').forEach(dropdown => {
-      dropdown.addEventListener('change', event => {
-        this.selectedMetric = event.target.value;
+    document.addEventListener('cwv-metric-change', (event) => {
+      const resolved = this.resolveMetric(event.detail?.value);
+      if (resolved !== this.selectedMetric) {
+        this.selectedMetric = resolved;
+        this.updateTitle();
         if (this.distributionData) this.renderChart();
-      });
+      }
     });
 
     const btn = document.getElementById('cwv-distribution-btn');
@@ -71,7 +84,7 @@ class CwvDistribution {
     const btn = document.getElementById('cwv-distribution-btn');
     if (show) {
       this.root.classList.remove('hidden');
-      if (btn) btn.textContent = 'Hide distribution';
+      if (btn) btn.textContent = 'Hide histogram';
       if (!this.distributionData) {
         this.fetchData();
       } else if (this.chart) {
@@ -79,7 +92,7 @@ class CwvDistribution {
       }
     } else {
       this.root.classList.add('hidden');
-      if (btn) btn.textContent = 'Show distribution';
+      if (btn) btn.textContent = 'Show histogram';
     }
   }
 

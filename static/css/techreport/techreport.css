@@ -2355,12 +2355,6 @@ path.highcharts-tick {
   margin-top: 0.5rem;
 }
 
-.cwv-button-bar > .geo-breakdown-wrapper,
-.cwv-button-bar > .cwv-distribution-wrapper,
-.cwv-button-bar > [id$="-table-wrapper"] {
-  flex-basis: 100%;
-  order: 1;
-}
 
 /* CWV Distribution histogram */
 .cwv-distribution-wrapper {
@@ -2377,12 +2371,8 @@ path.highcharts-tick {
   overflow-x: auto;
 }
 
-.cwv-distribution-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
+.cwv-distribution-header h3 {
+  margin-top: 0;
 }
 
 .cwv-distribution-header .descr {

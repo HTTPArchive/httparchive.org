@@ -46,6 +46,11 @@ class Timeseries {
       // Re-render the content
       this.updateContent();
       this.updateInfo(metric, endpoint);
+
+      // Broadcast metric change so linked components (geo breakdown, distribution) update
+      if (event.target.dataset.param === 'good-cwv-over-time') {
+        document.dispatchEvent(new CustomEvent('cwv-metric-change', { detail: { value: metric } }));
+      }
     }
   }
 

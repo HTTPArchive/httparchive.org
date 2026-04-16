@@ -737,8 +737,8 @@
         },
         "cwv_distribution": {
           "id": "cwv_distribution",
-          "title": "Core Web Vitals distribution",
-          "description": "How origins are distributed across performance buckets for individual Core Web Vitals metrics. Green, orange, and red zones indicate good, needs improvement, and poor thresholds respectively.",
+          "title": "Core Web Vitals histograms",
+          "description": "How origins are distributed for individual Core Web Vitals metrics. Green, orange, and red zones indicate good, needs improvement, and poor thresholds respectively.",
           "metric_options": [
             { "label": "LCP", "value": "LCP" },
             { "label": "CLS", "value": "CLS" },
