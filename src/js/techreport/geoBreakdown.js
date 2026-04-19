@@ -1,6 +1,15 @@
 import { Constants } from './utils/constants';
 import { UIUtils } from './utils/ui';
 
+const METRIC_CONFIG = {
+  overall: 'overall',
+  LCP: 'LCP',
+  FCP: 'FCP',
+  TTFB: 'TTFB',
+  INP: 'INP',
+  CLS: 'CLS',
+};
+
 class GeoBreakdown {
   constructor(id, pageConfig, config, filters, data) {
     this.id = id;
@@ -9,7 +18,7 @@ class GeoBreakdown {
     this.pageFilters = filters;
     this.data = data;
     this.geoData = null;
-    this.selectedMetric = new URLSearchParams(window.location.search).get('good-cwv-over-time') || 'overall';
+    this.selectedMetric = this.resolveMetric(new URLSearchParams(window.location.search).get('good-cwv-over-time')) || 'overall';
     this.sortColumn = 'total';
     this.sortDir = 'desc';
     this.showAll = false;
@@ -21,6 +30,12 @@ class GeoBreakdown {
     if (window.location.hash === `#section-${this.id}`) {
       this.toggle(true);
     }
+  }
+
+  // Map the shared metric value (which may be 'overall') to a metric this chart can show
+  resolveMetric(value) {
+    if (value && METRIC_CONFIG[value]) return value;
+    return 'LCP';
   }
 
   toggle(show) {

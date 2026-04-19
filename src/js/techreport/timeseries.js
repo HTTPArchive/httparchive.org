@@ -58,6 +58,7 @@ class Timeseries {
   toggleTable(event) {
     const button = event.target;
     const tableWrapper = document.getElementById(`${button.dataset.id}-table-wrapper`);
+    if (!tableWrapper) return;
     if(tableWrapper.classList.contains('hidden')) {
       button.textContent = 'Hide table';
       tableWrapper.classList.remove('hidden');
