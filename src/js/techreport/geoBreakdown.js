@@ -25,7 +25,7 @@ class GeoBreakdown {
 
   // Map the shared metric value (which may be 'overall') to a metric this chart can show
   resolveMetric(value) {
-    if (value && this.pageConfig.geo_breakdown.metric_labels.value) return value;
+    if (value && this.pageConfig.geo_breakdown.metric_labels.value) return this.pageConfig.geo_breakdown.metric_labels.value;
     return 'overall';
   }
 
