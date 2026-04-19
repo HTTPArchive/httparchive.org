@@ -1,15 +1,6 @@
 import { Constants } from './utils/constants';
 import { UIUtils } from './utils/ui';
 
-const METRIC_CONFIG = {
-  overall: 'overall',
-  LCP: 'LCP',
-  FCP: 'FCP',
-  TTFB: 'TTFB',
-  INP: 'INP',
-  CLS: 'CLS',
-};
-
 class GeoBreakdown {
   constructor(id, pageConfig, config, filters, data) {
     this.id = id;
@@ -34,7 +25,7 @@ class GeoBreakdown {
 
   // Map the shared metric value (which may be 'overall') to a metric this chart can show
   resolveMetric(value) {
-    if (value && METRIC_CONFIG[value]) return METRIC_CONFIG[value];
+    if (value && this.pageConfig.geo_breakdown.metric_labels.value) return value;
     return 'overall';
   }
 

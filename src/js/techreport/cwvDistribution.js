@@ -3,31 +3,12 @@
 import { Constants } from './utils/constants';
 import { UIUtils } from './utils/ui';
 
-const METRIC_CONFIG = {
-  LCP:  { bucketField: 'loading_bucket', originsField: 'lcp_origins',  unit: 'ms', label: 'LCP (ms)', step: 100 },
-  FCP:  { bucketField: 'loading_bucket', originsField: 'fcp_origins',  unit: 'ms', label: 'FCP (ms)', step: 100 },
-  TTFB: { bucketField: 'loading_bucket', originsField: 'ttfb_origins', unit: 'ms', label: 'TTFB (ms)', step: 100 },
-  INP:  { bucketField: 'inp_bucket',     originsField: 'inp_origins',  unit: 'ms', label: 'INP (ms)', step: 25 },
-  CLS:  { bucketField: 'cls_bucket',     originsField: 'cls_origins',  unit: '',   label: 'CLS', step: 0.05 },
-};
-
-const THRESHOLDS = {
-  LCP:  [{ value: 2500, label: 'Good' }, { value: 4000, label: 'Needs improvement' }],
-  FCP:  [{ value: 1800, label: 'Good' }, { value: 3000, label: 'Needs improvement' }],
-  TTFB: [{ value: 800,  label: 'Good' }, { value: 1800, label: 'Needs improvement' }],
-  INP:  [{ value: 200,  label: 'Good' }, { value: 500,  label: 'Needs improvement' }],
-  CLS:  [{ value: 0.1,  label: 'Good' }, { value: 0.25, label: 'Needs improvement' }],
-};
-
-const ZONE_COLORS = {
-  light: { good: '#0CCE6B', needsImprovement: '#FFA400', poor: '#FF4E42', text: '#444', gridLine: '#e6e6e6' },
-  dark:  { good: '#0CCE6B', needsImprovement: '#FBBC04', poor: '#FF6659', text: '#ccc', gridLine: '#444' },
-};
-
 class CwvDistribution {
   // eslint-disable-next-line no-unused-vars -- pageConfig, config, data satisfy the Section component contract
   constructor(id, pageConfig, config, filters, data) {
     this.id = id;
+    this.pageConfig = pageConfig;
+    this.config = config;
     this.pageFilters = filters;
     this.distributionData = null;
     this.chart = null;
@@ -50,7 +31,7 @@ class CwvDistribution {
 
   // Map the shared metric value (which may be 'overall') to a metric this chart can show
   resolveMetric(value) {
-    if (value && METRIC_CONFIG[value]) return METRIC_CONFIG[value];
+    if (value && this.pageConfig.cwv_distribution.metric_config[value]) return this.pageConfig.cwv_distribution.metric_config[value].label;
     return 'LCP';
   }
 
@@ -181,8 +162,8 @@ class CwvDistribution {
     if (!this.root) return;
 
     const client = this.root.dataset.client || 'mobile';
-    const metricCfg = METRIC_CONFIG[this.selectedMetric];
-    const thresholds = THRESHOLDS[this.selectedMetric];
+    const metricCfg = this.pageConfig.cwv_distribution.metric_config[this.selectedMetric];
+    const thresholds = this.config.cwv_thresholds[this.selectedMetric];
 
     const clientRows = this.distributionData
       .filter(row => row.client === client)
@@ -210,7 +191,7 @@ class CwvDistribution {
     }
 
     const theme = document.querySelector('html').dataset.theme;
-    const zoneColors = theme === 'dark' ? ZONE_COLORS.dark : ZONE_COLORS.light;
+    const zoneColors = theme === 'dark' ? this.pageConfig.cwv_distribution.zone_colors.dark : this.pageConfig.cwv_distribution.zone_colors.light;
 
     const getColor = (val) => {
       if (val < thresholds[0].value) return zoneColors.good;
@@ -256,7 +237,7 @@ class CwvDistribution {
       title: { text: null },
       xAxis: {
         categories,
-        title: { text: metricCfg.label, style: { color: textColor } },
+        title: { text: metricCfg.axis_label, style: { color: textColor } },
         labels: {
           step: Math.ceil(categories.length / 20),
           rotation: -45,
