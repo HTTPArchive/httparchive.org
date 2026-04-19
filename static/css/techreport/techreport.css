@@ -1922,8 +1922,12 @@ h2.summary-heading {
 /* -------------------- */
 
 /* Highcharts */
-.highcharts-background,
-.highcharts-point {
+.highcharts-background {
+  fill: var(--color-card-background) !important;
+}
+
+.highcharts-line-series .highcharts-point,
+.highcharts-spline-series .highcharts-point {
   fill: var(--color-card-background) !important;
 }
 
@@ -2336,3 +2340,81 @@ path.highcharts-tick {
     min-width: 7.5rem;
   }
 }
+
+/* Hide original "Show table" button — replaced by one in the button bar */
+#good-cwvs .card > [data-component="timeseries"] > .show-table {
+  display: none;
+}
+
+
+/* CWV button bar (Show table, geographic breakdown, distribution) */
+.cwv-button-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+
+/* CWV Distribution histogram */
+.cwv-distribution-wrapper {
+  margin-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+}
+
+/* Geographic breakdown wrapper */
+.geo-breakdown-wrapper {
+  margin-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+  overflow-x: auto;
+}
+
+.cwv-distribution-header h3 {
+  margin-top: 0;
+}
+
+.cwv-distribution-header .descr {
+  max-width: 30rem;
+}
+
+.cwv-distribution-wrapper [id$="-chart"] {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.cwv-distribution-wrapper .meta {
+  margin-bottom: 1rem;
+}
+
+.cwv-distribution-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  gap: 1rem;
+  color: var(--color-text-lighter);
+}
+
+.cwv-distribution-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-teal);
+  border-radius: 50%;
+  animation: cwv-spin 0.8s linear infinite;
+}
+
+@keyframes cwv-spin {
+  to { transform: rotate(360deg); }
+}
+
+.cwv-distribution-error {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--color-text-lighter);
+  font-style: italic;
+}
+

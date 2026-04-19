@@ -67,13 +67,60 @@
           {% set timeseries = tech_report_page.config.good_cwv_timeseries %}
           {% set selected_subcategory = request.args.get('good-cwv-over-time', '') or tech_report_page.config.good_cwv_timeseries.viz.default or 'overall' %}
           {% include "techreport/components/timeseries.html" %}
-        </div>
 
-        {% if tech_report_page.config.geo_breakdown %}
-        <div class="card">
-          {% include "techreport/components/geo_breakdown.html" %}
+          {% set ts_id = tech_report_page.config.good_cwv_timeseries.id %}
+          <div class="cwv-button-bar">
+            <button class="btn show-table cwv-show-table-btn" type="button" data-id="{{ ts_id }}">Show table</button>
+            {% if tech_report_page.config.geo_breakdown %}
+            <button class="btn show-table geo-breakdown-toggle" type="button" id="geo-breakdown-btn">Show geographic breakdown</button>
+            {% endif %}
+            {% if tech_report_page.config.cwv_distribution %}
+            <button class="btn show-table cwv-distribution-toggle" type="button" id="cwv-distribution-btn">Show histogram</button>
+            {% endif %}
+          </div>
+
+          {% if tech_report_page.config.geo_breakdown %}
+            {% include "techreport/components/geo_breakdown.html" %}
+          {% endif %}
+          {% if tech_report_page.config.cwv_distribution %}
+            {% include "techreport/components/cwv_distribution.html" %}
+          {% endif %}
+
+          <script nonce="{{ csp_nonce() }}">
+            (function() {
+              var bar = document.querySelector('.cwv-button-bar');
+              var tw = document.getElementById('{{ ts_id }}-table-wrapper');
+
+              // Move the timeseries' table wrapper out of the timeseries div so expanding it
+              // doesn't push the button bar down
+              if (bar && tw) bar.parentNode.insertBefore(tw, bar.nextSibling);
+
+              // Mutual exclusion: only one panel open at a time
+              var panels = [
+                { btn: bar.querySelector('.cwv-show-table-btn'), wrapper: tw, showText: 'Show table' },
+                { btn: document.getElementById('geo-breakdown-btn'), wrapper: document.getElementById('section-geo_breakdown'), showText: 'Show geographic breakdown' },
+                { btn: document.getElementById('cwv-distribution-btn'), wrapper: document.getElementById('section-cwv_distribution'), showText: 'Show histogram' }
+              ].filter(function(p) { return p.btn && p.wrapper; });
+
+              panels.forEach(function(panel) {
+                panel.btn.addEventListener('click', function() {
+                  panels.forEach(function(other) {
+                    if (other !== panel && !other.wrapper.classList.contains('hidden')) {
+                      other.wrapper.classList.add('hidden');
+                      other.btn.textContent = other.showText;
+                      // As table doesn't set the hash, clear it to avoid showing old value
+                      if (window.location.hash) {
+                        const url = new URL(window.location.href);
+                        url.hash = '';
+                        window.history.replaceState(null, null, url);
+                      }
+                    }
+                  });
+                }, true);
+              });
+            })();
+          </script>
         </div>
-        {% endif %}
       </div>
 
       <!-- Section: Lighthouse -->
