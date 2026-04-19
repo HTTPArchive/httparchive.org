@@ -32,14 +32,14 @@
     "test": "node ./tools/test"
   },
   "devDependencies": {
-    "ejs": "5.0.1",
+    "ejs": "5.0.2",
     "fs-extra": "11.3.4",
     "highcharts": "11.4.8",
     "node-fetch": "3.3.2",
     "recursive-readdir": "2.2.3",
     "run-script-os": "1.1.6",
     "web-vitals": "5.2.0",
-    "webpack": "5.105.4",
+    "webpack": "5.106.2",
     "webpack-cli": "7.0.2",
     "xml-js": "1.6.11"
   }
