@@ -108,6 +108,12 @@
                     if (other !== panel && !other.wrapper.classList.contains('hidden')) {
                       other.wrapper.classList.add('hidden');
                       other.btn.textContent = other.showText;
+                      // As table doesn't set the hash, clear it to avoid showing old value
+                      if (window.location.hash) {
+                        const url = new URL(window.location.href);
+                        url.hash = '';
+                        window.history.replaceState(null, null, url);
+                      }
                     }
                   });
                 }, true);
