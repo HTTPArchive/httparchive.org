@@ -1,4 +1,4 @@
-/* global Timeseries, GeoBreakdown */
+/* global Timeseries, GeoBreakdown, CwvDistribution */
 
 import SummaryCard from "./summaryCards";
 import TableLinked from "./tableLinked";
@@ -35,6 +35,10 @@ class Section {
 
         case "geoBreakdown":
           this.initializeGeoBreakdown(component);
+          break;
+
+        case "cwvDistribution":
+          this.initializeCwvDistribution(component);
           break;
 
         default:
@@ -75,6 +79,16 @@ class Section {
 
   initializeGeoBreakdown(component) {
     this.components[component.dataset.id] = new GeoBreakdown(
+      component.dataset.id,
+      this.pageConfig,
+      this.config,
+      this.pageFilters,
+      this.data
+    );
+  }
+
+  initializeCwvDistribution(component) {
+    this.components[component.dataset.id] = new CwvDistribution(
       component.dataset.id,
       this.pageConfig,
       this.config,
