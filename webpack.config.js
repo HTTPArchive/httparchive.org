@@ -16,6 +16,7 @@ module.exports = {
     'techreport/timeseries': './src/js/techreport/timeseries.js',
     'techreport/section': './src/js/techreport/section.js',
     'techreport/geoBreakdown': './src/js/techreport/geoBreakdown.js',
+    'techreport/cwvDistribution': './src/js/techreport/cwvDistribution.js',
   },
   output: {
     path: path.resolve(__dirname, 'static/js'),

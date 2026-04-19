@@ -15,6 +15,13 @@
       "INP",
       "TTFB"
     ],
+    "cwv_thresholds": {
+      "LCP":  [{ "value": 2500, "label": "Good" }, { "value": 4000, "label": "Needs improvement" }],
+      "FCP":  [{ "value": 1800, "label": "Good" }, { "value": 3000, "label": "Needs improvement" }],
+      "TTFB": [{ "value": 800,  "label": "Good" }, { "value": 1800, "label": "Needs improvement" }],
+      "INP":  [{ "value": 200,  "label": "Good" }, { "value": 500,  "label": "Needs improvement" }],
+      "CLS":  [{ "value": 0.1,  "label": "Good" }, { "value": 0.25, "label": "Needs improvement" }]
+    },
     "lighthouse_subcategories": [
       "accessibility",
       "best_practices",
@@ -726,14 +733,76 @@
           "id": "geo_breakdown",
           "title": "Core Web Vitals geographic breakdown",
           "description": "Top geographies by number of origins, showing the percentage with good Core Web Vitals and individual metrics.",
-          "metric_options": [
-            { "label": "Good Core Web Vitals", "value": "overall" },
-            { "label": "Good LCP", "value": "LCP" },
-            { "label": "Good INP", "value": "INP" },
-            { "label": "Good CLS", "value": "CLS" },
-            { "label": "Good FCP", "value": "FCP" },
-            { "label": "Good TTFB", "value": "TTFB" }
-          ]
+          "metric_labels": {
+            "overall": "Good Core Web Vitals",
+            "LCP": "Good LCP",
+            "INP": "Good INP",
+            "CLS": "Good CLS",
+            "FCP": "Good FCP",
+            "TTFB": "Good TTFB"
+          }
+        },
+        "cwv_distribution": {
+          "id": "cwv_distribution",
+          "title": "Core Web Vitals histograms",
+          "description": "How origins are distributed for individual Core Web Vitals metrics. Green, orange, and red zones indicate good, needs improvement, and poor thresholds respectively.",
+          "metric_config": {
+            "LCP":  {
+              "label": "LCP",
+              "bucketField": "loading_bucket",
+              "originsField": "lcp_origins",
+              "unit": "ms",
+              "axis_label": "LCP (ms)",
+              "step": 100
+            },
+            "FCP":  {
+              "label": "FCP",
+              "bucketField": "loading_bucket",
+              "originsField": "fcp_origins",
+              "unit": "ms",
+              "axis_label": "FCP (ms)",
+              "step": 100
+            },
+            "TTFB": {
+              "label": "TTFB",
+              "bucketField": "loading_bucket",
+              "originsField": "ttfb_origins",
+              "unit": "ms",
+              "axis_label": "TTFB (ms)",
+              "step": 100 },
+            "INP":  {
+              "label": "INP",
+              "bucketField": "inp_bucket",
+              "originsField": "inp_origins",
+              "unit": "ms",
+              "axis_label": "INP (ms)",
+              "step": 25
+            },
+            "CLS":  {
+              "label": "CLS",
+              "bucketField": "cls_bucket",
+              "originsField": "cls_origins",
+              "unit": "",
+              "axis_label": "CLS",
+              "step": 0.05
+            }
+          },
+          "zone_colors": {
+            "light": {
+              "good": "#0CCE6B",
+              "needsImprovement": "#FFA400",
+              "poor": "#FF4E42",
+              "text": "#444",
+              "gridLine": "#e6e6e6"
+            },
+            "dark": {
+              "good": "#0CCE6B",
+              "needsImprovement": "#FBBC04",
+              "poor": "#FF6659",
+              "text": "#ccc",
+              "gridLine": "#444"
+            }
+          }
         }
       }
     },
