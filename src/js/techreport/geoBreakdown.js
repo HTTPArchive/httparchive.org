@@ -34,8 +34,8 @@ class GeoBreakdown {
 
   // Map the shared metric value (which may be 'overall') to a metric this chart can show
   resolveMetric(value) {
-    if (value && METRIC_CONFIG[value]) return value;
-    return 'LCP';
+    if (value && METRIC_CONFIG[value]) return METRIC_CONFIG[value];
+    return 'overall';
   }
 
   toggle(show) {
@@ -47,9 +47,17 @@ class GeoBreakdown {
       if (!this.geoData) {
         this.fetchData();
       }
+      // Update the URL
+      const url = new URL(window.location.href);
+      url.hash = `#section-${this.id}`;
+      window.history.replaceState(null, null, url);
     } else {
       if (wrapper) wrapper.classList.add('hidden');
       if (btn) btn.textContent = 'Show geographic breakdown';
+      // Update the URL
+      const url = new URL(window.location.href);
+      url.hash = '';
+      window.history.replaceState(null, null, url);
     }
   }
 

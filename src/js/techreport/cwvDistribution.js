@@ -50,7 +50,7 @@ class CwvDistribution {
 
   // Map the shared metric value (which may be 'overall') to a metric this chart can show
   resolveMetric(value) {
-    if (value && METRIC_CONFIG[value]) return value;
+    if (value && METRIC_CONFIG[value]) return METRIC_CONFIG[value];
     return 'LCP';
   }
 
@@ -90,9 +90,17 @@ class CwvDistribution {
       } else if (this.chart) {
         this.chart.reflow();
       }
+      // Update the URL
+      const url = new URL(window.location.href);
+      url.hash = `#section-${this.id}`;
+      window.history.replaceState(null, null, url);
     } else {
       this.root.classList.add('hidden');
       if (btn) btn.textContent = 'Show histogram';
+      // Update the URL
+      const url = new URL(window.location.href);
+      url.hash = '';
+      window.history.replaceState(null, null, url);
     }
   }
 
