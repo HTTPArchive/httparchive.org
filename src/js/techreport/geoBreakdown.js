@@ -9,26 +9,91 @@ class GeoBreakdown {
     this.pageFilters = filters;
     this.data = data;
     this.geoData = null;
-    this.selectedMetric = 'overall';
+    this.selectedMetric = this.resolveMetric(new URLSearchParams(window.location.search).get('good-cwv-over-time')) || 'overall';
     this.sortColumn = 'total';
     this.sortDir = 'desc';
     this.showAll = false;
 
+    this.updateTitle();
     this.bindEventListeners();
-    this.fetchData();
+
+    // Auto-expand if URL hash targets this section
+    if (window.location.hash === `#section-${this.id}`) {
+      this.toggle(true);
+    }
+  }
+
+  // Map the shared metric value (which may be 'overall') to a metric this chart can show
+  resolveMetric(value) {
+    if (value && this.pageConfig.geo_breakdown.metric_labels.value) return this.pageConfig.geo_breakdown.metric_labels.value;
+    return 'overall';
+  }
+
+  toggle(show) {
+    const wrapper = document.getElementById(`section-${this.id}`);
+    const btn = document.getElementById('geo-breakdown-btn');
+    if (show) {
+      if (wrapper) wrapper.classList.remove('hidden');
+      if (btn) btn.textContent = 'Hide geographic breakdown';
+      if (!this.geoData) {
+        this.fetchData();
+      }
+      // Update the URL
+      const url = new URL(window.location.href);
+      url.hash = `#section-${this.id}`;
+      window.history.replaceState(null, null, url);
+    } else {
+      if (wrapper) wrapper.classList.add('hidden');
+      if (btn) btn.textContent = 'Show geographic breakdown';
+      // Update the URL
+      const url = new URL(window.location.href);
+      url.hash = '';
+      window.history.replaceState(null, null, url);
+    }
+  }
+
+  updateTitle() {
+    const slot = document.querySelector('[data-slot="geo-title-metric"]');
+    if (!slot) return;
+    slot.textContent = this.selectedMetric === 'overall' ? 'Core Web Vitals' : this.selectedMetric;
   }
 
   bindEventListeners() {
-    const root = `[data-id="${this.id}"]`;
-    document.querySelectorAll(`${root} .geo-metric-selector`).forEach(dropdown => {
-      dropdown.addEventListener('change', event => {
-        this.selectedMetric = event.target.value;
+    document.addEventListener('cwv-metric-change', (event) => {
+      const value = event.detail?.value;
+      if (value && value !== this.selectedMetric) {
+        this.selectedMetric = value;
+        this.updateTitle();
         if (this.geoData) this.renderTable();
-      });
+      }
     });
+
+    const btn = document.getElementById('geo-breakdown-btn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const wrapper = document.getElementById(`section-${this.id}`);
+        const isVisible = wrapper && !wrapper.classList.contains('hidden');
+        this.toggle(!isVisible);
+      });
+    }
+  }
+
+  showLoader() {
+    const container = document.getElementById(`${this.id}-table`);
+    if (!container) return;
+    container.innerHTML = '<div class="cwv-distribution-loader"><div class="cwv-distribution-spinner"></div><p>Loading geographic data…</p></div>';
+  }
+
+  hideLoader() {
+    const container = document.getElementById(`${this.id}-table`);
+    if (!container) return;
+    const loader = container.querySelector('.cwv-distribution-loader');
+    if (loader) loader.remove();
   }
 
   fetchData() {
+    this.showLoader();
+
     const technology = this.pageFilters.app.map(encodeURIComponent).join(',');
     const rank = encodeURIComponent(this.pageFilters.rank || 'ALL');
     const end = this.pageFilters.end ? `&end=${encodeURIComponent(this.pageFilters.end)}` : '';
@@ -38,9 +103,13 @@ class GeoBreakdown {
       .then(r => r.json())
       .then(rows => {
         this.geoData = rows;
+        this.hideLoader();
         this.renderTable();
       })
-      .catch(err => console.error('GeoBreakdown fetch error:', err));
+      .catch(err => {
+        console.error('GeoBreakdown fetch error:', err);
+        this.hideLoader();
+      });
   }
 
   updateContent() {
