@@ -16,9 +16,33 @@ class CwvDistribution {
     this.date = this.pageFilters.end || this.root?.dataset?.latestDate || '';
     this.selectedMetric = this.resolveMetric(new URLSearchParams(window.location.search).get('good-cwv-over-time'));
 
-    // Populate "Latest data" timestamp immediately
-    const tsSlot = this.root?.querySelector('[data-slot="cwv-distribution-timestamp"]');
-    if (tsSlot && this.date) tsSlot.textContent = UIUtils.printMonthYear(this.date);
+    const updateDateFromTimeseries = (newDate) => {
+      this.date = newDate;
+      const tsSlot = this.root?.querySelector('[data-slot="cwv-distribution-timestamp"]');
+      if (tsSlot && this.date) tsSlot.textContent = UIUtils.printMonthYear(this.date);
+      if (!this.distributionData) {
+        this.fetchData();
+      }
+    };
+
+    if (!this.date) {
+      // If we don't have a date, see if we can get it from the timeseries component
+      // If not wait for the event to emit when the date is available
+      const cwvChartDate = document.querySelector('#section-good_cwv_timeseries [data-slot=timestamp]');
+      if (cwvChartDate && cwvChartDate.dataset.date) {
+        updateDateFromTimeseries(cwvChartDate.dataset.date);
+      } else {
+        document.addEventListener('timeseries-date-updated', (event) => {
+          if (event.detail.id === 'good_cwv_timeseries') {
+            updateDateFromTimeseries(event.detail.date);
+          }
+        });
+      }
+    } else {
+      // Populate "Latest data" timestamp immediately
+      const tsSlot = this.root?.querySelector('[data-slot="cwv-distribution-timestamp"]');
+      if (tsSlot && this.date) tsSlot.textContent = UIUtils.printMonthYear(this.date);
+    }
 
     this.updateTitle();
     this.bindEventListeners();
@@ -66,7 +90,11 @@ class CwvDistribution {
     if (show) {
       this.root.classList.remove('hidden');
       if (btn) btn.textContent = 'Hide histogram';
-      if (!this.distributionData) {
+      if (!this.date) {
+        const cwvChartDate = document.querySelector('#section-good_cwv_timeseries [data-slot=timestamp]');
+        this.date = cwvChartDate.dataset.date;
+      }
+      if (!this.distributionData && this.date) {
         this.fetchData();
       } else if (this.chart) {
         this.chart.reflow();
