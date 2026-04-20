@@ -6,7 +6,7 @@
   data-id="{{ cwv_distribution_config.id }}"
   data-component="cwvDistribution"
   data-client="{{ request.args.get('client', '') or 'mobile' }}"
-  data-latest-date="{{ all_dates[0].value if all_dates else '' }}"
+  data-latest-date=""
 >
   <div class="cwv-distribution-header">
     <h3><a href="#section-{{ cwv_distribution_config.id }}" class="anchor"><span data-slot="cwv-distribution-title-metric">Core Web Vitals</span> histogram</a></h3>
