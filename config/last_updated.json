@@ -171,8 +171,8 @@
   },
   "/static/js/techreport/cwvDistribution.js": {
     "date_published": "2026-04-07T00:00:00.000Z",
-    "date_modified": "2026-04-19T00:00:00.000Z",
-    "hash": "9ca4cd9c10d6ef109fbd01d8af4b4e36"
+    "date_modified": "2026-04-20T00:00:00.000Z",
+    "hash": "d9721df034b07cd99460790b04aa711c"
   },
   "/static/js/techreport/geoBreakdown.js": {
     "date_published": "2026-03-24T00:00:00.000Z",
@@ -186,8 +186,8 @@
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2026-04-19T00:00:00.000Z",
-    "hash": "e50a9eac3a9e055d50db8ccc0017c968"
+    "date_modified": "2026-04-20T00:00:00.000Z",
+    "hash": "174a513cecbcd2abfdfe1d4fdbd739e1"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
