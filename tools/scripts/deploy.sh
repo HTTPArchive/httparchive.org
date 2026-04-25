@@ -69,7 +69,7 @@ echo "Beginning the https://httparchive.org Website deployment process"
 
 if [ "${no_promote}" == "1" ]; then
   echo "Deploying to GCP (no promote)"
-  echo "Y" | gcloud app deploy --project httparchive --no-promote
+  echo "Y" | gcloud run deploy httparchive --source . --project httparchive --region us-central1 --allow-unauthenticated --no-traffic
   echo "Done"
   exit 0
 fi
@@ -86,9 +86,9 @@ git checkout main
 git status
 git pull
 
-if [ "$(pgrep -if 'python main.py')" ]; then
+if [ "$(pgrep -if 'gunicorn')" ]; then
   echo "Killing existing server to run a fresh version"
-  pkill -9 -if "python main.py"
+  pkill -9 -if "gunicorn"
 fi
 
 echo "Run and test website"
@@ -105,11 +105,11 @@ echo "Please test the site locally"
 check_continue "Are you ready to deploy?"
 
 echo "Deploying to GCP"
-echo "Y" | gcloud app deploy --project httparchive
+echo "Y" | gcloud run deploy httparchive --source . --project httparchive --region us-central1 --allow-unauthenticated
 
-if [ "$(pgrep -if 'python main.py')" ]; then
+if [ "$(pgrep -if 'gunicorn')" ]; then
   echo "Killing server so backgrounded version isn't left there"
-  pkill -9 -if "python main.py"
+  pkill -9 -if "gunicorn"
 fi
 
 echo

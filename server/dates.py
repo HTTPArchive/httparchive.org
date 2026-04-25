@@ -23,7 +23,7 @@ LOAD_DATES_FROM_GCS = True
 try:
     gcs = storage.Client()
     gcs.get_bucket(GCS_BUCKET)  # pragma: no cover
-except (DefaultCredentialsError, RefreshError, Forbidden):  # pragma: no cover
+except (DefaultCredentialsError, RefreshError, Forbidden, OSError):  # pragma: no cover
     logger.warning("Unable to authenticate to Google Cloud Storage.")
     LOAD_DATES_FROM_GCS = False
 

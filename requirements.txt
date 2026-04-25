@@ -7,3 +7,4 @@ pytest==9.0.3
 pytest-watch==4.2.0
 pytest-cov==7.1.0
 Werkzeug!=2.2.0
+whitenoise==6.6.0

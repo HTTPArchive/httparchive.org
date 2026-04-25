@@ -26,6 +26,7 @@ from werkzeug.http import HTTP_STATUS_CODES
 from flask_talisman import Talisman
 from urllib.parse import urlparse, urlunparse
 from .markdown import Markdown, markdown
+from whitenoise import WhiteNoise
 
 
 from .csp import csp
@@ -43,19 +44,37 @@ TEMPLATES_DIR = ROOT_DIR + "/templates"
 STATIC_DIR = ROOT_DIR + "/static"
 
 
-# Set WOFF and WOFF2 caching to return 1 year as they should never change
-# Note this requires similar set up in app.yaml for Google App Engine
+# WOFF/WOFF2 fonts are fingerprinted and never change — cache for 1 year.
+# get_send_file_max_age is still used by Flask's test client;
+# whitenoise_add_headers applies the same rule when WhiteNoise serves the files.
 class HttpArchiveWebServer(Flask):
     def get_send_file_max_age(self, name):
         if name:
             if name.lower().endswith(".woff") or name.lower().endswith(".woff2"):
-                return 31536000
+                return 31536000  # pragma: no cover
         return Flask.get_send_file_max_age(self, name)
+
+
+def whitenoise_add_headers(headers, path, url):
+    """Override Cache-Control for static asset types that need non-default TTLs."""
+    if path.lower().endswith(".woff") or path.lower().endswith(".woff2"):
+        headers["Cache-Control"] = "max-age=31536000, public"
 
 
 # Initialize The Server
 app = HttpArchiveWebServer(
     __name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR
+)
+
+# Wrap WSGI app with WhiteNoise for serving static files efficiently on Cloud Run.
+# max_age=10800 (3h) matches the old app.yaml default_expiration.
+# Font files get a 1-year TTL via whitenoise_add_headers.
+app.wsgi_app = WhiteNoise(
+    app.wsgi_app,
+    root=STATIC_DIR,
+    prefix="static/",
+    max_age=10800,
+    add_headers_function=whitenoise_add_headers,
 )
 
 # register jinja2 extensions and filters
@@ -64,10 +83,14 @@ app.jinja_options = app.jinja_options.copy()
 app.jinja_env.add_extension(Markdown)
 app.jinja_env.filters["markdown"] = markdown
 
+# Disable HTTPS redirect locally when FLASK_DEBUG=1 (mirrors the old
+# 'python main.py background' which set talisman.force_https = False).
+_force_https = not bool(os.environ.get("FLASK_DEBUG"))
 talisman = Talisman(
     app,
     content_security_policy=csp,
     content_security_policy_nonce_in=["script-src"],
+    force_https=_force_https,
 )
 legacy_util = Legacy(faq_util)
 

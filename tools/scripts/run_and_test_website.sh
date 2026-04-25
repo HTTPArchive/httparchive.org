@@ -56,11 +56,11 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 
 echo "Starting website in background mode for tests"
-python main.py background &
+FLASK_DEBUG=1 gunicorn --bind :8080 --workers 1 --threads 8 main:app &
 # Sleep for a couple of seconds to make sure server is up
 sleep 5
 # Check website is running as won't have got feedback as backgrounded
-pgrep -if "python main.py"
+pgrep -if "gunicorn"
 
 echo "Installing node modules"
 npm install
@@ -91,6 +91,6 @@ if [ "${debug}" == "1" ]; then
   fi
 
   echo "Starting website in foreground mode so it reloads on file changes"
-  python main.py
+  FLASK_DEBUG=1 gunicorn --bind :8080 --workers 1 --threads 8 --reload main:app
 
 fi
