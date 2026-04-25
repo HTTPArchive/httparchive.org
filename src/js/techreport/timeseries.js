@@ -137,7 +137,14 @@ class Timeseries {
       container.innerHTML = '';
 
       /* Update the date to the most recent timestamp in the dataset */
-      viz.querySelector('[data-slot="timestamp"]').innerHTML = UIUtils.printMonthYear(sorted?.[0]?.date);
+      const timestamp = viz.querySelector('[data-slot="timestamp"]');
+      timestamp.textContent = UIUtils.printMonthYear(sorted?.[0]?.date);
+      timestamp.setAttribute('data-date', sorted?.[0]?.date);
+
+      /* Broadcast that the date has been updated */
+      document.dispatchEvent(new CustomEvent('timeseries-date-updated', {
+        detail: { id: this.id, date: sorted?.[0]?.date }
+      }));
 
       /* For each of the breakdowns, add a component with the latest data */
       config.series.values.forEach(breakdown => {
@@ -246,6 +253,12 @@ class Timeseries {
           value.textContent = 'No data';
         }
         timestamp.textContent = UIUtils.printMonthYear(latest.date);
+        timestamp.setAttribute('data-date', latest.date);
+
+        /* Broadcast that the date has been updated */
+        document.dispatchEvent(new CustomEvent('timeseries-date-updated', {
+          detail: { id: this.id, date: latest.date }
+        }));
         const techColor = UIUtils.getAppColor(app, this.pageFilters.app, this.pageConfig.colors);
         const fallback = this.pageConfig.colors.app[index];
         card.style.setProperty('--breakdown-color', techColor || fallback);
