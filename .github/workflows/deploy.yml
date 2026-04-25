@@ -1,0 +1,58 @@
+######################################
+## Custom HTTP Archive GitHub action ##
+######################################
+#
+# Deploys the website to Google App Engine (production) on every push to main.
+# Requires a GCP service account key stored as the GCP_SA_KEY repository secret.
+#
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and Deploy to App Engine
+    runs-on: ubuntu-latest
+    if: github.repository == 'HTTPArchive/httparchive.org'
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v6
+
+    - name: Setup Node.js for use with actions
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+
+    - name: Set up Python 3.14
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.14'
+
+    - name: Install Node dependencies
+      run: npm install
+
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build static assets
+      run: npm run build
+
+    - name: Update timestamps
+      run: npm run timestamps
+
+    - name: Generate scripts
+      run: npm run generate
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v3
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Deploy to App Engine
+      run: echo "Y" | gcloud app deploy --project httparchive
