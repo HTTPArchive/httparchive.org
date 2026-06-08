@@ -20,6 +20,35 @@ class ComboBox {
     const rows = data || this.data;
     // Add options in the dropdown list
     const listbox = this.element.querySelector('[role="listbox"]');
+
+    // Typing in the filter box does work for loading=lazy
+    // so use a manual IntersectionObserver for now.
+    const hasObserver = typeof IntersectionObserver !== 'undefined';
+    if (hasObserver) {
+      if (!this.observer) {
+        this.observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const option = entry.target;
+              const icon = option.dataset.icon;
+              if (icon && !option.querySelector('img')) {
+                const logo = document.createElement('img');
+                logo.setAttribute('alt', '');
+                logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
+                option.append(logo);
+              }
+              this.observer.unobserve(option);
+            }
+          });
+        }, {
+          root: listbox,
+          rootMargin: '100px',
+        });
+      } else {
+        this.observer.disconnect();
+      }
+    }
+
     rows.forEach((row, index) => {
       const icon = row.icon;
       const option = document.createElement('div');
@@ -30,11 +59,16 @@ class ComboBox {
       option.textContent = row.technology;
       option.id = `${this.element.dataset.id}-${row.technology.replaceAll(' ','-')}`;
       if(icon) {
-        const logo = document.createElement('img');
-        logo.setAttribute('alt', '');
-        logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${icon}`);
-        logo.setAttribute('loading', 'lazy');
-        option.append(logo);
+        if (hasObserver) {
+          option.dataset.icon = icon;
+          this.observer.observe(option);
+        } else {
+          const logo = document.createElement('img');
+          logo.setAttribute('alt', '');
+          logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
+          logo.setAttribute('loading', 'lazy');
+          option.append(logo);
+        }
       }
       if(this.selected.includes(row.technology)) {
         option.setAttribute('aria-selected', true);
