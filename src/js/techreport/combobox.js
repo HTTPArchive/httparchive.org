@@ -21,6 +21,8 @@ class ComboBox {
     // Add options in the dropdown list
     const listbox = this.element.querySelector('[role="listbox"]');
 
+    // Typing in the filter box does work for loading=lazy
+    // so use a manual IntersectionObserver for now.
     const hasObserver = typeof IntersectionObserver !== 'undefined';
     if (hasObserver) {
       if (!this.observer) {
