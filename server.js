@@ -70,7 +70,7 @@ async function getDates() {
   }
 
   try {
-    const [files, , apiResponse] = await bucket.getFiles({
+    const [, , apiResponse] = await bucket.getFiles({
       prefix: 'reports/20',
       delimiter: '/'
     });
