@@ -1,0 +1,1244 @@
+---
+title: Page payload blob
+description: Reference docs for the page payload blob
+---
+
+_Appears in: [`pages`](/reference/tables/pages/) table_\
+_As: [`payload`](/reference/tables/pages/#payload)_
+
+JSON-encoded WebPageTest result data for a page.
+
+<details>
+<summary>An example of the decoded object</summary>
+```json
+{
+    "_LargestContentfulPaintNodeType": "P",
+    "_LargestContentfulPaintType": "text",
+    "_LastInteractive": 400,
+    "_PerformancePaintTiming.first-contentful-paint": 314.80000000447035,
+    "_PerformancePaintTiming.first-paint": 314.80000000447035,
+    "_SpeedIndex": 400,
+    "_TTFB": 232,
+    "_TTIMeasurementEnd": 3452,
+    "_URL": "https://www.example.com/",
+    "_aft": 0,
+    "_audit_issues": [
+        {
+            "code": "QuirksModeIssue",
+            "details": {
+                "quirksModeIssueDetails": {
+                    "documentNodeId": 2,
+                    "frameId": "E021D0149DE3689992ECE4DF4B0ECA38",
+                    "isLimitedQuirksMode": false,
+                    "loaderId": "67DD39DE1A5C91FCB7B25B32EB8F7231",
+                    "url": "http://127.0.0.1:8888/orange.html"
+                }
+            }
+        }
+    ],
+    "_basePageSSLTime": 98,
+    "_base_page_cdn": "Edgecast",
+    "_base_page_cname": "",
+    "_base_page_dns_server": "a.iana-servers.net",
+    "_base_page_ip_ptr": "",
+    "_browserVersion": "128.0.0.0",
+    "_browser_name": "Chrome",
+    "_browser_version": "128.0.0.0",
+    "_bytesIn": 1296,
+    "_bytesInDoc": 1296,
+    "_bytesOut": 4112,
+    "_bytesOutDoc": 4112,
+    "_cached": 0,
+    "_chromeUserTiming": [
+        {
+            "name": "navigationStart",
+            "time": 39
+        },
+        ...
+    ],
+    "_chromeUserTiming.CumulativeLayoutShift": 0,
+    "_chromeUserTiming.LargestContentfulPaint": 354,
+    "_chromeUserTiming.LargestTextPaint": 354,
+    "_chromeUserTiming.TotalLayoutShift": 0,
+    "_chromeUserTiming.commitNavigationEnd": 285,
+    "_chromeUserTiming.domComplete": 320,
+    "_chromeUserTiming.domContentLoadedEventEnd": 320,
+    "_chromeUserTiming.domContentLoadedEventStart": 320,
+    "_chromeUserTiming.domInteractive": 320,
+    "_chromeUserTiming.domLoading": 285,
+    "_chromeUserTiming.fetchStart": 48,
+    "_chromeUserTiming.firstContentfulPaint": 354,
+    "_chromeUserTiming.firstMeaningfulPaint": 354,
+    "_chromeUserTiming.firstMeaningfulPaintCandidate": 354,
+    "_chromeUserTiming.firstPaint": 354,
+    "_chromeUserTiming.loadEventEnd": 320,
+    "_chromeUserTiming.loadEventStart": 320,
+    "_chromeUserTiming.markAsMainFrame": 284,
+    "_chromeUserTiming.navigationStart": 74,
+    "_chromeUserTiming.responseEnd": 277,
+    "_chromeUserTiming.unloadEventEnd": 284,
+    "_chromeUserTiming.unloadEventStart": 284,
+    "_connections": 1,
+    "_consoleLog": [
+        {
+            "level": "error",
+            "networkRequestId": "344808.2",
+            "source": "network",
+            "text": "Failed to load resource: the server responded with a status of 404 ()",
+            "timestamp": 1726370503561.599,
+            "url": "https://www.example.com/favicon.ico"
+        }
+    ],
+    "_cpu.CommitLoad": 0,
+    "_cpu.EventDispatch": 0,
+    "_cpu.FunctionCall": 0,
+    "_cpu.HTMLDocumentParser::FetchQueuedPreloads": 0,
+    "_cpu.Idle": 302,
+    "_cpu.Layerize": 0,
+    "_cpu.Layout": 18,
+    "_cpu.MarkDOMContent": 0,
+    "_cpu.MarkLoad": 0,
+    "_cpu.Paint": 0,
+    "_cpu.ParseHTML": 2,
+    "_cpu.PrePaint": 0,
+    "_cpu.ResourceFetcher::requestResource": 0,
+    "_cpu.UpdateLayoutTree": 0,
+    "_cpu.V8.GC_TIME_TO_SAFEPOINT": 0,
+    "_cpu.largestContentfulPaint::Candidate": 0,
+    "_cpuTimes": {
+        "CommitLoad": 0,
+        "EventDispatch": 0,
+        "FunctionCall": 0,
+        "HTMLDocumentParser::FetchQueuedPreloads": 0,
+        "Idle": 302,
+        "Layerize": 0,
+        "Layout": 18,
+        "MarkDOMContent": 0,
+        "MarkLoad": 0,
+        "Paint": 0,
+        "ParseHTML": 2,
+        "PrePaint": 0,
+        "ResourceFetcher::requestResource": 0,
+        "UpdateLayoutTree": 0,
+        "V8.GC_TIME_TO_SAFEPOINT": 0,
+        "largestContentfulPaint::Candidate": 0
+    },
+    "_cpuTimesDoc": {
+        "CommitLoad": 0,
+        "EventDispatch": 0,
+        "FunctionCall": 0,
+        "HTMLDocumentParser::FetchQueuedPreloads": 0,
+        "Idle": 299,
+        "Layerize": 0,
+        "Layout": 18,
+        "MarkDOMContent": 0,
+        "MarkLoad": 0,
+        "Paint": 0,
+        "ParseHTML": 2,
+        "PrePaint": 0,
+        "ResourceFetcher::requestResource": 0,
+        "UpdateLayoutTree": 0,
+        "V8.GC_TIME_TO_SAFEPOINT": 0,
+        "largestContentfulPaint::Candidate": 0
+    },
+    "_date": 1726370503.1648238,
+    "_docTime": 320,
+    "_document_URL": "https://www.example.com/",
+    "_document_hostname": "www.example.com",
+    "_document_origin": "https://www.example.com",
+    "_domComplete": 281,
+    "_domContentLoadedEventEnd": 280,
+    "_domContentLoadedEventStart": 280,
+    "_domElements": 12,
+    "_domInteractive": 280,
+    "_domLoading": 0,
+    "_domTime": 0,
+    "_edge-processed": true,
+    "_effectiveBps": 14727,
+    "_eventName": "Step_1",
+    "_execution_contexts": [
+        {
+            "id": 1,
+            "name": "",
+            "origin": "https://www.example.com"
+        },
+        ...
+    ],
+    "_final_base_page_request": 0,
+    "_final_base_page_request_id": "44714C6F6C72B045136D19CA9894886A",
+    "_final_url": "https://www.example.com/",
+    "_firstContentfulPaint": 354,
+    "_firstMeaningfulPaint": 354,
+    "_firstPaint": 314.80000000447035,
+    "_fullyLoaded": 323,
+    "_fullyLoadedCPUms": 610,
+    "_fullyLoadedCPUpct": 9.41358024700691,
+    "_gzip_savings": 0,
+    "_gzip_total": 648,
+    "_image_savings": 0,
+    "_image_total": 0,
+    "_interactivePeriods": [[0, 3452]],
+    "_largestPaints": [
+        {
+            "DOMNodeId": 3,
+            "event": "LargestTextPaint",
+            "nodeInfo": {
+                "bounds": [660, 192.875, 600, 57],
+                "nodeType": "P",
+                "styles": {
+                    "background-image": "none"
+                }
+            },
+            "size": 33858,
+            "time": 354
+        }
+    ],
+    "_lastVisualChange": 400,
+    "_lighthouse.Accessibility": 0.88,
+    "_lighthouse.BestPractices": 0.96,
+    "_lighthouse.Performance": 1,
+    "_lighthouse.Performance.cumulative-layout-shift": 0,
+    "_lighthouse.Performance.first-contentful-paint": 329.542,
+    "_lighthouse.Performance.largest-contentful-paint": 329.542,
+    "_lighthouse.Performance.speed-index": 322,
+    "_lighthouse.Performance.total-blocking-time": 0,
+    "_lighthouse.SEO": 0.9,
+    "_loadEventEnd": 281,
+    "_loadEventStart": 281,
+    "_loadTime": 320,
+    "_main_frame": "E021D0149DE3689992ECE4DF4B0ECA38",
+    "_minify_savings": -1,
+    "_minify_total": -1,
+    "_optimization_checked": 1,
+    "_origin_dns": {
+        "cname": [],
+        "https": [],
+        "mx": ["0 ."],
+        "ns": [
+            "a.iana-servers.net.",
+            "b.iana-servers.net."
+        ],
+        "soa": [
+            "ns.icann.org. noc.dns.icann.org. 2024081420 7200 3600 1209600 3600"
+        ],
+        "svcb": [],
+        "txt": [
+            "\"v=spf1 -all\"",
+            "\"wgyf8z8cgvm2qmxpnbnldrcltvk4xqfn\""
+        ]
+    },
+    "_osPlatform": "x86_64 x86_64",
+    "_osVersion": "Linux 6.8.0-1014-gcp",
+    "_os_version": "Linux 6.8.0-1014-gcp",
+    "_render": 400,
+    "_renderBlockingCSS": 0,
+    "_renderBlockingJS": 0,
+    "_requests": 2,
+    "_requestsDoc": 2,
+    "_requestsFull": 2,
+    "_responses_200": 1,
+    "_responses_404": 1,
+    "_responses_other": 0,
+    "_result": 99999,
+    "_run": 1,
+    "_score_cache": -1,
+    "_score_cdn": 100,
+    "_score_combine": -1,
+    "_score_compress": -1,
+    "_score_cookies": -1,
+    "_score_etags": -1,
+    "_score_gzip": 100,
+    "_score_keep-alive": 100,
+    "_score_minify": -1,
+    "_score_progressive_jpeg": -1,
+    "_server_rtt": 0,
+    "_start_epoch": 1726370501.1809506,
+    "_step": 1,
+    "_testID": "240912_Dx1XE_EVGML",
+    "_testStartOffset": 0,
+    "_testUrl": "https://www.example.com/",
+    "_test_run_time_ms": 5850,
+    "_tester": "agents-west-1-kl42-10.138.2.146",
+    "_titleTime": 76,
+    "_v8Stats": {
+        "background": {},
+        "main_thread": {}
+    },
+    "_viewport": {
+        "dpr": 1,
+        "height": 993,
+        "width": 1920
+    },
+    "_visualComplete": 400,
+    "_visualComplete85": 400,
+    "_visualComplete90": 400,
+    "_visualComplete95": 400,
+    "_visualComplete99": 400,
+    "id": "page_1_0_1",
+    "pageTimings": {
+        "_startRender": 400,
+        "onContentLoad": -1,
+        "onLoad": 320
+    },
+    "startedDateTime": "2024-09-15T03:21:42.914962",
+    "testID": "240912_Dx1XE_EVGML",
+    "title": "Run 1, First View for https://www.example.com/"
+}
+```
+</details>
+
+## Schema
+
+### `_LargestContentfulPaintNodeType`
+
+Type: `string`
+
+The node type of the largest contentful paint
+
+### `_LargestContentfulPaintType`
+
+Type: `string`
+
+The type of the largest contentful paint
+
+### `_LastInteractive`
+
+Type: `int`
+
+The time when the page was last interactive in milliseconds
+
+### `_PerformancePaintTiming.first-contentful-paint`
+
+Type: `float`
+
+The time when the first contentful paint occurred in milliseconds
+
+### `_PerformancePaintTiming.first-paint`
+
+Type: `float`
+
+The time when the first paint occurred in milliseconds
+
+### `_SpeedIndex`
+
+Type: `int`
+
+The Speed Index score
+
+### `_TTFB`
+
+Type: `int`
+
+The time to first byte in milliseconds
+
+### `_TTIMeasurementEnd`
+
+Type: `int`
+
+The time when the TTI measurement ended in milliseconds
+
+### `_URL`
+
+Type: `string`
+
+The URL of the page
+
+### `_aft`
+
+Type: `int`
+
+The above-the-fold time in milliseconds
+
+### `_audit_issues`
+
+Type: `array`
+
+Audit issues
+
+### `_basePageSSLTime`
+
+Type: `int`
+
+The time spent on SSL for the base page in milliseconds
+
+### `_base_page_cdn`
+
+Type: `string`
+
+The CDN used for the base page
+
+### `_base_page_cname`
+
+Type: `string`
+
+The CNAME used for the base page
+
+### `_base_page_dns_server`
+
+Type: `string`
+
+The DNS server used for the base page
+
+### `_base_page_ip_ptr`
+
+Type: `string`
+
+The IP PTR used for the base page
+
+### `_browserVersion`
+
+Type: `string`
+
+The browser version
+
+### `_browser_name`
+
+Type: `string`
+
+The browser name
+
+### `_browser_version`
+
+Type: `string`
+
+The browser version
+
+### `_bytesIn`
+
+Type: `int`
+
+The number of bytes received in
+
+### `_bytesInDoc`
+
+Type: `int`
+
+The number of bytes received in the document
+
+### `_bytesOut`
+
+Type: `int`
+
+The number of bytes sent out
+
+### `_bytesOutDoc`
+
+Type: `int`
+
+The number of bytes sent out in the document
+
+### `_cached`
+
+Type: `int`
+
+Whether the page was cached
+
+### `_chromeUserTiming`
+
+Type: `array`
+
+Chrome user timing
+
+### `_chromeUserTiming.CumulativeLayoutShift`
+
+Type: `int`
+
+The cumulative layout shift
+
+### `_chromeUserTiming.LargestContentfulPaint`
+
+Type: `int`
+
+The largest contentful paint
+
+### `_chromeUserTiming.LargestTextPaint`
+
+Type: `int`
+
+The largest text paint
+
+### `_chromeUserTiming.TotalLayoutShift`
+
+Type: `int`
+
+The total layout shift
+
+### `_chromeUserTiming.commitNavigationEnd`
+
+Type: `int`
+
+The commit navigation end
+
+### `_chromeUserTiming.domComplete`
+
+Type: `int`
+
+The DOM complete
+
+### `_chromeUserTiming.domContentLoadedEventEnd`
+
+Type: `int`
+
+The DOM content loaded event end
+
+### `_chromeUserTiming.domContentLoadedEventStart`
+
+Type: `int`
+
+The DOM content loaded event start
+
+### `_chromeUserTiming.domInteractive`
+
+Type: `int`
+
+The DOM interactive
+
+### `_chromeUserTiming.domLoading`
+
+Type: `int`
+
+The DOM loading in milliseconds
+
+### `_chromeUserTiming.fetchStart`
+
+Type: `int`
+
+The fetch start in milliseconds
+
+### `_chromeUserTiming.firstContentfulPaint`
+
+Type: `int`
+
+The first contentful paint
+
+### `_chromeUserTiming.firstMeaningfulPaint`
+
+Type: `int`
+
+The first meaningful paint
+
+### `_chromeUserTiming.firstMeaningfulPaintCandidate`
+
+Type: `int`
+
+The first meaningful paint candidate
+
+### `_chromeUserTiming.firstPaint`
+
+Type: `int`
+
+The first paint
+
+### `_chromeUserTiming.loadEventEnd`
+
+Type: `int`
+
+The load event end
+
+### `_chromeUserTiming.loadEventStart`
+
+Type: `int`
+
+The load event start
+
+### `_chromeUserTiming.markAsMainFrame`
+
+Type: `int`
+
+The mark as main frame
+
+### `_chromeUserTiming.navigationStart`
+
+Type: `int`
+
+The navigation start
+
+### `_chromeUserTiming.responseEnd`
+
+Type: `int`
+
+The response end
+
+### `_chromeUserTiming.unloadEventEnd`
+
+Type: `int`
+
+The unload event end
+
+### `_chromeUserTiming.unloadEventStart`
+
+Type: `int`
+
+The unload event start
+
+### `_connections`
+
+Type: `int`
+
+The number of connections
+
+### `_consoleLog`
+
+Type: `array`
+
+Console logs
+
+### `_cpu.CommitLoad`
+
+Type: `int`
+
+The CPU time spent on commit load in milliseconds
+
+### `_cpu.EventDispatch`
+
+Type: `int`
+
+The CPU time spent on event dispatch in milliseconds
+
+### `_cpu.FunctionCall`
+
+Type: `int`
+
+The CPU time spent on function call in milliseconds
+
+### `_cpu.HTMLDocumentParser::FetchQueuedPreloads`
+
+Type: `int`
+
+The CPU time spent on HTML document parser fetch queued preloads in milliseconds
+
+### `_cpu.Idle`
+
+Type: `int`
+
+The CPU time spent on idle in milliseconds
+
+### `_cpu.Layerize`
+
+Type: `int`
+
+The CPU time spent on layerize in milliseconds
+
+### `_cpu.Layout`
+
+Type: `int`
+
+The CPU time spent on layout in milliseconds
+
+### `_cpu.MarkDOMContent`
+
+Type: `int`
+
+The CPU time spent on marking DOM content in milliseconds
+
+### `_cpu.MarkLoad`
+
+Type: `int`
+
+The CPU time spent on marking load in milliseconds
+
+### `_cpu.Paint`
+
+Type: `int`
+
+The CPU time spent on paint in milliseconds
+
+### `_cpu.ParseHTML`
+
+Type: `int`
+
+The CPU time spent on parsing HTML in milliseconds
+
+### `_cpu.PrePaint`
+
+Type: `int`
+
+The CPU time spent on pre-paint in milliseconds
+
+### `_cpu.ResourceFetcher::requestResource`
+
+Type: `int`
+
+The CPU time spent on resource fetcher request resource in milliseconds
+
+### `_cpu.UpdateLayoutTree`
+
+Type: `int`
+
+The CPU time spent on updating layout tree in milliseconds
+
+### `_cpu.V8.GC_TIME_TO_SAFEPOINT`
+
+Type: `int`
+
+The CPU time spent on V8 GC time to safepoint in milliseconds
+
+### `_cpu.largestContentfulPaint::Candidate`
+
+Type: `int`
+
+The CPU time spent on largest contentful paint candidate in milliseconds
+
+### `_cpuTimes`
+
+Type: `object`
+
+CPU times
+
+### `_cpuTimesDoc`
+
+CPU times for the document
+
+### `_date`
+
+The date in Unix timestamp format
+
+### `_docTime`
+
+The document time in milliseconds
+
+### `_document_URL`
+
+The URL of the document
+
+### `_document_hostname`
+
+The hostname of the document
+
+### `_document_origin`
+
+The origin of the document
+
+### `_domComplete`
+
+Type: `int`
+
+The DOM complete in milliseconds
+
+### `_domContentLoadedEventEnd`
+
+Type: `int`
+
+The DOM content loaded event end in milliseconds
+
+### `_domContentLoadedEventStart`
+
+Type: `int`
+
+The DOM content loaded event start in milliseconds
+
+### `_domElements`
+
+Type: `int`
+
+The number of DOM elements
+
+### `_domInteractive`
+
+Type: `int`
+
+The DOM interactive in milliseconds
+
+### `_domLoading`
+
+Type: `int`
+
+The DOM loading in milliseconds
+
+### `_domTime`
+
+Type: `int`
+
+The DOM time in milliseconds
+
+### `_edge-processed`
+
+Type: `boolean`
+
+Whether the page was processed by Edge
+
+### `_effectiveBps`
+
+Type: `int`
+
+The effective BPS
+
+### `_eventName`
+
+Type: `string`
+
+The event name
+
+### `_execution_contexts`
+
+Type: `array`
+
+Execution contexts
+
+### `_final_base_page_request`
+
+Type: `int`
+
+The final base page request
+
+### `_final_base_page_request_id`
+
+Type: `string`
+
+The final base page request ID
+
+### `_final_url`
+
+Type: `string`
+
+The final URL
+
+### `_firstContentfulPaint`
+
+Type: `int`
+
+The first contentful paint in milliseconds
+
+### `_firstMeaningfulPaint`
+
+Type: `int`
+
+The first meaningful paint in milliseconds
+
+### `_firstPaint`
+
+Type: `float`
+
+The first paint in milliseconds
+
+### `_fullyLoaded`
+
+Type: `int`
+
+The fully loaded time in milliseconds
+
+### `_fullyLoadedCPUms`
+
+Type: `int`
+
+The fully loaded CPU time in milliseconds
+
+### `_fullyLoadedCPUpct`
+
+Type: `float`
+
+The fully loaded CPU percentage
+
+### `_gzip_savings`
+
+Type: `int`
+
+The bytes saved by gzip compression
+
+### `_gzip_total`
+
+Type: `int`
+
+The total bytes in gzip compression
+
+### `_image_savings`
+
+Type: `int`
+
+The bytes saved by image compression
+
+### `_image_total`
+
+Type: `int`
+
+The total bytes in image compression
+
+### `_interactivePeriods`
+
+Type: `array`
+
+Interactive periods in milliseconds
+
+### `_largestPaints`
+
+Type: `array`
+
+Largest paints
+
+### `_lastVisualChange`
+
+Type: `int`
+
+The time of the last visual change in milliseconds
+
+### `_lighthouse.Accessibility`
+
+Type: `float`
+
+The Lighthouse accessibility score
+
+### `_lighthouse.BestPractices`
+
+Type: `float`
+
+The Lighthouse best practices score
+
+### `_lighthouse.Performance`
+
+Type: `float`
+
+The Lighthouse performance score
+
+### `_lighthouse.Performance.cumulative-layout-shift`
+
+Type: `int`
+
+The Lighthouse cumulative layout shift
+
+### `_lighthouse.Performance.first-contentful-paint`
+
+Type: `float`
+
+The Lighthouse first contentful paint
+
+### `_lighthouse.Performance.largest-contentful-paint`
+
+Type: `float`
+
+The Lighthouse largest contentful paint
+
+### `_lighthouse.Performance.speed-index`
+
+Type: `int`
+
+The Lighthouse speed index
+
+### `_lighthouse.Performance.total-blocking-time`
+
+Type: `int`
+
+The Lighthouse total blocking time
+
+### `_lighthouse.SEO`
+
+Type: `float`
+
+The Lighthouse SEO score
+
+### `_loadEventEnd`
+
+Type: `int`
+
+The load event end in milliseconds
+
+### `_loadEventStart`
+
+Type: `int`
+
+The load event start in milliseconds
+
+### `_loadTime`
+
+Type: `int`
+
+The load time in milliseconds
+
+### `_main_frame`
+
+Type: `string`
+
+The main frame
+
+### `_minify_savings`
+
+Type: `int`
+
+The bytes saved by minification
+
+### `_minify_total`
+
+Type: `int`
+
+The total bytes in minification
+
+### `_optimization_checked`
+
+Type: `int`
+
+Whether optimization checks were performed
+
+### `_origin_dns`
+
+Type: `object`
+
+Origin DNS
+
+### `_osPlatform`
+
+Type: `string`
+
+The OS platform
+
+### `_osVersion`
+
+Type: `string`
+
+The OS version
+
+### `_os_version`
+
+Type: `string`
+
+The OS version
+
+### `_render`
+
+Type: `int`
+
+The render time in milliseconds
+
+### `_renderBlockingCSS`
+
+Type: `int`
+
+The render blocking CSS time in milliseconds
+
+### `_renderBlockingJS`
+
+Type: `int`
+
+The render blocking JS time in milliseconds
+
+### `_requests`
+
+Type: `int`
+
+The number of requests
+
+### `_requestsDoc`
+
+Type: `int`
+
+The number of requests in the document
+
+### `_requestsFull`
+
+Type: `int`
+
+The number of full requests
+
+### `_responses_200`
+
+Type: `int`
+
+The number of 200 responses
+
+### `_responses_404`
+
+Type: `int`
+
+The number of 404 responses
+
+### `_responses_other`
+
+Type: `int`
+
+The number of other responses
+
+### `_result`
+
+Type: `int`
+
+The result code of the test run
+
+### `_run`
+
+Type: `int`
+
+The run number
+
+### `_score_cache`
+
+Type: `int`
+
+The cache score
+
+### `_score_cdn`
+
+Type: `int`
+
+The CDN score
+
+### `_score_combine`
+
+Type: `int`
+
+The combine score
+
+### `_score_compress`
+
+Type: `int`
+
+The compress score
+
+### `_score_cookies`
+
+Type: `int`
+
+The cookies score
+
+### `_score_etags`
+
+Type: `int`
+
+The etags score
+
+### `_score_gzip`
+
+Type: `int`
+
+The gzip score
+
+### `_score_keep-alive`
+
+Type: `int`
+
+The keep-alive score
+
+### `_score_minify`
+
+Type: `int`
+
+The minify score
+
+### `_score_progressive_jpeg`
+
+Type: `int`
+
+The progressive JPEG score
+
+### `_server_rtt`
+
+Type: `int`
+
+The server RTT
+
+### `_start_epoch`
+
+Type: `float`
+
+The start epoch in Unix timestamp format
+
+### `_step`
+
+Type: `int`
+
+The step number
+
+### `_testID`
+
+Type: `string`
+
+The test ID
+
+### `_testStartOffset`
+
+Type: `int`
+
+The test start offset
+
+### `_testUrl`
+
+Type: `string`
+
+The test URL
+
+### `_test_run_time_ms`
+
+Type: `int`
+
+The test run time in milliseconds
+
+### `_tester`
+
+Type: `string`
+
+The tester
+
+### `_titleTime`
+
+Type: `int`
+
+The title time in milliseconds
+
+### `_v8Stats`
+
+Type: `object`
+
+V8 stats
+
+### `_viewport`
+
+Type: `object`
+
+The viewport dimensions
+
+### `_visualComplete`
+
+Type: `int`
+
+The visual complete time in milliseconds
+
+### `_visualComplete85`
+
+Type: `int`
+
+The 85th percentile visual complete time in milliseconds
+
+### `_visualComplete90`
+
+Type: `int`
+
+The 90th percentile visual complete time in milliseconds
+
+### `_visualComplete95`
+
+Type: `int`
+
+The 95th percentile visual complete time in milliseconds
+
+### `_visualComplete99`
+
+Type: `int`
+
+The 99th percentile visual complete time in milliseconds
+
+### `id`
+
+Type: `string`
+
+The page ID
+
+### `pageTimings`
+
+Type: `object`
+
+Page timings
+
+### `startedDateTime`
+
+Type: `string`
+
+The start date and time of the page in Unix timestamp format
+
+### `testID`
+
+Type: `string`
+
+The test ID
+
+### `title`
+
+Type: `string`
+
+The page title

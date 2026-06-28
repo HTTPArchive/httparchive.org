@@ -1,0 +1,228 @@
+---
+title: Requests table
+description: Reference docs for the httparchive.crawl.requests table
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+[`httparchive.crawl.requests`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!4m3!1shttparchive!2scrawl!3srequests) is a partitioned and clustered table containing one row per request per page tested in the HTTP Archive. Pages are tested on a monthly basis and as of April 2022, both the root page and one secondary page are tested.
+
+## Schema
+
+<div style="width:140px">Field name</div> | <div style="width:115px">Type</div> | Description
+---|---|---
+[`date`](#date) | `DATE` | YYYY-MM-DD format of the HTTP Archive monthly crawl
+[`client`](#client) | `STRING` | Test environment: `'desktop'` or `'mobile'`
+[`page`](#page) | `STRING` | The URL of the page being tested
+[`is_root_page`](#is_root_page) | `BOOLEAN` | Whether the page is the root of the origin
+[`root_page`](#root_page) | `STRING` | The URL of the root page being tested, the origin followed by `/`
+[`url`](#url) | `STRING` | The URL of the request
+[`is_main_document`](#is_main_document) | `BOOLEAN` | Whether this request corresponds with the main HTML document of the page, which is the first HTML request after redirects
+[`type`](#type) | `STRING` | Simplified description of the type of resource (script, html, css, text, other, etc)
+[`index`](#index) | `INTEGER` | The sequential 0-based index of the request
+[`payload`](#payload) | `JSON` | JSON-encoded WebPageTest result data for this request
+[`summary`](#summary) | `JSON` | JSON-encoded summarization of request data
+[`request_headers`](#request_headers) | <code>ARRAY\<RECORD\></code> | Request headers
+[`response_headers`](#response_headers) | <code>ARRAY\<RECORD\></code> | Response headers
+[`response_body`](#response_body) | `STRING` | Text-based response body
+
+### `date`
+
+**This field is required for all queries over the `requests` table.**
+
+YYYY-MM-DD format of the HTTP Archive monthly crawl.
+
+  Example: `date = '2023-06-01'`
+
+### `client`
+
+Test environment: `'desktop'` or `'mobile'`.
+
+### `page`
+
+The URL of the page being tested.
+
+Example: `page = 'https://har.fyi/'`
+
+### `is_root_page`
+
+Whether the page is the root of the origin.
+
+### `root_page`
+
+The URL of the root page being tested, the origin followed by `/`.
+
+Example: `root_page = 'https://har.fyi/'`
+
+### `url`
+
+The URL of the request
+
+### `is_main_document`
+
+Whether this request corresponds with the main HTML document of the page, which is the first HTML request after redirects
+
+### `type`
+
+Simplified description of the type of resource (script, image, css, html, other, font, text, video, xml, audio, wasm, etc)
+
+### `index`
+
+The sequential 1-based index of the request
+
+### `payload`
+
+JSON-encoded WebPageTest result data for this request
+
+See the [Request payload](/reference/blobs/request-payload/) reference for more details.
+
+### `summary`
+
+JSON-encoded summarization of request data
+
+See the [Request summary](/reference/blobs/request-summary/) reference for more details.
+
+### `request_headers`
+
+Request headers
+
+See the [Header](/reference/structs/header/) reference for more details.
+
+### `response_headers`
+
+Response headers
+
+See the [Header](/reference/structs/header/) reference for more details.
+
+### `response_body`
+
+Text-based response body
+
+## Example queries
+
+Here are some common operations you can perform with the `requests` table.
+
+### Count the pages crawled
+
+<Tabs>
+  <TabItem label="Query">
+  ```sql
+  /* This query will process 85 GB when run. */
+  SELECT
+    client,
+    is_root_page,
+    count(0) AS requests_total
+  FROM `httparchive.crawl.requests`
+  WHERE date = '2024-05-01'
+  group by client, is_root_page
+  ```
+  </TabItem>
+  <TabItem label="Results">
+  client | is_root_page | requests_total
+  -- | -- | --
+  mobile | true | 1517364094
+  desktop | true | 1299394354
+  mobile | false | 1216156430
+  desktop | false | 1093804725
+  </TabItem>
+</Tabs>
+
+### Size of requests served
+
+Let's check the size of individual requests served from websites across the entire dataset. To do this, we'll be using the respBodySize summary metric. This metric represents the size of the response payload in bytes. Since 1 byte is very granular, we'll divide by 1024 to get to 1 KB and then by 100 so that we are looking at this data with bin sizes of 100KB. We'll also wrap this in a CEIL() function to remove the decimal points and then multiply the result by 100. Using this technique, 1234567 bytes would be rounded to a bin of 1300 KB.
+
+<Tabs>
+  <TabItem label="Query">
+  ```sql
+  /* This query will process 26 GB when run. */
+  WITH requests AS (
+    SELECT
+      CEIL(INT64(summary.respBodySize)/1024/100)*100 AS responseSize100KB,
+      COUNT(0) OVER () AS total_requests
+    FROM `httparchive.crawl.requests` TABLESAMPLE SYSTEM (1 PERCENT)
+    WHERE
+      date = '2024-06-01' AND
+      client = 'desktop' AND
+      is_root_page AND
+      INT64(summary.respBodySize) > 0
+  )
+
+  SELECT
+    responseSize100KB,
+    COUNT(0) AS requests,
+    COUNT(0)/ANY_VALUE(total_requests) AS pct_requests
+  FROM requests
+  GROUP BY responseSize100KB
+  ORDER BY responseSize100KB ASC
+  LIMIT 10
+  ```
+  </TabItem>
+  <TabItem label="Results">
+  responseSize100KB | requests | pct_requests
+  -- | -- | --
+  100.0 | 10113115 | 0.90864138408777051
+  200.0 | 486257 | 0.043689133714228209
+  300.0 | 188335 | 0.016921490072264605
+  400.0 | 87127 | 0.0078281714260556891
+  500.0 | 54134 | 0.004863822144433972
+  600.0 | 37443 | 0.0033641721017113315
+  700.0 | 26985 | 0.0024245435505883687
+  800.0 | 19817 | 0.0017805143428575023
+  900.0 | 24519 | 0.0022029788147814046
+  1000.0 | 11787 | 0.0010590363102014118
+  </TabItem>
+</Tabs>
+
+We can see that that 91% of requests have a response size less than 100KB. Try repeating this with 10KB bin sizes and you'll be able to see the spread of response sizes with more granularity.
+
+### Popularity of various image formats
+
+Let's filter out all of the non-Image content and examine the popularity of various image formats. For example, how often is jpg, gif, webp, etc used.
+
+<Tabs>
+  <TabItem label="Query">
+  ```sql
+  /* This query will process 8 GB when run. */
+  WITH requests AS (
+    SELECT
+      STRING(summary.format) AS format,
+      page,
+      COUNT(0) OVER() AS total_requests,
+      COUNT(DISTINCT page) OVER() AS total_pages
+    FROM `httparchive.crawl.requests` TABLESAMPLE SYSTEM (1 PERCENT)
+    WHERE
+      date = '2024-06-01' AND
+      client = 'desktop' AND
+      is_root_page AND
+      type = 'image'
+  )
+
+  SELECT
+    format,
+    COUNT(0) requests,
+    COUNT(DISTINCT page) pages,
+    ROUND(COUNT(0) / ANY_VALUE(total_requests), 2) percent_image_requests,
+    ROUND(COUNT(DISTINCT page) / ANY_VALUE(total_pages), 2) percent_pages
+  FROM requests
+  GROUP BY format
+  ORDER BY requests DESC
+  ```
+  </TabItem>
+  <TabItem label="Results">
+  format | requests | pages | percent_image_requests | percent_pages
+  -- | -- | -- | -- | --
+  jpg | 1644804 | 1310081 | 0.38 | 0.43
+  png | 1328825 | 1151809 | 0.31 | 0.38
+  gif | 793541 | 495055 | 0.18 | 0.16
+  svg | 250130 | 227550 | 0.06 | 0.08
+  webp | 223783 | 191184 | 0.05 | 0.06
+  ico | 64468 | 64016 | 0.01 | 0.02
+  avif | 29226 | 25794 | 0.01 | 0.01
+  | | 4405 | 3938 | 0.0 | 0.0
+  heic | 395 | 382 | 0.0 | 0.0
+  </TabItem>
+</Tabs>
+
+:::note
+It's important to understand the bias in the data when doing this type of analysis. While 1.3 million page views is a very diverse set - the technology used to parse these pages is Chrome browsers (both Desktop and Emulated mobile). Because of this, some formats may be under-represented - since Chrome supports webp but not jpeg-xr or jpeg2000. There may be cases like this with other type of technologies as well - for example custom web font types that vary based on browser support.
+:::

@@ -1,0 +1,40 @@
+---
+title: har.fyi
+description: Learn how the HTTP Archive (HAR) dataset works and how to use it to explore the state of the web.
+template: splash
+hero:
+  tagline: A new reference doc for the HTTP Archive dataset
+  image:
+    file: ../../../assets/mag.png
+  actions:
+    - text: Get started
+      link: /guides/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: Contribute on GitHub
+      link: https://github.com/HTTPArchive/har.fyi
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Next steps
+
+<CardGrid stagger>
+  <Card title="Start querying" icon="magnifier">
+    Learn how to start [querying HTTP Archive on BigQuery](/guides/getting-started/)
+  </Card>
+  <Card title="Explore table schemas" icon="document">
+    Learn about the [`pages`](/reference/tables/pages/) table
+  </Card>
+  <Card title="Contribute to har.fyi" icon="pencil">
+    Contribute to the project on [GitHub](https://github.com/HTTPArchive/har.fyi)
+  </Card>
+  <Card title="Learn more about HTTP Archive" icon="information">
+    See [httparchive.org](https://httparchive.org/)
+  </Card>
+  <Card title="Ask us anything" icon="star">
+    Start a thread on the [HTTP Archive discussion forum](https://discuss.httparchive.org/)
+  </Card>
+</CardGrid>

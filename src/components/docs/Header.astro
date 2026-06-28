@@ -1,0 +1,31 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import HeaderComponent from '../Header.astro';
+import Search from '@astrojs/starlight/components/Search.astro';
+---
+<div class="starlight-header-wrapper">
+  <!-- Shared site navigation -->
+  <HeaderComponent />
+  
+  <!-- Starlight Search bar container -->
+  <div class="starlight-search-container">
+    <Search {...Astro.props} />
+  </div>
+</div>
+
+<style>
+  .starlight-header-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* Style Search input to fit in or below header cleanly */
+  .starlight-search-container {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--sl-color-bg-nav, #fff);
+    border-bottom: 1px solid var(--sl-color-hairline, #e3e8f3);
+  }
+</style>

@@ -1,5 +1,8 @@
 import { defineConfig } from 'astro/config';
 import { readFileSync } from 'fs';
+import starlight from '@astrojs/starlight';
+import starlightLinksValidator from 'starlight-links-validator';
+import starlightLlmsTxt from 'starlight-llms-txt';
 
 // Load the last_updated.json for versioned filenames (matching Flask's get_versioned_filename)
 let timestamps = {};
@@ -20,6 +23,46 @@ export default defineConfig({
     // Don't add trailing slashes to output filenames
     format: 'directory',
   },
+  integrations: [
+    starlight({
+      title: 'HTTP Archive Docs',
+      components: {
+        Header: './src/components/docs/Header.astro',
+      },
+      sidebar: [
+        {
+          label: 'Guides',
+          items: [
+            { label: 'Getting started', link: 'docs/guides/getting-started' },
+            { label: 'Minimizing query costs', link: 'docs/guides/minimizing-costs' },
+            { label: 'Guided tour', link: 'docs/guides/guided-tour' },
+            { label: 'Release cycle', link: 'docs/guides/release-cycle' },
+          ],
+        },
+        {
+          label: 'Tables',
+          items: [{ autogenerate: { directory: 'docs/reference/tables' } }]
+        },
+        {
+          label: 'Structs',
+          items: [{ autogenerate: { directory: 'docs/reference/structs' } }]
+        },
+        {
+          label: 'Blobs',
+          items: [{ autogenerate: { directory: 'docs/reference/blobs' } }]
+        },
+        {
+          label: 'Custom Metrics',
+          items: [{ autogenerate: { directory: 'docs/reference/custom-metrics' } }]
+        },
+        {
+          label: 'Functions',
+          items: [{ autogenerate: { directory: 'docs/reference/functions' } }]
+        },
+      ],
+      plugins: [starlightLlmsTxt()],
+    }),
+  ],
   vite: {
     // Expose timestamps to Astro components
     define: {
