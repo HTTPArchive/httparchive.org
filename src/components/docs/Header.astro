@@ -1,31 +1,309 @@
 ---
+/**
+ * Starlight Header override.
+ * Renders the HTTP Archive site navbar + Starlight search.
+ * All styles are scoped — Bootstrap is NOT loaded, to avoid conflicts with Starlight's CSS.
+ */
 import type { Props } from '@astrojs/starlight/props';
-import HeaderComponent from '../Header.astro';
 import Search from '@astrojs/starlight/components/Search.astro';
+
+import { getReports, getReportUrl } from '../../utils/reports.js';
+const reports = getReports();
 ---
-<div class="starlight-header-wrapper">
-  <!-- Shared site navigation -->
-  <HeaderComponent />
-  
-  <!-- Starlight Search bar container -->
-  <div class="starlight-search-container">
-    <Search {...Astro.props} />
-  </div>
+
+<div class="ha-header-root">
+  <header class="ha-header">
+    <div class="ha-container">
+      <!-- Logo -->
+      <div class="ha-logo-col">
+        <a href="/">
+          <img class="ha-logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" />
+        </a>
+      </div>
+
+      <!-- Desktop nav + search -->
+      <div class="ha-nav-col">
+        <nav class="ha-nav" id="ha-desktop-nav" aria-label="Header Menu">
+          <ul>
+            <li>
+              <span class="ha-dropdown-target" tabindex="0" role="button" title="Reports menu">
+                Reports
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 8l4 4 4-4z"/></svg>
+              </span>
+              <ul class="ha-dropdown-content">
+                <li><a href="/reports">All Reports</a></li>
+                {reports.map(report => (
+                  <li><a href={getReportUrl(report)}>{report.name}</a></li>
+                ))}
+              </ul>
+            </li>
+            <li><a href="https://discuss.httparchive.org">Discuss</a></li>
+            <li>
+              <span class="ha-dropdown-target" tabindex="0" role="button" title="Web Almanac menu">
+                Web Almanac
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 8l4 4 4-4z"/></svg>
+              </span>
+              <ul class="ha-dropdown-content">
+                <li><a href="https://almanac.httparchive.org/en/2025/">2025</a></li>
+                <li><a href="https://almanac.httparchive.org/en/2024/">2024</a></li>
+                <li><a href="https://almanac.httparchive.org/en/2022/">2022</a></li>
+                <li><a href="https://almanac.httparchive.org/en/2021/">2021</a></li>
+                <li><a href="https://almanac.httparchive.org/en/2020/">2020</a></li>
+                <li><a href="https://almanac.httparchive.org/en/2019/">2019</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="ha-dropdown-target" tabindex="0" role="button" title="About menu">
+                About
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 8l4 4 4-4z"/></svg>
+              </span>
+              <ul class="ha-dropdown-content">
+                <li><a href="/about#mission">Mission</a></li>
+                <li><a href="/about#contribute">Contribute</a></li>
+                <li><a href="/about#contact">Contact</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/docs/" aria-current="page">Docs</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Starlight search -->
+        <div class="ha-search">
+          <Search {...Astro.props} />
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button class="ha-hamburger" id="ha-hamburger-btn" aria-label="Show navigation" aria-expanded="false" aria-controls="ha-mobile-nav">
+          <svg viewBox="0 0 32 32" height="28" width="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4,10h24c1.104,0,2-.896,2-2s-.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,22,28,22z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile nav (hidden by default) -->
+  <nav class="ha-mobile-nav" id="ha-mobile-nav" aria-label="Mobile Menu" hidden>
+    <ul>
+      <li><a href="/reports">Reports</a></li>
+      <li><a href="https://discuss.httparchive.org">Discuss</a></li>
+      <li><a href="https://almanac.httparchive.org/">Web Almanac</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/docs/">Docs</a></li>
+    </ul>
+  </nav>
 </div>
 
 <style>
-  .starlight-header-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  /* -----------------------------------------------------------------------
+   * HTTP Archive docs header — fully self-contained, no Bootstrap.
+   * All selectors are namespaced with .ha- to avoid any Starlight conflicts.
+   * --------------------------------------------------------------------- */
+
+  .ha-header-root {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 25px;
+    color: #667a7d;
   }
 
-  /* Style Search input to fit in or below header cleanly */
-  .starlight-search-container {
-    padding: 0.5rem 1rem;
+  .ha-header {
+    background-color: #fff;
+    border-top: 5px solid #eee;
+    padding: 12px 15px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .ha-container {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  /* Logo */
+  .ha-logo-col {
+    flex: 0 0 auto;
+  }
+  .ha-logo {
+    max-height: 57px;
+    width: auto;
+    display: block;
+  }
+
+  /* Nav column: holds nav + search + hamburger in a row */
+  .ha-nav-col {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
     justify-content: flex-end;
-    background-color: var(--sl-color-bg-nav, #fff);
-    border-bottom: 1px solid var(--sl-color-hairline, #e3e8f3);
+  }
+
+  /* Desktop nav */
+  .ha-nav > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ha-nav li {
+    position: relative;
+  }
+
+  .ha-nav li > a,
+  .ha-nav .ha-dropdown-target {
+    display: inline-block;
+    padding: 10px 18px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #667a7d;
+    text-decoration: none;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  .ha-nav .ha-dropdown-target {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ha-nav .ha-dropdown-target svg {
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  .ha-nav li:hover > a,
+  .ha-nav li:hover .ha-dropdown-target,
+  .ha-nav li:focus-within > a,
+  .ha-nav li:focus-within .ha-dropdown-target {
+    background-color: #667a7d;
+    color: #fff;
+  }
+
+  /* Dropdown */
+  .ha-dropdown-content {
+    display: none !important;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #667a7d;
+    color: #fff;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 200;
+    min-width: 160px;
+    text-align: left;
+  }
+
+  .ha-dropdown-content li {
+    display: block !important;
+  }
+
+  .ha-dropdown-content li a {
+    display: block;
+    padding: 10px 16px;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  .ha-dropdown-content li a:hover,
+  .ha-dropdown-content li a[aria-current="page"] {
+    text-decoration: underline;
+  }
+
+  .ha-nav li:hover .ha-dropdown-content,
+  .ha-nav li:focus-within .ha-dropdown-content {
+    display: block !important;
+  }
+
+  /* Search */
+  .ha-search {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Hamburger (mobile only) */
+  .ha-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+  }
+  .ha-hamburger svg {
+    fill: currentColor;
+    display: block;
+  }
+  .ha-hamburger:hover,
+  .ha-hamburger:focus {
+    color: #444;
+    outline: none;
+  }
+
+  /* Mobile nav */
+  .ha-mobile-nav {
+    background-color: #667a7d;
+    padding: 0;
+  }
+  .ha-mobile-nav[hidden] {
+    display: none;
+  }
+  .ha-mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ha-mobile-nav li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .ha-mobile-nav li a {
+    display: block;
+    padding: 14px 20px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+  .ha-mobile-nav li a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive: hide desktop nav on small screens, show hamburger */
+  @media (max-width: 767px) {
+    .ha-nav {
+      display: none;
+    }
+    .ha-hamburger {
+      display: block;
+    }
   }
 </style>
+
+<script>
+  // Mobile nav toggle
+  const btn = document.getElementById('ha-hamburger-btn');
+  const nav = document.getElementById('ha-mobile-nav');
+  if (btn && nav) {
+    btn.addEventListener('click', () => {
+      const isHidden = nav.hasAttribute('hidden');
+      nav.toggleAttribute('hidden', !isHidden);
+      btn.setAttribute('aria-expanded', String(isHidden));
+    });
+  }
+</script>

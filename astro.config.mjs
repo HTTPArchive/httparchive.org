@@ -12,6 +12,16 @@ try {
   // During initial setup timestamps may not exist yet
 }
 
+function getVersionedFilename(filePath) {
+  const entry = timestamps[filePath];
+  if (entry?.hash) return `${filePath}?v=${entry.hash}`;
+  return filePath;
+}
+
+const bootstrapCss = getVersionedFilename('/static/css/bootstrap.min.css');
+const stylesCss    = getVersionedFilename('/static/css/styles.css');
+const mainJs       = getVersionedFilename('/static/js/main.js');
+
 export default defineConfig({
   output: 'static',
   outDir: 'dist',
