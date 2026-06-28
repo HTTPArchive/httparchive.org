@@ -6,7 +6,6 @@
  * based on the ?tech= parameter before initializing TechReport JS.
  */
 import Base from '../../../layouts/Base.astro';
-import { getVersionedFilename } from '../../../utils/timestamps.js';
 import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
 
 import Filters from '../../../components/techreport/Filters.astro';
@@ -15,30 +14,18 @@ import Timeseries from '../../../components/techreport/Timeseries.astro';
 import GeoBreakdown from '../../../components/techreport/GeoBreakdown.astro';
 import CwvDistribution from '../../../components/techreport/CwvDistribution.astro';
 import TableLinked from '../../../components/techreport/TableLinked.astro';
+import '../../../styles/techreport/general.css';
+import '../../../styles/techreport/techreport.css';
 
 const config = techReportConfig as any;
 const drilldownPage = config.pages.drilldown;
 const comparisonPage = config.pages.comparison;
-
-const generalCss = getVersionedFilename('/static/css/techreport/general.css');
-const techreportCss = getVersionedFilename('/static/css/techreport/techreport.css');
-const highchartsJs = getVersionedFilename('/static/js/highcharts.js');
-const exportingJs = getVersionedFilename('/static/js/exporting.js');
-const exportDataJs = getVersionedFilename('/static/js/export-data.js');
-const accessibilityJs = getVersionedFilename('/static/js/accessibility.js');
-const trTimeseriesJs = getVersionedFilename('/static/js/techreport/timeseries.js');
-const trGeoBreakdownJs = getVersionedFilename('/static/js/techreport/geoBreakdown.js');
-const trCwvDistributionJs = getVersionedFilename('/static/js/techreport/cwvDistribution.js');
-const trSectionJs = getVersionedFilename('/static/js/techreport/section.js');
-const techreportJs = getVersionedFilename('/static/js/techreport.js');
 ---
 <Base
   title="HTTP Archive: Tech Report"
   description="Track and compare web technology performance and adoption."
   customNavigation={true}
 >
-  <link slot="head" rel="stylesheet" href={generalCss}>
-  <link slot="head" rel="stylesheet" href={techreportCss}>
 
   <!-- Custom techreport navigation -->
   <Fragment slot="custom-navigation">
@@ -366,19 +353,27 @@ const techreportJs = getVersionedFilename('/static/js/techreport.js');
     </div>
   </div>
 
+  <div id="techreport-data" data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} data-pages={JSON.stringify(config.pages)} style="display: none;"></div>
+
   <Fragment slot="scripts">
-    <script is:inline src={highchartsJs}></script>
-    <script is:inline src={exportingJs}></script>
-    <script is:inline src={exportDataJs}></script>
-    <script is:inline src={accessibilityJs}></script>
-    <script is:inline src={trTimeseriesJs}></script>
-    <script is:inline src={trGeoBreakdownJs}></script>
-    <script is:inline src={trCwvDistributionJs}></script>
-    <script is:inline src={trSectionJs}></script>
-    <script is:inline src={techreportJs}></script>
-    <script is:inline define:vars={{ fullConfig: config.config, labels: config.labels, pages: config.pages }}>
+    <script is:inline src="/static/js/highcharts.js"></script>
+    <script is:inline src="/static/js/exporting.js"></script>
+    <script is:inline src="/static/js/export-data.js"></script>
+    <script is:inline src="/static/js/accessibility.js"></script>
+    <script src="../../../js/techreport/timeseries.js"></script>
+    <script src="../../../js/techreport/geoBreakdown.js"></script>
+    <script src="../../../js/techreport/cwvDistribution.js"></script>
+    <script src="../../../js/techreport/section.js"></script>
+    <script src="../../../js/techreport/index.js"></script>
+    <script>
       // Resolve page_id and populate dates client-side
-      (async function() {
+      addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('techreport-data');
+        if (!container) return;
+        const fullConfig = JSON.parse(container.dataset.fullConfig);
+        const labels = JSON.parse(container.dataset.labels);
+        const pages = JSON.parse(container.dataset.pages);
+
         const urlParams = new URLSearchParams(location.search);
         const techParam = urlParams.get('tech') || 'ALL';
         const techs = techParam.split(',');
@@ -478,7 +473,7 @@ const techreportJs = getVersionedFilename('/static/js/techreport.js');
 
         // Initialize TechReport JS class with the computed pageId ('drilldown' or 'comparison')
         const techReport = new TechReport(pageId, pageConfig, fullConfig, labels);
-      })();
+      });
     </script>
   </Fragment>
 </Base>

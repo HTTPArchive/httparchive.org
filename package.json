@@ -14,14 +14,14 @@
   },
   "homepage": "https://github.com/HTTPArchive/httparchive.org#readme",
   "scripts": {
-    "build": "webpack --config webpack.config.js --mode production",
+    "build": "npm run timestamps && npm run generate && npm run astro:build",
     "astro:build": "astro build",
     "astro:dev": "astro dev",
-    "watch": "webpack --config webpack.config.js --mode production --watch",
+    "watch": "astro dev",
     "generate": "node ./tools/generate",
-    "start": "npm run build && npm run timestamps && npm run generate && npm run astro:build && node server.js",
-    "stage": "npm run build && npm run timestamps && npm run generate && npm run astro:build && echo \"Y\" | gcloud app deploy --project httparchive --no-promote --version=staging",
-    "testdeploy": "npm run build && npm run timestamps && npm run generate && npm run astro:build && echo \"Y\" | gcloud app deploy --project httparchive --no-promote",
+    "start": "npm run build && node server.js",
+    "stage": "npm run build && echo \"Y\" | gcloud app deploy --project httparchive --no-promote --version=staging",
+    "testdeploy": "npm run build && echo \"Y\" | gcloud app deploy --project httparchive --no-promote",
     "deploy": "./tools/scripts/deploy.sh",
     "timestamps": "node ./tools/generate/generate_timestamps",
     "lint": "run-script-os",
@@ -40,8 +40,6 @@
     "recursive-readdir": "2.2.3",
     "run-script-os": "1.1.6",
     "web-vitals": "5.3.0",
-    "webpack": "5.108.1",
-    "webpack-cli": "7.1.0",
     "xml-js": "1.6.11"
   },
   "engines": {

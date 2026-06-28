@@ -67,7 +67,6 @@ npm install
 
 echo "Building website"
 npm run build
-npm run generate
 
 #echo "Running pytest"
 npm run pytest

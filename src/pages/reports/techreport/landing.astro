@@ -4,24 +4,12 @@
  * Replicates the Flask techreportlanding() route for page_id="landing"
  */
 import Base from '../../../layouts/Base.astro';
-import { getVersionedFilename } from '../../../utils/timestamps.js';
 import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
+import '../../../styles/techreport/general.css';
+import '../../../styles/techreport/techreport.css';
+import '../../../styles/techreport/landing.css';
 
 const config = techReportConfig as any;
-
-const generalCss = getVersionedFilename('/static/css/techreport/general.css');
-const techreportCss = getVersionedFilename('/static/css/techreport/techreport.css');
-const landingCss = getVersionedFilename('/static/css/techreport/landing.css');
-
-const highchartsJs = getVersionedFilename('/static/js/highcharts.js');
-const exportingJs = getVersionedFilename('/static/js/exporting.js');
-const exportDataJs = getVersionedFilename('/static/js/export-data.js');
-const accessibilityJs = getVersionedFilename('/static/js/accessibility.js');
-const trTimeseriesJs = getVersionedFilename('/static/js/techreport/timeseries.js');
-const trGeoBreakdownJs = getVersionedFilename('/static/js/techreport/geoBreakdown.js');
-const trCwvDistributionJs = getVersionedFilename('/static/js/techreport/cwvDistribution.js');
-const trSectionJs = getVersionedFilename('/static/js/techreport/section.js');
-const techreportJs = getVersionedFilename('/static/js/techreport.js');
 
 const drilldownTechs = (config.config?.default_apps?.drilldown || []).join(',');
 const comparisonTechs = (config.config?.default_apps?.comparison || []).join(',');
@@ -31,9 +19,6 @@ const comparisonTechs = (config.config?.default_apps?.comparison || []).join(','
   description="Track and compare web technology performance and adoption."
   customNavigation={true}
 >
-  <link slot="head" rel="stylesheet" href={generalCss}>
-  <link slot="head" rel="stylesheet" href={techreportCss}>
-  <link slot="head" rel="stylesheet" href={landingCss}>
 
   <!-- Custom techreport navigation -->
   <Fragment slot="custom-navigation">
@@ -131,18 +116,27 @@ const comparisonTechs = (config.config?.default_apps?.comparison || []).join(','
     </div>
   </div>
 
+  <div id="techreport-data" data-page-config={JSON.stringify(config.pages?.landing)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
+
   <Fragment slot="scripts">
-    <script is:inline src={highchartsJs}></script>
-    <script is:inline src={exportingJs}></script>
-    <script is:inline src={exportDataJs}></script>
-    <script is:inline src={accessibilityJs}></script>
-    <script is:inline src={trTimeseriesJs}></script>
-    <script is:inline src={trGeoBreakdownJs}></script>
-    <script is:inline src={trCwvDistributionJs}></script>
-    <script is:inline src={trSectionJs}></script>
-    <script is:inline src={techreportJs}></script>
-    <script is:inline define:vars={{ pageConfig: config.pages?.landing, fullConfig: config.config, labels: config.labels }}>
-      const techReport = new TechReport('landing', pageConfig, fullConfig, labels);
+    <script is:inline src="/static/js/highcharts.js"></script>
+    <script is:inline src="/static/js/exporting.js"></script>
+    <script is:inline src="/static/js/export-data.js"></script>
+    <script is:inline src="/static/js/accessibility.js"></script>
+    <script src="../../../js/techreport/timeseries.js"></script>
+    <script src="../../../js/techreport/geoBreakdown.js"></script>
+    <script src="../../../js/techreport/cwvDistribution.js"></script>
+    <script src="../../../js/techreport/section.js"></script>
+    <script src="../../../js/techreport/index.js"></script>
+    <script>
+      addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('techreport-data');
+        if (!container) return;
+        const pageConfig = JSON.parse(container.dataset.pageConfig);
+        const fullConfig = JSON.parse(container.dataset.fullConfig);
+        const labels = JSON.parse(container.dataset.labels);
+        new TechReport('landing', pageConfig, fullConfig, labels);
+      });
     </script>
   </Fragment>
 </Base>

@@ -6,7 +6,6 @@
  * the exact HTML structures they expect to find and query in the DOM.
  */
 import Base from '../../../layouts/Base.astro';
-import { getVersionedFilename } from '../../../utils/timestamps.js';
 import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
 
 import Filters from '../../../components/techreport/Filters.astro';
@@ -16,6 +15,8 @@ import Timeseries from '../../../components/techreport/Timeseries.astro';
 import GeoBreakdown from '../../../components/techreport/GeoBreakdown.astro';
 import CwvDistribution from '../../../components/techreport/CwvDistribution.astro';
 import TableLinked from '../../../components/techreport/TableLinked.astro';
+import '../../../styles/techreport/general.css';
+import '../../../styles/techreport/techreport.css';
 
 export function getStaticPaths() {
   const config = techReportConfig as any;
@@ -29,26 +30,12 @@ export function getStaticPaths() {
 const { page_id } = Astro.params;
 const config = techReportConfig as any;
 const activePage = config.pages?.[page_id!];
-
-const generalCss = getVersionedFilename('/static/css/techreport/general.css');
-const techreportCss = getVersionedFilename('/static/css/techreport/techreport.css');
-const highchartsJs = getVersionedFilename('/static/js/highcharts.js');
-const exportingJs = getVersionedFilename('/static/js/exporting.js');
-const exportDataJs = getVersionedFilename('/static/js/export-data.js');
-const accessibilityJs = getVersionedFilename('/static/js/accessibility.js');
-const trTimeseriesJs = getVersionedFilename('/static/js/techreport/timeseries.js');
-const trGeoBreakdownJs = getVersionedFilename('/static/js/techreport/geoBreakdown.js');
-const trCwvDistributionJs = getVersionedFilename('/static/js/techreport/cwvDistribution.js');
-const trSectionJs = getVersionedFilename('/static/js/techreport/section.js');
-const techreportJs = getVersionedFilename('/static/js/techreport.js');
 ---
 <Base
   title="HTTP Archive: Tech Report"
   description="Track and compare web technology performance and adoption."
   customNavigation={true}
 >
-  <link slot="head" rel="stylesheet" href={generalCss}>
-  <link slot="head" rel="stylesheet" href={techreportCss}>
 
   <!-- Custom techreport navigation -->
   <Fragment slot="custom-navigation">
@@ -469,19 +456,28 @@ const techreportJs = getVersionedFilename('/static/js/techreport.js');
     </div>
   </div>
 
+  <div id="techreport-data" data-page-id={page_id} data-page-config={JSON.stringify(activePage)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
+
   <Fragment slot="scripts">
-    <script is:inline src={highchartsJs}></script>
-    <script is:inline src={exportingJs}></script>
-    <script is:inline src={exportDataJs}></script>
-    <script is:inline src={accessibilityJs}></script>
-    <script is:inline src={trTimeseriesJs}></script>
-    <script is:inline src={trGeoBreakdownJs}></script>
-    <script is:inline src={trCwvDistributionJs}></script>
-    <script is:inline src={trSectionJs}></script>
-    <script is:inline src={techreportJs}></script>
-    <script is:inline define:vars={{ pageId: page_id, pageConfig: activePage, fullConfig: config.config, labels: config.labels }}>
+    <script is:inline src="/static/js/highcharts.js"></script>
+    <script is:inline src="/static/js/exporting.js"></script>
+    <script is:inline src="/static/js/export-data.js"></script>
+    <script is:inline src="/static/js/accessibility.js"></script>
+    <script src="../../../js/techreport/timeseries.js"></script>
+    <script src="../../../js/techreport/geoBreakdown.js"></script>
+    <script src="../../../js/techreport/cwvDistribution.js"></script>
+    <script src="../../../js/techreport/section.js"></script>
+    <script src="../../../js/techreport/index.js"></script>
+    <script>
       // Fetch available crawl dates from API client-side and populate start/end date selectors
-      (async function() {
+      addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('techreport-data');
+        if (!container) return;
+        const pageId = container.dataset.pageId;
+        const pageConfig = JSON.parse(container.dataset.pageConfig);
+        const fullConfig = JSON.parse(container.dataset.fullConfig);
+        const labels = JSON.parse(container.dataset.labels);
+
         // Extract query parameters client-side
         const urlParams = new URLSearchParams(location.search);
         const requestedGeo = urlParams.get('geo') || 'ALL';
@@ -561,7 +557,7 @@ const techreportJs = getVersionedFilename('/static/js/techreport.js');
 
         // Initialize TechReport JS class
         const techReport = new TechReport(pageId, pageConfig, fullConfig, labels);
-      })();
+      });
     </script>
   </Fragment>
 </Base>

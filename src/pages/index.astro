@@ -1,14 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getVersionedFilename } from '../utils/timestamps.js';
+import '../styles/index.css';
 
 const title = 'The HTTP Archive';
 const description = 'The HTTP Archive tracks how the web is built. We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page.';
-const indexCss = getVersionedFilename('/static/css/index.css');
-const indexJs = getVersionedFilename('/static/js/index.js');
 ---
 <Base title={title} description={description}>
-  <link slot="head" rel="stylesheet" href={indexCss}>
 
   <section id="how-web-is-built" class="container">
     <div class="col-lg-5 col-sm-5 col-md-5 col-xs-6">
@@ -141,5 +138,5 @@ const indexJs = getVersionedFilename('/static/js/index.js');
     </p>
   </section>
 
-  <script is:inline slot="scripts" src={indexJs}></script>
+  <script slot="scripts" src="../js/index.js"></script>
 </Base>

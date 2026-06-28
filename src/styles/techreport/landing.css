@@ -1,0 +1,71 @@
+.choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem 2rem;
+  margin-bottom: 4rem;
+}
+
+.choices .card {
+  padding: 1.5rem 1.75rem;
+  transition: background-color 0.25s, border 0.25s;
+  position: relative;
+}
+
+.choices .card h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.choices .card h2 + p {
+  margin: 0;
+  padding: 0;
+}
+
+.choices .card h2 a::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.choices .card:has(h2 a:is(:hover, :focus-visible)) {
+  background-color: var(--color-card-background-hover);
+  border: 1px solid var(--color-card-border-hover);
+}
+
+.latest-info h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.latest-info .stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.latest-info h3 {
+  font-size: 1.15rem;
+}
+
+.latest-info p.value {
+  font-size: var(--font-size-medium);
+  font-weight: 600;
+}
+
+.report-summary-tables {
+  padding: 4rem 0;
+}
+
+.report-summary-tables .section {
+  margin-top: 2rem;
+}
+
+.report-summary-tables .section + .section {
+  margin-top: 1rem;
+}

@@ -9,9 +9,9 @@
  * The dates array is fetched at runtime from /api/dates.json by the page's JS.
  */
 import Base from '../../layouts/Base.astro';
-import { getVersionedFilename } from '../../utils/timestamps.js';
 import { getReports, getReport, getLenses, getMetric, getReportUrl, type Report } from '../../utils/reports.js';
 import { marked } from 'marked';
+import '../../styles/report.css';
 
 export async function getStaticPaths() {
   const reports = getReports();
@@ -57,14 +57,6 @@ const description = report.summary
   ? (marked(report.summary) as string).replace(/<[^>]+>/g, '')
   : title;
 
-const reportCss = getVersionedFilename('/static/css/report.css');
-const highstockJs = getVersionedFilename('/static/js/highstock.js');
-const highchartsMoreJs = getVersionedFilename('/static/js/highcharts-more.js');
-const exportingJs = getVersionedFilename('/static/js/exporting.js');
-const reportJs = getVersionedFilename('/static/js/report.js');
-const timeseriesJs = getVersionedFilename('/static/js/timeseries.js');
-const histogramJs = getVersionedFilename('/static/js/histogram.js');
-
 // The report image for OG tags
 const imageUrl = report.image
   ? `https://httparchive.org${report.image}`
@@ -80,7 +72,6 @@ const imageHeight = report.image ? 460 : 160;
   imageWidth={imageWidth}
   imageHeight={imageHeight}
 >
-  <link slot="head" rel="stylesheet" href={reportCss}>
   <link slot="head" rel="preconnect" href="https://cdn.httparchive.org">
   <link slot="head" rel="canonical" href={reportUrl}>
 
@@ -220,20 +211,23 @@ const imageHeight = report.image ? 460 : 160;
     </div>
   </section>
 
+  <div id="report-data-container" data-report={JSON.stringify(enrichedReport)} data-url={reportUrl} style="display: none;"></div>
+
   <Fragment slot="scripts">
-    <script is:inline src={highstockJs}></script>
-    <script is:inline src={highchartsMoreJs}></script>
-    <script is:inline src={exportingJs}></script>
-    <script is:inline src={reportJs}></script>
-    <script is:inline src={timeseriesJs}></script>
-    <script is:inline src={histogramJs}></script>
-    <script is:inline define:vars={{ reportData: enrichedReport, reportUrl }}>
-      /**
-       * Initialize the report page.
-       * Fetch dates from /api/dates.json, apply URL params (start/end/lens),
-       * then init Report and render charts.
-       */
-      (async function() {
+    <script is:inline src="/static/js/highstock.js"></script>
+    <script is:inline src="/static/js/highcharts-more.js"></script>
+    <script is:inline src="/static/js/exporting.js"></script>
+    <script src="../../js/report.js"></script>
+    <script src="../../js/timeseries.js"></script>
+    <script src="../../js/histogram.js"></script>
+    <script>
+      addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('report-data-container');
+        if (!container) return;
+
+        const reportData = JSON.parse(container.dataset.report);
+        const reportUrl = container.dataset.url;
+
         const urlParams = new URLSearchParams(location.search);
         const startParam = urlParams.get('start');
         const endParam = urlParams.get('end');
@@ -345,7 +339,7 @@ const imageHeight = report.image ? 460 : 160;
             histogram(metric.id, start, metric);
           }
         });
-      })();
+      });
     </script>
   </Fragment>
 </Base>

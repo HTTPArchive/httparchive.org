@@ -1,14 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getVersionedFilename } from '../../utils/timestamps.js';
 import { getReports, getReportUrl } from '../../utils/reports.js';
 import { marked } from 'marked';
+import '../../styles/reports.css';
 
 const title = 'Reports';
 const description = 'List of reports the HTTP Archive Tracks creates to track various aspects of the the web: State of the Web, State of JavaScript, State of Images, Loading Speed, Progressive Web Apps, Accessibility, SEO, Page Weight, Chrome User Experience Report, and Capabilities.';
 
 const reports = getReports();
-const reportsCss = getVersionedFilename('/static/css/reports.css');
 
 function renderMarkdown(text: string): string {
   if (!text) return '';
@@ -20,7 +19,6 @@ function getReportGraphicStyle(report: any): string {
 }
 ---
 <Base title={title} description={description}>
-  <link slot="head" rel="stylesheet" href={reportsCss}>
 
   <!-- SVG sprite for report icons (from reports.html) -->
   <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">

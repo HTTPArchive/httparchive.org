@@ -21,7 +21,6 @@ call npm install
 
 echo "Building website"
 call npm run build
-call npm run generate
 
 echo "Starting website"
 start python main.py

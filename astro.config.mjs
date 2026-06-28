@@ -1,26 +1,7 @@
 import { defineConfig } from 'astro/config';
-import { readFileSync } from 'fs';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
 import starlightLlmsTxt from 'starlight-llms-txt';
-
-// Load the last_updated.json for versioned filenames (matching Flask's get_versioned_filename)
-let timestamps = {};
-try {
-  timestamps = JSON.parse(readFileSync('./config/last_updated.json', 'utf8'));
-} catch (e) {
-  // During initial setup timestamps may not exist yet
-}
-
-function getVersionedFilename(filePath) {
-  const entry = timestamps[filePath];
-  if (entry?.hash) return `${filePath}?v=${entry.hash}`;
-  return filePath;
-}
-
-const bootstrapCss = getVersionedFilename('/static/css/bootstrap.min.css');
-const stylesCss    = getVersionedFilename('/static/css/styles.css');
-const mainJs       = getVersionedFilename('/static/js/main.js');
 
 export default defineConfig({
   output: 'static',
@@ -74,10 +55,6 @@ export default defineConfig({
     }),
   ],
   vite: {
-    // Expose timestamps to Astro components
-    define: {
-      '__TIMESTAMPS__': JSON.stringify(timestamps),
-    },
     server: {
       proxy: {
         '/api': 'http://127.0.0.1:8080',
