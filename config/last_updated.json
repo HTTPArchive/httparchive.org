@@ -212,7 +212,7 @@
   "docs/guides/guided-tour": {
     "date_published": "2026-06-28T00:00:00.000Z",
     "date_modified": "2026-06-28T00:00:00.000Z",
-    "hash": "631e056379a5d6f93087618e3ea7924a"
+    "hash": "a52176e67f1d794e051c1aebd471f471"
   },
   "docs/guides/minimizing-costs": {
     "date_published": "2026-06-28T00:00:00.000Z",
@@ -227,7 +227,7 @@
   "docs/index": {
     "date_published": "2026-06-28T00:00:00.000Z",
     "date_modified": "2026-06-28T00:00:00.000Z",
-    "hash": "eb6490686b18e58e6c54b96900badce8"
+    "hash": "c374905b3752c4c66b835830bd8940f8"
   },
   "docs/reference/blobs/lighthouse": {
     "date_published": "2026-06-28T00:00:00.000Z",
@@ -322,22 +322,22 @@
   "docs/reference/tables/pages": {
     "date_published": "2026-06-28T00:00:00.000Z",
     "date_modified": "2026-06-28T00:00:00.000Z",
-    "hash": "f0dc87aa150866b0b2b09600d45f9532"
+    "hash": "4ea11683e3f67ddff1b585f6014cc3d1"
   },
   "docs/reference/tables/requests": {
     "date_published": "2026-06-28T00:00:00.000Z",
     "date_modified": "2026-06-28T00:00:00.000Z",
-    "hash": "6332d4ad13c07b3e038f21a583af77e3"
+    "hash": "cebd71a60ba1b7d32af85baab3a224bf"
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2026-06-28T00:00:00.000Z",
-    "hash": "90eb8f9b7424f620b3ec68974e3b4567"
+    "hash": "ad857b3c293d3e6f071a11512b47e5eb"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2026-06-28T00:00:00.000Z",
-    "hash": "9547d75542b63dcb62057f7c2f3a26aa"
+    "hash": "9e9252fb1ac6afde8962f0513fc0e871"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
