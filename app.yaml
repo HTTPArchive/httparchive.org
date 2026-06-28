@@ -65,7 +65,7 @@ handlers:
     http_headers:
       strict-transport-security: max-age=31556926; includeSubDomains
       x-content-type-options: nosniff
-      content-security-policy: "default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https:; connect-src 'self' https:; frame-ancestors 'none'"
+      content-security-policy: "default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https:; frame-ancestors 'none'"
 
   # Astro pages — serve /path as dist/path/index.html
   - url: /(.+)
@@ -76,7 +76,7 @@ handlers:
     http_headers:
       strict-transport-security: max-age=31556926; includeSubDomains
       x-content-type-options: nosniff
-      content-security-policy: "default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https:; connect-src 'self' https:; frame-ancestors 'none'"
+      content-security-policy: "default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https:; frame-ancestors 'none'"
 
   # Fallback: all remaining routes to Python (legacy redirects, 404s, robots.txt, .well-known)
   - url: /.*

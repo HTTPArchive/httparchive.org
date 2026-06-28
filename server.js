@@ -167,7 +167,7 @@ app.use((req, res, next) => {
   // Apply CSP header similar to app.yaml for HTML responses
   const isHtml = req.path === '/' || !path.extname(req.path);
   if (isHtml) {
-    res.setHeader('Content-Security-Policy', "default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https:; connect-src 'self' https:; frame-ancestors 'none'");
+    res.setHeader('Content-Security-Policy', "default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https:; frame-ancestors 'none'");
   }
   next();
 });

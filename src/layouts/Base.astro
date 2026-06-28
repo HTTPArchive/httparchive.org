@@ -3,6 +3,8 @@ import { getReports } from '../utils/reports.js';
 
 import '../styles/bootstrap.min.css';
 import '../styles/styles.css';
+import opensans400 from '../../static/fonts/opensans-latin-400.woff2';
+import opensans700 from '../../static/fonts/opensans-latin-700.woff2';
 
 export interface Props {
   title?: string;
@@ -79,8 +81,8 @@ import Header from '../components/Header.astro';
     <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
 
     <!-- Fonts -->
-    <link rel="preload" href="/static/fonts/opensans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/static/fonts/opensans-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href={opensans400} as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href={opensans700} as="font" type="font/woff2" crossorigin>
 
     <!-- Core styles -->
 
