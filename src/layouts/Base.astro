@@ -5,6 +5,7 @@ import '../styles/bootstrap.min.css';
 import '../styles/styles.css';
 import opensans400 from '../../static/fonts/opensans-latin-400.woff2';
 import opensans700 from '../../static/fonts/opensans-latin-700.woff2';
+import lastUpdated from '../../config/last_updated.json';
 
 export interface Props {
   title?: string;
@@ -20,6 +21,33 @@ export interface Props {
   isProduction?: boolean;
 }
 
+const getPageDates = (pathname: string) => {
+  const path = pathname.replace(/^\/|\/$/g, '');
+  let key = '';
+  if (!path) {
+    key = 'index.html';
+  } else if (path === 'faq') {
+    key = 'faq.html';
+  } else if (path === 'about') {
+    key = 'about.html';
+  } else if (path === 'reports') {
+    key = 'reports.html';
+  } else if (path.startsWith('reports/')) {
+    key = path;
+  }
+  
+  if (key && (lastUpdated as Record<string, any>)[key]) {
+    return {
+      published: (lastUpdated as Record<string, any>)[key].date_published,
+      modified: (lastUpdated as Record<string, any>)[key].date_modified
+    };
+  }
+  return null;
+};
+
+const pageDates = getPageDates(Astro.url.pathname);
+const defaultDate = new Date().toISOString();
+
 const {
   title = 'HTTP Archive',
   description = 'List of reports the HTTP Archive Tracks creates to track various aspects of the the web: State of the Web, State of JavaScript, State of Images, Loading Speed, Progressive Web Apps, Accessibility, SEO, Page Weight, Chrome User Experience Report, and Capabilities.',
@@ -28,8 +56,8 @@ const {
   imageWidth = 320,
   imageHeight = 160,
   imageAlt = '',
-  datePublished = new Date().toISOString(),
-  dateModified = new Date().toISOString(),
+  datePublished = pageDates?.published || defaultDate,
+  dateModified = pageDates?.modified || defaultDate,
   customNavigation = false,
   isProduction = Astro.url.hostname === 'httparchive.org',
 } = Astro.props;

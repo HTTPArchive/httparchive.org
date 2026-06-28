@@ -60,7 +60,7 @@ In order to access the HTTP Archive via BigQuery, you'll need a Google account. 
 
     HTTP Archive collecting metadata from millions of websites each month, an the dataset is _extremely large_—multiple petabytes.
 
-    See the guide on [minimizing query costs](/guides/minimizing-costs/) to learn more.
+    See the guide on [minimizing query costs](/docs/guides/minimizing-costs/) to learn more.
 
     Also, take a moment setting up [cost controls](https://cloud.google.com/bigquery/docs/custom-quotas) to be informed of the costs inqurred throughout the month.
     :::
@@ -89,9 +89,9 @@ Some of the types of tables you'll find useful when getting started are describe
 
 The HTTP Archive stores detailed information about each page load in [HAR (HTTP Archive) files](https://en.wikipedia.org/wiki/.har). Each HAR file is JSON formatted and contains detailed performance data about a web page. The [specification for this format](https://w3c.github.io/web-performance/specs/HAR/Overview.html) is produced by the Web Performance Working Group of the W3C. The HTTP Archive splits each HAR file into multiple BigQuery tables, which are described below.
 
-* [`httparchive.crawl.pages`](/reference/tables/pages/) - HAR extract for each page url.
+* [`httparchive.crawl.pages`](/docs/reference/tables/pages/) - HAR extract for each page url.
 
-* [`httparchive.crawl.requests`](/reference/tables/requests/) - HAR extract for each resource.
+* [`httparchive.crawl.requests`](/docs/reference/tables/requests/) - HAR extract for each resource.
 
 You'll find JSON encoded HAR files for pages, requests, lighthouse reports and even response bodies! The table below outlines what these tables include.
 
@@ -242,6 +242,6 @@ When analyzing the results from this, you can see the % of websites that use dif
 * 96% load at least 1 CSS style,
 * and 87% load fonts on their homepage, etc.
 
-To explore more interactive examples, read the [Guided Tour](/guides/guided-tour/).
+To explore more interactive examples, read the [Guided Tour](/docs/guides/guided-tour/).
 
 If you want to explore deeper you have everything you need - infrastructure, documentation, community. Enjoy exploring this data and feel free to share your results and ask questions on the [HTTP Archive Discuss section](https://discuss.httparchive.org/).

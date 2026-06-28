@@ -12,6 +12,131 @@
     </url>
 
     <url>
+        <loc>https://httparchive.org/docs/</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/guides/getting-started</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/guides/guided-tour</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/guides/minimizing-costs</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/guides/release-cycle</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/blobs/lighthouse</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/blobs/page-metadata</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/blobs/page-payload</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/blobs/page-summary</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/blobs/request-payload</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/blobs/request-summary</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/custom-metrics/ads</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/custom-metrics/other</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/custom-metrics/privacy</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/functions/capo</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/functions/get_host_categories</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/functions/get_lcp_lazy</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/functions/get_lcp_priority</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/functions/get_origin</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/structs/custom-metrics</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/structs/feature</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/structs/header</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/structs/technology</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/tables/pages</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/docs/reference/tables/requests</loc>
+        <lastmod>2026-06-28</lastmod>
+    </url>
+
+    <url>
         <loc>https://httparchive.org/faq</loc>
         <lastmod>2026-06-28</lastmod>
     </url>

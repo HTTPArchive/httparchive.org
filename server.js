@@ -74,7 +74,6 @@ async function getDates() {
       prefix: 'reports/20',
       delimiter: '/'
     });
-    
     const prefixes = apiResponse.prefixes || [];
     const datePattern = /(\d{4}_\d{2}_\d{2})/;
     const dates = [];
@@ -163,7 +162,6 @@ app.use((req, res, next) => {
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  
   // Apply CSP header similar to app.yaml for HTML responses
   const isHtml = req.path === '/' || !path.extname(req.path);
   if (isHtml) {

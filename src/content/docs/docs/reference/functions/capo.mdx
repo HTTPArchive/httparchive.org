@@ -17,7 +17,7 @@ The HTML response body.
 
 **Type:** `STRING`
 
-Response bodies can be sourced from the `response_body` field of the [`requests`](/reference/tables/requests/) table, or the `body` field of legacy `response_bodies` tables.
+Response bodies can be sourced from the `response_body` field of the [`requests`](/docs/reference/tables/requests/) table, or the `body` field of legacy `response_bodies` tables.
 
 The HTML does not need to be complete and can contain only the `<head>` element, so for faster results and to avoid hitting memory limitations of BigQuery functions, it's recommended to extract everything before the opening `<body>` tag using a regular expression like this:
 

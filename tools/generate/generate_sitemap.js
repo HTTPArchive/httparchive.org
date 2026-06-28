@@ -52,6 +52,20 @@ const generate_sitemap = async () => {
     }
   }
 
+  // Get sitemap entries for documentation pages
+  for (const key of Object.keys(file_dates)) {
+    if (key.startsWith('docs/')) {
+      const lastmod = get_lastmod_date(key);
+      let url;
+      if (key === 'docs/index') {
+        url = 'docs/';
+      } else {
+        url = key;
+      }
+      urls.push({ url, lastmod });
+    }
+  }
+
   // Sort the urls to prevent needless change
   urls.sort((a,b) => (a.url).localeCompare(b.url));
 
