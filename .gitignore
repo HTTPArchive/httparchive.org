@@ -1,17 +1,9 @@
 .idea/
-env/
-.venv/
 node_modules/
 static/js
 static/html
 templates/sitemap.xml
 *.log
-*.pyc
 **/.DS_Store
-.coverage
-.idx/dev.nix
-.coverage.*
-.pytest_cache
-__pycache__
 .astro/
 /dist

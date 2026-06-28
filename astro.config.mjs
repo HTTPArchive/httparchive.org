@@ -51,7 +51,10 @@ export default defineConfig({
           items: [{ autogenerate: { directory: 'docs/reference/functions' } }]
         },
       ],
-      plugins: [starlightLlmsTxt()],
+      editLink: {
+        baseUrl: 'https://github.com/HTTPArchive/httparchive.org/edit/main/'
+      },
+      plugins: [starlightLlmsTxt(), starlightLinksValidator()],
     }),
   ],
   vite: {

@@ -18,7 +18,7 @@ The list of URLs is fed to our private instance of [WebPageTest](https://webpage
 
 As of March 1 2016, the tests are performed on Chrome for desktop and emulated Android (on Chrome) for mobile.
 
-The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates [a public dataset in BigQuery](https://har.fyi/guides/getting-started/).
+The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates [a public dataset in BigQuery](docs/guides/getting-started/).
 
 
 ## How accurate is the data, in particular the time measurements?
@@ -37,7 +37,7 @@ Given these conditions it's virtually impossible to compare the HTTP Archive's t
 
 ## How do I use BigQuery to write custom queries over the data?
 
-The HTTP Archive dataset is available publicly on BigQuery. Check out [Getting Started Accessing the HTTP Archive with BigQuery](https://har.fyi/guides/getting-started/).
+The HTTP Archive dataset is available publicly on BigQuery. Check out [Getting Started Accessing the HTTP Archive with BigQuery](docs/guides/getting-started/).
 
 
 ## What changes have been made to the test environment that might affect the data?
