@@ -11,3 +11,7 @@ templates/sitemap.xml
 .coverage
 .idx/dev.nix
 .coverage.*
+.pytest_cache
+__pycache__
+.astro/
+/dist

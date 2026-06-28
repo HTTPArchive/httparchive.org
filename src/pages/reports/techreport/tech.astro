@@ -1,0 +1,484 @@
+---
+/**
+ * Tech Report technology page: /reports/techreport/tech
+ * Replicates the Flask techreport() route.
+ * Renders both drilldown and comparison layouts, toggling the correct one at runtime
+ * based on the ?tech= parameter before initializing TechReport JS.
+ */
+import Base from '../../../layouts/Base.astro';
+import { getVersionedFilename } from '../../../utils/timestamps.js';
+import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
+
+import Filters from '../../../components/techreport/Filters.astro';
+import SummaryCard from '../../../components/techreport/SummaryCard.astro';
+import Timeseries from '../../../components/techreport/Timeseries.astro';
+import GeoBreakdown from '../../../components/techreport/GeoBreakdown.astro';
+import CwvDistribution from '../../../components/techreport/CwvDistribution.astro';
+import TableLinked from '../../../components/techreport/TableLinked.astro';
+
+const config = techReportConfig as any;
+const drilldownPage = config.pages.drilldown;
+const comparisonPage = config.pages.comparison;
+
+const generalCss = getVersionedFilename('/static/css/techreport/general.css');
+const techreportCss = getVersionedFilename('/static/css/techreport/techreport.css');
+const highchartsJs = getVersionedFilename('/static/js/highcharts.js');
+const exportingJs = getVersionedFilename('/static/js/exporting.js');
+const exportDataJs = getVersionedFilename('/static/js/export-data.js');
+const accessibilityJs = getVersionedFilename('/static/js/accessibility.js');
+const trTimeseriesJs = getVersionedFilename('/static/js/techreport/timeseries.js');
+const trGeoBreakdownJs = getVersionedFilename('/static/js/techreport/geoBreakdown.js');
+const trCwvDistributionJs = getVersionedFilename('/static/js/techreport/cwvDistribution.js');
+const trSectionJs = getVersionedFilename('/static/js/techreport/section.js');
+const techreportJs = getVersionedFilename('/static/js/techreport.js');
+---
+<Base
+  title="HTTP Archive: Tech Report"
+  description="Track and compare web technology performance and adoption."
+  customNavigation={true}
+>
+  <link slot="head" rel="stylesheet" href={generalCss}>
+  <link slot="head" rel="stylesheet" href={techreportCss}>
+
+  <!-- Custom techreport navigation -->
+  <Fragment slot="custom-navigation">
+    <a href="#main" class="skip main-btn">Skip to main content</a>
+    <a href="#results" class="skip main-btn">Skip to results</a>
+    <nav class="report-navigation">
+      <a href="/">
+        <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+      </a>
+      <div class="hidden-xs">
+        <ul id="desktop" class="navigation-items">
+          <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
+          <li>
+            <a href="/reports/techreport/landing"><span>Home</span></a>
+          </li>
+          <li>
+            <a href={`/reports/techreport/tech?geo=ALL&rank=ALL&tech=ALL`} aria-current="page"><span>Technologies</span></a>
+          </li>
+          <li>
+            <a href="/reports/techreport/category?geo=ALL&rank=ALL&category=CMS"><span>Categories</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="visible-xs">
+        <button class="hamburger">
+          <span class="sr-only">Menu</span>
+          <svg aria-hidden="true" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
+  </Fragment>
+
+  <!-- Report Base view container (report.html style) -->
+  <button id="open-filters" class="hidden">
+    <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+  </button>
+  <div class="mobile-filters">
+    <div class="filter-bar" id="mobile-filter-bar">
+      <div class="wrapper block-m">
+        <p>Filters</p>
+        <button aria-expanded="false" class="open-filters" id="open-filters-mobile">
+          <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+        </button>
+      </div>
+    </div>
+    <div class="hidden" id="mobile-filter-container"></div>
+  </div>
+
+  <div class="split-view">
+    <div class="filters">
+      <div id="report-filters">
+        <button id="close-filters">
+          <img src="/static/img/close-filters.svg" alt="Collapse filters" width="16px" height="16px" />
+        </button>
+
+        <Filters />
+      </div>
+    </div>
+
+    <div class="content page-content" id="results">
+      <!-- Container 1: Drilldown layout -->
+      <div id="drilldown-view" class="report-content hidden">
+        <div class="info intro block-m">
+          <div class="heading-wrapper">
+            <h1>
+              <span class="subtitle">Technology</span>
+              <span>
+                <span class="main-title">ALL</span>
+                <span class="title-img" role="img" aria-hidden="true"></span>
+              </span>
+            </h1>
+            <div class="breakdown default-dropdown-group">
+              <label for="client-breakdown" class="default-dropdown-label">Client</label>
+              <div class="select-label default-dropdown-wrapper">
+                <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+                  <option value="mobile" selected>Mobile</option>
+                  <option value="desktop">Desktop</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <p class="app-description"></p>
+          <ul class="category-list categories">
+            <li class="cell">Uncategorized</li>
+          </ul>
+        </div>
+
+        <div class="data-sections">
+          <div
+            id="drilldown-summary"
+            class="block-m summary report-section"
+            data-type="section"
+            data-api="cwv,lighthouse,page-weight"
+          >
+            <h2 class="summary-heading">Summary</h2>
+            <div class="summary-grid">
+              {drilldownPage.config.summary?.map((summary: any) => (
+                <SummaryCard summary={summary} />
+              ))}
+            </div>
+          </div>
+
+          <div
+            id="good-cwvs"
+            class="block-m report-section"
+            data-type="section"
+            data-api="cwv"
+          >
+            <h2><a class="anchor" href="#good-cwvs">Core Web Vitals</a></h2>
+            <p>{config.labels.metrics.vitals.general.description}</p>
+
+            {drilldownPage.config.good_cwv_summary && (
+              <div>
+                <h3>{drilldownPage.config.good_cwv_summary.title}</h3>
+                <div class="summary-grid">
+                  {drilldownPage.config.good_cwv_summary.cards?.map((summary: any) => (
+                    <SummaryCard summary={summary} sectionPrefix="cwv" />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div class="card">
+              <Timeseries timeseries={drilldownPage.config.good_cwv_timeseries} />
+
+              <div class="cwv-button-bar">
+                <button class="btn show-table cwv-show-table-btn" type="button" data-id={drilldownPage.config.good_cwv_timeseries.id}>Show table</button>
+                {drilldownPage.config.geo_breakdown && (
+                  <button class="btn show-table geo-breakdown-toggle" type="button" id="geo-breakdown-btn">Show geographic breakdown</button>
+                )}
+                {drilldownPage.config.cwv_distribution && (
+                  <button class="btn show-table cwv-distribution-toggle" type="button" id="cwv-distribution-btn">Show histogram</button>
+                )}
+              </div>
+
+              {drilldownPage.config.geo_breakdown && (
+                <GeoBreakdown geoBreakdown={drilldownPage.config.geo_breakdown} />
+              )}
+              {drilldownPage.config.cwv_distribution && (
+                <CwvDistribution cwvDistribution={drilldownPage.config.cwv_distribution} />
+              )}
+            </div>
+          </div>
+
+          <div
+            id="lighthouse"
+            class="block-m report-section"
+            data-type="section"
+            data-api="lighthouse"
+          >
+            <h2><a class="anchor" href="#lighthouse">Lighthouse</a></h2>
+            <p>{config.labels.metrics.lighthouse.general.description}</p>
+
+            {drilldownPage.config.lighthouse_summary && (
+              <div>
+                <h3>{drilldownPage.config.lighthouse_summary.title}</h3>
+                <div class="summary-grid">
+                  {drilldownPage.config.lighthouse_summary.cards?.map((summary: any) => (
+                    <SummaryCard summary={summary} sectionPrefix="lighthouse" />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div class="card">
+              <Timeseries timeseries={drilldownPage.config.lighthouse_timeseries} />
+            </div>
+          </div>
+
+          <div
+            id="page-weight"
+            class="block-m report-section"
+            data-type="section"
+            data-api="page-weight"
+          >
+            <h2><a class="anchor" href="#page-weight">Page weight</a></h2>
+            <p>{config.labels.metrics.pageWeight.general.description}</p>
+
+            {drilldownPage.config.weight_summary && (
+              <div>
+                <h3>{drilldownPage.config.weight_summary.title}</h3>
+                <div class="summary-grid">
+                  {drilldownPage.config.weight_summary.cards?.map((summary: any) => (
+                    <SummaryCard summary={summary} sectionPrefix="weight" />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div class="card">
+              <Timeseries timeseries={drilldownPage.config.weight_timeseries} />
+            </div>
+          </div>
+
+          <div
+            id="adoption"
+            class="block-m report-section"
+            data-type="section"
+            data-api="adoption"
+          >
+            <h2><a class="anchor" href="#adoption">Adoption</a></h2>
+            <p>{config.labels.metrics.adoption.general.description}</p>
+
+            <div class="card">
+              <Timeseries timeseries={drilldownPage.config.adoption_timeseries} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container 2: Comparison layout -->
+      <div id="comparison-view" class="report-content hidden">
+        <div class="info intro block-m">
+          <div class="heading-wrapper">
+            <h1>
+              <span class="subtitle">Technology</span>
+              <span class="main-title">Compare technologies</span>
+            </h1>
+            <div class="breakdown default-dropdown-group">
+              <label for="client-breakdown" class="default-dropdown-label">Client</label>
+              <div class="select-label default-dropdown-wrapper">
+                <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+                  <option value="mobile" selected>Mobile</option>
+                  <option value="desktop">Desktop</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="data-sections">
+          <div
+            id="comparison-summary"
+            class="card block-m summary report-section"
+            data-type="section"
+            data-api="cwv,lighthouse,page-weight"
+          >
+            <h2><a href="#comparison-summary" class="anchor">Summary</a></h2>
+            <TableLinked id={comparisonPage.config.tech_comparison_summary.id} table={comparisonPage.config.tech_comparison_summary.table} />
+          </div>
+
+          <div
+            id="comparison-good-cwvs"
+            class="block-m summary report-section"
+            data-type="section"
+            data-api="cwv"
+          >
+            <h2><a href="#comparison-good-cwvs" class="anchor">Core Web Vitals</a></h2>
+            <p>{config.labels.metrics.vitals.general.description}</p>
+
+            <div class="card">
+              <Timeseries timeseries={comparisonPage.config.good_cwv_timeseries} />
+            </div>
+          </div>
+
+          <div
+            id="comparison-lighthouse"
+            class="block-m summary report-section"
+            data-type="section"
+            data-api="lighthouse"
+          >
+            <h2><a href="#comparison-lighthouse" class="anchor">Lighthouse</a></h2>
+            <p>{config.labels.metrics.lighthouse.general.description}</p>
+
+            <div class="card">
+              <Timeseries timeseries={comparisonPage.config.lighthouse_timeseries} />
+            </div>
+          </div>
+
+          <div
+            id="comparison-page-weight"
+            class="block-m summary report-section"
+            data-type="section"
+            data-api="page-weight"
+          >
+            <h2><a href="#comparison-page-weight" class="anchor">Page weight</a></h2>
+            <p>{config.labels.metrics.pageWeight.general.description}</p>
+
+            <div class="card">
+              <Timeseries timeseries={comparisonPage.config.weight_timeseries} />
+            </div>
+          </div>
+
+          <div
+            id="comparison-adoption"
+            class="block-m summary report-section"
+            data-type="section"
+            data-api="adoption"
+          >
+            <h2><a href="#comparison-adoption" class="anchor">Adoption</a></h2>
+            <p>{config.labels.metrics.adoption.general.description}</p>
+
+            <div class="card">
+              <Timeseries timeseries={comparisonPage.config.adoption_timeseries} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feedback" id="section-feedback">
+    <div class="block-m">
+      <h2><a href="#section-feedback" class="anchor">Feedback?</a></h2>
+      <p>Please raise a <a href="https://github.com/HTTPArchive/httparchive.org/issues/new?template=tech-report.md">GitHub issue</a> if you spot any problems, or for any feature requests.</p>
+    </div>
+  </div>
+
+  <div class="accessibility-options" id="section-accessibility-options">
+    <div class="wrapper block-m">
+      <h2><a href="#section-accessibility-options" class="anchor">Accessibility</a></h2>
+      <p>Change settings related to accessibility here</p>
+      <div class="setting">
+        <div class="check-wrapper">
+          <label for="indicators-check">Show markers</label>
+          <input type="checkbox" name="indicators-check" id="indicators-check">
+        </div>
+      </div>
+      <div class="setting">
+        <button class="theme-switcher">🌚 Switch to dark mode</button>
+      </div>
+    </div>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src={highchartsJs}></script>
+    <script is:inline src={exportingJs}></script>
+    <script is:inline src={exportDataJs}></script>
+    <script is:inline src={accessibilityJs}></script>
+    <script is:inline src={trTimeseriesJs}></script>
+    <script is:inline src={trGeoBreakdownJs}></script>
+    <script is:inline src={trCwvDistributionJs}></script>
+    <script is:inline src={trSectionJs}></script>
+    <script is:inline src={techreportJs}></script>
+    <script is:inline define:vars={{ fullConfig: config.config, labels: config.labels, pages: config.pages }}>
+      // Resolve page_id and populate dates client-side
+      (async function() {
+        const urlParams = new URLSearchParams(location.search);
+        const techParam = urlParams.get('tech') || 'ALL';
+        const techs = techParam.split(',');
+        const pageId = techs.length > 1 ? 'comparison' : 'drilldown';
+        const pageConfig = pages[pageId];
+
+        // Extract query parameters client-side
+        const requestedGeo = urlParams.get('geo') || 'ALL';
+        const requestedRank = urlParams.get('rank') || 'ALL';
+        const requestedCategory = urlParams.get('category') || 'CMS';
+        const requestedStart = urlParams.get('start') || '';
+        const requestedEnd = urlParams.get('end') || '';
+        const requestedPage = parseInt(urlParams.get('page') || '1', 10);
+        const selectedTechs = urlParams.get('selected');
+        const selectedRows = urlParams.get('rows') || '10';
+        const lastPage = urlParams.get('last_page') === 'true';
+
+        let requestedTechs = ['ALL'];
+        if (techParam) {
+          requestedTechs = techParam.split(',');
+        } else if (pageConfig.config?.default?.app) {
+          requestedTechs = pageConfig.config.default.app;
+        }
+
+        const filters = {
+          geo: requestedGeo,
+          rank: requestedRank,
+          app: requestedTechs,
+          category: requestedCategory,
+          page: requestedPage,
+          last_page: lastPage,
+          selected: selectedTechs,
+          rows: selectedRows,
+          start: requestedStart,
+          end: requestedEnd,
+        };
+
+        const params = {
+          geo: requestedGeo,
+          rank: requestedRank,
+        };
+
+        // Attach filters and params dynamically
+        pageConfig.filters = filters;
+        pageConfig.params = params;
+
+        // Toggle layout visibility and set correct ID for the active container
+        if (pageId === 'comparison') {
+          const comp = document.getElementById('comparison-view');
+          comp.id = 'report-content';
+          comp.classList.remove('hidden');
+          const drill = document.getElementById('drilldown-view');
+          if (drill) drill.remove();
+        } else {
+          const drill = document.getElementById('drilldown-view');
+          drill.id = 'report-content';
+          drill.classList.remove('hidden');
+          const comp = document.getElementById('comparison-view');
+          if (comp) comp.remove();
+        }
+
+        // Fetch available crawl dates from API and populate selectors
+        let dates = [];
+        try {
+          const resp = await fetch('/api/dates.json');
+          const data = await resp.json();
+          dates = data.dates || [];
+        } catch (e) {
+          console.error('Failed to fetch dates', e);
+        }
+
+        const startSelect = document.getElementById('startDate');
+        const endSelect = document.getElementById('endDate');
+        if (startSelect && endSelect) {
+          const startVal = urlParams.get('start') || '';
+          const endVal = urlParams.get('end') || '';
+
+          dates.forEach(d => {
+            const formattedDate = d.replace(/_/g, '-');
+            const parts = d.split('_');
+            const dateObj = new Date(Date.UTC(parts[0], parts[1] - 1));
+            const display = dateObj.toLocaleString('default', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+            const opt1 = document.createElement('option');
+            opt1.value = formattedDate;
+            opt1.textContent = display;
+            if (formattedDate === startVal) opt1.selected = true;
+            startSelect.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = formattedDate;
+            opt2.textContent = display;
+            if (formattedDate === endVal) opt2.selected = true;
+            endSelect.appendChild(opt2);
+          });
+        }
+
+        // Initialize TechReport JS class with the computed pageId ('drilldown' or 'comparison')
+        const techReport = new TechReport(pageId, pageConfig, fullConfig, labels);
+      })();
+    </script>
+  </Fragment>
+</Base>

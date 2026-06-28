@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import { getVersionedFilename } from '../utils/timestamps.js';
+
+const title = 'The HTTP Archive';
+const description = 'The HTTP Archive tracks how the web is built. We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page.';
+const indexCss = getVersionedFilename('/static/css/index.css');
+const indexJs = getVersionedFilename('/static/js/index.js');
+---
+<Base title={title} description={description}>
+  <link slot="head" rel="stylesheet" href={indexCss}>
+
+  <section id="how-web-is-built" class="container">
+    <div class="col-lg-5 col-sm-5 col-md-5 col-xs-6">
+      <a href="/reports">
+        <img src="/static/img/web.png" alt="" width="457" height="495" aria-label="HTTP Archive reports"/>
+      </a>
+    </div>
+
+    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-12">
+      <h1>
+        The <b class="nowrap">HTTP Archive</b> Tracks How the <b>Web is Built</b>.
+      </h1>
+
+      <p>
+        We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page. We then crunch and analyze this data to identify trends &mdash; <a href="/faq">learn more about our methodology</a>.
+      </p>
+
+      <a href="/reports" class="btn alt">View Reports</a>
+    </div>
+  </section>
+
+  <section style="padding: 60px 15px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
+          <h2>
+            <small>Web Almanac</small>
+            2025 State of the Web Report
+          </h2>
+
+          <p>The Web Almanac combines the raw stats and trends of the HTTP Archive with the expertise of the web community. The 2025 edition is a comprehensive report on the state of the web, backed by real data and trusted web experts, and comprised of 16 chapters spanning aspects of page content, user experience, publishing, and distribution.</p>
+
+          <a href="https://almanac.httparchive.org/en/2025/" class="btn alt">Read The 2025 Web Almanac</a>
+        </div>
+        <div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
+          <a href="https://almanac.httparchive.org/en/2025/">
+            <img src="https://almanac.httparchive.org/static/images/home-hero.png" width="820" height="562" alt="The 2025 Web Almanac" loading="lazy"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech-report">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
+          <a href="/reports/techreport/landing">
+            <img src="/static/img/web-vitals.png" width="471" height="367" alt="Explore the Core Web Vitals Tech Report" loading="lazy"/>
+          </a>
+        </div>
+
+        <div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
+          <h2>
+            <small>Core Web Vitals</small>
+            Tech Report
+          </h2>
+
+          <p>
+            Track and compare web technology performance and adoption. Real-world Core Web Vitals performance data is provided by the Chrome UX Report at the origin level, and technologies are identified by HTTP Archive on the home page and one interior page.
+          </p>
+          <a href="/reports/techreport/landing" class="btn alt">View the Core Web Vitals Tech Report </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bigquery">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
+          <h2>
+            <small>Public Dataset</small>
+            Google BigQuery
+          </h2>
+
+          <p>
+            The HTTP Archive archives and provides access to detailed information about each website it crawls: request and response metadata, response bodies, execution traces, and more. You can download this data for offline analysis, or access it as a public dataset via Google BigQuery for fast and rapid analysis.
+          </p>
+          <a href="https://har.fyi/guides/getting-started/" class="btn alt">Get Started with Public Dataset</a>
+        </div>
+
+        <div class="col-lg-5 col-sm-6 col-md-6 hidden-xs">
+          <a href="https://har.fyi/guides/getting-started/">
+            <img src="/static/img/data.png" width="466" height="367" alt="Learn more about HTTP Archive on BigQuery" loading="lazy"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" class="hidden container">
+    <h2>Recent blog posts</h2>
+    <div id="blog-posts">
+      <template id="blog-post-template">
+        <div class="blog-post">
+          <a class="blog-post-author-avatar hidden-xs"><img height="50" width="50" loading="lazy" alt=""></a>
+          <div class="blog-post-content">
+            <a class="blog-post-title"></a>
+            <div class="blog-post-byline">
+              <a class="blog-post-author"></a>・<span class="blog-post-publication-date"></span>
+            </div>
+            <div class="blog-post-tags"><a class="blog-post-tag"></a></div>
+            <div class="blog-post-reactions">
+              <a class="blog-post-reaction blog-post-likes"><img src="/static/img/blog-likes.png" width="26" height="20" alt="likes" loading="lazy"><span></span></a>
+              <a class="blog-post-reaction blog-post-comments"><img src="/static/img/blog-comments.png" width="28" height="20" alt="comments" loading="lazy"><span></span></a>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+    <p class="text-center">
+      <a href="https://dev.to/httparchive" class="btn">Read more blog posts</a>
+    </p>
+  </section>
+
+  <section id="discuss" class="hidden container">
+    <h2>Featured Discussions</h2>
+    <table id="discussion-table">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Replies</th>
+        </tr>
+      </thead>
+      <tbody id="discussions"></tbody>
+    </table>
+    <p class="text-center">
+      <a href="https://discuss.httparchive.org" class="btn">Read more discussions</a>
+    </p>
+  </section>
+
+  <script is:inline slot="scripts" src={indexJs}></script>
+</Base>

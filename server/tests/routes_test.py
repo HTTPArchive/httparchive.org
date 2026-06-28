@@ -13,12 +13,9 @@
 # limitations under the License.
 
 import pytest
-
 from server import app, talisman
 
 
-# Create test client without https redirect
-# (normally taken care of by running in debug)
 @pytest.fixture
 def client():
     with app.test_client() as client:
@@ -26,7 +23,6 @@ def client():
         yield client
 
 
-# Add a function to test routes with optional location
 def assert_route(client, path, status, location=None):
     response = client.get(path)
     redirect_loc = response.location
@@ -38,267 +34,57 @@ def assert_route(client, path, status, location=None):
         assert response.status_code == status
 
 
-def test_index(client):
-    assert_route(client, "/", 200)
+def test_index_is_404_on_flask(client):
+    # Under Astro SSG, page routes are served statically by GAE, so Flask returns 404
+    assert_route(client, "/", 404)
 
 
-def test_reports(client):
-    assert_route(client, "/reports", 200)
+def test_reports_is_404_on_flask(client):
+    assert_route(client, "/reports", 404)
 
 
-def test_reports_with_slash(client):
-    assert_route(client, "/reports/", 301, "/reports")
+def test_about_is_404_on_flask(client):
+    assert_route(client, "/about", 404)
 
 
-def test_report_state_of_the_web(client):
-    assert_route(client, "/reports/state-of-the-web", 200)
+def test_faq_is_404_on_flask(client):
+    assert_route(client, "/faq", 404)
 
 
-def test_report_state_of_the_web_with_slash(client):
-    assert_route(client, "/reports/state-of-the-web/", 301, "/reports/state-of-the-web")
-
-
-def test_reports_www(client):
-    assert_route(
-        client,
-        "https://www.httparchive.org/reports",
-        301,
-        "https://httparchive.org/reports",
-    )
-
-
-def test_reports_beta(client):
-    assert_route(
-        client,
-        "https://beta.httparchive.org/reports",
-        301,
-        "https://httparchive.org/reports",
-    )
-
-
-def test_reports_legacy(client):
-    assert_route(
-        client,
-        "https://legacy.httparchive.org/reports",
-        301,
-        "https://httparchive.org/reports",
-    )
-
-
-def test_report_state_of_the_web_lens(client):
-    response = client.get("/reports/state-of-the-web?lens=top1k")
-    assert (
-        response.status_code == 200
-        and '<option value="top1k" selected>' in response.get_data(as_text=True)
-    )
-
-
-def test_reports_json(client):
-    response = client.get("/reports?f=json")
-    assert response.status_code == 200 and "application/json" in response.headers.get(
-        "Content-Type"
-    )
-
-
-def test_report_state_of_the_web_json(client):
-    response = client.get("/reports/state-of-the-web?f=json")
-    assert response.status_code == 200 and "application/json" in response.headers.get(
-        "Content-Type"
-    )
-
-
-def test_invalid_report(client):
-    assert_route(client, "/reports/test", 404)
-
-
-def test_report_invalid_start_date(client):
-    assert_route(
-        client, "/reports/state-of-the-web?start=1900_05_15&end=latest&view=list", 400
-    )
-
-
-def test_report_invalid_end_date(client):
-    assert_route(
-        client, "/reports/state-of-the-web?start=earliest&end=1900_05_15&view=list", 400
-    )
-
-
-def test_report_crux_max_date(client):
-    assert_route(client, "/reports/chrome-ux-report", 200)
-
-
-def test_report_latest(client):
-    assert_route(client, "/reports/state-of-the-web?end=latest&view=list", 200)
-
-
-def test_report_earliest(client):
-    assert_route(client, "/reports/state-of-the-web?start=earliest&view=list", 200)
-
-
-def test_report_earliest_end(client):
-    assert_route(
-        client, "/reports/state-of-the-web?start=earliest&end=earliest&view=list", 200
-    )
-
-
-def test_about(client):
-    assert_route(client, "/about", 200)
-
-
-def test_about_with_slash(client):
-    assert_route(client, "/about/", 301, "/about")
-
-
-def test_faq(client):
-    assert_route(client, "/faq", 200)
-
-
-def test_faq_with_slash(client):
-    assert_route(client, "/faq/", 301, "/faq")
-
-
-def test_legacy_page(client):
+def test_legacy_php_redirect(client):
     assert_route(client, "/index.php", 301, "/")
 
 
 def test_robots_txt(client):
     response = client.get("/robots.txt")
-    assert response.status_code == 200 and "text/plain" in response.headers.get(
-        "Content-Type"
-    )
-
-
-def test_sitemap(client):
-    response = client.get("/sitemap.xml")
-    assert response.status_code == 200 and "text/xml" in response.headers.get(
-        "Content-Type"
-    )
+    assert response.status_code == 200 and "text/plain" in response.headers.get("Content-Type")
 
 
 def test_favicon(client):
     response = client.get("/favicon.ico")
-    # Note flask sometimes returns image/x-icon and sometimes image/vnd.microsoft.icon
-    assert response.status_code == 200 and "image/" in response.headers.get(
-        "Content-Type"
-    )
+    assert response.status_code == 200 and "image/" in response.headers.get("Content-Type")
 
 
-def test_metric(client):
+def test_metric_api_requires_id(client):
     response = client.get("/metric.json")
-    assert response.status_code == 200 and "id parameter required" in response.get_data(
-        as_text=True
-    )
+    assert response.status_code == 200 and "id parameter required" in response.get_data(as_text=True)
 
 
-def test_metric_speedindex(client):
+def test_metric_api_speedindex(client):
     response = client.get("/metric.json?id=speedIndex")
     assert (
         response.status_code == 200
-        and '"description":"How quickly the contents of a page'
-        in response.get_data(as_text=True)
+        and '"description":"How quickly the contents of a page' in response.get_data(as_text=True)
     )
 
 
-def test_render_efonts_cache_control(client):
-    response = client.get("/static/fonts/opensans-latin-700.woff2")
-    assert response.status_code == 200 and "max-age=3153600" in response.headers.get(
-        "Cache-Control"
-    )
-
-
-def test_render_js_cache_control(client):
-    response = client.get("/static/js/main.js")
-    assert response.status_code == 200 and "max-age=10800" in response.headers.get(
-        "Cache-Control"
-    )
-
-
-def test_tech_report_compare(client):
-    response = client.get(
-        "/reports/techreport/tech?tech=jQuery%2CWordPress&geo=ALL&rank=ALL"
-    )
-    assert response.status_code == 200
-
-
-def test_tech_report_drilldown(client):
-    response = client.get("/reports/techreport/tech?geo=ALL&rank=ALL")
-    assert response.status_code == 200
-
-
-def test_tech_report_drilldown_wordpress(client):
-    response = client.get("/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL")
-    assert response.status_code == 200
-
-
-def test_tech_report_category(client):
-    response = client.get("/reports/techreport/category?geo=ALL&rank=ALL&category=CMS")
-    assert response.status_code == 200
-
-
-def test_tech_report_category_pages(client):
-    response = client.get(
-        "/reports/techreport/category?geo=ALL&rank=ALL&category=CMS&page=2"
-    )
-    assert response.status_code == 200
-
-
-def test_tech_report_category_pages_fallback(client):
-    response = client.get(
-        "/reports/techreport/category?geo=ALL&rank=ALL&category=CMS&page=defaults_to_1"
-    )
-    assert response.status_code == 200
-
-
-def test_tech_report_landing_valid_page(client):
-    response = client.get("/reports/techreport/landing")
-    assert response.status_code == 200
-
-
-def test_tech_report_landing_redirect(client):
-    assert_route(client, "/reports/techreport", 301, "/reports/techreport/landing")
-
-
-def test_tech_report_drilldown_page(client):
-    response = client.get("/reports/techreport/drilldown")
-    assert response.status_code == 200
-
-
-def test_tech_report_comparison_page(client):
-    response = client.get("/reports/techreport/comparison")
-    assert response.status_code == 200
-
-
-def test_tech_report_category_page(client):
-    response = client.get("/reports/techreport/category")
-    assert response.status_code == 200
-
-
-def test_tech_report_invalid_page(client):
-    response = client.get("/reports/techreport/invalid_page_id")
-    assert response.status_code == 404
-
-
-def test_tech_report_drilldown_with_dates(client):
-    response = client.get(
-        "/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01"
-    )
-    data = response.get_data(as_text=True)
-    assert response.status_code == 200
-    assert 'value="2024-01-01" selected' in data
-    assert 'value="2024-03-01" selected' in data
-    assert 'value="2025-01-01" selected' not in data
-
-
-def test_tech_report_comparison_with_dates(client):
-    response = client.get(
-        "/reports/techreport/tech?tech=jQuery%2CWordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01"
-    )
-    assert response.status_code == 200
-    data = response.get_data(as_text=True)
-    assert response.status_code == 200
-    assert 'value="2024-01-01" selected' in data
-    assert 'value="2024-03-01" selected' in data
-    assert 'value="2025-01-01" selected' not in data
+def test_api_dates(client):
+    response = client.get("/api/dates.json")
+    assert response.status_code == 200 and "application/json" in response.headers.get("Content-Type")
+    data = response.get_json()
+    assert "dates" in data
+    assert isinstance(data["dates"], list)
+    assert len(data["dates"]) > 0
 
 
 def test_well_known_atproto_did(client):

@@ -1,0 +1,48 @@
+---
+/**
+ * CwvDistribution Astro component — translates templates/techreport/components/cwv_distribution.html
+ */
+export interface Props {
+  cwvDistribution: {
+    id: string;
+    description: string;
+  };
+}
+
+const { cwvDistribution } = Astro.props;
+---
+<div
+  id={`section-${cwvDistribution.id}`}
+  class="cwv-distribution-wrapper hidden"
+  data-id={cwvDistribution.id}
+  data-component="cwvDistribution"
+  data-client="mobile"
+  data-latest-date=""
+>
+  <div class="cwv-distribution-header">
+    <h3>
+      <a href={`#section-${cwvDistribution.id}`} class="anchor">
+        <span data-slot="cwv-distribution-title-metric">Core Web Vitals</span> histogram
+      </a>
+    </h3>
+    <p class="descr">{cwvDistribution.description}</p>
+    <h4 class="heading">Latest data: <span data-slot="cwv-distribution-timestamp"></span></h4>
+
+    <ul class="meta">
+      <li class="client">
+        Client: <span data-slot="client">Mobile</span>
+      </li>
+      <li>
+        Geo: <span data-slot="geo">ALL</span>
+      </li>
+      <li>
+        Rank: <span data-slot="rank">ALL</span>
+      </li>
+      <li id="tech-meta-item">
+        Technology: <span data-slot="tech">ALL</span>
+      </li>
+    </ul>
+  </div>
+
+  <div id={`${cwvDistribution.id}-chart`}></div>
+</div>

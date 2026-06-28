@@ -1,0 +1,230 @@
+---
+/**
+ * Base layout — replaces base.html + main.html
+ * Accepts props for title, description, og metadata, and per-page customization.
+ */
+
+import { getVersionedFilename } from '../utils/timestamps.js';
+import { getReports, getReportUrl } from '../utils/reports.js';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  pageUrl?: string;
+  imageUrl?: string;
+  imageWidth?: string | number;
+  imageHeight?: string | number;
+  imageAlt?: string;
+  datePublished?: string;
+  dateModified?: string;
+  extraCss?: string[];
+  customNavigation?: boolean;
+  isProduction?: boolean;
+}
+
+const {
+  title = 'HTTP Archive',
+  description = 'List of reports the HTTP Archive Tracks creates to track various aspects of the the web: State of the Web, State of JavaScript, State of Images, Loading Speed, Progressive Web Apps, Accessibility, SEO, Page Weight, Chrome User Experience Report, and Capabilities.',
+  pageUrl = `https://httparchive.org${Astro.url.pathname}`,
+  imageUrl = 'https://httparchive.org/static/img/ha.png',
+  imageWidth = 320,
+  imageHeight = 160,
+  imageAlt = '',
+  datePublished = new Date().toISOString(),
+  dateModified = new Date().toISOString(),
+  extraCss = [],
+  customNavigation = false,
+  isProduction = Astro.url.hostname === 'httparchive.org',
+} = Astro.props;
+
+const reports = getReports();
+
+const bootstrapCss = getVersionedFilename('/static/css/bootstrap.min.css');
+const stylesCss = getVersionedFilename('/static/css/styles.css');
+const mainJs = getVersionedFilename('/static/js/main.js');
+const webVitalsJs = getVersionedFilename('/static/js/web-vitals.js');
+const sendWebVitalsJs = getVersionedFilename('/static/js/send-web-vitals.js');
+
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{title}</title>
+
+    <meta name="description" content={description}>
+    {!isProduction && <meta name="robots" content="noindex">}
+    <meta property="og:title" content={title}>
+    <meta property="og:url" content={pageUrl}>
+    <meta property="og:image" content={imageUrl}>
+    <meta property="og:image:height" content={String(imageHeight)}>
+    <meta property="og:image:width" content={String(imageWidth)}>
+    <meta property="og:type" content="article">
+    <meta property="og:description" content={description}>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@HTTPArchive">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:image" content={imageUrl}>
+    <meta name="twitter:description" content={description}>
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
+      "headline": title,
+      "image": { "@type": "ImageObject", "url": imageUrl, "height": imageHeight, "width": imageWidth },
+      "publisher": {
+        "@type": "Organization",
+        "name": "HTTP Archive",
+        "logo": { "@type": "ImageObject", "url": "https://httparchive.org/static/img/ha.png", "height": 160, "width": 320 },
+        "sameas": ["https://httparchive.org", "https://twitter.com/HTTPArchive", "https://github.com/HTTPArchive"]
+      },
+      "description": description,
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+    })} />
+
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
+
+    <!-- Fonts -->
+    <link rel="preload" href="/static/fonts/opensans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/opensans-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Core styles -->
+    <link rel="stylesheet" href={bootstrapCss}>
+    <link rel="stylesheet" href={stylesCss}>
+    {extraCss.map(css => <link rel="stylesheet" href={getVersionedFilename(css)}>)}
+
+    <!-- Google Analytics -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-D66RRD8GF2"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-D66RRD8GF2');
+    </script>
+
+    <!-- SpeedCurve LUX -->
+    <script is:inline>LUX = window.LUX || {}; LUX.samplerate = 100;</script>
+    <script is:inline async defer src="https://cdn.speedcurve.com/js/lux.js?id=104609804"></script>
+
+    <slot name="head" />
+  </head>
+  <body>
+    {customNavigation ? (
+      <slot name="custom-navigation" />
+    ) : (
+      <header>
+        <div class="container">
+          <div class="pddl0 col-lg-2 col-md-3 col-sm-3 col-xs-10">
+            <a href="/">
+              <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+            </a>
+          </div>
+          <div class="col-lg-10 col-md-9 col-sm-9 col-xs-2 clearfix">
+            <nav id="desktop" class="hidden-xs pull-right text-right" aria-label="Header Menu">
+              <ul>
+                <li>
+                  <span class="dropdown-target" aria-haspopup="true" tabindex="0" role="button" title="Reports menu">
+                    Reports
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-label="menu"><path d="M5 8l4 4 4-4z"/></svg>
+                  </span>
+                  <ul class="dropdown-content reports">
+                    <li><a href="/reports">All Reports</a></li>
+                    {reports.map(report => (
+                      <li>
+                        <a href={getReportUrl(report)}>
+                          {report.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li><a href="https://discuss.httparchive.org">Discuss</a></li>
+                <li>
+                  <span class="dropdown-target" aria-haspopup="true" tabindex="0" role="button" title="Web Almanac menu">
+                    Web Almanac
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-label="menu"><path d="M5 8l4 4 4-4z"/></svg>
+                  </span>
+                  <ul class="dropdown-content">
+                    <li><a href="https://almanac.httparchive.org/en/2025/">2025</a></li>
+                    <li><a href="https://almanac.httparchive.org/en/2024/">2024</a></li>
+                    <li><a href="https://almanac.httparchive.org/en/2022/">2022</a></li>
+                    <li><a href="https://almanac.httparchive.org/en/2021/">2021</a></li>
+                    <li><a href="https://almanac.httparchive.org/en/2020/">2020</a></li>
+                    <li><a href="https://almanac.httparchive.org/en/2019/">2019</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="dropdown-target" aria-haspopup="true" tabindex="0" role="button" title="About menu">
+                    About
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-label="menu"><path d="M5 8l4 4 4-4z"/></svg>
+                  </span>
+                  <ul class="dropdown-content">
+                    <li><a href="/about#mission">Mission</a></li>
+                    <li><a href="/about#contribute">Contribute</a></li>
+                    <li><a href="/about#contact">Contact</a></li>
+                    <li><a href="/faq">FAQ</a></li>
+                    <li><a href="https://har.fyi">Docs</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+            <button class="visible-xs hamburger" aria-label="Show navigation">
+              <svg version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+    )}
+
+    <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
+
+    <slot name="report-navigation" />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+          <a href="/">
+            <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" loading="lazy"/>
+          </a>
+          <a href="https://archive.org/">
+            <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive" loading="lazy"/>
+          </a>
+        </div>
+        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
+          <nav id="footer-links" aria-label="Footer links">
+            <a href="/reports">Reports</a>
+            <a href="https://discuss.httparchive.org">Discuss</a>
+            <a href="https://almanac.httparchive.org/">Web Almanac</a>
+            <a href="/about">About</a>
+            <a href="/about#mission">Mission</a>
+            <a href="/about#contact">Contact</a>
+            <a href="/faq">FAQ</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Core JS -->
+    <script is:inline src={mainJs}></script>
+    <script is:inline defer src={webVitalsJs}></script>
+    <script is:inline defer src={sendWebVitalsJs}></script>
+    <script type="speculationrules">
+      {
+        "prefetch": [{"where": {"href_matches": "/reports/*"}, "eagerness": "eager"}],
+        "prerender": [{"where": {"href_matches": "/*"}, "eagerness": "moderate"}]
+      }
+    </script>
+
+    <slot name="scripts" />
+  </body>
+</html>

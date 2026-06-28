@@ -13,26 +13,19 @@
 # limitations under the License.
 
 # [START app]
+# Slim Flask server — HTML pages served by Astro SSG static files.
+# Flask only handles: /metric.json, /api/dates.json, legacy .php redirects, 404s.
 import os
 import logging
-from flask import (
-    Flask,
-    request,
-    render_template as flask_render_template,
-    redirect,
-    url_for as flask_url_for,
-)
-from werkzeug.http import HTTP_STATUS_CODES
+from flask import Flask, request, redirect
 from flask_talisman import Talisman
 from urllib.parse import urlparse, urlunparse
-from .markdown import Markdown, markdown
-
 
 from .csp import csp
 from . import reports as report_util
-from . import faq as faq_util
 from . import timestamps as timestamps_util
 from .legacy import Legacy
+from . import faq as faq_util
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -57,12 +50,6 @@ class HttpArchiveWebServer(Flask):
 app = HttpArchiveWebServer(
     __name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR
 )
-
-# register jinja2 extensions and filters
-
-app.jinja_options = app.jinja_options.copy()
-app.jinja_env.add_extension(Markdown)
-app.jinja_env.filters["markdown"] = markdown
 
 talisman = Talisman(
     app,
@@ -108,41 +95,11 @@ def add_header(response):
 
 
 # Cache static resources for 10800 secs (3 hrs) with SEND_FILE_MAX_AGE_DEFAULT.
-# Flask default if not set is 12 hours but we want to match app.yaml
-# which is used by Google App Engine as it serves static files directly
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 10800
 
 
-# Overwrite the built-in method.
-def render_template(template, *args, **kwargs):
-
-    date_published = timestamps_util.get_file_date_info(template, "date_published")
-    date_modified = timestamps_util.get_file_date_info(template, "date_modified")
-
-    kwargs.update(date_published=date_published, date_modified=date_modified)
-    return flask_render_template(template, *args, **kwargs)
-
-
-# Overwrite the built-in method.
-def url_for(endpoint, **kwargs):
-    # Persist the lens parameter across navigations.
-    lens = request.args.get("lens")
-    if report_util.is_valid_lens(lens):
-        kwargs["lens"] = lens
-
-    # Pass through to the built-in method.
-    return flask_url_for(endpoint, **kwargs)
-
-
-app.jinja_env.globals["url_for"] = url_for
-app.jinja_env.globals["get_versioned_filename"] = timestamps_util.get_versioned_filename
-app.jinja_env.globals["HTTP_STATUS_CODES"] = HTTP_STATUS_CODES
-
-
-# Circular Import but this is fine because routes and errors modules are not used in here and
-# this way we make app available for decorators in both modules
-# For more details, check https://flask.palletsprojects.com/en/1.1.x/patterns/packages/
-import server.routes
-import server.errors
+# Circular Import — routes and errors use decorators that need `app` to be defined first.
+import server.routes  # noqa: E402
+import server.errors  # noqa: E402
 
 # [END app]

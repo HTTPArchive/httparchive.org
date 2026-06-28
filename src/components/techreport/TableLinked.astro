@@ -1,0 +1,134 @@
+---
+/**
+ * TableLinked Astro component — translates templates/techreport/components/table_linked.html
+ */
+export interface Props {
+  id: string;
+  table: {
+    caption: string;
+    key: string;
+    prefill?: string;
+    columns: {
+      key: string;
+      name: string;
+      metric?: string;
+      endpoint?: string;
+      subcategory?: string;
+      className?: string;
+      hiddenName?: boolean;
+      hiddenSuffix?: string;
+      viz?: string;
+    }[];
+    rows?: { key: string; name: string; header?: string }[];
+  };
+  category?: string;
+  endpoint?: string;
+  sortEndpoint?: string;
+  sortMetric?: string;
+  sortKey?: string;
+  sortOrder?: string;
+  technologies?: string[];
+}
+
+const {
+  id,
+  table,
+  category = '',
+  endpoint = '',
+  sortEndpoint = 'adoption',
+  sortMetric = 'adoption',
+  sortKey = 'origins',
+  sortOrder = 'desc',
+  technologies = ['ALL'],
+} = Astro.props;
+---
+<div class="table-ui-wrapper" role="region" aria-labelledby={`table-${id}`} tabindex="0">
+  <table
+    class="table-ui"
+    data-breakdown="app"
+    data-category={category}
+    data-client="mobile"
+    data-component="table"
+    data-endpoint={endpoint}
+    data-id={id}
+    data-key={table.key}
+    data-sort-endpoint={sortEndpoint}
+    data-sort-metric={sortMetric}
+    data-sort-key={sortKey}
+    data-sort-order={sortOrder}
+    id={`table-${id}`}
+  >
+    <caption class="sr-only">{table.caption}</caption>
+    <thead>
+      <tr>
+        {table.columns.map(column => (
+          <th
+            data-key={column.key}
+            data-metric={column.metric}
+            data-endpoint={column.endpoint}
+            data-subcategory={column.subcategory || ''}
+            class={column.className}
+            scope="col"
+          >
+            {column.hiddenName ? (
+              <span class="sr-only">{column.name}</span>
+            ) : (
+              column.name
+            )}
+            {column.hiddenSuffix && (
+              <span aria-hidden="true">{column.hiddenSuffix}</span>
+            )}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {table.rows ? (
+        table.rows.map(row => (
+          <tr>
+            {row.header === 'true' ? (
+              <th data-key={row.key}>{row.name}</th>
+            ) : (
+              <td data-key={row.key}>{row.name}</td>
+            )}
+          </tr>
+        ))
+      ) : table.prefill === 'tech' ? (
+        technologies.map(tech => (
+          <tr>
+            {table.columns.map(column => {
+              if (column.key === 'technology') {
+                return (
+                  <th class="app-cell">
+                    <span class="app-wrapper">
+                      <span class="app-img" aria-hidden="true"></span>
+                      <a href={`/reports/techreport/tech?tech=${tech}&geo=ALL&rank=ALL`}>{tech}</a>
+                    </span>
+                  </th>
+                );
+              } else if (column.viz === 'progress') {
+                return (
+                  <td style="--cell-value: 2%" data-value="0" class="cwv-cell main-cell pct-value">
+                    <span>--%</span>
+                  </td>
+                );
+              } else if (column.key === 'client') {
+                return <td class="client">--</td>;
+              } else {
+                return (
+                  <td>
+                    {column.viz === 'progress-circle' ? (
+                      <span class="progress-circle improvement" style="--offset: 1%">--</span>
+                    ) : (
+                      '--'
+                    )}
+                  </td>
+                );
+              }
+            })}
+          </tr>
+        ))
+      ) : null}
+    </tbody>
+  </table>
+</div>

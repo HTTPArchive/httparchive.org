@@ -1,0 +1,567 @@
+---
+/**
+ * Tech Report: /reports/techreport/[page_id]
+ * Serves category, drilldown, and comparison pages.
+ * All rendering is done by TechReport JS class — the Astro page provides
+ * the exact HTML structures they expect to find and query in the DOM.
+ */
+import Base from '../../../layouts/Base.astro';
+import { getVersionedFilename } from '../../../utils/timestamps.js';
+import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
+
+import Filters from '../../../components/techreport/Filters.astro';
+import CategoryFilters from '../../../components/techreport/CategoryFilters.astro';
+import SummaryCard from '../../../components/techreport/SummaryCard.astro';
+import Timeseries from '../../../components/techreport/Timeseries.astro';
+import GeoBreakdown from '../../../components/techreport/GeoBreakdown.astro';
+import CwvDistribution from '../../../components/techreport/CwvDistribution.astro';
+import TableLinked from '../../../components/techreport/TableLinked.astro';
+
+export function getStaticPaths() {
+  const config = techReportConfig as any;
+  const pageIds = Object.keys(config.pages || {});
+  // Exclude 'landing' which has its own page
+  return pageIds
+    .filter(id => id !== 'landing')
+    .map(id => ({ params: { page_id: id } }));
+}
+
+const { page_id } = Astro.params;
+const config = techReportConfig as any;
+const activePage = config.pages?.[page_id!];
+
+const generalCss = getVersionedFilename('/static/css/techreport/general.css');
+const techreportCss = getVersionedFilename('/static/css/techreport/techreport.css');
+const highchartsJs = getVersionedFilename('/static/js/highcharts.js');
+const exportingJs = getVersionedFilename('/static/js/exporting.js');
+const exportDataJs = getVersionedFilename('/static/js/export-data.js');
+const accessibilityJs = getVersionedFilename('/static/js/accessibility.js');
+const trTimeseriesJs = getVersionedFilename('/static/js/techreport/timeseries.js');
+const trGeoBreakdownJs = getVersionedFilename('/static/js/techreport/geoBreakdown.js');
+const trCwvDistributionJs = getVersionedFilename('/static/js/techreport/cwvDistribution.js');
+const trSectionJs = getVersionedFilename('/static/js/techreport/section.js');
+const techreportJs = getVersionedFilename('/static/js/techreport.js');
+---
+<Base
+  title="HTTP Archive: Tech Report"
+  description="Track and compare web technology performance and adoption."
+  customNavigation={true}
+>
+  <link slot="head" rel="stylesheet" href={generalCss}>
+  <link slot="head" rel="stylesheet" href={techreportCss}>
+
+  <!-- Custom techreport navigation -->
+  <Fragment slot="custom-navigation">
+    <a href="#main" class="skip main-btn">Skip to main content</a>
+    <a href="#results" class="skip main-btn">Skip to results</a>
+    <nav class="report-navigation">
+      <a href="/">
+        <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+      </a>
+      <div class="hidden-xs">
+        <ul id="desktop" class="navigation-items">
+          <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
+          <li>
+            <a href="/reports/techreport/landing" aria-current={page_id === 'landing' ? 'page' : 'false'}><span>Home</span></a>
+          </li>
+          <li>
+            <a href={`/reports/techreport/tech?geo=ALL&rank=ALL&tech=ALL`}><span>Technologies</span></a>
+          </li>
+          <li>
+            <a href="/reports/techreport/category?geo=ALL&rank=ALL&category=CMS" aria-current={page_id === 'category' ? 'page' : 'false'}><span>Categories</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="visible-xs">
+        <button class="hamburger">
+          <span class="sr-only">Menu</span>
+          <svg aria-hidden="true" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
+  </Fragment>
+
+  <!-- Report Base view container (report.html style) -->
+  <button id="open-filters" class="hidden">
+    <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+  </button>
+  <div class="mobile-filters">
+    <div class="filter-bar" id="mobile-filter-bar">
+      <div class="wrapper block-m">
+        <p>Filters</p>
+        <button aria-expanded="false" class="open-filters" id="open-filters-mobile">
+          <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+        </button>
+      </div>
+    </div>
+    <div class="hidden" id="mobile-filter-container"></div>
+  </div>
+
+  <div class="split-view">
+    <div class="filters">
+      <div id="report-filters">
+        <button id="close-filters">
+          <img src="/static/img/close-filters.svg" alt="Collapse filters" width="16px" height="16px" />
+        </button>
+
+        {page_id === 'category' ? <CategoryFilters /> : <Filters />}
+      </div>
+    </div>
+
+    <div class="content page-content" id="results">
+      {page_id === 'category' && (
+        <div class="report-content">
+          <div class="intro block-m">
+            <div class="info">
+              <div class="heading-wrapper">
+                <div>
+                  <h1>
+                    <span class="subtitle">Category</span>
+                    <span class="main-title">CMS</span>
+                  </h1>
+                  <p class="app-description"></p>
+                </div>
+                <div class="breakdown default-dropdown-group">
+                  <label for="client-breakdown" class="default-dropdown-label">Client</label>
+                  <div class="select-label default-dropdown-wrapper">
+                    <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+                      <option value="mobile" selected>Mobile</option>
+                      <option value="desktop">Desktop</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-sections">
+            <div
+              id="cateogry-summary"
+              class="block-m summary report-section"
+              data-type="section"
+              data-api="category"
+            >
+              <h2 class="summary-heading"><a href="#cateogry-summary" class="anchor">Summary</a></h2>
+              <div class="summary-grid">
+                {activePage.config.summary?.map((summary: any) => (
+                  <SummaryCard summary={summary} sectionPrefix="category" />
+                ))}
+              </div>
+            </div>
+
+            <div
+              id="comparison-summary"
+              class="card block-m summary report-section"
+              data-type="section"
+              data-api="cwv,lighthouse,page-weight"
+            >
+              <h2><a href="#comparison-summary" class="anchor">Technologies</a></h2>
+              <div class="table-descr">
+                <p>
+                  Overview of the latest Core Web Vitals of all technologies within this category, sorted by number of origins.
+                  Select up to 10 technologies to compare their Core Web Vitals, Lighthouse scores, adoption, and page weight over time, or view details about a single technology.
+                </p>
+                <p>
+                  Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>, based on the latest data (<span data-slot="timestamp"></span>).
+                </p>
+              </div>
+
+              <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
+
+              <div class="selected-apps">
+                <p>Selected technologies:</p>
+                <ul data-name="selected-apps-overview"></ul>
+              </div>
+
+              <TableLinked id={activePage.config.tech_comparison_summary.id} table={activePage.config.tech_comparison_summary.table} category="" />
+
+              <div class="table-pagination">
+                <p data-pagination="previous" style="display: none;"></p>
+                <div class="table-page-info">
+                  <p>
+                    Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+                  </p>
+                  <div class="table-row-count">
+                    <label for="rowsPerPage">Rows</label>
+                    <select id="rowsPerPage">
+                      <option value="10" selected>10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                    </select>
+                  </div>
+                  <p class="sr-only" aria-live="polite">
+                    <span id="rows-announcement"></span>
+                  </p>
+                </div>
+                <p data-pagination="next" style="display: none;"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {page_id === 'drilldown' && (
+        <div id="report-content" class="report-content">
+          <div class="info intro block-m">
+            <div class="heading-wrapper">
+              <h1>
+                <span class="subtitle">Technology</span>
+                <span>
+                  <span class="main-title">ALL</span>
+                  <span class="title-img" role="img" aria-hidden="true"></span>
+                </span>
+              </h1>
+              <div class="breakdown default-dropdown-group">
+                <label for="client-breakdown" class="default-dropdown-label">Client</label>
+                <div class="select-label default-dropdown-wrapper">
+                  <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+                    <option value="mobile" selected>Mobile</option>
+                    <option value="desktop">Desktop</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <p class="app-description"></p>
+            <ul class="category-list categories">
+              <li class="cell">Uncategorized</li>
+            </ul>
+          </div>
+
+          <div class="data-sections">
+            <div
+              id="drilldown-summary"
+              class="block-m summary report-section"
+              data-type="section"
+              data-api="cwv,lighthouse,page-weight"
+            >
+              <h2 class="summary-heading">Summary</h2>
+              <div class="summary-grid">
+                {activePage.config.summary?.map((summary: any) => (
+                  <SummaryCard summary={summary} />
+                ))}
+              </div>
+            </div>
+
+            <div
+              id="good-cwvs"
+              class="block-m report-section"
+              data-type="section"
+              data-api="cwv"
+            >
+              <h2><a class="anchor" href="#good-cwvs">Core Web Vitals</a></h2>
+              <p>{config.labels.metrics.vitals.general.description}</p>
+
+              {activePage.config.good_cwv_summary && (
+                <div>
+                  <h3>{activePage.config.good_cwv_summary.title}</h3>
+                  <div class="summary-grid">
+                    {activePage.config.good_cwv_summary.cards?.map((summary: any) => (
+                      <SummaryCard summary={summary} sectionPrefix="cwv" />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.good_cwv_timeseries} />
+
+                <div class="cwv-button-bar">
+                  <button class="btn show-table cwv-show-table-btn" type="button" data-id={activePage.config.good_cwv_timeseries.id}>Show table</button>
+                  {activePage.config.geo_breakdown && (
+                    <button class="btn show-table geo-breakdown-toggle" type="button" id="geo-breakdown-btn">Show geographic breakdown</button>
+                  )}
+                  {activePage.config.cwv_distribution && (
+                    <button class="btn show-table cwv-distribution-toggle" type="button" id="cwv-distribution-btn">Show histogram</button>
+                  )}
+                </div>
+
+                {activePage.config.geo_breakdown && (
+                  <GeoBreakdown geoBreakdown={activePage.config.geo_breakdown} />
+                )}
+                {activePage.config.cwv_distribution && (
+                  <CwvDistribution cwvDistribution={activePage.config.cwv_distribution} />
+                )}
+              </div>
+            </div>
+
+            <div
+              id="lighthouse"
+              class="block-m report-section"
+              data-type="section"
+              data-api="lighthouse"
+            >
+              <h2><a class="anchor" href="#lighthouse">Lighthouse</a></h2>
+              <p>{config.labels.metrics.lighthouse.general.description}</p>
+
+              {activePage.config.lighthouse_summary && (
+                <div>
+                  <h3>{activePage.config.lighthouse_summary.title}</h3>
+                  <div class="summary-grid">
+                    {activePage.config.lighthouse_summary.cards?.map((summary: any) => (
+                      <SummaryCard summary={summary} sectionPrefix="lighthouse" />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.lighthouse_timeseries} />
+              </div>
+            </div>
+
+            <div
+              id="page-weight"
+              class="block-m report-section"
+              data-type="section"
+              data-api="page-weight"
+            >
+              <h2><a class="anchor" href="#page-weight">Page weight</a></h2>
+              <p>{config.labels.metrics.pageWeight.general.description}</p>
+
+              {activePage.config.weight_summary && (
+                <div>
+                  <h3>{activePage.config.weight_summary.title}</h3>
+                  <div class="summary-grid">
+                    {activePage.config.weight_summary.cards?.map((summary: any) => (
+                      <SummaryCard summary={summary} sectionPrefix="weight" />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.weight_timeseries} />
+              </div>
+            </div>
+
+            <div
+              id="adoption"
+              class="block-m report-section"
+              data-type="section"
+              data-api="adoption"
+            >
+              <h2><a class="anchor" href="#adoption">Adoption</a></h2>
+              <p>{config.labels.metrics.adoption.general.description}</p>
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.adoption_timeseries} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {page_id === 'comparison' && (
+        <div id="report-content" class="report-content">
+          <div class="info intro block-m">
+            <div class="heading-wrapper">
+              <h1>
+                <span class="subtitle">Technology</span>
+                <span class="main-title">Compare technologies</span>
+              </h1>
+              <div class="breakdown default-dropdown-group">
+                <label for="client-breakdown" class="default-dropdown-label">Client</label>
+                <div class="select-label default-dropdown-wrapper">
+                  <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+                    <option value="mobile" selected>Mobile</option>
+                    <option value="desktop">Desktop</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-sections">
+            <div
+              id="comparison-summary"
+              class="card block-m summary report-section"
+              data-type="section"
+              data-api="cwv,lighthouse,page-weight"
+            >
+              <h2><a href="#comparison-summary" class="anchor">Summary</a></h2>
+              <TableLinked id={activePage.config.tech_comparison_summary.id} table={activePage.config.tech_comparison_summary.table} />
+            </div>
+
+            <div
+              id="comparison-good-cwvs"
+              class="block-m summary report-section"
+              data-type="section"
+              data-api="cwv"
+            >
+              <h2><a href="#comparison-good-cwvs" class="anchor">Core Web Vitals</a></h2>
+              <p>{config.labels.metrics.vitals.general.description}</p>
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.good_cwv_timeseries} />
+              </div>
+            </div>
+
+            <div
+              id="comparison-lighthouse"
+              class="block-m summary report-section"
+              data-type="section"
+              data-api="lighthouse"
+            >
+              <h2><a href="#comparison-lighthouse" class="anchor">Lighthouse</a></h2>
+              <p>{config.labels.metrics.lighthouse.general.description}</p>
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.lighthouse_timeseries} />
+              </div>
+            </div>
+
+            <div
+              id="comparison-page-weight"
+              class="block-m summary report-section"
+              data-type="section"
+              data-api="page-weight"
+            >
+              <h2><a href="#comparison-page-weight" class="anchor">Page weight</a></h2>
+              <p>{config.labels.metrics.pageWeight.general.description}</p>
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.weight_timeseries} />
+              </div>
+            </div>
+
+            <div
+              id="comparison-adoption"
+              class="block-m summary report-section"
+              data-type="section"
+              data-api="adoption"
+            >
+              <h2><a href="#comparison-adoption" class="anchor">Adoption</a></h2>
+              <p>{config.labels.metrics.adoption.general.description}</p>
+
+              <div class="card">
+                <Timeseries timeseries={activePage.config.adoption_timeseries} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div class="feedback" id="section-feedback">
+    <div class="block-m">
+      <h2><a href="#section-feedback" class="anchor">Feedback?</a></h2>
+      <p>Please raise a <a href="https://github.com/HTTPArchive/httparchive.org/issues/new?template=tech-report.md">GitHub issue</a> if you spot any problems, or for any feature requests.</p>
+    </div>
+  </div>
+
+  <div class="accessibility-options" id="section-accessibility-options">
+    <div class="wrapper block-m">
+      <h2><a href="#section-accessibility-options" class="anchor">Accessibility</a></h2>
+      <p>Change settings related to accessibility here</p>
+      <div class="setting">
+        <div class="check-wrapper">
+          <label for="indicators-check">Show markers</label>
+          <input type="checkbox" name="indicators-check" id="indicators-check">
+        </div>
+      </div>
+      <div class="setting">
+        <button class="theme-switcher">🌚 Switch to dark mode</button>
+      </div>
+    </div>
+  </div>
+
+  <Fragment slot="scripts">
+    <script is:inline src={highchartsJs}></script>
+    <script is:inline src={exportingJs}></script>
+    <script is:inline src={exportDataJs}></script>
+    <script is:inline src={accessibilityJs}></script>
+    <script is:inline src={trTimeseriesJs}></script>
+    <script is:inline src={trGeoBreakdownJs}></script>
+    <script is:inline src={trCwvDistributionJs}></script>
+    <script is:inline src={trSectionJs}></script>
+    <script is:inline src={techreportJs}></script>
+    <script is:inline define:vars={{ pageId: page_id, pageConfig: activePage, fullConfig: config.config, labels: config.labels }}>
+      // Fetch available crawl dates from API client-side and populate start/end date selectors
+      (async function() {
+        // Extract query parameters client-side
+        const urlParams = new URLSearchParams(location.search);
+        const requestedGeo = urlParams.get('geo') || 'ALL';
+        const requestedRank = urlParams.get('rank') || 'ALL';
+        const requestedCategory = urlParams.get('category') || 'CMS';
+        const requestedStart = urlParams.get('start') || '';
+        const requestedEnd = urlParams.get('end') || '';
+        const requestedPage = parseInt(urlParams.get('page') || '1', 10);
+        const selectedTechs = urlParams.get('selected');
+        const selectedRows = urlParams.get('rows') || '10';
+        const lastPage = urlParams.get('last_page') === 'true';
+
+        let requestedTechs = ['ALL'];
+        const techParam = urlParams.get('tech');
+        if (techParam) {
+          requestedTechs = techParam.split(',');
+        } else if (pageConfig.config?.default?.app) {
+          requestedTechs = pageConfig.config.default.app;
+        }
+
+        const filters = {
+          geo: requestedGeo,
+          rank: requestedRank,
+          app: requestedTechs,
+          category: requestedCategory,
+          page: requestedPage,
+          last_page: lastPage,
+          selected: selectedTechs,
+          rows: selectedRows,
+          start: requestedStart,
+          end: requestedEnd,
+        };
+
+        const params = {
+          geo: requestedGeo,
+          rank: requestedRank,
+        };
+
+        // Attach filters and params dynamically
+        pageConfig.filters = filters;
+        pageConfig.params = params;
+
+        let dates = [];
+        try {
+          const resp = await fetch('/api/dates.json');
+          const data = await resp.json();
+          dates = data.dates || [];
+        } catch (e) {
+          console.error('Failed to fetch dates', e);
+        }
+
+        const startSelect = document.getElementById('startDate');
+        const endSelect = document.getElementById('endDate');
+        if (startSelect && endSelect) {
+          const startVal = urlParams.get('start') || '';
+          const endVal = urlParams.get('end') || '';
+
+          dates.forEach(d => {
+            const formattedDate = d.replace(/_/g, '-');
+            const parts = d.split('_');
+            const dateObj = new Date(Date.UTC(parts[0], parts[1] - 1));
+            const display = dateObj.toLocaleString('default', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+            const opt1 = document.createElement('option');
+            opt1.value = formattedDate;
+            opt1.textContent = display;
+            if (formattedDate === startVal) opt1.selected = true;
+            startSelect.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = formattedDate;
+            opt2.textContent = display;
+            if (formattedDate === endVal) opt2.selected = true;
+            endSelect.appendChild(opt2);
+          });
+        }
+
+        // Initialize TechReport JS class
+        const techReport = new TechReport(pageId, pageConfig, fullConfig, labels);
+      })();
+    </script>
+  </Fragment>
+</Base>
