@@ -3,43 +3,45 @@ New and improved version of [HTTP Archive](https://httparchive.org). This replac
 
 ## Run Locally
 
-[Source](https://cloud.google.com/appengine/docs/flexible/python/quickstart)
+This is an Astro and Node.js-based application (Express server). It requires **Node.js >= 24.0.0**.
 
-1. If you don't have virtualenv, install it using pip.
+1. Install the NPM dependencies:
 
-```
-sudo pip install virtualenv
-```
-
-2. Create an isolated Python environment, and install dependencies:
-
-```
-virtualenv --python python3.14 .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-3. Install the NPM dependencies:
-
-```
+```bash
 npm install
 ```
 
-4. Initialize the Google Cloud CLI (this is necessary because the App Engine server uses Google Cloud APIs):
+2. Initialize the Google Cloud CLI (this is necessary because the web server uses Google Cloud APIs like Google Cloud Storage to fetch reports):
 
-```
+```bash
 gcloud init
 ```
 
-5. Run the application:
+3. Run the application:
 
-```
-npm run start
-```
+* **Production build and start:**
+  ```bash
+  npm run start
+  ```
+* **Development mode (with live reload):**
+  ```bash
+  npm run watch
+  ```
 
-Note: Windows users may need to run `npm run watch` and `python main.py` separately.
+4. In your web browser, enter the following address: http://127.0.0.1:8080
 
-6. In your web browser, enter the following address: http://127.0.0.1:8080
+## Linting
+
+To run the GitHub Super-Linter locally using Docker:
+
+* **macOS / Linux:**
+  ```bash
+  npm run lint:darwin:linux
+  ```
+* **Windows (Command Prompt):**
+  ```bash
+  npm run lint:win32
+  ```
 
 ## Staging
 
