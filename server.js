@@ -17,7 +17,7 @@ try {
   gcs = new Storage();
   bucket = gcs.bucket(GCS_BUCKET);
 } catch (e) {
-  console.warn('Unable to authenticate to Google Cloud Storage. Using mock dates.');
+  console.warn('Unable to authenticate to Google Cloud Storage. Using mock dates.', e.message);
   loadDatesFromGCS = false;
 }
 

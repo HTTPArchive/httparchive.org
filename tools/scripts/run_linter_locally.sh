@@ -51,7 +51,6 @@ export FILTER_REGEX_EXCLUDE=".*\.min\..*"
 export VALIDATE_ALL_CODEBASE=true
 export VALIDATE_BASH=true
 export VALIDATE_CSS=true
-export VALIDATE_EDITORCONFIG=true
 export VALIDATE_HTML=true
 export VALIDATE_JAVASCRIPT_ES=true
 export VALIDATE_JSON=true

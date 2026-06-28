@@ -80,7 +80,7 @@ const get_docs_dates = async () => {
         .replace(/\\/g, '/')
         .replace('src/content/docs/docs/', 'docs/')
         .replace(/\.mdx?$/, '');
-      
+
       const content = await fs.readFile(file, 'utf-8');
       const hash = crypto.createHash('md5').update(content).digest("hex");
       check_and_update_date(key, hash);

@@ -206,7 +206,7 @@ th {
 
 #report-metrics.grid-view .report-metrics-inner-wrapper {
   display: grid;
-  grid-gap: 40px;
+  gap: 40px;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
 }

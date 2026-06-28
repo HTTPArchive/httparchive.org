@@ -81,7 +81,7 @@ if [ "${debug}" == "1" ]; then
   echo "Monitoring for changes"
   npm run watch &
   WATCH_PID=$!
-  
+
   # Update trap to clean up watch process as well
   trap 'echo "Stopping server and watch processes..."; kill "$WATCH_PID" 2>/dev/null || true; kill "$SERVER_PID" 2>/dev/null || true' EXIT
 

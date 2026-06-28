@@ -35,7 +35,7 @@ const getPageDates = (pathname: string) => {
   } else if (path.startsWith('reports/')) {
     key = path;
   }
-  
+
   if (key && (lastUpdated as Record<string, any>)[key]) {
     return {
       published: (lastUpdated as Record<string, any>)[key].date_published,

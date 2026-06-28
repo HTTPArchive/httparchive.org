@@ -168,7 +168,7 @@ In reality as `rank` is part of the clustering of the tables you don't need to u
 
 This comes down largely to a matter of personal preference. Each has their advantage and disadvantage.
 
-Advantage |`TABLESAMPLE`|`rank`|`sample_data`
+Advantage|`TABLESAMPLE`|`rank`|`sample_data`
 ----|---|---|---
 Consistency of results returned|❌|✅|✅ (if run in same month)
 Accurate estimates|✅|❌|✅
