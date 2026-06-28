@@ -1,7 +1,7 @@
 .idea/
 node_modules/
-static/js
-static/html
+public/static/js
+public/static/html
 templates/sitemap.xml
 *.log
 **/.DS_Store

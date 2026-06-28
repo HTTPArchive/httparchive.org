@@ -218,23 +218,23 @@ app.get('/api/dates.json', async (req, res) => {
 // Static file handlers
 // ---------------------------------------------------------------------------
 app.get('/robots.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/robots.txt'));
+  res.sendFile(path.join(__dirname, 'public/robots.txt'));
 });
 
 app.get('/sitemap.xml', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/sitemap.xml'));
+  res.sendFile(path.join(__dirname, 'public/sitemap.xml'));
 });
 
 app.get('/favicon.ico', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/img/favicon.ico'));
+  res.sendFile(path.join(__dirname, 'public/static/img/favicon.ico'));
 });
 
 app.get('/.well-known/:file', (req, res) => {
-  res.sendFile(path.join(__dirname, 'static/well-known', req.params.file));
+  res.sendFile(path.join(__dirname, 'public/static/well-known', req.params.file));
 });
 
 // Static assets pass-through
-app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/static', express.static(path.join(__dirname, 'public/static')));
 
 // ---------------------------------------------------------------------------
 // Legacy Redirects

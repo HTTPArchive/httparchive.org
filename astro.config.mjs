@@ -6,8 +6,7 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 export default defineConfig({
   output: 'static',
   outDir: 'dist',
-  // Static assets pass-through from /static directory
-  publicDir: 'static',
+
   // Base URL
   site: 'https://httparchive.org',
   build: {

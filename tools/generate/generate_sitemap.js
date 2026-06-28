@@ -4,7 +4,7 @@ const ejs = require('ejs');
 
 const min_publish_date = '2019-11-11';
 const sitemap_template = `templates/sitemap.ejs.xml`;
-const sitemap_path = `static/sitemap.xml`;
+const sitemap_path = `public/sitemap.xml`;
 
 let file_dates = {};
 

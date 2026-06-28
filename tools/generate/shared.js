@@ -36,7 +36,7 @@ const find_asset_files = async () => {
     return !isJS && !isJSMap && !isCSS && !isCSSMap && !isPDF && !isDirectory;
   };
 
-  return await recursive('static', [filter]);
+  return await recursive('public/static', [filter]);
 };
 
 const get_report_config = async () => {
