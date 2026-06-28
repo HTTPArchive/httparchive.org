@@ -214,9 +214,7 @@ const imageHeight = report.image ? 460 : 160;
   <div id="report-data-container" data-report={JSON.stringify(enrichedReport)} data-url={reportUrl} style="display: none;"></div>
 
   <Fragment slot="scripts">
-    <script is:inline src="/static/js/highstock.js"></script>
-    <script is:inline src="/static/js/highcharts-more.js"></script>
-    <script is:inline src="/static/js/exporting.js"></script>
+    <script src="../../js/highcharts-init.js"></script>
     <script src="../../js/report.js"></script>
     <script src="../../js/timeseries.js"></script>
     <script src="../../js/histogram.js"></script>

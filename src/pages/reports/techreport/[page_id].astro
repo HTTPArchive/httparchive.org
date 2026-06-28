@@ -459,10 +459,7 @@ const activePage = config.pages?.[page_id!];
   <div id="techreport-data" data-page-id={page_id} data-page-config={JSON.stringify(activePage)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
 
   <Fragment slot="scripts">
-    <script is:inline src="/static/js/highcharts.js"></script>
-    <script is:inline src="/static/js/exporting.js"></script>
-    <script is:inline src="/static/js/export-data.js"></script>
-    <script is:inline src="/static/js/accessibility.js"></script>
+    <script src="../../../js/highcharts-init.js"></script>
     <script src="../../../js/techreport/timeseries.js"></script>
     <script src="../../../js/techreport/geoBreakdown.js"></script>
     <script src="../../../js/techreport/cwvDistribution.js"></script>
