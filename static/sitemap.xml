@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+    <url>
+        <loc>https://httparchive.org/</loc>
+        <lastmod>2026-01-24</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/about</loc>
+        <lastmod>2025-06-02</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/faq</loc>
+        <lastmod>2025-08-18</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports</loc>
+        <lastmod>2023-12-07</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/accessibility</loc>
+        <lastmod>2023-09-07</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/chrome-ux-report</loc>
+        <lastmod>2024-11-06</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/loading-speed</loc>
+        <lastmod>2023-09-07</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/page-weight</loc>
+        <lastmod>2023-09-07</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/progressive-web-apps</loc>
+        <lastmod>2025-03-28</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/project-fugu</loc>
+        <lastmod>2024-08-22</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/search-engine-optimization</loc>
+        <lastmod>2026-03-11</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/state-of-images</loc>
+        <lastmod>2023-09-07</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/state-of-javascript</loc>
+        <lastmod>2021-04-26</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/state-of-the-web</loc>
+        <lastmod>2024-06-05</lastmod>
+    </url>
+
+    <url>
+        <loc>https://httparchive.org/reports/techreport/landing</loc>
+        <lastmod>2025-10-15</lastmod>
+    </url>
+
+</urlset>

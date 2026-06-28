@@ -46,7 +46,7 @@ const test_status_code = async (page, status, location) => {
 };
 
 const test_sitemap_pages = async () => {
-  const xml = await fs.readFile(`templates/sitemap.xml`, 'utf-8');
+  const xml = await fs.readFile(`static/sitemap.xml`, 'utf-8');
   const sitemap = JSON.parse(convert.xml2json(xml, {compact: true}));
   const urls = sitemap['urlset']['url'];
   for ( var url in urls ) {

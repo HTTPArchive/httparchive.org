@@ -1,5 +1,5 @@
-runtime: python312
-entrypoint: gunicorn -b :$PORT main:app
+runtime: nodejs24
+entrypoint: node server.js
 default_expiration: 3h
 
 handlers:
@@ -11,6 +11,11 @@ handlers:
 
   - url: /api/.*
     script: auto
+    secure: always
+
+  - url: /.well-known/(.*)
+    static_files: static/well-known/\1
+    upload: static/well-known/.*
     secure: always
 
   # Add longer caching for fonts
