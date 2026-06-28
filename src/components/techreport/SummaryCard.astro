@@ -69,3 +69,27 @@ const cardId = `${prefix}-${summary.endpoint}-${summary.category}-${summary.metr
   </div>
   <p class="summary-linked-description" data-slot="description" set:html={summary.description} />
 </div>
+
+<style>
+  .summary-linked-label {
+    font-weight: 600;
+  }
+
+  .summary-linked-label a {
+    color: var(--color-link);
+  }
+
+  .summary-linked-label a:is(:hover, :focus) {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .summary-linked-value,
+  .summary-suffix {
+    font-size: var(--font-size-medium);
+  }
+
+  .summary-linked-description {
+    margin-bottom: 0;
+  }
+</style>
