@@ -46,7 +46,6 @@ jobs:
           VALIDATE_PYTHON_BLACK: true
           VALIDATE_YAML: true
 
-
   dependabot:
     name: Dependabot auto-merge
     runs-on: ubuntu-latest

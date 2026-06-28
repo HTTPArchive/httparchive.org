@@ -14,7 +14,7 @@
 #
 
 # exit when any command fails instead of trying to continue on
-set -e
+set -euo pipefail
 
 # Annoyingly super-linter includes node_modules and env which take a long time
 # https://github.com/super-linter/super-linter/issues/985
@@ -39,23 +39,28 @@ if [ "$#" -gt 0 ]; then
   done
 else
   echo "Copying all files"
-  # Copy everything except node_folders and env
+  # Copy everything except node_modules
   cp -r .github /tmp/lint
-  find ./ -maxdepth 1 -not -name "." -not -name "node_modules" -not -name "env"  -not -name ".venv" -exec cp -r {} /tmp/lint/ \;
+  find ./ -maxdepth 1 -not -name "." -not -name "node_modules" -exec cp -r {} /tmp/lint/ \;
 fi
 
 # set all the necessary environments variables
 export RUN_LOCAL=true
-export VALIDATE_BASH=true
+export DEFAULT_BRANCH=main
 export FILTER_REGEX_EXCLUDE=".*\.min\..*"
+export VALIDATE_ALL_CODEBASE=true
+export VALIDATE_BASH=true
 export VALIDATE_CSS=true
+export VALIDATE_EDITORCONFIG=true
 export VALIDATE_HTML=true
 export VALIDATE_JAVASCRIPT_ES=true
 export VALIDATE_JSON=true
 export VALIDATE_MARKDOWN=true
 export VALIDATE_PYTHON_PYLINT=true
 export VALIDATE_PYTHON_FLAKE8=true
+export VALIDATE_PYTHON_BLACK=true
 export VALIDATE_YAML=true
 
 echo "Starting linting"
+cd /tmp/lint
 /action/lib/linter.sh "$@"
