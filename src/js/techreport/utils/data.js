@@ -256,19 +256,27 @@ const fetchCategoryData = (rows, filters, callback) => {
         if (prevPageLink) {
           if (pageNr <= 1) {
             prevPageLink.style.display = 'none';
-            prevPageLink.innerHTML = '';
+            prevPageLink.textContent = '';
           } else {
             prevPageLink.style.display = 'block';
-            prevPageLink.innerHTML = `<a href="${buildPaginationUrl(pageNr - 1)}">Previous page</a>`;
+            prevPageLink.textContent = '';
+            const prevAnchor = document.createElement('a');
+            prevAnchor.href = buildPaginationUrl(pageNr - 1);
+            prevAnchor.textContent = 'Previous page';
+            prevPageLink.appendChild(prevAnchor);
           }
         }
         if (nextPageLink) {
           if (pageNr >= totalPages) {
             nextPageLink.style.display = 'none';
-            nextPageLink.innerHTML = '';
+            nextPageLink.textContent = '';
           } else {
             nextPageLink.style.display = 'block';
-            nextPageLink.innerHTML = `<a href="${buildPaginationUrl(pageNr + 1)}">Next page</a>`;
+            nextPageLink.textContent = '';
+            const nextAnchor = document.createElement('a');
+            nextAnchor.href = buildPaginationUrl(pageNr + 1);
+            nextAnchor.textContent = 'Next page';
+            nextPageLink.appendChild(nextAnchor);
           }
         }
 
