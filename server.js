@@ -122,7 +122,8 @@ async function getLatestDate(dates, metricId) {
       }
     }
   } catch (err) {
-    console.error(`Error finding latest date for ${metricId}:`, err.message);
+    const safeMetricIdForLog = String(metricId).replace(/[\r\n]/g, '');
+    console.error(`Error finding latest date for ${safeMetricIdForLog}:`, err.message);
   }
 
   return mockDates[0];
