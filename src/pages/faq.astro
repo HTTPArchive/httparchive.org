@@ -7,11 +7,11 @@ import { resolve } from 'path';
 const title = 'HTTP Archive FAQ';
 const description = 'Frequently Asked Questions about the HTTP Archive: what we do and how we test and gather our data.';
 
-// Read and parse the FAQ markdown file (replicates server/faq.py logic)
+// Read and parse the FAQ markdown file
 const faqPath = resolve('./docs/faq.md');
 const faqRaw = readFileSync(faqPath, 'utf-8');
 
-// Extract headings as questions and build anchor map (same logic as Python faq.py)
+// Extract headings as questions and build anchor map
 function getAnchor(question: string): string {
   return question.toLowerCase().replace(/ /g, '-').replace(/\?/g, '').replace(/'/g, '');
 }

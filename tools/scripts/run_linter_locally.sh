@@ -55,9 +55,6 @@ export VALIDATE_HTML=true
 export VALIDATE_JAVASCRIPT_ES=true
 export VALIDATE_JSON=true
 export VALIDATE_MARKDOWN=true
-export VALIDATE_PYTHON_PYLINT=true
-export VALIDATE_PYTHON_FLAKE8=true
-export VALIDATE_PYTHON_BLACK=true
 export VALIDATE_YAML=true
 
 echo "Starting linting"

@@ -4,7 +4,7 @@ default_expiration: 3h
 
 handlers:
 
-  # Python API endpoints — must be routed to gunicorn before static handlers
+  # API endpoints — must be routed to gunicorn before static handlers
   - url: /metric.json
     script: auto
     secure: always
@@ -74,7 +74,7 @@ handlers:
         connect-src 'self' https:;
         frame-ancestors 'none'
 
-  # Fallback: all remaining routes to Python (legacy redirects, 404s, robots.txt, .well-known)
+  # Fallback: all remaining routes (legacy redirects, 404s, robots.txt, .well-known)
   - url: /.*
     script: auto
     secure: always

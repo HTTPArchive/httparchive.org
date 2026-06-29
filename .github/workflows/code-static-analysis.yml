@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - '**.js'
+
   schedule:
     #        ┌───────────── minute (0 - 59)
     #        │ ┌───────────── hour (0 - 23)
@@ -26,9 +27,6 @@ jobs:
   CodeQL-Build:
     # CodeQL runs on ubuntu-latest, windows-latest, and macos-latest
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        language: ['javascript']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -37,7 +35,6 @@ jobs:
         with:
           config-file: ./.github/codeql/codeql-config.yml
           queries: +security-and-quality
-          setup-python-dependencies: false
-          languages: '${{ matrix.language }}'
+          languages: 'javascript'
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
