@@ -207,7 +207,11 @@ class TechReport {
 
   // New API
   getAllMetricData() {
-    const technologies = this.filters.app;
+    const technologies = this.filters && this.filters.app;
+
+    if (!technologies || !Array.isArray(technologies) || technologies.length === 0) {
+      return;
+    }
 
     const apis = [
       {

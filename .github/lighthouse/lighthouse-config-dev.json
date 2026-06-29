@@ -48,7 +48,8 @@
         "uses-rel-preconnect": "off",
         "uses-responsive-images": "off",
         "uses-text-compression": "off",
-        "uses-webp-images": "off"
+        "uses-webp-images": "off",
+        "valid-source-maps": "off"
       }
     }
   }
