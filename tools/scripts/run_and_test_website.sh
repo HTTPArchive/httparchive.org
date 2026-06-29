@@ -57,8 +57,12 @@ echo "Starting website in background mode for tests"
 PORT=8080 node server.js &
 SERVER_PID=$!
 
-# Ensure the background server is terminated on exit
-trap 'echo "Stopping background server..."; kill "$SERVER_PID" 2>/dev/null || true' EXIT
+# Ensure the background server is terminated on exit unless KEEP_SERVER_RUNNING is true
+if [ "${KEEP_SERVER_RUNNING:-false}" != "true" ]; then
+  trap 'echo "Stopping background server..."; kill "$SERVER_PID" 2>/dev/null || true' EXIT
+else
+  echo "Keeping server running (KEEP_SERVER_RUNNING is set to true)"
+fi
 
 echo "Waiting for server to start..."
 timeout=15
