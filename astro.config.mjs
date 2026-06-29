@@ -1,4 +1,6 @@
 import { defineConfig } from 'astro/config';
+
+const sourceMaps = process.env.SOURCE_MAPS === 'true';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
 import starlightLlmsTxt from 'starlight-llms-txt';
@@ -57,6 +59,9 @@ export default defineConfig({
     }),
   ],
   vite: {
+    build: {
+      sourcemap: sourceMaps,
+    },
     server: {
       proxy: {
         '/api': 'http://127.0.0.1:8080',

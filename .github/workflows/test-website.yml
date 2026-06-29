@@ -27,6 +27,7 @@ jobs:
     - name: Run the website
       env:
         KEEP_SERVER_RUNNING: true
+        SOURCE_MAPS: true
       run: ./tools/scripts/run_and_test_website.sh
     - name: Use more complete checks for generated HTML linting
       run: cp -f .github/linters/.htmlhintrc_morechecks .github/linters/.htmlhintrc
