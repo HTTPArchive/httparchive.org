@@ -6,7 +6,7 @@
 # permissions for the httparchive on GCP
 
 # exit when any command fails instead of trying to continue on
-set -e
+set -euo pipefail
 
 # Usage info
 show_help() {
@@ -69,7 +69,7 @@ echo "Beginning the https://httparchive.org Website deployment process"
 
 if [ "${no_promote}" == "1" ]; then
   echo "Deploying to GCP (no promote)"
-  echo "Y" | gcloud app deploy --project httparchive --no-promote
+  gcloud app deploy --project httparchive --no-promote --quiet
   echo "Done"
   exit 0
 fi
@@ -86,9 +86,9 @@ git checkout main
 git status
 git pull
 
-if [ "$(pgrep -if 'python main.py')" ]; then
+if pgrep -f "node server.js" > /dev/null; then
   echo "Killing existing server to run a fresh version"
-  pkill -9 -if "python main.py"
+  pkill -f "node server.js" || true
 fi
 
 echo "Run and test website"
@@ -105,11 +105,11 @@ echo "Please test the site locally"
 check_continue "Are you ready to deploy?"
 
 echo "Deploying to GCP"
-echo "Y" | gcloud app deploy --project httparchive
+gcloud app deploy --project httparchive --quiet
 
-if [ "$(pgrep -if 'python main.py')" ]; then
+if pgrep -f "node server.js" > /dev/null; then
   echo "Killing server so backgrounded version isn't left there"
-  pkill -9 -if "python main.py"
+  pkill -f "node server.js" || true
 fi
 
 echo
