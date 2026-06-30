@@ -95,8 +95,8 @@ async function getDates() {
   }
 }
 
-const latestMetricDates = {};
-const latestMetricCheck = {};
+const latestMetricDates = Object.create(null);
+const latestMetricCheck = Object.create(null);
 
 async function getLatestDate(dates, metricId) {
   if (!loadDatesFromGCS) {
@@ -123,7 +123,7 @@ async function getLatestDate(dates, metricId) {
     }
   } catch (err) {
     const safeMetricIdForLog = String(metricId).replace(/[\r\n]/g, '');
-    console.error(`Error finding latest date for ${safeMetricIdForLog}:`, err.message);
+    console.error('Error finding latest date for %s:', safeMetricIdForLog, err.message);
   }
 
   return mockDates[0];
@@ -147,8 +147,14 @@ async function loadReportsConfig() {
 }
 
 async function getMetric(metricId) {
+  if (typeof metricId !== 'string' || !/^[a-zA-Z0-9_\-]+$/.test(metricId)) {
+    return null;
+  }
   const config = await loadReportsConfig();
   const metrics = config._metrics || {};
+  if (!Object.prototype.hasOwnProperty.call(metrics, metricId)) {
+    return null;
+  }
   const metric = metrics[metricId];
   if (!metric) {
     return null;
@@ -230,7 +236,8 @@ app.get('/favicon.ico', (req, res) => {
 });
 
 app.get('/.well-known/:file', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/static/well-known', req.params.file));
+  const safeFile = path.basename(req.params.file);
+  res.sendFile(path.join(__dirname, 'public/static/well-known', safeFile));
 });
 
 // Static assets pass-through
@@ -269,7 +276,7 @@ app.use((req, res, next) => {
 // Local fallback static file router
 // ---------------------------------------------------------------------------
 app.use((req, res, next) => {
-  const distDir = path.join(__dirname, 'dist');
+  const distDir = path.resolve(__dirname, 'dist');
   let filePath = req.path.replace(/^\//, '');
 
   if (!filePath) {
@@ -278,8 +285,15 @@ app.use((req, res, next) => {
     filePath += 'index.html';
   }
 
-  const fullPath = path.join(distDir, filePath);
-  const indexFullPath = path.join(distDir, filePath, 'index.html');
+  const fullPath = path.resolve(distDir, filePath);
+
+  // Prevent directory traversal
+  const relative = path.relative(distDir, fullPath);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    return next();
+  }
+
+  const indexFullPath = path.resolve(distDir, filePath, 'index.html');
 
   if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
     return res.sendFile(fullPath);

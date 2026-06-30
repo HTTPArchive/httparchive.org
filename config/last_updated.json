@@ -201,8 +201,8 @@
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2026-06-28T00:00:00.000Z",
-    "hash": "ef6555255ad26e4e47da7186be9bd999"
+    "date_modified": "2026-06-29T00:00:00.000Z",
+    "hash": "46a530699525ca2120027f9712eff2bf"
   },
   "docs/guides/getting-started": {
     "date_published": "2026-06-28T00:00:00.000Z",
@@ -332,7 +332,7 @@
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2026-06-29T00:00:00.000Z",
-    "hash": "51c288459fbada3ed4dd443d24a3938e"
+    "hash": "474a30967e56a20920b1aed21c276923"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -342,7 +342,7 @@
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
     "date_modified": "2026-06-29T00:00:00.000Z",
-    "hash": "2b2e2146739bca46032888ec345d5dc2"
+    "hash": "d577ec86f532e02e3cbe70ad38eb9912"
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",

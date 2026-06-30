@@ -18,6 +18,21 @@ handlers:
     upload: public/static/well-known/.*
     secure: always
 
+  - url: /robots.txt
+    static_files: public/robots.txt
+    upload: public/robots.txt
+    secure: always
+
+  - url: /sitemap.xml
+    static_files: public/sitemap.xml
+    upload: public/sitemap.xml
+    secure: always
+
+  - url: /favicon.ico
+    static_files: public/static/img/favicon.ico
+    upload: public/static/img/favicon.ico
+    secure: always
+
   # Add longer caching for fonts
   - url: /static/fonts/(.*\.(woff|woff2))$
     static_files: public/static/fonts/\1

@@ -6,11 +6,9 @@
 - Scholars cite this data to support their [research](https://scholar.google.com/scholar?q=httparchive.org) in major publications like ACM and IEEE.
 - Industry leaders use this data to calibrate their tools to accurately represent how the web is built. For example, a tool might warn a developer when their JavaScript bundle is too big, as defined by exceeding some percentile of all websites.
 
-
 ## How does the HTTP Archive decide which URLs to test?
 
 The HTTP Archive crawls [millions of URLs](https://httparchive.org/reports/state-of-the-web#numUrls) on both desktop and mobile monthly. The URLs come from the [Chrome User Experience Report](https://web.dev/fast/chrome-ux-report), a dataset of real user performance data of the most popular websites.
-
 
 ## How is the data gathered?
 
@@ -19,7 +17,6 @@ The list of URLs is fed to our private instance of [WebPageTest](https://webpage
 As of March 1 2016, the tests are performed on Chrome for desktop and emulated Android (on Chrome) for mobile.
 
 The test agents are run from [Google Cloud regions](https://cloud.google.com/compute/docs/regions-zones) across the US. Each URL is loaded once with an empty cache ("first view") for normal metrics collection and again, in a clean browser profile, using [Lighthouse](https://developers.google.com/web/tools/lighthouse). The data is collected via a [HAR file](https://en.wikipedia.org/wiki/.har). The HTTP Archive collects these HAR files, parses them, and populates [a public dataset in BigQuery](docs/guides/getting-started/).
-
 
 ## How accurate is the data, in particular the time measurements?
 
@@ -34,16 +31,13 @@ The time measurements are gathered in a test environment, and thus have all the 
 
 Given these conditions it's virtually impossible to compare the HTTP Archive's time measurements with those gathered in other browsers, locations or connection speeds. They are best used as a source of comparison only within the HTTP Archive dataset.
 
-
 ## How do I use BigQuery to write custom queries over the data?
 
 The HTTP Archive dataset is available publicly on BigQuery. Check out [Getting Started Accessing the HTTP Archive with BigQuery](docs/guides/getting-started/).
 
-
 ## What changes have been made to the test environment that might affect the data?
 
 See [changelog.json](https://github.com/HTTPArchive/httparchive/blob/main/docs/changelog.json)
-
 
 ## What are the limitations of this testing methodology?
 
@@ -51,13 +45,11 @@ The HTTP Archive examines each URL in the list, but does not crawl the website's
 
 Most websites are comprised of many separate web pages. The landing page may not be representative of the overall site. Some websites, such as [facebook.com](http://www.facebook.com/), require logging in to see typical content. Some websites, such as [googleusercontent.com](http://www.googleusercontent.com/), don't have a landing page. Instead, they are used for hosting other URLs and resources. In this case googleusercontent.com is the domain path used for resources inserted by users into Google documents, etc. Because of these issues and more, it's possible that the actual HTML document analyzed is not representative of the website.
 
-
 ## What is a lens?
 
 A lens focuses on a specific subset of websites. Through a lens, you'll see data about those particular websites only. For example, the [WordPress lens](https://wordpress.httparchive.org) focuses only on websites that are detected as being built with WordPress. We use [Wappalayzer](https://www.wappalyzer.com/) to detect over 1,000 web technologies and choose a few interesting ones to become lenses.
 
 Lenses can be enabled  at the top of any report, or by visiting the respective subdomain, for example [`wordpress.httparchive.org`](https://wordpress.httparchive.org).
-
 
 ## Who sponsors the HTTP Archive?
 
@@ -65,18 +57,15 @@ The HTTP Archive is sponsored by companies large and small in the web industry w
 
 See the full list of [HTTP Archive sponsors](/about#sponsors).
 
-
 ## How do I make a donation to support the HTTP Archive?
 
 Donations in support of the HTTP Archive can be made through the [Open Collective](https://opencollective.com/httparchive).
-
 
 ## Who maintains the HTTP Archive?
 
 The current core maintainers are [Pat Meenan](https://x.com/patmeenan), [Paul Calvano](https://x.com/paulcalvano), [Barry Pollard](https://bsky.app/profile/tunetheweb.com), [Max Ostapenko](https://x.com/themax_o), and [Nurullah Demir](https://ndemir.com).
 
-Many people have contributed ([1](https://github.com/HTTPArchive/httparchive.org/graphs/contributors), [2](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://x.com/Souders), who started the project in 2010, [Pat Meenan](https://x.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, [Ilya Grigorik](https://x.com/igrigorik) and [Rick Viscomi](https://x.com/rick_viscomi), both long-time core maintainers, and Guy Leech and Stephen Hay for design help along the way.
-
+Many people have contributed (to the [current codebase](https://github.com/HTTPArchive/httparchive.org/graphs/contributors) and [legacy codebase](https://github.com/HTTPArchive/legacy.httparchive.org/graphs/contributors)) and helped make the HTTP Archive successful over the years. Special thanks to [Steve Souders](https://x.com/Souders), who started the project in 2010, [Pat Meenan](https://x.com/patmeenan) who built the [WebPageTest](https://webpagetest.org/) infrastructure powering the HTTP Archive, [Ilya Grigorik](https://x.com/igrigorik) and [Rick Viscomi](https://x.com/rick_viscomi), both long-time core maintainers, and Guy Leech and Stephen Hay for design help along the way.
 
 ## Who do I contact for more information?
 
