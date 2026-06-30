@@ -147,7 +147,7 @@ async function loadReportsConfig() {
 }
 
 async function getMetric(metricId) {
-  if (typeof metricId !== 'string' || !/^[a-zA-Z0-9_\-]+$/.test(metricId)) {
+  if (typeof metricId !== 'string' || !/^[a-zA-Z0-9_-]+$/.test(metricId)) {
     return null;
   }
   const config = await loadReportsConfig();
