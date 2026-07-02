@@ -95,18 +95,18 @@ async function getDates() {
   }
 }
 
-const latestMetricDates = Object.create(null);
-const latestMetricCheck = Object.create(null);
+const latestMetricDates = new Map();
+const latestMetricCheck = new Map();
 
 async function getLatestDate(dates, metricId) {
   if (!loadDatesFromGCS) {
     return mockDates[0];
   }
 
-  const cached = latestMetricDates[metricId];
+  const cached = latestMetricDates.get(metricId);
   const now = Date.now();
   if (cached) {
-    if (cached === dates[0] || (now - latestMetricCheck[metricId]) < CACHE_LIFETIME) {
+    if (cached === dates[0] || (now - latestMetricCheck.get(metricId)) < CACHE_LIFETIME) {
       return cached;
     }
   }
@@ -116,8 +116,8 @@ async function getLatestDate(dates, metricId) {
       const file = bucket.file(`reports/${date}/${metricId}.json`);
       const [exists] = await file.exists();
       if (exists) {
-        latestMetricDates[metricId] = date;
-        latestMetricCheck[metricId] = now;
+        latestMetricDates.set(metricId, date);
+        latestMetricCheck.set(metricId, now);
         return date;
       }
     }
@@ -285,20 +285,38 @@ app.use((req, res, next) => {
     filePath += 'index.html';
   }
 
-  const fullPath = path.resolve(distDir, filePath);
+  // Resolve the dist directory to its real path to guard against symlink escapes.
+  let realDistDir;
+  try {
+    realDistDir = fs.realpathSync(distDir);
+  } catch {
+    return next();
+  }
+
+  const fullPath = path.resolve(realDistDir, filePath);
+  const indexFullPath = path.resolve(realDistDir, filePath, 'index.html');
 
   // Prevent directory traversal
-  const relative = path.relative(distDir, fullPath);
+  const relative = path.relative(realDistDir, fullPath);
   if (relative.startsWith('..') || path.isAbsolute(relative)) {
     return next();
   }
 
-  const indexFullPath = path.resolve(distDir, filePath, 'index.html');
+  const isWithinDist = (candidatePath) => {
+    const rel = path.relative(realDistDir, candidatePath);
+    return !rel.startsWith('..') && !path.isAbsolute(rel);
+  };
 
   if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
-    return res.sendFile(fullPath);
+    const realFullPath = fs.realpathSync(fullPath);
+    if (isWithinDist(realFullPath)) {
+      return res.sendFile(realFullPath);
+    }
   } else if (fs.existsSync(indexFullPath) && fs.statSync(indexFullPath).isFile()) {
-    return res.sendFile(indexFullPath);
+    const realIndexFullPath = fs.realpathSync(indexFullPath);
+    if (isWithinDist(realIndexFullPath)) {
+      return res.sendFile(realIndexFullPath);
+    }
   }
 
   next();
