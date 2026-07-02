@@ -24,14 +24,11 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version:  '24'
-    - name: Set up Python 3.14
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.14'
     - name: Run the website
+      env:
+        KEEP_SERVER_RUNNING: true
+        SOURCE_MAPS: true
       run: ./tools/scripts/run_and_test_website.sh
-    - name: Remove node modules to avoid linting errors
-      run: rm -rf node_modules
     - name: Use more complete checks for generated HTML linting
       run: cp -f .github/linters/.htmlhintrc_morechecks .github/linters/.htmlhintrc
     - name: Lint Generated HTML
@@ -39,6 +36,7 @@ jobs:
       env:
         ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: false
         FILTER_REGEX_INCLUDE: static/html/.*
+        FILTER_REGEX_EXCLUDE: .*node_modules/.*
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_HTML: true
         USE_FIND_ALGORITHM: true

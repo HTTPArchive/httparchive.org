@@ -1,0 +1,105 @@
+---
+title: GET_HOST_CATEGORIES function
+description: Reference docs for the httparchive.fn.GET_HOST_CATEGORIES function
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+We are happy to release the largest open-source dataset of website categories, featuring 147 million hosts and 31 million domains, making it the most extensive open-source data available in this area.
+
+The [`GET_HOST_CATEGORIES`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!6m3!1shttparchive!2sfn!3sGET_HOST_CATEGORIES) function retrieves the category information of a given hostname. It maps hostnames to their respective categories using a pre-classified dataset.
+
+## Input
+
+### `input_host`
+The function takes a single parameter: `input_host`, which is a STRING representing the hostname to be classified. The hostname can be a full URL (e.g., `https://store.google.com/product`) or just the host (e.g., `store.google.com`).
+
+**Type:** `STRING`
+
+
+### Output
+- ARRAY of STRUCT containing:
+  - `domain` (STRING): The queried host.
+  - `category_id` (INT64): The category ID of the host.
+  - `full_category` (STRING): The full hierarchical category.
+  - `subcategory` (STRING): The most specific subcategory.
+  - `parent_category` (STRING): The parent category.
+
+### Example Query
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+SELECT *
+FROM UNNEST(httparchive.fn.GET_HOST_CATEGORIES('apple.com'))
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+```json
+[{
+  "host": "apple.com",
+  "category_id": "528",
+  "full_category": "/Internet \u0026 Telecom/Mobile Phones",
+  "subcategory": "Mobile Phones",
+  "parent_category": "/Internet \u0026 Telecom/"
+}, {
+  "host": "apple.com",
+  "category_id": "129",
+  "full_category": "/Computers \u0026 Electronics/Consumer Electronics",
+  "subcategory": "Consumer Electronics",
+  "parent_category": "/Computers \u0026 Electronics/"
+}]
+```
+  </TabItem>
+</Tabs>
+
+You can also integrate this function into another SQL query by joining its result with your target table. Here is an example:
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+SELECT
+  url,
+  category_id,
+  full_category,
+  subcategory,
+  parent_category
+FROM `httparchive.urls.latest_crux_mobile`,
+  UNNEST(`httparchive.fn.GET_HOST_CATEGORIES`(url))
+  ```
+
+  </TabItem>
+</Tabs>
+
+
+## Methodology
+The classification of hostnames is performed using Chrome's Topics API (currently `chrome5`)  by [Nurullah Demir](https://ndemir.com) and [Yohan Beugin](https://yohan.beugin.org/) using [this repository](https://github.com/yohhaan/httparchive-topics-classification). The taxonomy used is version 2, which consists of 469 categories as defined in the [Topics API taxonomy v2](https://github.com/patcg-individual-drafts/topics/blob/a116e9e404dd96c7793fe6542c53e9a9d93cb75b/taxonomy_v2.md).
+
+This model is applied to all requests in the HTTP Archive's dataset from the first crawl in November 2010 to June 2024. These requests include the page's HTML document itself as well as all of its subresources.
+
+### Raw Data
+The raw data for the classifications is stored in the `httparchive.urls.categories` table. This table consists of pre-classified hostnames with their corresponding categories. The categories follow a hierarchical structure, providing both specific subcategories and broader parent categories.
+
+Please consider the limitations of our method regarding some hosts discussed [here](https://github.com/HTTPArchive/httparchive.org/issues/868). Thus, while this data can be accessed directly, we highly recommend using the `GET_HOST_CATEGORIES` function due to the handling of hashed subdomains. If your analysis requires working with domains (e.g., `google.com` instead of `maps.google.com`), accessing the raw data directly is also appropriate.
+
+
+## Limitations
+As with many classification models, our approach has some limitations:
+
+- **Unclassified Hosts**: Some hosts might not be classified if they fall outside the scope of the classification model used, such as adult or gambling sites.
+- **Hashed Subdomains**: For certain hosts like `googlesyndication.com` and others, the function returns the category of the main domain. This is because these hosts typically contain hashed subdomains, which would otherwise lead to inconsistent classifications.
+
+The function specifically addresses domains (currently top 50) known for having numerous hashed subdomains. Some of these domains include:
+- `googlesyndication.com`
+- `gstatic.com`
+- `cloudfront.net`
+- `akamaihd.net`
+- `doubleclick.net`
+- `amazonaws.com`
+
+And others as seen in the [function source](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!6m3!1shttparchive!2sfn!3sGET_HOST_CATEGORIES).
+

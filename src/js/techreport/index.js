@@ -207,7 +207,11 @@ class TechReport {
 
   // New API
   getAllMetricData() {
-    const technologies = this.filters.app;
+    const technologies = this.filters && this.filters.app;
+
+    if (!technologies || !Array.isArray(technologies) || technologies.length === 0) {
+      return;
+    }
 
     const apis = [
       {
@@ -335,6 +339,10 @@ class TechReport {
   updateCategoryComponents (category) {
     this.updateComponents(category.data);
     DrilldownHeader.setDescription(category.description);
+    const mainTitle = document.querySelector('h1 span.main-title');
+    if (mainTitle && this.filters.category) {
+      mainTitle.textContent = this.filters.category;
+    }
   }
 
   // Update components and sections that are relevant to the current page

@@ -1,4 +1,6 @@
-/* global gtag, webVitals */
+import { onFCP, onLCP, onCLS, onTTFB, onINP } from 'web-vitals/attribution';
+
+/* global gtag */
 
 function sendWebVitals() {
 
@@ -114,16 +116,11 @@ function sendWebVitals() {
 
   }
 
-  // As the web-vitals script and this script is set with defer in order, so it should be loaded
-  if (webVitals) {
-    webVitals.onFCP(sendWebVitalsGAEvents);
-    webVitals.onLCP(sendWebVitalsGAEvents);
-    webVitals.onCLS(sendWebVitalsGAEvents);
-    webVitals.onTTFB(sendWebVitalsGAEvents);
-    webVitals.onINP(sendWebVitalsGAEvents);
-  } else {
-    console.error('Web Vitals is not loaded!!');
-  }
+  onFCP(sendWebVitalsGAEvents);
+  onLCP(sendWebVitalsGAEvents);
+  onCLS(sendWebVitalsGAEvents);
+  onTTFB(sendWebVitalsGAEvents);
+  onINP(sendWebVitalsGAEvents);
 
 }
 

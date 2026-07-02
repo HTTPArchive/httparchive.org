@@ -1,0 +1,95 @@
+---
+/**
+ * SummaryCard Astro component — translates templates/techreport/components/summary_card.html
+ */
+export interface Props {
+  summary: {
+    key: string;
+    metric: string;
+    endpoint: string;
+    category: string;
+    label: string;
+    url?: string;
+    suffix?: string;
+    change?: boolean;
+    changeMeaning?: string;
+    description: string;
+  };
+  sectionPrefix?: string;
+}
+
+const { summary, sectionPrefix } = Astro.props;
+
+const prefix = sectionPrefix ? `${sectionPrefix}-summary` : 'summary';
+const cardId = `${prefix}-${summary.endpoint}-${summary.category}-${summary.metric}`;
+---
+<div
+  class="card"
+  data-component="summaryCard"
+  data-key={summary.key}
+  data-metric={summary.metric}
+  data-endpoint={summary.endpoint}
+  data-category={summary.category}
+  data-id={cardId}
+  data-client="mobile"
+>
+  <p class="summary-linked-label">
+    {summary.url ? (
+      <a href={summary.url} data-slot="label">
+        {summary.label}
+      </a>
+    ) : (
+      <span data-slot="label">
+        {summary.label}
+      </span>
+    )}
+  </p>
+  <div class="summary-value">
+    <p>
+      {sectionPrefix === 'lighthouse' ? (
+        <span class="progress-circle">
+          <span class="summary-linked-value" data-slot="value">--</span>
+          {summary.suffix && (
+            <span class="summary-suffix" data-slot="suffix">{summary.suffix}</span>
+          )}
+        </span>
+      ) : (
+        <>
+          <span class="summary-linked-value" data-slot="value">--</span>
+          {summary.suffix && (
+            <span class="summary-suffix" data-slot="suffix">{summary.suffix}</span>
+          )}
+        </>
+      )}
+
+      {summary.change && (
+        <span class="monthchange" data-slot="change" data-meaning={summary.changeMeaning}></span>
+      )}
+    </p>
+  </div>
+  <p class="summary-linked-description" data-slot="description" set:html={summary.description} />
+</div>
+
+<style>
+  .summary-linked-label {
+    font-weight: 600;
+  }
+
+  .summary-linked-label a {
+    color: var(--color-link);
+  }
+
+  .summary-linked-label a:is(:hover, :focus) {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .summary-linked-value,
+  .summary-suffix {
+    font-size: var(--font-size-medium);
+  }
+
+  .summary-linked-description {
+    margin-bottom: 0;
+  }
+</style>

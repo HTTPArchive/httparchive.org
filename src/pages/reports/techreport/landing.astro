@@ -1,0 +1,139 @@
+---
+/**
+ * Tech Report landing page — /reports/techreport/landing
+ * Replicates the Flask techreportlanding() route for page_id="landing"
+ */
+import Base from '../../../layouts/Base.astro';
+import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
+import '../../../styles/techreport/general.css';
+import '../../../styles/techreport/techreport.css';
+import '../../../styles/techreport/landing.css';
+
+const config = techReportConfig as any;
+
+const drilldownTechs = (config.config?.default_apps?.drilldown || []).join(',');
+const comparisonTechs = (config.config?.default_apps?.comparison || []).join(',');
+---
+<Base
+  title="HTTP Archive: Tech Report"
+  description="Track and compare web technology performance and adoption."
+  customNavigation={true}
+>
+
+  <!-- Custom techreport navigation -->
+  <Fragment slot="custom-navigation">
+    <a href="#main" class="skip main-btn">Skip to main content</a>
+    <a href="#results" class="skip main-btn">Skip to results</a>
+    <nav class="report-navigation">
+      <a href="/">
+        <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+      </a>
+      <div class="hidden-xs">
+        <ul id="desktop" class="navigation-items">
+          <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
+          <li>
+            <a href="/reports/techreport/landing" aria-current="page"><span>Home</span></a>
+          </li>
+          <li>
+            <a href={`/reports/techreport/tech?geo=ALL&rank=ALL&tech=ALL`}><span>Technologies</span></a>
+          </li>
+          <li>
+            <a href="/reports/techreport/category?geo=ALL&rank=ALL&category=CMS"><span>Categories</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="visible-xs">
+        <button class="hamburger">
+          <span class="sr-only">Menu</span>
+          <svg aria-hidden="true" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
+  </Fragment>
+
+  <!-- Landing page content -->
+  <div class="intro block-m">
+    <div>
+      <h1>
+        <span class="subtitle">Reports</span>
+        <span class="title">Tech Report</span>
+      </h1>
+      <p>
+        Track and compare web technology performance and adoption. Real-world Core Web Vitals performance data is provided by the Chrome UX Report at the origin level, and technologies are identified by HTTP Archive on the home page and one interior page.
+      </p>
+    </div>
+  </div>
+
+  <div class="report-content landing-content">
+    <div class="choices block-m">
+      <div class="card">
+        <h2><a href={`/reports/techreport/tech?tech=${drilldownTechs}`}>Technology Drilldown</a></h2>
+        <p>Get detailed information about <strong>one</strong> technology.</p>
+      </div>
+      <div class="card">
+        <h2><a href={`/reports/techreport/tech?tech=${comparisonTechs}`}>Technology Comparison</a></h2>
+        <p>Get detailed information about <strong>two to ten</strong> technologies.</p>
+      </div>
+      <div class="card">
+        <h2><a href="/reports/techreport/category?category=CMS">Category info</a></h2>
+        <p>Get detailed information about <strong>a category</strong> and its technologies.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caveats block-m" id="caveats">
+    <div>
+      <h2><a href="#caveats" class="anchor">A note of caution</a></h2>
+      <p>
+        <em>Web performance is based on a large number of factors and correlation does not equal causation. A technology being highly correlated with good (or poor) performance does not necessarily indicate that technology is the cause of that performance. Those technologies may be used on simpler or more complex sites, or in popular third-party components that may be more or less performant. We hope this data serves as an interesting jumping off point for delving into, and discussing, why the stats are the way they are rather than as a definitve grading of the technology.</em>
+      </p>
+    </div>
+  </div>
+
+  <div class="feedback" id="section-feedback">
+    <div class="block-m">
+      <h2><a href="#section-feedback" class="anchor">Feedback?</a></h2>
+      <p>Please raise a <a href="https://github.com/HTTPArchive/httparchive.org/issues/new?template=tech-report.md">GitHub issue</a> if you spot any problems, or for any feature requests.</p>
+    </div>
+  </div>
+
+  <div class="accessibility-options" id="section-accessibility-options">
+    <div class="wrapper block-m">
+      <h2><a href="#section-accessibility-options" class="anchor">Accessibility</a></h2>
+      <p>Change settings related to accessibility here</p>
+      <div class="setting">
+        <div class="check-wrapper">
+          <label for="indicators-check">Show markers</label>
+          <input type="checkbox" name="indicators-check" id="indicators-check">
+        </div>
+      </div>
+      <div class="setting">
+        <button class="theme-switcher">🌚 Switch to dark mode</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="techreport-data" data-page-config={JSON.stringify(config.pages?.landing)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
+
+  <Fragment slot="scripts">
+    <script src="../../../js/highcharts-init.js"></script>
+    <script src="../../../js/techreport/timeseries.js"></script>
+    <script src="../../../js/techreport/geoBreakdown.js"></script>
+    <script src="../../../js/techreport/cwvDistribution.js"></script>
+    <script src="../../../js/techreport/section.js"></script>
+    <script src="../../../js/techreport/index.js"></script>
+    <script>
+      addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('techreport-data');
+        if (!container) return;
+        const pageConfig = JSON.parse(container.dataset.pageConfig);
+        const fullConfig = JSON.parse(container.dataset.fullConfig);
+        const labels = JSON.parse(container.dataset.labels);
+        new TechReport('landing', pageConfig, fullConfig, labels);
+      });
+    </script>
+  </Fragment>
+</Base>

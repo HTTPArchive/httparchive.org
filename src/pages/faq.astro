@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/Base.astro';
+import { marked } from 'marked';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+
+const title = 'HTTP Archive FAQ';
+const description = 'Frequently Asked Questions about the HTTP Archive: what we do and how we test and gather our data.';
+
+// Read and parse the FAQ markdown file
+const faqPath = resolve('./docs/faq.md');
+const faqRaw = readFileSync(faqPath, 'utf-8');
+
+// Extract headings as questions and build anchor map
+function getAnchor(question: string): string {
+  return question.toLowerCase().replace(/ /g, '-').replace(/\?/g, '').replace(/'/g, '');
+}
+const headingRegex = /^[#]+\s*(.*)/gm;
+const anchors: Record<string, string> = {};
+let match;
+while ((match = headingRegex.exec(faqRaw)) !== null) {
+  const question = match[1];
+  anchors[question] = getAnchor(question);
+}
+
+// Render markdown to HTML
+const faqHtml = marked(faqRaw);
+
+---
+<Base title={title} description={description}>
+  <section id="faq" class="alt-light" data-anchors={JSON.stringify(anchors)}>
+    <div class="container">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1>
+          <small>Frequently Asked Questions</small>
+          FAQ
+        </h1>
+
+        <ul id="questions">
+          {Object.entries(anchors).map(([question, anchor]) => (
+            <li class="question">
+              <a href={`#${anchor}`}>{question}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="answers" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" set:html={faqHtml}>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="scripts">
+    <script src="../js/faq.js"></script>
+  </Fragment>
+</Base>

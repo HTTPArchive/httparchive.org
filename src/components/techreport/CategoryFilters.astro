@@ -1,0 +1,76 @@
+---
+/**
+ * Category Filters component — translates templates/techreport/category.html filters form.
+ */
+---
+<form id="page-filters">
+  <div>
+    <fieldset class="technology-filters filters">
+      <legend class="form-title">Choose a dataset</legend>
+
+      <div class="tech-selector default-dropdown-group">
+        <label for="categories_selector" class="tech default-dropdown-label">Category</label>
+        <div class="default-dropdown-wrapper">
+          <select name="categories" class="default-dropdown tech" data-selected="CMS" id="categories_selector" disabled>
+            <option value="CMS" selected="true">CMS</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="lens">
+      <legend class="sr-only">Lens</legend>
+
+      <div class="default-dropdown-group">
+        <label for="geo">Geo</label>
+        <div class="default-dropdown-wrapper">
+          <select class="default-dropdown" name="geo" id="geo" disabled>
+            <option value="ALL" selected="true">ALL</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="default-dropdown-group">
+        <label for="rank">Rank</label>
+        <div class="default-dropdown-wrapper">
+          <select class="default-dropdown" name="rank" id="rank" disabled>
+            <option value="ALL" selected="true">ALL</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <button type="submit" id="submit-form" class="main-btn">Update</button>
+
+  <ul class="meta">
+    <li class="client">
+      Client: <span data-slot="client">Mobile</span>
+    </li>
+    <li>
+      Geo: <span data-slot="geo">ALL</span>
+    </li>
+    <li>
+      Rank: <span data-slot="rank">ALL</span>
+    </li>
+  </ul>
+</form>
+
+<template id="filter-option">
+  <option value="Option">Option</option>
+</template>
+
+<template id="tech-selector">
+  <div class="tech-selector-group" data-tech="tech-new">
+    <div class="tech-selector default-dropdown-group">
+      <label class="tech default-dropdown-label">Technology</label>
+      <div class="default-dropdown-wrapper">
+        <select name="tech" class="default-dropdown tech" data-selected="ALL" id="tech-new" disabled>
+          <option value="ALL" selected="true">ALL</option>
+        </select>
+      </div>
+    </div>
+    <button class="remove-tech hidden" data-tech="tech-new" type="button">
+      <img src="/static/img/close-filters.svg" alt="Remove option" width="12px" height="12px" />
+    </button>
+  </div>
+</template>

@@ -81,8 +81,8 @@
   },
   "/static/js/faq.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2026-01-24T00:00:00.000Z",
-    "hash": "6cc4de9aeed86421f03dcdcaade3f594"
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "f2e298b5fe6063ed10d2958e11391b36"
   },
   "/static/js/highcharts-more.js": {
     "date_published": "2021-04-26T00:00:00.000Z",
@@ -131,8 +131,8 @@
   },
   "/static/js/send-web-vitals.js": {
     "date_published": "2022-01-03T00:00:00.000Z",
-    "date_modified": "2025-06-02T00:00:00.000Z",
-    "hash": "ab3c52a208f6ed195272017124837a54"
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "b10c4415f8dee25b01e171dada5eb1c9"
   },
   "/static/js/summaryLinked.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
@@ -166,8 +166,8 @@
   },
   "/static/js/techreport.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2026-06-09T00:00:00.000Z",
-    "hash": "d7124ced4c0de9b8fff69bd6557451a4"
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "0175fb04f7df1fb73d7a55b6090256e9"
   },
   "/static/js/techreport/cwvDistribution.js": {
     "date_published": "2026-04-07T00:00:00.000Z",
@@ -181,13 +181,13 @@
   },
   "/static/js/techreport/section.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2026-04-07T00:00:00.000Z",
-    "hash": "c813fe60fb1bcd338221f72b64739701"
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "79f6b253b94a8dfa91c3693229823ed5"
   },
   "/static/js/techreport/timeseries.js": {
     "date_published": "2023-10-09T00:00:00.000Z",
-    "date_modified": "2026-04-20T00:00:00.000Z",
-    "hash": "174a513cecbcd2abfdfe1d4fdbd739e1"
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "2068e3a84e29a2b05aeb83d67667aff5"
   },
   "/static/js/timeseries.js": {
     "date_published": "2018-05-08T00:00:00.000Z",
@@ -201,23 +201,148 @@
   },
   "about.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-06-02T00:00:00.000Z",
-    "hash": "af69d0e1acd55a05d78630155271b229"
+    "date_modified": "2026-06-29T00:00:00.000Z",
+    "hash": "46a530699525ca2120027f9712eff2bf"
+  },
+  "docs/guides/getting-started": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "cd0a8ad4379b0f3b312e8ba56032d4a6"
+  },
+  "docs/guides/guided-tour": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "a52176e67f1d794e051c1aebd471f471"
+  },
+  "docs/guides/minimizing-costs": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-29T00:00:00.000Z",
+    "hash": "a103e22b684565b1a55e4b722d66f0bf"
+  },
+  "docs/guides/release-cycle": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "8259e9969874283a66929c525e1e2e19"
+  },
+  "docs/index": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "c374905b3752c4c66b835830bd8940f8"
+  },
+  "docs/reference/blobs/lighthouse": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "de55578fc8edfadce490f0ce9205d279"
+  },
+  "docs/reference/blobs/page-metadata": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "3d746a46653adc82819e234d9c092f32"
+  },
+  "docs/reference/blobs/page-payload": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "564869fe373e6de48547b627f4bc7287"
+  },
+  "docs/reference/blobs/page-summary": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "ab57f4a09c389cf6bdbb1c0dbe83a31b"
+  },
+  "docs/reference/blobs/request-payload": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "a4e80fb44f65e6504d2b9e5b2e87f22f"
+  },
+  "docs/reference/blobs/request-summary": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "72d4210cd35088c8706a1ea02f58c952"
+  },
+  "docs/reference/custom-metrics/ads": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "6261101aa4c53499a24f49431a5a1027"
+  },
+  "docs/reference/custom-metrics/other": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "999e963a01ec07de9bd58e1cfb28aab3"
+  },
+  "docs/reference/custom-metrics/privacy": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "a8c0e88f953021ffcfbf037bdadfea4b"
+  },
+  "docs/reference/functions/capo": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "f030d469063a7ca5ac5881e300995a93"
+  },
+  "docs/reference/functions/get_host_categories": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "74e4235447f6d0f8e9e66957ae2fdbd5"
+  },
+  "docs/reference/functions/get_lcp_lazy": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "9347d792c09501f366e8673714b42c89"
+  },
+  "docs/reference/functions/get_lcp_priority": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "70b1661490313f5cf448e20b4568924d"
+  },
+  "docs/reference/functions/get_origin": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "a75d9efb5b4e0a260ef7de7d7e51e293"
+  },
+  "docs/reference/structs/custom-metrics": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "4b2eeb1aaec6c982ae82031de1061546"
+  },
+  "docs/reference/structs/feature": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "387f5c67a41f137abea9817ff9396de3"
+  },
+  "docs/reference/structs/header": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "2ec68ca21788e35622b1312452c6ea94"
+  },
+  "docs/reference/structs/technology": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "6f2463eb1f62e9a15717f9f186eccb61"
+  },
+  "docs/reference/tables/pages": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-29T00:00:00.000Z",
+    "hash": "8183f41800e611b1d94eaf1d7fd3e656"
+  },
+  "docs/reference/tables/requests": {
+    "date_published": "2026-06-28T00:00:00.000Z",
+    "date_modified": "2026-06-28T00:00:00.000Z",
+    "hash": "cebd71a60ba1b7d32af85baab3a224bf"
   },
   "faq.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2025-08-18T00:00:00.000Z",
-    "hash": "f14213418e3cd6f4f5b12780f58f3786"
+    "date_modified": "2026-06-29T00:00:00.000Z",
+    "hash": "474a30967e56a20920b1aed21c276923"
   },
   "index.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2026-01-24T00:00:00.000Z",
-    "hash": "12e34e07b9c530f20cc4b108d07c65a4"
+    "date_modified": "2026-06-29T00:00:00.000Z",
+    "hash": "31356d59e05a901e0a54909d55e32ca5"
   },
   "reports.html": {
     "date_published": "2018-05-08T00:00:00.000Z",
-    "date_modified": "2023-12-07T00:00:00.000Z",
-    "hash": "383eb3f292743eb357f80ce20259ee5d"
+    "date_modified": "2026-06-29T00:00:00.000Z",
+    "hash": "d577ec86f532e02e3cbe70ad38eb9912"
   },
   "reports/accessibility": {
     "date_published": "2018-05-08T00:00:00.000Z",

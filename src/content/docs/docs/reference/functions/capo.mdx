@@ -1,0 +1,98 @@
+---
+title: CAPO function
+description: Reference docs for the httparchive.fn.CAPO function
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+The [`httparchive.fn.CAPO`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!6m3!1shttparchive!2sfn!3sCAPO) function takes an HTML response body and returns an array of objects containing the relative performance weighting for each element in the static HTML `<head>`.
+
+Learn more about using Capo on BigQuery in the [capo.js docs](https://github.com/rviscomi/capo.js/tree/main/bigquery).
+
+## Input
+
+### `html`
+
+The HTML response body.
+
+**Type:** `STRING`
+
+Response bodies can be sourced from the `response_body` field of the [`requests`](/docs/reference/tables/requests/) table, or the `body` field of legacy `response_bodies` tables.
+
+The HTML does not need to be complete and can contain only the `<head>` element, so for faster results and to avoid hitting memory limitations of BigQuery functions, it's recommended to extract everything before the opening `<body>` tag using a regular expression like this:
+
+```sql
+REGEXP_EXTRACT(response_body, r'(?s)(.*)(<body.*?>)')
+```
+
+## Output
+
+Capo object.
+
+**Type:** `ARRAY<STRUCT<vizWeight STRING, weight INT64, element STRING>>`
+
+## Example usage
+
+### Static input
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+SELECT httparchive.fn.CAPO('''
+<html>
+  <head>
+    <title>Example</title>
+    <link rel="manifest" href="/manifest.json">
+    <style></style>
+    <script defer src="script.js"></script>
+    <meta charset="utf-8">
+  </head>
+</html>
+''')
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+vizWeight | weight | element
+-- | -- | --
+██████████ | 9 | `<title>Example</title>`
+█ | 0 | `<link rel="manifest" href="/manifest.json">`
+█████ | 4 | `<style></style>`
+███ | 2 | `<script defer="" src="script.js"></script>`
+███████████ | 10 | `<meta charset="utf-8">`
+
+  </TabItem>
+</Tabs>
+
+### Live input
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+SELECT
+  page,
+  httparchive.fn.CAPO(response_body) AS capo
+FROM `httparchive.crawl.requests` TABLESAMPLE SYSTEM (0.001 PERCENT)
+WHERE
+  date = '2023-05-01' AND
+  client = 'desktop' AND
+  is_main_document
+LIMIT 1
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+page | vizWeight | weight | element
+-- | -- | -- | --
+https://www.example.com/ | ██████████ | 9 | `<title>Example Domain</title>`
+https://www.example.com/ | ███████████ | 10 | `<meta charset="utf-8">`
+https://www.example.com/ | ███████████ | 10 | `<meta http-equiv="Content-type" content="text/html; charset=utf-8">`
+https://www.example.com/ | ███████████ | 10 | `<meta name="viewport" content="width=device-width, initial-scale=1">`
+https://www.example.com/ | █████ | 4 | `<style type="text/css">...</style>`
+
+  </TabItem>
+</Tabs>

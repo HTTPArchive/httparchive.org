@@ -26,25 +26,10 @@ jobs:
       with:
         node-version: '24'
 
-    - name: Set up Python 3.14
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.14'
-
     - name: Install Node dependencies
       run: npm install
-
-    - name: Install Python dependencies
-      run: pip install -r requirements.txt
-
-    - name: Build static assets
+    - name: Build website
       run: npm run build
-
-    - name: Update timestamps
-      run: npm run timestamps
-
-    - name: Generate scripts
-      run: npm run generate
 
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v3

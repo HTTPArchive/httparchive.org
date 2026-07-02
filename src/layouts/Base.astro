@@ -1,0 +1,180 @@
+---
+import { getReports } from '../utils/reports.js';
+
+import '../styles/bootstrap.min.css';
+import '../styles/styles.css';
+import lastUpdated from '../../config/last_updated.json';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  pageUrl?: string;
+  imageUrl?: string;
+  imageWidth?: string | number;
+  imageHeight?: string | number;
+  imageAlt?: string;
+  datePublished?: string;
+  dateModified?: string;
+  customNavigation?: boolean;
+  isProduction?: boolean;
+}
+
+const getPageDates = (pathname: string) => {
+  const path = pathname.replace(/^\/|\/$/g, '');
+  let key = '';
+  if (!path) {
+    key = 'index.html';
+  } else if (path === 'faq') {
+    key = 'faq.html';
+  } else if (path === 'about') {
+    key = 'about.html';
+  } else if (path === 'reports') {
+    key = 'reports.html';
+  } else if (path.startsWith('reports/')) {
+    key = path;
+  }
+
+  if (key && (lastUpdated as Record<string, any>)[key]) {
+    return {
+      published: (lastUpdated as Record<string, any>)[key].date_published,
+      modified: (lastUpdated as Record<string, any>)[key].date_modified
+    };
+  }
+  return null;
+};
+
+const pageDates = getPageDates(Astro.url.pathname);
+const defaultDate = new Date().toISOString();
+
+const {
+  title = 'HTTP Archive',
+  description = 'List of reports the HTTP Archive Tracks creates to track various aspects of the the web: State of the Web, State of JavaScript, State of Images, Loading Speed, Progressive Web Apps, Accessibility, SEO, Page Weight, Chrome User Experience Report, and Capabilities.',
+  pageUrl = `https://httparchive.org${Astro.url.pathname}`,
+  imageUrl = 'https://httparchive.org/static/img/ha.png',
+  imageWidth = 320,
+  imageHeight = 160,
+  imageAlt = '',
+  datePublished = pageDates?.published || defaultDate,
+  dateModified = pageDates?.modified || defaultDate,
+  customNavigation = false,
+  isProduction = Astro.url.hostname === 'httparchive.org',
+} = Astro.props;
+
+const reports = getReports();
+
+import Header from '../components/Header.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{title}</title>
+
+    <meta name="description" content={description}>
+    {!isProduction && <meta name="robots" content="noindex">}
+    <meta property="og:title" content={title}>
+    <meta property="og:url" content={pageUrl}>
+    <meta property="og:image" content={imageUrl}>
+    <meta property="og:image:height" content={String(imageHeight)}>
+    <meta property="og:image:width" content={String(imageWidth)}>
+    <meta property="og:type" content="article">
+    <meta property="og:description" content={description}>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@HTTPArchive">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:image" content={imageUrl}>
+    <meta name="twitter:description" content={description}>
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": pageUrl },
+      "headline": title,
+      "image": { "@type": "ImageObject", "url": imageUrl, "height": imageHeight, "width": imageWidth },
+      "publisher": {
+        "@type": "Organization",
+        "name": "HTTP Archive",
+        "logo": { "@type": "ImageObject", "url": "https://httparchive.org/static/img/ha.png", "height": 160, "width": 320 },
+        "sameas": ["https://httparchive.org", "https://twitter.com/HTTPArchive", "https://github.com/HTTPArchive"]
+      },
+      "description": description,
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+    })} />
+
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/img/apple-touch-icon.png">
+
+    <!-- Fonts -->
+    <link rel="preload" href="/static/fonts/opensans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/opensans-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Core styles -->
+
+
+    <!-- Google Analytics -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-D66RRD8GF2"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-D66RRD8GF2');
+    </script>
+
+    <!-- SpeedCurve LUX -->
+    <script is:inline>LUX = window.LUX || {}; LUX.samplerate = 100;</script>
+    <script is:inline async defer src="https://cdn.speedcurve.com/js/lux.js?id=104609804"></script>
+
+    <slot name="head" />
+  </head>
+  <body>
+    {customNavigation ? (
+      <slot name="custom-navigation" />
+    ) : (
+      <Header />
+    )}
+
+    <slot name="report-navigation" />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+          <a href="/">
+            <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" loading="lazy"/>
+          </a>
+          <a href="https://archive.org/">
+            <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive" loading="lazy"/>
+          </a>
+        </div>
+        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
+          <nav id="footer-links" aria-label="Footer links">
+            <a href="/reports">Reports</a>
+            <a href="https://discuss.httparchive.org">Discuss</a>
+            <a href="https://almanac.httparchive.org/">Web Almanac</a>
+            <a href="/about">About</a>
+            <a href="/about#mission">Mission</a>
+            <a href="/about#contact">Contact</a>
+            <a href="/faq">FAQ</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Core JS -->
+    <script src="../js/main.js"></script>
+    <script src="../js/send-web-vitals.js"></script>
+    <script type="speculationrules">
+      {
+        "prefetch": [{"where": {"href_matches": "/reports/*"}, "eagerness": "eager"}],
+        "prerender": [{"where": {"href_matches": "/*"}, "eagerness": "moderate"}]
+      }
+    </script>
+
+    <slot name="scripts" />
+  </body>
+</html>

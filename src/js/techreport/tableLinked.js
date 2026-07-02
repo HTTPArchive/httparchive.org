@@ -94,7 +94,11 @@ class TableLinked {
       }
 
       if(timestamp) {
-        timestamp.textContent = UIUtils.printMonthYear(this.dataArray[1]?.[0]?.date);
+        const firstTech = this.dataArray.find(tech => tech && tech.length > 0);
+        if (firstTech) {
+          const sortedEntries = [...firstTech].sort((a, b) => new Date(b.date) - new Date(a.date));
+          timestamp.textContent = UIUtils.printMonthYear(sortedEntries[0]?.date);
+        }
       }
 
       this.dataArray.forEach(technology => {

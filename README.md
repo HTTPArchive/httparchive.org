@@ -1,45 +1,54 @@
 # HTTPArchive.org Web Server on App Engine
+
 New and improved version of [HTTP Archive](https://httparchive.org). This replaces the [legacy version](https://legacy.httparchive.org), the source code for which is still available at [HTTPArchive/legacy.httparchive.org](https://github.com/HTTPArchive/legacy.httparchive.org).
 
 ## Run Locally
 
-[Source](https://cloud.google.com/appengine/docs/flexible/python/quickstart)
+This is an Astro and Node.js-based application (Express server). It requires **Node.js >= 24.0.0**.
 
-1. If you don't have virtualenv, install it using pip.
+1. Install the NPM dependencies:
 
-```
-sudo pip install virtualenv
-```
+    ```bash
+    npm install
+    ```
 
-2. Create an isolated Python environment, and install dependencies:
+2. Initialize the Google Cloud CLI (this is necessary because the web server uses Google Cloud APIs like Google Cloud Storage to fetch reports):
 
-```
-virtualenv --python python3.14 .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+    ```bash
+    gcloud init
+    ```
 
-3. Install the NPM dependencies:
+3. Run the application:
 
-```
-npm install
-```
+    * **Production build and start:**
 
-4. Initialize the Google Cloud CLI (this is necessary because the App Engine server uses Google Cloud APIs):
+    ```bash
+    npm run start
+    ```
 
-```
-gcloud init
-```
+    * **Development mode (with live reload):**
 
-5. Run the application:
+    ```bash
+    npm run watch
+    ```
 
-```
-npm run start
-```
+4. In your web browser, enter the following address: http://127.0.0.1:8080
 
-Note: Windows users may need to run `npm run watch` and `python main.py` separately.
+## Linting
 
-6. In your web browser, enter the following address: http://127.0.0.1:8080
+To run the GitHub Super-Linter locally using Docker:
+
+* **macOS / Linux:**
+
+  ```bash
+  npm run lint:darwin:linux
+  ```
+
+* **Windows (Command Prompt):**
+
+  ```bash
+  npm run lint:win32
+  ```
 
 ## Staging
 
@@ -47,7 +56,7 @@ Note: Windows users may need to run `npm run watch` and `python main.py` separat
 
 To test changes on a GCP App Engine server without deploying to the production instance, use the staging app at https://staging-dot-httparchive.uk.r.appspot.com/
 
-```
+```bash
 npm run stage
 ```
 
@@ -57,7 +66,7 @@ npm run stage
 
 To push changes live to the production instance, use the deployment script. Changes will be available on https://httparchive.org.
 
-```
+```bash
 npm run deploy
 ```
 

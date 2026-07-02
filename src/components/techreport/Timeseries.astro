@@ -1,0 +1,200 @@
+---
+/**
+ * Timeseries Astro component — translates templates/techreport/components/timeseries.html
+ */
+export interface Props {
+  timeseries: {
+    id: string;
+    endpoint: string;
+    metric: string;
+    title: string;
+    description: string;
+    subcategory?: {
+      param: string;
+      base: string;
+      default: string;
+      options: { value: string; label: string }[];
+    };
+    summary?: boolean;
+    change?: boolean;
+    changeMeaning?: string;
+    viz?: {
+      metric_summary?: string;
+      series: {
+        breakdown: string;
+        suffix?: string;
+        values?: { name: string; suffix?: string }[];
+      };
+    };
+    table: {
+      caption: string;
+      columns: {
+        key: string;
+        name: string;
+        metric?: string;
+        className?: string;
+        hiddenSuffix?: string;
+        breakdown?: string;
+      }[];
+      rows?: { key: string; name: string; header?: string }[];
+    };
+  };
+  selectedSubcategory?: string;
+  appFilters?: string[];
+}
+
+const { timeseries, selectedSubcategory, appFilters = ['ALL'] } = Astro.props;
+
+const category = selectedSubcategory || timeseries.subcategory?.default || '';
+const endpoint = timeseries.endpoint;
+---
+<div
+  id={`section-${timeseries.id}`}
+  data-id={timeseries.id}
+  data-component="timeseries"
+  data-endpoint={timeseries.endpoint}
+  data-category={category}
+  data-metric={timeseries.metric}
+  data-summary={timeseries.viz?.metric_summary}
+  data-client="mobile"
+>
+  <div class="component-heading-wrapper">
+    <div class="component-heading">
+      <h3>
+        <a href={`#section-${timeseries.id}`} class="anchor">{timeseries.title}</a>
+      </h3>
+      <p class="descr">{timeseries.description}</p>
+    </div>
+
+    <div class="component-filters">
+      {timeseries.subcategory && (
+        <div class="subcategory-selector-wrapper">
+          <div class="position-wrapper">
+            <label for={`subcategory-${timeseries.subcategory.base}`}>Metric</label>
+            <select
+              name="subcategory"
+              class="subcategory-selector"
+              id={`subcategory-${timeseries.subcategory.base}`}
+              data-controls={timeseries.id}
+              data-param={timeseries.subcategory.param}
+              data-endpoint={endpoint}
+            >
+              {timeseries.subcategory.options.map(option => (
+                <option value={option.value} selected={option.value === category}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+
+  {timeseries.viz && timeseries.summary && (
+    <div class="data-summary">
+      <h4 class="heading">
+        Latest data: <span data-slot="timestamp"></span>
+      </h4>
+
+      <ul class="meta">
+        <li class="client">
+          Client: <span data-slot="client">Mobile</span>
+        </li>
+        <li>
+          Geo: <span data-slot="geo">ALL</span>
+        </li>
+        <li>
+          Rank: <span data-slot="rank">ALL</span>
+        </li>
+        <li class="tech-meta-item">
+          Technology: <span data-slot="tech">ALL</span>
+        </li>
+      </ul>
+
+      <div class="breakdown-list" data-change={String(timeseries.change)} data-meaning={timeseries.changeMeaning}>
+        {timeseries.viz.series.breakdown === 'client' ? (
+          timeseries.viz.series.values?.map(breakdown => (
+            <div class="breakdown-item" data-change={String(timeseries.change)}>
+              <p class="breakdown-label">{breakdown.name}</p>
+              <p class="breakdown-value">00{breakdown.suffix === '%' ? '.00%' : breakdown.suffix}</p>
+              {timeseries.change && (
+                <span class="monthchange" data-slot="change" data-meaning={timeseries.changeMeaning}></span>
+              )}
+            </div>
+          ))
+        ) : timeseries.viz.series.breakdown === 'app' ? (
+          appFilters.map(app => (
+            <div class="breakdown-item" data-app={app}>
+              <p class="breakdown-label">{app}</p>
+              <p class="breakdown-value">00{timeseries.viz.series.suffix}</p>
+            </div>
+          ))
+        ) : null}
+      </div>
+    </div>
+  )}
+
+  <div id={`${timeseries.id}-timeseries`}></div>
+
+  <button class="btn show-table" type="button" data-id={timeseries.id}>Show table</button>
+
+  <div id={`${timeseries.id}-table-wrapper`} class="hidden">
+    <div class="table-ui-wrapper" role="region" aria-labelledby={`table-${timeseries.id}`} tabindex="0">
+      <table
+        id={`table-${timeseries.id}`}
+        class="table-ui"
+        data-client="mobile"
+        data-breakdown={timeseries.viz?.series.breakdown}
+        data-endpoint={endpoint}
+        data-category={category}
+        data-metric={timeseries.metric}
+      >
+        <caption class="sr-only">{timeseries.table.caption}</caption>
+        <thead>
+          <tr>
+            {timeseries.table.columns.map(column => (
+              column.breakdown === 'app' ? (
+                appFilters.map(app => (
+                  <th
+                    data-key={column.key}
+                    data-app={app}
+                    data-metric={column.metric}
+                    class={column.className}
+                  >
+                    {app === 'ALL' ? 'All technologies' : app}
+                    {column.hiddenSuffix && (
+                      <span aria-hidden="true">{column.hiddenSuffix}</span>
+                    )}
+                  </th>
+                ))
+              ) : (
+                <th
+                  data-key={column.key}
+                  data-metric={column.metric}
+                  class={column.className}
+                >
+                  {column.name}
+                  {column.hiddenSuffix && (
+                    <span aria-hidden="true">{column.hiddenSuffix}</span>
+                  )}
+                </th>
+              )
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {timeseries.table.rows?.map(row => (
+            <tr>
+              {row.header === 'true' ? (
+                <th data-key={row.key}>{row.name}</th>
+              ) : (
+                <td data-key={row.key}>{row.name}</td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

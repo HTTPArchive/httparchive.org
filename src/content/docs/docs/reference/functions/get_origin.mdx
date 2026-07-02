@@ -1,0 +1,99 @@
+---
+title: GET_ORIGIN function
+description: Reference docs for the httparchive.fn.CAPO function
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+The [`httparchive.fn.GET_ORIGIN`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!6m3!1shttparchive!2sfn!3sGET_ORIGIN) function returns the [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin) for a given URL.
+
+## Input
+
+### `url`
+
+The URL of a web page.
+
+**Type:** `STRING`
+
+## Output
+
+The corresponding origin.
+
+**Type:** `STRING`
+
+## Example usage
+
+### Basic usage
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+SELECT
+  url,
+  `httparchive.fn.GET_ORIGIN`(url) AS origin
+FROM UNNEST([
+    'https://www.example.com/product/123',
+    'https://example.com/',
+    'http://example.com:80/index.html'
+  ]) AS url
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+url | origin
+-- | --
+https://www.example.com/product/123	| https://www.example.com
+https://example.com/ | https://example.com
+http://example.com:80/index.html | http://example.com:80
+
+  </TabItem>
+</Tabs>
+
+### Counting cross-origin resources per page
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+WITH cross_origin AS (
+  SELECT
+    COUNT(0) AS resources
+  FROM `httparchive.crawl.requests`
+  WHERE
+    date = '2023-11-01' AND
+    client = 'mobile' AND
+    is_root_page AND
+    `httparchive.fn.GET_ORIGIN`(url) != `httparchive.fn.GET_ORIGIN`(page)
+  GROUP BY page
+)
+
+
+SELECT
+  APPROX_QUANTILES(resources, 1000)[OFFSET(500)] AS median_xo_resources_per_page
+FROM
+  cross_origin
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+| median_xo_resources_per_page |
+| -- |
+| 27 |
+
+  </TabItem>
+</Tabs>
+
+## Routine
+
+```sql
+LOWER(CONCAT(
+    -- only network protocols (excludes blob, filesystem, chrome, etc)
+    REGEXP_EXTRACT(url, r'(?i)^(https?://)'),
+    NET.HOST(url),
+    -- be lazy and include @ and : for username/password without enforcing order.
+    IFNULL(REGEXP_EXTRACT(url, r'(?i)^https?://[\w-.@:]+(:\d+)'), '')
+  ))
+```

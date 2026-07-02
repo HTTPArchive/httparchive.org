@@ -246,18 +246,37 @@ const fetchCategoryData = (rows, filters, callback) => {
         /* Update pagination links visibility */
         const nextPageLink = document.querySelector('[data-pagination="next"]');
         const prevPageLink = document.querySelector('[data-pagination="previous"]');
+
+        const buildPaginationUrl = (page) => {
+          const url = new URL(window.location.href);
+          url.searchParams.set('page', page);
+          return url.pathname + url.search;
+        };
+
         if (prevPageLink) {
           if (pageNr <= 1) {
             prevPageLink.style.display = 'none';
+            prevPageLink.textContent = '';
           } else {
             prevPageLink.style.display = 'block';
+            prevPageLink.textContent = '';
+            const prevAnchor = document.createElement('a');
+            prevAnchor.href = buildPaginationUrl(pageNr - 1);
+            prevAnchor.textContent = 'Previous page';
+            prevPageLink.appendChild(prevAnchor);
           }
         }
         if (nextPageLink) {
           if (pageNr >= totalPages) {
             nextPageLink.style.display = 'none';
+            nextPageLink.textContent = '';
           } else {
             nextPageLink.style.display = 'block';
+            nextPageLink.textContent = '';
+            const nextAnchor = document.createElement('a');
+            nextAnchor.href = buildPaginationUrl(pageNr + 1);
+            nextAnchor.textContent = 'Next page';
+            nextPageLink.appendChild(nextAnchor);
           }
         }
 

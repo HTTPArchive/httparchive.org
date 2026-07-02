@@ -1,13 +1,9 @@
 .idea/
-env/
-.venv/
 node_modules/
-static/js
-static/html
+public/static/js
+public/static/html
 templates/sitemap.xml
 *.log
-*.pyc
 **/.DS_Store
-.coverage
-.idx/dev.nix
-.coverage.*
+.astro/
+/dist

@@ -4,7 +4,7 @@ const convert = require('xml-js');
 
 const base_url = "http://127.0.0.1:8080";
 
-const output_dir = `static/html`;
+const output_dir = `public/static/html`;
 
 let failures = 0;
 let passes = 0;
@@ -46,7 +46,7 @@ const test_status_code = async (page, status, location) => {
 };
 
 const test_sitemap_pages = async () => {
-  const xml = await fs.readFile(`templates/sitemap.xml`, 'utf-8');
+  const xml = await fs.readFile(`public/sitemap.xml`, 'utf-8');
   const sitemap = JSON.parse(convert.xml2json(xml, {compact: true}));
   const urls = sitemap['urlset']['url'];
   for ( var url in urls ) {

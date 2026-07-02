@@ -1,0 +1,343 @@
+---
+/**
+ * Dynamic report page: /reports/[report_id]
+ *
+ * Replicates the Flask routes.py `report()` function.
+ * Renders the default timeseries view (start=72 crawls ago, end=latest).
+ * Date selection / histogram view switching is handled client-side by existing report.js.
+ *
+ * The dates array is fetched at runtime from /api/dates.json by the page's JS.
+ */
+import Base from '../../layouts/Base.astro';
+import { getReports, getReport, getLenses, getMetric, getReportUrl, type Report } from '../../utils/reports.js';
+import { marked } from 'marked';
+import '../../styles/report.css';
+
+export async function getStaticPaths() {
+  const reports = getReports();
+  return reports
+    .filter(report => {
+      // Skip reports that redirect to external URLs or techreport (has its own pages)
+      if (report.url?.startsWith('http')) return false;
+      if (report.id === 'techreport') return false;
+      return true;
+    })
+    .map(report => ({
+      params: { report_id: report.id },
+    }));
+}
+
+const { report_id } = Astro.params;
+
+const report = getReport(report_id!);
+if (!report) {
+  return Astro.redirect('/404');
+}
+
+const lenses = getLenses();
+
+// Enrich metrics with full metric objects
+const metricsWithData = (report.metrics as string[]).map(metricId => {
+  const metric = getMetric(metricId);
+  if (!metric) return null;
+  return metric;
+}).filter(Boolean);
+
+const enrichedReport = {
+  ...report,
+  metrics: metricsWithData,
+  lenses,
+};
+
+const reportUrl = `https://httparchive.org/reports/${report_id}`;
+
+// Page metadata
+const title = `HTTP Archive: ${report.name}`;
+const description = report.summary
+  ? (marked(report.summary) as string).replace(/<[^>]+>/g, '')
+  : title;
+
+// The report image for OG tags
+const imageUrl = report.image
+  ? `https://httparchive.org${report.image}`
+  : 'https://httparchive.org/static/img/ha.png';
+const imageWidth = report.image ? 800 : 320;
+const imageHeight = report.image ? 460 : 160;
+---
+<Base
+  title={title}
+  description={description}
+  pageUrl={reportUrl}
+  imageUrl={imageUrl}
+  imageWidth={imageWidth}
+  imageHeight={imageHeight}
+>
+  <link slot="head" rel="preconnect" href="https://cdn.httparchive.org">
+  <link slot="head" rel="canonical" href={reportUrl}>
+
+  <!-- Report header with date/lens controls -->
+  <section id="report-header">
+    <div class="container">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1>
+          <small id="lens-label">Report:</small>
+          {report.name}
+        </h1>
+
+        {report.summary && (
+          <div set:html={marked(report.summary)} />
+        )}
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <ul id="toc">
+              {metricsWithData.map(metric => (
+                metric && (
+                  <li>
+                    <a href={`#${metric.id}`}>{metric.name}</a>
+                  </li>
+                )
+              ))}
+            </ul>
+          </div>
+
+          <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <form id="history" class="row">
+              <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+                <label for="lens">
+                  Lens
+                  <a href="/faq#what-is-a-lens" aria-label="FAQ: What is a lens?">
+                    <svg class="svg-inline--fa fa-info-circle fa-w-16 hidden-xs help-tooltip" title="A lens shows a report for a particular subset of websites." aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <title>A lens shows a report for a particular subset of websites.</title>
+                      <path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                    </svg>
+                  </a>
+                </label>
+                <select id="lens">
+                  <option></option>
+                  {Object.entries(lenses).map(([lens_id, l]) => (
+                    <option value={lens_id}>{l.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <!-- Date selectors — populated by client JS after fetching /api/dates.json -->
+              <div class="col-sm-4 col-sm-offset-2 col-xs-12">
+                <label for="startDate">Start Date</label>
+                <select id="startDate" aria-label="Start date"></select>
+              </div>
+
+              <div class="col-sm-4 col-xs-12">
+                <label for="endDate">End Date</label>
+                <select id="endDate">
+                  <option></option>
+                </select>
+              </div>
+
+              <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+                <button id="update" class="btn alt" type="button">Update</button>
+              </div>
+
+              <div id="permalink-wrapper" class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
+                <i id="permalink-icon">
+                  <svg width="12" height="12" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/>
+                  </svg>
+                </i>
+                <input id="permalink" type="text" readonly={true} aria-label="Permalink">
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="btn-group pull-right">
+                  <button id="grid-view" class="btn" title="Grid view" type="button">
+                    <svg class="svg-inline--fa fa-th fa-w-16" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path fill="currentColor" d="M149.333 56v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zm181.334 240v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24z"/>
+                    </svg>
+                  </button>
+                  <button id="list-view" class="btn alt" title="List view" type="button">
+                    <svg class="svg-inline--fa fa-list fa-w-16" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path fill="currentColor" d="M128 116V76c0-8.837 7.163-16 16-16h352c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H144c-8.837 0-16-7.163-16-16z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics section (populated dynamically by JS after dates load) -->
+  <section id="report-metrics">
+    <div class="container">
+      <div class="report-metrics-inner-wrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        {metricsWithData.map(metric => {
+          if (!metric) return null;
+          const hasTimeseries = metric.timeseries?.enabled !== false;
+          return (
+            <section id={metric.id} class="report-metric">
+              <h2 class="metric-header">
+                <a href={`#${metric.id}`} data-metric={metric.id}>{metric.name}</a>
+                <button class="grid-expansion" data-metric={metric.id} type="button">
+                  <i class="fas fa-expand" title="Expand metric"></i>
+                  <i class="fas fa-compress" title="Collapse metric"></i>
+                </button>
+              </h2>
+              {metric.description && (
+                <div set:html={marked(metric.description as string)} />
+              )}
+              <div class="metric-summaries">
+                <div class="metric-summary desktop hidden">
+                  <span class="client"><span class="metric">Median</span> Desktop</span>
+                  <span class="primary"></span>
+                  <span class="change"></span>
+                </div>
+                <div class="metric-summary mobile hidden">
+                  <span class="client"><span class="metric">Median</span> Mobile</span>
+                  <span class="primary"></span>
+                  <span class="change"></span>
+                </div>
+              </div>
+              <!-- Chart container — rendered by timeseries.js or histogram.js -->
+              <div id={`${metric.id}-chart`} class="chart"></div>
+              <button class="btn show-hide" data-metric={metric.id}>Show Table</button>
+              <div class="table-wrapper">
+                <table id={`${metric.id}-table`} class="table hidden"></table>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <div id="report-data-container" data-report={JSON.stringify(enrichedReport)} data-url={reportUrl} style="display: none;"></div>
+
+  <Fragment slot="scripts">
+    <script src="../../js/highcharts-init.js"></script>
+    <script src="../../js/report.js"></script>
+    <script src="../../js/timeseries.js"></script>
+    <script src="../../js/histogram.js"></script>
+    <script>
+      addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('report-data-container');
+        if (!container) return;
+
+        const reportData = JSON.parse(container.dataset.report);
+        const reportUrl = container.dataset.url;
+
+        const urlParams = new URLSearchParams(location.search);
+        const startParam = urlParams.get('start');
+        const endParam = urlParams.get('end');
+        const lensParam = urlParams.get('lens');
+
+        // Populate lens selector from URL
+        if (lensParam) {
+          const lensEl = document.getElementById('lens');
+          if (lensEl) {
+            const opt = lensEl.querySelector(`option[value="${lensParam}"]`);
+            if (opt) opt.selected = true;
+          }
+        }
+
+        // Fetch available crawl dates from API (Flask /api/dates.json endpoint)
+        let dates = [];
+        try {
+          const resp = await fetch('/api/dates.json');
+          const data = await resp.json();
+          dates = data.dates || [];
+        } catch (e) {
+          console.error('Failed to fetch dates', e);
+          dates = [];
+        }
+
+        // Apply report-level date filtering (mirrors Flask routes.py logic)
+        let filteredDates = [...dates];
+        if (reportData.minDate && filteredDates.includes(reportData.minDate)) {
+          filteredDates = filteredDates.slice(0, filteredDates.indexOf(reportData.minDate) + 1);
+        }
+        if (reportData.maxDate && filteredDates.includes(reportData.maxDate)) {
+          filteredDates = filteredDates.slice(filteredDates.indexOf(reportData.maxDate));
+        }
+        if (reportData.datePattern) {
+          const pat = new RegExp(reportData.datePattern);
+          filteredDates = filteredDates.filter(d => pat.test(d));
+        }
+
+        // Resolve date aliases
+        const resolveAlias = (d) => {
+          if (d === 'latest') return filteredDates[0];
+          if (d === 'earliest') return filteredDates[filteredDates.length - 1];
+          return d;
+        };
+
+        let start = resolveAlias(startParam);
+        let end = resolveAlias(endParam);
+
+        // Canonicalize: single-date
+        if (end && !start) { [start, end] = [end, null]; }
+        if (start === end) { end = null; }
+
+        // Default: timeseries over last 72 crawls (3 years)
+        if (!start && !end) {
+          start = filteredDates[Math.min(72, filteredDates.length - 1)];
+          end = filteredDates[0];
+        }
+
+        const viz = (start && !end) ? 'histogram' : 'timeseries';
+
+        // Populate date selector dropdowns
+        const startSelect = document.getElementById('startDate');
+        const endSelect = document.getElementById('endDate');
+        if (startSelect && endSelect) {
+          filteredDates.forEach(d => {
+            const opt1 = document.createElement('option');
+            opt1.value = d;
+            opt1.textContent = d;
+            opt1.className = 'yyyy_mm_dd';
+            if (d === start) opt1.selected = true;
+            startSelect.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = d;
+            opt2.textContent = d;
+            opt2.className = 'yyyy_mm_dd';
+            if (d === end) opt2.selected = true;
+            endSelect.appendChild(opt2);
+          });
+        }
+
+        // Build the report object expected by Report class (report.js)
+        const report = {
+          ...reportData,
+          dates: filteredDates,
+          url: reportUrl,
+          startDate: start,
+          endDate: end,
+        };
+
+        // Mark enabled metrics for this viz type
+        report.metrics = report.metrics.map(metric => {
+          if (!metric) return metric;
+          const vizConfig = metric[viz] || {};
+          const enabled = vizConfig.enabled !== false;
+          return { ...metric, [viz]: { ...vizConfig, enabled } };
+        });
+
+        // Initialize Report controller (from report.js)
+        const reportInstance = new Report(report, viz);
+
+        // Render charts for each enabled metric
+        report.metrics.forEach(metric => {
+          if (!metric || !metric[viz]?.enabled) return;
+
+          if (viz === 'timeseries') {
+            timeseries(metric.id, metric, start, end);
+          } else {
+            histogram(metric.id, start, metric);
+          }
+        });
+      });
+    </script>
+  </Fragment>
+</Base>

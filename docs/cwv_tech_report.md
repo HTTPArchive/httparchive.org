@@ -19,7 +19,7 @@ Some files you'll need to work in when building on this report:
 
 ## How it works
 
-The report is built using Python, HTML/CSS, and vanilla JavaScript. We're using Highcharts for the visualizations, with the export and accessibility module added (built-in table altenatives, keyboard nav, etc). The page skeleton gets built on the server side, and populated with data on the client.
+The report is built using NodeJS, HTML/CSS, and vanilla JavaScript. We're using Highcharts for the visualizations, with the export and accessibility module added (built-in table altenatives, keyboard nav, etc). The page skeleton gets built on the server side, and populated with data on the client.
 
 ### Configurations
 

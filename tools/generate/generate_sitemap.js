@@ -4,9 +4,16 @@ const ejs = require('ejs');
 
 const min_publish_date = '2019-11-11';
 const sitemap_template = `templates/sitemap.ejs.xml`;
-const sitemap_path = `templates/sitemap.xml`;
+const sitemap_path = `public/sitemap.xml`;
 
 let file_dates = {};
+
+const map_to_astro_page = (loc) => {
+  if (loc === 'reports.html') {
+    return 'src/pages/reports/index.astro';
+  }
+  return `src/pages/${loc.replace('.html', '.astro')}`;
+};
 
 const generate_sitemap = async () => {
 
@@ -17,7 +24,8 @@ const generate_sitemap = async () => {
 
   // Get the sitemap entries for static pages
   for (const loc of static_pages) {
-    if (fs.existsSync(`templates/${loc}`)) {
+    const astro_page = map_to_astro_page(loc);
+    if (fs.existsSync(astro_page)) {
       const lastmod = get_lastmod_date(loc);
       const url = convert_file_name(loc);
 
@@ -40,6 +48,20 @@ const generate_sitemap = async () => {
       const lastmod = get_lastmod_date(loc);
       const url = convert_file_name(loc);
 
+      urls.push({ url, lastmod });
+    }
+  }
+
+  // Get sitemap entries for documentation pages
+  for (const key of Object.keys(file_dates)) {
+    if (key.startsWith('docs/')) {
+      const lastmod = get_lastmod_date(key);
+      let url;
+      if (key === 'docs/index') {
+        url = 'docs/';
+      } else {
+        url = key;
+      }
       urls.push({ url, lastmod });
     }
   }
