@@ -277,12 +277,21 @@ app.use((req, res, next) => {
 // ---------------------------------------------------------------------------
 app.use((req, res, next) => {
   const distDir = path.resolve(__dirname, 'dist');
-  let filePath = req.path.replace(/^\//, '');
 
-  if (!filePath) {
+  // Normalize and sanitize the request path early to break the taint chain.
+  // path.posix.normalize collapses redundant slashes/dots, then we reject
+  // anything containing traversal segments or characters outside a strict
+  // allowlist before the value ever reaches a file-system call.
+  let filePath = path.posix.normalize(req.path.replace(/^\/+/, ''));
+
+  if (filePath.includes('..') || !/^[a-zA-Z0-9._\-/]*$/.test(filePath)) {
+    return next();
+  }
+
+  if (!filePath || filePath === '.') {
     filePath = 'index.html';
-  } else if (filePath.endsWith('/')) {
-    filePath += 'index.html';
+  } else if (req.path.endsWith('/')) {
+    filePath = `${filePath}/index.html`;
   }
 
   // Resolve the dist directory to its real path to guard against symlink escapes.
@@ -295,12 +304,6 @@ app.use((req, res, next) => {
 
   const fullPath = path.resolve(realDistDir, filePath);
   const indexFullPath = path.resolve(realDistDir, filePath, 'index.html');
-
-  // Prevent directory traversal
-  const relative = path.relative(realDistDir, fullPath);
-  if (relative.startsWith('..') || path.isAbsolute(relative)) {
-    return next();
-  }
 
   const isWithinDist = (candidatePath) => {
     const rel = path.relative(realDistDir, candidatePath);
