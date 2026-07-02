@@ -1,5 +1,6 @@
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
+import { Constants } from "./utils/constants.js";
 
 class TableLinked {
   constructor(id, pageConfig, globalConfig, filters, data) {
@@ -125,7 +126,7 @@ class TableLinked {
 
               if(technology[0]?.icon) {
                 const img = document.createElement('span');
-                const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${encodeURI(technology[0]?.icon)}`;
+                const imgUrl = `${Constants.apiBase}/static/icons/${encodeURI(technology[0]?.icon)}`;
                 img.setAttribute('aria-hidden', 'true');
                 img.setAttribute('style', `background-image: url(${imgUrl})`);
                 img.classList.add('app-img');

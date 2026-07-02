@@ -62,12 +62,5 @@ export default defineConfig({
     build: {
       sourcemap: sourceMaps,
     },
-    server: {
-      proxy: {
-        '/api': 'http://127.0.0.1:8080',
-        '/metric.json': 'http://127.0.0.1:8080',
-        '/.well-known': 'http://127.0.0.1:8080',
-      },
-    },
   },
 });

@@ -362,7 +362,9 @@ const comparisonPage = config.pages.comparison;
     <script src="../../../js/techreport/cwvDistribution.js"></script>
     <script src="../../../js/techreport/section.js"></script>
     <script src="../../../js/techreport/index.js"></script>
-    <script>
+    <script type="module">
+      import { Constants } from '../../../js/techreport/utils/constants.js';
+
       // Resolve page_id and populate dates client-side
       addEventListener('DOMContentLoaded', async () => {
         const container = document.getElementById('techreport-data');
@@ -435,9 +437,13 @@ const comparisonPage = config.pages.comparison;
         // Fetch available crawl dates from API and populate selectors
         let dates = [];
         try {
-          const resp = await fetch('/api/dates.json');
-          const data = await resp.json();
-          dates = data.dates || [];
+          const resp = await fetch(`${Constants.apiBase}/dates`);
+          if (resp.ok) {
+            const data = await resp.json();
+            dates = data.dates || [];
+          } else {
+            console.warn(`Failed to fetch dates: ${resp.status}`);
+          }
         } catch (e) {
           console.error('Failed to fetch dates', e);
         }

@@ -219,6 +219,8 @@ const imageHeight = report.image ? 460 : 160;
     <script src="../../js/timeseries.js"></script>
     <script src="../../js/histogram.js"></script>
     <script>
+      import { Constants } from '../../js/techreport/utils/constants.js';
+
       addEventListener('DOMContentLoaded', async () => {
         const container = document.getElementById('report-data-container');
         if (!container) return;
@@ -243,9 +245,13 @@ const imageHeight = report.image ? 460 : 160;
         // Fetch available crawl dates from API (Flask /api/dates.json endpoint)
         let dates = [];
         try {
-          const resp = await fetch('/api/dates.json');
-          const data = await resp.json();
-          dates = data.dates || [];
+          const resp = await fetch(`${Constants.apiBase}/dates`);
+          if (resp.ok) {
+            const data = await resp.json();
+            dates = data.dates || [];
+          } else {
+            console.warn(`Failed to fetch dates: ${resp.status}`);
+          }
         } catch (e) {
           console.error('Failed to fetch dates', e);
           dates = [];
