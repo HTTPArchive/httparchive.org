@@ -93,6 +93,8 @@ do
         FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
+    # Pause for 1 second before the next request to avoid hitting rate limits
+    sleep 1
 done
 
 for TEST_URL in ${TIMESERIES_URLS}
