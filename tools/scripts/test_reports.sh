@@ -7,7 +7,7 @@ then
         echo "Running MacOS"
         CRUX_REPORT_DATE=$(date -v -1m +%Y_%m_01)
     else
-        CRUX_REPORT_DATE=$(date -d "-1 month" +%Y_%m_01)
+        CRUX_REPORT_DATE=$(date -d "$(date +%Y-%m-01) -1 month" +%Y_%m_01)
     fi
 else
     CRUX_REPORT_DATE="${REPORT_DATE}"
@@ -94,7 +94,7 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 2
+    sleep 5
 done
 
 for TEST_URL in ${TIMESERIES_URLS}
@@ -109,7 +109,7 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 2
+    sleep 5
 done
 
 for TEST_URL in ${CRUX_TIMESERIES_URLS}
@@ -123,9 +123,8 @@ do
         FAIL_LOG="${FAIL_LOG}${CRUX_REPORT_DATE} not found in body for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
-
     # Pause before the next request to avoid hitting rate limits
-    sleep 2
+    sleep 5
 done
 
 FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
