@@ -94,7 +94,7 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 5
+    sleep 10
 done
 
 for TEST_URL in ${TIMESERIES_URLS}
@@ -109,7 +109,7 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 5
+    sleep 10
 done
 
 for TEST_URL in ${CRUX_TIMESERIES_URLS}
@@ -124,7 +124,7 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 5
+    sleep 10
 done
 
 FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
