@@ -93,8 +93,8 @@ do
         FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
-    # Pause for 1 second before the next request to avoid hitting rate limits
-    sleep 1
+    # Pause before the next request to avoid hitting rate limits
+    sleep 2
 done
 
 for TEST_URL in ${TIMESERIES_URLS}
@@ -108,8 +108,8 @@ do
         FAIL_LOG="${FAIL_LOG}${REPORT_DATE} not found in body for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
-    # Pause for 1 second before the next request to avoid hitting rate limits
-    sleep 1
+    # Pause before the next request to avoid hitting rate limits
+    sleep 2
 done
 
 for TEST_URL in ${CRUX_TIMESERIES_URLS}
@@ -124,8 +124,8 @@ do
         FAIL=$((FAIL+1))
     fi
 
-    # Pause for 1 second before the next request to avoid hitting rate limits
-    sleep 1
+    # Pause before the next request to avoid hitting rate limits
+    sleep 2
 done
 
 FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
