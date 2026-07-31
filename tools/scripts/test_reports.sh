@@ -94,13 +94,13 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 10
+    sleep 2
 done
 
 for TEST_URL in ${TIMESERIES_URLS}
 do
     NUM_TESTS=$((NUM_TESTS+1))
-    if curl -s "${TEST_URL}" | grep -q "${REPORT_DATE}"
+    if curl -s "${TEST_URL}" --compressed | grep -q "${REPORT_DATE}"
     then
         echo "${REPORT_DATE} found in body for ${TEST_URL}"
     else
@@ -109,13 +109,13 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 10
+    sleep 2
 done
 
 for TEST_URL in ${CRUX_TIMESERIES_URLS}
 do
     NUM_TESTS=$((NUM_TESTS+1))
-    if curl -s "${TEST_URL}" | grep -q "${CRUX_REPORT_DATE}"
+    if curl -s "${TEST_URL}" --compressed | grep -q "${CRUX_REPORT_DATE}"
     then
         echo "${CRUX_REPORT_DATE} found in body for ${TEST_URL}"
     else
@@ -124,7 +124,7 @@ do
         FAIL=$((FAIL+1))
     fi
     # Pause before the next request to avoid hitting rate limits
-    sleep 10
+    sleep 2
 done
 
 FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
