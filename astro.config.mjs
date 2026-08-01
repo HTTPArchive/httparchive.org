@@ -18,6 +18,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'HTTP Archive Docs',
+      disable404Route: true,
       components: {
         Header: './src/components/docs/Header.astro',
       },

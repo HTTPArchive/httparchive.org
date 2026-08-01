@@ -1,31 +1,22 @@
-######################################
-## Custom HTTP Archive GitHub action ##
-######################################
-#
-# Deploys the website to Firebase Hosting (production live channel) on every push to main.
-# Requires a GCP service account key stored as the GCP_SA_KEY repository secret.
-#
-name: Deploy to Production
+name: Deploy to Firebase Hosting Preview
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 permissions:
   checks: write
   contents: read
+  pull-requests: write
 
 jobs:
-  deploy:
-    name: Build and Deploy to Firebase Hosting (Production)
-    runs-on: ubuntu-latest
+  build_and_preview:
     if: github.repository == 'HTTPArchive/httparchive.org'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
         uses: actions/checkout@v7
 
-      - name: Setup Node.js for use with actions
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -36,10 +27,9 @@ jobs:
       - name: Build website
         run: npm run build
 
-      - name: Deploy to Firebase Hosting (Live)
+      - name: Deploy to Firebase Hosting Preview Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.GCP_SA_KEY }}'
-          channelId: live
           projectId: httparchive

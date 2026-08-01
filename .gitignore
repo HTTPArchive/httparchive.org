@@ -7,3 +7,4 @@ templates/sitemap.xml
 **/.DS_Store
 .astro/
 /dist
+.firebase/
