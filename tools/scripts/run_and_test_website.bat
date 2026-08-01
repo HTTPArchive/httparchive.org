@@ -9,8 +9,8 @@ rem # It's a simplified version of run_and_test_website.sh for windows users
 rem # It depends on nodejs being installed already
 rem #
 
-echo "Kill any existing instances of the webserver"
-wmic Path win32_process Where "Caption Like '%%node.exe%%' AND CommandLine Like '%%server.js%%'" Call Terminate
+echo "Kill any existing instances of the hosting emulator"
+wmic Path win32_process Where "Caption Like '%%node.exe%%' AND CommandLine Like '%%firebase-tools%%'" Call Terminate
 
 echo "Installing node modules"
 call npm install --legacy-peer-deps
@@ -19,7 +19,7 @@ echo "Building website"
 call npm run build
 
 echo "Starting website"
-start node server.js
+start npx -y firebase-tools@latest emulators:start --only hosting
 rem # Sleep for 5 seconds to make sure server is up
 timeout /t 5 /nobreak
 rem # Use sleep as well in case running in GitBash where above command fails
@@ -29,6 +29,6 @@ echo "Testing website"
 call npm run test
 
 echo "Monitoring templates for changes"
-call npm run watch
+call npm run astro:dev
 
 echo "Website started successfully"
