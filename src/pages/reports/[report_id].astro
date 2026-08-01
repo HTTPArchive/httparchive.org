@@ -231,9 +231,11 @@ const imageHeight = report.image ? 460 : 160;
         const urlParams = new URLSearchParams(location.search);
         const startParam = urlParams.get('start');
         const endParam = urlParams.get('end');
-        const lensParam = urlParams.get('lens');
 
-        // Populate lens selector from URL
+        const subdomain = location.hostname.split('.')[0];
+        const lensParam = urlParams.get('lens') || subdomain;
+
+        // Populate lens selector from URL query parameter or subdomain
         if (lensParam) {
           const lensEl = document.getElementById('lens');
           if (lensEl) {
