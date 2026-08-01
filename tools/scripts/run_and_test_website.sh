@@ -41,10 +41,10 @@ while getopts "h?d" opt; do
 done
 shift "$((OPTIND-1))" # Discard the options and sentinel --
 
-# Kill existing node server if running
-if pgrep -f "node server.js" > /dev/null; then
-  echo "Killing existing server to run a fresh version"
-  pkill -f "node server.js" || true
+# Kill existing hosting emulator if running
+if pgrep -f "firebase-tools.*hosting" > /dev/null; then
+  echo "Killing existing emulator to run a fresh version"
+  pkill -f "firebase-tools.*hosting" || true
 fi
 
 echo "Installing node modules"
@@ -53,8 +53,8 @@ npm install --legacy-peer-deps
 echo "Building website"
 npm run build
 
-echo "Starting website in background mode for tests"
-PORT=8080 node server.js &
+echo "Starting Firebase Hosting emulator in background mode for tests"
+npx -y firebase-tools@latest emulators:start --only hosting &
 SERVER_PID=$!
 
 # Ensure the background server is terminated on exit unless KEEP_SERVER_RUNNING is true
@@ -83,7 +83,7 @@ echo "Website tested successfully"
 # If in debug mode then monitor for changes and keep running
 if [ "${debug}" == "1" ]; then
   echo "Monitoring for changes"
-  npm run watch &
+  npm run astro:dev &
   WATCH_PID=$!
 
   # Update trap to clean up watch process as well

@@ -48,7 +48,7 @@ const generate_sitemap = async () => {
   for (const key of Object.keys(file_dates)) {
     if (key.startsWith('docs/')) {
       const lastmod = get_lastmod_date(key);
-      const url = key === 'docs/index' ? 'docs/' : key;
+      const url = key === 'docs/index' ? 'docs' : key;
       urls.push({ url, lastmod });
     }
   }
