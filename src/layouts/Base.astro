@@ -30,7 +30,7 @@ const getPageDates = (pathname: string) => {
     key = 'about.html';
   } else if (path === 'reports') {
     key = 'reports.html';
-  } else if (path.startsWith('reports/')) {
+  } else if (path.startsWith('reports/') || path.startsWith('docs/')) {
     key = path;
   }
 

@@ -92,7 +92,10 @@ const write_files_dates_file = async () => {
   Object.keys(file_dates)
     .sort()
     .forEach((key) => {
-      sorted_dates[key] = file_dates[key];
+      // Only retain page, report, and doc entries (strip legacy /static/ entries)
+      if (!key.startsWith('/static/')) {
+        sorted_dates[key] = file_dates[key];
+      }
     });
   file_dates = sorted_dates;
 
