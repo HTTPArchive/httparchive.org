@@ -2,7 +2,7 @@
 ## Custom HTTP Archive GitHub action ##
 ######################################
 #
-# Deploys the website to Google App Engine (production) on every push to main.
+# Deploys the website to Firebase Hosting (production live channel) on every push to main.
 # Requires a GCP service account key stored as the GCP_SA_KEY repository secret.
 #
 name: Deploy to Production
@@ -12,47 +12,34 @@ on:
     branches:
       - main
 
+permissions:
+  checks: write
+  contents: read
+
 jobs:
   deploy:
-    name: Build and Deploy to App Engine
+    name: Build and Deploy to Firebase Hosting (Production)
     runs-on: ubuntu-latest
     if: github.repository == 'HTTPArchive/httparchive.org'
     steps:
-    - name: Checkout branch
-      uses: actions/checkout@v7
+      - name: Checkout branch
+        uses: actions/checkout@v7
 
-    - name: Setup Node.js for use with actions
-      uses: actions/setup-node@v7
-      with:
-        node-version: '24'
+      - name: Setup Node.js for use with actions
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
 
-    - name: Set up Python 3.14
-      uses: actions/setup-python@v7
-      with:
-        python-version: '3.14'
+      - name: Install dependencies
+        run: npm ci || npm install
 
-    - name: Install Node dependencies
-      run: npm install
+      - name: Build website
+        run: npm run build
 
-    - name: Install Python dependencies
-      run: pip install -r requirements.txt
-
-    - name: Build static assets
-      run: npm run build
-
-    - name: Update timestamps
-      run: npm run timestamps
-
-    - name: Generate scripts
-      run: npm run generate
-
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v3
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v3
-
-    - name: Deploy to App Engine
-      run: echo "Y" | gcloud app deploy --project httparchive
+      - name: Deploy to Firebase Hosting (Live)
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.GCP_SA_KEY }}'
+          channelId: live
+          projectId: httparchive

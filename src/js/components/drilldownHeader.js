@@ -1,4 +1,5 @@
 import { DataUtils } from "../techreport/utils/data";
+import { Constants } from "../techreport/utils/constants.js";
 
 function setTitle(title) {
   const mainTitle = document.querySelector('h1 span.main-title');
@@ -8,7 +9,7 @@ function setTitle(title) {
 
 function setIcon(icon) {
   const img = document.querySelector('h1 .title-img');
-  const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${icon}`;
+  const imgUrl = `${Constants.apiBase}/static/icons/${icon}`;
   img.setAttribute('style', `background-image: url(${imgUrl})`);
 }
 

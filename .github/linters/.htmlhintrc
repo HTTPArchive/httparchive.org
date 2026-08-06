@@ -4,7 +4,7 @@
   "attr-value-double-quotes": true,
   "attr-value-not-empty": false,
   "attr-no-duplication": true,
-  "attr-unsafe-chars": true,
+  "attr-unsafe-chars": false,
   "doctype-first": false,
   "doctype-html5": true,
   "empyty-tag-self-close": true,

@@ -1,53 +1,60 @@
-# HTTPArchive.org Web Server on App Engine
-New and improved version of [HTTP Archive](https://httparchive.org). This replaces the [legacy version](https://legacy.httparchive.org), the source code for which is still available at [HTTPArchive/legacy.httparchive.org](https://github.com/HTTPArchive/legacy.httparchive.org).
+# HTTPArchive.org Website
 
 ## Run Locally
 
-[Source](https://cloud.google.com/appengine/docs/flexible/python/quickstart)
+This is an Astro-based web application for HTTPArchive.org. It requires **Node.js >= 24.0.0**.
 
-1. If you don't have virtualenv, install it using pip.
+1. Install the NPM dependencies:
 
-```
-sudo pip install virtualenv
-```
+    ```bash
+    npm install
+    ```
 
-2. Create an isolated Python environment, and install dependencies:
+2. Run the application:
 
-```
-virtualenv --python python3.14 .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+    * **Development mode (with live reload):**
 
-3. Install the NPM dependencies:
+    ```bash
+    npm run astro:dev
+    ```
 
-```
-npm install
-```
+    In your web browser, open [http://localhost:4321](http://localhost:4321)
 
-4. Initialize the Google Cloud CLI (this is necessary because the App Engine server uses Google Cloud APIs):
+    * **Production build:**
 
-```
-gcloud init
-```
+    ```bash
+    npm run build
+    ```
 
-5. Run the application:
+    * **Build & run locally in Firebase Hosting emulator:**
 
-```
-npm run start
-```
+    ```bash
+    npm run start
+    ```
 
-Note: Windows users may need to run `npm run watch` and `python main.py` separately.
+## Linting
 
-6. In your web browser, enter the following address: http://127.0.0.1:8080
+To run the GitHub Super-Linter locally using Docker:
+
+* **macOS / Linux:**
+
+  ```bash
+  npm run lint:darwin:linux
+  ```
+
+* **Windows (Command Prompt):**
+
+  ```bash
+  npm run lint:win32
+  ```
 
 ## Staging
 
 (Only available to maintainers)
 
-To test changes on a GCP App Engine server without deploying to the production instance, use the staging app at https://staging-dot-httparchive.uk.r.appspot.com/
+To deploy and test changes on the Firebase Hosting staging channel:
 
-```
+```bash
 npm run stage
 ```
 
@@ -55,15 +62,15 @@ npm run stage
 
 (Only available to maintainers)
 
-To push changes live to the production instance, use the deployment script. Changes will be available on https://httparchive.org.
+To push changes live to Firebase Hosting production instance:
 
-```
+```bash
 npm run deploy
 ```
 
-## Added new icons
+## Adding New Icons
 
-We use [Font Awesome](https://fontawesome.com/) icons but inline them directly in the code to save using the JavaScript library. To add, or change an icon, [find one on the Font Awesome website](https://fontawesome.com/icons) and copy the path from the SVG tab and reference it by name in the [reports.json](/config/reports.json) and add the SVG path in the [reports.html](/templates/reports.html) file as per the others. The width in the `reports.json` can be set based on display preferences.
+We use [Font Awesome](https://fontawesome.com/) icons but inline them directly in the SVG sprite to avoid using the JavaScript library. To add or change an icon, find one on the [Font Awesome website](https://fontawesome.com/icons), copy the path from the SVG tab, reference it by name in [`config/reports.json`](/config/reports.json), and add the SVG `<symbol>` path in [`src/pages/reports/index.astro`](/src/pages/reports/index.astro).
 
 ## Third-party software licenses
 

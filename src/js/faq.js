@@ -79,6 +79,12 @@ function maybeScrollToAnchor(anchors) {
   }
 }
 
-// Expose to global scope for access in jinja template.
-window.generateQuestionAnchors = generateQuestionAnchors;
-window.generateChangelog = generateChangelog;
+// Initialize on load
+addEventListener('DOMContentLoaded', () => {
+  const faqSection = document.getElementById('faq');
+  if (faqSection) {
+    const anchors = JSON.parse(faqSection.dataset.anchors || '{}');
+    generateQuestionAnchors(anchors);
+    generateChangelog();
+  }
+});

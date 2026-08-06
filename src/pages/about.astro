@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'About the HTTP Archive';
+const description = 'The HTTP Archive tracks how the web is built. We periodically crawl the top sites on the web and record detailed information about fetched resources, used web platform APIs and features, and execution traces of each page.';
+---
+<Base title={title} description={description}>
+  <section id="mission" class="container">
+    <h1>
+      <small>About</small> Mission
+    </h1>
+
+    <p>
+      Successful societies and institutions recognize the need to record their history - this provides a way to review the past, find explanations for current behavior, and spot emerging trends. In 1996 <a href="http://en.wikipedia.org/wiki/Brewster_Kahle" target="_blank" rel="noopener nofollow">Brewster Kahle</a> realized the cultural significance of the Internet and the need to record its history. As a result he founded the <a href="http://archive.org/" target="_blank" rel="noopener nofollow">Internet Archive</a> which collects and permanently stores the Web's digitized content.
+    </p>
+
+    <p>
+      In addition to the content of web pages, it's important to record how this digitized content is constructed and served. The HTTP Archive provides this record. It is a permanent repository of web performance information such as size of pages, failed requests, and technologies utilized. This performance information allows us to see trends in how the Web is built and provides a common data set from which to conduct web performance research.
+    </p>
+  </section>
+
+  <section id="contribute" class="container">
+    <h2>Contribute</h2>
+
+    <p>
+      The HTTP Archive is an open source project maintained by a <a href="/faq#who-maintains-the-http-archive">core group of developers and contributors from the community</a>. Here's how you can become more involved with the project:
+    </p>
+
+    <ul class="bulleted">
+      <li>
+        <a href="https://join.slack.com/t/httparchive/shared_invite/zt-45sgwmnb-eDEatOhqssqNAKxxOSLAaA">Join the HTTP Archive Slack channel</a> to discuss the project with other members of the web community. This channel is also a sounding board to get ideas and feedback on new features.
+      </li>
+
+      <li>
+        <a href="https://discuss.httparchive.org">Post on the HTTP Archive forum</a> to share interesting analyses, get SQL help, and follow official product announcements.
+      </li>
+
+      <li>
+        <a href="https://github.com/HTTPArchive/httparchive.org">Contribute to the HTTP Archive on GitHub</a> to file a bug or feature request, submit a code change, or learn more about how it works under the hood.
+      </li>
+
+      <li>
+        <a href="https://docs.google.com/document/d/1D4k77yFVbk1e-l28sTC2fniqYQIyyt49OLPOuXTgx8g/edit?usp=sharing">Join the monthly maintenance Hangout</a> to get an update on administrative tasks. This meeting is open to the community and notes are made available.
+      </li>
+
+      <li>
+        <a href="https://twitter.com/HTTPArchive">Follow @HTTPArchive on Twitter</a> or <a href="https://bsky.app/profile/httparchive.org">@httparchive.org on Bluesky</a> to get live updates on product announcements, forum highlights, and more.
+      </li>
+    </ul>
+  </section>
+
+  <section id="sponsors" class="alt">
+    <div class="container">
+      <h2>Sponsors</h2>
+
+      <p>
+        The HTTP Archive is possible through the support of these sponsors:
+        <a href="https://www.google.com/" target="_blank" rel="noopener nofollow">Google</a>,
+        <a href="https://www.mozilla.org/en-US/firefox/" target="_blank" rel="noopener nofollow">Mozilla</a>,
+        <a href="https://newrelic.com/" target="_blank" rel="noopener nofollow">New Relic</a>,
+        <a href="https://www.oreilly.com/" target="_blank" rel="noopener nofollow">O'Reilly Media</a>,
+        <a href="https://www.etsy.com/" target="_blank" rel="noopener nofollow">Etsy</a>,
+        <a href="https://www.dynatrace.com/" target="_blank" rel="noopener nofollow">dynaTrace</a>,
+        <a href="https://www.instartlogic.com/" target="_blank" rel="noopener nofollow">Instart Logic</a>,
+        <a href="http://www.catchpoint.com/" target="_blank" rel="noopener nofollow">Catchpoint Systems</a>,
+        <a href="http://bit.ly/1nWd1oL" target="_blank" rel="noopener nofollow">Fastly</a>,
+        <a href="https://hostingfacts.com/" target="_blank" rel="noopener nofollow">Hosting Facts</a>,
+        <a href="https://thebestvpn.com/" target="_blank" rel="noopener nofollow">TheBestVPN</a>,
+        <a href="https://www.akamai.com/" target="_blank" rel="noopener nofollow">Akamai</a>,
+        <a href="https://www.codeinwp.com/" target="_blank" rel="noopener nofollow">CodeinWP</a>,
+        and
+        <a href="https://kinsta.com/" target="_blank" rel="noopener nofollow">Kinsta</a>.
+      </p>
+
+      <div id="sponsor-logos">
+        <a href="https://www.google.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/google.png" alt="Google" width="116" height="41" loading="lazy"></a>
+        <a href="https://www.mozilla.org/en-US/firefox/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/mozilla.png" alt="Mozilla" width="145" height="100" loading="lazy"></a>
+        <a href="https://newrelic.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/newrelic.gif" alt="New Relic" width="120" height="22" loading="lazy"></a>
+        <a href="https://www.oreilly.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/oreilly.gif" alt="O'Reilly Media" width="155" height="35" loading="lazy"></a>
+        <a href="https://www.etsy.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/etsy.png" alt="Etsy" width="106" height="61" loading="lazy"></a>
+        <a href="https://www.dynatrace.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/dynatrace.gif" alt="dynaTrace" width="120" height="31" loading="lazy"></a>
+        <a href="https://www.instartlogic.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/instartlogic.jpg" alt="Instart Logic" width="150" height="44" loading="lazy"></a>
+        <a href="http://www.catchpoint.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/catchpoint.png" alt="Catchpoint Systems" width="150" height="150" loading="lazy"></a>
+        <a href="http://bit.ly/1nWd1oL" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/fastly.png" alt="Fastly" width="115" height="115" loading="lazy"></a>
+        <a href="https://hostingfacts.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/hostingfacts.png" alt="Hosting Facts" width="250" height="40" loading="lazy"></a>
+        <a href="https://thebestvpn.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/thebestvpn.png" alt="TheBestVPN" width="1843" height="438" loading="lazy"></a>
+        <a href="https://www.akamai.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/akamai.png" alt="Akamai" width="200" height="91" loading="lazy"></a>
+        <a href="https://www.codeinwp.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/codeinwp.svg" alt="CodeinWP" width="190" height="59" loading="lazy" style="height: 115px;"></a>
+        <a href="https://kinsta.com/" target="_blank" rel="nofollow noopener"><img src="/static/img/sponsors/kinsta.png" alt="Kinsta" width="200" height="51" loading="lazy"></a>
+      </div>
+
+      <p>
+        The HTTP Archive is part of the Internet Archive, a 501(c)(3) non-profit. Donations in support of the HTTP Archive can be made through the <a target="_blank" href="https://opencollective.com/httparchive">Open Collective</a>.
+      </p>
+    </div>
+  </section>
+
+  <section id="contact" class="container">
+    <h2>Contact</h2>
+
+    <p>
+      For general questions about data or website content, please create a thread on the <a href="https://discuss.httparchive.org/">discussion forum</a> or <a href="https://github.com/HTTPArchive/httparchive.org/issues">GitHub project</a> where members of the community will be able to assist you.
+    </p>
+  </section>
+</Base>

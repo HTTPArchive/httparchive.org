@@ -1,0 +1,27 @@
+---
+title: Guided Tour
+description: HTTP Archive data analysis in BigQuery
+---
+
+
+The HTTP Archive contains a tremendous amount of information that can be used to understand the evolution of the web. And since the raw data is available in Google BigQuery, you can start digging into it with a minimal amount of setup!
+
+If you are new to BigQuery, then the [Getting Started guide](/docs/guides/getting-started/) will walk you through the basic setup. That guide ends with a sample query that explores MIME types from the `pages` tables. In this guide, we'll explore more of the tables and build additional queries that you can learn from. The easiest way to get started is by following along, testing some of the queries and learning from them. If you need any help then there is plenty of support available from the community at [https://discuss.httparchive.org](https://discuss.httparchive.org).
+
+**Prerequisites:**
+
+- This guide assumes that you've completed the setup from the [Getting Started guide](/docs/guides/getting-started/).
+- You would be safe processing extremely-large tables contained in this dataset if you follow the [minimizing query costs guide](/docs/guides/minimizing-costs/).
+- It also assumes some familiarity with [Google SQL](https://docs.cloud.google.com/bigquery/docs/introduction-sql).
+
+This guide is split into multiple sections, each one focusing on different tables in the HTTP Archive. Each section builds on top of the previous one:
+
+1. [Exploring the `httparchive.crawl.pages` tables](https://colab.research.google.com/github/HTTPArchive/httparchive.org/blob/main/workbooks/exploring_httparchive-all-pages_tables.ipynb)
+2. [Exploring the `httparchive.crawl.requests` tables](https://colab.research.google.com/github/HTTPArchive/httparchive.org/blob/main/workbooks/exploring_httparchive-all-requests_tables.ipynb)
+3. [JOINing `pages` and `requests` tables](https://colab.research.google.com/github/HTTPArchive/httparchive.org/blob/main/workbooks/exploring_pages_and_requests_tables_joined.ipynb)
+
+:::caution
+HTTP Archive uses clustered tables. BigQuery [doesn't guarantee](https://cloud.google.com/bigquery/docs/clustered-tables#clustered_table_pricing:~:text=BigQuery%20might%20not%20be%20able%20to%20accurately%20estimate%20the%20bytes%20to%20be%20processed) accuracy of estimations for bytes to be processed when querying clustered tables. For your information the actual bytes processed amount is provided in a comment for each query.
+
+Please also read [Minimizing query costs](/docs/guides/minimizing-costs/) for more details on the topic.
+:::

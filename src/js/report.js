@@ -13,7 +13,7 @@ class Report {
     this.report = report;
     this.viz = viz;
     this.baseUrl = report.url;
-    this.lens = report.lens && report.lens.id;
+    this.lens = (document.getElementById('lens') && document.getElementById('lens').value) || (report.lens && report.lens.id);
     this.startDate = report.startDate;
     this.endDate = report.endDate;
     this.view = report.view;
