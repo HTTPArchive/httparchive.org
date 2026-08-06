@@ -7,7 +7,7 @@ then
         echo "Running MacOS"
         CRUX_REPORT_DATE=$(date -v -1m +%Y_%m_01)
     else
-        CRUX_REPORT_DATE=$(date -d "-1 month" +%Y_%m_01)
+        CRUX_REPORT_DATE=$(date -d "$(date +%Y-%m-01) -1 month" +%Y_%m_01)
     fi
 else
     CRUX_REPORT_DATE="${REPORT_DATE}"
@@ -93,12 +93,14 @@ do
         FAIL_LOG="${FAIL_LOG}Incorrect Status code ${STATUS_CODE} found for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
+    # Pause before the next request to avoid hitting rate limits
+    sleep 1
 done
 
 for TEST_URL in ${TIMESERIES_URLS}
 do
     NUM_TESTS=$((NUM_TESTS+1))
-    if curl -s "${TEST_URL}" | grep -q "${REPORT_DATE}"
+    if curl -s "${TEST_URL}" --compressed | grep -q "${REPORT_DATE}"
     then
         echo "${REPORT_DATE} found in body for ${TEST_URL}"
     else
@@ -106,12 +108,14 @@ do
         FAIL_LOG="${FAIL_LOG}${REPORT_DATE} not found in body for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
+    # Pause before the next request to avoid hitting rate limits
+    sleep 1
 done
 
 for TEST_URL in ${CRUX_TIMESERIES_URLS}
 do
     NUM_TESTS=$((NUM_TESTS+1))
-    if curl -s "${TEST_URL}" | grep -q "${CRUX_REPORT_DATE}"
+    if curl -s "${TEST_URL}" --compressed | grep -q "${CRUX_REPORT_DATE}"
     then
         echo "${CRUX_REPORT_DATE} found in body for ${TEST_URL}"
     else
@@ -119,6 +123,8 @@ do
         FAIL_LOG="${FAIL_LOG}${CRUX_REPORT_DATE} not found in body for ${TEST_URL}\n"
         FAIL=$((FAIL+1))
     fi
+    # Pause before the next request to avoid hitting rate limits
+    sleep 1
 done
 
 FAIL_LOG="${FAIL_LOG}\nSee latest log in [GitHub Actions](https://github.com/HTTPArchive/httparchive.org/actions/workflows/monthly-report-checks.yml)
