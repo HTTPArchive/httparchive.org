@@ -1,3 +1,4 @@
+import os
 import sys
 from server import app, talisman
 
@@ -14,4 +15,4 @@ if __name__ == "__main__":
         talisman.force_https = False
         app.run(host="0.0.0.0", port=8080)
     else:
-        app.run(host="0.0.0.0", port=8080, debug=True)
+        app.run(host="0.0.0.0", port=8080, debug=os.environ.get("FLASK_DEBUG", "0") == "1")
