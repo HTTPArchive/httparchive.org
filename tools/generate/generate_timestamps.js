@@ -1,5 +1,4 @@
 const fs = require('fs-extra');
-const path = require('path');
 const crypto = require('crypto');
 const {
   get_static_pages,
@@ -60,31 +59,6 @@ const get_reports_dates = async () => {
   }
 };
 
-const get_docs_dates = async () => {
-  const docsDir = 'src/content/docs/docs';
-  if (!fs.existsSync(docsDir)) return;
-
-  try {
-    const files = await fs.promises.readdir(docsDir, { recursive: true });
-    for (const relativeFile of files) {
-      if (!relativeFile.endsWith('.md') && !relativeFile.endsWith('.mdx')) continue;
-
-      const fullPath = path.join(docsDir, relativeFile);
-      const stats = await fs.stat(fullPath);
-      if (!stats.isFile()) continue;
-
-      const normalizedRel = relativeFile.replace(/\\/g, '/');
-      const key = `docs/${normalizedRel.replace(/\.mdx?$/, '')}`;
-
-      const content = await fs.readFile(fullPath, 'utf-8');
-      const hash = crypto.createHash('md5').update(content).digest('hex');
-      check_and_update_date(key, hash);
-    }
-  } catch (err) {
-    console.error('Failed to generate doc timestamps:', err);
-  }
-};
-
 const write_files_dates_file = async () => {
   const last_update_json = get_last_update_json_filename();
 
@@ -116,7 +90,6 @@ const generate_timestamps = async () => {
 
   await get_template_pages_dates();
   await get_reports_dates();
-  await get_docs_dates();
   await write_files_dates_file();
 };
 
