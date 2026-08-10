@@ -26,7 +26,7 @@ This is an Astro-based web application for HTTPArchive.org. It requires **Node.j
     npm run build
     ```
 
-    * **Build & run locally in Firebase Hosting emulator:**
+    * **Build & run locally:**
 
     ```bash
     npm run start
@@ -52,7 +52,7 @@ To run the GitHub Super-Linter locally using Docker:
 
 (Only available to maintainers)
 
-To deploy and test changes on the Firebase Hosting staging channel:
+To deploy and test changes on the staging channel:
 
 ```bash
 npm run stage
@@ -62,7 +62,7 @@ npm run stage
 
 (Only available to maintainers)
 
-To push changes live to Firebase Hosting production instance:
+To push changes live to production instance:
 
 ```bash
 npm run deploy
