@@ -81,7 +81,7 @@ npm run test
 echo "Website tested successfully"
 
 # If in debug mode then monitor for changes and keep running
-if [ "${debug}" == "1" ]; then
+if [ "${debug}" = "1" ]; then
   echo "Monitoring for changes"
   npm run astro:dev &
   WATCH_PID=$!
