@@ -248,9 +248,9 @@ const comparisonPage = config.pages.comparison;
               <span class="main-title">Compare technologies</span>
             </h1>
             <div class="breakdown default-dropdown-group">
-              <label for="client-breakdown" class="default-dropdown-label">Client</label>
+              <label for="comparison-client-breakdown" class="default-dropdown-label">Client</label>
               <div class="select-label default-dropdown-wrapper">
-                <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+                <select class="default-dropdown" name="client-breakdown" id="comparison-client-breakdown">
                   <option value="mobile" selected>Mobile</option>
                   <option value="desktop">Desktop</option>
                 </select>
@@ -280,7 +280,7 @@ const comparisonPage = config.pages.comparison;
             <p>{config.labels.metrics.vitals.general.description}</p>
 
             <div class="card">
-              <Timeseries timeseries={comparisonPage.config.good_cwv_timeseries} />
+              <Timeseries timeseries={{ ...comparisonPage.config.good_cwv_timeseries, id: 'comparison_good_cwv_timeseries' }} />
             </div>
           </div>
 
@@ -294,7 +294,7 @@ const comparisonPage = config.pages.comparison;
             <p>{config.labels.metrics.lighthouse.general.description}</p>
 
             <div class="card">
-              <Timeseries timeseries={comparisonPage.config.lighthouse_timeseries} />
+              <Timeseries timeseries={{ ...comparisonPage.config.lighthouse_timeseries, id: 'comparison_lighthouse_timeseries' }} />
             </div>
           </div>
 
@@ -308,7 +308,7 @@ const comparisonPage = config.pages.comparison;
             <p>{config.labels.metrics.pageWeight.general.description}</p>
 
             <div class="card">
-              <Timeseries timeseries={comparisonPage.config.weight_timeseries} />
+              <Timeseries timeseries={{ ...comparisonPage.config.weight_timeseries, id: 'comparison_weight_timeseries' }} />
             </div>
           </div>
 
@@ -322,7 +322,7 @@ const comparisonPage = config.pages.comparison;
             <p>{config.labels.metrics.adoption.general.description}</p>
 
             <div class="card">
-              <Timeseries timeseries={comparisonPage.config.adoption_timeseries} />
+              <Timeseries timeseries={{ ...comparisonPage.config.adoption_timeseries, id: 'comparison_adoption_timeseries' }} />
             </div>
           </div>
         </div>

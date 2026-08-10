@@ -35,7 +35,7 @@ jobs:
       uses: super-linter/super-linter/slim@v8
       env:
         ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: false
-        FILTER_REGEX_INCLUDE: static/html/.*
+        FILTER_REGEX_INCLUDE: .*static/html/.*
         FILTER_REGEX_EXCLUDE: .*node_modules/.*
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_HTML: true

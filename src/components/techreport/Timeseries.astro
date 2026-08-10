@@ -70,11 +70,11 @@ const endpoint = timeseries.endpoint;
       {timeseries.subcategory && (
         <div class="subcategory-selector-wrapper">
           <div class="position-wrapper">
-            <label for={`subcategory-${timeseries.subcategory.base}`}>Metric</label>
+            <label for={`subcategory-${timeseries.id}-${timeseries.subcategory.base}`}>Metric</label>
             <select
               name="subcategory"
               class="subcategory-selector"
-              id={`subcategory-${timeseries.subcategory.base}`}
+              id={`subcategory-${timeseries.id}-${timeseries.subcategory.base}`}
               data-controls={timeseries.id}
               data-param={timeseries.subcategory.param}
               data-endpoint={endpoint}
