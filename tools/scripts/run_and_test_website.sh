@@ -41,10 +41,10 @@ while getopts "h?d" opt; do
 done
 shift "$((OPTIND-1))" # Discard the options and sentinel --
 
-# Kill existing hosting emulator if running
-if pgrep -f "firebase-tools.*hosting" > /dev/null; then
-  echo "Killing existing emulator to run a fresh version"
-  pkill -f "firebase-tools.*hosting" || true
+# Kill existing static server if running
+if pgrep -f "serve.*dist" > /dev/null; then
+  echo "Killing existing server to run a fresh version"
+  pkill -f "serve.*dist" || true
 fi
 
 echo "Installing node modules"
@@ -53,8 +53,8 @@ npm install --legacy-peer-deps
 echo "Building website"
 npm run build
 
-echo "Starting Firebase Hosting emulator in background mode for tests"
-npx -y firebase-tools@latest emulators:start --only hosting &
+echo "Starting static server on port 8080 for tests"
+npx -y serve dist -p 8080 &
 SERVER_PID=$!
 
 # Ensure the background server is terminated on exit unless KEEP_SERVER_RUNNING is true

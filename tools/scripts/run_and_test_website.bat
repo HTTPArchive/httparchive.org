@@ -19,7 +19,7 @@ echo "Building website"
 call npm run build
 
 echo "Starting website"
-start npx -y firebase-tools@latest emulators:start --only hosting
+start npx -y serve dist -p 8080
 rem # Sleep for 5 seconds to make sure server is up
 timeout /t 5 /nobreak
 rem # Use sleep as well in case running in GitBash where above command fails
