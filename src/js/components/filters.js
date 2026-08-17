@@ -190,7 +190,7 @@ class Filters {
         const sortedCategories = this.categories.sort((a, b) => a !== b ? a < b ? -1 : 1 : 0);
         sortedCategories.forEach((category) => {
           const option = document.createElement('option');
-          if(category === select.getAttribute('data-selected')) {
+          if(category === (this.filters.category || select.getAttribute('data-selected'))) {
             option.selected = true;
           }
           option.value = category;

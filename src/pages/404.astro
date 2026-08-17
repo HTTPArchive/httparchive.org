@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'Page Not Found - HTTP Archive';
+const description = 'Page not found on the HTTP Archive website.';
+---
+
+<Base title={title} description={description}>
+  <section style="padding: 60px 15px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-9 col-xs-12">
+          <h2>
+            <small>Error</small> Page Not Found
+          </h2>
+
+          <p>
+            If the information you're looking for is missing, please <a href="https://github.com/HTTPArchive/httparchive.org/issues/new?template=BLANK_ISSUE" target="_blank" rel="noopener nofollow">let us know</a>.
+          </p>
+
+          <p style="margin-top: 20px;">
+            <a href="/" class="btn">Home</a>
+            <a href="/reports" class="btn alt">Reports</a>
+          </p>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-3 hidden-xs">
+          <img src="/static/img/hero.png" alt="HTTP Archive illustration" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
