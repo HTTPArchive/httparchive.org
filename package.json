@@ -39,7 +39,7 @@
     "recursive-readdir": "2.2.3",
     "run-script-os": "1.1.6",
     "web-vitals": "6.2.1",
-    "webpack": "5.110.1",
+    "webpack": "5.110.2",
     "webpack-cli": "7.2.3",
     "xml-js": "1.6.11"
   }
