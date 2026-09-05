@@ -2,7 +2,7 @@ h1 {
   font-size: 2.7em;
 }
 
-h1 + p {
+h1 + div > p {
   padding: 25px 0;
 }
 
