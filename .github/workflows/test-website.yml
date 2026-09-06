@@ -20,17 +20,21 @@ jobs:
       with:
         # Full git history is needed to get a proper list of changed files within `super-linter`
         fetch-depth: 0
+
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v7
       with:
-        node-version:  '24'
+        node-version:  '26'
+
     - name: Run the website
       env:
         KEEP_SERVER_RUNNING: true
         SOURCE_MAPS: true
       run: ./tools/scripts/run_and_test_website.sh
+
     - name: Use more complete checks for generated HTML linting
       run: cp -f .github/linters/.htmlhintrc_morechecks .github/linters/.htmlhintrc
+
     - name: Lint Generated HTML
       uses: super-linter/super-linter/slim@v8
       env:
@@ -40,11 +44,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VALIDATE_HTML: true
         USE_FIND_ALGORITHM: true
+
     - name: Set the list of URLs for Lighthouse to check
       env:
         RUN_TYPE: ${{ github.event_name }}
         COMMIT_SHA: ${{ github.sha }}
       run: ./tools/scripts/set_lighthouse_urls.sh
+
     - name: Audit URLs using Lighthouse
       uses: treosh/lighthouse-ci-action@12.6.2
       id: LHCIAction
@@ -53,6 +59,7 @@ jobs:
         configPath: .github/lighthouse/lighthouse-config-dev.json
         uploadArtifacts: true # save results as an action artifacts
         temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+
     - name: Show Lighthouse outputs
       run: |
         # All results by URL:
