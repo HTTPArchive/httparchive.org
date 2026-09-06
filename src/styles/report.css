@@ -286,7 +286,12 @@ th {
 
 /* Disable selector-class-pattern which enforces kebab-case to allow us to */
 /* continue using font awesome class styles for ease */
-/* stylelint-disable selector-class-pattern */
+.svg-inline--fa {
+  display: inline-block;
+  height: 1em;
+  vertical-align: -0.125em;
+}
+
 .svg-inline--fa.fa-w-16 {
   width: 1em;
 }

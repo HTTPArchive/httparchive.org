@@ -739,11 +739,15 @@ input {
 }
 
 .help-tooltip {
+  display: inline-block;
+  margin-left: 0.35em;
+  vertical-align: -0.125em;
   opacity: 70%;
   transition: all 0.2s;
 }
 
-.help-tooltip:hover {
+.help-tooltip:hover,
+.help-tooltip:focus {
   opacity: 100%;
 }
 
