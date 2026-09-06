@@ -36,7 +36,7 @@
     "node-fetch": "3.3.2",
     "puppeteer": "^25.10.0",
     "run-script-os": "1.1.6",
-    "web-vitals": "6.1.0",
+    "web-vitals": "6.2.1",
     "xml-js": "1.6.11",
     "zod": "^4.4.3"
   },
