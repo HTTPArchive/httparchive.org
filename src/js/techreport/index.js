@@ -2,9 +2,9 @@
 
 import Filters from '../components/filters';
 import { Constants } from './utils/constants';
-const { DrilldownHeader } = require("../components/drilldownHeader");
-const { DataUtils } = require("./utils/data");
-const { UIUtils } = require("./utils/ui");
+import { DrilldownHeader } from "../components/drilldownHeader";
+import { DataUtils } from "./utils/data";
+import { UIUtils } from "./utils/ui";
 
 class TechReport {
   constructor(pageId, page, config, labels) {

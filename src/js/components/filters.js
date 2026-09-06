@@ -1,6 +1,6 @@
 import ComboBox from "../techreport/combobox";
+import { DataUtils } from "../techreport/utils/data";
 
-const { DataUtils } = require("../techreport/utils/data");
 class Filters {
   constructor(filterData, filters) {
     this.categories = filterData?.categories;
