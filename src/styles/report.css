@@ -51,6 +51,17 @@ h2 + p {
   display: block;
 }
 
+#history .field-label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+#history .field-label-wrapper label {
+  margin-bottom: 0;
+}
+
 #history select,
 #update,
 #permalink {
@@ -284,18 +295,7 @@ th {
   display: none;
 }
 
-/* Disable selector-class-pattern which enforces kebab-case to allow us to */
-/* continue using font awesome class styles for ease */
-.svg-inline--fa {
-  display: inline-block;
-  height: 1em;
-  vertical-align: -0.125em;
-}
 
-.svg-inline--fa.fa-w-16 {
-  width: 1em;
-}
-/* stylelint-enable selector-class-pattern */
 
 @media (max-width: 992px) {
   #history {
