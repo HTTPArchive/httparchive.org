@@ -1,5 +1,6 @@
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
+import { Constants } from "./utils/constants.js";
 
 class TableLinked {
   constructor(id, pageConfig, globalConfig, filters, data) {
@@ -94,7 +95,11 @@ class TableLinked {
       }
 
       if(timestamp) {
-        timestamp.textContent = UIUtils.printMonthYear(this.dataArray[1]?.[0]?.date);
+        const firstTech = this.dataArray.find(tech => tech && tech.length > 0);
+        if (firstTech) {
+          const sortedEntries = [...firstTech].sort((a, b) => new Date(b.date) - new Date(a.date));
+          timestamp.textContent = UIUtils.printMonthYear(sortedEntries[0]?.date);
+        }
       }
 
       this.dataArray.forEach(technology => {
@@ -121,7 +126,7 @@ class TableLinked {
 
               if(technology[0]?.icon) {
                 const img = document.createElement('span');
-                const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${encodeURI(technology[0]?.icon)}`;
+                const imgUrl = `${Constants.apiBase}/static/icons/${encodeURI(technology[0]?.icon)}`;
                 img.setAttribute('aria-hidden', 'true');
                 img.setAttribute('style', `background-image: url(${imgUrl})`);
                 img.classList.add('app-img');

@@ -221,6 +221,9 @@ class Timeseries {
     const showChange = container.dataset.change;
     const changeMeaning = container?.dataset?.meaning;
 
+    // Clear the container first to remove any stale/default cards (like "ALL")
+    container.innerHTML = '';
+
     pageFilters.app.forEach((app, index) => {
       if(data[app] && data[app].length > 0) {
         const sorted = data[app].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -233,11 +236,24 @@ class Timeseries {
         const latestValue = latestClient?.[metric]?.toLocaleString();
         const summaryValue = latestClient?.[summary]?.toLocaleString();
 
-        /* Select the container to which we'll add elements. */
-        const card = container.querySelector(`[data-app="${app}"]`);
+        /* Create a wrapper */
+        const card = document.createElement('div');
+        card.className = 'breakdown-item';
+        card.setAttribute('data-app', app);
+
+        /* Add breakdown label */
+        const label = document.createElement('p');
+        label.className = 'breakdown-label';
+        card.appendChild(label);
+
+        /* Add breakdown value */
+        const value = document.createElement('p');
+        value.className = 'breakdown-value';
+        card.appendChild(value);
+
+        container.appendChild(card);
+
         const timestamp = component.querySelector('[data-slot="timestamp"]');
-        const label = card.getElementsByClassName('breakdown-label')[0];
-        const value = card.getElementsByClassName('breakdown-value')[0];
 
         /* Update text */
         const formattedApp = DataUtils.formatAppName(latest.technology);
@@ -269,12 +285,9 @@ class Timeseries {
           const latestMoMStr = latestClient?.momString;
           const styling = UIUtils.getChangeStatus(latestMoM, changeMeaning);
 
-          /* Add month change element if not already present */
-          let monthChange = card.querySelector('.monthchange');
-          if(!monthChange) {
-            monthChange = document.createElement('span');
-            card.appendChild(monthChange);
-          }
+          /* Add month change element */
+          const monthChange = document.createElement('span');
+          card.appendChild(monthChange);
 
           monthChange.textContent = latestMoMStr;
           monthChange.className = `monthchange ${styling?.color} ${styling?.direction}`;

@@ -60,14 +60,14 @@ elif [ "${RUN_TYPE}" == "pull_request" ] && [ "${COMMIT_SHA}" != "" ]; then
     git pull --quiet
     git checkout main
     # Then get the changes
-    CHANGED_FILES=$(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d templates config/reports.json | grep -v base.html | grep -v main.html | grep -v ejs | grep -v base_ | grep -v sitemap | grep -v error.html | grep -v techreport/components | grep -v techreport/templates | grep -v techreport/report | grep -v techreport/techreport | grep -v 404)
+    CHANGED_FILES=$(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d src/pages config/reports.json | grep -v ejs | grep -v sitemap | grep -v 404)
     echo "${CHANGED_FILES}"
 
     # Then back to the pull request changes
     git checkout --progress --force "${COMMIT_SHA}"
 
     # Transform the files to http://127.0.0.1:8080 URLs
-    LIGHTHOUSE_URLS=$(echo "${CHANGED_FILES}" | sed 's/templates/http:\/\/127.0.0.1:8080/g' | sed 's/techreport/reports\/techreport/g' | sed 's/index\.html//g' | sed 's/\.html//g' | sed 's/_/-/g' )
+    LIGHTHOUSE_URLS=$(echo "${CHANGED_FILES}" | sed 's/src\/pages/http:\/\/127.0.0.1:8080/g' | sed 's/techreport/reports\/techreport/g' | sed 's/index\.astro//g' | sed 's/\.astro//g' | sed 's/_/-/g' )
 
     # If report.json or any of the report templates were changed, then test all the reports
     # TODO - make this list dynamic
@@ -80,7 +80,7 @@ elif [ "${RUN_TYPE}" == "pull_request" ] && [ "${COMMIT_SHA}" != "" ]; then
 else
 
     # Else test every URL in the sitemap
-    LIGHTHOUSE_URLS=$(grep loc templates/sitemap.xml | grep -v "/static/" | sed 's/ *<loc>//g' | sed 's/<\/loc>//g' | sed 's/https:\/\/httparchive.org/http:\/\/127.0.0.1:8080/g')
+    LIGHTHOUSE_URLS=$(grep loc public/sitemap.xml | grep -v "/static/" | sed 's/ *<loc>//g' | sed 's/<\/loc>//g' | sed 's/https:\/\/httparchive.org/http:\/\/127.0.0.1:8080/g')
 
 fi
 

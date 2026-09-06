@@ -1,0 +1,1111 @@
+{
+  "startedDateTime": "2023-05-12T22:00:03.402038",
+  "title": "Run 1, First View for https://www.example.com/",
+  "id": "page_1_0_1",
+  "testID": "230509_Dx20W_FMHK5",
+  "pageTimings": {
+      "onLoad": 218,
+      "onContentLoad": -1,
+      "_startRender": 300
+  },
+  "_loadTime": 218,
+  "_docTime": 218,
+  "_fullyLoaded": 285,
+  "_bytesOut": 3956,
+  "_bytesOutDoc": 2065,
+  "_bytesIn": 1296,
+  "_bytesInDoc": 648,
+  "_requests": 2,
+  "_requestsFull": 2,
+  "_requestsDoc": 1,
+  "_responses_200": 1,
+  "_responses_404": 1,
+  "_responses_other": 0,
+  "_result": 99999,
+  "_testStartOffset": 0,
+  "_cached": 0,
+  "_optimization_checked": 1,
+  "_main_frame": "EC506EEB846DE36D23C35256AE9DA763",
+  "_loadEventStart": 205,
+  "_loadEventEnd": 205,
+  "_domContentLoadedEventStart": 204,
+  "_domContentLoadedEventEnd": 204,
+  "_URL": "https://www.example.com/",
+  "_connections": 1,
+  "_final_base_page_request": 0,
+  "_final_base_page_request_id": "F4AC05C4043F6D6A9C911B6703BDEC35",
+  "_final_url": "https://www.example.com/",
+  "_domInteractive": 204,
+  "_firstPaint": 0,
+  "_firstContentfulPaint": 300,
+  "_firstMeaningfulPaint": 300,
+  "_renderBlockingCSS": 0,
+  "_renderBlockingJS": 0,
+  "_metadata": {
+      "rank": 500000,
+      "page_id": 26243429,
+      "tested_url": "https://www.example.com/",
+      "layout": "Desktop",
+      "crawl_depth": 0,
+      "link_depth": 0,
+      "root_page_id": 26243429,
+      "root_page_url": "https://www.example.com/",
+      "root_page_test_id": "230509_Dx20W_FMHK5"
+  },
+  "_TTFB": 170,
+  "_basePageSSLTime": 78,
+  "_score_cache": -1,
+  "_score_cdn": 100,
+  "_score_gzip": 100,
+  "_score_cookies": -1,
+  "_score_keep-alive": 100,
+  "_score_minify": -1,
+  "_score_combine": -1,
+  "_score_compress": -1,
+  "_score_etags": -1,
+  "_score_progressive_jpeg": -1,
+  "_gzip_total": 648,
+  "_gzip_savings": 0,
+  "_minify_total": -1,
+  "_minify_savings": -1,
+  "_image_total": 0,
+  "_image_savings": 0,
+  "_base_page_cdn": "Edgecast",
+  "_cpuTimes": {
+      "ParseHTML": 2,
+      "HTMLDocumentParser::FetchQueuedPreloads": 0,
+      "EventDispatch": 0,
+      "MarkDOMContent": 0,
+      "V8.GC_TIME_TO_SAFEPOINT": 0,
+      "CommitLoad": 0,
+      "EvaluateScript": 1,
+      "v8.compile": 1,
+      "UpdateLayoutTree": 1,
+      "MarkLoad": 0,
+      "Layout": 42,
+      "PrePaint": 0,
+      "HitTest": 0,
+      "Paint": 1,
+      "Layerize": 0,
+      "ResourceFetcher::requestResource": 1,
+      "largestContentfulPaint::Candidate": 0,
+      "FunctionCall": 0,
+      "Idle": 238
+  },
+  "_cpuTimesDoc": {
+      "ParseHTML": 2,
+      "HTMLDocumentParser::FetchQueuedPreloads": 0,
+      "EventDispatch": 0,
+      "MarkDOMContent": 0,
+      "V8.GC_TIME_TO_SAFEPOINT": 0,
+      "CommitLoad": 0,
+      "EvaluateScript": 1,
+      "v8.compile": 1,
+      "UpdateLayoutTree": 1,
+      "MarkLoad": 0,
+      "Layout": 0,
+      "PrePaint": 0,
+      "HitTest": 0,
+      "Paint": 0,
+      "Layerize": 0,
+      "ResourceFetcher::requestResource": 0,
+      "largestContentfulPaint::Candidate": 0,
+      "FunctionCall": 0,
+      "Idle": 214
+  },
+  "_cpu.ParseHTML": 2,
+  "_cpu.HTMLDocumentParser::FetchQueuedPreloads": 0,
+  "_cpu.EventDispatch": 0,
+  "_cpu.MarkDOMContent": 0,
+  "_cpu.V8.GC_TIME_TO_SAFEPOINT": 0,
+  "_cpu.CommitLoad": 0,
+  "_cpu.EvaluateScript": 1,
+  "_cpu.v8.compile": 1,
+  "_cpu.UpdateLayoutTree": 1,
+  "_cpu.MarkLoad": 0,
+  "_cpu.Layout": 42,
+  "_cpu.PrePaint": 0,
+  "_cpu.HitTest": 0,
+  "_cpu.Paint": 1,
+  "_cpu.Layerize": 0,
+  "_cpu.ResourceFetcher::requestResource": 1,
+  "_cpu.largestContentfulPaint::Candidate": 0,
+  "_cpu.FunctionCall": 0,
+  "_cpu.Idle": 238,
+  "_v8Stats": {
+      "main_thread": {},
+      "background": {}
+  },
+  "_tester": "agents-east-4-r5m7-10.150.5.247",
+  "_start_epoch": 1683928801.393396,
+  "_osVersion": "Linux 5.19.0-1022-gcp",
+  "_os_version": "Linux 5.19.0-1022-gcp",
+  "_osPlatform": "x86_64 x86_64",
+  "_date": 1683928803.6884737,
+  "_browserVersion": "113.0.0.0",
+  "_browser_version": "113.0.0.0",
+  "_fullyLoadedCPUms": 800,
+  "_fullyLoadedCPUpct": 13.114754098416629,
+  "_audit_issues": [
+      {
+          "code": "QuirksModeIssue",
+          "details": {
+              "quirksModeIssueDetails": {
+                  "isLimitedQuirksMode": false,
+                  "documentNodeId": 2,
+                  "url": "http://127.0.0.1:8888/orange.html",
+                  "frameId": "EC506EEB846DE36D23C35256AE9DA763",
+                  "loaderId": "286DF86286EE5B3D4CBA54E3BC13A327"
+              }
+          }
+      }
+  ],
+  "_execution_contexts": [
+      {
+          "id": 2,
+          "origin": "http://127.0.0.1:8888",
+          "name": ""
+      },
+      {
+          "id": 1,
+          "origin": "https://www.example.com",
+          "name": ""
+      }
+  ],
+  "_document_URL": "https://www.example.com/",
+  "_document_hostname": "www.example.com",
+  "_document_origin": "https://www.example.com",
+  "_viewport": {
+      "width": 1920,
+      "height": 1007,
+      "dpr": 1
+  },
+  "_domElements": 12,
+  "_domComplete": 205,
+  "_PerformancePaintTiming.first-paint": 286.5,
+  "_PerformancePaintTiming.first-contentful-paint": 286.5,
+  "_origin_dns": {
+      "txt": [
+          "\"v=spf1 -all\"",
+          "\"wgyf8z8cgvm2qmxpnbnldrcltvk4xqfn\""
+      ],
+      "ns": [
+          "b.iana-servers.net.",
+          "a.iana-servers.net."
+      ],
+      "mx": [
+          "0 ."
+      ],
+      "soa": [
+          "ns.icann.org. noc.dns.icann.org. 2022091276 7200 3600 1209600 3600"
+      ],
+      "cname": [],
+      "https": [],
+      "svcb": []
+  },
+  "_detected": {
+      "PaaS": "Azure,Amazon Web Services",
+      "Containers": "Docker",
+      "IaaS": "Amazon ECS",
+      "CDN": "Azure CDN"
+  },
+  "_detected_apps": {
+      "Azure": "",
+      "Docker": "",
+      "Amazon Web Services": "",
+      "Amazon ECS": "",
+      "Azure CDN": ""
+  },
+  "_detected_technologies": {
+      "Azure": {
+          "name": "Azure",
+          "description": "Azure is a cloud computing service for building, testing, deploying, and managing applications and services through Microsoft-managed data centers.",
+          "slug": "azure",
+          "categories": [
+              {
+                  "id": 62,
+                  "slug": "paas",
+                  "groups": [
+                      7
+                  ],
+                  "name": "PaaS",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Azure.svg",
+          "website": "https://azure.microsoft.com",
+          "pricing": [],
+          "cpe": null
+      },
+      "Docker": {
+          "name": "Docker",
+          "description": "Docker is a tool designed to make it easier to create, deploy, and run applications by using containers.",
+          "slug": "docker",
+          "categories": [
+              {
+                  "id": 60,
+                  "slug": "containers",
+                  "groups": [
+                      7
+                  ],
+                  "name": "Containers",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Docker.svg",
+          "website": "https://www.docker.com/",
+          "pricing": [],
+          "cpe": "cpe:2.3:a:docker:engine:*:*:*:*:*:*:*:*"
+      },
+      "Amazon Web Services": {
+          "name": "Amazon Web Services",
+          "description": "Amazon Web Services (AWS) is a comprehensive cloud services platform offering compute power, database storage, content delivery and other functionality.",
+          "slug": "amazon-web-services",
+          "categories": [
+              {
+                  "id": 62,
+                  "slug": "paas",
+                  "groups": [
+                      7
+                  ],
+                  "name": "PaaS",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Amazon Web Services.svg",
+          "website": "https://aws.amazon.com/",
+          "pricing": [],
+          "cpe": null
+      },
+      "Amazon ECS": {
+          "name": "Amazon ECS",
+          "description": null,
+          "slug": "amazon-ecs",
+          "categories": [
+              {
+                  "id": 63,
+                  "slug": "iaas",
+                  "groups": [
+                      7
+                  ],
+                  "name": "IaaS",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Amazon ECS.svg",
+          "website": "https://aws.amazon.com/ecs/",
+          "pricing": [],
+          "cpe": null
+      },
+      "Azure CDN": {
+          "name": "Azure CDN",
+          "description": "Azure Content Delivery Network (CDN) reduces load times, save bandwidth and speed responsiveness.",
+          "slug": "azure-cdn",
+          "categories": [
+              {
+                  "id": 31,
+                  "slug": "cdn",
+                  "groups": [
+                      7
+                  ],
+                  "name": "CDN",
+                  "priority": 9
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Azure.svg",
+          "website": "https://azure.microsoft.com/en-us/services/cdn/",
+          "pricing": [],
+          "cpe": null
+      }
+  },
+  "_detected_raw": [
+      {
+          "name": "Azure",
+          "description": "Azure is a cloud computing service for building, testing, deploying, and managing applications and services through Microsoft-managed data centers.",
+          "slug": "azure",
+          "categories": [
+              {
+                  "id": 62,
+                  "slug": "paas",
+                  "groups": [
+                      7
+                  ],
+                  "name": "PaaS",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Azure.svg",
+          "website": "https://azure.microsoft.com",
+          "pricing": [],
+          "cpe": null
+      },
+      {
+          "name": "Docker",
+          "description": "Docker is a tool designed to make it easier to create, deploy, and run applications by using containers.",
+          "slug": "docker",
+          "categories": [
+              {
+                  "id": 60,
+                  "slug": "containers",
+                  "groups": [
+                      7
+                  ],
+                  "name": "Containers",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Docker.svg",
+          "website": "https://www.docker.com/",
+          "pricing": [],
+          "cpe": "cpe:2.3:a:docker:engine:*:*:*:*:*:*:*:*"
+      },
+      {
+          "name": "Amazon Web Services",
+          "description": "Amazon Web Services (AWS) is a comprehensive cloud services platform offering compute power, database storage, content delivery and other functionality.",
+          "slug": "amazon-web-services",
+          "categories": [
+              {
+                  "id": 62,
+                  "slug": "paas",
+                  "groups": [
+                      7
+                  ],
+                  "name": "PaaS",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Amazon Web Services.svg",
+          "website": "https://aws.amazon.com/",
+          "pricing": [],
+          "cpe": null
+      },
+      {
+          "name": "Amazon ECS",
+          "description": null,
+          "slug": "amazon-ecs",
+          "categories": [
+              {
+                  "id": 63,
+                  "slug": "iaas",
+                  "groups": [
+                      7
+                  ],
+                  "name": "IaaS",
+                  "priority": 8
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Amazon ECS.svg",
+          "website": "https://aws.amazon.com/ecs/",
+          "pricing": [],
+          "cpe": null
+      },
+      {
+          "name": "Azure CDN",
+          "description": "Azure Content Delivery Network (CDN) reduces load times, save bandwidth and speed responsiveness.",
+          "slug": "azure-cdn",
+          "categories": [
+              {
+                  "id": 31,
+                  "slug": "cdn",
+                  "groups": [
+                      7
+                  ],
+                  "name": "CDN",
+                  "priority": 9
+              }
+          ],
+          "confidence": 100,
+          "version": "",
+          "icon": "Azure.svg",
+          "website": "https://azure.microsoft.com/en-us/services/cdn/",
+          "pricing": [],
+          "cpe": null
+      }
+  ],
+  "_base_page_ip_ptr": "",
+  "_base_page_cname": "",
+  "_base_page_dns_server": "a.iana-servers.net",
+  "_browser_name": "Chrome",
+  "_eventName": "Step_1",
+  "_test_run_time_ms": 6157,
+  "_testUrl": "https://www.example.com/",
+  "_custom": [
+      "00_reset",
+      "Colordepth",
+      "Dpi",
+      "Images",
+      "Resolution",
+      "a11y",
+      "almanac",
+      "aurora",
+      "avg_dom_depth",
+      "cms",
+      "crawl_links",
+      "css",
+      "css-variables",
+      "doctype",
+      "document_height",
+      "document_width",
+      "ecommerce",
+      "element_count",
+      "event-names",
+      "fugu-apis",
+      "has_shadow_root",
+      "img-loading-attr",
+      "initiators",
+      "inline_style_bytes",
+      "javascript",
+      "lib-detector-version",
+      "localstorage_size",
+      "markup",
+      "media",
+      "meta_viewport",
+      "num_iframes",
+      "num_scripts",
+      "num_scripts_async",
+      "num_scripts_sync",
+      "observers",
+      "origin-trials",
+      "parsed_css",
+      "performance",
+      "privacy",
+      "pwa",
+      "quirks_mode",
+      "responsive_images",
+      "robots_meta",
+      "robots_txt",
+      "sass",
+      "security",
+      "sessionstorage_size",
+      "structured-data",
+      "third-parties",
+      "usertiming",
+      "valid-head",
+      "well-known",
+      "wpt_bodies"
+  ],
+  "_00_reset": null,
+  "_Colordepth": 24,
+  "_Dpi": "{\"dppx\":1,\"dpcm\":37.79527559055118,\"dpi\":96}",
+  "_Images": "[]",
+  "_Resolution": "{\"absolute\":{\"height\":1200,\"width\":1920},\"available\":{\"height\":1200,\"width\":1920}}",
+  "_a11y": "{\"tables\":{\"total\":0,\"total_with_caption\":0,\"total_with_presentational\":0,\"total_with_figcaption\":0},\"file_extension_alts\":{\"total_elements_with_alt\":0,\"total_elements_with_non_empty_alt\":0,\"total_with_file_extension\":0,\"file_extensions\":{}},\"title_and_alt\":{\"total_alt\":0,\"total_title\":0,\"total_both\":0,\"total_alt_same_as_title\":0},\"th_with_scope_attribute\":{\"total_th\":0,\"total_with_scope\":0,\"scopes\":{}},\"td_with_headers_attribute\":{\"total_tds\":0,\"total_with_headers\":0},\"total_anchors_with_role_button\":0,\"total_role_tab_with_selected_and_controls\":0,\"placeholder_but_no_label\":{\"total_placeholder\":0,\"total_no_label\":0},\"divs_or_spans_as_button_or_link\":{\"total_role_button\":0,\"total_role_link\":0,\"total_either\":0},\"screen_reader_classes\":false,\"form_control_a11y_tree\":[],\"fieldset_radio_checkbox\":{\"total_radio\":0,\"total_checkbox\":0,\"total_radio_in_fieldset\":0,\"total_checkbox_in_fieldset\":0,\"fieldsets\":[]},\"required_form_controls\":[]}",
+  "_almanac": "{\"01.12\":0,\"01.13\":0,\"link-nodes\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"priority-hints\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"meta-nodes\":{\"total\":3,\"nodes\":[{\"tagName\":\"meta\",\"charset\":\"utf-8\"},{\"tagName\":\"meta\",\"http-equiv\":\"Content-type\",\"content\":\"text/html; charset=utf-8\"},{\"tagName\":\"meta\",\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],\"attribute_usage_count\":{\"charset\":1,\"http-equiv\":1,\"content\":2,\"name\":1}},\"10.5\":[],\"seo-anchor-elements\":{\"internal\":0,\"external\":1,\"hash\":0,\"navigateHash\":0,\"earlyHash\":0},\"seo-titles\":{\"titleWords\":2,\"titleElements\":1},\"seo-words\":{\"wordsCount\":24,\"wordElements\":1},\"input_elements\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"link_protocols_used\":{\"https\":1},\"06.47\":0,\"08.39\":{\"link\":0,\"script\":0},\"09.27\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"icon_only_clickables\":0,\"inline_svg_stats\":{\"total\":0,\"content_lengths\":[],\"attribute_usage_count\":{}},\"images\":{\"pictures\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"imgs\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"sources\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"total_with_srcset\":0,\"total_with_sizes\":0,\"total_pictures_with_img\":0,\"sizes_values\":[],\"loading_values\":[],\"alt_lengths\":[]},\"videos\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{},\"total_with_track\":0,\"tracks\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}}},\"audios\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{},\"total_with_track\":0,\"tracks\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}}},\"iframes\":{\"iframes\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"loading_values\":[]},\"scripts\":{\"total\":0,\"nodes\":[],\"attribute_usage_count\":{}},\"nodes_using_role\":{\"total\":0,\"usage_and_count\":{}},\"headings_order\":[1],\"shortcuts_stats\":{\"total_with_aria_shortcut\":0,\"total_with_accesskey\":0,\"aria_shortcut_values\":[],\"accesskey_values\":[]},\"attributes_used_on_elements\":{\"charset\":1,\"http-equiv\":1,\"content\":2,\"name\":1,\"type\":1,\"href\":1},\"body_node\":{\"tagName\":\"body\"},\"html_node\":{\"tagName\":\"html\"},\"document_title\":{\"value\":\"Example Domain\",\"length\":14},\"length_of_h1s\":[14]}",
+  "_aurora": {
+      "ng_version": null,
+      "ng_img_user": null,
+      "ng_priority_img_count": null,
+      "nuxt_version": null,
+      "nuxt_vue_version": null,
+      "react_version": null
+  },
+  "_avg_dom_depth": 3,
+  "_cms": {
+      "wordpress": {
+          "block_theme": false,
+          "has_embed_block": false,
+          "embed_block_count": {
+              "total": 0,
+              "total_by_type": []
+          }
+      }
+  },
+  "_crawl_links": [],
+  "_css": "{\"css_in_js\":[],\"prefersColorScheme\":false,\"externalCssInHead\":0,\"externalCssInBody\":0,\"inlineCssInHead\":1,\"inlineCssInBody\":0}",
+  "_css-variables": "{\"summary\":{}}",
+  "_doctype": "html",
+  "_document_height": 1007,
+  "_document_width": 1920,
+  "_ecommerce": "{\"AndroidAppLinks\":0,\"iOSUniveralLinks\":0}",
+  "_element_count": "{\"html\":1,\"head\":1,\"title\":1,\"meta\":3,\"style\":1,\"body\":1,\"div\":1,\"h1\":1,\"p\":2,\"a\":1}",
+  "_event-names": {},
+  "_fugu-apis": {},
+  "_has_shadow_root": "false",
+  "_img-loading-attr": "[]",
+  "_initiators": {
+      "": [
+          "https://www.example.com/"
+      ],
+      "undefined": [
+          "https://www.example.com/favicon.ico"
+      ]
+  },
+  "_inline_style_bytes": 650,
+  "_javascript": "{\"ajax_requests\":{\"xmlhttprequest\":0,\"fetch\":0,\"beacon\":0,\"total\":0},\"beacon_ajax_usage\":0,\"iframe\":0,\"requests_protocol\":{\"ajax_h1\":0,\"resources_h1\":0,\"ajax_h2\":0,\"resources_h2\":1,\"ajax_h3\":0,\"resources_h3\":0},\"web_component_specs\":{\"custom_elements\":[],\"shadow_roots\":[],\"template\":[]},\"script_tags\":{\"total\":0,\"async\":0,\"defer\":0,\"crossorigin\":0,\"integrity\":0,\"nomodule\":0,\"nonce\":0,\"referrerpolicy\":0,\"src\":0,\"inline\":0,\"type_module\":0,\"async_and_defer\":0,\"defer_without_src\":0,\"charset\":0,\"language\":0},\"noscript_tags\":{\"total\":0},\"sourceMaps\":{\"count\":0,\"ext\":{}},\"bundler\":[],\"document\":{\"length\":1256,\"elements\":12,\"links\":0,\"stylesheets\":0,\"inlineStyles\":1,\"scripts\":0,\"inlineScripts\":0}}",
+  "_lib-detector-version": "6.1.0",
+  "_localstorage_size": 0,
+  "_markup": "{\"favicon\":false,\"rel_alternate_mobile\":false,\"compatMode\":\"CSS1Compat\",\"noscripts\":{\"iframe_googletagmanager_count\":0,\"total\":0},\"buttons\":{\"types\":{},\"total\":0},\"form\":{\"target\":{},\"method\":{},\"elements\":[],\"total\":0},\"dirs\":{\"html_dir\":null,\"body_nodes_dir\":{\"values\":{},\"total\":0}},\"inputs\":{\"types\":{},\"total\":0},\"audios\":{\"autoplay\":{},\"total\":0},\"classes\":{\"unique_names_total\":0,\"references_total\":0},\"ids\":{\"ids_total\":0,\"duplicate_ids_total\":0,\"unique_ids_total\":0},\"images\":{\"picture\":{\"total\":0},\"source\":{\"total\":0,\"src_total\":0,\"srcset_total\":0,\"media_total\":0,\"type_total\":0},\"img\":{\"total\":0,\"src_total\":0,\"srcset_total\":0,\"alt\":{\"missing\":0,\"blank\":0,\"present\":0},\"loading\":{\"auto\":0,\"lazy\":0,\"eager\":0,\"invalid\":0,\"missing\":0,\"blank\":0},\"dimensions\":{\"missing_width\":0,\"missing_height\":0}}},\"iframes\":{\"total\":0,\"loading\":{\"auto\":0,\"lazy\":0,\"eager\":0,\"invalid\":0,\"missing\":0,\"blank\":0}},\"amp\":{\"html_amp_attribute_present\":false,\"html_amp_emoji_attribute_present\":false,\"amp_page\":false,\"rel_amphtml\":null},\"data_nosnippet\":{\"valid\":0,\"wrong_tag_type\":0},\"obsolete_elements\":{},\"svgs\":{\"svg_element_total\":0,\"svg_img_total\":0,\"svg_object_total\":0,\"svg_embed_total\":0,\"svg_iframe_total\":0,\"svg_total\":0},\"app\":{\"app_id_present\":false,\"meta_theme_color\":null},\"anchors\":{\"hrefs_without_special_scheme\":[]}}",
+  "_media": "{\"num_picture_img\":0,\"num_image_sizes\":0,\"num_srcset_all\":0,\"num_srcset_sizes\":0,\"num_srcset_descriptor_x\":0,\"num_srcset_descriptor_w\":0,\"num_srcset_candidates\":0,\"picture_formats\":[],\"num_video_nodes\":0,\"video_durations\":[],\"video_attributes_values_counts\":[],\"video_display_style\":[],\"video_source_format_count\":[],\"video_source_format_type\":[],\"num_picture_using_min_resolution\":0,\"num_picture_using_orientation\":0,\"num_img_not_in_picture_srcset_candidates\":0}",
+  "_meta_viewport": "width=device-width, initial-scale=1",
+  "_num_iframes": 0,
+  "_num_scripts": 0,
+  "_num_scripts_async": 0,
+  "_num_scripts_sync": 0,
+  "_observers": null,
+  "_origin-trials": [],
+  "_performance": {
+      "lcp_elem_stats": {
+          "startTime": 286.5,
+          "nodeName": "P",
+          "url": "",
+          "size": 33858,
+          "loadTime": 0,
+          "renderTime": 286.5,
+          "attributes": [],
+          "boundingClientRect": {
+              "x": 660,
+              "y": 192.875,
+              "width": 600,
+              "height": 57,
+              "top": 192.875,
+              "right": 1260,
+              "bottom": 249.875,
+              "left": 660
+          },
+          "styles": {
+              "background-image": "",
+              "pointer-events": "",
+              "position": "",
+              "width": "",
+              "height": ""
+          },
+          "cover90viewport": false
+      },
+      "raw_lcp_element": null,
+      "lcp_resource": null,
+      "is_lcp_statically_discoverable": true,
+      "is_lcp_preloaded": null,
+      "lcp_preload": null,
+      "web_vitals_js": [],
+      "gaming_metrics": {}
+  },
+  "_privacy": "{\"privacy_wording_links\":[],\"iab_tcf_v1\":{\"present\":false,\"data\":null,\"compliant_setup\":null},\"iab_tcf_v2\":{\"present\":false,\"data\":null,\"compliant_setup\":null},\"iab_usp\":{\"present\":false,\"privacy_string\":null},\"ads_transparency_spotlight\":{\"present\":false,\"ads_metadata\":null},\"document_interestCohort\":false,\"navigator_doNotTrack\":false,\"navigator_globalPrivacyControl\":false,\"document_permissionsPolicy\":false,\"document_featurePolicy\":false,\"referrerPolicy\":{\"entire_document_policy\":null,\"individual_requests\":null,\"link_relations\":null},\"media_devices\":{\"navigator_mediaDevices_enumerateDevices\":false,\"navigator_mediaDevices_getUserMedia\":false,\"navigator_mediaDevices_getDisplayMedia\":false},\"geolocation\":{\"navigator_geolocation_getCurrentPosition\":false,\"navigator_geolocation_watchPosition\":false}}",
+  "_pwa": {
+      "serviceWorkers": {},
+      "manifests": {},
+      "serviceWorkerInitiated": [],
+      "workboxInfo": {},
+      "importScriptsInfo": {},
+      "swEventListenersInfo": {},
+      "swPropertiesInfo": {},
+      "swMethodsInfo": {},
+      "swObjectsInfo": {},
+      "swRegistrationPropertiesInfo": {},
+      "windowEventListenersInfo": {},
+      "windowPropertiesInfo": {},
+      "serviceWorkerRegistrationInfo": {},
+      "serviceWorkerHeuristic": false
+  },
+  "_quirks_mode": false,
+  "_responsive_images": "{\"responsive-images\":[]}",
+  "_robots_meta": {
+      "main_frame_robots_rendered": {},
+      "main_frame_robots_raw": {},
+      "main_frame_robots_headers": {},
+      "iframe_robots_raw": {},
+      "iframe_robots_headers": {},
+      "main_frame_crawl_data": {
+          "rendered": {},
+          "raw": {},
+          "headers": {},
+          "all": {}
+      }
+  },
+  "_robots_txt": "{\"redirected\":false,\"status\":404,\"size\":1256,\"size_kib\":1.2265625,\"over_google_limit\":false,\"comment_count\":3,\"record_counts\":{\"by_type\":{\"sitemap\":0,\"user_agent\":0,\"allow\":0,\"disallow\":0,\"crawl_delay\":0,\"noindex\":0,\"other\":44},\"by_useragent\":{}}}",
+  "_sass": "{\"stylesheets\":{\"remote\":0,\"inline\":1},\"sourcemaps\":{\"count\":0,\"ext\":{}}}",
+  "_security": "{\"iframe-allow-sandbox\":[],\"sri-integrity\":[],\"visibility-observer\":false}",
+  "_sessionstorage_size": 0,
+  "_structured-data": "{\"structured_data\":{\"rendered\":{\"jsonld_scripts\":[],\"present\":{\"json_ld\":false,\"microdata\":false,\"rdfa\":false,\"microformats2\":false,\"microformats_classic\":false,\"dublin_core\":false,\"twitter\":false,\"facebook\":false,\"opengraph\":false},\"microdata_itemtypes\":[],\"rdfa_vocabs\":[],\"rdfa_prefixes\":[],\"rdfa_typeofs\":[],\"microformats2_types\":[],\"microformats_classic_types\":[],\"dublin_core\":[],\"twitter\":[],\"facebook\":[],\"opengraph\":[]},\"raw\":{\"jsonld_scripts\":[],\"present\":{\"json_ld\":false,\"microdata\":false,\"rdfa\":false,\"microformats2\":false,\"microformats_classic\":false,\"dublin_core\":false,\"twitter\":false,\"facebook\":false,\"opengraph\":false},\"microdata_itemtypes\":[],\"rdfa_vocabs\":[],\"rdfa_prefixes\":[],\"rdfa_typeofs\":[],\"microformats2_types\":[],\"microformats_classic_types\":[],\"dublin_core\":[],\"twitter\":[],\"facebook\":[],\"opengraph\":[]}}}",
+  "_third-parties": "[{\"name\":\"Workbox\",\"version\":null}]",
+  "_usertiming": 0,
+  "_valid-head": {
+      "invalidElements": [],
+      "invalidHead": false
+  },
+  "_well-known": "{\"/.well-known/assetlinks.json\":{\"found\":false},\"/.well-known/apple-app-site-association\":{\"found\":false},\"/.well-known/gpc.json\":{\"found\":false},\"/robots.txt\":{\"found\":false},\"/.well-known/security.txt\":{\"found\":false},\"/.well-known/change-password\":{\"data\":{\"status\":404,\"redirected\":false,\"url\":\"https://www.example.com/.well-known/change-password\"}},\"/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/\":{\"data\":{\"status\":404,\"redirected\":false,\"url\":\"https://www.example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/\"}}}",
+  "_wpt_bodies": "{\"anchors\":{\"rendered\":{\"crawlable\":{\"follow\":1,\"nofollow\":0},\"hash_link\":0,\"hash_only_link\":0,\"javascript_void_links\":0,\"same_page\":{\"total\":0,\"jumpto\":{\"total\":0,\"early\":0,\"other\":0,\"using_id\":0,\"using_name\":0},\"dynamic\":{\"total\":0,\"onclick_attributes\":{\"total\":0,\"window_location\":0,\"window_open\":0,\"unknown_action\":0},\"href_javascript\":0,\"hash_link\":0},\"other\":{\"total\":0,\"hash_link\":0}},\"same_site\":0,\"same_property\":0,\"other_property\":1,\"rel_attributes\":{\"dofollow\":0,\"follow\":0,\"nofollow\":0,\"ugc\":0,\"sponsored\":0,\"noopener\":0,\"noreferrer\":0},\"image_links\":0,\"invisible_links\":0,\"text_links\":1,\"target_blank\":{\"total\":0,\"noopener_noreferrer\":0,\"noopener\":0,\"noreferrer\":0,\"neither\":0},\"targets\":{},\"protocols\":{\"https\":1}},\"raw\":{\"crawlable\":{\"follow\":1,\"nofollow\":0},\"hash_link\":0,\"hash_only_link\":0,\"javascript_void_links\":0,\"same_page\":{\"total\":0,\"jumpto\":{\"total\":0,\"early\":0,\"other\":0,\"using_id\":0,\"using_name\":0},\"dynamic\":{\"total\":0,\"onclick_attributes\":{\"total\":0,\"window_location\":0,\"window_open\":0,\"unknown_action\":0},\"href_javascript\":0,\"hash_link\":0},\"other\":{\"total\":0,\"hash_link\":0}},\"same_site\":0,\"same_property\":0,\"other_property\":1,\"rel_attributes\":{\"dofollow\":0,\"follow\":0,\"nofollow\":0,\"ugc\":0,\"sponsored\":0,\"noopener\":0,\"noreferrer\":0},\"image_links\":0,\"invisible_links\":0,\"text_links\":1,\"target_blank\":{\"total\":0,\"noopener_noreferrer\":0,\"noopener\":0,\"noreferrer\":0,\"neither\":0},\"targets\":{},\"protocols\":{\"https\":1}}},\"title\":{\"rendered\":{\"primary\":{\"characters\":14,\"words\":2,\"text\":\"Example Domain\"},\"total\":1},\"raw\":{\"primary\":{\"characters\":14,\"words\":2,\"text\":\"Example Domain\"},\"total\":1},\"title_changed_on_render\":false},\"meta_description\":{\"rendered\":{\"all\":{\"text\":\"\",\"words\":0,\"characters\":0},\"total\":0},\"raw\":{\"all\":{\"text\":\"\",\"words\":0,\"characters\":0},\"total\":0}},\"hreflangs\":{\"http_header\":{\"values\":[]},\"rendered\":{\"values\":[]},\"raw\":{\"values\":[]}},\"headings\":{\"rendered\":{\"first_non_empty_heading_hidden\":false,\"primary\":{\"words\":2,\"characters\":14,\"matches_title\":true,\"text\":\"Example Domain\",\"level\":1},\"h1\":{\"total\":1,\"non_empty_total\":1,\"characters\":14,\"words\":2},\"h2\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h3\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h4\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h5\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h6\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h7\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h8\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0}},\"raw\":{\"first_non_empty_heading_hidden\":false,\"primary\":{\"words\":2,\"characters\":14,\"matches_title\":true,\"text\":\"Example Domain\",\"level\":1},\"h1\":{\"total\":1,\"non_empty_total\":1,\"characters\":14,\"words\":2},\"h2\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h3\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h4\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h5\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h6\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h7\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0},\"h8\":{\"total\":0,\"non_empty_total\":0,\"characters\":0,\"words\":0}}},\"structured_data\":{\"rendered\":{\"jsonld_and_microdata_types\":[],\"jsonldIds\":0,\"jsonldReferencedIds\":0,\"microdataIds\":0,\"microdataReferencedIds\":0,\"jsonlsMicrodataCommonIds\":0,\"logo\":false,\"sitelinks_search_box\":false,\"same_as_values\":[],\"items_by_format\":{\"microformats2\":0,\"microdata\":0,\"jsonld\":0,\"rdfa\":0},\"context_hostnames\":[],\"jsonld_scripts\":{\"count\":0,\"errors\":0},\"microformats2_types\":[]},\"raw\":{\"jsonld_and_microdata_types\":[],\"jsonldIds\":0,\"jsonldReferencedIds\":0,\"microdataIds\":0,\"microdataReferencedIds\":0,\"jsonlsMicrodataCommonIds\":0,\"logo\":false,\"sitelinks_search_box\":false,\"same_as_values\":[],\"items_by_format\":{\"microformats2\":0,\"microdata\":0,\"jsonld\":0,\"rdfa\":0},\"context_hostnames\":[],\"jsonld_scripts\":{\"count\":0,\"errors\":0},\"microformats2_types\":[]}},\"raw_html\":{\"body\":true,\"html\":true,\"head\":true,\"size\":1256,\"head_size\":917,\"body_size\":305},\"canonicals\":{\"rendered\":{\"html_link_canoncials\":[]},\"raw\":{\"html_link_canoncials\":[]},\"self_canonical\":false,\"other_canonical\":false,\"canonicals\":[],\"url\":\"https://www.example.com/\",\"http_header_link_canoncials\":[],\"canonical_missmatch\":false},\"robots\":{\"has_robots_meta_tag\":false,\"has_x_robots_tag\":false,\"rendered\":{\"otherbot\":{\"status_index\":true,\"status_follow\":true,\"via_meta_tag\":false,\"via_x_robots_tag\":false},\"googlebot\":{\"status_index\":true,\"status_follow\":true,\"via_meta_tag\":false,\"via_x_robots_tag\":false},\"googlebot_news\":{\"status_index\":true,\"status_follow\":true,\"via_meta_tag\":false,\"via_x_robots_tag\":false},\"google\":{}},\"raw\":{\"otherbot\":{\"status_index\":true,\"status_follow\":true,\"via_meta_tag\":false,\"via_x_robots_tag\":false},\"googlebot\":{\"status_index\":true,\"status_follow\":true,\"via_meta_tag\":false,\"via_x_robots_tag\":false},\"googlebot_news\":{\"status_index\":true,\"status_follow\":true,\"via_meta_tag\":false,\"via_x_robots_tag\":false},\"google\":{}}},\"visible_words\":{\"rendered\":28,\"raw\":28},\"web_components\":{\"rendered\":{\"customElements\":{\"names\":[],\"shadowRoots\":[],\"templates\":[],\"slots\":[]},\"hyphenatedElements\":{\"names\":[],\"shadowRoots\":[],\"templates\":[],\"slots\":[]}},\"raw\":{\"customElements\":{\"names\":[],\"shadowRoots\":[],\"templates\":[],\"slots\":[]},\"hyphenatedElements\":{\"names\":[],\"shadowRoots\":[],\"templates\":[],\"slots\":[]}}}}",
+  "_interactivePeriods": [
+      [
+          0,
+          3330
+      ]
+  ],
+  "_lastVisualChange": 300,
+  "_render": 300,
+  "_visualComplete85": 300,
+  "_visualComplete90": 300,
+  "_visualComplete95": 300,
+  "_visualComplete99": 300,
+  "_visualComplete": 300,
+  "_SpeedIndex": 300,
+  "_largestPaints": [
+      {
+          "event": "LargestTextPaint",
+          "time": 300,
+          "size": 33858,
+          "DOMNodeId": 4,
+          "nodeInfo": {
+              "nodeType": "P",
+              "bounds": [
+                  660,
+                  192.875,
+                  600,
+                  57
+              ],
+              "styles": {
+                  "background-image": "none"
+              }
+          }
+      },
+      {
+          "event": "LargestContentfulPaint",
+          "time": 300,
+          "size": 33858,
+          "element": {
+              "nodeName": "P",
+              "boundingRect": {
+                  "x": 660,
+                  "y": 192.875,
+                  "width": 600,
+                  "height": 57,
+                  "top": 192.875,
+                  "right": 1260,
+                  "bottom": 249.875,
+                  "left": 660
+              },
+              "outerHTML": "<p>This domain is for use in illustrative examples in documents. You may use this\n    domain in literature without prior coordination or asking for permission.</p>",
+              "content": "normal"
+          },
+          "type": "text"
+      }
+  ],
+  "_LargestContentfulPaintType": "text",
+  "_LargestContentfulPaintNodeType": "P",
+  "_chromeUserTiming": [
+      {
+          "name": "navigationStart",
+          "time": 13
+      },
+      {
+          "name": "fetchStart",
+          "time": 22
+      },
+      {
+          "name": "navigationStart",
+          "time": 57
+      },
+      {
+          "name": "domLoading",
+          "time": 57
+      },
+      {
+          "name": "responseEnd",
+          "time": 58
+      },
+      {
+          "name": "domInteractive",
+          "time": 58
+      },
+      {
+          "name": "domContentLoadedEventStart",
+          "time": 58
+      },
+      {
+          "name": "domContentLoadedEventEnd",
+          "time": 58
+      },
+      {
+          "name": "domComplete",
+          "time": 58
+      },
+      {
+          "name": "responseEnd",
+          "time": 195
+      },
+      {
+          "name": "unloadEventStart",
+          "time": 204
+      },
+      {
+          "name": "unloadEventEnd",
+          "time": 204
+      },
+      {
+          "name": "markAsMainFrame",
+          "time": 204
+      },
+      {
+          "name": "commitNavigationEnd",
+          "time": 205
+      },
+      {
+          "name": "domLoading",
+          "time": 205
+      },
+      {
+          "name": "domInteractive",
+          "time": 217
+      },
+      {
+          "name": "domContentLoadedEventStart",
+          "time": 217
+      },
+      {
+          "name": "domContentLoadedEventEnd",
+          "time": 217
+      },
+      {
+          "name": "domComplete",
+          "time": 218
+      },
+      {
+          "name": "loadEventStart",
+          "time": 218
+      },
+      {
+          "name": "loadEventEnd",
+          "time": 218
+      },
+      {
+          "name": "firstPaint",
+          "time": 300
+      },
+      {
+          "name": "firstContentfulPaint",
+          "time": 300
+      },
+      {
+          "name": "firstMeaningfulPaintCandidate",
+          "time": 300
+      },
+      {
+          "name": "firstMeaningfulPaint",
+          "time": 300
+      },
+      {
+          "name": "firstMeaningfulPaint",
+          "time": 300
+      },
+      {
+          "name": "LargestTextPaint",
+          "time": 300
+      },
+      {
+          "name": "LargestContentfulPaint",
+          "time": 300
+      },
+      {
+          "name": "TotalLayoutShift",
+          "value": 0
+      },
+      {
+          "name": "CumulativeLayoutShift",
+          "value": 0
+      }
+  ],
+  "_chromeUserTiming.navigationStart": 57,
+  "_chromeUserTiming.fetchStart": 22,
+  "_chromeUserTiming.domLoading": 205,
+  "_chromeUserTiming.responseEnd": 195,
+  "_chromeUserTiming.domInteractive": 217,
+  "_chromeUserTiming.domContentLoadedEventStart": 217,
+  "_chromeUserTiming.domContentLoadedEventEnd": 217,
+  "_chromeUserTiming.domComplete": 218,
+  "_chromeUserTiming.unloadEventStart": 204,
+  "_chromeUserTiming.unloadEventEnd": 204,
+  "_chromeUserTiming.markAsMainFrame": 204,
+  "_chromeUserTiming.commitNavigationEnd": 205,
+  "_chromeUserTiming.loadEventStart": 218,
+  "_chromeUserTiming.loadEventEnd": 218,
+  "_chromeUserTiming.firstPaint": 300,
+  "_chromeUserTiming.firstContentfulPaint": 300,
+  "_chromeUserTiming.firstMeaningfulPaintCandidate": 300,
+  "_chromeUserTiming.firstMeaningfulPaint": 300,
+  "_chromeUserTiming.LargestTextPaint": 300,
+  "_chromeUserTiming.LargestContentfulPaint": 300,
+  "_chromeUserTiming.TotalLayoutShift": 0,
+  "_chromeUserTiming.CumulativeLayoutShift": 0,
+  "_blinkFeatureFirstUsed": {
+      "Features": {
+          "973": {
+              "name": "CSSAtRuleMedia",
+              "firstUsed": 215.369
+          },
+          "1075": {
+              "name": "V8SloppyMode",
+              "firstUsed": 212.591
+          },
+          "1441": {
+              "name": "SecureContextCheckPassed",
+              "firstUsed": 207.019
+          },
+          "1910": {
+              "name": "CrossOriginMainFrameNulledNameAccessed",
+              "firstUsed": 207.032
+          },
+          "2188": {
+              "name": "PerformanceObserverForWindow",
+              "firstUsed": 213.196
+          },
+          "2203": {
+              "name": "HasIDClassTagAttribute",
+              "firstUsed": 215.178
+          },
+          "2219": {
+              "name": "V8Element_GetBoundingClientRect_Method",
+              "firstUsed": 314.825
+          },
+          "2627": {
+              "name": "PageLifeCycleFreeze",
+              "firstUsed": 209.275
+          },
+          "2782": {
+              "name": "LayoutJankExplicitlyRequested",
+              "firstUsed": 213.276
+          },
+          "2927": {
+              "name": "LargestContentfulPaintExplicitlyRequested",
+              "firstUsed": 213.251
+          },
+          "3004": {
+              "name": "PerformanceObserverBufferedFlag",
+              "firstUsed": 213.257
+          }
+      },
+      "CSSFeatures": {
+          "2": {
+              "name": "CSSPropertyColor",
+              "firstUsed": 215.353
+          },
+          "6": {
+              "name": "CSSPropertyFontFamily",
+              "firstUsed": 215.295
+          },
+          "24": {
+              "name": "CSSPropertyBackgroundColor",
+              "firstUsed": 215.198
+          },
+          "53": {
+              "name": "CSSPropertyBorderRadius",
+              "firstUsed": 215.319
+          },
+          "68": {
+              "name": "CSSPropertyBoxShadow",
+              "firstUsed": 215.33
+          },
+          "89": {
+              "name": "CSSPropertyMargin",
+              "firstUsed": 215.26
+          },
+          "109": {
+              "name": "CSSPropertyPadding",
+              "firstUsed": 215.267
+          },
+          "129": {
+              "name": "CSSPropertyTextDecoration",
+              "firstUsed": 215.363
+          },
+          "161": {
+              "name": "CSSPropertyWidth",
+              "firstUsed": 215.307
+          }
+      },
+      "AnimatedCSSFeatures": {}
+  },
+  "_TTIMeasurementEnd": 3330,
+  "_LastInteractive": 300,
+  "_testID": "230509_Dx20W_FMHK5",
+  "_run": 1,
+  "_step": 1,
+  "_effectiveBps": 13500,
+  "_domTime": 0,
+  "_aft": 0,
+  "_titleTime": 62,
+  "_domLoading": 0,
+  "_server_rtt": 0,
+  "_CrUX": {
+      "key": {
+          "formFactor": "DESKTOP",
+          "url": "https://www.example.com/"
+      },
+      "metrics": {
+          "interaction_to_next_paint": {
+              "histogram": [
+                  {
+                      "start": 0,
+                      "end": 200,
+                      "density": 0.9835904971834437
+                  },
+                  {
+                      "start": 200,
+                      "end": 500,
+                      "density": 0.00979671809943669
+                  },
+                  {
+                      "start": 500,
+                      "density": 0.006612784717119725
+                  }
+              ],
+              "percentiles": {
+                  "p75": 15
+              }
+          },
+          "largest_contentful_paint": {
+              "histogram": [
+                  {
+                      "start": 0,
+                      "end": 2500,
+                      "density": 0.9567035670356704
+                  },
+                  {
+                      "start": 2500,
+                      "end": 4000,
+                      "density": 0.028044280442804437
+                  },
+                  {
+                      "start": 4000,
+                      "density": 0.01525215252152517
+                  }
+              ],
+              "percentiles": {
+                  "p75": 1088
+              }
+          },
+          "cumulative_layout_shift": {
+              "histogram": [
+                  {
+                      "start": "0.00",
+                      "end": "0.10",
+                      "density": 0.9982784062961141
+                  },
+                  {
+                      "start": "0.10",
+                      "end": "0.25",
+                      "density": 0.0007378258730939499
+                  },
+                  {
+                      "start": "0.25",
+                      "density": 0.0009837678307919328
+                  }
+              ],
+              "percentiles": {
+                  "p75": "0.00"
+              }
+          },
+          "experimental_time_to_first_byte": {
+              "histogram": [
+                  {
+                      "start": 0,
+                      "end": 800,
+                      "density": 0.7510068704098558
+                  },
+                  {
+                      "start": 800,
+                      "end": 1800,
+                      "density": 0.2020848140251126
+                  },
+                  {
+                      "start": 1800,
+                      "density": 0.04690831556503168
+                  }
+              ],
+              "percentiles": {
+                  "p75": 797
+              }
+          },
+          "first_contentful_paint": {
+              "histogram": [
+                  {
+                      "start": 0,
+                      "end": 1800,
+                      "density": 0.9130541871921183
+                  },
+                  {
+                      "start": 1800,
+                      "end": 3000,
+                      "density": 0.05714285714285715
+                  },
+                  {
+                      "start": 3000,
+                      "density": 0.02980295566502464
+                  }
+              ],
+              "percentiles": {
+                  "p75": 1089
+              }
+          },
+          "first_input_delay": {
+              "histogram": [
+                  {
+                      "start": 0,
+                      "end": 100,
+                      "density": 0.9848693259972491
+                  },
+                  {
+                      "start": 100,
+                      "end": 300,
+                      "density": 0.007794589637780836
+                  },
+                  {
+                      "start": 300,
+                      "density": 0.007336084364970164
+                  }
+              ],
+              "percentiles": {
+                  "p75": 2
+              }
+          }
+      },
+      "collectionPeriod": {
+          "firstDate": {
+              "year": 2023,
+              "month": 4,
+              "day": 13
+          },
+          "lastDate": {
+              "year": 2023,
+              "month": 5,
+              "day": 10
+          }
+      }
+  },
+  "_lighthouse.Performance": 0.99,
+  "_lighthouse.Performance.first-contentful-paint": 780.895,
+  "_lighthouse.Performance.largest-contentful-paint": 780.895,
+  "_lighthouse.Performance.total-blocking-time": 0,
+  "_lighthouse.Performance.cumulative-layout-shift": 0,
+  "_lighthouse.Performance.speed-index": 773,
+  "_lighthouse.Accessibility": 0.91,
+  "_lighthouse.BestPractices": 0.92,
+  "_lighthouse.SEO": 0.89,
+  "_lighthouse.PWA": 0.25,
+  "_edge-processed": true,
+  "_consoleLog": [
+      {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 ()",
+          "timestamp": 1683928804036.864,
+          "url": "https://www.example.com/favicon.ico",
+          "networkRequestId": "129591.2"
+      }
+  ]
+}

@@ -1,41 +1,23 @@
 {
-    "extends": "stylelint-config-standard",
-    "rules": {
-        "alpha-value-notation": null,
-        "at-rule-no-unknown": [
-            true,
-            {
-                "ignoreAtRules": ["prince-pdf"]
-            }
-        ],
-        "color-function-notation": null,
-        "comment-empty-line-before": null,
-        "font-family-no-duplicate-names": [
-            true,
-            {
-                "ignoreFontFamilyNames": ["monospace"]
-            }
-        ],
-        "length-zero-no-unit": null,
-        "media-feature-range-notation": "prefix",
-        "no-descending-specificity": null,
-        "property-no-unknown": [
-            true,
-            {
-                "ignoreProperties": ["prince-pdf-display-doc-title","prince-pdf-tag-type"]
-            }
-        ],
-        "selector-pseudo-element-no-unknown": [
-            true,
-            {
-                "ignorePseudoElements": ["footnote-call","footnote-marker"]
-            }
-        ],
-        "value-keyword-case": [
-            "lower",
-            {
-                "ignoreKeywords": ["Art","A4","A5", "currentColor"]
-            }
-        ]
-    }
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "comment-empty-line-before": null,
+    "font-family-no-duplicate-names": [
+      true,
+      {
+        "ignoreFontFamilyNames": ["monospace"]
+      }
+    ],
+    "length-zero-no-unit": null,
+    "media-feature-range-notation": "prefix",
+    "no-descending-specificity": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": ["currentColor"]
+      }
+    ]
+  }
 }
