@@ -27,8 +27,8 @@
     "test": "node ./tools/test"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.0.3",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.1",
     "ejs": "6.0.1",
     "fs-extra": "11.4.0",
     "highcharts": "11.4.8",
