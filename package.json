@@ -34,6 +34,7 @@
     "highcharts": "11.4.8",
     "marked": "^18.0.5",
     "node-fetch": "3.3.2",
+    "puppeteer": "^25.10.0",
     "run-script-os": "1.1.6",
     "web-vitals": "6.1.0",
     "xml-js": "1.6.11",
