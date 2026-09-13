@@ -10,6 +10,7 @@ export default defineConfig({
   site: 'https://httparchive.org',
   server: {
     port: 8080,
+    host: true,
   },
   build: {
     // Don't add trailing slashes to output filenames
