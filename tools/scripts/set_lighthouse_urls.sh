@@ -38,8 +38,7 @@ http://127.0.0.1:8080/
 http://127.0.0.1:8080/reports
 http://127.0.0.1:8080/reports/state-of-the-web
 http://127.0.0.1:8080/reports/techreport/landing
-http://127.0.0.1:8080/reports/techreport/drilldown
-http://127.0.0.1:8080/reports/techreport/comparison
+http://127.0.0.1:8080/reports/techreport/tech
 http://127.0.0.1:8080/reports/techreport/category
 END
 )
@@ -60,7 +59,7 @@ elif [ "${RUN_TYPE}" == "pull_request" ] && [ "${COMMIT_SHA}" != "" ]; then
     git pull --quiet
     git checkout main
     # Then get the changes
-    CHANGED_FILES=$(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d src/pages config/reports.json | grep -v ejs | grep -v sitemap | grep -v 404)
+    CHANGED_FILES=$(git diff --name-only "main...${COMMIT_SHA}" --diff-filter=d src/pages config/reports.json | grep -v ejs | grep -v sitemap | grep -v 404 | grep -v comparison | grep -v drilldown)
     echo "${CHANGED_FILES}"
 
     # Then back to the pull request changes
