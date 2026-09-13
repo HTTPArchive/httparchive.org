@@ -369,7 +369,19 @@ const activePage = config.pages?.[page_id!];
               data-api="cwv,lighthouse,page-weight"
             >
               <h2><a href="#comparison-summary" class="anchor">Summary</a></h2>
+              <p>Showing the latest data for <strong data-slot="techs-count">10 technologies</strong>.</p>
               <TableLinked id={activePage.config.tech_comparison_summary.id} table={activePage.config.tech_comparison_summary.table} />
+              <ul class="meta">
+                <li class="client">
+                  Client: <span data-slot="client">Mobile</span>
+                </li>
+                <li>
+                  Geo: <span data-slot="geo">ALL</span>
+                </li>
+                <li>
+                  Rank: <span data-slot="rank">ALL</span>
+                </li>
+              </ul>
             </div>
 
             <div
@@ -521,6 +533,19 @@ const activePage = config.pages?.[page_id!];
         // Attach filters and params dynamically
         pageConfig.filters = filters;
         pageConfig.params = params;
+
+        if (pageId === 'comparison') {
+          const count = requestedTechs.length;
+          const techWord = count === 1 ? 'technology' : 'technologies';
+          const titleEl = document.querySelector('h1 span.main-title');
+          if (titleEl) {
+            titleEl.textContent = `Compare ${count} ${techWord}`;
+          }
+          const summaryCountEl = document.querySelector('[data-slot="techs-count"]');
+          if (summaryCountEl) {
+            summaryCountEl.textContent = `${count} ${techWord}`;
+          }
+        }
 
         let dates = [];
         try {

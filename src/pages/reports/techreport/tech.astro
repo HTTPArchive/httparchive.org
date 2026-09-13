@@ -267,7 +267,19 @@ const comparisonPage = config.pages.comparison;
             data-api="cwv,lighthouse,page-weight"
           >
             <h2><a href="#comparison-summary" class="anchor">Summary</a></h2>
+            <p>Showing the latest data for <strong data-slot="techs-count">10 technologies</strong>.</p>
             <TableLinked id={comparisonPage.config.tech_comparison_summary.id} table={comparisonPage.config.tech_comparison_summary.table} />
+            <ul class="meta">
+              <li class="client">
+                Client: <span data-slot="client">Mobile</span>
+              </li>
+              <li>
+                Geo: <span data-slot="geo">ALL</span>
+              </li>
+              <li>
+                Rank: <span data-slot="rank">ALL</span>
+              </li>
+            </ul>
           </div>
 
           <div
@@ -429,6 +441,17 @@ const comparisonPage = config.pages.comparison;
           comp.classList.remove('hidden');
           const drill = document.getElementById('drilldown-view');
           if (drill) drill.remove();
+
+          const count = requestedTechs.length;
+          const techWord = count === 1 ? 'technology' : 'technologies';
+          const titleEl = comp.querySelector('h1 span.main-title');
+          if (titleEl) {
+            titleEl.textContent = `Compare ${count} ${techWord}`;
+          }
+          const summaryCountEl = comp.querySelector('[data-slot="techs-count"]');
+          if (summaryCountEl) {
+            summaryCountEl.textContent = `${count} ${techWord}`;
+          }
         } else {
           const drill = document.getElementById('drilldown-view');
           drill.id = 'report-content';

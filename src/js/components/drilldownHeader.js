@@ -72,6 +72,14 @@ function updateFilterMeta(filters) {
   document.querySelectorAll('[data-slot="rank"]').forEach(el => { el.textContent = rank; });
   document.querySelectorAll('[data-slot="tech"]').forEach(el => { el.textContent = tech; });
   document.querySelectorAll('[data-slot="client"]').forEach(el => { el.textContent = UIUtils.capitalizeFirstLetter(client); });
+
+  if (filters?.app?.length) {
+    const count = filters.app.length;
+    const techWord = count === 1 ? 'technology' : 'technologies';
+    document.querySelectorAll('[data-slot="techs-count"]').forEach(el => {
+      el.textContent = `${count} ${techWord}`;
+    });
+  }
 }
 
 function update(filters) {
