@@ -1,6 +1,7 @@
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
 import { Constants } from "./utils/constants.js";
+import { UrlUtils } from "./utils/url.js";
 
 class TableLinked {
   constructor(id, pageConfig, globalConfig, filters, data) {
@@ -53,11 +54,10 @@ class TableLinked {
         id: this.id,
       };
 
-      const filters = new URLSearchParams(window.location.search);
-      const geo = filters.get('geo') || 'ALL';
-      const rank = filters.get('rank') || 'ALL';
-      const start = filters.get('start') || '';
-      const end = filters.get('end') || '';
+      const geo = UrlUtils.get('geo', 'ALL');
+      const rank = UrlUtils.get('rank', 'ALL');
+      const start = UrlUtils.get('start', '');
+      const end = UrlUtils.get('end', '');
 
       // sort data
       const sortEndpoint = component.dataset.sortEndpoint;
@@ -276,10 +276,9 @@ class TableLinked {
 
   updateSelectionText(allSelectedApps) {
     const appLinks = document.querySelectorAll('[data-name="selected-apps"]');
-    const urlParams = new URLSearchParams(window.location.search);
-    const geo = urlParams.get('geo') || 'ALL';
-    const rank = urlParams.get('rank') || 'ALL';
-    const clientVal = document.querySelector('[data-component="tableLinked"]')?.dataset?.client || urlParams.get('client');
+    const geo = UrlUtils.get('geo', 'ALL');
+    const rank = UrlUtils.get('rank', 'ALL');
+    const clientVal = document.querySelector('[data-component="tableLinked"]')?.dataset?.client || UrlUtils.get('client');
     const client = clientVal === 'desktop' ? 'desktop' : 'mobile';
     const geoParam = geo !== 'ALL' ? `&geo=${encodeURIComponent(geo)}` : '';
     const rankParam = rank !== 'ALL' ? `&rank=${encodeURIComponent(rank)}` : '';

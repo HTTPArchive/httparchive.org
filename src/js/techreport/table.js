@@ -1,5 +1,6 @@
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
+import { UrlUtils } from "./utils/url";
 
 function formatData(tableConfig, data) {
   const { id, config, apps } = tableConfig;
@@ -101,8 +102,7 @@ function getColumnCell(columnConfig, data, date) {
 
 // Get the selected subcategory based on url
 function getSubcategory(config) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlSubcategory = urlParams.get(config.param);
+  const urlSubcategory = UrlUtils.get(config.param);
   const subcategory = urlSubcategory || config.default || '';
 
   return subcategory;

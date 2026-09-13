@@ -2,6 +2,7 @@
 /**
  * Category Filters component — translates templates/techreport/category.html filters form.
  */
+import FilterMeta from './FilterMeta.astro';
 ---
 <form id="page-filters">
   <div>
@@ -42,17 +43,7 @@
   </div>
   <button type="submit" id="submit-form" class="main-btn">Update</button>
 
-  <ul class="meta">
-    <li class="client">
-      Client: <span data-slot="client"></span>
-    </li>
-    <li>
-      Geo: <span data-slot="geo"></span>
-    </li>
-    <li>
-      Rank: <span data-slot="rank"></span>
-    </li>
-  </ul>
+  <FilterMeta showTech={false} />
 </form>
 
 <template id="filter-option">

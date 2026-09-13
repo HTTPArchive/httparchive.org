@@ -1,6 +1,7 @@
 import { DataUtils } from "../techreport/utils/data";
 import { UIUtils } from "../techreport/utils/ui.js";
 import { Constants } from "../techreport/utils/constants.js";
+import { UrlUtils } from "../techreport/utils/url.js";
 
 function setTitle(title) {
   const mainTitle = document.querySelector('h1 span.main-title');
@@ -32,7 +33,7 @@ function setCategories(categories) {
       cellTemplate.className = 'cell btn';
       const link = document.createElement('a');
       link.textContent = category;
-      const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = UrlUtils.getParams();
       urlParams.set('category', category);
       const tech = urlParams.get('tech');
       if (tech) {
@@ -71,10 +72,23 @@ function setDescription(description) {
   }
 }
 
+function safeDecodeText(val) {
+  if (typeof val !== 'string') return val;
+  try {
+    let decoded = decodeURIComponent(val);
+    if (decoded.includes('%')) {
+      try { decoded = decodeURIComponent(decoded); } catch (_) {}
+    }
+    return decoded;
+  } catch (_) {
+    return val;
+  }
+}
+
 function updateFilterMeta(filters) {
-  const geo = filters?.geo || 'ALL';
-  const rank = filters?.rank || 'ALL';
-  const tech = filters?.app ? filters.app.join(', ') : 'ALL';
+  const geo = safeDecodeText(filters?.geo) || 'ALL';
+  const rank = safeDecodeText(filters?.rank) || 'ALL';
+  const tech = filters?.app ? filters.app.map(safeDecodeText).join(', ') : 'ALL';
   const client = filters?.client || 'Mobile';
 
   document.querySelectorAll('[data-slot="geo"]').forEach(el => { el.textContent = geo; });

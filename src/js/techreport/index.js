@@ -1,10 +1,10 @@
-/* global Section */
-
 import Filters from '../components/filters';
+import Section from './section';
 import { Constants } from './utils/constants';
 import { DrilldownHeader } from "../components/drilldownHeader";
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
+import { UrlUtils } from "./utils/url";
 
 class TechReport {
   constructor(pageId, page, config, labels) {
@@ -164,12 +164,11 @@ class TechReport {
   // Restore any subcategory dropdown selectors based on URL parameters
   bindSubcategoryListener() {
     const dropdowns = document.querySelectorAll('.subcategory-selector');
-    const urlParams = new URLSearchParams(window.location.search);
 
     dropdowns.forEach(dropdown => {
       const param = dropdown.dataset.param;
       if (param) {
-        const urlVal = urlParams.get(param);
+        const urlVal = UrlUtils.get(param);
         if (urlVal) {
           const optionExists = Array.from(dropdown.options).some(opt => opt.value === urlVal);
           if (optionExists) {
@@ -185,8 +184,7 @@ class TechReport {
     const selects = document.querySelectorAll('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown');
 
     // Restore client from URL param on page load
-    const urlParams = new URLSearchParams(window.location.search);
-    const clientParam = urlParams.get('client');
+    const clientParam = UrlUtils.get('client');
     const selectedClient = clientParam || (selects[0] ? selects[0].value : 'mobile');
 
     if (this.filters) {
@@ -277,109 +275,22 @@ class TechReport {
   }
 
   // New API
-  getAllMetricData() {
+  async getAllMetricData() {
     const technologies = this.filters && this.filters.app;
 
     if (!technologies || !Array.isArray(technologies) || technologies.length === 0) {
       return;
     }
 
-    const apis = [
-      {
-        endpoint: 'technologies',
-        metric: 'technologies',
-      },
-      {
-        endpoint: 'cwv',
-        metric: 'vitals',
-        parse: DataUtils.parseVitalsData,
-      },
-      {
-        endpoint: 'lighthouse',
-        metric: 'lighthouse',
-        parse: DataUtils.parseLighthouseData,
-      },
-      {
-        endpoint: 'adoption',
-        metric: 'adoption',
-        parse: DataUtils.parseAdoptionData,
-      },
-      {
-        endpoint: 'page-weight',
-        metric: 'pageWeight',
-        parse: DataUtils.parsePageWeightData,
-      },
-    ];
-
-    const technology = technologies.join('%2C')
-      .replaceAll(" ", "%20");
-
-    const geo = this.filters.geo.replaceAll(" ", "%20");
-    const rank = this.filters.rank.replaceAll(" ", "%20");
-    const start = this.filters.start;
-    const end = this.filters.end;
-
-    let allResults = {};
-    let techInfo = {};
-    technologies.forEach(tech => allResults[tech] = []);
-
-    Promise.all(apis.map(api => {
-      let url = `${Constants.apiBase}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
-      if (start) {
-        url += `&start=${start}`;
-      }
-      if (end) {
-        url += `&end=${end}`;
-      }
-
-      return fetch(url)
-        .then(result => result.json())
-        .then(result => {
-          const sortedResult = result.sort((a, b) => new Date(a.date) - new Date(b.date));
-          let previousRow = {};
-          // Loop through all the rows of the API result
-          sortedResult.forEach(row => {
-            const parsedRow = {
-              ...row,
-            }
-
-            // Parse the data and add it to the results
-            if(api.parse) {
-              const metric = parsedRow[api.metric] || parsedRow;
-              const previousMetric = previousRow[row.technology]?.[api.metric];
-              parsedRow[api.metric] = api.parse(metric, previousMetric, parsedRow?.date);
-            }
-
-            if(api.endpoint === 'technologies') {
-              techInfo[row.technology] = row;
-            } else {
-              const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
-              if(resIndex > -1) {
-                allResults[row.technology][resIndex] = {
-                  ...allResults[row.technology][resIndex],
-                  ...techInfo[row.technology],
-                  ...parsedRow
-                }
-              } else {
-                allResults[row.technology].push(parsedRow);
-              }
-            }
-
-            previousRow[row.technology] = row;
-          });
-        })
-        .catch(error => console.log('Something went wrong', error));
-    })).then(() => {
-      // Ensure techInfo properties (such as icon) are merged into allResults even if technologies finishes later
-      Object.keys(techInfo).forEach(tech => {
-        if (allResults[tech]?.length) {
-          allResults[tech].forEach(row => {
-            Object.assign(row, techInfo[tech]);
-          });
-        }
-      });
-      this.updateComponents(allResults);
+    const allResults = await DataUtils.fetchMetricsForTechnologies({
+      technologies,
+      geo: this.filters.geo,
+      rank: this.filters.rank,
+      start: this.filters.start,
+      end: this.filters.end,
     });
+
+    this.updateComponents(allResults);
   }
 
   getCategoryData() {
@@ -572,11 +483,9 @@ class TechReport {
       return new TechReport('landing', pageConfig, fullConfig, labels);
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-
     // Resolve polymorphic route (/reports/techreport/tech)
     if (!pageId || pageId === 'tech') {
-      const techParam = urlParams.get('tech') || 'ALL';
+      const techParam = UrlUtils.get('tech', 'ALL');
       const techs = techParam.split(',').map(t => t.trim()).filter(Boolean);
       pageId = techs.length > 1 ? 'comparison' : 'drilldown';
       if (pages) {
@@ -608,44 +517,14 @@ class TechReport {
       }
     }
 
-    // Extract query parameters
-    const requestedGeo = urlParams.get('geo') || 'ALL';
-    const requestedRank = urlParams.get('rank') || 'ALL';
-    const requestedClient = urlParams.get('client') || 'mobile';
-    const requestedCategory = urlParams.get('category') || 'CMS';
-    const requestedStart = urlParams.get('start') || '';
-    const requestedEnd = urlParams.get('end') || '';
-    const requestedPage = parseInt(urlParams.get('page') || '1', 10);
-    const selectedTechs = urlParams.get('selected');
-    const selectedRows = urlParams.get('rows') || '10';
-    const lastPage = urlParams.get('last_page') === 'true';
-
-    let requestedTechs = ['ALL'];
-    const techParam = urlParams.get('tech');
-    if (techParam) {
-      requestedTechs = techParam.split(',').map(t => t.trim()).filter(Boolean);
-    } else if (pageConfig?.config?.default?.app) {
-      requestedTechs = pageConfig.config.default.app;
-    }
-
-    const filters = {
-      geo: requestedGeo,
-      rank: requestedRank,
-      client: requestedClient,
-      app: requestedTechs,
-      category: requestedCategory,
-      page: requestedPage,
-      last_page: lastPage,
-      selected: selectedTechs,
-      rows: selectedRows,
-      start: requestedStart,
-      end: requestedEnd,
-    };
+    // Extract query parameters and filters
+    const filters = UrlUtils.getFilters(pageConfig);
+    const requestedTechs = filters.app;
 
     const params = {
-      geo: requestedGeo,
-      rank: requestedRank,
-      client: requestedClient,
+      geo: filters.geo,
+      rank: filters.rank,
+      client: filters.client,
     };
 
     pageConfig.filters = filters;
@@ -670,8 +549,8 @@ class TechReport {
       }
     } else if (pageId === 'category') {
       const titleEl = document.querySelector('h1 span.main-title');
-      if (titleEl && requestedCategory) {
-        titleEl.textContent = requestedCategory;
+      if (titleEl && filters.category) {
+        titleEl.textContent = filters.category;
       }
     }
 
@@ -692,8 +571,8 @@ class TechReport {
     const startSelect = document.getElementById('startDate');
     const endSelect = document.getElementById('endDate');
     if (startSelect && endSelect) {
-      const startVal = urlParams.get('start') || '';
-      const endVal = urlParams.get('end') || '';
+      const startVal = filters.start || '';
+      const endVal = filters.end || '';
 
       dates.forEach(d => {
         const formattedDate = d.replace(/_/g, '-');
@@ -734,3 +613,5 @@ class TechReport {
 }
 
 window.TechReport = TechReport;
+export default TechReport;
+export { TechReport };

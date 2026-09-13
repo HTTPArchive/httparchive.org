@@ -2,6 +2,7 @@
 
 import { Constants } from './utils/constants';
 import { UIUtils } from './utils/ui';
+import { UrlUtils } from './utils/url';
 
 class CwvDistribution {
   // eslint-disable-next-line no-unused-vars -- pageConfig, config, data satisfy the Section component contract
@@ -14,7 +15,7 @@ class CwvDistribution {
     this.chart = null;
     this.root = document.querySelector(`[data-id="${this.id}"]`);
     this.date = this.pageFilters.end || this.root?.dataset?.latestDate || '';
-    this.selectedMetric = this.resolveMetric(new URLSearchParams(window.location.search).get('good-cwv-over-time'));
+    this.selectedMetric = this.resolveMetric(UrlUtils.get('good-cwv-over-time'));
 
     const updateDateFromTimeseries = (newDate) => {
       this.date = newDate;
@@ -313,3 +314,5 @@ class CwvDistribution {
 }
 
 window.CwvDistribution = CwvDistribution;
+export default CwvDistribution;
+export { CwvDistribution };

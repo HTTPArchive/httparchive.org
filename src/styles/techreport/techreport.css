@@ -500,7 +500,9 @@ nav {
 }
 
 .report-navigation img {
-  max-height: 2rem;
+  height: 2rem;
+  width: auto;
+  aspect-ratio: 2 / 1;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -1167,6 +1169,10 @@ select {
 }
 
 /* Timeseries cards */
+div[id$="-timeseries"] {
+  min-height: 400px;
+}
+
 .timeseries-container {
   margin-top: 2rem;
 }

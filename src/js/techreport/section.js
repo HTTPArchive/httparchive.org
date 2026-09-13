@@ -1,5 +1,6 @@
-/* global Timeseries, GeoBreakdown, CwvDistribution */
-
+import Timeseries from "./timeseries";
+import GeoBreakdown from "./geoBreakdown";
+import CwvDistribution from "./cwvDistribution";
 import SummaryCard from "./summaryCards";
 import TableLinked from "./tableLinked";
 
@@ -152,3 +153,5 @@ class Section {
 }
 
 window.Section = Section;
+export default Section;
+export { Section };

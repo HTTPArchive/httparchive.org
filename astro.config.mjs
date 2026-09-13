@@ -8,6 +8,9 @@ export default defineConfig({
 
   // Base URL
   site: 'https://httparchive.org',
+  devToolbar: {
+    enabled: false,
+  },
   server: {
     port: 8080,
     host: true,

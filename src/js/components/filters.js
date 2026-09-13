@@ -154,13 +154,14 @@ class Filters {
   updateGeo() {
     const select = document.querySelector('select#geo');
     select.innerHTML = '';
+    const normalizedFilter = decodeURIComponent(this.filters.geo || '').trim();
     this.geos.forEach((geo) => {
       const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
       const option = optionTmpl.querySelector('option');
       const formattedTech = geo.geo;
       option.textContent = geo.geo;
       option.value = formattedTech;
-      if(formattedTech === this.filters.geo) {
+      if(formattedTech === this.filters.geo || formattedTech === normalizedFilter) {
         option.selected = true;
       }
       select.append(optionTmpl);
@@ -171,13 +172,14 @@ class Filters {
   updateRank() {
     const select = document.querySelector('select#rank');
     select.innerHTML = '';
+    const normalizedFilter = decodeURIComponent(this.filters.rank || '').trim();
     this.ranks.forEach((rank) => {
       const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
       const option = optionTmpl.querySelector('option');
       const formattedTech = rank.rank;
       option.textContent = rank.rank;
       option.value = formattedTech;
-      if(formattedTech === this.filters.rank) {
+      if(formattedTech === this.filters.rank || formattedTech === normalizedFilter) {
         option.selected = true;
       }
       select.append(optionTmpl);

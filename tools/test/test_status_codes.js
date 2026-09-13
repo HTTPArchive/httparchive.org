@@ -2,7 +2,7 @@ const fs = require("fs-extra");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const convert = require('xml-js');
 
-const base_url = "http://127.0.0.1:8080";
+const base_url = process.env.TEST_BASE_URL || "http://127.0.0.1:8080";
 
 const output_dir = `public/static/html`;
 

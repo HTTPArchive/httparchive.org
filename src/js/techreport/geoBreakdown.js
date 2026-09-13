@@ -1,5 +1,6 @@
 import { Constants } from './utils/constants';
 import { UIUtils } from './utils/ui';
+import { UrlUtils } from './utils/url';
 
 class GeoBreakdown {
   constructor(id, pageConfig, config, filters, data) {
@@ -9,7 +10,7 @@ class GeoBreakdown {
     this.pageFilters = filters;
     this.data = data;
     this.geoData = null;
-    this.selectedMetric = this.resolveMetric(new URLSearchParams(window.location.search).get('good-cwv-over-time')) || 'overall';
+    this.selectedMetric = this.resolveMetric(UrlUtils.get('good-cwv-over-time')) || 'overall';
     this.sortColumn = 'total';
     this.sortDir = 'desc';
     this.showAll = false;
@@ -274,3 +275,5 @@ class GeoBreakdown {
 }
 
 window.GeoBreakdown = GeoBreakdown;
+export default GeoBreakdown;
+export { GeoBreakdown };

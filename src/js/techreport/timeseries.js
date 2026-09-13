@@ -3,6 +3,7 @@
 import { Table } from "./table";
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
+import { UrlUtils } from "./utils/url";
 
 class Timeseries {
   // Create the component
@@ -28,12 +29,11 @@ class Timeseries {
     const param = subcategoryConfig?.param || vizConfig?.param;
     const defaultVal = subcategoryConfig?.default || vizConfig?.default || '';
 
-    const urlParams = new URLSearchParams(window.location.search);
-    let activeSubmetric = (param ? urlParams.get(param) : null) || defaultVal;
+    let activeSubmetric = (param ? UrlUtils.get(param) : null) || defaultVal;
 
     dropdowns.forEach(dropdown => {
       const dropParam = dropdown.dataset.param || param;
-      const urlVal = dropParam ? urlParams.get(dropParam) : null;
+      const urlVal = dropParam ? UrlUtils.get(dropParam) : null;
       if (urlVal) {
         const optionExists = Array.from(dropdown.options).some(opt => opt.value === urlVal);
         if (optionExists) {
@@ -152,7 +152,14 @@ class Timeseries {
       this.updateSummary();
     }
     this.updateViz();
-    Table.updateTable(this.id, this.pageConfig[this.id]?.table, this.config, this.pageFilters.app, this.data);
+    const updateTable = () => {
+      Table.updateTable(this.id, this.pageConfig[this.id]?.table, this.config, this.pageFilters.app, this.data);
+    };
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      window.requestIdleCallback(updateTable, { timeout: 2000 });
+    } else {
+      setTimeout(updateTable, 100);
+    }
   }
 
   // Update the summary with the latest data for all categories
@@ -189,8 +196,7 @@ class Timeseries {
 
     if(sorted) {
       /* Get the currently selected subcategory based on the URL */
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlSubcategory = urlParams.get(config.param);
+      const urlSubcategory = UrlUtils.get(config.param);
       const subcategory = urlSubcategory || config.default;
       const showChange = container.dataset.change;
       const changeMeaning = container?.dataset?.meaning;
@@ -271,8 +277,7 @@ class Timeseries {
     const container = component.querySelector('.breakdown-list');
 
     /* Get the currently selected subcategory based on the URL */
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlSubcategory = urlParams.get(config.param);
+    const urlSubcategory = UrlUtils.get(config.param);
     const subcategory = urlSubcategory || config.default;
 
     /* Get settings */
@@ -318,7 +323,7 @@ class Timeseries {
         const timestamp = component.querySelector('[data-slot="timestamp"]');
 
         /* Update text */
-        const formattedApp = DataUtils.formatAppName(latest.technology);
+        const formattedApp = DataUtils.formatAppName(latest?.technology || app);
         label.textContent = formattedApp;
         if(latestValue) {
           if(summary) {
@@ -405,88 +410,40 @@ class Timeseries {
       crosshairs: true,
       useHTML: true,
       formatter: function() {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'tooltip-wrapper';
+        const d = Highcharts.dateFormat('%b %Y', this.x);
+        const pointItems = (this.points || []).map(point => {
+          const color = point.color;
+          const strokeWidth = point?.point?.graphic?.['stroke-width'] ?? 1;
+          const width = point?.point?.graphic?.width ?? 8;
+          const symbolName = point?.point?.graphic?.symbolName;
 
-        const d =  Highcharts.dateFormat('%b %Y', this.x);
-
-        const dateEl = document.createElement('p');
-        dateEl.innerHTML = d;
-
-        wrapper.appendChild(dateEl);
-
-        const pointList = document.createElement('ul');
-
-        this.points.forEach(point => {
-          const pointItem = document.createElement('li');
-          const pointSeries = document.createElement('span');
-
-          const pointSvg = document.createElement('svg');
-          let pointSymbol;
-
-          switch(point?.point?.graphic?.symbolName) {
+          let symbolMarkup;
+          switch(symbolName) {
             case 'circle':
-              pointSymbol = document.createElement('circle');
-              pointSymbol.setAttribute('class', 'point-symbol circle');
-              pointSymbol.setAttribute('r', point.point.graphic.width / 2);
-              pointSymbol.setAttribute('stroke', point.color);
-              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              symbolMarkup = `<circle class="point-symbol circle" r="${width / 2}" stroke="${color}" stroke-width="${strokeWidth}"/>`;
               break;
-
             case 'diamond':
-              pointSymbol = document.createElement('path');
-              pointSymbol.setAttribute('class', 'point-symbol diamond');
-              pointSymbol.setAttribute('d', 'M 4 0 L 8 4 L 4 8 L 0 4 Z');
-              pointSymbol.setAttribute('stroke', point.color);
-              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              symbolMarkup = `<path class="point-symbol diamond" d="M 4 0 L 8 4 L 4 8 L 0 4 Z" stroke="${color}" stroke-width="${strokeWidth}"/>`;
               break;
-
             case 'square':
-              pointSymbol = document.createElement('path');
-              pointSymbol.setAttribute('class', 'point-symbol square');
-              pointSymbol.setAttribute('d', 'M 0 0 L 8 0 L 8 8 L 0 8 Z');
-              pointSymbol.setAttribute('stroke', point.color);
-              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              symbolMarkup = `<path class="point-symbol square" d="M 0 0 L 8 0 L 8 8 L 0 8 Z" stroke="${color}" stroke-width="${strokeWidth}"/>`;
               break;
-
             case 'triangle-down':
-              pointSymbol = document.createElement('path');
-              pointSymbol.setAttribute('class', 'point-symbol triangle-down');
-              pointSymbol.setAttribute('d', 'M 0 0 L 8 0 L 4 8 Z');
-              pointSymbol.setAttribute('stroke', point.color);
-              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              symbolMarkup = `<path class="point-symbol triangle-down" d="M 0 0 L 8 0 L 4 8 Z" stroke="${color}" stroke-width="${strokeWidth}"/>`;
               break;
-
             case 'triangle':
-              pointSymbol = document.createElement('path');
-              pointSymbol.setAttribute('class', 'point-symbol triangle-up');
-              pointSymbol.setAttribute('d', 'M 4 0 L 8 8 L 0 8 Z');
-              pointSymbol.setAttribute('stroke', point.color);
-              pointSymbol.setAttribute('stroke-width', point.point.graphic['stroke-width']);
+              symbolMarkup = `<path class="point-symbol triangle-up" d="M 4 0 L 8 8 L 0 8 Z" stroke="${color}" stroke-width="${strokeWidth}"/>`;
               break;
-
-
             default:
-              pointSymbol = document.createElement('circle');
-              pointSymbol.setAttribute('class', 'point-fallback');
-              pointSymbol.setAttribute('r', '4');
-              pointSymbol.setAttribute('fill', point.color);
+              symbolMarkup = `<circle class="point-fallback" r="4" fill="${color}"/>`;
               break;
           }
 
-          pointSvg.appendChild(pointSymbol);
+          const seriesName = UIUtils.capitalizeFirstLetter(point.series.name);
+          return `<li><svg>${symbolMarkup}</svg> <span>${seriesName}</span>: ${point.y.toLocaleString()}</li>`;
+        }).join('');
 
-          document.getElementsByTagName('main')[0].append(pointSvg);
-
-          pointSeries.innerHTML = UIUtils.capitalizeFirstLetter(point.series.name);
-          pointItem.innerHTML = `${pointSvg.outerHTML} ${pointSeries.outerHTML}: ${point.y.toLocaleString()}`;
-
-          pointList.appendChild(pointItem);
-        });
-
-        wrapper.appendChild(pointList);
-
-        return wrapper.outerHTML;
+        return `<div class="tooltip-wrapper"><p>${d}</p><ul>${pointItems}</ul></div>`;
       }
     }
 
@@ -498,7 +455,31 @@ class Timeseries {
     }
 
     // Render the chart
-    Highcharts.chart(`${this.id}-timeseries`, timeseries);
+    const container = document.getElementById(`${this.id}-timeseries`);
+    if (!container) return;
+
+    const render = () => {
+      Highcharts.chart(`${this.id}-timeseries`, timeseries);
+      this.chartRendered = true;
+    };
+
+    if (this.chartRendered || typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      render();
+    } else {
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+      this.observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            obs.disconnect();
+            this.observer = null;
+            render();
+          }
+        });
+      }, { rootMargin: '400px 0px' });
+      this.observer.observe(container);
+    }
   }
 
   // Format the data in the format Highcharts needs it to be
@@ -532,32 +513,42 @@ class Timeseries {
 
     // Get the currently selected subcategory based on the URL
     const config = this.pageConfig[this.id]?.viz;
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlSubcategory = urlParams.get(config.param);
+    const urlSubcategory = UrlUtils.get(config.param);
     const subcategory = urlSubcategory || config.default;
 
     // Get default colors
     const colors = this.defaults(config)?.chart?.colors;
 
     // Create series to use in Highcharts
-    Object.values(this.data).forEach((app, index) => {
-      const tech = app[0]?.technology;
+    const apps = this.pageFilters?.app || Object.keys(this.data || {});
+    apps.forEach((techName, index) => {
+      const app = this.data?.[techName] || [];
+      const tech = app[0]?.technology || techName;
       const techColor = UIUtils.getAppColor(tech, this.pageFilters.app, this.pageConfig.colors);
 
-      const data = app.map(row => {
-        const value = row?.[endpoint]?.find(row => row.name === subcategory)?.[client]?.[metric];
-        return {
-          x: new Date(row.date).getTime(),
-          y: value || 0,
-        };
+      const validPoints = [];
+      app.forEach(row => {
+        const categoryData = row?.[endpoint]?.find(r => r.name === subcategory);
+        const clientData = categoryData?.[client];
+        const value = clientData?.[metric];
+        if (value !== null && value !== undefined && value !== '') {
+          const num = Number(value);
+          if (!isNaN(num)) {
+            validPoints.push({
+              x: new Date(row.date).getTime(),
+              y: num,
+            });
+          }
+        }
       });
 
-      const sortedData = data.sort((a, b) => new Date(a.x) - new Date(b.x) ? -1 : 1);
+      const sortedData = validPoints.sort((a, b) => a.x - b.x);
 
       series.push({
         name: tech,
         data: sortedData,
-        color: techColor || colors[index]
+        color: techColor || colors[index],
+        showInLegend: sortedData.length > 0,
       });
     });
 
@@ -588,16 +579,21 @@ class Timeseries {
       // Formatted as coordinates for Highcharts
       const formattedData = [];
       appData?.forEach(row => {
-        const categoryData = row?.[endpoint]?.find(row => row.name === category);
+        const categoryData = row?.[endpoint]?.find(r => r.name === category);
         const clientData = categoryData?.[value.name];
         const y = clientData?.[metric];
-        formattedData.push({
-          x: new Date(row.date).getTime(),
-          y: Number(y),
-        });
+        if (y !== null && y !== undefined && y !== '') {
+          const num = Number(y);
+          if (!isNaN(num)) {
+            formattedData.push({
+              x: new Date(row.date).getTime(),
+              y: num,
+            });
+          }
+        }
       });
 
-      const sortedData = formattedData.sort((a, b) => new Date(a.x) - new Date(b.x));
+      const sortedData = formattedData.sort((a, b) => a.x - b.x);
 
       // Pick color from settings depending on theme
       const colors = this.defaults(config)?.chart?.colors;
@@ -606,14 +602,12 @@ class Timeseries {
       const seriesColor = theme === "dark" ? colorDark : colorLight;
 
       // Push the configurations and formatted data to the series array
-      series.push(
-        {
-          name: value.name,
-          data: sortedData,
-          color: seriesColor || colors?.[index],
-          lineWidth: 2,
-        }
-      )
+      series.push({
+        name: value.name,
+        data: sortedData,
+        color: seriesColor || colors?.[index],
+        lineWidth: 2,
+      });
     });
 
     return series;
@@ -624,8 +618,7 @@ class Timeseries {
     const defaultMetric = config.default;
 
     // Get the submetric from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlSubcategory = urlParams.get(config.param);
+    const urlSubcategory = UrlUtils.get(config.param);
 
     return this.submetric || urlSubcategory || defaultMetric;
   }
@@ -674,3 +667,5 @@ class Timeseries {
 
 /* Make the component availble everywhere */
 window.Timeseries = Timeseries;
+export default Timeseries;
+export { Timeseries };

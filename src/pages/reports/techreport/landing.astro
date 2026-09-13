@@ -3,10 +3,8 @@
  * Tech Report landing page — /reports/techreport/landing
  * Replicates the Flask techreportlanding() route for page_id="landing"
  */
-import Base from '../../../layouts/Base.astro';
+import TechReportLayout from '../../../layouts/TechReportLayout.astro';
 import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
-import '../../../styles/techreport/general.css';
-import '../../../styles/techreport/techreport.css';
 import '../../../styles/techreport/landing.css';
 
 const config = techReportConfig as any;
@@ -14,46 +12,7 @@ const config = techReportConfig as any;
 const drilldownTechs = (config.config?.default_apps?.drilldown || []).join(',');
 const comparisonTechs = (config.config?.default_apps?.comparison || []).join(',');
 ---
-<Base
-  title="HTTP Archive: Tech Report"
-  description="Track and compare web technology performance and adoption."
-  customNavigation={true}
->
-
-  <!-- Custom techreport navigation -->
-  <Fragment slot="custom-navigation">
-    <a href="#main" class="skip main-btn">Skip to main content</a>
-    <a href="#results" class="skip main-btn">Skip to results</a>
-    <nav class="report-navigation">
-      <a href="/">
-        <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
-      </a>
-      <div class="hidden-xs">
-        <ul id="desktop" class="navigation-items">
-          <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
-          <li>
-            <a href="/reports/techreport/landing" aria-current="page"><span>Home</span></a>
-          </li>
-          <li>
-            <a href={`/reports/techreport/tech?geo=ALL&rank=ALL&tech=ALL`}><span>Technologies</span></a>
-          </li>
-          <li>
-            <a href="/reports/techreport/category?geo=ALL&rank=ALL&category=CMS"><span>Categories</span></a>
-          </li>
-        </ul>
-      </div>
-      <div class="visible-xs">
-        <button class="hamburger">
-          <span class="sr-only">Menu</span>
-          <svg aria-hidden="true" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
-          </svg>
-        </button>
-      </div>
-    </nav>
-    <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
-  </Fragment>
-
+<TechReportLayout activeNav="home" pageId="landing" showFilters={false}>
   <!-- Landing page content -->
   <div class="intro block-m">
     <div>
@@ -92,41 +51,4 @@ const comparisonTechs = (config.config?.default_apps?.comparison || []).join(','
       </p>
     </div>
   </div>
-
-  <div class="feedback" id="section-feedback">
-    <div class="block-m">
-      <h2><a href="#section-feedback" class="anchor">Feedback?</a></h2>
-      <p>Please raise a <a href="https://github.com/HTTPArchive/httparchive.org/issues/new?template=tech-report.md">GitHub issue</a> if you spot any problems, or for any feature requests.</p>
-    </div>
-  </div>
-
-  <div class="accessibility-options" id="section-accessibility-options">
-    <div class="wrapper block-m">
-      <h2><a href="#section-accessibility-options" class="anchor">Accessibility</a></h2>
-      <p>Change settings related to accessibility here</p>
-      <div class="setting">
-        <div class="check-wrapper">
-          <label for="indicators-check">Show markers</label>
-          <input type="checkbox" name="indicators-check" id="indicators-check">
-        </div>
-      </div>
-      <div class="setting">
-        <button class="theme-switcher">🌚 Switch to dark mode</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="techreport-data" data-page-id="landing" data-page-config={JSON.stringify(config.pages?.landing)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
-
-  <Fragment slot="scripts">
-    <script src="../../../js/highcharts-init.js"></script>
-    <script src="../../../js/techreport/timeseries.js"></script>
-    <script src="../../../js/techreport/geoBreakdown.js"></script>
-    <script src="../../../js/techreport/cwvDistribution.js"></script>
-    <script src="../../../js/techreport/section.js"></script>
-    <script src="../../../js/techreport/index.js"></script>
-    <script>
-      TechReport.start();
-    </script>
-  </Fragment>
-</Base>
+</TechReportLayout>
