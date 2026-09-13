@@ -61,6 +61,16 @@ function setDescription(description) {
   }
 }
 
+function updateFilterMeta(filters) {
+  const geo = filters.geo || 'ALL';
+  const rank = filters.rank || 'ALL';
+  const tech = filters.app ? filters.app.join(', ') : 'ALL';
+
+  document.querySelectorAll('[data-slot="geo"]').forEach(el => { el.textContent = geo; });
+  document.querySelectorAll('[data-slot="rank"]').forEach(el => { el.textContent = rank; });
+  document.querySelectorAll('[data-slot="tech"]').forEach(el => { el.textContent = tech; });
+}
+
 function update(filters) {
   const app = filters.app[0];
 
@@ -68,10 +78,13 @@ function update(filters) {
     const formattedApp = DataUtils.formatAppName(app);
     setTitle(formattedApp);
   }
+
+  updateFilterMeta(filters);
 }
 
 export const DrilldownHeader = {
   update,
+  updateFilterMeta,
   setCategories,
   setDescription,
   setIcon,

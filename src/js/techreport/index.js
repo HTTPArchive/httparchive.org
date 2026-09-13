@@ -144,6 +144,19 @@ class TechReport {
 
     if(select) {
       select.onchange = (event) => this.updateClient(event);
+
+      // Restore client from URL param on page load
+      const urlParams = new URLSearchParams(window.location.search);
+      const clientParam = urlParams.get('client');
+      if(clientParam && clientParam !== select.value) {
+        select.value = clientParam;
+        document.querySelectorAll('[data-client]').forEach(component => {
+          component.dataset.client = clientParam;
+        });
+        document.querySelectorAll('[data-slot="client"]').forEach(component => {
+          component.innerText = clientParam;
+        });
+      }
     }
   }
 
@@ -360,11 +373,13 @@ class TechReport {
       case 'comparison':
         this.updateComparisonComponents(data);
         this.getFilterInfo();
+        DrilldownHeader.updateFilterMeta(this.filters);
         break;
 
       case 'category':
         this.updateComparisonComponents(data);
         this.getFilterInfo();
+        DrilldownHeader.updateFilterMeta(this.filters);
         break;
     }
   }
