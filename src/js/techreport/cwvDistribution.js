@@ -88,17 +88,6 @@ class CwvDistribution {
         this.toggle(!isVisible);
       });
     }
-
-    const submitBtn = document.getElementById('submit-form');
-    if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
-        if (this.root && !this.root.classList.contains('hidden')) {
-          const url = new URL(window.location.href);
-          url.hash = `#section-${this.id}`;
-          window.history.replaceState(null, null, url);
-        }
-      }, true);
-    }
   }
 
   toggle(show) {
