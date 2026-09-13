@@ -159,3 +159,8 @@ State must be preserved when navigating between views or submitting filters:
 7. **`GeoBreakdown`**:
   - Displays geographic distribution table broken down by countries/regions.
   - Updates when either the geo filter, client selector, or CWV submetric changes.
+
+8. **`Empty Template Placeholders & Immediate Hydration`**:
+  - Static templates (`.astro`) leave `<span class="main-title"></span>` and metadata slots (`<span data-slot="..."></span>`) empty rather than hardcoding fallback values like `"ALL"` or `"Mobile"`. This prevents Flash of Incorrect Content (FOIC) when visiting filtered URLs.
+  - In `DOMContentLoaded` and `TechReport.prototype.initializeReport()`, `DrilldownHeader.update()` / `DrilldownHeader.updateFilterMeta()` are called synchronously upon page initialization to immediately populate the title and all metadata slots from URL parameters, prior to awaiting asynchronous metric API fetches.
+

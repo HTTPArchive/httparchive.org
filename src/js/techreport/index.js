@@ -134,6 +134,18 @@ class TechReport {
     this.bindClientListener();
     this.bindSubcategoryListener();
 
+    if (this.pageId === 'drilldown') {
+      DrilldownHeader.update(this.filters);
+    } else {
+      DrilldownHeader.updateFilterMeta(this.filters);
+      if (this.pageId === 'category') {
+        const mainTitle = document.querySelector('h1 span.main-title');
+        if (mainTitle && this.filters.category) {
+          mainTitle.textContent = this.filters.category;
+        }
+      }
+    }
+
     const sections = document.querySelectorAll('[data-type="section"]');
 
     // Create new class for each of the sections

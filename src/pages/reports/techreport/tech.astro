@@ -96,7 +96,7 @@ const comparisonPage = config.pages.comparison;
             <h1>
               <span class="subtitle">Technology</span>
               <span>
-                <span class="main-title">ALL</span>
+                <span class="main-title"></span>
                 <span class="title-img" role="img" aria-hidden="true"></span>
               </span>
             </h1>
@@ -271,13 +271,13 @@ const comparisonPage = config.pages.comparison;
             <TableLinked id={comparisonPage.config.tech_comparison_summary.id} table={comparisonPage.config.tech_comparison_summary.table} />
             <ul class="meta">
               <li class="client">
-                Client: <span data-slot="client">Mobile</span>
+                Client: <span data-slot="client"></span>
               </li>
               <li>
-                Geo: <span data-slot="geo">ALL</span>
+                Geo: <span data-slot="geo"></span>
               </li>
               <li>
-                Rank: <span data-slot="rank">ALL</span>
+                Rank: <span data-slot="rank"></span>
               </li>
             </ul>
           </div>
@@ -458,6 +458,11 @@ const comparisonPage = config.pages.comparison;
           drill.classList.remove('hidden');
           const comp = document.getElementById('comparison-view');
           if (comp) comp.remove();
+
+          const titleEl = drill.querySelector('h1 span.main-title');
+          if (titleEl && requestedTechs[0]) {
+            titleEl.textContent = requestedTechs[0] === 'ALL' ? 'All technologies' : requestedTechs[0];
+          }
         }
 
         // Fetch available crawl dates from API and populate selectors
