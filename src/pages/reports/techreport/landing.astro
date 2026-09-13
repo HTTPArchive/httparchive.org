@@ -116,7 +116,7 @@ const comparisonTechs = (config.config?.default_apps?.comparison || []).join(','
     </div>
   </div>
 
-  <div id="techreport-data" data-page-config={JSON.stringify(config.pages?.landing)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
+  <div id="techreport-data" data-page-id="landing" data-page-config={JSON.stringify(config.pages?.landing)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
 
   <Fragment slot="scripts">
     <script src="../../../js/highcharts-init.js"></script>
@@ -126,14 +126,7 @@ const comparisonTechs = (config.config?.default_apps?.comparison || []).join(','
     <script src="../../../js/techreport/section.js"></script>
     <script src="../../../js/techreport/index.js"></script>
     <script>
-      addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('techreport-data');
-        if (!container) return;
-        const pageConfig = JSON.parse(container.dataset.pageConfig);
-        const fullConfig = JSON.parse(container.dataset.fullConfig);
-        const labels = JSON.parse(container.dataset.labels);
-        new TechReport('landing', pageConfig, fullConfig, labels);
-      });
+      TechReport.start();
     </script>
   </Fragment>
 </Base>

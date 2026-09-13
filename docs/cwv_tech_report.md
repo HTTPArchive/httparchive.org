@@ -164,3 +164,15 @@ State must be preserved when navigating between views or submitting filters:
   - Static templates (`.astro`) leave `<span class="main-title"></span>` and metadata slots (`<span data-slot="..."></span>`) empty rather than hardcoding fallback values like `"ALL"` or `"Mobile"`. This prevents Flash of Incorrect Content (FOIC) when visiting filtered URLs.
   - In `DOMContentLoaded` and `TechReport.prototype.initializeReport()`, `DrilldownHeader.update()` / `DrilldownHeader.updateFilterMeta()` are called synchronously upon page initialization to immediately populate the title and all metadata slots from URL parameters, prior to awaiting asynchronous metric API fetches.
 
+9. **`Unified Client-Side Bootstrap (TechReport.start / TechReport.boot)`**:
+  - Instead of duplicate inline script tags in `.astro` files, all techreport pages (`tech.astro`, `[page_id].astro`, and `landing.astro`) use a single call: `TechReport.start()`.
+  - `TechReport.boot()` parses URL query parameters, resolves polymorphic pages (`tech.astro` drilldown vs comparison), removes inactive layouts, sets initial titles, fetches crawl dates to populate date selectors, and initializes `TechReport`.
+
+10. **`Reusable View Layout Components`**:
+  - `DrilldownView.astro` ([`src/components/techreport/DrilldownView.astro`](file:///Users/maxostapenko/httparchive/httparchive.org/src/components/techreport/DrilldownView.astro)): Encapsulates the single-technology drilldown layout (Summary cards, CWV with geo/histogram panels, Lighthouse, Page Weight, Adoption).
+  - `ComparisonView.astro` ([`src/components/techreport/ComparisonView.astro`](file:///Users/maxostapenko/httparchive/httparchive.org/src/components/techreport/ComparisonView.astro)): Encapsulates the multi-technology comparison layout (Summary table, CWV, Lighthouse, Page Weight, Adoption timeseries).
+  - `CategoryView.astro` ([`src/components/techreport/CategoryView.astro`](file:///Users/maxostapenko/httparchive/httparchive.org/src/components/techreport/CategoryView.astro)): Encapsulates the category reporting view (Category summary and paginated technology table).
+  - Both `[page_id].astro` and `tech.astro` render these shared views, eliminating ~600 lines of duplicate Astro template code.
+
+
+

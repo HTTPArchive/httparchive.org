@@ -1,0 +1,116 @@
+---
+/**
+ * ComparisonView.astro
+ * Renders the multi-technology comparison layout with summary table and metric timeseries.
+ */
+import Timeseries from './Timeseries.astro';
+import TableLinked from './TableLinked.astro';
+
+interface Props {
+  config: any;
+  pageConfig: any;
+  id?: string;
+  isHidden?: boolean;
+}
+
+const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.props;
+---
+<div id={id} class:list={['report-content', { hidden: isHidden }]}>
+  <div class="info intro block-m">
+    <div class="heading-wrapper">
+      <h1>
+        <span class="subtitle">Technology</span>
+        <span class="main-title">Compare technologies</span>
+      </h1>
+      <div class="breakdown default-dropdown-group">
+        <label for="comparison-client-breakdown" class="default-dropdown-label">Client</label>
+        <div class="select-label default-dropdown-wrapper">
+          <select class="default-dropdown" name="client-breakdown" id="comparison-client-breakdown">
+            <option value="mobile" selected>Mobile</option>
+            <option value="desktop">Desktop</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-sections">
+    <div
+      id="comparison-summary"
+      class="card block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
+      <h2><a href="#comparison-summary" class="anchor">Summary</a></h2>
+      <p>Showing the latest data for <strong data-slot="techs-count">10 technologies</strong>.</p>
+      <TableLinked id={pageConfig.config.tech_comparison_summary.id} table={pageConfig.config.tech_comparison_summary.table} />
+      <ul class="meta">
+        <li class="client">
+          Client: <span data-slot="client"></span>
+        </li>
+        <li>
+          Geo: <span data-slot="geo"></span>
+        </li>
+        <li>
+          Rank: <span data-slot="rank"></span>
+        </li>
+      </ul>
+    </div>
+
+    <div
+      id="comparison-good-cwvs"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="cwv"
+    >
+      <h2><a href="#comparison-good-cwvs" class="anchor">Core Web Vitals</a></h2>
+      <p>{config.labels.metrics.vitals.general.description}</p>
+
+      <div class="card">
+        <Timeseries timeseries={{ ...pageConfig.config.good_cwv_timeseries, id: 'comparison_good_cwv_timeseries' }} />
+      </div>
+    </div>
+
+    <div
+      id="comparison-lighthouse"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="lighthouse"
+    >
+      <h2><a href="#comparison-lighthouse" class="anchor">Lighthouse</a></h2>
+      <p>{config.labels.metrics.lighthouse.general.description}</p>
+
+      <div class="card">
+        <Timeseries timeseries={{ ...pageConfig.config.lighthouse_timeseries, id: 'comparison_lighthouse_timeseries' }} />
+      </div>
+    </div>
+
+    <div
+      id="comparison-page-weight"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="page-weight"
+    >
+      <h2><a href="#comparison-page-weight" class="anchor">Page weight</a></h2>
+      <p>{config.labels.metrics.pageWeight.general.description}</p>
+
+      <div class="card">
+        <Timeseries timeseries={{ ...pageConfig.config.weight_timeseries, id: 'comparison_weight_timeseries' }} />
+      </div>
+    </div>
+
+    <div
+      id="comparison-adoption"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="adoption"
+    >
+      <h2><a href="#comparison-adoption" class="anchor">Adoption</a></h2>
+      <p>{config.labels.metrics.adoption.general.description}</p>
+
+      <div class="card">
+        <Timeseries timeseries={{ ...pageConfig.config.adoption_timeseries, id: 'comparison_adoption_timeseries' }} />
+      </div>
+    </div>
+  </div>
+</div>

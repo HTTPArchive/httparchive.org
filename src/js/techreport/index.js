@@ -551,6 +551,186 @@ class TechReport {
       });
     }
   }
+
+  /**
+   * Bootstraps the TechReport client-side from the #techreport-data container.
+   * Parses URL query parameters, configures filters, toggles views if polymorphic,
+   * updates initial headers, populates crawl date dropdowns, and initializes TechReport.
+   */
+  static async boot(containerId = 'techreport-data') {
+    const container = document.getElementById(containerId);
+    if (!container) return null;
+
+    const fullConfig = JSON.parse(container.dataset.fullConfig || '{}');
+    const labels = JSON.parse(container.dataset.labels || '{}');
+    const pages = container.dataset.pages ? JSON.parse(container.dataset.pages) : null;
+    let pageId = container.dataset.pageId;
+    let pageConfig = container.dataset.pageConfig ? JSON.parse(container.dataset.pageConfig) : null;
+
+    // Handle landing page directly
+    if (pageId === 'landing') {
+      return new TechReport('landing', pageConfig, fullConfig, labels);
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Resolve polymorphic route (/reports/techreport/tech)
+    if (!pageId || pageId === 'tech') {
+      const techParam = urlParams.get('tech') || 'ALL';
+      const techs = techParam.split(',').map(t => t.trim()).filter(Boolean);
+      pageId = techs.length > 1 ? 'comparison' : 'drilldown';
+      if (pages) {
+        pageConfig = pages[pageId];
+      }
+    }
+
+    if (!pageConfig && pages && pages[pageId]) {
+      pageConfig = pages[pageId];
+    }
+
+    if (!pageConfig) {
+      console.error(`TechReport.boot: unable to resolve page config for "${pageId}"`);
+      return null;
+    }
+
+    // Toggle polymorphic layouts if both exist in DOM (tech.astro)
+    const compView = document.getElementById('comparison-view');
+    const drillView = document.getElementById('drilldown-view');
+    if (compView && drillView) {
+      if (pageId === 'comparison') {
+        compView.id = 'report-content';
+        compView.classList.remove('hidden');
+        drillView.remove();
+      } else {
+        drillView.id = 'report-content';
+        drillView.classList.remove('hidden');
+        compView.remove();
+      }
+    }
+
+    // Extract query parameters
+    const requestedGeo = urlParams.get('geo') || 'ALL';
+    const requestedRank = urlParams.get('rank') || 'ALL';
+    const requestedClient = urlParams.get('client') || 'mobile';
+    const requestedCategory = urlParams.get('category') || 'CMS';
+    const requestedStart = urlParams.get('start') || '';
+    const requestedEnd = urlParams.get('end') || '';
+    const requestedPage = parseInt(urlParams.get('page') || '1', 10);
+    const selectedTechs = urlParams.get('selected');
+    const selectedRows = urlParams.get('rows') || '10';
+    const lastPage = urlParams.get('last_page') === 'true';
+
+    let requestedTechs = ['ALL'];
+    const techParam = urlParams.get('tech');
+    if (techParam) {
+      requestedTechs = techParam.split(',').map(t => t.trim()).filter(Boolean);
+    } else if (pageConfig?.config?.default?.app) {
+      requestedTechs = pageConfig.config.default.app;
+    }
+
+    const filters = {
+      geo: requestedGeo,
+      rank: requestedRank,
+      client: requestedClient,
+      app: requestedTechs,
+      category: requestedCategory,
+      page: requestedPage,
+      last_page: lastPage,
+      selected: selectedTechs,
+      rows: selectedRows,
+      start: requestedStart,
+      end: requestedEnd,
+    };
+
+    const params = {
+      geo: requestedGeo,
+      rank: requestedRank,
+      client: requestedClient,
+    };
+
+    pageConfig.filters = filters;
+    pageConfig.params = params;
+
+    // Immediately set titles & summary counts before async fetches
+    if (pageId === 'comparison') {
+      const count = requestedTechs.length;
+      const techWord = count === 1 ? 'technology' : 'technologies';
+      const titleEl = document.querySelector('h1 span.main-title');
+      if (titleEl) {
+        titleEl.textContent = `Compare ${count} ${techWord}`;
+      }
+      const summaryCountEl = document.querySelector('[data-slot="techs-count"]');
+      if (summaryCountEl) {
+        summaryCountEl.textContent = `${count} ${techWord}`;
+      }
+    } else if (pageId === 'drilldown') {
+      const titleEl = document.querySelector('h1 span.main-title');
+      if (titleEl && requestedTechs[0]) {
+        titleEl.textContent = requestedTechs[0] === 'ALL' ? 'All technologies' : requestedTechs[0];
+      }
+    } else if (pageId === 'category') {
+      const titleEl = document.querySelector('h1 span.main-title');
+      if (titleEl && requestedCategory) {
+        titleEl.textContent = requestedCategory;
+      }
+    }
+
+    // Fetch crawl dates and populate start/end date selectors
+    let dates = [];
+    try {
+      const resp = await fetch(`${Constants.apiBase}/dates`);
+      if (resp.ok) {
+        const data = await resp.json();
+        dates = data.dates || [];
+      } else {
+        console.warn(`Failed to fetch dates: ${resp.status}`);
+      }
+    } catch (e) {
+      console.error('Failed to fetch dates', e);
+    }
+
+    const startSelect = document.getElementById('startDate');
+    const endSelect = document.getElementById('endDate');
+    if (startSelect && endSelect) {
+      const startVal = urlParams.get('start') || '';
+      const endVal = urlParams.get('end') || '';
+
+      dates.forEach(d => {
+        const formattedDate = d.replace(/_/g, '-');
+        const parts = d.split('_');
+        const dateObj = new Date(Date.UTC(parts[0], parts[1] - 1));
+        const display = dateObj.toLocaleString('default', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+        const opt1 = document.createElement('option');
+        opt1.value = formattedDate;
+        opt1.textContent = display;
+        if (formattedDate === startVal) opt1.selected = true;
+        startSelect.appendChild(opt1);
+
+        const opt2 = document.createElement('option');
+        opt2.value = formattedDate;
+        opt2.textContent = display;
+        if (formattedDate === endVal) opt2.selected = true;
+        endSelect.appendChild(opt2);
+      });
+    }
+
+    return new TechReport(pageId, pageConfig, fullConfig, labels);
+  }
+
+  /**
+   * Safe launcher that waits for DOM readiness if necessary.
+   */
+  static start(containerId = 'techreport-data') {
+    if (document.readyState === 'loading') {
+      return new Promise(resolve => {
+        document.addEventListener('DOMContentLoaded', () => {
+          resolve(TechReport.boot(containerId));
+        });
+      });
+    }
+    return TechReport.boot(containerId);
+  }
 }
 
 window.TechReport = TechReport;
