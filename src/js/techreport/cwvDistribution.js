@@ -12,16 +12,21 @@ class CwvDistribution {
     this.config = config;
     this.pageFilters = filters;
     this.distributionData = null;
+    this.isLoading = false;
     this.chart = null;
     this.root = document.querySelector(`[data-id="${this.id}"]`);
     this.date = this.pageFilters.end || this.root?.dataset?.latestDate || '';
     this.selectedMetric = this.resolveMetric(UrlUtils.get('good-cwv-over-time'));
 
     const updateDateFromTimeseries = (newDate) => {
+      const dateChanged = this.date && this.date !== newDate;
       this.date = newDate;
       const tsSlot = this.root?.querySelector('[data-slot="cwv-distribution-timestamp"]');
       if (tsSlot && this.date) tsSlot.textContent = UIUtils.printMonthYear(this.date);
-      if (!this.distributionData) {
+      if (dateChanged) {
+        this.distributionData = null;
+      }
+      if (!this.distributionData && !this.isLoading && !this.root?.classList.contains('hidden')) {
         this.fetchData();
       }
     };
@@ -32,13 +37,12 @@ class CwvDistribution {
       const cwvChartDate = document.querySelector('#section-good_cwv_timeseries [data-slot=timestamp]');
       if (cwvChartDate && cwvChartDate.dataset.date) {
         updateDateFromTimeseries(cwvChartDate.dataset.date);
-      } else {
-        document.addEventListener('timeseries-date-updated', (event) => {
-          if (event.detail.id === 'good_cwv_timeseries') {
-            updateDateFromTimeseries(event.detail.date);
-          }
-        });
       }
+      document.addEventListener('timeseries-date-updated', (event) => {
+        if (event.detail.id === 'good_cwv_timeseries') {
+          updateDateFromTimeseries(event.detail.date);
+        }
+      });
     } else {
       // Populate "Latest data" timestamp immediately
       const tsSlot = this.root?.querySelector('[data-slot="cwv-distribution-timestamp"]');
@@ -84,6 +88,17 @@ class CwvDistribution {
         this.toggle(!isVisible);
       });
     }
+
+    const submitBtn = document.getElementById('submit-form');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', () => {
+        if (this.root && !this.root.classList.contains('hidden')) {
+          const url = new URL(window.location.href);
+          url.hash = `#section-${this.id}`;
+          window.history.replaceState(null, null, url);
+        }
+      }, true);
+    }
   }
 
   toggle(show) {
@@ -93,10 +108,22 @@ class CwvDistribution {
       if (btn) btn.textContent = 'Hide histogram';
       if (!this.date) {
         const cwvChartDate = document.querySelector('#section-good_cwv_timeseries [data-slot=timestamp]');
-        this.date = cwvChartDate.dataset.date;
+        if (cwvChartDate?.dataset?.date) {
+          this.date = cwvChartDate.dataset.date;
+          const tsSlot = this.root?.querySelector('[data-slot="cwv-distribution-timestamp"]');
+          if (tsSlot && this.date) tsSlot.textContent = UIUtils.printMonthYear(this.date);
+        }
       }
-      if (!this.distributionData && this.date) {
-        this.fetchData();
+      const currentUrl = this.getUrl();
+      if (this.fetchedUrl && this.fetchedUrl !== currentUrl) {
+        this.distributionData = null;
+      }
+      if (!this.distributionData && !this.isLoading) {
+        if (this.date) {
+          this.fetchData();
+        } else {
+          this.showLoader();
+        }
       } else if (this.chart) {
         this.chart.reflow();
       }
@@ -118,8 +145,33 @@ class CwvDistribution {
     return document.getElementById(`${this.id}-chart`);
   }
 
+  getUrl() {
+    const technology = this.pageFilters.app.map(encodeURIComponent).join(',');
+    const rank = encodeURIComponent(this.pageFilters.rank || 'ALL');
+    const geo = encodeURIComponent(this.pageFilters.geo || 'ALL');
+    let url = `${Constants.apiBase}/cwv-distribution?technology=${technology}&rank=${rank}&geo=${geo}`;
+    if (this.date) {
+      url += `&date=${encodeURIComponent(this.date)}`;
+    }
+    return url;
+  }
+
   updateContent() {
-    if (this.distributionData) this.renderChart();
+    const isVisible = this.root && !this.root.classList.contains('hidden');
+    const currentUrl = this.getUrl();
+    const urlChanged = this.fetchedUrl && this.fetchedUrl !== currentUrl;
+
+    if (urlChanged) {
+      this.distributionData = null;
+    }
+
+    if (isVisible) {
+      if (!this.distributionData && !this.isLoading && this.date) {
+        this.fetchData();
+      } else if (this.distributionData) {
+        this.renderChart();
+      }
+    }
   }
 
   showLoader() {
@@ -139,15 +191,12 @@ class CwvDistribution {
   }
 
   fetchData() {
+    if (this.isLoading) return;
+    this.isLoading = true;
     this.showLoader();
 
-    const technology = this.pageFilters.app.map(encodeURIComponent).join(',');
-    const rank = encodeURIComponent(this.pageFilters.rank || 'ALL');
-    const geo = encodeURIComponent(this.pageFilters.geo || 'ALL');
-    let url = `${Constants.apiBase}/cwv-distribution?technology=${technology}&rank=${rank}&geo=${geo}`;
-    if (this.date) {
-      url += `&date=${encodeURIComponent(this.date)}`;
-    }
+    const url = this.getUrl();
+    this.fetchedUrl = url;
 
     fetch(url)
       .then(r => {
@@ -157,11 +206,13 @@ class CwvDistribution {
       .then(rows => {
         if (!Array.isArray(rows) || rows.length === 0) throw new Error('Empty response');
         this.distributionData = rows;
+        this.isLoading = false;
         this.hideLoader();
         this.renderChart();
       })
       .catch(err => {
         console.error('CWV Distribution fetch error:', err);
+        this.isLoading = false;
         this.showError();
       });
   }
