@@ -9,6 +9,7 @@
         "bootup-time": "off",
         "cache-insight": "off",
         "canonical": "off",
+        "cls-culprits-insight": "off",
         "document-latency-insight": "off",
         "dom-size": "off",
         "dom-size-insight": "off",
