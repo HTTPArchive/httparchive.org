@@ -15,13 +15,23 @@ class TechReport {
     this.pageId = pageId;
     this.sections = {};
 
-    // Pass the labels into the page data
+    // Pass the labels into the page data, and for comparison pages add
+    // `comparison_*` key aliases so Timeseries can find section config by
+    // its DOM data-id (e.g. `comparison_good_cwv_timeseries`).
+    const baseConfig = {
+      ...page.config,
+      labels: labels,
+    };
+    if (pageId === 'comparison') {
+      Object.keys(page.config).forEach(key => {
+        if (!['colors', 'default', 'labels'].includes(key)) {
+          baseConfig[`comparison_${key}`] = page.config[key];
+        }
+      });
+    }
     this.page = {
       ...page,
-      config: {
-        ...page.config,
-        labels: labels,
-      },
+      config: baseConfig,
     };
 
     // Load the page
