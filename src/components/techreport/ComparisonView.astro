@@ -5,6 +5,7 @@
  */
 import Timeseries from './Timeseries.astro';
 import TableLinked from './TableLinked.astro';
+import FilterMeta from './FilterMeta.astro';
 
 interface Props {
   config: any;
@@ -44,17 +45,7 @@ const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.pr
       <h2><a href="#comparison-summary" class="anchor">Summary</a></h2>
       <p>Showing the latest data for <strong data-slot="techs-count">10 technologies</strong>.</p>
       <TableLinked id={pageConfig.config.tech_comparison_summary.id} table={pageConfig.config.tech_comparison_summary.table} />
-      <ul class="meta">
-        <li class="client">
-          Client: <span data-slot="client"></span>
-        </li>
-        <li>
-          Geo: <span data-slot="geo"></span>
-        </li>
-        <li>
-          Rank: <span data-slot="rank"></span>
-        </li>
-      </ul>
+      <FilterMeta showTech={false} />
     </div>
 
     <div

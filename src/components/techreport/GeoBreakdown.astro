@@ -1,4 +1,6 @@
 ---
+import FilterMeta from './FilterMeta.astro';
+
 /**
  * GeoBreakdown Astro component — translates templates/techreport/components/geo_breakdown.html
  */
@@ -32,11 +34,7 @@ const { geoBreakdown } = Astro.props;
   <div class="geo-breakdown-controls">
     <div class="geo-breakdown-meta">
       <h4 class="heading">Latest data: <span data-slot="geo-timestamp"></span></h4>
-      <ul class="meta">
-        <li>Client: <span data-slot="client"></span></li>
-        <li>Rank: <span data-slot="rank"></span></li>
-        <li>Technology: <span data-slot="tech"></span></li>
-      </ul>
+      <FilterMeta breakdown="geo" />
     </div>
   </div>
 

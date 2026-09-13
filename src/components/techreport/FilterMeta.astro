@@ -1,0 +1,43 @@
+---
+/**
+ * FilterMeta Astro component — translates templates/techreport/components/filter_meta.html
+ * Displays applied filter metadata (Client, Geo, Rank, Technology).
+ */
+export interface Props {
+  breakdown?: string;
+  showClient?: boolean;
+  showGeo?: boolean;
+  showRank?: boolean;
+  showTech?: boolean;
+}
+
+const {
+  breakdown,
+  showClient = breakdown !== 'client',
+  showGeo = breakdown !== 'geo',
+  showRank = breakdown !== 'rank',
+  showTech = breakdown !== 'app',
+} = Astro.props;
+---
+<ul class="meta">
+  {showClient && (
+    <li class="client">
+      Client: <span data-slot="client"></span>
+    </li>
+  )}
+  {showGeo && (
+    <li>
+      Geo: <span data-slot="geo"></span>
+    </li>
+  )}
+  {showRank && (
+    <li>
+      Rank: <span data-slot="rank"></span>
+    </li>
+  )}
+  {showTech && (
+    <li class="tech-meta-item">
+      Technology: <span data-slot="tech"></span>
+    </li>
+  )}
+</ul>

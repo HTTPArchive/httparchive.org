@@ -1,4 +1,6 @@
 ---
+import FilterMeta from './FilterMeta.astro';
+
 /**
  * Timeseries Astro component — translates templates/techreport/components/timeseries.html
  */
@@ -97,22 +99,7 @@ const endpoint = timeseries.endpoint;
         Latest data: <span data-slot="timestamp"></span>
       </h4>
 
-      <ul class="meta">
-        <li class="client">
-          Client: <span data-slot="client"></span>
-        </li>
-        <li>
-          Geo: <span data-slot="geo"></span>
-        </li>
-        <li>
-          Rank: <span data-slot="rank"></span>
-        </li>
-        {timeseries.viz?.series?.breakdown === 'client' && (
-          <li class="tech-meta-item">
-            Technology: <span data-slot="tech"></span>
-          </li>
-        )}
-      </ul>
+      <FilterMeta breakdown={timeseries.viz?.series?.breakdown} />
 
       <div class="breakdown-list" data-change={String(timeseries.change)} data-meaning={timeseries.changeMeaning}>
         {timeseries.viz.series.breakdown === 'client' ? (

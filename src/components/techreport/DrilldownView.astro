@@ -8,6 +8,7 @@ import SummaryCard from './SummaryCard.astro';
 import Timeseries from './Timeseries.astro';
 import GeoBreakdown from './GeoBreakdown.astro';
 import CwvDistribution from './CwvDistribution.astro';
+import FilterMeta from './FilterMeta.astro';
 
 interface Props {
   config: any;
@@ -57,20 +58,7 @@ const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.pr
           <SummaryCard summary={summary} />
         ))}
       </div>
-      <ul class="meta">
-        <li class="client">
-          Client: <span data-slot="client"></span>
-        </li>
-        <li>
-          Geo: <span data-slot="geo"></span>
-        </li>
-        <li>
-          Rank: <span data-slot="rank"></span>
-        </li>
-        <li class="tech-meta-item">
-          Technology: <span data-slot="tech"></span>
-        </li>
-      </ul>
+      <FilterMeta />
     </div>
 
     <div
@@ -90,6 +78,7 @@ const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.pr
               <SummaryCard summary={summary} sectionPrefix="cwv" />
             ))}
           </div>
+          <FilterMeta />
         </div>
       )}
 
@@ -132,6 +121,7 @@ const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.pr
               <SummaryCard summary={summary} sectionPrefix="lighthouse" />
             ))}
           </div>
+          <FilterMeta />
         </div>
       )}
 
@@ -157,6 +147,7 @@ const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.pr
               <SummaryCard summary={summary} sectionPrefix="weight" />
             ))}
           </div>
+          <FilterMeta />
         </div>
       )}
 
