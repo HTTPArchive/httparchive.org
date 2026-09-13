@@ -132,6 +132,7 @@ class TechReport {
   initializeReport() {
     // Apply client settings and watch for updates before initializing sections
     this.bindClientListener();
+    this.bindSubcategoryListener();
 
     const sections = document.querySelectorAll('[data-type="section"]');
 
@@ -145,6 +146,25 @@ class TechReport {
         this.allData
       );
       this.sections[section.id] = reportSection;
+    });
+  }
+
+  // Restore any subcategory dropdown selectors based on URL parameters
+  bindSubcategoryListener() {
+    const dropdowns = document.querySelectorAll('.subcategory-selector');
+    const urlParams = new URLSearchParams(window.location.search);
+
+    dropdowns.forEach(dropdown => {
+      const param = dropdown.dataset.param;
+      if (param) {
+        const urlVal = urlParams.get(param);
+        if (urlVal) {
+          const optionExists = Array.from(dropdown.options).some(opt => opt.value === urlVal);
+          if (optionExists) {
+            dropdown.value = urlVal;
+          }
+        }
+      }
     });
   }
 

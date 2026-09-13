@@ -53,6 +53,24 @@ The HTTP Archive Tech Report is built using **Astro (SSR & client scripting)**, 
     5. Propagate `section.pageFilters.client = client` and call `section.updateSection()`.
     6. Call `DrilldownHeader.updateFilterMeta(this.filters)` so all `[data-slot="client"]` badges update to "Mobile" or "Desktop".
 
+### Subsection / Subcategory Selectors (e.g. `good-cwv-over-time`)
+
+- **Elements**: `<select name="subcategory" class="subcategory-selector" data-controls="..." data-param="..." data-endpoint="...">`.
+- **Query Parameters**:
+  - CWV Metrics: `?good-cwv-over-time=overall|LCP|INP|CLS|FCP|TTFB`
+  - Lighthouse: `?median-lighthouse-over-time=performance|accessibility|best_practices|seo`
+  - Page Weight: `?weight-over-time=total|js|images`
+- **Restoration on Reload**:
+  - Astro generates static HTML where the default option has `selected=""`.
+  - On page load / reload, `TechReport.bindSubcategoryListener()` and `Timeseries.syncSubcategory()` inspect the URL parameter matching `data-param` (or `pageConfig[id].subcategory.param`).
+  - If a parameter value exists in the URL, the dropdown `.value` is restored, `this.submetric` is set, `component.dataset.category` is updated, and `this.updateInfo(metric, endpoint)` updates the section title (`<h3>`) and description (`.descr`).
+- **Reactive Updates (`Timeseries.updateSubmetric`)**:
+  - Updates the URL via `window.history.replaceState`.
+  - Sets `this.submetric = value` and `component.dataset.category = value`.
+  - Synchronizes any sibling matching selectors for the section.
+  - Re-renders `Timeseries.updateContent()` and `Timeseries.updateInfo()`.
+  - Dispatches `cwv-metric-change` event for connected components (`CwvDistribution` and `GeoBreakdown`).
+
 ### URL Parameter Preservation
 
 State must be preserved when navigating between views or submitting filters:

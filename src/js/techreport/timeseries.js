@@ -11,16 +11,56 @@ class Timeseries {
     this.pageConfig = pageConfig;
     this.config = config;
     this.pageFilters = filters;
-    this.submetric = ''; // TODO: Fetch the default one from somewhere
     this.data = data;
 
+    this.syncSubcategory();
     this.updateContent();
     this.bindEventListeners();
   }
 
+  // Restore submetric state and dropdown value from URL on load/reload
+  syncSubcategory() {
+    const subcategorySelector = `[data-id="${this.id}"] .subcategory-selector, select[data-controls="${this.id}"]`;
+    const dropdowns = document.querySelectorAll(subcategorySelector);
+
+    const vizConfig = this.pageConfig?.[this.id]?.viz;
+    const subcategoryConfig = this.pageConfig?.[this.id]?.subcategory;
+    const param = subcategoryConfig?.param || vizConfig?.param;
+    const defaultVal = subcategoryConfig?.default || vizConfig?.default || '';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let activeSubmetric = (param ? urlParams.get(param) : null) || defaultVal;
+
+    dropdowns.forEach(dropdown => {
+      const dropParam = dropdown.dataset.param || param;
+      const urlVal = dropParam ? urlParams.get(dropParam) : null;
+      if (urlVal) {
+        const optionExists = Array.from(dropdown.options).some(opt => opt.value === urlVal);
+        if (optionExists) {
+          dropdown.value = urlVal;
+          activeSubmetric = urlVal;
+        }
+      } else if (dropdown.value) {
+        activeSubmetric = dropdown.value;
+      }
+    });
+
+    this.submetric = activeSubmetric;
+
+    const component = document.querySelector(`[data-id="${this.id}"]`);
+    if (component && activeSubmetric) {
+      component.dataset.category = activeSubmetric;
+    }
+
+    const endpoint = this.pageConfig?.[this.id]?.endpoint || component?.dataset?.endpoint;
+    if (activeSubmetric && endpoint) {
+      this.updateInfo(activeSubmetric, endpoint);
+    }
+  }
+
   // Check if anything in the component updates
   bindEventListeners() {
-    const subcategory = `[data-id="${this.id}"] .subcategory-selector`;
+    const subcategory = `[data-id="${this.id}"] .subcategory-selector, select[data-controls="${this.id}"]`;
     document.querySelectorAll(subcategory).forEach(dropdown => {
       dropdown.addEventListener('change', (event) => this.updateSubmetric(event));
     });
@@ -33,23 +73,40 @@ class Timeseries {
 
   // Filter and re-render the component when the submetric changes
   updateSubmetric(event) {
-    if(this.submetric !== event.target.value) {
+    const value = event.target.value;
+    const param = event.target.dataset.param;
+    const endpoint = event.target.dataset.endpoint;
+
+    if(this.submetric !== value) {
       // Update the URL
       const url = new URL(window.location.href);
-      url.searchParams.set(event.target.dataset.param, event.target.value);
-      window.history.replaceState(null, null, url);
+      if (param) {
+        url.searchParams.set(param, value);
+        window.history.replaceState(null, null, url);
+      }
 
-      // Get the relevant endpoint and metric
-      const endpoint = event.target.dataset.endpoint;
-      const metric = event.target.value;
+      this.submetric = value;
+
+      // Sync all matching dropdowns
+      const subcategory = `[data-id="${this.id}"] .subcategory-selector, select[data-controls="${this.id}"]`;
+      document.querySelectorAll(subcategory).forEach(dropdown => {
+        if (dropdown.value !== value) {
+          dropdown.value = value;
+        }
+      });
+
+      const component = document.querySelector(`[data-id="${this.id}"]`);
+      if (component) {
+        component.dataset.category = value;
+      }
 
       // Re-render the content
       this.updateContent();
-      this.updateInfo(metric, endpoint);
+      this.updateInfo(value, endpoint);
 
       // Broadcast metric change so linked components (geo breakdown, distribution) update
-      if (event.target.dataset.param === 'good-cwv-over-time') {
-        document.dispatchEvent(new CustomEvent('cwv-metric-change', { detail: { value: metric } }));
+      if (param === 'good-cwv-over-time') {
+        document.dispatchEvent(new CustomEvent('cwv-metric-change', { detail: { value: value } }));
       }
     }
   }
@@ -70,17 +127,22 @@ class Timeseries {
 
   // Re-render the title, description, and text labels
   updateInfo(metric, endpoint) {
-    const option = this.pageConfig?.labels?.metrics[endpoint][metric];
+    const option = this.pageConfig?.labels?.metrics?.[endpoint]?.[metric];
     const component = document.querySelector(`[data-id="${this.id}"]`);
 
-    if(option && option.title) {
-      const title = component.querySelector('h3');
-      title.innerHTML = option.title;
+    if(option && option.title && component) {
+      const anchor = component.querySelector('h3 a');
+      if (anchor) {
+        anchor.innerHTML = option.title;
+      } else {
+        const title = component.querySelector('h3');
+        if (title) title.innerHTML = option.title;
+      }
     }
 
-    if(option && option.description) {
+    if(option && option.description && component) {
       const descr = component.querySelector('.descr');
-      descr.innerHTML = option.description;
+      if (descr) descr.innerHTML = option.description;
     }
   }
 
@@ -565,7 +627,7 @@ class Timeseries {
     const urlParams = new URLSearchParams(window.location.search);
     const urlSubcategory = urlParams.get(config.param);
 
-    return urlSubcategory || defaultMetric;
+    return this.submetric || urlSubcategory || defaultMetric;
   }
 
   // Get the default settings
