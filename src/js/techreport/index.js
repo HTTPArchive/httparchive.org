@@ -358,6 +358,14 @@ class TechReport {
         })
         .catch(error => console.log('Something went wrong', error));
     })).then(() => {
+      // Ensure techInfo properties (such as icon) are merged into allResults even if technologies finishes later
+      Object.keys(techInfo).forEach(tech => {
+        if (allResults[tech]?.length) {
+          allResults[tech].forEach(row => {
+            Object.assign(row, techInfo[tech]);
+          });
+        }
+      });
       this.updateComponents(allResults);
     });
   }

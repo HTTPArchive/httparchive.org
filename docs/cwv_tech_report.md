@@ -9,26 +9,34 @@ The HTTP Archive Tech Report is built using **Astro (SSR & client scripting)**, 
 - **Configuration**:
   - `config/techreport.json`: Central configuration containing metric definitions, endpoints, page structures, summary cards, and brackets.
 - **Astro Pages**:
-  - `src/pages/reports/techreport/tech.astro`: Handles Drilldown (1 technology) and Comparison (2+ technologies) views. Mutually exclusive containers (`#drilldown-view` and `#comparison-view`) are pruned client-side based on the selected technologies.
-  - `src/pages/reports/techreport/[page_id].astro`: Parameterized page routing (`category`, `drilldown`, `comparison`).
-- **Astro UI Components**:
-  - `src/components/techreport/Filters.astro`: Primary sidebar filter form and metadata summary list (`<ul class="meta">`).
-  - `src/components/techreport/SummaryCard.astro`: Metric callout cards with circular progress indicators.
-  - `src/components/techreport/Timeseries.astro`: Timeseries chart containers, submetric selectors, and summary breakdown cards.
-  - `src/components/techreport/TableLinked.astro`: Categorized technologies data table with pagination and multi-select comparison.
-  - `src/components/techreport/GeoBreakdown.astro`: Geographic breakdown table container.
-  - `src/components/techreport/CwvDistribution.astro`: CWV histogram distribution container.
+  - `src/pages/reports/techreport/landing.astro`: Report landing page linking to featured categories, technologies, and comparison entry points.
+  - `src/pages/reports/techreport/tech.astro`: Polymorphic route matching `/reports/techreport/tech`. Renders skeletons for both **Drilldown** (1 technology) and **Comparison** (2+ technologies) layouts, dynamically pruning the inactive container on load based on `?tech=`.
+  - `src/pages/reports/techreport/[page_id].astro`: Parameterized SSG page routing for static endpoints (`category`, `drilldown`, and `comparison`).
+- **Astro UI Components (`src/components/techreport/`)**:
+  - `Filters.astro`: Primary sidebar filter form and metadata summary list (`<ul class="meta">`).
+  - `CategoryFilters.astro`: Filter bar for category browsing with search and pagination controls.
+  - `SummaryCard.astro`: Metric callout cards with circular progress indicators.
+  - `Timeseries.astro`: Timeseries chart containers, submetric selectors, and summary breakdown cards.
+  - `TableLinked.astro`: Categorized technologies data table with pagination, sorting, and comparison checkboxes.
+  - `GeoBreakdown.astro`: Geographic breakdown table container.
+  - `CwvDistribution.astro`: CWV histogram distribution container.
 - **Client JavaScript (`src/js/techreport/`)**:
-  - `index.js` (`TechReport`): Main orchestrator. Handles filter bindings, client switcher, accessibility, and creates `Section` instances.
-  - `section.js` (`Section`): Manages one metric section (e.g. Adoption, CWVs, Lighthouse) and its child components.
+  - `index.js` (`TechReport`): Main orchestrator. Manages initialization, subcategory listeners, client switcher, data fetching, and creates `Section` instances.
+  - `section.js` (`Section`): Manages one metric section (e.g. Adoption, CWVs, Lighthouse, Page Weight) and its child components.
   - `summaryCards.js` (`SummaryCard`): Formats latest values, updates circular SVG progress indicators, and applies score brackets.
   - `timeseries.js` (`Timeseries`): Manages Highcharts timeseries generation, breakdown list cards, and tabular view toggling.
-  - `tableLinked.js` (`TableLinked`): Manages category table sorting, pagination, and multi-technology comparison checkboxes.
-  - `geoBreakdown.js` (`GeoBreakdown`): Renders geographic distribution table.
-  - `cwvDistribution.js` (`CwvDistribution`): Highcharts histogram chart with dynamic bucket trimming.
+  - `tableLinked.js` (`TableLinked`): Manages category table sorting, pagination, multi-tech comparison checkboxes, and comparison summary tables.
+  - `table.js` (`Table`): Utility for generic table data rendering and column sorting.
+  - `geoBreakdown.js` (`GeoBreakdown`): Renders geographic distribution table. Listens to CWV submetric updates.
+  - `cwvDistribution.js` (`CwvDistribution`): Highcharts histogram chart with dynamic bucket trimming. Listens to CWV submetric updates.
+  - `combobox.js`: Accessible combobox for searching and selecting technologies and categories.
 - **Shared UI Helpers (`src/js/components/`)**:
   - `filters.js` (`Filters`): Handles `#page-filters` form submission and combobox interactions.
-  - `drilldownHeader.js` (`DrilldownHeader`): Updates header titles, icons, and `[data-slot]` metadata badges across the DOM.
+  - `drilldownHeader.js` (`DrilldownHeader`): Central helper updating header titles, icons, and `[data-slot]` metadata badges across the DOM.
+- **Utilities (`src/js/techreport/utils/`)**:
+  - `constants.js`: API base URLs and global constants.
+  - `data.js` (`DataUtils`): Metric parsing, Month-over-Month calculations, category data fetching, and query parameter helpers.
+  - `ui.js` (`UIUtils`): Date formatting, string capitalization, and component DOM updates.
 
 ---
 
@@ -69,14 +77,25 @@ The HTTP Archive Tech Report is built using **Astro (SSR & client scripting)**, 
   - Sets `this.submetric = value` and `component.dataset.category = value`.
   - Synchronizes any sibling matching selectors for the section.
   - Re-renders `Timeseries.updateContent()` and `Timeseries.updateInfo()`.
-  - Dispatches `cwv-metric-change` event for connected components (`CwvDistribution` and `GeoBreakdown`).
+  - Dispatches `cwv-metric-change` custom event for connected components (`CwvDistribution` and `GeoBreakdown`).
 
-### URL Parameter Preservation
+### Cross-Component Event Bus (`cwv-metric-change`)
+
+- Dispatched on `window` whenever the active CWV submetric changes in `Timeseries`:
+  ```javascript
+  window.dispatchEvent(new CustomEvent('cwv-metric-change', { detail: { metric: value } }));
+  ```
+- `CwvDistribution` listens to this event to fetch histogram data for the new metric and re-render the distribution chart.
+- `GeoBreakdown` listens to this event to update its submetric data table and ranking.
+
+### URL Parameter Preservation & Safe Sanitization
 
 State must be preserved when navigating between views or submitting filters:
 - **Sidebar Form (`filters.js:setFilter`)**: Reads active client from dropdown or URL to ensure submitting Geo/Rank/Tech does not reset `client`.
-- **Category Table Links (`tableLinked.js`)**: Append `${client ? '&client=' + client : ''}` to technology drilldown links.
-- **Compare Action Links (`data.js` & `tableLinked.js:updateSelectionText`)**: Append active `&client=...`, `&geo=...`, and `&rank=...` when building the comparison target URL.
+- **Category Table Links (`tableLinked.js`)**: Appends `${client ? '&client=' + client : ''}` to technology drilldown links.
+- **Compare Action Links (`data.js` & `tableLinked.js:updateSelectionText`)**:
+  - All dynamic query parameters (`tech`, `geo`, `rank`, `start`, `end`) **must** be sanitized with `encodeURIComponent`.
+  - The `client` parameter is strictly validated against `'desktop'` or `'mobile'` to eliminate tainted input flow and satisfy CodeQL security checks.
 
 ---
 
@@ -102,8 +121,41 @@ State must be preserved when navigating between views or submitting filters:
   - Explicitly handle zero values: `latestValue !== undefined && latestValue !== null`.
   - Remove stale bracket classes (`circle.classList.remove('good', 'needs-improvement', 'poor')`) on re-renders.
   - Clear change indicator text and classes when no month-over-month data exists.
+
 2. **`Timeseries`**:
-  - In Drilldown view (`breakdown === 'client'`), the timeseries plots both Mobile and Desktop, and the breakdown list renders dual cards (one for Mobile, one for Desktop).
-  - In Comparison view (`breakdown === 'app'`), the breakdown list renders individual technology cards for the currently selected client (`component.dataset.client`).
-3. **`Metadata Slots`**:
-  - Use `DrilldownHeader.updateFilterMeta(filters)` as the central method for updating `[data-slot="client"]`, `[data-slot="geo"]`, `[data-slot="rank"]`, and `[data-slot="tech"]`. Capitalize client labels ("Mobile" / "Desktop") using `UIUtils.capitalizeFirstLetter()`.
+  - **Drilldown View (`breakdown === 'client'`)**:
+    - The timeseries plots both Mobile and Desktop series.
+    - The breakdown list renders dual cards (one for Mobile, one for Desktop).
+    - Renders `<li class="tech-meta-item">Technology: <span data-slot="tech">...</span></li>` in `.meta`.
+  - **Comparison View (`breakdown === 'app'`)**:
+    - The timeseries plots each compared technology as a series.
+    - The breakdown list renders individual technology cards for the currently selected client (`component.dataset.client`).
+    - The `.tech-meta-item` list element is omitted in `.meta` to prevent redundancy with the breakdown cards directly below.
+
+3. **`TableLinked` & Comparison Summary**:
+  - **Category View**:
+    - Manages pagination (`page`, `rows`), client-side sorting across columns, and up to 10 multi-technology checkboxes.
+    - Updates `?selected=...` in the URL and synchronizes compare button hrefs.
+  - **Comparison Summary Table (`#comparison-summary`)**:
+    - Prefilled comparison overview table listing all selected technologies.
+    - Renders description paragraph:
+      `<p>Showing the latest data for <strong data-slot="techs-count">X technologies</strong>.</p>`.
+    - Renders summary meta list (`<ul class="meta">`) containing `Client: <span data-slot="client">...</span>`, `Geo: <span data-slot="geo">...</span>`, and `Rank: <span data-slot="rank">...</span>`.
+
+4. **`Metadata Slots` & `DrilldownHeader`**:
+  - Use `DrilldownHeader.updateFilterMeta(filters)` as the central method for updating `[data-slot="client"]`, `[data-slot="geo"]`, `[data-slot="rank"]`, `[data-slot="tech"]`, and `[data-slot="techs-count"]`.
+  - Capitalize client labels ("Mobile" / "Desktop") using `UIUtils.capitalizeFirstLetter()`.
+  - In comparison views, synchronize `h1 span.main-title` and `DrilldownHeader.setTitle()` to `Compare X technologies`.
+
+5. **`Technology Icon Handling`**:
+  - `DrilldownHeader.setIcon(icon)` safely normalizes icon paths with `encodeURI(decodeURI(icon))` and wraps CSS background urls in quotes (`url('${imgUrl}')`). This ensures technologies with spaces or special characters in their names (e.g. "Open Graph", "Google Analytics") render correctly in `h1 .title-img`.
+  - In `getAllMetricData()`, merge `techInfo` (which contains `icon` and `description`) into `allResults` upon `Promise.all` resolution to ensure drilldown components receive the icon even if the `/technologies` endpoint finishes after metric endpoints.
+
+6. **`CwvDistribution` (Histogram)**:
+  - Histogram chart comparing distribution bucket percentages for the selected technology and client.
+  - Filters out trailing empty buckets to focus the visualization on populated ranges.
+  - Listens to `cwv-metric-change` to refresh when the active vitals metric switches.
+
+7. **`GeoBreakdown`**:
+  - Displays geographic distribution table broken down by countries/regions.
+  - Updates when either the geo filter, client selector, or CWV submetric changes.

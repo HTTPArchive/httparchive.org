@@ -4,14 +4,19 @@ import { Constants } from "../techreport/utils/constants.js";
 
 function setTitle(title) {
   const mainTitle = document.querySelector('h1 span.main-title');
-  mainTitle.textContent = title;
-
+  if (mainTitle) {
+    mainTitle.textContent = title;
+  }
 }
 
 function setIcon(icon) {
+  if (!icon) return;
   const img = document.querySelector('h1 .title-img');
-  const imgUrl = `${Constants.apiBase}/static/icons/${icon}`;
-  img.setAttribute('style', `background-image: url(${imgUrl})`);
+  if (img) {
+    const cleanIcon = encodeURI(decodeURI(icon));
+    const imgUrl = `${Constants.apiBase}/static/icons/${cleanIcon}`;
+    img.setAttribute('style', `background-image: url('${imgUrl}')`);
+  }
 }
 
 function setCategories(categories) {
@@ -55,10 +60,14 @@ function setCategories(categories) {
 function setDescription(description) {
   if(description && description !== "") {
     const descr = document.querySelector('p.app-description');
-    descr.textContent = description;
+    if (descr) {
+      descr.textContent = description;
+    }
   } else {
     const descr = document.querySelector('p.app-description');
-    descr.remove();
+    if (descr) {
+      descr.remove();
+    }
   }
 }
 
