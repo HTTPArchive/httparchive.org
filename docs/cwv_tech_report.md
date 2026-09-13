@@ -98,12 +98,12 @@ State must be preserved when navigating between views or submitting filters:
 ## 4. Component Implementation Rules
 
 1. **`SummaryCard`**:
-   - Guard against missing data: `const dataApp = this.data?.[app] || [];`.
-   - Explicitly handle zero values: `latestValue !== undefined && latestValue !== null`.
-   - Remove stale bracket classes (`circle.classList.remove('good', 'needs-improvement', 'poor')`) on re-renders.
-   - Clear change indicator text and classes when no month-over-month data exists.
+  - Guard against missing data: `const dataApp = this.data?.[app] || [];`.
+  - Explicitly handle zero values: `latestValue !== undefined && latestValue !== null`.
+  - Remove stale bracket classes (`circle.classList.remove('good', 'needs-improvement', 'poor')`) on re-renders.
+  - Clear change indicator text and classes when no month-over-month data exists.
 2. **`Timeseries`**:
-   - In Drilldown view (`breakdown === 'client'`), the timeseries plots both Mobile and Desktop, and the breakdown list renders dual cards (one for Mobile, one for Desktop).
-   - In Comparison view (`breakdown === 'app'`), the breakdown list renders individual technology cards for the currently selected client (`component.dataset.client`).
+  - In Drilldown view (`breakdown === 'client'`), the timeseries plots both Mobile and Desktop, and the breakdown list renders dual cards (one for Mobile, one for Desktop).
+  - In Comparison view (`breakdown === 'app'`), the breakdown list renders individual technology cards for the currently selected client (`component.dataset.client`).
 3. **`Metadata Slots`**:
-   - Use `DrilldownHeader.updateFilterMeta(filters)` as the central method for updating `[data-slot="client"]`, `[data-slot="geo"]`, `[data-slot="rank"]`, and `[data-slot="tech"]`. Capitalize client labels ("Mobile" / "Desktop") using `UIUtils.capitalizeFirstLetter()`.
+  - Use `DrilldownHeader.updateFilterMeta(filters)` as the central method for updating `[data-slot="client"]`, `[data-slot="geo"]`, `[data-slot="rank"]`, and `[data-slot="tech"]`. Capitalize client labels ("Mobile" / "Desktop") using `UIUtils.capitalizeFirstLetter()`.

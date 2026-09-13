@@ -188,13 +188,20 @@ const fetchCategoryData = (rows, filters, callback) => {
 
       const techsFromUrl = getTechsFromURL();
       const technologyFormatted = paginatedTechs?.join(',');
-      const technologyUrl = encodeURI(techsFromUrl || technologyFormatted);
+      const rawTechs = techsFromUrl || technologyFormatted || '';
+      const safeTechs = rawTechs
+        .split(',')
+        .map(tech => encodeURIComponent(tech.trim()))
+        .filter(Boolean)
+        .join(',');
 
       const compare = document.querySelector('[data-name="selected-apps"]');
       if (compare) {
-        const currentClient = filters?.client || new URLSearchParams(window.location.search).get('client');
-        const extraParams = `${geoFormatted && geoFormatted !== 'ALL' ? '&geo=' + geoFormatted : ''}${rankFormatted && rankFormatted !== 'ALL' ? '&rank=' + rankFormatted : ''}${currentClient ? '&client=' + currentClient : ''}`;
-        compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyUrl}${extraParams}`);
+        const clientQuery = new URLSearchParams(window.location.search).get('client');
+        const validClient = (filters?.client === 'desktop' || clientQuery === 'desktop') ? 'desktop' : 'mobile';
+        const geoParam = geoFormatted && geoFormatted !== 'ALL' ? `&geo=${encodeURIComponent(geoFormatted)}` : '';
+        const rankParam = rankFormatted && rankFormatted !== 'ALL' ? `&rank=${encodeURIComponent(rankFormatted)}` : '';
+        compare.setAttribute('href', `/reports/techreport/tech?tech=${safeTechs}${geoParam}${rankParam}&client=${validClient}`);
       }
 
       let allResults = {};

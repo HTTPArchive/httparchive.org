@@ -135,7 +135,10 @@ class TableLinked {
 
               const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
-              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}${start ? '&start=' + start : ''}${end ? '&end=' + end : ''}${client ? '&client=' + client : ''}`);
+              const startParam = start ? `&start=${encodeURIComponent(start)}` : '';
+              const endParam = end ? `&end=${encodeURIComponent(end)}` : '';
+              const clientParam = client ? `&client=${encodeURIComponent(client)}` : '';
+              link.setAttribute('href', `/reports/techreport/tech?tech=${encodeURIComponent(app)}&geo=${encodeURIComponent(geo)}&rank=${encodeURIComponent(rank)}${startParam}${endParam}${clientParam}`);
               link.innerText = formattedApp;
               wrapper.append(link);
               cell.append(wrapper);
@@ -276,17 +279,29 @@ class TableLinked {
     const urlParams = new URLSearchParams(window.location.search);
     const geo = urlParams.get('geo') || 'ALL';
     const rank = urlParams.get('rank') || 'ALL';
-    const client = document.querySelector('[data-component="tableLinked"]')?.dataset?.client || urlParams.get('client') || 'mobile';
-    const extraParams = `${geo !== 'ALL' ? '&geo=' + geo : ''}${rank !== 'ALL' ? '&rank=' + rank : ''}${client ? '&client=' + client : ''}`;
+    const clientVal = document.querySelector('[data-component="tableLinked"]')?.dataset?.client || urlParams.get('client');
+    const client = clientVal === 'desktop' ? 'desktop' : 'mobile';
+    const geoParam = geo !== 'ALL' ? `&geo=${encodeURIComponent(geo)}` : '';
+    const rankParam = rank !== 'ALL' ? `&rank=${encodeURIComponent(rank)}` : '';
+    const extraParams = `${geoParam}${rankParam}&client=${client}`;
 
     appLinks.forEach(appLinkEl => {
       let label = 'Compare all technologies on this page';
       let href = '';
       if(this.selectedTechs.length > 0) {
-        href = `/reports/techreport/tech?tech=${encodeURI(allSelectedApps)}${extraParams}`;
+        const safeApps = String(allSelectedApps || '')
+          .split(',')
+          .map(app => encodeURIComponent(app.trim()))
+          .filter(Boolean)
+          .join(',');
+        href = `/reports/techreport/tech?tech=${safeApps}${extraParams}`;
         label = `Compare ${this.selectedTechs.length} technologies`;
       } else if(this.data.technologies) {
-        href = `/reports/techreport/tech?tech=${encodeURI(Object.keys(this.data.technologies).join(','))}${extraParams}`;
+        const safeTechs = Object.keys(this.data.technologies)
+          .map(tech => encodeURIComponent(tech.trim()))
+          .filter(Boolean)
+          .join(',');
+        href = `/reports/techreport/tech?tech=${safeTechs}${extraParams}`;
       }
 
       appLinkEl.setAttribute('href', href);
