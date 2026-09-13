@@ -105,7 +105,7 @@ class Section {
     if (!bar) return;
 
     const tw = document.getElementById('good_cwv_timeseries-table-wrapper') ||
-               section.querySelector('[id$="-table-wrapper"]');
+      section.querySelector('[id$="-table-wrapper"]');
 
     // Move the timeseries' table wrapper out of the timeseries div so expanding it
     // doesn't push the button bar down
