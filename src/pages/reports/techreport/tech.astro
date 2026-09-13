@@ -382,6 +382,7 @@ const comparisonPage = config.pages.comparison;
         // Extract query parameters client-side
         const requestedGeo = urlParams.get('geo') || 'ALL';
         const requestedRank = urlParams.get('rank') || 'ALL';
+        const requestedClient = urlParams.get('client') || 'mobile';
         const requestedCategory = urlParams.get('category') || 'CMS';
         const requestedStart = urlParams.get('start') || '';
         const requestedEnd = urlParams.get('end') || '';
@@ -400,6 +401,7 @@ const comparisonPage = config.pages.comparison;
         const filters = {
           geo: requestedGeo,
           rank: requestedRank,
+          client: requestedClient,
           app: requestedTechs,
           category: requestedCategory,
           page: requestedPage,
@@ -413,6 +415,7 @@ const comparisonPage = config.pages.comparison;
         const params = {
           geo: requestedGeo,
           rank: requestedRank,
+          client: requestedClient,
         };
 
         // Attach filters and params dynamically

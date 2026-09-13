@@ -130,6 +130,9 @@ class TechReport {
 
   // Initialize the report pages
   initializeReport() {
+    // Apply client settings and watch for updates before initializing sections
+    this.bindClientListener();
+
     const sections = document.querySelectorAll('[data-type="section"]');
 
     // Create new class for each of the sections
@@ -143,31 +146,32 @@ class TechReport {
       );
       this.sections[section.id] = reportSection;
     });
-
-    // Apply settings and watch for updates
-    this.bindClientListener();
   }
 
   // Watch for changes in the client dropdown
   bindClientListener() {
-    const select = document.getElementById('client-breakdown');
+    const selects = document.querySelectorAll('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown');
 
-    if(select) {
-      select.onchange = (event) => this.updateClient(event);
+    // Restore client from URL param on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    const clientParam = urlParams.get('client');
+    const selectedClient = clientParam || (selects[0] ? selects[0].value : 'mobile');
 
-      // Restore client from URL param on page load
-      const urlParams = new URLSearchParams(window.location.search);
-      const clientParam = urlParams.get('client');
-      if(clientParam && clientParam !== select.value) {
-        select.value = clientParam;
-        document.querySelectorAll('[data-client]').forEach(component => {
-          component.dataset.client = clientParam;
-        });
-        document.querySelectorAll('[data-slot="client"]').forEach(component => {
-          component.innerText = clientParam;
-        });
-      }
+    if (this.filters) {
+      this.filters.client = selectedClient;
     }
+
+    selects.forEach(select => {
+      select.value = selectedClient;
+      select.onchange = (event) => this.updateClient(event);
+    });
+
+    document.querySelectorAll('[data-client]').forEach(component => {
+      component.dataset.client = selectedClient;
+    });
+    document.querySelectorAll('[data-slot="client"]').forEach(component => {
+      component.innerText = UIUtils.capitalizeFirstLetter(selectedClient);
+    });
   }
 
   // Watch for changes in the accessibility/UI settings
@@ -206,11 +210,22 @@ class TechReport {
   // Update which client is selected
   updateClient(event) {
     const client = event.target.value;
+    if (this.filters) {
+      this.filters.client = client;
+    }
 
     // Update the URL
     const url = new URL(window.location.href);
     url.searchParams.set(`client`, client);
     window.history.replaceState(null, null, url);
+
+    // Keep all client dropdowns in sync (if multiple)
+    const selects = document.querySelectorAll('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown');
+    selects.forEach(select => {
+      if (select.value !== client) {
+        select.value = client;
+      }
+    });
 
     // Update selected client property everywhere
     document.querySelectorAll('[data-client]').forEach(component => {
@@ -219,13 +234,14 @@ class TechReport {
 
     // Update the sections
     Object.values(this.sections).forEach(section => {
+      if (section.pageFilters) {
+        section.pageFilters.client = client;
+      }
       section.updateSection();
     });
 
     // Update labels
-    document.querySelectorAll('[data-slot="client"]').forEach(component => {
-      component.innerText = client;
-    });
+    DrilldownHeader.updateFilterMeta(this.filters);
   }
 
   // New API

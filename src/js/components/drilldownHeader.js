@@ -1,4 +1,5 @@
 import { DataUtils } from "../techreport/utils/data";
+import { UIUtils } from "../techreport/utils/ui.js";
 import { Constants } from "../techreport/utils/constants.js";
 
 function setTitle(title) {
@@ -62,13 +63,15 @@ function setDescription(description) {
 }
 
 function updateFilterMeta(filters) {
-  const geo = filters.geo || 'ALL';
-  const rank = filters.rank || 'ALL';
-  const tech = filters.app ? filters.app.join(', ') : 'ALL';
+  const geo = filters?.geo || 'ALL';
+  const rank = filters?.rank || 'ALL';
+  const tech = filters?.app ? filters.app.join(', ') : 'ALL';
+  const client = filters?.client || 'Mobile';
 
   document.querySelectorAll('[data-slot="geo"]').forEach(el => { el.textContent = geo; });
   document.querySelectorAll('[data-slot="rank"]').forEach(el => { el.textContent = rank; });
   document.querySelectorAll('[data-slot="tech"]').forEach(el => { el.textContent = tech; });
+  document.querySelectorAll('[data-slot="client"]').forEach(el => { el.textContent = UIUtils.capitalizeFirstLetter(client); });
 }
 
 function update(filters) {

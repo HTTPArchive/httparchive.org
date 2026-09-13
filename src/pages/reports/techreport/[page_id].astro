@@ -481,6 +481,7 @@ const activePage = config.pages?.[page_id!];
         const urlParams = new URLSearchParams(location.search);
         const requestedGeo = urlParams.get('geo') || 'ALL';
         const requestedRank = urlParams.get('rank') || 'ALL';
+        const requestedClient = urlParams.get('client') || 'mobile';
         const requestedCategory = urlParams.get('category') || 'CMS';
         const requestedStart = urlParams.get('start') || '';
         const requestedEnd = urlParams.get('end') || '';
@@ -500,6 +501,7 @@ const activePage = config.pages?.[page_id!];
         const filters = {
           geo: requestedGeo,
           rank: requestedRank,
+          client: requestedClient,
           app: requestedTechs,
           category: requestedCategory,
           page: requestedPage,
@@ -513,6 +515,7 @@ const activePage = config.pages?.[page_id!];
         const params = {
           geo: requestedGeo,
           rank: requestedRank,
+          client: requestedClient,
         };
 
         // Attach filters and params dynamically

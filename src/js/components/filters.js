@@ -87,6 +87,12 @@ class Filters {
       url.searchParams.append('end', endDate);
     }
 
+    const clientSelect = document.querySelector('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown');
+    const client = clientSelect?.value || this.filters?.client || url.searchParams.get('client');
+    if (client) {
+      url.searchParams.set('client', client);
+    }
+
     // Reset to page 1 when filters change
     url.searchParams.delete('page');
     url.searchParams.append('page', '1');

@@ -1,110 +1,91 @@
-# CWV Tech Report
+# CWV Tech Report Architecture & Frontend Guide
 
-## Development
+## 1. Architecture Overview
 
-### Setting up the code
+The HTTP Archive Tech Report is built using **Astro (SSR & client scripting)**, vanilla JavaScript, and **Highcharts**. The initial page skeleton and metadata slots are generated server-side, while data fetching, state synchronization, and visualization rendering happen client-side.
 
-See general README.md, nothing extra is required.
+### Core File Structure
 
-### Useful files
+- **Configuration**:
+  - `config/techreport.json`: Central configuration containing metric definitions, endpoints, page structures, summary cards, and brackets.
+- **Astro Pages**:
+  - `src/pages/reports/techreport/tech.astro`: Handles Drilldown (1 technology) and Comparison (2+ technologies) views. Mutually exclusive containers (`#drilldown-view` and `#comparison-view`) are pruned client-side based on the selected technologies.
+  - `src/pages/reports/techreport/[page_id].astro`: Parameterized page routing (`category`, `drilldown`, `comparison`).
+- **Astro UI Components**:
+  - `src/components/techreport/Filters.astro`: Primary sidebar filter form and metadata summary list (`<ul class="meta">`).
+  - `src/components/techreport/SummaryCard.astro`: Metric callout cards with circular progress indicators.
+  - `src/components/techreport/Timeseries.astro`: Timeseries chart containers, submetric selectors, and summary breakdown cards.
+  - `src/components/techreport/TableLinked.astro`: Categorized technologies data table with pagination and multi-select comparison.
+  - `src/components/techreport/GeoBreakdown.astro`: Geographic breakdown table container.
+  - `src/components/techreport/CwvDistribution.astro`: CWV histogram distribution container.
+- **Client JavaScript (`src/js/techreport/`)**:
+  - `index.js` (`TechReport`): Main orchestrator. Handles filter bindings, client switcher, accessibility, and creates `Section` instances.
+  - `section.js` (`Section`): Manages one metric section (e.g. Adoption, CWVs, Lighthouse) and its child components.
+  - `summaryCards.js` (`SummaryCard`): Formats latest values, updates circular SVG progress indicators, and applies score brackets.
+  - `timeseries.js` (`Timeseries`): Manages Highcharts timeseries generation, breakdown list cards, and tabular view toggling.
+  - `tableLinked.js` (`TableLinked`): Manages category table sorting, pagination, and multi-technology comparison checkboxes.
+  - `geoBreakdown.js` (`GeoBreakdown`): Renders geographic distribution table.
+  - `cwvDistribution.js` (`CwvDistribution`): Highcharts histogram chart with dynamic bucket trimming.
+- **Shared UI Helpers (`src/js/components/`)**:
+  - `filters.js` (`Filters`): Handles `#page-filters` form submission and combobox interactions.
+  - `drilldownHeader.js` (`DrilldownHeader`): Updates header titles, icons, and `[data-slot]` metadata badges across the DOM.
 
-Some files you'll need to work in when building on this report:
-- **Configuration**: `config/techreport.json`. Contains all text labels, information on data formatting and structure, and anything else that needs to be configured in one central locaiton. Used by both the server and client to render the page.
-- **Routing**: `server/routes.py`. Where the page templates get loaded based on the URL formatting. Functionality specific to this tech report is located in `server/techreport.py` and called from the routes file.
-- **Page templates**: `templates/techreport/*.html`. The structure of the different pages is located in the techreport folder, and used as SSR templates. `techreport.html` is the main tech report base, and where the shared JS and CSS is loaded from.
-- **Re-usable HTML**: `templates/techreport/components/*.html`. Re-usable UI components are added in the components folder, and included from the page templates. These may be modified in JS, but load with empty/placeholder content without it.
-- **Initializing the JS**: `src/js/techreport/index.js`. All the JS code related to this report is in the `techreport` folder. The code for the different UI elements and features is split up in separate files, and the `index.js` is the main one called from the `techreport.py` page.
-- **Sections**: `src/js/techreport/section.js`. The report is split up in several sections based on the different metrics.
-- **Timeseries**: `src/js/techreport/timeseries.js`. This contains all functionality related to the timeseries container, including: switching sub-metric, latest data highlight, rendering the highcharts timeseries, table toggle.
+---
 
-## How it works
+## 2. Filters & State Management
 
-The report is built using Astro, HTML/CSS, and vanilla JavaScript. We're using Highcharts for the visualizations, with the export and accessibility module added (built-in table altenatives, keyboard nav, etc). The page skeleton gets built on the server side, and populated with data on the client.
+### Client Filter (`mobile` vs `desktop`)
 
-### Configurations
+- **Default Value**: `'mobile'`.
+- **Dropdown Elements**:
+  - Drilldown / Category: `select#client-breakdown[name="client-breakdown"]`.
+  - Comparison: `select#comparison-client-breakdown[name="client-breakdown"]`.
+  - *Best Practice*: Always query using `document.querySelectorAll('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown')`.
+- **Initialization Lifecycle**:
+  - In `TechReport.initializeReport()`, `this.bindClientListener()` **must execute before** constructing `Section` instances.
+  - Restores the client from URL (`?client=...`) or defaults to `'mobile'`, synchronizes dropdown `.value`, sets `this.filters.client`, and updates `dataset.client` on all matching DOM elements (`.card`, `.report-section`, `table`).
+- **Reactive Re-rendering**:
+  - When the client dropdown changes:
+    1. Update `this.filters.client = client`.
+    2. Sync URL via `history.replaceState(null, null, url)`.
+    3. Update all client select elements on the page.
+    4. Set `dataset.client = client` on all section/card elements.
+    5. Propagate `section.pageFilters.client = client` and call `section.updateSection()`.
+    6. Call `DrilldownHeader.updateFilterMeta(this.filters)` so all `[data-slot="client"]` badges update to "Mobile" or "Desktop".
 
-The configurations for the tech report can be found in the **`/config/techreport.json`** file. They're passed in to the JavaScript from the **`/templates/techreport.html`** file.
+### URL Parameter Preservation
 
-#### `techreport.json`
+State must be preserved when navigating between views or submitting filters:
+- **Sidebar Form (`filters.js:setFilter`)**: Reads active client from dropdown or URL to ensure submitting Geo/Rank/Tech does not reset `client`.
+- **Category Table Links (`tableLinked.js`)**: Append `${client ? '&client=' + client : ''}` to technology drilldown links.
+- **Compare Action Links (`data.js` & `tableLinked.js:updateSelectionText`)**: Append active `&client=...`, `&geo=...`, and `&rank=...` when building the comparison target URL.
 
-**TODO**: Example to come 🙂
+---
 
-### Server-side: rendering of the page frame
+## 3. Responsive & Mobile Viewport Behavior
 
-Based on the URL, the server decides which report template to load:
-- Landing
-- Drilldown
-- Comparison
+- **Desktop ($\gt$ 50rem / 800px)**:
+  - Sidebar (`.filters`) is docked to the left.
+  - Client dropdown sits aligned to the right inside `.intro .heading-wrapper .breakdown`.
+- **Mobile Viewport ($\le$ 50rem / 800px)**:
+  - Sidebar collapses; `.mobile-filters` bar appears at the top.
+  - Tapping `#open-filters-mobile` expands `#mobile-filter-container`, moving `#report-filters` into view.
+  - **Client Dropdown Position**: Remains in `.intro .heading-wrapper .breakdown` right below the main title. On screens under 40rem (640px), `.heading-wrapper` displays as a block (`display: block`) for clean vertical stacking.
+- **Mobile Viewport vs Mobile Dataset**:
+  - *Mobile Viewport*: Responsive layout adjustments for small screens.
+  - *Mobile Dataset* (`client=mobile`): HTTP Archive mobile crawl dataset. Both mobile and desktop datasets share identical reactivity and layout rules.
 
-This is currently based on `/techreport/<pageId>` in the url, but could in the future also be a combination of this and the number of technologies present in the arguments.
+---
 
-Each page is made out of sections (based on the metrics), that each contain a collection of visualizations. The static skeleton content for these are rendered server-side, and based on the configurations in the **`techreport.json`** file.
+## 4. Component Implementation Rules
 
-### Client-side: data fetching and functionality
-
-On the client, through **`/src/js/techreport/index.js`**, the data is fetched and filled into the components on the page.
-
-The Highcharts components (`timeseries.js`) are rendered with placeholder data (defined in the config) first, to avoid having a long period without graphs while waiting for the API.
-
-#### Data
-
-**Future behavior**: There will be one API per metric, which will be called from the section level.
-
-**Current behavior**: The data currently comes from static JSONs and is fetched from inside the **`techreport/index.js`** file, and then passed on to the different sections.
-
-#### HTML
-
-All the HTML files are located in the `templates/techreport` folder. The top level files in that folder are the main pages that will be rendered. The `components` subfolder contains reusable bits of HTML that can be included in the pages and templates.
-
-The `templates` subfolder contains `<template>`s used in (web)components.
-
-```
-/templates
-  /techreport
-    /components
-      filters.html
-      ...
-    /templates
-      table_general.html
-      ...
-    comparison.html
-    drilldown.html
-    landing.html
-    ...
-```
-
-#### JavaScript
-
-**`/src/js/techreport/index.js`** is the main JavaScript file, from where all sections/visualizations are initiated and updated, and from where the data currently gets loaded.
-
-Different `Section` instances are created by based on the different `[data-type="section"]`s on the page.
-
-Currently, the JSON files are fetched from within the `Techreport`, and on success the `Section`s get updated with the new data. Later this data will be fetched with an API for each `Section`.
-
-When the data in the `Section` updates, the code updates the different components. The `Section` is responsible for fetching the data or watching section-level interactions. The components, like `Timeseries` (**`/src/js/techreport/timeseries.js`**), parse the data into the format required and then update the HTML with it.
-
-#### CSS
-
-We use vanilla CSS, no libraries. Bootstrap is loaded as well because it's used in the shared the header.
-
-## Behavior
-
-### Filters
-
-**On a global level**, the data can be filtered by:
-- App / technology
-- Geography
-- Rank
-
-When changing any of these, the user has to submit the form, after which the data gets fetched through the API(s).
-
-These parameters also update in the URL, which is used by the server-side code to render a page outline, and carry over between drilldown/comparison page.
-
-**On a page level**, the selected cliented can be changed between desktop and mobile. This does not require a new API call.
-
-**On a component level**, the selected submetric can be changed. The options are different for each metric, and defined in the `techreport.json`.
-
-
-## Todos and improvements
-
-This is still a work in progress, todos will be tracked elsewhere.
+1. **`SummaryCard`**:
+   - Guard against missing data: `const dataApp = this.data?.[app] || [];`.
+   - Explicitly handle zero values: `latestValue !== undefined && latestValue !== null`.
+   - Remove stale bracket classes (`circle.classList.remove('good', 'needs-improvement', 'poor')`) on re-renders.
+   - Clear change indicator text and classes when no month-over-month data exists.
+2. **`Timeseries`**:
+   - In Drilldown view (`breakdown === 'client'`), the timeseries plots both Mobile and Desktop, and the breakdown list renders dual cards (one for Mobile, one for Desktop).
+   - In Comparison view (`breakdown === 'app'`), the breakdown list renders individual technology cards for the currently selected client (`component.dataset.client`).
+3. **`Metadata Slots`**:
+   - Use `DrilldownHeader.updateFilterMeta(filters)` as the central method for updating `[data-slot="client"]`, `[data-slot="geo"]`, `[data-slot="rank"]`, and `[data-slot="tech"]`. Capitalize client labels ("Mobile" / "Desktop") using `UIUtils.capitalizeFirstLetter()`.

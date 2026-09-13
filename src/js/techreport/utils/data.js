@@ -191,7 +191,11 @@ const fetchCategoryData = (rows, filters, callback) => {
       const technologyUrl = encodeURI(techsFromUrl || technologyFormatted);
 
       const compare = document.querySelector('[data-name="selected-apps"]');
-      compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyUrl}`);
+      if (compare) {
+        const currentClient = filters?.client || new URLSearchParams(window.location.search).get('client');
+        const extraParams = `${geoFormatted && geoFormatted !== 'ALL' ? '&geo=' + geoFormatted : ''}${rankFormatted && rankFormatted !== 'ALL' ? '&rank=' + rankFormatted : ''}${currentClient ? '&client=' + currentClient : ''}`;
+        compare.setAttribute('href', `/reports/techreport/tech?tech=${technologyUrl}${extraParams}`);
+      }
 
       let allResults = {};
       paginatedTechs.forEach(tech => allResults[tech] = []);

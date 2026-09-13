@@ -135,7 +135,7 @@ class TableLinked {
 
               const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
-              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}${start ? '&start=' + start : ''}${end ? '&end=' + end : ''}`);
+              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}${start ? '&start=' + start : ''}${end ? '&end=' + end : ''}${client ? '&client=' + client : ''}`);
               link.innerText = formattedApp;
               wrapper.append(link);
               cell.append(wrapper);
@@ -273,15 +273,20 @@ class TableLinked {
 
   updateSelectionText(allSelectedApps) {
     const appLinks = document.querySelectorAll('[data-name="selected-apps"]');
+    const urlParams = new URLSearchParams(window.location.search);
+    const geo = urlParams.get('geo') || 'ALL';
+    const rank = urlParams.get('rank') || 'ALL';
+    const client = document.querySelector('[data-component="tableLinked"]')?.dataset?.client || urlParams.get('client') || 'mobile';
+    const extraParams = `${geo !== 'ALL' ? '&geo=' + geo : ''}${rank !== 'ALL' ? '&rank=' + rank : ''}${client ? '&client=' + client : ''}`;
+
     appLinks.forEach(appLinkEl => {
       let label = 'Compare all technologies on this page';
       let href = '';
       if(this.selectedTechs.length > 0) {
-        href = `/reports/techreport/tech?tech=${allSelectedApps}`;
+        href = `/reports/techreport/tech?tech=${encodeURI(allSelectedApps)}${extraParams}`;
         label = `Compare ${this.selectedTechs.length} technologies`;
       } else if(this.data.technologies) {
-        href = `/reports/techreport/tech?tech=${Object.keys(this.data.technologies).join(',')}`;
-        href = encodeURI(href);
+        href = `/reports/techreport/tech?tech=${encodeURI(Object.keys(this.data.technologies).join(','))}${extraParams}`;
       }
 
       appLinkEl.setAttribute('href', href);
