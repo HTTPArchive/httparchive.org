@@ -13,6 +13,7 @@ const test_pages = [
   '/reports/techreport/landing',
   '/reports/techreport/drilldown',
   '/reports/techreport/comparison',
+  '/reports/techreport/category?geo=ALL&rank=ALL&category=CMS',
   '/reports/techreport/tech?tech=ALL',
   '/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01',
 ];

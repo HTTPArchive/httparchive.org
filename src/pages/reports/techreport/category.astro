@@ -1,33 +1,18 @@
 ---
 /**
- * Tech Report: /reports/techreport/[page_id]
- * Serves category, drilldown, and comparison pages.
- * All rendering is done by TechReport JS class — the Astro page provides
- * the exact HTML structures they expect to find and query in the DOM.
+ * Tech Report Category page: /reports/techreport/category
+ * Renders category reporting view with category summary and technology table.
  */
 import Base from '../../../layouts/Base.astro';
 import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
 
-import Filters from '../../../components/techreport/Filters.astro';
 import CategoryFilters from '../../../components/techreport/CategoryFilters.astro';
-import DrilldownView from '../../../components/techreport/DrilldownView.astro';
-import ComparisonView from '../../../components/techreport/ComparisonView.astro';
 import CategoryView from '../../../components/techreport/CategoryView.astro';
 import '../../../styles/techreport/general.css';
 import '../../../styles/techreport/techreport.css';
 
-export function getStaticPaths() {
-  const config = techReportConfig as any;
-  const pageIds = Object.keys(config.pages || {});
-  // Exclude 'landing' which has its own page
-  return pageIds
-    .filter(id => id !== 'landing')
-    .map(id => ({ params: { page_id: id } }));
-}
-
-const { page_id } = Astro.params;
 const config = techReportConfig as any;
-const activePage = config.pages?.[page_id!];
+const categoryPage = config.pages.category;
 ---
 <Base
   title="HTTP Archive: Tech Report"
@@ -47,13 +32,13 @@ const activePage = config.pages?.[page_id!];
         <ul id="desktop" class="navigation-items">
           <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
           <li>
-            <a href="/reports/techreport/landing" aria-current={page_id === 'landing' ? 'page' : 'false'}><span>Home</span></a>
+            <a href="/reports/techreport/landing"><span>Home</span></a>
           </li>
           <li>
             <a href={`/reports/techreport/tech?geo=ALL&rank=ALL&tech=ALL`}><span>Technologies</span></a>
           </li>
           <li>
-            <a href="/reports/techreport/category?geo=ALL&rank=ALL&category=CMS" aria-current={page_id === 'category' ? 'page' : 'false'}><span>Categories</span></a>
+            <a href="/reports/techreport/category?geo=ALL&rank=ALL&category=CMS" aria-current="page"><span>Categories</span></a>
           </li>
         </ul>
       </div>
@@ -92,14 +77,12 @@ const activePage = config.pages?.[page_id!];
           <img src="/static/img/close-filters.svg" alt="Collapse filters" width="16px" height="16px" />
         </button>
 
-        {page_id === 'category' ? <CategoryFilters /> : <Filters />}
+        <CategoryFilters />
       </div>
     </div>
 
     <div class="content page-content" id="results">
-      {page_id === 'category' && <CategoryView config={config} pageConfig={activePage} />}
-      {page_id === 'drilldown' && <DrilldownView config={config} pageConfig={activePage} />}
-      {page_id === 'comparison' && <ComparisonView config={config} pageConfig={activePage} />}
+      <CategoryView config={config} pageConfig={categoryPage} />
     </div>
   </div>
 
@@ -126,7 +109,7 @@ const activePage = config.pages?.[page_id!];
     </div>
   </div>
 
-  <div id="techreport-data" data-page-id={page_id} data-page-config={JSON.stringify(activePage)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
+  <div id="techreport-data" data-page-id="category" data-page-config={JSON.stringify(categoryPage)} data-full-config={JSON.stringify(config.config)} data-labels={JSON.stringify(config.labels)} style="display: none;"></div>
 
   <Fragment slot="scripts">
     <script src="../../../js/highcharts-init.js"></script>

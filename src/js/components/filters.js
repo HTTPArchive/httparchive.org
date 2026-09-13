@@ -100,6 +100,10 @@ class Filters {
     // /* Scroll to the report content */
     // url.hash = '#report-content';
 
+    if (url.pathname.includes('/reports/techreport/comparison') || url.pathname.includes('/reports/techreport/drilldown')) {
+      url.pathname = '/reports/techreport/tech';
+    }
+
     /* Update the url */
     const styledUrl = url.href.replaceAll('%2C', ',');
     location.href = styledUrl;

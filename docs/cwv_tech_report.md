@@ -11,7 +11,8 @@ The HTTP Archive Tech Report is built using **Astro (SSR & client scripting)**, 
 - **Astro Pages**:
   - `src/pages/reports/techreport/landing.astro`: Report landing page linking to featured categories, technologies, and comparison entry points.
   - `src/pages/reports/techreport/tech.astro`: Polymorphic route matching `/reports/techreport/tech`. Renders skeletons for both **Drilldown** (1 technology) and **Comparison** (2+ technologies) layouts, dynamically pruning the inactive container on load based on `?tech=`.
-  - `src/pages/reports/techreport/[page_id].astro`: Parameterized SSG page routing for static endpoints (`category`, `drilldown`, and `comparison`).
+  - `src/pages/reports/techreport/category.astro`: Dedicated category reporting page matching `/reports/techreport/category`.
+  - `src/pages/reports/techreport/comparison.astro` & `drilldown.astro`: Preserving redirects pointing to `/reports/techreport/tech`.
 - **Astro UI Components (`src/components/techreport/`)**:
   - `Filters.astro`: Primary sidebar filter form and metadata summary list (`<ul class="meta">`).
   - `CategoryFilters.astro`: Filter bar for category browsing with search and pagination controls.
@@ -172,7 +173,7 @@ State must be preserved when navigating between views or submitting filters:
   - `DrilldownView.astro` ([`src/components/techreport/DrilldownView.astro`](file:///Users/maxostapenko/httparchive/httparchive.org/src/components/techreport/DrilldownView.astro)): Encapsulates the single-technology drilldown layout (Summary cards, CWV with geo/histogram panels, Lighthouse, Page Weight, Adoption).
   - `ComparisonView.astro` ([`src/components/techreport/ComparisonView.astro`](file:///Users/maxostapenko/httparchive/httparchive.org/src/components/techreport/ComparisonView.astro)): Encapsulates the multi-technology comparison layout (Summary table, CWV, Lighthouse, Page Weight, Adoption timeseries).
   - `CategoryView.astro` ([`src/components/techreport/CategoryView.astro`](file:///Users/maxostapenko/httparchive/httparchive.org/src/components/techreport/CategoryView.astro)): Encapsulates the category reporting view (Category summary and paginated technology table).
-  - Both `[page_id].astro` and `tech.astro` render these shared views, eliminating ~600 lines of duplicate Astro template code.
+  - `category.astro` and `tech.astro` render these shared views, eliminating ~600 lines of duplicate Astro template code.
 
 
 
