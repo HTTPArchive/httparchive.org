@@ -97,8 +97,7 @@ class Filters {
     url.searchParams.delete('page');
     url.searchParams.append('page', '1');
 
-    // /* Scroll to the report content */
-    // url.hash = '#report-content';
+    // Preserves existing URL hash so expanded sections (e.g. #section-cwv_distribution) remain open
 
     if (url.pathname.includes('/reports/techreport/comparison') || url.pathname.includes('/reports/techreport/drilldown')) {
       url.pathname = '/reports/techreport/tech';
