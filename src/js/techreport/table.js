@@ -108,11 +108,67 @@ function getSubcategory(config) {
   return subcategory;
 }
 
+// Update table headers to match technologies
+function updateThead(component, config, apps) {
+  const thead = component.querySelector('thead');
+  if (!thead || !config?.columns) return;
+
+  const tr = document.createElement('tr');
+  config.columns.forEach(column => {
+    if (column.breakdown === 'app') {
+      const technologies = Array.isArray(apps) && apps.length > 0 ? apps : ['ALL'];
+      technologies.forEach(app => {
+        const th = document.createElement('th');
+        if (column.key) th.dataset.key = column.key;
+        th.dataset.app = app;
+        if (column.metric) th.dataset.metric = column.metric;
+        if (column.className) th.className = column.className;
+
+        th.textContent = app === 'ALL' ? 'All technologies' : app;
+
+        if (column.hiddenSuffix) {
+          const span = document.createElement('span');
+          span.setAttribute('aria-hidden', 'true');
+          span.textContent = column.hiddenSuffix;
+          th.appendChild(span);
+        }
+
+        tr.appendChild(th);
+      });
+    } else {
+      const th = document.createElement('th');
+      if (column.key) th.dataset.key = column.key;
+      if (column.metric) th.dataset.metric = column.metric;
+      if (column.className) th.className = column.className;
+
+      th.textContent = column.name;
+
+      if (column.hiddenSuffix) {
+        const span = document.createElement('span');
+        span.setAttribute('aria-hidden', 'true');
+        span.textContent = column.hiddenSuffix;
+        th.appendChild(span);
+      }
+
+      tr.appendChild(th);
+    }
+  });
+
+  thead.innerHTML = '';
+  thead.appendChild(tr);
+}
+
 // Update the table
 function updateTable(id, config, appConfig, apps, data) {
   // Select a table based on the passed in id
-  const component = document.getElementById(`table-${id}`)
+  const component = document.getElementById(`table-${id}`);
+  if (!component) return;
+
+  // Update table header to match current apps/technologies
+  updateThead(component, config, apps);
+
   const tbody = component.querySelector('tbody');
+  if (!tbody) return;
 
   // Reset what's in the table before adding new content
   tbody.innerHTML = '';
