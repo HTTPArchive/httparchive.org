@@ -1,0 +1,149 @@
+---
+title: GET_LCP_LAZY function
+description: Reference docs for the httparchive.fn.GET_LCP_LAZY function
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+The [`httparchive.fn.GET_LCP_LAZY`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!6m3!1shttparchive!2sfn!3sGET_LCP_LAZY) function returns whether the LCP element had native and/or custom lazy-loading attributes.
+
+## Input
+
+### `performance_custom_metric`
+
+The JSON-encoded [`performance`](https://github.com/HTTPArchive/custom-metrics/blob/main/dist/performance.js) custom metric of a page.
+
+**Type:** `STRING`
+
+## Output
+
+Lazy-loading information about the LCP element.
+
+If the LCP element had native lazy-loading, the `native` property will be `true`.
+
+If the LCP element had custom lazy-loading, the `custom` property will be an array of CSS selectors representing the techniques used, which can be any of:
+
+- `[data-src]`
+- `[data-rimg]`
+- `[data-lazy]`
+- `[class~=lazyload]`
+- `[class~=swiper-lazy]`
+
+For custom attributes, only the name needs to match (the value is ignored). For custom classes, the value must exist anywhere in the attribute separated by whitespace.
+
+**Type:** `STRUCT<native BOOL, custom ARRAY<STRING>>`
+
+## Example usage
+
+### Percent of pages that natively lazy load their LCP element
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+WITH lazy AS (
+  SELECT
+    `httparchive.fn.GET_LCP_LAZY`(TO_JSON_STRING(custom_metrics.performance)).native
+  FROM `httparchive.crawl.pages`
+  WHERE
+    date = '2023-11-01' AND
+    client = 'mobile' AND
+    is_root_page
+)
+
+SELECT
+  COUNTIF(native) / COUNT(0) AS pct_lazy
+FROM
+  lazy
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+| pct_lazy |
+| -- |
+| 0.039 |
+
+  </TabItem>
+</Tabs>
+
+### Top custom lazy-loading techniques
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+WITH lazy AS (
+  SELECT
+    `httparchive.fn.GET_LCP_LAZY`(TO_JSON_STRING(custom_metrics.performance)).custom
+  FROM `httparchive.crawl.pages`
+  WHERE
+    date = '2023-11-01' AND
+    client = 'mobile' AND
+    is_root_page
+)
+
+SELECT
+  APPROX_TOP_COUNT(value, 10) AS custom_technique
+FROM
+  lazy,
+  UNNEST(custom) AS value
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+custom_technique.value | custom_technique.count
+-- | --
+`[data-src]` | 585469
+`[data-rimg]` | 12434
+`[class~=lazyload]` | 6497
+`[data-lazy]` | 4490
+`[class~=swiper-lazy]` | 553
+
+  </TabItem>
+</Tabs>
+
+## Routine
+
+```sql
+try {
+  const perf = JSON.parse(performance_custom_metric);
+  const lcpAttrs = perf.lcp_elem_stats.attributes;
+
+  const custom = [{
+    name: 'data-src'
+  }, {
+    name: 'data-rimg'
+  }, {
+    name: 'data-lazy'
+  }, {
+    name: 'class',
+    value: 'lazyload'
+  }, {
+    name: 'class',
+    value: 'swiper-lazy'
+  }].map(config => {
+    if (config.value) {
+      config.regex = new RegExp(`(^|\\s)${config.value}(\\s|$)`);
+    }
+    return config;
+  });
+
+
+  return {
+    native: lcpAttrs.some(({name, value}) => {
+      return name == 'loading' && value == 'lazy';
+    }),
+    custom: custom.filter(({name, value, regex}) => {
+      return lcpAttrs.some(attr => {
+        return attr.name == name && (!value || regex.test(attr.value));
+      });
+    }).map(({name, value}) => {
+      return `[${name}${value ? `~=${value}` : ''}]`;
+    })
+  }
+} catch {
+  return null;
+}
+```
