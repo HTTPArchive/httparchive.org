@@ -2,20 +2,25 @@
  * URL Utilities for Tech Report
  * Centralized query parameter parsing, serialization, and state helpers.
  */
-function safeDecode(val) {
+export function safeDecode(val) {
   if (typeof val !== 'string') return val;
   try {
     let decoded = decodeURIComponent(val);
     if (decoded.includes('%')) {
-      try { decoded = decodeURIComponent(decoded); } catch (_) {}
+      try {
+        decoded = decodeURIComponent(decoded);
+      } catch {
+        // Ignore secondary decode failure
+      }
     }
     return decoded;
-  } catch (_) {
+  } catch {
     return val;
   }
 }
 
 export const UrlUtils = {
+  safeDecode,
   /**
    * Returns current URLSearchParams instance.
    */
