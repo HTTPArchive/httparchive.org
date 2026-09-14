@@ -1,0 +1,94 @@
+---
+title: Page metadata blob
+description: Reference docs for the HAR page metadata blob
+---
+
+_Appears in: [`pages`](/docs/reference/tables/pages/) table_\
+_As: [`metadata`](/docs/reference/tables/pages/#metadata)_
+
+JSON-encoded HTTP Archive metadata about the page that was tested.
+
+<details>
+<summary>An example of the decoded object</summary>
+```json
+{
+    "crawl_depth": 1,
+    "layout": "Desktop",
+    "link_depth": 0,
+    "parent_page_test_id": "241008_Dx133_8DPZ7",
+    "parent_page_url": "https://httparchive.org/",
+    "rank": 5000000,
+    "retry_count": 0,
+    "root_page_test_id": "241008_Dx133_8DPZ7",
+    "root_page_url": "https://httparchive.org/",
+    "tested_url": "https://httparchive.org/faq",
+    "visited": [
+        "https://httparchive.org/",
+        "https://httparchive.org/faq"
+    ]
+}
+```
+</details>
+
+## Schema
+
+### `crawl_depth`
+
+Levels of depth from the root page. HTTP Archive is currently configured to crawl one level into a website, so this value will always be `0` or `1`.
+
+A value of `0` means that the page is the root page. A value of `1` means that the page is an _interior_ or _secondary page_.
+
+When a root page is being tested, secondary page candidates are collected using the [`crawl-links`](https://github.com/HTTPArchive/custom-metrics/blob/main/dist/crawl_links.js) custom metric. The criteria for candidate pages are:
+
+- The page is linked from the root page
+- The page is on the same origin as the root page
+- The page is not the same as the root page
+- The link to the page is visible within the viewport
+
+From the list of candidates, the link with the largest hit area is selected to be tested next. If that test fails, the next largest link is used.
+
+### `layout`
+
+Whether the page was tested in a desktop or mobile environment. Values are `"Desktop"` or `"Mobile"`.
+
+### `link_depth`
+
+At a given crawl depth, this value represents the index in the list of pages being tested. Currently, HTTP Archive only crawls one page per level, so this value is always `0`.
+
+Hypothetically, HTTP Archive can crawl multiple pages per level. For example, at crawl depth `0`, the page is the root. Given that there's only one root page, the `link_depth` would be `0`. At crawl depth `1`, there may be many secondary page candidates. Instead of testing only one of them, HTTP Archive could test multiple secondary pages that are all linked from the root page. These pages would have a `link_depth` of `0`, `1`, `2`, etc, where the smaller indexes represent the pages that are more prominently linked from the preceding page.
+
+### `parent_page_test_id`
+
+The test ID of the parent page. This is useful for debugging purposes.
+
+### `parent_page_url`
+
+URL of the parent page.
+
+### `rank`
+
+The rank magnitude of the origin, which is a measure of relative popularity.
+
+For example, the page `https://www.example.com/` has a rank of `500000`, which means that the `https://www.example.com` website is in the top 500k most popular, according to the [Chrome UX Report](https://developer.chrome.com/docs/crux/methodology/#popularity-metric).
+
+### `retry_count`
+
+The number of times the page was retried. This is useful for debugging purposes.
+
+### `root_page_test_id`
+
+The test ID of the root page.
+
+### `root_page_url`
+
+URL of the root page.
+
+### `tested_url`
+
+The actual URL of the page that was intended to be tested.
+
+This is useful when there may be ambiguity caused by redirects or known issues where the certificate request appears before the page itself.
+
+### `visited`
+
+An array of URLs that were visited during the test. This includes the root page and any secondary pages that were tested.
