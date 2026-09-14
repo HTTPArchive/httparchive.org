@@ -65,7 +65,7 @@ else
 fi
 
 echo "Waiting for server to start..."
-timeout=15
+timeout=45
 while ! curl -s http://127.0.0.1:8080 > /dev/null; do
   sleep 1
   timeout=$((timeout-1))
