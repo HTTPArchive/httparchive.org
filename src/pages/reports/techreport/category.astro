@@ -1,0 +1,19 @@
+---
+/**
+ * Tech Report Category page: /reports/techreport/category
+ * Renders category reporting view with category summary and technology table.
+ */
+import TechReportLayout from '../../../layouts/TechReportLayout.astro';
+import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
+
+import CategoryFilters from '../../../components/techreport/CategoryFilters.astro';
+import CategoryView from '../../../components/techreport/CategoryView.astro';
+
+const config = techReportConfig as any;
+const categoryPage = config.pages.category;
+---
+<TechReportLayout activeNav="category" pageId="category">
+  <CategoryFilters slot="filters" />
+
+  <CategoryView config={config} pageConfig={categoryPage} />
+</TechReportLayout>

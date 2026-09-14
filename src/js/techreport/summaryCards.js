@@ -12,7 +12,7 @@ class SummaryCard {
     this.pageConfig = pageConfig;
     this.config = config;
     this.pageFilters = filters;
-    this.client = 'mobile'; //TODO: get default from config
+    this.client = filters?.client || 'mobile';
   }
 
   updateContent() {
@@ -20,10 +20,11 @@ class SummaryCard {
       // Select the HTML element that corresponds with this card
       const query = `[data-component="summaryCard"][data-id="${this.id}"]`;
       const card = document.querySelector(query);
+      if(!card) return;
 
       // Get the latest data for the selected app/tech
-      const app = this.pageFilters.app[0];
-      const client = card.dataset.client || this.client;
+      const app = this.pageFilters.app?.[0];
+      const client = card.dataset.client || this.pageFilters?.client || this.client;
       // const filteredData = this.data?.[app]?.filter(entry => entry.client === client);
       // filteredData?.sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -37,9 +38,9 @@ class SummaryCard {
       let latestChange;
 
       if(key) {
-        latestValue = this.data[key][metric][client] || this.data[key][metric];
+        latestValue = this.data[key]?.[metric]?.[client] || this.data[key]?.[metric];
       } else {
-        const dataApp = this.data?.[app];
+        const dataApp = this.data?.[app] || [];
         const latestToOldest = [...dataApp].sort((a, b) => new Date(b.date) - new Date(a.date));
         const latestEndpoint = latestToOldest[0]?.[endpoint];
 
@@ -60,27 +61,36 @@ class SummaryCard {
       }
 
       // Update the html
-      if(latestValue) {
-        const valueSlot = card.querySelector('[data-slot="value"]');
-        valueSlot.innerHTML = latestValue?.toLocaleString();
+      const valueSlot = card.querySelector('[data-slot="value"]');
+      if(valueSlot) {
+        valueSlot.innerHTML = (latestValue !== undefined && latestValue !== null)
+          ? latestValue.toLocaleString()
+          : '-';
+      }
 
-        const progress = card.querySelectorAll('.progress-circle');
-        progress.forEach(circle => {
+      const progress = card.querySelectorAll('.progress-circle');
+      progress.forEach(circle => {
+        circle.classList.remove('good', 'needs-improvement', 'poor');
+        if(latestValue !== undefined && latestValue !== null) {
           const scoreCategory = DataUtils.getLighthouseScoreCategories(latestValue, this.config.lighthouse_brackets);
           const scoreCategoryName = scoreCategory?.name;
           circle.setAttribute('style', `--offset: ${latestValue}%;`);
-          circle.classList.add(scoreCategoryName);
-        });
-      }
+          if(scoreCategoryName) {
+            circle.classList.add(scoreCategoryName);
+          }
+        }
+      });
 
-      if(latestChange && latestChange.string && latestChange.perc != null) {
-        const changeSlot = card.querySelector('[data-slot="change"]');
-        const changeMeaning = changeSlot?.dataset?.meaning;
-
-        if(changeSlot) {
+      const changeSlot = card.querySelector('[data-slot="change"]');
+      if(changeSlot) {
+        if(latestChange && latestChange.string && latestChange.perc != null) {
+          const changeMeaning = changeSlot?.dataset?.meaning;
           changeSlot.textContent = latestChange.string;
           const styling = UIUtils.getChangeStatus(latestChange.perc, changeMeaning);
           changeSlot.className = `monthchange ${styling?.color} ${styling?.direction}`;
+        } else {
+          changeSlot.textContent = '';
+          changeSlot.className = 'monthchange';
         }
       }
     }

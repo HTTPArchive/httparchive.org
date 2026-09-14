@@ -1,0 +1,105 @@
+---
+/**
+ * CategoryView.astro
+ * Renders the category reporting view with category summary and paginated technology table.
+ */
+import SummaryCard from './SummaryCard.astro';
+import TableLinked from './TableLinked.astro';
+
+interface Props {
+  config: any;
+  pageConfig: any;
+  id?: string;
+  isHidden?: boolean;
+}
+
+const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.props;
+---
+<div id={id} class:list={['report-content', { hidden: isHidden }]}>
+  <div class="intro block-m">
+    <div class="info">
+      <div class="heading-wrapper">
+        <div>
+          <h1>
+            <span class="subtitle">Category</span>
+            <span class="main-title"></span>
+          </h1>
+          <p class="app-description"></p>
+        </div>
+        <div class="breakdown default-dropdown-group">
+          <label for="client-breakdown" class="default-dropdown-label">Client</label>
+          <div class="select-label default-dropdown-wrapper">
+            <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+              <option value="mobile" selected>Mobile</option>
+              <option value="desktop">Desktop</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-sections">
+    <div
+      id="cateogry-summary"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="category"
+    >
+      <h2 class="summary-heading"><a href="#cateogry-summary" class="anchor">Summary</a></h2>
+      <div class="summary-grid">
+        {pageConfig.config.summary?.map((summary: any) => (
+          <SummaryCard summary={summary} sectionPrefix="category" />
+        ))}
+      </div>
+    </div>
+
+    <div
+      id="comparison-summary"
+      class="card block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
+      <h2><a href="#comparison-summary" class="anchor">Technologies</a></h2>
+      <div class="table-descr">
+        <p>
+          Overview of the latest Core Web Vitals of all technologies within this category, sorted by number of origins.
+          Select up to 10 technologies to compare their Core Web Vitals, Lighthouse scores, adoption, and page weight over time, or view details about a single technology.
+        </p>
+        <p>
+          Currently showing page <strong><span data-page="current">1</span> of <span data-page="total">1</span></strong>, based on the latest data (<span data-slot="timestamp"></span>).
+        </p>
+      </div>
+
+      <a data-name="selected-apps" href="/reports/techreport/tech" class="cta-link">Compare all technologies on this page</a>
+
+      <div class="selected-apps">
+        <p>Selected technologies:</p>
+        <ul data-name="selected-apps-overview"></ul>
+      </div>
+
+      <TableLinked id={pageConfig.config.tech_comparison_summary.id} table={pageConfig.config.tech_comparison_summary.table} category="" />
+
+      <div class="table-pagination">
+        <p data-pagination="previous" style="display: none;"></p>
+        <div class="table-page-info">
+          <p>
+            Page <strong data-page="current">1</strong> of <strong data-page="total">1</strong>
+          </p>
+          <div class="table-row-count">
+            <label for="rowsPerPage">Rows</label>
+            <select id="rowsPerPage">
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <p class="sr-only" aria-live="polite">
+            <span id="rows-announcement"></span>
+          </p>
+        </div>
+        <p data-pagination="next" style="display: none;"></p>
+      </div>
+    </div>
+  </div>
+</div>

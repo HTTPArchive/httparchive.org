@@ -5,10 +5,11 @@ import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
 import { el, prettyDate, chartExportOptions, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { Constants } from './techreport/utils/constants.js';
 
 
 function timeseries(metric, options, start, end) {
-  const dataUrl = `https://cdn.httparchive.org/v1/static/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
+  const dataUrl = `${Constants.apiBase}/static/reports/${options.lens ? `${options.lens.id}/` : ''}${metric}.json`;
   options.chartId = `${metric}-chart`;
   options.tableId = `${metric}-table`;
   options.metric = metric;

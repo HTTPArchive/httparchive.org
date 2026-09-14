@@ -1,5 +1,6 @@
 import { Constants } from './utils/constants';
 import { UIUtils } from './utils/ui';
+import { UrlUtils } from './utils/url';
 
 class GeoBreakdown {
   constructor(id, pageConfig, config, filters, data) {
@@ -9,7 +10,7 @@ class GeoBreakdown {
     this.pageFilters = filters;
     this.data = data;
     this.geoData = null;
-    this.selectedMetric = this.resolveMetric(new URLSearchParams(window.location.search).get('good-cwv-over-time')) || 'overall';
+    this.selectedMetric = this.resolveMetric(UrlUtils.get('good-cwv-over-time')) || 'overall';
     this.sortColumn = 'total';
     this.sortDir = 'desc';
     this.showAll = false;
@@ -25,7 +26,7 @@ class GeoBreakdown {
 
   // Map the shared metric value (which may be 'overall') to a metric this chart can show
   resolveMetric(value) {
-    if (value && this.pageConfig.geo_breakdown.metric_labels.value) return this.pageConfig.geo_breakdown.metric_labels.value;
+    if (value && this.pageConfig?.geo_breakdown?.metric_labels?.[value]) return value;
     return 'overall';
   }
 
@@ -198,7 +199,13 @@ class GeoBreakdown {
       const th = document.createElement('th');
       th.className = [col.cls, 'geo-sortable-col'].filter(Boolean).join(' ');
       const isActive = this.sortColumn === col.key;
-      th.innerHTML = col.label + (isActive ? `<span class="geo-sort-arrow">${this.sortDir === 'desc' ? ' ▼' : ' ▲'}</span>` : '');
+      th.textContent = col.label;
+      if (isActive) {
+        const arrow = document.createElement('span');
+        arrow.className = 'geo-sort-arrow';
+        arrow.textContent = this.sortDir === 'desc' ? ' ▼' : ' ▲';
+        th.appendChild(arrow);
+      }
       if (col.key !== 'geo') {
         th.style.cursor = 'pointer';
         th.addEventListener('click', () => {
@@ -274,3 +281,5 @@ class GeoBreakdown {
 }
 
 window.GeoBreakdown = GeoBreakdown;
+export default GeoBreakdown;
+export { GeoBreakdown };

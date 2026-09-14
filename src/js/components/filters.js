@@ -1,6 +1,6 @@
 import ComboBox from "../techreport/combobox";
+import { DataUtils } from "../techreport/utils/data";
 
-const { DataUtils } = require("../techreport/utils/data");
 class Filters {
   constructor(filterData, filters) {
     this.categories = filterData?.categories;
@@ -87,12 +87,22 @@ class Filters {
       url.searchParams.append('end', endDate);
     }
 
+    const clientSelect = document.querySelector('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown');
+    const client = clientSelect?.value || this.filters?.client || url.searchParams.get('client');
+    if (client) {
+      url.searchParams.set('client', client);
+    }
+
     // Reset to page 1 when filters change
     url.searchParams.delete('page');
     url.searchParams.append('page', '1');
 
     // /* Scroll to the report content */
     // url.hash = '#report-content';
+
+    if (url.pathname.includes('/reports/techreport/comparison') || url.pathname.includes('/reports/techreport/drilldown')) {
+      url.pathname = '/reports/techreport/tech';
+    }
 
     /* Update the url */
     const styledUrl = url.href.replaceAll('%2C', ',');
@@ -144,13 +154,14 @@ class Filters {
   updateGeo() {
     const select = document.querySelector('select#geo');
     select.innerHTML = '';
+    const normalizedFilter = decodeURIComponent(this.filters.geo || '').trim();
     this.geos.forEach((geo) => {
       const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
       const option = optionTmpl.querySelector('option');
       const formattedTech = geo.geo;
       option.textContent = geo.geo;
       option.value = formattedTech;
-      if(formattedTech === this.filters.geo) {
+      if(formattedTech === this.filters.geo || formattedTech === normalizedFilter) {
         option.selected = true;
       }
       select.append(optionTmpl);
@@ -161,13 +172,14 @@ class Filters {
   updateRank() {
     const select = document.querySelector('select#rank');
     select.innerHTML = '';
+    const normalizedFilter = decodeURIComponent(this.filters.rank || '').trim();
     this.ranks.forEach((rank) => {
       const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
       const option = optionTmpl.querySelector('option');
       const formattedTech = rank.rank;
       option.textContent = rank.rank;
       option.value = formattedTech;
-      if(formattedTech === this.filters.rank) {
+      if(formattedTech === this.filters.rank || formattedTech === normalizedFilter) {
         option.selected = true;
       }
       select.append(optionTmpl);
@@ -190,7 +202,7 @@ class Filters {
         const sortedCategories = this.categories.sort((a, b) => a !== b ? a < b ? -1 : 1 : 0);
         sortedCategories.forEach((category) => {
           const option = document.createElement('option');
-          if(category === select.getAttribute('data-selected')) {
+          if(category === (this.filters.category || select.getAttribute('data-selected'))) {
             option.selected = true;
           }
           option.value = category;

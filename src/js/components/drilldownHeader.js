@@ -1,15 +1,23 @@
 import { DataUtils } from "../techreport/utils/data";
+import { UIUtils } from "../techreport/utils/ui.js";
+import { Constants } from "../techreport/utils/constants.js";
+import { UrlUtils, safeDecode } from "../techreport/utils/url.js";
 
 function setTitle(title) {
   const mainTitle = document.querySelector('h1 span.main-title');
-  mainTitle.textContent = title;
-
+  if (mainTitle) {
+    mainTitle.textContent = title;
+  }
 }
 
 function setIcon(icon) {
+  if (!icon) return;
   const img = document.querySelector('h1 .title-img');
-  const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${icon}`;
-  img.setAttribute('style', `background-image: url(${imgUrl})`);
+  if (img) {
+    const cleanIcon = encodeURI(decodeURI(icon));
+    const imgUrl = `${Constants.apiBase}/static/icons/${cleanIcon}`;
+    img.setAttribute('style', `background-image: url('${imgUrl}')`);
+  }
 }
 
 function setCategories(categories) {
@@ -25,7 +33,7 @@ function setCategories(categories) {
       cellTemplate.className = 'cell btn';
       const link = document.createElement('a');
       link.textContent = category;
-      const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = UrlUtils.getParams();
       urlParams.set('category', category);
       const tech = urlParams.get('tech');
       if (tech) {
@@ -53,10 +61,34 @@ function setCategories(categories) {
 function setDescription(description) {
   if(description && description !== "") {
     const descr = document.querySelector('p.app-description');
-    descr.textContent = description;
+    if (descr) {
+      descr.textContent = description;
+    }
   } else {
     const descr = document.querySelector('p.app-description');
-    descr.remove();
+    if (descr) {
+      descr.remove();
+    }
+  }
+}
+
+function updateFilterMeta(filters) {
+  const geo = safeDecode(filters?.geo) || 'ALL';
+  const rank = safeDecode(filters?.rank) || 'ALL';
+  const tech = filters?.app ? filters.app.map(safeDecode).join(', ') : 'ALL';
+  const client = filters?.client || 'Mobile';
+
+  document.querySelectorAll('[data-slot="geo"]').forEach(el => { el.textContent = geo; });
+  document.querySelectorAll('[data-slot="rank"]').forEach(el => { el.textContent = rank; });
+  document.querySelectorAll('[data-slot="tech"]').forEach(el => { el.textContent = tech; });
+  document.querySelectorAll('[data-slot="client"]').forEach(el => { el.textContent = UIUtils.capitalizeFirstLetter(client); });
+
+  if (filters?.app?.length) {
+    const count = filters.app.length;
+    const techWord = count === 1 ? 'technology' : 'technologies';
+    document.querySelectorAll('[data-slot="techs-count"]').forEach(el => {
+      el.textContent = `${count} ${techWord}`;
+    });
   }
 }
 
@@ -67,10 +99,13 @@ function update(filters) {
     const formattedApp = DataUtils.formatAppName(app);
     setTitle(formattedApp);
   }
+
+  updateFilterMeta(filters);
 }
 
 export const DrilldownHeader = {
   update,
+  updateFilterMeta,
   setCategories,
   setDescription,
   setIcon,

@@ -1,5 +1,6 @@
-/* global Timeseries, GeoBreakdown, CwvDistribution */
-
+import Timeseries from "./timeseries";
+import GeoBreakdown from "./geoBreakdown";
+import CwvDistribution from "./cwvDistribution";
 import SummaryCard from "./summaryCards";
 import TableLinked from "./tableLinked";
 
@@ -13,6 +14,7 @@ class Section {
     this.components = {};
 
     this.initializeComponents();
+    this.initializeCwvButtonBar();
   }
 
   initializeComponents() {
@@ -97,6 +99,46 @@ class Section {
     );
   }
 
+  initializeCwvButtonBar() {
+    const section = document.getElementById(this.id);
+    if (!section) return;
+    const bar = section.querySelector('.cwv-button-bar');
+    if (!bar) return;
+
+    const tw = document.getElementById('good_cwv_timeseries-table-wrapper') ||
+      section.querySelector('[id$="-table-wrapper"]');
+
+    // Move the timeseries' table wrapper out of the timeseries div so expanding it
+    // doesn't push the button bar down
+    if (bar && tw && tw.parentNode !== bar.parentNode) {
+      bar.parentNode.insertBefore(tw, bar.nextSibling);
+    }
+
+    // Mutual exclusion: only one panel open at a time
+    const panels = [
+      { btn: bar.querySelector('.cwv-show-table-btn'), wrapper: tw, showText: 'Show table' },
+      { btn: document.getElementById('geo-breakdown-btn'), wrapper: document.getElementById('section-geo_breakdown'), showText: 'Show geographic breakdown' },
+      { btn: document.getElementById('cwv-distribution-btn'), wrapper: document.getElementById('section-cwv_distribution'), showText: 'Show histogram' }
+    ].filter(p => p.btn && p.wrapper);
+
+    panels.forEach(panel => {
+      panel.btn.addEventListener('click', () => {
+        panels.forEach(other => {
+          if (other !== panel && !other.wrapper.classList.contains('hidden')) {
+            other.wrapper.classList.add('hidden');
+            other.btn.textContent = other.showText;
+            // As table doesn't set the hash, clear it to avoid showing old value
+            if (window.location.hash) {
+              const url = new URL(window.location.href);
+              url.hash = '';
+              window.history.replaceState(null, null, url);
+            }
+          }
+        });
+      }, true);
+    });
+  }
+
   updateSection(content) {
     Object.values(this.components).forEach(component => {
       if(component.data !== this.data) {
@@ -111,3 +153,5 @@ class Section {
 }
 
 window.Section = Section;
+export default Section;
+export { Section };

@@ -1,3 +1,5 @@
+import { Constants } from "./utils/constants.js";
+
 class ComboBox {
   constructor(element, data, selected) {
     this.element = element;
@@ -34,7 +36,7 @@ class ComboBox {
               if (icon && !option.querySelector('img')) {
                 const logo = document.createElement('img');
                 logo.setAttribute('alt', '');
-                logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
+                logo.setAttribute('src', `${Constants.apiBase}/static/icons/${encodeURI(icon)}`);
                 option.append(logo);
               }
               this.observer.unobserve(option);
@@ -65,7 +67,7 @@ class ComboBox {
         } else {
           const logo = document.createElement('img');
           logo.setAttribute('alt', '');
-          logo.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
+          logo.setAttribute('src', `${Constants.apiBase}/static/icons/${encodeURI(icon)}`);
           logo.setAttribute('loading', 'lazy');
           option.append(logo);
         }
@@ -237,7 +239,7 @@ class ComboBox {
     if (icon) {
       /* Add the app logo */
       const appIcon = document.createElement('img');
-      appIcon.setAttribute('src', `https://cdn.httparchive.org/v1/static/icons/${encodeURI(icon)}`);
+      appIcon.setAttribute('src', `${Constants.apiBase}/static/icons/${encodeURI(icon)}`);
       appIcon.setAttribute('alt', '');
       appIcon.classList.add('logo');
       deleteSelection.append(appIcon);

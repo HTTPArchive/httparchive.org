@@ -1,0 +1,22 @@
+---
+/**
+ * Redirects legacy /reports/techreport/drilldown to /reports/techreport/tech
+ * preserving all query parameters and hash.
+ */
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting to Tech Report...</title>
+    <script is:inline>
+      const target = '/reports/techreport/tech' + window.location.search + window.location.hash;
+      window.location.replace(target);
+    </script>
+    <meta http-equiv="refresh" content="0; url=/reports/techreport/tech" />
+    <link rel="canonical" href="https://httparchive.org/reports/techreport/tech" />
+  </head>
+  <body>
+    <p>Redirecting to <a href="/reports/techreport/tech">Technology Report</a>...</p>
+  </body>
+</html>
