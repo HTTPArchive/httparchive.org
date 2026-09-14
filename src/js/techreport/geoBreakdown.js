@@ -199,7 +199,13 @@ class GeoBreakdown {
       const th = document.createElement('th');
       th.className = [col.cls, 'geo-sortable-col'].filter(Boolean).join(' ');
       const isActive = this.sortColumn === col.key;
-      th.innerHTML = col.label + (isActive ? `<span class="geo-sort-arrow">${this.sortDir === 'desc' ? ' ▼' : ' ▲'}</span>` : '');
+      th.textContent = col.label;
+      if (isActive) {
+        const arrow = document.createElement('span');
+        arrow.className = 'geo-sort-arrow';
+        arrow.textContent = this.sortDir === 'desc' ? ' ▼' : ' ▲';
+        th.appendChild(arrow);
+      }
       if (col.key !== 'geo') {
         th.style.cursor = 'pointer';
         th.addEventListener('click', () => {
