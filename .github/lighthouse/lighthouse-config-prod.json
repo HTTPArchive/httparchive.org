@@ -9,7 +9,6 @@
         "bf-cache": "off",
         "bootup-time": "off",
         "cache-insight": "off",
-        "cls-culprits-insight": "off",
         "document-latency-insight": "off",
         "dom-size": "off",
         "dom-size-insight": "off",
