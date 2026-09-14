@@ -1,0 +1,75 @@
+---
+title: GET_LCP_PRIORITY function
+description: Reference docs for the httparchive.fn.GET_LCP_PRIORITY function
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+The [`httparchive.fn.GET_LCP_PRIORITY`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!6m3!1shttparchive!2sfn!3sGET_LCP_PRIORITY) function returns the value of the `fetchpriority` attribute of the LCP element.
+
+## Input
+
+### `performance_custom_metric`
+
+The JSON-encoded [`performance`](https://github.com/HTTPArchive/custom-metrics/blob/main/dist/performance.js) custom metric of a page.
+
+**Type:** `STRING`
+
+## Output
+
+The value of the `fetchpriority` attribute of the LCP element, or `null` if the LCP element does not have a `fetchpriority` attribute.
+
+**Type:** `STRING`
+
+## Example usage
+
+### Top `fetchpriority` values
+
+<Tabs>
+  <TabItem label="Query">
+
+```sql
+WITH lcp AS (
+  SELECT
+    `httparchive.fn.GET_LCP_PRIORITY`(TO_JSON_STRING(custom_metrics.performance)) AS priority
+  FROM `httparchive.crawl.pages`
+  WHERE
+    date = '2023-11-01' AND
+    client = 'mobile' AND
+    is_root_page
+)
+
+SELECT APPROX_TOP_COUNT(priority, 10) AS priority
+FROM lcp
+```
+
+  </TabItem>
+  <TabItem label="Results">
+
+priority.value | priority.count
+-- | --
+_null_ | 15892076
+high | 697184
+low | 5103
+auto | 3255
+hight | 24
+highest | 17
+"" | 14
+”high” | 4
+High | 4
+medium | 3
+
+  </TabItem>
+</Tabs>
+
+## Routine
+
+```sql
+try {
+  const perf = JSON.parse(performance_custom_metric);
+  const lcpAttrs = perf.lcp_elem_stats.attributes;
+  return lcpAttrs.find(attr => attr.name == 'fetchpriority')?.value
+} catch {
+  return null;
+}
+```
