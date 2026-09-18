@@ -196,8 +196,8 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
   mainPlotEl.className = 'chart-main-plot';
   container.appendChild(mainPlotEl);
 
-  // Calculate full data boundaries
-  const allTimestamps = [...desktop, ...mobile].map(d => d.timestamp).filter(Boolean);
+  // Calculate full data boundaries and unique crawl timestamps
+  const allTimestamps = Array.from(new Set([...desktop, ...mobile].map(d => d.timestamp).filter(Boolean))).sort((a, b) => a - b);
   const earliest = Math.min(...allTimestamps);
   const latest = Math.max(...allTimestamps);
 
@@ -209,29 +209,69 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     renderer: 'svg'
   });
 
-  // Prepare MarkLines for Changelog milestones
-  const changelogMarkLines = changelogData.map((c, i) => ({
-    xAxis: c.date,
-    name: String.fromCharCode(65 + (i % 26)),
-    label: {
-      formatter: String.fromCharCode(65 + (i % 26)),
-      position: 'insideEndTop',
-      distance: 5,
-      fontSize: 9,
-      fontWeight: '600',
-      color: '#64748b',
-      backgroundColor: '#ffffff',
-      borderColor: '#94a3b8',
-      borderWidth: 1,
-      borderRadius: 3,
-      padding: [1, 3]
-    },
-    lineStyle: {
-      color: '#cbd5e1',
-      type: 'dashed',
-      width: 1
+  // Build high-fidelity changelog mapping
+  // Map by:
+  // 1. Exact changelog date timestamp
+  // 2. UTC midnight of changelog date
+  // 3. Closest crawl timestamp in the dataset
+  const changelogMap = new Map();
+  const changelogMarkLines = changelogData.map((c, i) => {
+    const letter = String.fromCharCode(65 + (i % 26));
+    const item = {
+      ...c,
+      letter,
+      title: c.title,
+      desc: c.desc
+    };
+
+    // 1. Exact date
+    changelogMap.set(+c.date, item);
+
+    // 2. UTC midnight
+    const cd = new Date(+c.date);
+    const midnight = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
+    changelogMap.set(midnight, item);
+
+    // 3. Closest crawl timestamp
+    let closestTs = allTimestamps[0];
+    let minDiff = Infinity;
+    for (const ts of allTimestamps) {
+      const diff = Math.abs(ts - c.date);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestTs = ts;
+      }
     }
-  }));
+    if (minDiff <= 15 * 86400000) {
+      changelogMap.set(closestTs, item);
+      item.crawlTs = closestTs;
+    } else {
+      item.crawlTs = midnight;
+    }
+
+    return {
+      xAxis: item.crawlTs,
+      name: item.title,
+      label: {
+        formatter: letter,
+        position: 'insideStartBottom',
+        distance: 8,
+        fontSize: 9,
+        fontWeight: '600',
+        color: '#64748b',
+        backgroundColor: '#ffffff',
+        borderColor: '#94a3b8',
+        borderWidth: 1,
+        borderRadius: 3,
+        padding: [1, 3]
+      },
+      lineStyle: {
+        color: '#cbd5e1',
+        type: 'dashed',
+        width: 1
+      }
+    };
+  });
 
   // Dynamic benchmarks
   const benchmarkMarkLines = [];
@@ -371,12 +411,14 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     }
   }
 
+  const yAxisTitle = `${options.name}${options.redundant ? '' : ` (${options.type})`}`;
+
   // ECharts Option Configuration
   const option = {
     animation: false,
     grid: {
       top: 25,
-      left: 65,
+      left: 70,
       right: 25,
       bottom: 95,
       containLabel: false
@@ -395,6 +437,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     },
     tooltip: {
       trigger: 'axis',
+      confine: true,
       backgroundColor: 'rgba(255, 255, 255, 0.98)',
       borderColor: '#d1d5db',
       borderWidth: 1,
@@ -419,7 +462,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
           ? d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
           : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
-        let html = `<div class="echarts-tooltip-card">`;
+        let html = `<div class="echarts-tooltip-card" style="max-width: 320px;">`;
         html += `<div class="tooltip-date">${formattedDate}</div>`;
         html += `<table><tr>`;
 
@@ -446,12 +489,14 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
         html += `</tr></table>`;
 
         // Check for changelog milestone
-        const changelogItem = flags[ts];
+        const cd = new Date(ts);
+        const midnight = Date.UTC(cd.getUTCFullYear(), cd.getUTCMonth(), cd.getUTCDate());
+        const changelogItem = changelogMap.get(ts) || changelogMap.get(midnight);
         if (changelogItem) {
           html += `
-            <div class="changelog-box">
-              <span style="font-weight: 600; color: #1f2937;">${changelogItem.title}</span><br/>
-              <span>${changelogItem.desc}</span>
+            <div class="changelog-box" style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #e2e8f0; font-size: 11px; text-align: left; max-width: 290px; white-space: normal; line-height: 1.4;">
+              <span style="font-weight: 600; color: #1f2937;">[${changelogItem.letter}] ${changelogItem.title}</span>
+              ${changelogItem.desc ? `<br/><span style="color: #64748b; font-size: 10px; line-height: 1.35; display: inline-block; margin-top: 2px;">${changelogItem.desc}</span>` : ''}
             </div>
           `;
         }
@@ -476,8 +521,9 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     },
     yAxis: {
       type: 'value',
-      name: options.type || 'Value',
-      nameLocation: 'center',
+      name: yAxisTitle,
+      nameLocation: 'middle',
+      nameRotate: 90,
       nameGap: 50,
       nameTextStyle: {
         color: '#64748b',
@@ -499,6 +545,8 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
         xAxisIndex: 0,
         startValue: initialMin,
         endValue: initialMax,
+        left: 70,
+        right: 25,
         bottom: 34,
         height: 26,
         borderColor: '#e2e8f0',
@@ -537,6 +585,29 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
   };
 
   chart.setOption(option);
+
+  // Year labels overlay inside the zoom/pan slider
+  const sliderYearsEl = document.createElement('div');
+  sliderYearsEl.className = 'chart-slider-years';
+  sliderYearsEl.style.cssText = 'position: absolute; left: 70px; right: 25px; bottom: 34px; height: 26px; pointer-events: none; overflow: hidden; display: flex; align-items: center; z-index: 2;';
+
+  const startYr = new Date(earliest).getUTCFullYear();
+  const endYr = new Date(latest).getUTCFullYear();
+  const yrSpan = endYr - startYr;
+  const step = yrSpan > 10 ? 4 : (yrSpan > 5 ? 2 : 1);
+  const firstYr = yrSpan > 10 ? 2014 : Math.ceil((startYr + 1) / step) * step;
+
+  for (let yr = firstYr; yr < endYr; yr += step) {
+    const yrTs = Date.UTC(yr, 0, 1);
+    const pct = ((yrTs - earliest) / (latest - earliest)) * 100;
+    if (pct >= 8 && pct <= 92) {
+      const span = document.createElement('span');
+      span.style.cssText = `position: absolute; left: ${pct}%; font-size: 11px; color: #475569; font-weight: 600; transform: translateX(-50%); user-select: none; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; text-shadow: 0 0 4px #ffffff, 0 0 2px #ffffff;`;
+      span.textContent = yr.toString();
+      sliderYearsEl.appendChild(span);
+    }
+  }
+  mainPlotEl.appendChild(sliderYearsEl);
 
   // Link IQR series with legend toggling
   chart.on('legendselectchanged', params => {
