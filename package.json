@@ -47,5 +47,8 @@
   },
   "engines": {
     "node": ">=26.0.0"
+  },
+  "dependencies": {
+    "echarts": "^6.1.0"
   }
 }
