@@ -215,8 +215,22 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
   // 2. UTC midnight of changelog date
   // 3. Closest crawl timestamp in the dataset
   const changelogMap = new Map();
-  const changelogMarkLines = changelogData.map((c, i) => {
-    const letter = String.fromCharCode(65 + (i % 26));
+
+  // Filter changelog items to only those within the metric's lifespan
+  // so obsolete milestones (e.g. from 2012-2018 on a 2020+ metric) aren't drawn clamped at x=0
+  const relevantChanges = changelogData.filter(c => {
+    const ts = +c.date;
+    return ts >= earliest - 15 * 86400000 && ts <= latest + 15 * 86400000;
+  });
+
+  // Track vertical staggering level for close milestones (< 90 days)
+  let lastMilestoneTs = -Infinity;
+  let lastStaggerLevel = 0;
+
+  const changelogMarkLines = relevantChanges.map(c => {
+    // Preserve canonical global letter matching HTTPArchive standard
+    const globalIdx = changelogData.findIndex(x => x.date === c.date);
+    const letter = String.fromCharCode(65 + ((globalIdx >= 0 ? globalIdx : 0) % 26));
     const item = {
       ...c,
       letter,
@@ -249,24 +263,36 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
       item.crawlTs = midnight;
     }
 
+    // Determine vertical staggering to prevent adjacent milestone lines from slicing through badges
+    let staggerLevel = 0;
+    if (Math.abs(item.crawlTs - lastMilestoneTs) < 90 * 86400000) {
+      staggerLevel = lastStaggerLevel === 0 ? 1 : 0;
+    }
+    lastMilestoneTs = item.crawlTs;
+    lastStaggerLevel = staggerLevel;
+
+    const distance = staggerLevel === 0 ? 8 : 26;
+
     return {
       xAxis: item.crawlTs,
       name: item.title,
       label: {
         formatter: letter,
         position: 'insideStartBottom',
-        distance: 8,
-        fontSize: 9,
-        fontWeight: '600',
-        color: '#64748b',
+        distance: distance,
+        fontSize: 10,
+        fontWeight: '700',
+        color: '#0284c7',
         backgroundColor: '#ffffff',
-        borderColor: '#94a3b8',
-        borderWidth: 1,
-        borderRadius: 3,
-        padding: [1, 3]
+        borderColor: '#0284c7',
+        borderWidth: 1.5,
+        borderRadius: 4,
+        padding: [2, 5],
+        shadowColor: 'rgba(0, 0, 0, 0.15)',
+        shadowBlur: 3
       },
       lineStyle: {
-        color: '#cbd5e1',
+        color: '#94a3b8',
         type: 'dashed',
         width: 1
       }
@@ -495,8 +521,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
         if (changelogItem) {
           html += `
             <div class="changelog-box" style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #e2e8f0; font-size: 11px; text-align: left; max-width: 290px; white-space: normal; line-height: 1.4;">
-              <span style="font-weight: 600; color: #1f2937;">[${changelogItem.letter}] ${changelogItem.title}</span>
-              ${changelogItem.desc ? `<br/><span style="color: #64748b; font-size: 10px; line-height: 1.35; display: inline-block; margin-top: 2px;">${changelogItem.desc}</span>` : ''}
+              <span style="font-weight: 600; color: #1f2937;">${changelogItem.title}</span>
             </div>
           `;
         }
@@ -508,11 +533,37 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     xAxis: {
       type: 'time',
       boundaryGap: false,
+      min: earliest,
+      max: latest,
       axisLine: { lineStyle: { color: '#cbd5e1' } },
       axisTick: { lineStyle: { color: '#cbd5e1' } },
       axisLabel: {
         color: '#64748b',
-        fontSize: 11
+        fontSize: 11,
+        showMinLabel: true,
+        showMaxLabel: false,
+        hideOverlap: true,
+        formatter: value => {
+          let spanDays = (latest - earliest) / 86400000;
+          try {
+            const axis = chart.getModel()?.getComponent('xAxis', 0)?.axis;
+            if (axis) {
+              const extent = axis.scale.getExtent();
+              spanDays = (extent[1] - extent[0]) / 86400000;
+            }
+          } catch (e) {}
+
+          const d = new Date(value);
+          if (spanDays > 730) {
+            return d.getFullYear().toString();
+          } else if (spanDays > 120) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[d.getMonth()]} '${d.getFullYear().toString().slice(-2)}`;
+          } else {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[d.getMonth()]} ${d.getDate()}`;
+          }
+        }
       },
       splitLine: {
         show: true,
