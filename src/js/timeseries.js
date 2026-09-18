@@ -217,17 +217,13 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
   const changelogMap = new Map();
 
   // Filter changelog items to only those within the metric's lifespan
-  // so obsolete milestones (e.g. from 2012-2018 on a 2020+ metric) aren't drawn clamped at x=0
+  // so obsolete milestones (e.g. from 2012-2018 on a 2020+ metric) aren't processed
   const relevantChanges = changelogData.filter(c => {
     const ts = +c.date;
     return ts >= earliest - 15 * 86400000 && ts <= latest + 15 * 86400000;
   });
 
-  // Track vertical staggering level for close milestones (< 90 days)
-  let lastMilestoneTs = -Infinity;
-  let lastStaggerLevel = 0;
-
-  const changelogMarkLines = relevantChanges.map(c => {
+  const changelogSeriesData = relevantChanges.map(c => {
     // Preserve canonical global letter matching HTTPArchive standard
     const globalIdx = changelogData.findIndex(x => x.date === c.date);
     const letter = String.fromCharCode(65 + ((globalIdx >= 0 ? globalIdx : 0) % 26));
@@ -263,40 +259,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
       item.crawlTs = midnight;
     }
 
-    // Determine vertical staggering to prevent adjacent milestone lines from slicing through badges
-    let staggerLevel = 0;
-    if (Math.abs(item.crawlTs - lastMilestoneTs) < 90 * 86400000) {
-      staggerLevel = lastStaggerLevel === 0 ? 1 : 0;
-    }
-    lastMilestoneTs = item.crawlTs;
-    lastStaggerLevel = staggerLevel;
-
-    const distance = staggerLevel === 0 ? 8 : 26;
-
-    return {
-      xAxis: item.crawlTs,
-      name: item.title,
-      label: {
-        formatter: letter,
-        position: 'insideStartBottom',
-        distance: distance,
-        fontSize: 10,
-        fontWeight: '700',
-        color: '#0284c7',
-        backgroundColor: '#ffffff',
-        borderColor: '#0284c7',
-        borderWidth: 1.5,
-        borderRadius: 4,
-        padding: [2, 5],
-        shadowColor: 'rgba(0, 0, 0, 0.15)',
-        shadowBlur: 3
-      },
-      lineStyle: {
-        color: '#94a3b8',
-        type: 'dashed',
-        width: 1
-      }
-    };
+    return [item.crawlTs, 0, letter, item.title, item];
   });
 
   // Dynamic benchmarks
@@ -320,10 +283,10 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
           smooth: false,
           lineStyle: { color: Colors.DESKTOP, width: 2 },
           itemStyle: { color: Colors.DESKTOP },
-          markLine: field === options.timeseries.fields[0] ? {
+          markLine: field === options.timeseries.fields[0] && benchmarkMarkLines.length ? {
             symbol: ['none', 'none'],
             silent: true,
-            data: [...changelogMarkLines, ...benchmarkMarkLines]
+            data: benchmarkMarkLines
           } : undefined
         });
       });
@@ -368,11 +331,11 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
         showSymbol: false,
         smooth: false,
         z: 3,
-        markLine: {
+        markLine: benchmarkMarkLines.length ? {
           symbol: ['none', 'none'],
           silent: true,
-          data: [...changelogMarkLines, ...benchmarkMarkLines]
-        }
+          data: benchmarkMarkLines
+        } : undefined
       });
     }
   }
@@ -437,6 +400,113 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     }
   }
 
+  // Append Changelog custom series (Option A: Clean bottom axis pins, on-demand crosshair)
+  if (changelogSeriesData.length) {
+    seriesList.push({
+      name: 'Changelog',
+      type: 'custom',
+      coordinateSystem: 'cartesian2d',
+      xAxisIndex: 0,
+      yAxisIndex: 0,
+      z: 10,
+      data: changelogSeriesData,
+      renderItem: (params, api) => {
+        const ts = api.value(0);
+        const letter = api.value(2);
+        const coord = api.coord([ts, 0]);
+        const x = coord[0];
+        const gridBottom = params.coordSys.y + params.coordSys.height;
+
+        // Clip if outside visible chart bounds
+        if (x < params.coordSys.x - 12 || x > params.coordSys.x + params.coordSys.width + 12) {
+          return;
+        }
+
+        const dataIdx = params.dataIndex;
+        let stemH = 14;
+        const boxW = 16;
+        const boxH = 16;
+
+        // Dynamic stem staggering when adjacent milestones are close in pixels (< 18px)
+        if (dataIdx > 0) {
+          const prevTs = changelogSeriesData[dataIdx - 1][0];
+          const prevX = api.coord([prevTs, 0])[0];
+          if (Math.abs(x - prevX) < 18) {
+            stemH = (dataIdx % 2 === 1) ? 28 : 14;
+          }
+        }
+
+        const boxY = gridBottom - stemH - boxH;
+        const boxX = Math.round(x - boxW / 2);
+
+        return {
+          type: 'group',
+          children: [
+            // Stem connecting tick to flag
+            {
+              type: 'line',
+              shape: {
+                x1: Math.round(x),
+                y1: gridBottom,
+                x2: Math.round(x),
+                y2: boxY + boxH
+              },
+              style: {
+                stroke: '#94a3b8',
+                lineWidth: 1
+              }
+            },
+            // Flag badge box
+            {
+              type: 'rect',
+              shape: {
+                x: boxX,
+                y: boxY,
+                width: boxW,
+                height: boxH,
+                r: 3
+              },
+              style: {
+                fill: '#ffffff',
+                stroke: '#94a3b8',
+                lineWidth: 1,
+                shadowColor: 'rgba(0, 0, 0, 0.08)',
+                shadowBlur: 2
+              },
+              emphasis: {
+                style: {
+                  fill: '#f0f9ff',
+                  stroke: '#0284c7',
+                  lineWidth: 1.5,
+                  shadowColor: 'rgba(2, 132, 199, 0.25)',
+                  shadowBlur: 4
+                }
+              }
+            },
+            // Letter text
+            {
+              type: 'text',
+              style: {
+                text: letter,
+                x: Math.round(x),
+                y: boxY + Math.round(boxH / 2) + 1,
+                fill: '#475569',
+                font: 'bold 9px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                textAlign: 'center',
+                textVerticalAlign: 'middle'
+              },
+              emphasis: {
+                style: {
+                  fill: '#0284c7'
+                }
+              }
+            }
+          ]
+        };
+      }
+    });
+  }
+
   const yAxisTitle = `${options.name}${options.redundant ? '' : ` (${options.type})`}`;
 
   // ECharts Option Configuration
@@ -479,8 +549,27 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
       },
       formatter: params => {
         if (!params || !params.length) return '';
-        const visibleParams = params.filter(p => !p.seriesName.includes('IQR'));
-        if (!visibleParams.length) return '';
+        const visibleParams = params.filter(p => !p.seriesName.includes('IQR') && p.seriesName !== 'Changelog');
+        if (!visibleParams.length) {
+          const changelogParam = params.find(p => p.seriesName === 'Changelog');
+          if (changelogParam) {
+            const ts = changelogParam.value[0];
+            const d = new Date(ts);
+            const formattedDate = ts >= Date.UTC(2019, 0, 1)
+              ? d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+              : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+            const title = changelogParam.value[3];
+            return `
+              <div class="echarts-tooltip-card" style="max-width: 320px;">
+                <div class="tooltip-date">${formattedDate}</div>
+                <div class="changelog-box" style="margin-top: 6px; font-size: 11px; text-align: left; max-width: 290px; white-space: normal; line-height: 1.4;">
+                  <span style="font-weight: 600; color: #1f2937;">${title}</span>
+                </div>
+              </div>
+            `;
+          }
+          return '';
+        }
 
         const ts = visibleParams[0].value[0];
         const d = new Date(ts);
@@ -533,37 +622,11 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     xAxis: {
       type: 'time',
       boundaryGap: false,
-      min: earliest,
-      max: latest,
       axisLine: { lineStyle: { color: '#cbd5e1' } },
       axisTick: { lineStyle: { color: '#cbd5e1' } },
       axisLabel: {
         color: '#64748b',
-        fontSize: 11,
-        showMinLabel: true,
-        showMaxLabel: false,
-        hideOverlap: true,
-        formatter: value => {
-          let spanDays = (latest - earliest) / 86400000;
-          try {
-            const axis = chart.getModel()?.getComponent('xAxis', 0)?.axis;
-            if (axis) {
-              const extent = axis.scale.getExtent();
-              spanDays = (extent[1] - extent[0]) / 86400000;
-            }
-          } catch (e) {}
-
-          const d = new Date(value);
-          if (spanDays > 730) {
-            return d.getFullYear().toString();
-          } else if (spanDays > 120) {
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            return `${months[d.getMonth()]} '${d.getFullYear().toString().slice(-2)}`;
-          } else {
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            return `${months[d.getMonth()]} ${d.getDate()}`;
-          }
-        }
+        fontSize: 11
       },
       splitLine: {
         show: true,
@@ -828,7 +891,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
         seriesList[0].markLine = {
           symbol: ['none', 'none'],
           silent: true,
-          data: [...changelogMarkLines, ...benchmarkMarkLines]
+          data: benchmarkMarkLines
         };
         chart.setOption({ series: seriesList });
       }
