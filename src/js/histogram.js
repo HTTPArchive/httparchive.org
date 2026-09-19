@@ -447,7 +447,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
 
   resetZoomBtn?.addEventListener('click', resetZoom);
 
-  // Mouse drag selection zoom
+  // Mouse drag selection zoom with visual background area
   let dragStartX = null;
   let selectionBox = null;
   mainPlotEl.style.position = 'relative';
@@ -458,22 +458,28 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    if (x >= 50 && x <= rect.width - 50 && y >= 20 && y <= rect.height - 50) {
+    if (x >= 40 && x <= rect.width - 40 && y >= 10 && y <= rect.height - 40) {
       dragStartX = e.clientX;
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseup', onMouseUp);
+      e.preventDefault();
+      document.body.style.userSelect = 'none';
+      document.body.style.cursor = 'crosshair';
+      window.addEventListener('mousemove', onMouseMove, { capture: true });
+      window.addEventListener('mouseup', onMouseUp, { capture: true });
     }
   };
 
   const onMouseMove = e => {
     if (dragStartX === null) return;
     const dx = e.clientX - dragStartX;
-    if (Math.abs(dx) > 5) {
+    if (Math.abs(dx) > 3) {
       if (!selectionBox) {
         selectionBox = document.createElement('div');
         selectionBox.className = 'chart-zoom-selection';
-        selectionBox.style.cssText = 'position: absolute; top: 25px; bottom: 62px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); pointer-events: none; z-index: 10;';
+        const rect = mainPlotEl.getBoundingClientRect();
+        const plotHeight = rect.height - 25 - 62;
+        selectionBox.style.height = `${plotHeight}px`;
         mainPlotEl.appendChild(selectionBox);
+        chart.dispatchAction({ type: 'hideTip' });
       }
       const rect = mainPlotEl.getBoundingClientRect();
       const left = Math.max(60, Math.min(dragStartX, e.clientX) - rect.left);
@@ -484,8 +490,10 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
   };
 
   const onMouseUp = e => {
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
+    window.removeEventListener('mousemove', onMouseMove, { capture: true });
+    window.removeEventListener('mouseup', onMouseUp, { capture: true });
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
 
     if (dragStartX !== null) {
       const dx = Math.abs(e.clientX - dragStartX);
@@ -520,7 +528,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
     }
   };
 
-  mainPlotEl.addEventListener('mousedown', onMouseDown);
+  mainPlotEl.addEventListener('mousedown', onMouseDown, { capture: true });
 
   chart.on('datazoom', () => {
     const opt = chart.getOption();
