@@ -241,9 +241,40 @@ th {
   text-decoration: underline;
 }
 
-.chart-menu {
+.chart-header-actions {
   position: absolute;
   top: -4px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reset-zoom-btn {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  color: #374151;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  cursor: pointer;
+  line-height: 1.3;
+  transition: all 0.15s ease;
+}
+
+.reset-zoom-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.reset-zoom-btn.hidden {
+  display: none;
+}
+
+.chart-menu {
+  position: relative;
+  top: 0;
   right: 0;
 }
 
@@ -400,6 +431,20 @@ th {
 .echarts-tooltip-card .series-val {
   font-size: 14px;
   font-weight: 700;
+  line-height: 1.2;
+}
+
+.echarts-tooltip-card .series-sublabel {
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.echarts-tooltip-card .series-subval {
+  font-size: 13px;
+  font-weight: 600;
   line-height: 1.2;
 }
 
