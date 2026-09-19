@@ -5,6 +5,8 @@ import { Metric } from './metric';
 import { el, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
 import { Constants } from './techreport/utils/constants.js';
 
+const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({ rgba: true });
+
 function getQueryUrl(metric, type = 'histogram') {
   return `https://github.com/HTTPArchive/legacy.httparchive.org/blob/master/sql/${type}/${metric}.sql`;
 }
@@ -184,33 +186,36 @@ function drawHistogram(data, containerId, options) {
   if (!container) return;
 
   callOnceWhenVisible(container, () => {
-    renderEChartsHistogram(container, desktop, mobile, options);
+    renderEChartsHistogram(container, desktop, mobile, options, data);
   });
 }
 
-function renderEChartsHistogram(container, desktop, mobile, options) {
+function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
   container.innerHTML = '';
 
-  const chartTitle = `${options.lens ? `${options.lens.name}: ` : ''}Distribution of ${options.name}`;
+  const chartTitle = `${options.lens ? `${options.lens.name}: ` : ''}Histogram of ${options.name}`;
 
   // 1. Header Card Element
   const header = document.createElement('div');
   header.className = 'chart-header';
   header.innerHTML = `
     <h3 class="chart-title">${chartTitle}</h3>
-    <div class="chart-subtitle">Source: <a href="https://httparchive.org" target="_blank" rel="noopener">httparchive.org</a></div>
-    <div class="chart-menu">
-      <button class="chart-menu-btn" title="Chart options" aria-label="Chart options">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
-      <div class="chart-menu-dropdown hidden">
-        <button class="chart-menu-item" data-action="download-png">Download PNG image</button>
-        <button class="chart-menu-item" data-action="download-svg">Download SVG vector image</button>
-        <button class="chart-menu-item" data-action="show-query">Show BigQuery query</button>
+    <div class="chart-subtitle">Source: <a href="https://httparchive.org" target="_blank" rel="noopener">httparchive.org</a>${options.date ? ` (${prettyDate(options.date)})` : ''}</div>
+    <div class="chart-header-actions">
+      <button class="reset-zoom-btn hidden" aria-label="Reset zoom">Reset zoom</button>
+      <div class="chart-menu">
+        <button class="chart-menu-btn" title="Chart options" aria-label="Chart options">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <div class="chart-menu-dropdown hidden">
+          <button class="chart-menu-item" data-action="download-png">Download PNG image</button>
+          <button class="chart-menu-item" data-action="download-svg">Download SVG vector image</button>
+          <button class="chart-menu-item" data-action="show-query">Show BigQuery query</button>
+        </div>
       </div>
     </div>
   `;
@@ -247,8 +252,9 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
         return [bin, b ? Math.round(b.pdf * 10000) / 100 : 0];
       }),
       yAxisIndex: 0,
-      itemStyle: { color: Colors.DESKTOP },
-      barCategoryGap: '20%'
+      itemStyle: { color: COLOR_DESKTOP },
+      barCategoryGap: '20%',
+      barGap: '-100%'
     });
 
     seriesList.push({
@@ -260,9 +266,10 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
       }),
       yAxisIndex: 1,
       itemStyle: { color: Colors.DESKTOP },
-      lineStyle: { color: Colors.DESKTOP, width: 2, type: 'dashed' },
+      lineStyle: { color: Colors.DESKTOP, width: 2, type: 'solid' },
       showSymbol: false,
-      step: 'end'
+      symbol: 'none',
+      emphasis: { disabled: true }
     });
   }
 
@@ -276,8 +283,9 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
         return [bin, b ? Math.round(b.pdf * 10000) / 100 : 0];
       }),
       yAxisIndex: 0,
-      itemStyle: { color: Colors.MOBILE },
-      barCategoryGap: '20%'
+      itemStyle: { color: COLOR_MOBILE },
+      barCategoryGap: '20%',
+      barGap: '-100%'
     });
 
     seriesList.push({
@@ -289,9 +297,10 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
       }),
       yAxisIndex: 1,
       itemStyle: { color: Colors.MOBILE },
-      lineStyle: { color: Colors.MOBILE, width: 2, type: 'dashed' },
+      lineStyle: { color: Colors.MOBILE, width: 2, type: 'solid' },
       showSymbol: false,
-      step: 'end'
+      symbol: 'none',
+      emphasis: { disabled: true }
     });
   }
 
@@ -308,9 +317,9 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
       bottom: 0,
       left: 'center',
       data: legendNames,
-      icon: 'roundRect',
-      itemWidth: 16,
-      itemHeight: 4,
+      icon: 'circle',
+      itemWidth: 8,
+      itemHeight: 8,
       textStyle: {
         color: '#374151',
         fontSize: 12
@@ -319,9 +328,9 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
     tooltip: {
       trigger: 'axis',
       backgroundColor: 'rgba(255, 255, 255, 0.98)',
-      borderColor: '#d1d5db',
+      borderColor: '#e2e8f0',
       borderWidth: 1,
-      padding: 10,
+      padding: [8, 12],
       extraCssText: 'box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14); border-radius: 6px; backdrop-filter: blur(4px);',
       axisPointer: {
         type: 'shadow',
@@ -336,24 +345,24 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
         const mBin = mobileMap.get(binVal);
 
         let html = `<div class="echarts-tooltip-card">`;
-        html += `<div class="tooltip-date">${options.name}: ${metricObj.toString()}</div>`;
+        html += `<div class="tooltip-date">${metricObj.toString()}</div>`;
         html += `<table><tr>`;
 
         if (dBin) {
           html += `<td>
             <div class="series-label" style="color: ${Colors.DESKTOP};">Desktop</div>
-            <div class="series-val" style="color: ${Colors.DESKTOP};">${(dBin.pdf * 100).toFixed(2)}%</div>
-            <div style="font-size: 11px; color: #6b7280; margin-top: 2px;">CDF: ${(dBin.cdf * 100).toFixed(1)}%</div>
-            <div style="font-size: 10px; color: #9ca3af;">Vol: ${dBin.volume.toLocaleString()}</div>
+            <div class="series-val" style="color: ${Colors.DESKTOP}; font-size: 18px; font-weight: 700; margin: 2px 0;">${(dBin.pdf * 100).toFixed(2)}%</div>
+            <div class="series-sublabel">Cumulative</div>
+            <div class="series-subval" style="color: ${Colors.DESKTOP};">${(dBin.cdf * 100).toFixed(2)}%</div>
           </td>`;
         }
 
         if (mBin) {
           html += `<td>
             <div class="series-label" style="color: ${Colors.MOBILE};">Mobile</div>
-            <div class="series-val" style="color: ${Colors.MOBILE};">${(mBin.pdf * 100).toFixed(2)}%</div>
-            <div style="font-size: 11px; color: #6b7280; margin-top: 2px;">CDF: ${(mBin.cdf * 100).toFixed(1)}%</div>
-            <div style="font-size: 10px; color: #9ca3af;">Vol: ${mBin.volume.toLocaleString()}</div>
+            <div class="series-val" style="color: ${Colors.MOBILE}; font-size: 18px; font-weight: 700; margin: 2px 0;">${(mBin.pdf * 100).toFixed(2)}%</div>
+            <div class="series-sublabel">Cumulative</div>
+            <div class="series-subval" style="color: ${Colors.MOBILE};">${(mBin.cdf * 100).toFixed(2)}%</div>
           </td>`;
         }
 
@@ -361,6 +370,15 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
         return html;
       }
     },
+    dataZoom: [
+      {
+        type: 'inside',
+        xAxisIndex: 0,
+        filterMode: 'none',
+        zoomOnMouseWheel: false,
+        moveOnMouseMove: false
+      }
+    ],
     xAxis: {
       type: 'value',
       name: options.type || 'Metric Value',
@@ -379,7 +397,7 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
     yAxis: [
       {
         type: 'value',
-        name: 'Density (%)',
+        name: 'Density',
         nameLocation: 'center',
         nameGap: 45,
         nameTextStyle: { color: '#64748b', fontSize: 12 },
@@ -392,8 +410,9 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
       },
       {
         type: 'value',
-        name: 'Cumulative Density (%)',
+        name: 'Cumulative Density',
         nameLocation: 'center',
+        nameRotate: -90,
         nameGap: 45,
         min: 0,
         max: 100,
@@ -410,6 +429,109 @@ function renderEChartsHistogram(container, desktop, mobile, options) {
   };
 
   chart.setOption(option);
+
+  // Reset zoom & selection zoom interactions
+  const resetZoomBtn = header.querySelector('.reset-zoom-btn');
+
+  const resetZoom = () => {
+    chart.dispatchAction({
+      type: 'dataZoom',
+      start: 0,
+      end: 100
+    });
+    resetZoomBtn?.classList.add('hidden');
+    if (rawData) {
+      drawHistogramTable(rawData, `${options.metric}-table-desktop`, `${options.metric}-table-mobile`, options.type, [-Infinity, Infinity]);
+    }
+  };
+
+  resetZoomBtn?.addEventListener('click', resetZoom);
+
+  // Mouse drag selection zoom
+  let dragStartX = null;
+  let selectionBox = null;
+  mainPlotEl.style.position = 'relative';
+
+  const onMouseDown = e => {
+    if (e.button !== 0) return;
+    const rect = mainPlotEl.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (x >= 50 && x <= rect.width - 50 && y >= 20 && y <= rect.height - 50) {
+      dragStartX = e.clientX;
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+    }
+  };
+
+  const onMouseMove = e => {
+    if (dragStartX === null) return;
+    const dx = e.clientX - dragStartX;
+    if (Math.abs(dx) > 5) {
+      if (!selectionBox) {
+        selectionBox = document.createElement('div');
+        selectionBox.className = 'chart-zoom-selection';
+        selectionBox.style.cssText = 'position: absolute; top: 25px; bottom: 62px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); pointer-events: none; z-index: 10;';
+        mainPlotEl.appendChild(selectionBox);
+      }
+      const rect = mainPlotEl.getBoundingClientRect();
+      const left = Math.max(60, Math.min(dragStartX, e.clientX) - rect.left);
+      const right = Math.min(rect.width - 60, Math.max(dragStartX, e.clientX) - rect.left);
+      selectionBox.style.left = `${left}px`;
+      selectionBox.style.width = `${Math.max(0, right - left)}px`;
+    }
+  };
+
+  const onMouseUp = e => {
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+
+    if (dragStartX !== null) {
+      const dx = Math.abs(e.clientX - dragStartX);
+      if (dx > 10) {
+        const rect = mainPlotEl.getBoundingClientRect();
+        const startX = Math.min(dragStartX, e.clientX) - rect.left;
+        const endX = Math.max(dragStartX, e.clientX) - rect.left;
+        const val1 = chart.convertFromPixel({ xAxisIndex: 0 }, startX);
+        const val2 = chart.convertFromPixel({ xAxisIndex: 0 }, endX);
+        if (val1 != null && val2 != null) {
+          const minVal = Math.min(val1, val2);
+          const maxVal = Math.max(val1, val2);
+          if (maxVal > minVal) {
+            chart.dispatchAction({
+              type: 'dataZoom',
+              startValue: minVal,
+              endValue: maxVal
+            });
+            resetZoomBtn?.classList.remove('hidden');
+            if (rawData) {
+              drawHistogramTable(rawData, `${options.metric}-table-desktop`, `${options.metric}-table-mobile`, options.type, [minVal, maxVal]);
+            }
+          }
+        }
+      }
+      dragStartX = null;
+    }
+
+    if (selectionBox) {
+      selectionBox.remove();
+      selectionBox = null;
+    }
+  };
+
+  mainPlotEl.addEventListener('mousedown', onMouseDown);
+
+  chart.on('datazoom', () => {
+    const opt = chart.getOption();
+    const dz = opt.dataZoom && opt.dataZoom[0];
+    if (dz) {
+      const isZoomed = dz.startValue !== undefined || (dz.start !== undefined && (dz.start > 0.5 || dz.end < 99.5));
+      if (isZoomed) {
+        resetZoomBtn?.classList.remove('hidden');
+      }
+    }
+  });
 
   // Legend toggling for CDF curves together with bars
   chart.on('legendselectchanged', params => {
