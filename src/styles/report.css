@@ -272,6 +272,16 @@ th {
   display: none;
 }
 
+.chart-zoom-selection {
+  position: absolute;
+  top: 25px;
+  background: rgba(51, 92, 173, 0.25);
+  border: 1px solid rgba(51, 92, 173, 0.6);
+  pointer-events: none;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
 .chart-menu {
   position: relative;
   top: 0;
