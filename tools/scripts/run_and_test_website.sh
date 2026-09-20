@@ -8,7 +8,9 @@ if pgrep -f "emulators:start.*hosting" > /dev/null 2>&1; then
 fi
 
 # Detect whether firebase is installed or fallback to npx
-if command -v firebase > /dev/null 2>&1; then
+if [ -x "$HOME/.npm-global/bin/firebase" ]; then
+  FIREBASE_CMD="$HOME/.npm-global/bin/firebase"
+elif command -v firebase > /dev/null 2>&1; then
   FIREBASE_CMD="firebase"
 else
   FIREBASE_CMD="npx -y firebase-tools"

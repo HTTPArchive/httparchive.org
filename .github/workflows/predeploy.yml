@@ -45,9 +45,6 @@ jobs:
         npm config set prefix "$HOME/.npm-global"
         npm install -g firebase-tools
 
-    - name: Add Firebase CLI to PATH
-      run: echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
-
     - name: Run the website
       run: ./tools/scripts/run_and_test_website.sh
     - name: Update timestamps
