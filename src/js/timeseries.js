@@ -119,9 +119,9 @@ const loadChangelog = () => {
 };
 
 function drawTimeseries(data, options) {
-  data = data.map(toNumeric);
-  const desktop = data.filter(isDesktop);
-  const mobile = data.filter(isMobile);
+  const numericData = data.map(toNumeric);
+  const desktop = numericData.filter(isDesktop);
+  const mobile = numericData.filter(isMobile);
 
   loadChangelog().then(changelogData => {
     changelogData.forEach(change => {
@@ -985,13 +985,7 @@ function drawTimeseriesTable(data, options, [start, end] = [-Infinity, Infinity]
     const tr = el('tr');
     cols.forEach(col => {
       const th = el('th');
-      if (col === 'date') {
-        th.textContent = 'Date';
-      } else if (col === 'client') {
-        th.textContent = 'Client';
-      } else {
-        th.textContent = col;
-      }
+      th.textContent = col;
       tr.appendChild(th);
     });
     thead.appendChild(tr);
@@ -1001,7 +995,7 @@ function drawTimeseriesTable(data, options, [start, end] = [-Infinity, Infinity]
     groupedData.forEach(([timestamp, arr]) => {
       const ts = +timestamp;
       if (ts < start || ts > end) return;
-      arr.forEach((o, i) => tbody.appendChild(toRow(o, i, arr.length, cols)));
+      arr.forEach(o => tbody.appendChild(toRow(o, cols)));
     });
     frag.appendChild(tbody);
     table.appendChild(frag);
@@ -1010,20 +1004,20 @@ function drawTimeseriesTable(data, options, [start, end] = [-Infinity, Infinity]
 
 const isDesktop = o => o.client == 'desktop';
 const isMobile = o => o.client == 'mobile';
-const toNumeric = ({ client, ...other }) => {
+const toNumeric = ({ client, date, ...other }) => {
   return Object.entries(other).reduce(
     (o, [k, v]) => {
       o[k] = +v;
       return o;
     },
-    { client }
+    { client, date }
   );
 };
 
 const toFixed = value => (value ? (+value).toFixed(1) : value);
 
 const formatters = {
-  client: value => (value ? value.charAt(0).toUpperCase() + value.slice(1) : value),
+  date: prettyDate,
   p10: toFixed,
   p25: toFixed,
   p50: toFixed,
@@ -1047,19 +1041,18 @@ const zip = data => {
   return Object.entries(dates).sort(([a], [b]) => (+a > +b ? -1 : 1));
 };
 
-const toRow = (o, i, n, cols) => {
+const toRow = (o, cols) => {
   const row = el('tr');
-  if (i === 0) {
+  cols.forEach(col => {
     const td = el('td');
-    td.setAttribute('rowspan', n.toString());
-    td.textContent = prettyDate(o.date);
-    row.appendChild(td);
-  }
-
-  cols.slice(1).forEach(col => {
-    const td = el('td');
-    const formatter = formatters[col] || (v => (v !== undefined && v !== null ? v : ''));
-    td.textContent = formatter(o[col]);
+    let text = o[col];
+    const formatter = formatters[col];
+    if (formatter) {
+      text = formatter(o[col]);
+    } else if (text === undefined || text === null) {
+      text = '';
+    }
+    td.textContent = text;
     row.appendChild(td);
   });
 
