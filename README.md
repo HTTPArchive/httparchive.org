@@ -10,6 +10,8 @@ This is an Astro-based web application for HTTPArchive.org. It requires **Node.j
     npm install
     ```
 
+    *(When switching from older branches before the Astro migration, `npm ci` is recommended over `npm install` to ensure a clean install of dependencies and clean out legacy packages).*
+
 2. Run the application:
 
     * **Development mode (with live reload):**

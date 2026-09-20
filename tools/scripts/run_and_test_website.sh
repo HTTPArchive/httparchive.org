@@ -48,7 +48,7 @@ if pgrep -f "serve.*dist" > /dev/null; then
 fi
 
 echo "Installing node modules"
-npm install --legacy-peer-deps
+npm ci
 
 echo "Building website"
 npm run build

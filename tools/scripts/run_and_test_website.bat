@@ -13,7 +13,7 @@ echo "Kill any existing instances of the hosting emulator"
 wmic Path win32_process Where "Caption Like '%%node.exe%%' AND CommandLine Like '%%firebase-tools%%'" Call Terminate
 
 echo "Installing node modules"
-call npm install --legacy-peer-deps
+call npm ci
 
 echo "Building website"
 call npm run build
