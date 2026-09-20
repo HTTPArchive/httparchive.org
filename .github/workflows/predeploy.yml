@@ -26,26 +26,27 @@ jobs:
       with:
         node-version: '26'
         cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build website
+      run: npm run build
+
     - name: Cache Firebase CLI
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       id: cache-firebase
       with:
         path: ~/.npm-global
         key: ${{ runner.os }}-firebase-tools
 
-    - name: Install dependencies
-      run: npm ci
-
     - name: Install Firebase CLI
+      if: steps.cache-firebase.outputs.cache-hit != 'true'
       run: |
         npm config set prefix "$HOME/.npm-global"
-        echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
-        if [ "${{ steps.cache-firebase.outputs.cache-hit }}" != "true" ]; then
-          npm install -g firebase-tools
-        fi
+        npm install -g firebase-tools
 
-    - name: Build website
-      run: npm run build
+    - name: Add Firebase CLI to PATH
+      run: echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
 
     - name: Run the website
       run: ./tools/scripts/run_and_test_website.sh
