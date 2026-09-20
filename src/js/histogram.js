@@ -499,6 +499,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
 
     if (x >= 40 && x <= rect.width - 40 && y >= 10 && y <= rect.height - 40) {
       dragStartX = e.clientX;
+      chart.dispatchAction({ type: 'hideTip' });
       e.preventDefault();
       document.body.style.userSelect = 'none';
       document.body.style.cursor = 'crosshair';
@@ -511,6 +512,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
     if (dragStartX === null) return;
     const dx = e.clientX - dragStartX;
     if (Math.abs(dx) > 3) {
+      e.stopPropagation();
       if (!selectionBox) {
         selectionBox = document.createElement('div');
         selectionBox.className = 'chart-zoom-selection';
@@ -518,8 +520,8 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
         const plotHeight = rect.height - 25 - 62;
         selectionBox.style.height = `${plotHeight}px`;
         mainPlotEl.appendChild(selectionBox);
-        chart.dispatchAction({ type: 'hideTip' });
       }
+      chart.dispatchAction({ type: 'hideTip' });
       const rect = mainPlotEl.getBoundingClientRect();
       const left = Math.max(60, Math.min(dragStartX, e.clientX) - rect.left);
       const right = Math.min(rect.width - 60, Math.max(dragStartX, e.clientX) - rect.left);

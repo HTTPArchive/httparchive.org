@@ -99,7 +99,7 @@ export function callOnceWhenVisible(element, callback) {
 }
 
 export const getQueryUrl = (metric) => {
-  return `https://github.com/HTTPArchive/dataform/blob/main/includes/reports.js#:~:text=${metric}:`;
+  return `https://github.com/search?q=repo%3AHTTPArchive%2Fdataform+path%3Aincludes%2Freports.js+${metric}`;
 };
 
 const getSummaryElement = (metric, client) => {

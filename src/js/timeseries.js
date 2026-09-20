@@ -690,7 +690,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
         type: 'inside',
         xAxisIndex: 0,
         zoomOnMouseWheel: true,
-        moveOnMouseMove: true,
+        moveOnMouseMove: false,
         moveOnMouseWheel: false
       }
     ],
@@ -834,6 +834,90 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
       debouncedTableSync(newMin, endTs);
     });
   });
+
+  // Mouse drag selection zoom with visual background area
+  let dragStartX = null;
+  let selectionBox = null;
+  mainPlotEl.style.position = 'relative';
+
+  const onMouseDown = e => {
+    if (e.button !== 0) return;
+    const rect = mainPlotEl.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (x >= 50 && x <= rect.width - 20 && y >= 20 && y <= rect.height - 90) {
+      dragStartX = e.clientX;
+      chart.dispatchAction({ type: 'hideTip' });
+      e.preventDefault();
+      document.body.style.userSelect = 'none';
+      document.body.style.cursor = 'crosshair';
+      window.addEventListener('mousemove', onMouseMove, { capture: true });
+      window.addEventListener('mouseup', onMouseUp, { capture: true });
+    }
+  };
+
+  const onMouseMove = e => {
+    if (dragStartX === null) return;
+    const dx = e.clientX - dragStartX;
+    if (Math.abs(dx) > 3) {
+      e.stopPropagation();
+      if (!selectionBox) {
+        selectionBox = document.createElement('div');
+        selectionBox.className = 'chart-zoom-selection';
+        const rect = mainPlotEl.getBoundingClientRect();
+        const plotHeight = rect.height - 25 - 95;
+        selectionBox.style.height = `${plotHeight}px`;
+        mainPlotEl.appendChild(selectionBox);
+      }
+      chart.dispatchAction({ type: 'hideTip' });
+      const rect = mainPlotEl.getBoundingClientRect();
+      const left = Math.max(70, Math.min(dragStartX, e.clientX) - rect.left);
+      const right = Math.min(rect.width - 25, Math.max(dragStartX, e.clientX) - rect.left);
+      selectionBox.style.left = `${left}px`;
+      selectionBox.style.width = `${Math.max(0, right - left)}px`;
+    }
+  };
+
+  const onMouseUp = e => {
+    window.removeEventListener('mousemove', onMouseMove, { capture: true });
+    window.removeEventListener('mouseup', onMouseUp, { capture: true });
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+
+    if (dragStartX !== null) {
+      const dx = Math.abs(e.clientX - dragStartX);
+      if (dx > 10) {
+        const rect = mainPlotEl.getBoundingClientRect();
+        const startX = Math.min(dragStartX, e.clientX) - rect.left;
+        const endX = Math.max(dragStartX, e.clientX) - rect.left;
+        const val1 = chart.convertFromPixel({ xAxisIndex: 0 }, startX);
+        const val2 = chart.convertFromPixel({ xAxisIndex: 0 }, endX);
+        if (val1 != null && val2 != null) {
+          const minVal = Math.min(val1, val2);
+          const maxVal = Math.max(val1, val2);
+          if (maxVal > minVal) {
+            chart.dispatchAction({
+              type: 'dataZoom',
+              startValue: minVal,
+              endValue: maxVal
+            });
+            updateRangeDisplay(minVal, maxVal);
+            syncZoomButtonState(minVal, maxVal);
+            debouncedTableSync(minVal, maxVal);
+          }
+        }
+      }
+      dragStartX = null;
+    }
+
+    if (selectionBox) {
+      selectionBox.remove();
+      selectionBox = null;
+    }
+  };
+
+  mainPlotEl.addEventListener('mousedown', onMouseDown, { capture: true });
 
   // Context menu toggle
   const menuBtn = header.querySelector('.chart-menu-btn');
