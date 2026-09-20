@@ -7,13 +7,13 @@ if pgrep -f "emulators:start.*hosting" > /dev/null 2>&1; then
   pkill -f "emulators:start.*hosting" || true
 fi
 
-# Detect whether firebase is installed or fallback to npx
-if [ -x "$HOME/.npm-global/bin/firebase" ]; then
-  FIREBASE_CMD="$HOME/.npm-global/bin/firebase"
+# Detect whether firebase is installed in node_modules, system PATH, or fallback to npx
+if [ -x "./node_modules/.bin/firebase" ]; then
+  FIREBASE_CMD="./node_modules/.bin/firebase"
 elif command -v firebase > /dev/null 2>&1; then
   FIREBASE_CMD="firebase"
 else
-  FIREBASE_CMD="npx -y firebase-tools"
+  FIREBASE_CMD="npx firebase"
 fi
 
 echo "Starting Firebase Hosting emulator for tests"

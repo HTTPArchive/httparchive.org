@@ -32,19 +32,6 @@ jobs:
     - name: Build website
       run: npm run build
 
-    - name: Cache Firebase CLI
-      uses: actions/cache@v6
-      id: cache-firebase
-      with:
-        path: ~/.npm-global
-        key: ${{ runner.os }}-firebase-tools
-
-    - name: Install Firebase CLI
-      if: steps.cache-firebase.outputs.cache-hit != 'true'
-      run: |
-        npm config set prefix "$HOME/.npm-global"
-        npm install -g firebase-tools
-
     - name: Run the website
       run: ./tools/scripts/run_and_test_website.sh
     - name: Update timestamps
