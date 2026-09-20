@@ -4,8 +4,6 @@ const convert = require('xml-js');
 
 const base_url = process.env.TEST_BASE_URL || "http://127.0.0.1:8080";
 
-const output_dir = `public/static/html`;
-
 let failures = 0;
 let passes = 0;
 
@@ -27,12 +25,6 @@ const test_status_code = async (page, status, location) => {
     if (response.status === status && response.headers.get('location') === location) {
       //console.log('Success - expected:', status, 'got:',response.status, 'for page:', page);
       passes++;
-      if (status === 200 && response.headers.get('content-type').startsWith('text/html')) {
-        if (page.slice(-1) === '/') page = page + 'index';
-        page = page + '.html';
-        const body = await response.text();
-        await fs.outputFile(output_dir + page, body, 'utf8');
-      }
     } else {
       console.error('Failed - expected:', status, 'got:', response.status, 'for page:', page, 'location:', location);
       failures++;
