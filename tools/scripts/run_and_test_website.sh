@@ -1,77 +1,32 @@
 #!/bin/bash
-
-######################################
-## Custom HTTP Archive script       ##
-######################################
-#
-# This script installs all the required dependencies needed to run the
-# HTTP Archive website providing you have node installed.
-#
-# It also runs our tests to ensure the website is working for all pages.
-#
-# It is used by various GitHub actions to build and test the site.
-#
-
-# exit when any command fails, undefined variables, or piped command fails
 set -euo pipefail
 
-# Usage info
-show_help() {
-cat << EOF
-Usage: ${0##*/} [-hds]
-This script installs all the required dependencies needed to run the
-HTTP Archive website.
-
-    -h   display this help and exit
-    -d   debug mode (watches files for changes)
-    -s   skip install and build (useful when already built in CI)
-EOF
-}
-
-OPTIND=1 # Reseting is good practice
-debug=0
-skip_build=0
-while getopts "h?ds" opt; do
-    case "$opt" in
-    h|\?)
-        show_help
-        exit 0
-        ;;
-    d)  debug=1
-        ;;
-    s)  skip_build=1
-        ;;
-    esac
-done
-shift "$((OPTIND-1))" # Discard the options and sentinel --
-
-# Kill existing hosting emulator if running
-if pgrep -f "firebase-tools.*hosting" > /dev/null; then
+# Kill any existing hosting emulator
+if pgrep -f "emulators:start.*hosting" > /dev/null 2>&1; then
   echo "Killing existing emulator to run a fresh version"
-  pkill -f "firebase-tools.*hosting" || true
+  pkill -f "emulators:start.*hosting" || true
 fi
 
-if [ "${skip_build}" != "1" ] && [ "${SKIP_BUILD:-false}" != "true" ]; then
-  echo "Installing node modules"
-  npm ci
-
-  echo "Building website"
-  npm run build
+# Detect whether firebase is installed or fallback to npx
+if command -v firebase > /dev/null 2>&1; then
+  FIREBASE_CMD="firebase"
+else
+  FIREBASE_CMD="npx -y firebase-tools"
 fi
 
-echo "Starting Firebase Hosting emulator in background mode for tests"
-npx -y firebase-tools@latest emulators:start --only hosting &
+echo "Starting Firebase Hosting emulator for tests"
+$FIREBASE_CMD emulators:start --only hosting &
 SERVER_PID=$!
 
-# Ensure the background server is terminated on exit unless KEEP_SERVER_RUNNING is true
+# Ensure background server is terminated on exit unless KEEP_SERVER_RUNNING is true
 if [ "${KEEP_SERVER_RUNNING:-false}" != "true" ]; then
-  trap 'echo "Stopping background server..."; kill "$SERVER_PID" 2>/dev/null || true' EXIT
+  trap 'echo "Stopping background server..."; kill "$SERVER_PID" 2>/dev/null || true; pkill -P "$SERVER_PID" 2>/dev/null || true' EXIT
 else
   echo "Keeping server running (KEEP_SERVER_RUNNING is set to true)"
 fi
 
 echo "Waiting for server to start..."
-timeout=45
+timeout=30
 while ! curl -s http://127.0.0.1:8080 > /dev/null; do
   sleep 1
   timeout=$((timeout-1))
@@ -85,16 +40,3 @@ echo "Testing website"
 npm run test
 
 echo "Website tested successfully"
-
-# If in debug mode then monitor for changes and keep running
-if [ "${debug}" = "1" ]; then
-  echo "Monitoring for changes"
-  npm run astro:dev &
-  WATCH_PID=$!
-
-  # Update trap to clean up watch process as well
-  trap 'echo "Stopping server and watch processes..."; kill "$WATCH_PID" 2>/dev/null || true; kill "$SERVER_PID" 2>/dev/null || true' EXIT
-
-  # Bring server process to foreground or just wait
-  wait "$SERVER_PID"
-fi
