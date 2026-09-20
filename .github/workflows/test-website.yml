@@ -55,18 +55,9 @@ jobs:
         firebaseServiceAccount: '${{ secrets.GCP_SA_KEY }}'
         projectId: httparchive
 
-    - name: Use more complete checks for generated HTML linting
-      run: cp -f .github/linters/.htmlhintrc_morechecks .github/linters/.htmlhintrc
-
     - name: Lint Generated HTML
-      uses: super-linter/super-linter/slim@v8
-      env:
-        ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: false
-        FILTER_REGEX_INCLUDE: .*dist/.*\.html
-        FILTER_REGEX_EXCLUDE: .*node_modules/.*
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        VALIDATE_HTML: true
-        USE_FIND_ALGORITHM: true
+      run: npm run lint:html
+
 
     - name: Set the list of URLs for Lighthouse to check
       env:
