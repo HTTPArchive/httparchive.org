@@ -3,11 +3,11 @@ import Changelog from './changelog';
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { el, prettyDate, drawMetricSummary, callOnceWhenVisible, getQueryUrl } from './utils';
 import { Constants } from './techreport/utils/constants.js';
 
-const DEFAULT_COLS = ['Date'];
-const DEFAULT_FIELDS = ['Desktop', 'Mobile'];
+const DEFAULT_COLS = ['date', 'client'];
+const DEFAULT_FIELDS = ['p10', 'p25', 'p50', 'p75', 'p90'];
 
 // Standard SI unit formatting for Y-axis (10M, 1.5M, 200k, etc.)
 function formatSI(val) {
@@ -18,10 +18,6 @@ function formatSI(val) {
   if (abs >= 1e3) return (val / 1e3).toFixed(abs >= 1e4 ? 0 : 1).replace(/\.0$/, '') + 'k';
   if (abs < 0.01) return val.toFixed(3);
   return val.toLocaleString();
-}
-
-function getQueryUrl(metric, type = 'timeseries') {
-  return `https://github.com/HTTPArchive/legacy.httparchive.org/blob/master/sql/${type}/${metric}.sql`;
 }
 
 function timeseries(metric, options, start, end) {
@@ -595,6 +591,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
             } else {
               formattedVal = val.toFixed(1);
             }
+            formattedVal = new Metric(options, formattedVal).toString();
           }
 
           html += `<td>
@@ -865,7 +862,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
       } else if (action === 'download-svg') {
         exportECharts(chart, mainPlotEl, `${options.metric}-timeseries`, 'svg');
       } else if (action === 'show-query') {
-        const url = getQueryUrl(options.metric, 'timeseries');
+        const url = getQueryUrl(options.metric);
         if (url) window.open(url, '_blank');
       }
     });
@@ -897,6 +894,9 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
       }
     }
   };
+
+  window.charts = window.charts || {};
+  window.charts[options.metric] = chartController;
 
   return chartController;
 }
@@ -985,15 +985,22 @@ function drawTimeseriesTable(data, options, [start, end] = [-Infinity, Infinity]
     const tr = el('tr');
     cols.forEach(col => {
       const th = el('th');
-      th.textContent = col;
+      if (col === 'date') {
+        th.textContent = 'Date';
+      } else if (col === 'client') {
+        th.textContent = 'Client';
+      } else {
+        th.textContent = col;
+      }
       tr.appendChild(th);
     });
     thead.appendChild(tr);
     frag.appendChild(thead);
 
     const tbody = el('tbody');
-    groupedData.forEach(([date, arr]) => {
-      if (date < start || date > end) return;
+    groupedData.forEach(([timestamp, arr]) => {
+      const ts = +timestamp;
+      if (ts < start || ts > end) return;
       arr.forEach((o, i) => tbody.appendChild(toRow(o, i, arr.length, cols)));
     });
     frag.appendChild(tbody);
@@ -1016,6 +1023,7 @@ const toNumeric = ({ client, ...other }) => {
 const toFixed = value => (value ? (+value).toFixed(1) : value);
 
 const formatters = {
+  client: value => (value ? value.charAt(0).toUpperCase() + value.slice(1) : value),
   p10: toFixed,
   p25: toFixed,
   p50: toFixed,
@@ -1028,11 +1036,15 @@ const formatters = {
 const zip = data => {
   const dates = {};
   data.forEach(o => {
-    const arr = dates[o.date] || [];
-    arr.push(o);
-    dates[o.date] = arr;
+    let row = dates[o.timestamp];
+    if (row) {
+      row.push(o);
+      row.sort(a => (a.client === 'desktop' ? -1 : 1));
+      return;
+    }
+    dates[o.timestamp] = [o];
   });
-  return Object.entries(dates);
+  return Object.entries(dates).sort(([a], [b]) => (+a > +b ? -1 : 1));
 };
 
 const toRow = (o, i, n, cols) => {
@@ -1046,7 +1058,8 @@ const toRow = (o, i, n, cols) => {
 
   cols.slice(1).forEach(col => {
     const td = el('td');
-    td.textContent = (formatters[col] || (v => v))(o[col]);
+    const formatter = formatters[col] || (v => (v !== undefined && v !== null ? v : ''));
+    td.textContent = formatter(o[col]);
     row.appendChild(td);
   });
 

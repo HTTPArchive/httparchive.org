@@ -98,14 +98,8 @@ export function callOnceWhenVisible(element, callback) {
   }).observe(element);
 }
 
-const getQueryUrl = (metric, type) => {
-  const URL_BASE = 'https://github.com/HTTPArchive/bigquery/blob/master/sql';
-  if (type === 'timeseries') {
-    return `${URL_BASE}/timeseries/${metric}.sql`;
-  }
-  if (type === 'histogram') {
-    return `${URL_BASE}/histograms/${metric}.sql`;
-  }
+export const getQueryUrl = (metric) => {
+  return `https://github.com/HTTPArchive/dataform/blob/main/includes/reports.js#:~:text=${metric}:`;
 };
 
 const getSummaryElement = (metric, client) => {

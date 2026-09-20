@@ -2,14 +2,10 @@ import * as echarts from 'echarts';
 import { Colors } from './colors';
 import debounce from './debounce';
 import { Metric } from './metric';
-import { el, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
+import { el, prettyDate, drawMetricSummary, callOnceWhenVisible, getQueryUrl } from './utils';
 import { Constants } from './techreport/utils/constants.js';
 
 const [COLOR_DESKTOP, COLOR_MOBILE] = Colors.getAll({ rgba: true });
-
-function getQueryUrl(metric, type = 'histogram') {
-  return `https://github.com/HTTPArchive/legacy.httparchive.org/blob/master/sql/${type}/${metric}.sql`;
-}
 
 function histogram(metric, date, options) {
   options.date = date;
@@ -27,7 +23,7 @@ function histogram(metric, date, options) {
     .then(jsonStr => JSON.parse(jsonStr))
     .then(data => {
       drawHistogram(data, `${metric}-chart`, options);
-      drawHistogramTable(data, `${metric}-table-desktop`, `${metric}-table-mobile`, options.type);
+      drawHistogramTable(data, `${metric}-table`, options.type);
     })
     .catch(e => {
       const chart = document.getElementById(`${metric}-chart`);
@@ -118,8 +114,7 @@ class HistogramTable {
     this.table = document.getElementById(id);
     this.bins = bins;
     this.type = type;
-    this.schema = bins[0].getSchema();
-    this.maxPdf = Math.max.apply(null, this.bins.map(bin => bin.pdf));
+    this.maxPdf = Math.max.apply(null, this.bins.map(bin => bin.pdf)) || 1;
   }
 
   draw() {
@@ -128,27 +123,75 @@ class HistogramTable {
 
     const thead = el('thead');
     const headerRow = el('tr');
-    this.schema.forEach(col => {
+    ['Bin (' + (this.type || 'Value') + ')', 'Client', 'Volume', 'PDF', 'CDF'].forEach(col => {
       const th = el('th');
-      th.textContent = col === 'bin' ? this.type : col;
+      th.textContent = col;
       headerRow.appendChild(th);
     });
     thead.appendChild(headerRow);
     this.table.appendChild(thead);
 
     const tbody = el('tbody');
-    this.bins.forEach(bin => {
-      tbody.appendChild(bin.toRow(this.maxPdf));
+    const binMap = new Map();
+    this.bins.forEach(b => {
+      if (!binMap.has(b.bin)) binMap.set(b.bin, []);
+      binMap.get(b.bin).push(b);
+    });
+
+    const sortedBins = Array.from(binMap.keys()).sort((a, b) => a - b);
+    sortedBins.forEach(binVal => {
+      const clientBins = binMap.get(binVal);
+      clientBins.sort(a => (a.client === 'desktop' ? -1 : 1));
+      clientBins.forEach((b, idx) => {
+        const tr = el('tr');
+        if (idx === 0) {
+          const tdBin = el('td');
+          if (clientBins.length > 1) {
+            tdBin.setAttribute('rowspan', clientBins.length.toString());
+          }
+          tdBin.textContent = b.format('bin');
+          tdBin.classList.add('bin');
+          tr.appendChild(tdBin);
+        }
+
+        const tdClient = el('td');
+        tdClient.textContent = b.client ? b.client.charAt(0).toUpperCase() + b.client.slice(1) : '';
+        tdClient.classList.add('client');
+        tr.appendChild(tdClient);
+
+        const tdVol = el('td');
+        tdVol.classList.add('volume');
+        const bar = el('div');
+        bar.style.width = `${(b.pdf * 100) / this.maxPdf}%`;
+        bar.classList.add(b.client);
+        tdVol.appendChild(bar);
+        const text = el('span');
+        text.textContent = b.format('volume');
+        tdVol.appendChild(text);
+        tr.appendChild(tdVol);
+
+        const tdPdf = el('td');
+        tdPdf.classList.add('pdf');
+        tdPdf.textContent = b.format('pdf');
+        tr.appendChild(tdPdf);
+
+        const tdCdf = el('td');
+        tdCdf.classList.add('cdf');
+        tdCdf.textContent = b.format('cdf');
+        tr.appendChild(tdCdf);
+
+        tbody.appendChild(tr);
+      });
     });
     this.table.appendChild(tbody);
   }
 }
 
 let redrawHistogramTable = null;
-function drawHistogramTable(data, desktopId, mobileId, type, [start, end] = [-Infinity, Infinity]) {
+function drawHistogramTable(data, tableId, type, [start, end] = [-Infinity, Infinity]) {
   if (!redrawHistogramTable) {
-    redrawHistogramTable = debounce(range => {
-      return drawHistogramTable(data, desktopId, mobileId, type, range);
+    redrawHistogramTable = debounce((tblId, typ, range) => {
+      return drawHistogramTable(data, tblId, typ, range);
     }, 100);
   }
 
@@ -156,11 +199,7 @@ function drawHistogramTable(data, desktopId, mobileId, type, [start, end] = [-In
     .filter(d => d.bin >= start && d.bin <= end)
     .map(d => new Bin(d));
 
-  const desktop = bins.filter(d => d.client === 'desktop');
-  const mobile = bins.filter(d => d.client === 'mobile');
-
-  if (desktop.length) new HistogramTable(desktopId, desktop, type).draw();
-  if (mobile.length) new HistogramTable(mobileId, mobile, type).draw();
+  new HistogramTable(tableId, bins, type).draw();
 }
 
 function drawHistogram(data, containerId, options) {
@@ -441,7 +480,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
     });
     resetZoomBtn?.classList.add('hidden');
     if (rawData) {
-      drawHistogramTable(rawData, `${options.metric}-table-desktop`, `${options.metric}-table-mobile`, options.type, [-Infinity, Infinity]);
+      drawHistogramTable(rawData, `${options.metric}-table`, options.type, [-Infinity, Infinity]);
     }
   };
 
@@ -514,7 +553,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
             });
             resetZoomBtn?.classList.remove('hidden');
             if (rawData) {
-              drawHistogramTable(rawData, `${options.metric}-table-desktop`, `${options.metric}-table-mobile`, options.type, [minVal, maxVal]);
+              drawHistogramTable(rawData, `${options.metric}-table`, options.type, [minVal, maxVal]);
             }
           }
         }
@@ -534,9 +573,29 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
     const opt = chart.getOption();
     const dz = opt.dataZoom && opt.dataZoom[0];
     if (dz) {
-      const isZoomed = dz.startValue !== undefined || (dz.start !== undefined && (dz.start > 0.5 || dz.end < 99.5));
+      const isZoomed =
+        (dz.startValue !== undefined && dz.endValue !== undefined) ||
+        (dz.start !== undefined && (dz.start > 0.5 || dz.end < 99.5));
       if (isZoomed) {
         resetZoomBtn?.classList.remove('hidden');
+      } else {
+        resetZoomBtn?.classList.add('hidden');
+      }
+
+      if (rawData) {
+        let minVal = -Infinity;
+        let maxVal = Infinity;
+        if (dz.startValue !== undefined && dz.endValue !== undefined) {
+          minVal = dz.startValue;
+          maxVal = dz.endValue;
+        } else if (dz.start !== undefined && dz.end !== undefined) {
+          const xMin = opt.xAxis?.[0]?.min ?? sortedBins[0];
+          const xMax = opt.xAxis?.[0]?.max ?? sortedBins[sortedBins.length - 1];
+          const span = xMax - xMin;
+          minVal = xMin + (span * dz.start) / 100;
+          maxVal = xMin + (span * dz.end) / 100;
+        }
+        drawHistogramTable(rawData, `${options.metric}-table`, options.type, [minVal, maxVal]);
       }
     }
   });
@@ -584,7 +643,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
       } else if (action === 'download-svg') {
         exportEChartsHistogram(mainPlotEl, `${options.metric}-histogram`, 'svg');
       } else if (action === 'show-query') {
-        const url = getQueryUrl(options.metric, 'histogram');
+        const url = getQueryUrl(options.metric);
         if (url) window.open(url, '_blank');
       }
     });
@@ -614,6 +673,9 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
       }
     }
   };
+
+  window.charts = window.charts || {};
+  window.charts[options.metric] = chartController;
 
   return chartController;
 }
