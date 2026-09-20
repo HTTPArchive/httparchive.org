@@ -2,7 +2,7 @@
 
 ## Run Locally
 
-This is an Astro-based web application for HTTPArchive.org. It requires **Node.js >= 26.0.0**.
+This is an Astro-based web application for HTTPArchive.org.
 
 1. Install the NPM dependencies:
 
