@@ -7,22 +7,13 @@ if pgrep -f "emulators:start.*hosting" > /dev/null 2>&1; then
   pkill -f "emulators:start.*hosting" || true
 fi
 
-# Detect whether firebase is installed in node_modules, system PATH, or fallback to npx
-if [ -x "./node_modules/.bin/firebase" ]; then
-  FIREBASE_CMD="./node_modules/.bin/firebase"
-elif command -v firebase > /dev/null 2>&1; then
-  FIREBASE_CMD="firebase"
-else
-  FIREBASE_CMD="npx firebase"
-fi
-
 echo "Starting Firebase Hosting emulator for tests"
-$FIREBASE_CMD emulators:start --only hosting &
+npm run emulate &
 SERVER_PID=$!
 
 # Ensure background server is terminated on exit unless KEEP_SERVER_RUNNING is true
 if [ "${KEEP_SERVER_RUNNING:-false}" != "true" ]; then
-  trap 'echo "Stopping background server..."; kill "$SERVER_PID" 2>/dev/null || true; pkill -P "$SERVER_PID" 2>/dev/null || true' EXIT
+  trap 'echo "Stopping background server..."; kill "$SERVER_PID" 2>/dev/null || true; pkill -f "emulators:start.*hosting" 2>/dev/null || true' EXIT
 else
   echo "Keeping server running (KEEP_SERVER_RUNNING is set to true)"
 fi
