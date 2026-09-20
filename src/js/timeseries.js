@@ -746,8 +746,6 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
   const zoomBtns = navBar.querySelectorAll('.zoom-btn');
 
   function updateRangeDisplay(minT, maxT) {
-    const d1 = new Date(minT);
-    const d2 = new Date(maxT);
     const fmt = ts => {
       const d = new Date(ts);
       return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });

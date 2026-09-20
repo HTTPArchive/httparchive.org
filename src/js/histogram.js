@@ -5,7 +5,7 @@ import { Metric } from './metric';
 import { el, prettyDate, drawMetricSummary, callOnceWhenVisible } from './utils';
 import { Constants } from './techreport/utils/constants.js';
 
-const [COLOR_DESKTOP, COLOR_MOBILE, COLOR_DESKTOP_ALT, COLOR_MOBILE_ALT] = Colors.getAll({ rgba: true });
+const [COLOR_DESKTOP, COLOR_MOBILE] = Colors.getAll({ rgba: true });
 
 function getQueryUrl(metric, type = 'histogram') {
   return `https://github.com/HTTPArchive/legacy.httparchive.org/blob/master/sql/${type}/${metric}.sql`;
