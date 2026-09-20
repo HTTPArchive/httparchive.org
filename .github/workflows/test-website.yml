@@ -41,23 +41,14 @@ jobs:
         SOURCE_MAPS: true
       run: npm run build
 
+    - name: Lint Generated HTML
+      run: npm run lint:html
+
     - name: Run the website and test
       env:
         KEEP_SERVER_RUNNING: true
         SOURCE_MAPS: true
       run: ./tools/scripts/run_and_test_website.sh
-
-    - name: Deploy to Firebase Hosting Preview Channel
-      if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-      uses: FirebaseExtended/action-hosting-deploy@v0
-      with:
-        repoToken: '${{ secrets.GITHUB_TOKEN }}'
-        firebaseServiceAccount: '${{ secrets.GCP_SA_KEY }}'
-        projectId: httparchive
-
-    - name: Lint Generated HTML
-      run: npm run lint:html
-
 
     - name: Set the list of URLs for Lighthouse to check
       env:
@@ -73,6 +64,14 @@ jobs:
         configPath: .github/lighthouse/lighthouse-config-dev.json
         uploadArtifacts: true # save results as an action artifacts
         temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+
+    - name: Deploy to Firebase Hosting Preview Channel
+      if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.GCP_SA_KEY }}'
+        projectId: httparchive
 
     - name: Show Lighthouse outputs
       run: |
