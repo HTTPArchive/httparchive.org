@@ -1,351 +1,399 @@
 ---
 /**
  * Starlight Header override.
- * Renders the HTTP Archive site navbar + Starlight search.
- * All styles are scoped — Bootstrap is NOT loaded, to avoid conflicts with Starlight's CSS.
+ * Reuses the main website's Header component, styled to match the website root,
+ * with Starlight's search box and mobile navigation support.
  */
 import type { Props } from '@astrojs/starlight/props';
 import Search from '@astrojs/starlight/components/Search.astro';
-
-import { getReports, getReportUrl } from '../../utils/reports.js';
-const reports = getReports();
-const { hasSidebar } = Astro.locals.starlightRoute;
+import SiteHeader from '../Header.astro';
 ---
 
-<div class="ha-header-root">
-  <header class="ha-header">
-    <div class="ha-container">
-      <!-- Logo -->
-      <div class="ha-logo-col">
-        <a href="/">
-          <img class="ha-logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" />
-        </a>
-      </div>
-
-      <!-- Desktop nav + search -->
-      <div class="ha-nav-col">
-        <nav class="ha-nav" id="ha-desktop-nav" aria-label="Header Menu">
-          <ul>
-            <li>
-              <span class="ha-dropdown-target" tabindex="0" role="button" title="Reports menu">
-                Reports
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 8l4 4 4-4z"/></svg>
-              </span>
-              <ul class="ha-dropdown-content">
-                <li><a href="/reports">All Reports</a></li>
-                {reports.map(report => (
-                  <li><a href={getReportUrl(report)}>{report.name}</a></li>
-                ))}
-              </ul>
-            </li>
-            <li><a href="https://discuss.httparchive.org">Discuss</a></li>
-            <li>
-              <span class="ha-dropdown-target" tabindex="0" role="button" title="Web Almanac menu">
-                Web Almanac
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 8l4 4 4-4z"/></svg>
-              </span>
-              <ul class="ha-dropdown-content">
-                <li><a href="https://almanac.httparchive.org/en/2025/">2025</a></li>
-                <li><a href="https://almanac.httparchive.org/en/2024/">2024</a></li>
-                <li><a href="https://almanac.httparchive.org/en/2022/">2022</a></li>
-                <li><a href="https://almanac.httparchive.org/en/2021/">2021</a></li>
-                <li><a href="https://almanac.httparchive.org/en/2020/">2020</a></li>
-                <li><a href="https://almanac.httparchive.org/en/2019/">2019</a></li>
-              </ul>
-            </li>
-            <li>
-              <span class="ha-dropdown-target" tabindex="0" role="button" title="About menu">
-                About
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 8l4 4 4-4z"/></svg>
-              </span>
-              <ul class="ha-dropdown-content">
-                <li><a href="/about#mission">Mission</a></li>
-                <li><a href="/about#contribute">Contribute</a></li>
-                <li><a href="/about#contact">Contact</a></li>
-                <li><a href="/faq">FAQ</a></li>
-                <li><a href="/docs/" aria-current="page">Docs</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-
-        <!-- Starlight search -->
-        <div class="ha-search">
-          <Search {...Astro.props} />
-        </div>
-
-        {/* Only render header hamburger on splash/pages without a sidebar (sidebar pages use Starlight's MobileMenuToggle) */}
-        {!hasSidebar && (
-          <button class="ha-hamburger" id="ha-hamburger-btn" aria-label="Show navigation" aria-expanded="false" aria-controls="ha-mobile-nav">
-            <svg viewBox="0 0 32 32" height="28" width="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M4,10h24c1.104,0,2-.896,2-2s-.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,22,28,22z"/>
-            </svg>
-          </button>
-        )}
-      </div>
+<div class="ha-docs-header">
+  <SiteHeader>
+    <div slot="search" class="header-search">
+      <Search {...Astro.props} />
     </div>
-  </header>
-
-  {!hasSidebar && (
-    <nav class="ha-mobile-nav" id="ha-mobile-nav" aria-label="Mobile Menu" hidden>
-      <ul>
-        <li><a href="/reports">Reports</a></li>
-        <li><a href="https://discuss.httparchive.org">Discuss</a></li>
-        <li><a href="https://almanac.httparchive.org/">Web Almanac</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/docs/">Docs</a></li>
-      </ul>
-    </nav>
-  )}
+  </SiteHeader>
 </div>
 
 <style is:global>
   :root {
-    --sl-nav-height: 86px;
+    --sl-nav-height: 102px;
   }
   header.header {
     padding: 0 !important;
+    border-bottom: none !important;
   }
-
-  /* Style Starlight's MobileMenuToggle button to cleanly match HTTP Archive's header */
-  starlight-menu-button button {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    color: #999 !important;
-    cursor: pointer !important;
-    border-radius: 2px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 4px !important;
-    width: 36px !important;
-    height: 36px !important;
-  }
-  starlight-menu-button button:hover,
-  starlight-menu-button button:focus {
-    color: #444 !important;
-    background: rgba(0, 0, 0, 0.05) !important;
-    outline: none !important;
-  }
-  starlight-menu-button button svg {
-    width: 28px !important;
-    height: 28px !important;
+  /* Visually hide Starlight's default circular menu button; header hamburger controls it */
+  starlight-menu-button {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
   }
 </style>
 
 <style>
   /* -----------------------------------------------------------------------
-   * HTTP Archive docs header — fully self-contained, no Bootstrap.
-   * All selectors are namespaced with .ha- to avoid any Starlight conflicts.
+   * Replicate the HTTP Archive main site header styles for docs
+   * Exactly matching src/styles/styles.css and bootstrap.min.css
    * --------------------------------------------------------------------- */
 
-  .ha-header-root {
+  .ha-docs-header {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
     line-height: 25px;
     color: #667a7d;
+    width: 100%;
   }
 
-  .ha-header {
-    background-color: #fff;
+  .ha-docs-header :global(header) {
     border-top: 5px solid #eee;
-    padding: 12px 15px;
+    padding: 20px 15px;
+    background-color: #fff;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 25px;
+    width: 100%;
     position: relative;
-    z-index: 100;
+    box-sizing: border-box;
   }
 
-  .ha-container {
+  .ha-docs-header :global(.container) {
+    padding: 0 18px;
+    margin-right: auto;
+    margin-left: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 10px;
   }
 
-  /* Logo */
-  .ha-logo-col {
-    flex: 0 0 auto;
+  .ha-docs-header :global([class*="col"]) {
+    padding: 0;
+    width: auto;
+    float: none;
   }
-  .ha-logo {
+
+  .ha-docs-header :global(.col-lg-10) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .ha-docs-header :global(.logo) {
     max-height: 57px;
     width: auto;
     display: block;
   }
 
-  /* Nav column: holds nav + search + hamburger in a row */
-  .ha-nav-col {
+  .ha-docs-header :global(nav#desktop) {
     display: flex;
     align-items: center;
-    gap: 12px;
-    flex: 1;
     justify-content: flex-end;
+    color: #667a7d;
   }
 
-  /* Desktop nav */
-  .ha-nav > ul {
+  .ha-docs-header :global(nav#desktop > ul) {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
   }
 
-  .ha-nav li {
+  .ha-docs-header :global(nav#desktop li) {
     position: relative;
-  }
-
-  .ha-nav li > a,
-  .ha-nav .ha-dropdown-target {
     display: inline-block;
-    padding: 10px 18px;
     text-transform: uppercase;
     white-space: nowrap;
-    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
+  }
+
+  .ha-docs-header :global(nav#desktop li:not(:last-child)) {
+    margin-right: 8px;
+  }
+
+  .ha-docs-header :global(nav#desktop li a),
+  .ha-docs-header :global(nav#desktop li .dropdown-target) {
+    display: inline-block;
+    padding: 12px 20px;
     color: #667a7d;
     text-decoration: none;
-    border-radius: 2px;
-    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
   }
 
-  .ha-nav .ha-dropdown-target {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .ha-nav .ha-dropdown-target svg {
+  .ha-docs-header :global(.dropdown-target svg) {
+    display: inline-block;
+    vertical-align: sub;
     fill: currentColor;
-    flex-shrink: 0;
   }
 
-  .ha-nav li:hover > a,
-  .ha-nav li:hover .ha-dropdown-target,
-  .ha-nav li:focus-within > a,
-  .ha-nav li:focus-within .ha-dropdown-target {
+  .ha-docs-header :global(nav#desktop li:hover),
+  .ha-docs-header :global(nav#desktop li:focus-within) {
+    text-decoration: none;
     background-color: #667a7d;
     color: #fff;
   }
 
-  /* Dropdown */
-  .ha-dropdown-content {
-    display: none !important;
+  .ha-docs-header :global(nav#desktop li:hover > a),
+  .ha-docs-header :global(nav#desktop li:hover > .dropdown-target),
+  .ha-docs-header :global(nav#desktop li:focus-within > a),
+  .ha-docs-header :global(nav#desktop li:focus-within > .dropdown-target) {
+    color: #fff;
+  }
+
+  /* Dropdowns */
+  .ha-docs-header :global(nav#desktop ul.dropdown-content) {
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
     background-color: #667a7d;
-    color: #fff;
+    text-align: left;
+    z-index: 1000;
+    min-width: 160px;
     list-style: none;
     margin: 0;
     padding: 0;
-    z-index: 200;
-    min-width: 160px;
-    text-align: left;
   }
 
-  .ha-dropdown-content li {
-    display: block !important;
-  }
-
-  .ha-dropdown-content li a {
+  .ha-docs-header :global(nav#desktop li:hover > ul.dropdown-content),
+  .ha-docs-header :global(nav#desktop li:focus-within > ul.dropdown-content) {
     display: block;
-    padding: 10px 16px;
+  }
+
+  .ha-docs-header :global(nav#desktop ul.dropdown-content li) {
+    display: block;
+    margin: 0;
+  }
+
+  .ha-docs-header :global(nav#desktop ul.dropdown-content li:not(:last-child)) {
+    margin: 0;
+  }
+
+  .ha-docs-header :global(nav#desktop ul.dropdown-content li a) {
+    display: block;
+    padding: 12px 20px;
     color: #fff;
     text-decoration: none;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
   }
 
-  .ha-dropdown-content li a:hover,
-  .ha-dropdown-content li a[aria-current="page"] {
+  .ha-docs-header :global(nav#desktop ul.dropdown-content li a:hover) {
     text-decoration: underline;
   }
 
-  .ha-nav li:hover .ha-dropdown-content,
-  .ha-nav li:focus-within .ha-dropdown-content {
-    display: block !important;
-  }
-
-  /* Search */
-  .ha-search {
+  /* Search box */
+  .ha-docs-header .header-search {
     display: flex;
     align-items: center;
   }
 
-  /* Hamburger (mobile only) */
-  .ha-hamburger {
+  .ha-docs-header :global(site-search button[data-open-modal]) {
+    color: #667a7d;
+  }
+
+  .ha-docs-header :global(site-search button[data-open-modal]:hover) {
+    color: #444;
+  }
+
+  /* Hamburger button (mobile only) */
+  .ha-docs-header :global(.hamburger) {
     display: none;
-    background: none;
     border: none;
+    background: none;
     color: #999;
-    cursor: pointer;
     padding: 4px;
     line-height: 1;
+    cursor: pointer;
+    vertical-align: middle;
   }
-  .ha-hamburger svg {
+
+  .ha-docs-header :global(.hamburger svg) {
     fill: currentColor;
     display: block;
+    width: 28px;
+    height: 28px;
   }
-  .ha-hamburger:hover,
-  .ha-hamburger:focus {
+
+  .ha-docs-header :global(.hamburger:hover),
+  .ha-docs-header :global(.hamburger:focus) {
     color: #444;
     outline: none;
   }
 
-  /* Mobile nav */
-  .ha-mobile-nav {
-    background-color: #667a7d;
-    padding: 0;
+  /* Responsive breakpoints */
+  @media (max-width: 767px) {
+    .ha-docs-header :global(nav#desktop) {
+      display: none !important;
+    }
+
+    .ha-docs-header :global(.hamburger) {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+    }
   }
-  .ha-mobile-nav[hidden] {
+
+  /* Mobile nav dropdown (splash page) */
+  .ha-docs-header :global(nav#mobile) {
     display: none;
+    background-color: #667a7d;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    max-height: calc(100vh - var(--sl-nav-height, 102px));
+    overflow-y: auto;
   }
-  .ha-mobile-nav ul {
+
+  .ha-docs-header :global(nav#mobile.active) {
+    display: block !important;
+  }
+
+  .ha-docs-header :global(nav#mobile ul) {
     list-style: none;
     margin: 0;
     padding: 0;
   }
-  .ha-mobile-nav li {
+
+  .ha-docs-header :global(nav#mobile li) {
+    display: block;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0;
+    background-color: #667a7d;
+    color: #fff;
   }
-  .ha-mobile-nav li a {
+
+  .ha-docs-header :global(nav#mobile li a) {
     display: block;
     padding: 14px 20px;
     color: #fff;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 13px;
+    font-weight: 600;
   }
-  .ha-mobile-nav li a:hover {
+
+  .ha-docs-header :global(nav#mobile li a:hover),
+  .ha-docs-header :global(nav#mobile li a:focus) {
     text-decoration: underline;
   }
 
-  /* Responsive: hide desktop nav on small screens, show hamburger */
-  @media (max-width: 767px) {
-    .ha-nav {
-      display: none;
-    }
-    .ha-hamburger {
-      display: block;
-    }
-    :global([data-has-sidebar]) .ha-nav-col {
-      padding-inline-end: calc(var(--sl-menu-button-size, 2rem) + 8px);
-    }
+  .ha-docs-header :global(nav#mobile li .dropdown-target) {
+    display: block;
+    padding: 14px 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .ha-docs-header :global(nav#mobile li .dropdown-target svg) {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 6px;
+    fill: currentColor;
+  }
+
+  .ha-docs-header :global(nav#mobile li ul.dropdown-content) {
+    display: block;
+    position: static;
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+
+  .ha-docs-header :global(nav#mobile li ul.dropdown-content a) {
+    padding: 10px 20px 10px 36px;
+    font-size: 12px;
+    font-weight: 400;
   }
 </style>
 
 <script>
-  // Mobile nav toggle
-  const btn = document.getElementById('ha-hamburger-btn');
-  const nav = document.getElementById('ha-mobile-nav');
-  if (btn && nav) {
-    btn.addEventListener('click', () => {
-      const isHidden = nav.hasAttribute('hidden');
-      nav.toggleAttribute('hidden', !isHidden);
-      btn.setAttribute('aria-expanded', String(isHidden));
-    });
+  function setupDocsMobileMenu() {
+    const hamburger = document.querySelector('.ha-docs-header .hamburger');
+    const mobileNav = document.querySelector('.ha-docs-header nav#mobile');
+    const desktopNav = document.querySelector('.ha-docs-header nav#desktop');
+
+    // Populate mobile nav with desktop links if empty
+    if (mobileNav && desktopNav && !mobileNav.hasChildNodes()) {
+      const desktopUl = desktopNav.querySelector('ul');
+      if (desktopUl) {
+        mobileNav.appendChild(desktopUl.cloneNode(true));
+      }
+    }
+
+    if (hamburger && !hamburger.hasAttribute('data-initialized')) {
+      hamburger.setAttribute('data-initialized', 'true');
+      hamburger.addEventListener('click', () => {
+        const starlightBtn = document.querySelector('starlight-menu-button button') as HTMLButtonElement | null;
+        if (starlightBtn) {
+          // On pages with Starlight sidebar drawer, delegate toggle to Starlight
+          starlightBtn.click();
+          const expanded = starlightBtn.getAttribute('aria-expanded');
+          hamburger.setAttribute('aria-expanded', expanded || 'false');
+        } else if (mobileNav) {
+          // On splash pages without sidebar drawer, toggle nav#mobile
+          const isExpanded = mobileNav.classList.toggle('active');
+          hamburger.setAttribute('aria-expanded', String(isExpanded));
+        }
+      });
+    }
   }
+
+  // Close mobile nav when clicking outside
+  document.addEventListener('click', (e) => {
+    const mobileNav = document.querySelector('.ha-docs-header nav#mobile');
+    const hamburger = document.querySelector('.ha-docs-header .hamburger');
+    if (!mobileNav || !mobileNav.classList.contains('active')) return;
+    const target = e.target as HTMLElement | null;
+    if (target && !mobileNav.contains(target) && !hamburger?.contains(target)) {
+      mobileNav.classList.remove('active');
+      hamburger?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close mobile nav on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const mobileNav = document.querySelector('.ha-docs-header nav#mobile');
+      const hamburger = document.querySelector('.ha-docs-header .hamburger');
+      if (mobileNav?.classList.contains('active')) {
+        mobileNav.classList.remove('active');
+        hamburger?.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // Keep hamburger aria-expanded synchronized if Starlight's menu changes
+  const observer = new MutationObserver(() => {
+    const isExpanded = document.body.hasAttribute('data-mobile-menu-expanded');
+    const hamburger = document.querySelector('.ha-docs-header .hamburger');
+    const starlightBtn = document.querySelector('starlight-menu-button button');
+    if (hamburger && starlightBtn) {
+      hamburger.setAttribute('aria-expanded', String(isExpanded));
+    }
+  });
+  observer.observe(document.body, { attributes: true, attributeFilter: ['data-mobile-menu-expanded'] });
+
+  setupDocsMobileMenu();
+  document.addEventListener('astro:page-load', setupDocsMobileMenu);
 </script>
