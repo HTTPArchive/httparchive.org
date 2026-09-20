@@ -28,6 +28,7 @@ export default defineConfig({
       disable404Route: true,
       components: {
         Header: './src/components/docs/Header.astro',
+        Sidebar: './src/components/docs/Sidebar.astro',
       },
       sidebar: [
         {

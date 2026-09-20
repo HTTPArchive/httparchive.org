@@ -9,6 +9,7 @@ import Search from '@astrojs/starlight/components/Search.astro';
 
 import { getReports, getReportUrl } from '../../utils/reports.js';
 const reports = getReports();
+const { hasSidebar } = Astro.locals.starlightRoute;
 ---
 
 <div class="ha-header-root">
@@ -73,26 +74,29 @@ const reports = getReports();
           <Search {...Astro.props} />
         </div>
 
-        <!-- Mobile hamburger -->
-        <button class="ha-hamburger" id="ha-hamburger-btn" aria-label="Show navigation" aria-expanded="false" aria-controls="ha-mobile-nav">
-          <svg viewBox="0 0 32 32" height="28" width="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M4,10h24c1.104,0,2-.896,2-2s-.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,22,28,22z"/>
-          </svg>
-        </button>
+        {/* Only render header hamburger on splash/pages without a sidebar (sidebar pages use Starlight's MobileMenuToggle) */}
+        {!hasSidebar && (
+          <button class="ha-hamburger" id="ha-hamburger-btn" aria-label="Show navigation" aria-expanded="false" aria-controls="ha-mobile-nav">
+            <svg viewBox="0 0 32 32" height="28" width="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4,10h24c1.104,0,2-.896,2-2s-.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,.896-2,2s.896,2,2,2h24c1.104,0,2-.896,2-2S29.104,22,28,22z"/>
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   </header>
 
-  <!-- Mobile nav (hidden by default) -->
-  <nav class="ha-mobile-nav" id="ha-mobile-nav" aria-label="Mobile Menu" hidden>
-    <ul>
-      <li><a href="/reports">Reports</a></li>
-      <li><a href="https://discuss.httparchive.org">Discuss</a></li>
-      <li><a href="https://almanac.httparchive.org/">Web Almanac</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/docs/">Docs</a></li>
-    </ul>
-  </nav>
+  {!hasSidebar && (
+    <nav class="ha-mobile-nav" id="ha-mobile-nav" aria-label="Mobile Menu" hidden>
+      <ul>
+        <li><a href="/reports">Reports</a></li>
+        <li><a href="https://discuss.httparchive.org">Discuss</a></li>
+        <li><a href="https://almanac.httparchive.org/">Web Almanac</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/docs/">Docs</a></li>
+      </ul>
+    </nav>
+  )}
 </div>
 
 <style is:global>
@@ -101,6 +105,32 @@ const reports = getReports();
   }
   header.header {
     padding: 0 !important;
+  }
+
+  /* Style Starlight's MobileMenuToggle button to cleanly match HTTP Archive's header */
+  starlight-menu-button button {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: #999 !important;
+    cursor: pointer !important;
+    border-radius: 2px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 4px !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+  starlight-menu-button button:hover,
+  starlight-menu-button button:focus {
+    color: #444 !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    outline: none !important;
+  }
+  starlight-menu-button button svg {
+    width: 28px !important;
+    height: 28px !important;
   }
 </style>
 
@@ -300,6 +330,9 @@ const reports = getReports();
     }
     .ha-hamburger {
       display: block;
+    }
+    :global([data-has-sidebar]) .ha-nav-col {
+      padding-inline-end: calc(var(--sl-menu-button-size, 2rem) + 8px);
     }
   }
 </style>
