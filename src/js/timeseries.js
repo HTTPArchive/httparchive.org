@@ -156,18 +156,20 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
   header.innerHTML = `
     <h3 class="chart-title">${chartTitle}</h3>
     <div class="chart-subtitle">Source: <a href="https://httparchive.org" target="_blank" rel="noopener">httparchive.org</a></div>
-    <div class="chart-menu">
-      <button class="chart-menu-btn" title="Chart options" aria-label="Chart options">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
-      </button>
-      <div class="chart-menu-dropdown hidden">
-        <button class="chart-menu-item" data-action="download-png">Download PNG image</button>
-        <button class="chart-menu-item" data-action="download-svg">Download SVG vector image</button>
-        <button class="chart-menu-item" data-action="show-query">Show BigQuery query</button>
+    <div class="chart-header-actions">
+      <div class="chart-menu">
+        <button class="chart-menu-btn" title="Chart options" aria-label="Chart options">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <div class="chart-menu-dropdown hidden">
+          <button class="chart-menu-item" data-action="download-png">Download PNG image</button>
+          <button class="chart-menu-item" data-action="download-svg">Download SVG vector image</button>
+          <button class="chart-menu-item" data-action="show-query">Show BigQuery query</button>
+        </div>
       </div>
     </div>
   `;

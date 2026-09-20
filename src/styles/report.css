@@ -241,7 +241,8 @@ th {
   text-decoration: underline;
 }
 
-.chart-header-actions {
+.chart-header-actions,
+.chart-header > .chart-menu {
   position: absolute;
   top: -4px;
   right: 0;
