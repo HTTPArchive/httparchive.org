@@ -22,6 +22,9 @@ const test_status_code = async (page, status, location) => {
 
     const response = await fetch(base_url + page, options);
 
+    // Drain response body to free socket and prevent leaks/hangs
+    await response.text();
+
     if (response.status === status && response.headers.get('location') === location) {
       //console.log('Success - expected:', status, 'got:',response.status, 'for page:', page);
       passes++;
