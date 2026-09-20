@@ -18,24 +18,28 @@ set -euo pipefail
 # Usage info
 show_help() {
 cat << EOF
-Usage: ${0##*/} [-hd]
+Usage: ${0##*/} [-hds]
 This script installs all the required dependencies needed to run the
 HTTP Archive website.
 
     -h   display this help and exit
     -d   debug mode (watches files for changes)
+    -s   skip install and build (useful when already built in CI)
 EOF
 }
 
 OPTIND=1 # Reseting is good practice
 debug=0
-while getopts "h?d" opt; do
+skip_build=0
+while getopts "h?ds" opt; do
     case "$opt" in
     h|\?)
         show_help
         exit 0
         ;;
     d)  debug=1
+        ;;
+    s)  skip_build=1
         ;;
     esac
 done
@@ -47,11 +51,13 @@ if pgrep -f "firebase-tools.*hosting" > /dev/null; then
   pkill -f "firebase-tools.*hosting" || true
 fi
 
-echo "Installing node modules"
-npm ci
+if [ "${skip_build}" != "1" ] && [ "${SKIP_BUILD:-false}" != "true" ]; then
+  echo "Installing node modules"
+  npm ci
 
-echo "Building website"
-npm run build
+  echo "Building website"
+  npm run build
+fi
 
 echo "Starting Firebase Hosting emulator in background mode for tests"
 npx -y firebase-tools@latest emulators:start --only hosting &

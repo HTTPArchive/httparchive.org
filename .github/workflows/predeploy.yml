@@ -24,7 +24,8 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v7
       with:
-        node-version: '24'
+        node-version: '26'
+        cache: 'npm'
     - name: Run the website
       run: ./tools/scripts/run_and_test_website.sh
     - name: Update timestamps
