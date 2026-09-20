@@ -2,18 +2,24 @@
 ## Custom HTTP Archive GitHub action ##
 #######################################
 #
-# This generates snd tests the website when a pull request is
+# This generates and tests the website when a pull request is
 # opened (or added to) on the original repo
-#
+
 name: Test Website
 on:
   workflow_dispatch:
   pull_request:
+
 jobs:
   build:
     name: Build and Test Website
     runs-on: ubuntu-latest
     if: github.repository == 'HTTPArchive/httparchive.org'
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+
     steps:
     - name: Checkout branch
       uses: actions/checkout@v7
@@ -24,26 +30,34 @@ jobs:
     - name: Setup Node.js for use with actions
       uses: actions/setup-node@v7
       with:
-        node-version:  '26'
+        node-version: '26'
+        cache: 'npm'
 
-    - name: Run the website
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build website
+      env:
+        SOURCE_MAPS: true
+      run: npm run build
+
+    - name: Run the website and test
       env:
         KEEP_SERVER_RUNNING: true
         SOURCE_MAPS: true
       run: ./tools/scripts/run_and_test_website.sh
 
-    - name: Use more complete checks for generated HTML linting
-      run: cp -f .github/linters/.htmlhintrc_morechecks .github/linters/.htmlhintrc
+    - name: Deploy to Firebase Hosting Preview Channel
+      if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.GCP_SA_KEY }}'
+        projectId: httparchive
 
     - name: Lint Generated HTML
-      uses: super-linter/super-linter/slim@v8
-      env:
-        ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: false
-        FILTER_REGEX_INCLUDE: .*static/html/.*
-        FILTER_REGEX_EXCLUDE: .*node_modules/.*
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        VALIDATE_HTML: true
-        USE_FIND_ALGORITHM: true
+      run: npm run lint:html
+
 
     - name: Set the list of URLs for Lighthouse to check
       env:
@@ -86,10 +100,8 @@ jobs:
 
       - name: Enable auto-merge for Dependabot PRs
         if: |
-          (
-            steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-            steps.metadata.outputs.update-type == 'version-update:semver-minor'
-          ) && !contains(steps.metadata.outputs.dependency-names, 'super-linter')
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor'
         run: gh pr merge --squash --auto "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}

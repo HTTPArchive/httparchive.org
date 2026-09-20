@@ -10,6 +10,7 @@ name: Lint Code Base
 on:
   - workflow_dispatch
   - pull_request
+
 jobs:
   lint:
     name: Lint Code Base
@@ -20,6 +21,7 @@ jobs:
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
+
       - name: Set VALIDATE_ALL_CODEBASE variable to false
         # Only run the full workflow for manual runs or if upgrading the super linter
         if: |
@@ -27,6 +29,7 @@ jobs:
             startsWith(github.event.pull_request.title,'Bump super-linter/super-linter') != true
         run: |
           echo "VALIDATE_ALL_CODEBASE=false" >> $GITHUB_ENV
+
       - name: Lint Code Base
         uses: super-linter/super-linter/slim@v8
         env:
@@ -42,33 +45,3 @@ jobs:
           VALIDATE_JSON: true
           VALIDATE_MARKDOWN: true
           VALIDATE_YAML: true
-
-  dependabot:
-    name: Dependabot auto-merge
-    runs-on: ubuntu-latest
-    needs: lint
-    if: |
-      github.event.pull_request.user.login == 'dependabot[bot]' &&
-      github.repository == 'HTTPArchive/httparchive.org'
-
-    permissions:
-      contents: write
-      pull-requests: write
-
-    steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v3
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Enable auto-merge for Dependabot PRs
-        if: |
-          contains(steps.metadata.outputs.dependency-names, 'super-linter') && (
-            steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-            steps.metadata.outputs.update-type == 'version-update:semver-minor'
-          )
-        run: gh pr merge --squash --auto "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
