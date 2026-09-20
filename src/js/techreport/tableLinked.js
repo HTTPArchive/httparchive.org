@@ -1,5 +1,7 @@
 import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
+import { Constants } from "./utils/constants.js";
+import { UrlUtils } from "./utils/url.js";
 
 class TableLinked {
   constructor(id, pageConfig, globalConfig, filters, data) {
@@ -52,11 +54,10 @@ class TableLinked {
         id: this.id,
       };
 
-      const filters = new URLSearchParams(window.location.search);
-      const geo = filters.get('geo') || 'ALL';
-      const rank = filters.get('rank') || 'ALL';
-      const start = filters.get('start') || '';
-      const end = filters.get('end') || '';
+      const geo = UrlUtils.get('geo', 'ALL');
+      const rank = UrlUtils.get('rank', 'ALL');
+      const start = UrlUtils.get('start', '');
+      const end = UrlUtils.get('end', '');
 
       // sort data
       const sortEndpoint = component.dataset.sortEndpoint;
@@ -94,7 +95,11 @@ class TableLinked {
       }
 
       if(timestamp) {
-        timestamp.textContent = UIUtils.printMonthYear(this.dataArray[1]?.[0]?.date);
+        const firstTech = this.dataArray.find(tech => tech && tech.length > 0);
+        if (firstTech) {
+          const sortedEntries = [...firstTech].sort((a, b) => new Date(b.date) - new Date(a.date));
+          timestamp.textContent = UIUtils.printMonthYear(sortedEntries[0]?.date);
+        }
       }
 
       this.dataArray.forEach(technology => {
@@ -121,7 +126,7 @@ class TableLinked {
 
               if(technology[0]?.icon) {
                 const img = document.createElement('span');
-                const imgUrl = `https://cdn.httparchive.org/v1/static/icons/${encodeURI(technology[0]?.icon)}`;
+                const imgUrl = `${Constants.apiBase}/static/icons/${encodeURI(technology[0]?.icon)}`;
                 img.setAttribute('aria-hidden', 'true');
                 img.setAttribute('style', `background-image: url(${imgUrl})`);
                 img.classList.add('app-img');
@@ -130,7 +135,10 @@ class TableLinked {
 
               const formattedApp = DataUtils.formatAppName(app);
               const link = document.createElement('a');
-              link.setAttribute('href', `/reports/techreport/tech?tech=${app}&geo=${geo}&rank=${rank}${start ? '&start=' + start : ''}${end ? '&end=' + end : ''}`);
+              const startParam = start ? `&start=${encodeURIComponent(start)}` : '';
+              const endParam = end ? `&end=${encodeURIComponent(end)}` : '';
+              const clientParam = client ? `&client=${encodeURIComponent(client)}` : '';
+              link.setAttribute('href', `/reports/techreport/tech?tech=${encodeURIComponent(app)}&geo=${encodeURIComponent(geo)}&rank=${encodeURIComponent(rank)}${startParam}${endParam}${clientParam}`);
               link.innerText = formattedApp;
               wrapper.append(link);
               cell.append(wrapper);
@@ -268,15 +276,31 @@ class TableLinked {
 
   updateSelectionText(allSelectedApps) {
     const appLinks = document.querySelectorAll('[data-name="selected-apps"]');
+    const geo = UrlUtils.get('geo', 'ALL');
+    const rank = UrlUtils.get('rank', 'ALL');
+    const clientVal = document.querySelector('[data-component="tableLinked"]')?.dataset?.client || UrlUtils.get('client');
+    const client = clientVal === 'desktop' ? 'desktop' : 'mobile';
+    const geoParam = geo !== 'ALL' ? `&geo=${encodeURIComponent(geo)}` : '';
+    const rankParam = rank !== 'ALL' ? `&rank=${encodeURIComponent(rank)}` : '';
+    const extraParams = `${geoParam}${rankParam}&client=${client}`;
+
     appLinks.forEach(appLinkEl => {
       let label = 'Compare all technologies on this page';
       let href = '';
       if(this.selectedTechs.length > 0) {
-        href = `/reports/techreport/tech?tech=${allSelectedApps}`;
+        const safeApps = String(allSelectedApps || '')
+          .split(',')
+          .map(app => encodeURIComponent(app.trim()))
+          .filter(Boolean)
+          .join(',');
+        href = `/reports/techreport/tech?tech=${safeApps}${extraParams}`;
         label = `Compare ${this.selectedTechs.length} technologies`;
       } else if(this.data.technologies) {
-        href = `/reports/techreport/tech?tech=${Object.keys(this.data.technologies).join(',')}`;
-        href = encodeURI(href);
+        const safeTechs = Object.keys(this.data.technologies)
+          .map(tech => encodeURIComponent(tech.trim()))
+          .filter(Boolean)
+          .join(',');
+        href = `/reports/techreport/tech?tech=${safeTechs}${extraParams}`;
       }
 
       appLinkEl.setAttribute('href', href);

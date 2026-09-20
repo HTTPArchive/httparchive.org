@@ -1,0 +1,174 @@
+---
+/**
+ * TechReportLayout Astro Layout
+ * Encapsulates common chrome, custom navigation, mobile filter drawers, split-view shell,
+ * feedback/accessibility blocks, data containers, and client-side bootstrap scripts for
+ * all Tech Report pages (tech.astro, category.astro, landing.astro).
+ */
+import Base from './Base.astro';
+import techReportConfig from '../../config/techreport.json' assert { type: 'json' };
+import '../styles/techreport/general.css';
+import '../styles/techreport/techreport.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  activeNav?: 'home' | 'tech' | 'category';
+  pageId?: 'tech' | 'category' | 'landing';
+  showFilters?: boolean;
+}
+
+const {
+  title = 'HTTP Archive: Tech Report',
+  description = 'Track and compare web technology performance and adoption.',
+  activeNav = 'tech',
+  pageId = 'tech',
+  showFilters = true,
+} = Astro.props;
+
+const config = techReportConfig as any;
+---
+<Base
+  title={title}
+  description={description}
+  customNavigation={true}
+>
+  <slot name="head" slot="head" />
+
+  <!-- Custom techreport navigation -->
+  <Fragment slot="custom-navigation">
+    <a href="#main" class="skip main-btn">Skip to main content</a>
+    <a href="#results" class="skip main-btn">Skip to results</a>
+    <nav class="report-navigation">
+      <a href="/">
+        <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive"/>
+      </a>
+      <div class="hidden-xs">
+        <ul id="desktop" class="navigation-items">
+          <li class="all-reports"><a href="/reports/"><span>All reports</span></a></li>
+          <li>
+            <a href="/reports/techreport/landing" aria-current={activeNav === 'home' ? 'page' : undefined}><span>Home</span></a>
+          </li>
+          <li>
+            <a href="/reports/techreport/tech?geo=ALL&rank=ALL&tech=ALL" aria-current={activeNav === 'tech' ? 'page' : undefined}><span>Technologies</span></a>
+          </li>
+          <li>
+            <a href="/reports/techreport/category?geo=ALL&rank=ALL&category=CMS" aria-current={activeNav === 'category' ? 'page' : undefined}><span>Categories</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="visible-xs">
+        <button class="hamburger">
+          <span class="sr-only">Menu</span>
+          <svg aria-hidden="true" version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
+  </Fragment>
+
+  {showFilters ? (
+    <>
+      <button id="open-filters" class="hidden">
+        <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+      </button>
+      <div class="mobile-filters">
+        <div class="filter-bar" id="mobile-filter-bar">
+          <div class="wrapper block-m">
+            <p>Filters</p>
+            <button aria-expanded="false" class="open-filters" id="open-filters-mobile">
+              <img src="/static/img/open-filters.svg" alt="Expand filters" width="16px" height="16px" />
+            </button>
+          </div>
+        </div>
+        <div class="hidden" id="mobile-filter-container"></div>
+      </div>
+
+      <div class="split-view">
+        <div class="filters">
+          <div id="report-filters">
+            <button id="close-filters">
+              <img src="/static/img/close-filters.svg" alt="Collapse filters" width="16px" height="16px" />
+            </button>
+            <slot name="filters" />
+          </div>
+        </div>
+
+        <div class="content page-content" id="results">
+          <slot />
+        </div>
+      </div>
+    </>
+  ) : (
+    <slot />
+  )}
+
+  <!-- Feedback section -->
+  <div class="feedback" id="section-feedback">
+    <div class="block-m">
+      <h2><a href="#section-feedback" class="anchor">Feedback?</a></h2>
+      <p>Please raise a <a href="https://github.com/HTTPArchive/httparchive.org/issues/new?template=tech-report.md">GitHub issue</a> if you spot any problems, or for any feature requests.</p>
+    </div>
+  </div>
+
+  <!-- Accessibility options section -->
+  <div class="accessibility-options" id="section-accessibility-options">
+    <div class="wrapper block-m">
+      <h2><a href="#section-accessibility-options" class="anchor">Accessibility</a></h2>
+      <p>Change settings related to accessibility here</p>
+      <div class="setting">
+        <div class="check-wrapper">
+          <label for="indicators-check">Show markers</label>
+          <input type="checkbox" name="indicators-check" id="indicators-check">
+        </div>
+      </div>
+      <div class="setting">
+        <button class="theme-switcher">🌚 Switch to dark mode</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-side bootstrap data container -->
+  {pageId === 'tech' && (
+    <div
+      id="techreport-data"
+      data-page-id="tech"
+      data-full-config={JSON.stringify(config.config)}
+      data-labels={JSON.stringify(config.labels)}
+      data-pages={JSON.stringify(config.pages)}
+      style="display: none;"
+    />
+  )}
+  {pageId === 'category' && (
+    <div
+      id="techreport-data"
+      data-page-id="category"
+      data-page-config={JSON.stringify(config.pages?.category)}
+      data-full-config={JSON.stringify(config.config)}
+      data-labels={JSON.stringify(config.labels)}
+      style="display: none;"
+    />
+  )}
+  {pageId === 'landing' && (
+    <div
+      id="techreport-data"
+      data-page-id="landing"
+      data-page-config={JSON.stringify(config.pages?.landing)}
+      data-full-config={JSON.stringify(config.config)}
+      data-labels={JSON.stringify(config.labels)}
+      style="display: none;"
+    />
+  )}
+
+  <!-- TechReport client-side scripts -->
+  <Fragment slot="scripts">
+    <script src="../js/highcharts-init.js"></script>
+    <script>
+      import TechReport from '../js/techreport/index.js';
+      TechReport.start();
+    </script>
+    <slot name="scripts" />
+  </Fragment>
+</Base>

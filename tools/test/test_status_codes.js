@@ -2,9 +2,9 @@ const fs = require("fs-extra");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const convert = require('xml-js');
 
-const base_url = "http://127.0.0.1:8080";
+const base_url = process.env.TEST_BASE_URL || "http://127.0.0.1:8080";
 
-const output_dir = `static/html`;
+const output_dir = `public/static/html`;
 
 let failures = 0;
 let passes = 0;
@@ -46,7 +46,7 @@ const test_status_code = async (page, status, location) => {
 };
 
 const test_sitemap_pages = async () => {
-  const xml = await fs.readFile(`templates/sitemap.xml`, 'utf-8');
+  const xml = await fs.readFile(`public/sitemap.xml`, 'utf-8');
   const sitemap = JSON.parse(convert.xml2json(xml, {compact: true}));
   const urls = sitemap['urlset']['url'];
   for ( var url in urls ) {
@@ -67,6 +67,7 @@ const test_status_codes = async () => {
   await test_status_code('/reports/techreport/landing', 200);
   await test_status_code('/reports/techreport/drilldown', 200);
   await test_status_code('/reports/techreport/comparison', 200);
+  await test_status_code('/reports/techreport/category?geo=ALL&rank=ALL&category=CMS', 200);
   await test_status_code('/reports/techreport/tech?tech=WordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01', 200);
   await test_status_code('/reports/techreport/tech?tech=jQuery%2CWordPress&geo=ALL&rank=ALL&start=2024-01-01&end=2024-03-01', 200);
 

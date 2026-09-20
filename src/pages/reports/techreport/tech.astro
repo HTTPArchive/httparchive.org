@@ -1,0 +1,24 @@
+---
+/**
+ * Tech Report technology page: /reports/techreport/tech
+ * Replicates the Flask techreport() route.
+ * Renders both drilldown and comparison layouts, toggling the correct one at runtime
+ * based on the ?tech= parameter before initializing TechReport JS.
+ */
+import TechReportLayout from '../../../layouts/TechReportLayout.astro';
+import techReportConfig from '../../../../config/techreport.json' assert { type: 'json' };
+
+import Filters from '../../../components/techreport/Filters.astro';
+import DrilldownView from '../../../components/techreport/DrilldownView.astro';
+import ComparisonView from '../../../components/techreport/ComparisonView.astro';
+
+const config = techReportConfig as any;
+const drilldownPage = config.pages.drilldown;
+const comparisonPage = config.pages.comparison;
+---
+<TechReportLayout activeNav="tech" pageId="tech">
+  <Filters slot="filters" />
+
+  <DrilldownView config={config} pageConfig={drilldownPage} id="drilldown-view" isHidden={false} />
+  <ComparisonView config={config} pageConfig={comparisonPage} id="comparison-view" isHidden={true} />
+</TechReportLayout>

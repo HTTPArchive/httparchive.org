@@ -1,10 +1,10 @@
-/* global Section */
-
 import Filters from '../components/filters';
+import Section from './section';
 import { Constants } from './utils/constants';
-const { DrilldownHeader } = require("../components/drilldownHeader");
-const { DataUtils } = require("./utils/data");
-const { UIUtils } = require("./utils/ui");
+import { DrilldownHeader } from "../components/drilldownHeader";
+import { DataUtils } from "./utils/data";
+import { UIUtils } from "./utils/ui";
+import { UrlUtils } from "./utils/url";
 
 class TechReport {
   constructor(pageId, page, config, labels) {
@@ -15,13 +15,23 @@ class TechReport {
     this.pageId = pageId;
     this.sections = {};
 
-    // Pass the labels into the page data
+    // Pass the labels into the page data, and for comparison pages add
+    // `comparison_*` key aliases so Timeseries can find section config by
+    // its DOM data-id (e.g. `comparison_good_cwv_timeseries`).
+    const baseConfig = {
+      ...page.config,
+      labels: labels,
+    };
+    if (pageId === 'comparison') {
+      Object.keys(page.config).forEach(key => {
+        if (!['colors', 'default', 'labels'].includes(key)) {
+          baseConfig[`comparison_${key}`] = page.config[key];
+        }
+      });
+    }
     this.page = {
       ...page,
-      config: {
-        ...page.config,
-        labels: labels,
-      },
+      config: baseConfig,
     };
 
     // Load the page
@@ -120,6 +130,22 @@ class TechReport {
 
   // Initialize the report pages
   initializeReport() {
+    // Apply client settings and watch for updates before initializing sections
+    this.bindClientListener();
+    this.bindSubcategoryListener();
+
+    if (this.pageId === 'drilldown') {
+      DrilldownHeader.update(this.filters);
+    } else {
+      DrilldownHeader.updateFilterMeta(this.filters);
+      if (this.pageId === 'category') {
+        const mainTitle = document.querySelector('h1 span.main-title');
+        if (mainTitle && this.filters.category) {
+          mainTitle.textContent = this.filters.category;
+        }
+      }
+    }
+
     const sections = document.querySelectorAll('[data-type="section"]');
 
     // Create new class for each of the sections
@@ -133,18 +159,49 @@ class TechReport {
       );
       this.sections[section.id] = reportSection;
     });
+  }
 
-    // Apply settings and watch for updates
-    this.bindClientListener();
+  // Restore any subcategory dropdown selectors based on URL parameters
+  bindSubcategoryListener() {
+    const dropdowns = document.querySelectorAll('.subcategory-selector');
+
+    dropdowns.forEach(dropdown => {
+      const param = dropdown.dataset.param;
+      if (param) {
+        const urlVal = UrlUtils.get(param);
+        if (urlVal) {
+          const optionExists = Array.from(dropdown.options).some(opt => opt.value === urlVal);
+          if (optionExists) {
+            dropdown.value = urlVal;
+          }
+        }
+      }
+    });
   }
 
   // Watch for changes in the client dropdown
   bindClientListener() {
-    const select = document.getElementById('client-breakdown');
+    const selects = document.querySelectorAll('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown');
 
-    if(select) {
-      select.onchange = (event) => this.updateClient(event);
+    // Restore client from URL param on page load
+    const clientParam = UrlUtils.get('client');
+    const selectedClient = clientParam || (selects[0] ? selects[0].value : 'mobile');
+
+    if (this.filters) {
+      this.filters.client = selectedClient;
     }
+
+    selects.forEach(select => {
+      select.value = selectedClient;
+      select.onchange = (event) => this.updateClient(event);
+    });
+
+    document.querySelectorAll('[data-client]').forEach(component => {
+      component.dataset.client = selectedClient;
+    });
+    document.querySelectorAll('[data-slot="client"]').forEach(component => {
+      component.innerText = UIUtils.capitalizeFirstLetter(selectedClient);
+    });
   }
 
   // Watch for changes in the accessibility/UI settings
@@ -183,11 +240,22 @@ class TechReport {
   // Update which client is selected
   updateClient(event) {
     const client = event.target.value;
+    if (this.filters) {
+      this.filters.client = client;
+    }
 
     // Update the URL
     const url = new URL(window.location.href);
     url.searchParams.set(`client`, client);
     window.history.replaceState(null, null, url);
+
+    // Keep all client dropdowns in sync (if multiple)
+    const selects = document.querySelectorAll('select[name="client-breakdown"], #client-breakdown, #comparison-client-breakdown');
+    selects.forEach(select => {
+      if (select.value !== client) {
+        select.value = client;
+      }
+    });
 
     // Update selected client property everywhere
     document.querySelectorAll('[data-client]').forEach(component => {
@@ -196,107 +264,33 @@ class TechReport {
 
     // Update the sections
     Object.values(this.sections).forEach(section => {
+      if (section.pageFilters) {
+        section.pageFilters.client = client;
+      }
       section.updateSection();
     });
 
     // Update labels
-    document.querySelectorAll('[data-slot="client"]').forEach(component => {
-      component.innerText = client;
-    });
+    DrilldownHeader.updateFilterMeta(this.filters);
   }
 
   // New API
-  getAllMetricData() {
-    const technologies = this.filters.app;
+  async getAllMetricData() {
+    const technologies = this.filters && this.filters.app;
 
-    const apis = [
-      {
-        endpoint: 'technologies',
-        metric: 'technologies',
-      },
-      {
-        endpoint: 'cwv',
-        metric: 'vitals',
-        parse: DataUtils.parseVitalsData,
-      },
-      {
-        endpoint: 'lighthouse',
-        metric: 'lighthouse',
-        parse: DataUtils.parseLighthouseData,
-      },
-      {
-        endpoint: 'adoption',
-        metric: 'adoption',
-        parse: DataUtils.parseAdoptionData,
-      },
-      {
-        endpoint: 'page-weight',
-        metric: 'pageWeight',
-        parse: DataUtils.parsePageWeightData,
-      },
-    ];
+    if (!technologies || !Array.isArray(technologies) || technologies.length === 0) {
+      return;
+    }
 
-    const technology = technologies.join('%2C')
-      .replaceAll(" ", "%20");
-
-    const geo = this.filters.geo.replaceAll(" ", "%20");
-    const rank = this.filters.rank.replaceAll(" ", "%20");
-    const start = this.filters.start;
-    const end = this.filters.end;
-
-    let allResults = {};
-    let techInfo = {};
-    technologies.forEach(tech => allResults[tech] = []);
-
-    Promise.all(apis.map(api => {
-      let url = `${Constants.apiBase}/${api.endpoint}?technology=${technology}&geo=${geo}&rank=${rank}`;
-      if (start) {
-        url += `&start=${start}`;
-      }
-      if (end) {
-        url += `&end=${end}`;
-      }
-
-      return fetch(url)
-        .then(result => result.json())
-        .then(result => {
-          const sortedResult = result.sort((a, b) => new Date(a.date) - new Date(b.date));
-          let previousRow = {};
-          // Loop through all the rows of the API result
-          sortedResult.forEach(row => {
-            const parsedRow = {
-              ...row,
-            }
-
-            // Parse the data and add it to the results
-            if(api.parse) {
-              const metric = parsedRow[api.metric] || parsedRow;
-              const previousMetric = previousRow[row.technology]?.[api.metric];
-              parsedRow[api.metric] = api.parse(metric, previousMetric, parsedRow?.date);
-            }
-
-            if(api.endpoint === 'technologies') {
-              techInfo[row.technology] = row;
-            } else {
-              const resIndex = allResults[row.technology].findIndex(res => res.date === row.date);
-              if(resIndex > -1) {
-                allResults[row.technology][resIndex] = {
-                  ...allResults[row.technology][resIndex],
-                  ...techInfo[row.technology],
-                  ...parsedRow
-                }
-              } else {
-                allResults[row.technology].push(parsedRow);
-              }
-            }
-
-            previousRow[row.technology] = row;
-          });
-        })
-        .catch(error => console.log('Something went wrong', error));
-    })).then(() => {
-      this.updateComponents(allResults);
+    const allResults = await DataUtils.fetchMetricsForTechnologies({
+      technologies,
+      geo: this.filters.geo,
+      rank: this.filters.rank,
+      start: this.filters.start,
+      end: this.filters.end,
     });
+
+    this.updateComponents(allResults);
   }
 
   getCategoryData() {
@@ -335,6 +329,10 @@ class TechReport {
   updateCategoryComponents (category) {
     this.updateComponents(category.data);
     DrilldownHeader.setDescription(category.description);
+    const mainTitle = document.querySelector('h1 span.main-title');
+    if (mainTitle && this.filters.category) {
+      mainTitle.textContent = this.filters.category;
+    }
   }
 
   // Update components and sections that are relevant to the current page
@@ -352,11 +350,13 @@ class TechReport {
       case 'comparison':
         this.updateComparisonComponents(data);
         this.getFilterInfo();
+        DrilldownHeader.updateFilterMeta(this.filters);
         break;
 
       case 'category':
         this.updateComparisonComponents(data);
         this.getFilterInfo();
+        DrilldownHeader.updateFilterMeta(this.filters);
         break;
     }
   }
@@ -462,6 +462,156 @@ class TechReport {
       });
     }
   }
+
+  /**
+   * Bootstraps the TechReport client-side from the #techreport-data container.
+   * Parses URL query parameters, configures filters, toggles views if polymorphic,
+   * updates initial headers, populates crawl date dropdowns, and initializes TechReport.
+   */
+  static async boot(containerId = 'techreport-data') {
+    const container = document.getElementById(containerId);
+    if (!container) return null;
+
+    const fullConfig = JSON.parse(container.dataset.fullConfig || '{}');
+    const labels = JSON.parse(container.dataset.labels || '{}');
+    const pages = container.dataset.pages ? JSON.parse(container.dataset.pages) : null;
+    let pageId = container.dataset.pageId;
+    let pageConfig = container.dataset.pageConfig ? JSON.parse(container.dataset.pageConfig) : null;
+
+    // Handle landing page directly
+    if (pageId === 'landing') {
+      return new TechReport('landing', pageConfig, fullConfig, labels);
+    }
+
+    // Resolve polymorphic route (/reports/techreport/tech)
+    if (!pageId || pageId === 'tech') {
+      const techParam = UrlUtils.get('tech', 'ALL');
+      const techs = techParam.split(',').map(t => t.trim()).filter(Boolean);
+      pageId = techs.length > 1 ? 'comparison' : 'drilldown';
+      if (pages) {
+        pageConfig = pages[pageId];
+      }
+    }
+
+    if (!pageConfig && pages && pages[pageId]) {
+      pageConfig = pages[pageId];
+    }
+
+    if (!pageConfig) {
+      console.error(`TechReport.boot: unable to resolve page config for "${pageId}"`);
+      return null;
+    }
+
+    // Toggle polymorphic layouts if both exist in DOM (tech.astro)
+    const compView = document.getElementById('comparison-view');
+    const drillView = document.getElementById('drilldown-view');
+    if (compView && drillView) {
+      if (pageId === 'comparison') {
+        compView.id = 'report-content';
+        compView.classList.remove('hidden');
+        drillView.remove();
+      } else {
+        drillView.id = 'report-content';
+        drillView.classList.remove('hidden');
+        compView.remove();
+      }
+    }
+
+    // Extract query parameters and filters
+    const filters = UrlUtils.getFilters(pageConfig);
+    const requestedTechs = filters.app;
+
+    const params = {
+      geo: filters.geo,
+      rank: filters.rank,
+      client: filters.client,
+    };
+
+    pageConfig.filters = filters;
+    pageConfig.params = params;
+
+    // Immediately set titles & summary counts before async fetches
+    if (pageId === 'comparison') {
+      const count = requestedTechs.length;
+      const techWord = count === 1 ? 'technology' : 'technologies';
+      const titleEl = document.querySelector('h1 span.main-title');
+      if (titleEl) {
+        titleEl.textContent = `Compare ${count} ${techWord}`;
+      }
+      const summaryCountEl = document.querySelector('[data-slot="techs-count"]');
+      if (summaryCountEl) {
+        summaryCountEl.textContent = `${count} ${techWord}`;
+      }
+    } else if (pageId === 'drilldown') {
+      const titleEl = document.querySelector('h1 span.main-title');
+      if (titleEl && requestedTechs[0]) {
+        titleEl.textContent = requestedTechs[0] === 'ALL' ? 'All technologies' : requestedTechs[0];
+      }
+    } else if (pageId === 'category') {
+      const titleEl = document.querySelector('h1 span.main-title');
+      if (titleEl && filters.category) {
+        titleEl.textContent = filters.category;
+      }
+    }
+
+    // Fetch crawl dates and populate start/end date selectors
+    let dates = [];
+    try {
+      const resp = await fetch(`${Constants.apiBase}/dates`);
+      if (resp.ok) {
+        const data = await resp.json();
+        dates = data.dates || [];
+      } else {
+        console.warn(`Failed to fetch dates: ${resp.status}`);
+      }
+    } catch (e) {
+      console.error('Failed to fetch dates', e);
+    }
+
+    const startSelect = document.getElementById('startDate');
+    const endSelect = document.getElementById('endDate');
+    if (startSelect && endSelect) {
+      const startVal = filters.start || '';
+      const endVal = filters.end || '';
+
+      dates.forEach(d => {
+        const formattedDate = d.replace(/_/g, '-');
+        const parts = d.split('_');
+        const dateObj = new Date(Date.UTC(parts[0], parts[1] - 1));
+        const display = dateObj.toLocaleString('default', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+        const opt1 = document.createElement('option');
+        opt1.value = formattedDate;
+        opt1.textContent = display;
+        if (formattedDate === startVal) opt1.selected = true;
+        startSelect.appendChild(opt1);
+
+        const opt2 = document.createElement('option');
+        opt2.value = formattedDate;
+        opt2.textContent = display;
+        if (formattedDate === endVal) opt2.selected = true;
+        endSelect.appendChild(opt2);
+      });
+    }
+
+    return new TechReport(pageId, pageConfig, fullConfig, labels);
+  }
+
+  /**
+   * Safe launcher that waits for DOM readiness if necessary.
+   */
+  static start(containerId = 'techreport-data') {
+    if (document.readyState === 'loading') {
+      return new Promise(resolve => {
+        document.addEventListener('DOMContentLoaded', () => {
+          resolve(TechReport.boot(containerId));
+        });
+      });
+    }
+    return TechReport.boot(containerId);
+  }
 }
 
 window.TechReport = TechReport;
+export default TechReport;
+export { TechReport };

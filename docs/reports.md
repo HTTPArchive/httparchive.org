@@ -6,7 +6,7 @@ A _report_ is a collection of similar metrics. Reports may span multiple crawls,
 
 Reports are configured in [config/reports.json](../config/reports.json). Here's a small sample configuration:
 
-```
+```json
 {
   "_reports": [
     "foo",

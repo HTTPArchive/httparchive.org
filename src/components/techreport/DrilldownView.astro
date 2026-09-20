@@ -1,0 +1,173 @@
+---
+/**
+ * DrilldownView.astro
+ * Renders the single-technology drilldown layout with summaries, Core Web Vitals,
+ * Lighthouse, page weight, and adoption sections.
+ */
+import SummaryCard from './SummaryCard.astro';
+import Timeseries from './Timeseries.astro';
+import GeoBreakdown from './GeoBreakdown.astro';
+import CwvDistribution from './CwvDistribution.astro';
+import FilterMeta from './FilterMeta.astro';
+
+interface Props {
+  config: any;
+  pageConfig: any;
+  id?: string;
+  isHidden?: boolean;
+}
+
+const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.props;
+---
+<div id={id} class:list={['report-content', { hidden: isHidden }]}>
+  <div class="info intro block-m">
+    <div class="heading-wrapper">
+      <h1>
+        <span class="subtitle">Technology</span>
+        <span>
+          <span class="main-title"></span>
+          <span class="title-img" role="img" aria-hidden="true"></span>
+        </span>
+      </h1>
+      <div class="breakdown default-dropdown-group">
+        <label for="client-breakdown" class="default-dropdown-label">Client</label>
+        <div class="select-label default-dropdown-wrapper">
+          <select class="default-dropdown" name="client-breakdown" id="client-breakdown">
+            <option value="mobile" selected>Mobile</option>
+            <option value="desktop">Desktop</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <p class="app-description"></p>
+    <ul class="category-list categories">
+      <li class="cell">Uncategorized</li>
+    </ul>
+  </div>
+
+  <div class="data-sections">
+    <div
+      id="drilldown-summary"
+      class="block-m summary report-section"
+      data-type="section"
+      data-api="cwv,lighthouse,page-weight"
+    >
+      <h2 class="summary-heading">Summary</h2>
+      <div class="summary-grid">
+        {pageConfig.config.summary?.map((summary: any) => (
+          <SummaryCard summary={summary} />
+        ))}
+      </div>
+      <FilterMeta />
+    </div>
+
+    <div
+      id="good-cwvs"
+      class="block-m report-section"
+      data-type="section"
+      data-api="cwv"
+    >
+      <h2><a class="anchor" href="#good-cwvs">Core Web Vitals</a></h2>
+      <p>{config.labels.metrics.vitals.general.description}</p>
+
+      {pageConfig.config.good_cwv_summary && (
+        <div>
+          <h3>{pageConfig.config.good_cwv_summary.title}</h3>
+          <div class="summary-grid">
+            {pageConfig.config.good_cwv_summary.cards?.map((summary: any) => (
+              <SummaryCard summary={summary} sectionPrefix="cwv" />
+            ))}
+          </div>
+          <FilterMeta />
+        </div>
+      )}
+
+      <div class="card">
+        <Timeseries timeseries={pageConfig.config.good_cwv_timeseries} />
+
+        <div class="cwv-button-bar">
+          <button class="btn show-table cwv-show-table-btn" type="button" data-id={pageConfig.config.good_cwv_timeseries.id}>Show table</button>
+          {pageConfig.config.geo_breakdown && (
+            <button class="btn show-table geo-breakdown-toggle" type="button" id="geo-breakdown-btn">Show geographic breakdown</button>
+          )}
+          {pageConfig.config.cwv_distribution && (
+            <button class="btn show-table cwv-distribution-toggle" type="button" id="cwv-distribution-btn">Show histogram</button>
+          )}
+        </div>
+
+        {pageConfig.config.geo_breakdown && (
+          <GeoBreakdown geoBreakdown={pageConfig.config.geo_breakdown} />
+        )}
+        {pageConfig.config.cwv_distribution && (
+          <CwvDistribution cwvDistribution={pageConfig.config.cwv_distribution} />
+        )}
+      </div>
+    </div>
+
+    <div
+      id="lighthouse"
+      class="block-m report-section"
+      data-type="section"
+      data-api="lighthouse"
+    >
+      <h2><a class="anchor" href="#lighthouse">Lighthouse</a></h2>
+      <p>{config.labels.metrics.lighthouse.general.description}</p>
+
+      {pageConfig.config.lighthouse_summary && (
+        <div>
+          <h3>{pageConfig.config.lighthouse_summary.title}</h3>
+          <div class="summary-grid">
+            {pageConfig.config.lighthouse_summary.cards?.map((summary: any) => (
+              <SummaryCard summary={summary} sectionPrefix="lighthouse" />
+            ))}
+          </div>
+          <FilterMeta />
+        </div>
+      )}
+
+      <div class="card">
+        <Timeseries timeseries={pageConfig.config.lighthouse_timeseries} />
+      </div>
+    </div>
+
+    <div
+      id="page-weight"
+      class="block-m report-section"
+      data-type="section"
+      data-api="page-weight"
+    >
+      <h2><a class="anchor" href="#page-weight">Page weight</a></h2>
+      <p>{config.labels.metrics.pageWeight.general.description}</p>
+
+      {pageConfig.config.weight_summary && (
+        <div>
+          <h3>{pageConfig.config.weight_summary.title}</h3>
+          <div class="summary-grid">
+            {pageConfig.config.weight_summary.cards?.map((summary: any) => (
+              <SummaryCard summary={summary} sectionPrefix="weight" />
+            ))}
+          </div>
+          <FilterMeta />
+        </div>
+      )}
+
+      <div class="card">
+        <Timeseries timeseries={pageConfig.config.weight_timeseries} />
+      </div>
+    </div>
+
+    <div
+      id="adoption"
+      class="block-m report-section"
+      data-type="section"
+      data-api="adoption"
+    >
+      <h2><a class="anchor" href="#adoption">Adoption</a></h2>
+      <p>{config.labels.metrics.adoption.general.description}</p>
+
+      <div class="card">
+        <Timeseries timeseries={pageConfig.config.adoption_timeseries} />
+      </div>
+    </div>
+  </div>
+</div>
