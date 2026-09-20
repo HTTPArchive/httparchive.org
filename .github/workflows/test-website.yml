@@ -14,6 +14,10 @@ jobs:
     name: Build and Test Website
     runs-on: ubuntu-latest
     if: github.repository == 'HTTPArchive/httparchive.org'
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
     - name: Checkout branch
       uses: actions/checkout@v7
@@ -26,6 +30,7 @@ jobs:
       with:
         node-version: '26'
         cache: 'npm'
+
     - name: Install dependencies
       run: npm ci
 
@@ -39,6 +44,14 @@ jobs:
         KEEP_SERVER_RUNNING: true
         SOURCE_MAPS: true
       run: ./tools/scripts/run_and_test_website.sh
+
+    - name: Deploy to Firebase Hosting Preview Channel
+      if: github.event_name == 'pull_request'
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.GCP_SA_KEY }}'
+        projectId: httparchive
 
     - name: Use more complete checks for generated HTML linting
       run: cp -f .github/linters/.htmlhintrc_morechecks .github/linters/.htmlhintrc
