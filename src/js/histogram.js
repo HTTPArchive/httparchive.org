@@ -299,10 +299,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
     seriesList.push({
       name: 'Desktop CDF',
       type: 'line',
-      data: sortedBins.map(bin => {
-        const b = desktopMap.get(bin);
-        return [bin, b ? Math.round(b.cdf * 10000) / 100 : 0];
-      }),
+      data: desktop.map(b => [b.bin, Math.round(b.cdf * 10000) / 100]).sort((a, b) => a[0] - b[0]),
       yAxisIndex: 1,
       itemStyle: { color: Colors.DESKTOP },
       lineStyle: { color: Colors.DESKTOP, width: 2, type: 'solid' },
@@ -330,10 +327,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
     seriesList.push({
       name: 'Mobile CDF',
       type: 'line',
-      data: sortedBins.map(bin => {
-        const b = mobileMap.get(bin);
-        return [bin, b ? Math.round(b.cdf * 10000) / 100 : 0];
-      }),
+      data: mobile.map(b => [b.bin, Math.round(b.cdf * 10000) / 100]).sort((a, b) => a[0] - b[0]),
       yAxisIndex: 1,
       itemStyle: { color: Colors.MOBILE },
       lineStyle: { color: Colors.MOBILE, width: 2, type: 'solid' },
@@ -344,6 +338,10 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
   }
 
   const option = {
+    aria: {
+      enabled: true,
+      decal: { show: false }
+    },
     animation: false,
     grid: {
       top: 25,

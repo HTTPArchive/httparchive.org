@@ -509,6 +509,10 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
 
   // ECharts Option Configuration
   const option = {
+    aria: {
+      enabled: true,
+      decal: { show: false }
+    },
     animation: false,
     grid: {
       top: 25,
@@ -787,7 +791,7 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
   }, 100);
 
   // Listen to ECharts DataZoom events (fired by slider drag, wheel zoom, pan)
-  chart.on('dataZoom', () => {
+  chart.on('datazoom', () => {
     const axis = chart.getModel()?.getComponent('xAxis', 0)?.axis;
     if (!axis) return;
     const extent = axis.scale.getExtent();
