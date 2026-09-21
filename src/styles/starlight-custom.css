@@ -53,15 +53,15 @@
   --sl-color-hairline: var(--sl-color-gray-6);
   --sl-color-hairline-shade: var(--sl-color-gray-6);
 
-  --sl-color-backdrop-overlay: hsla(225deg, 9%, 36%, 0.66);
+  --sl-color-backdrop-overlay: hsl(225deg, 9%, 36%, 0.66);
 
   /* Shadows (light mode) */
-  --sl-shadow-sm: 0px 1px 1px hsla(0deg, 0%, 0%, 0.06), 0px 2px 1px hsla(0deg, 0%, 0%, 0.06);
-  --sl-shadow-md: 0px 8px 4px hsla(0deg, 0%, 0%, 0.03), 0px 5px 2px hsla(0deg, 0%, 0%, 0.03),
-    0px 3px 2px hsla(0deg, 0%, 0%, 0.06), 0px 1px 1px hsla(0deg, 0%, 0%, 0.06);
-  --sl-shadow-lg: 0px 25px 7px rgba(0, 0, 0, 0.01), 0px 16px 6px hsla(0deg, 0%, 0%, 0.03),
-    0px 9px 5px hsla(223deg, 13%, 10%, 0.08), 0px 4px 4px hsla(0deg, 0%, 0%, 0.16),
-    0px 4px 2px hsla(0deg, 0%, 0%, 0.04);
+  --sl-shadow-sm: 0px 1px 1px hsl(0deg, 0%, 0%, 0.06), 0px 2px 1px hsl(0deg, 0%, 0%, 0.06);
+  --sl-shadow-md: 0px 8px 4px hsl(0deg, 0%, 0%, 0.03), 0px 5px 2px hsl(0deg, 0%, 0%, 0.03),
+    0px 3px 2px hsl(0deg, 0%, 0%, 0.06), 0px 1px 1px hsl(0deg, 0%, 0%, 0.06);
+  --sl-shadow-lg: 0px 25px 7px rgb(0, 0, 0, 0.01), 0px 16px 6px hsl(0deg, 0%, 0%, 0.03),
+    0px 9px 5px hsl(223deg, 13%, 10%, 0.08), 0px 4px 4px hsl(0deg, 0%, 0%, 0.16),
+    0px 4px 2px hsl(0deg, 0%, 0%, 0.04);
 }
 
 /* Hide theme select element wherever rendered */
