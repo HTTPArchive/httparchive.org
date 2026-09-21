@@ -37,7 +37,7 @@
     "fs-extra": "11.4.0",
     "highcharts": "11.4.8",
     "htmlhint": "^1.9.2",
-    "marked": "^18.0.5",
+    "marked": "^18.0.13",
     "node-fetch": "3.3.2",
     "puppeteer": "^25.10.0",
     "run-script-os": "1.1.6",
