@@ -26,9 +26,12 @@ export default defineConfig({
     starlight({
       title: 'HTTP Archive Docs',
       disable404Route: true,
+      customCss: ['./src/styles/starlight-custom.css'],
       components: {
         Header: './src/components/docs/Header.astro',
         Sidebar: './src/components/docs/Sidebar.astro',
+        ThemeProvider: './src/components/docs/ThemeProvider.astro',
+        ThemeSelect: './src/components/docs/EmptyComponent.astro',
       },
       sidebar: [
         {
@@ -64,7 +67,12 @@ export default defineConfig({
       editLink: {
         baseUrl: 'https://github.com/HTTPArchive/httparchive.org/edit/main/'
       },
-      plugins: [starlightLlmsTxt(), starlightLinksValidator()],
+      plugins: [
+        starlightLlmsTxt(),
+        starlightLinksValidator({
+          exclude: ['/', '/about/**', '/faq/**', '/reports/**'], // Pages outside starlight
+        }),
+      ],
     }),
   ],
   vite: {
