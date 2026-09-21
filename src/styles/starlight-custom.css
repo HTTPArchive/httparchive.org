@@ -11,15 +11,15 @@
 ::backdrop,
 :root[data-theme='dark'] {
   /* Colours (light mode) */
-  --sl-color-white: hsl(224, 10%, 10%);
-  --sl-color-gray-1: hsl(224, 14%, 16%);
-  --sl-color-gray-2: hsl(224, 10%, 23%);
-  --sl-color-gray-3: hsl(224, 7%, 36%);
-  --sl-color-gray-4: hsl(224, 6%, 56%);
-  --sl-color-gray-5: hsl(224, 6%, 77%);
-  --sl-color-gray-6: hsl(224, 20%, 94%);
-  --sl-color-gray-7: hsl(224, 19%, 97%);
-  --sl-color-black: hsl(0, 0%, 100%);
+  --sl-color-white: hsl(224deg, 10%, 10%);
+  --sl-color-gray-1: hsl(224deg, 14%, 16%);
+  --sl-color-gray-2: hsl(224deg, 10%, 23%);
+  --sl-color-gray-3: hsl(224deg, 7%, 36%);
+  --sl-color-gray-4: hsl(224deg, 6%, 56%);
+  --sl-color-gray-5: hsl(224deg, 6%, 77%);
+  --sl-color-gray-6: hsl(224deg, 20%, 94%);
+  --sl-color-gray-7: hsl(224deg, 19%, 97%);
+  --sl-color-black: hsl(0deg, 0%, 100%);
 
   --sl-color-orange-high: hsl(var(--sl-hue-orange, 41), 80%, 25%);
   --sl-color-orange: hsl(var(--sl-hue-orange, 41), 90%, 60%);
@@ -37,9 +37,9 @@
   --sl-color-red: hsl(var(--sl-hue-red, 339), 90%, 60%);
   --sl-color-red-low: hsl(var(--sl-hue-red, 339), 80%, 90%);
 
-  --sl-color-accent-high: hsl(234, 80%, 30%);
-  --sl-color-accent: hsl(234, 90%, 60%);
-  --sl-color-accent-low: hsl(234, 88%, 90%);
+  --sl-color-accent-high: hsl(234deg, 80%, 30%);
+  --sl-color-accent: hsl(234deg, 90%, 60%);
+  --sl-color-accent-low: hsl(234deg, 88%, 90%);
 
   --sl-color-text: var(--sl-color-gray-2);
   --sl-color-text-accent: var(--sl-color-accent);
@@ -53,15 +53,15 @@
   --sl-color-hairline: var(--sl-color-gray-6);
   --sl-color-hairline-shade: var(--sl-color-gray-6);
 
-  --sl-color-backdrop-overlay: hsla(225, 9%, 36%, 0.66);
+  --sl-color-backdrop-overlay: hsla(225deg, 9%, 36%, 0.66);
 
   /* Shadows (light mode) */
-  --sl-shadow-sm: 0px 1px 1px hsla(0, 0%, 0%, 0.06), 0px 2px 1px hsla(0, 0%, 0%, 0.06);
-  --sl-shadow-md: 0px 8px 4px hsla(0, 0%, 0%, 0.03), 0px 5px 2px hsla(0, 0%, 0%, 0.03),
-    0px 3px 2px hsla(0, 0%, 0%, 0.06), 0px 1px 1px hsla(0, 0%, 0%, 0.06);
-  --sl-shadow-lg: 0px 25px 7px rgba(0, 0, 0, 0.01), 0px 16px 6px hsla(0, 0%, 0%, 0.03),
-    0px 9px 5px hsla(223, 13%, 10%, 0.08), 0px 4px 4px hsla(0, 0%, 0%, 0.16),
-    0px 4px 2px hsla(0, 0%, 0%, 0.04);
+  --sl-shadow-sm: 0px 1px 1px hsla(0deg, 0%, 0%, 0.06), 0px 2px 1px hsla(0deg, 0%, 0%, 0.06);
+  --sl-shadow-md: 0px 8px 4px hsla(0deg, 0%, 0%, 0.03), 0px 5px 2px hsla(0deg, 0%, 0%, 0.03),
+    0px 3px 2px hsla(0deg, 0%, 0%, 0.06), 0px 1px 1px hsla(0deg, 0%, 0%, 0.06);
+  --sl-shadow-lg: 0px 25px 7px rgba(0, 0, 0, 0.01), 0px 16px 6px hsla(0deg, 0%, 0%, 0.03),
+    0px 9px 5px hsla(223deg, 13%, 10%, 0.08), 0px 4px 4px hsla(0deg, 0%, 0%, 0.16),
+    0px 4px 2px hsla(0deg, 0%, 0%, 0.04);
 }
 
 /* Hide theme select element wherever rendered */

@@ -70,15 +70,17 @@ const get_docs_dates = async () => {
       if (!relativeFile.endsWith('.md') && !relativeFile.endsWith('.mdx')) continue;
 
       const fullPath = path.join(docsDir, relativeFile);
-      const stats = await fs.stat(fullPath);
-      if (!stats.isFile()) continue;
-
       const normalizedRel = relativeFile.replace(/\\/g, '/');
       const key = `docs/${normalizedRel.replace(/\.mdx?$/, '')}`;
 
-      const content = await fs.readFile(fullPath, 'utf-8');
-      const hash = crypto.createHash('md5').update(content).digest('hex');
-      check_and_update_date(key, hash);
+      try {
+        const content = await fs.readFile(fullPath, 'utf-8');
+        const hash = crypto.createHash('md5').update(content).digest('hex');
+        check_and_update_date(key, hash);
+      } catch (fileErr) {
+        if (fileErr.code === 'EISDIR') continue;
+        throw fileErr;
+      }
     }
   } catch (err) {
     console.error('Failed to generate doc timestamps:', err);

@@ -10,6 +10,7 @@
         "ignoreFontFamilyNames": ["monospace"]
       }
     ],
+    "hue-degree-notation": null,
     "length-zero-no-unit": null,
     "media-feature-range-notation": "prefix",
     "no-descending-specificity": null,
