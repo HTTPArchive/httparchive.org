@@ -62,6 +62,7 @@ const {
 const reports = getReports();
 
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 <!doctype html>
 <html lang="en">
@@ -141,29 +142,7 @@ import Header from '../components/Header.astro';
       <slot />
     </main>
 
-    <footer>
-      <div class="container">
-        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
-          <a href="/">
-            <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" loading="lazy"/>
-          </a>
-          <a href="https://archive.org/">
-            <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive" loading="lazy"/>
-          </a>
-        </div>
-        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
-          <nav id="footer-links" aria-label="Footer links">
-            <a href="/reports">Reports</a>
-            <a href="https://discuss.httparchive.org">Discuss</a>
-            <a href="https://almanac.httparchive.org/">Web Almanac</a>
-            <a href="/about">About</a>
-            <a href="/about#mission">Mission</a>
-            <a href="/about#contact">Contact</a>
-            <a href="/faq">FAQ</a>
-          </nav>
-        </div>
-      </div>
-    </footer>
+    <Footer />
 
     <!-- Core JS -->
     <script src="../js/main.js"></script>
