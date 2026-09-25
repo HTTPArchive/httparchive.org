@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/starlight": "^0.41.1",
     "astro": "^7.3.3",
     "ejs": "6.0.1",
     "firebase-tools": "^15.30.2",
@@ -41,6 +42,8 @@
     "node-fetch": "3.3.2",
     "puppeteer": "^25.11.0",
     "run-script-os": "1.1.6",
+    "starlight-links-validator": "^0.25.1",
+    "starlight-llms-txt": "^0.11.0",
     "web-vitals": "6.2.2",
     "xml-js": "1.6.11",
     "zod": "^4.6.5"

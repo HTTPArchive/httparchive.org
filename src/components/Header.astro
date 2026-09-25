@@ -11,6 +11,7 @@ const reports = getReports();
       </a>
     </div>
     <div class="col-lg-10 col-md-9 col-sm-9 col-xs-2 clearfix">
+      <slot name="search" />
       <nav id="desktop" class="hidden-xs pull-right text-right" aria-label="Header Menu">
         <ul>
           <li>
@@ -29,6 +30,7 @@ const reports = getReports();
               ))}
             </ul>
           </li>
+          <li><a href="/docs/">Docs</a></li>
           <li><a href="https://discuss.httparchive.org">Discuss</a></li>
           <li>
             <span class="dropdown-target" aria-haspopup="true" tabindex="0" role="button" title="Web Almanac menu">
@@ -54,18 +56,289 @@ const reports = getReports();
               <li><a href="/about#contribute">Contribute</a></li>
               <li><a href="/about#contact">Contact</a></li>
               <li><a href="/faq">FAQ</a></li>
-              <li><a href="https://har.fyi">Docs</a></li>
             </ul>
           </li>
         </ul>
       </nav>
       <button class="visible-xs hamburger" aria-label="Show navigation">
         <svg version="1.1" viewBox="0 0 32 32" height="32px" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+          <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,.896-2,2s0.896,2,2,2h24c1.104,0,2-.896,2-2  S29.104,22,28,22z"/>
         </svg>
       </button>
     </div>
   </div>
+  <nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
 </header>
 
-<nav id="mobile" class="hidden-sm hidden-md hidden-lg" aria-label="Mobile Menu"></nav>
+<style>
+  header {
+    border-top: 5px solid #eee;
+    padding: 20px 15px;
+    background-color: #fff;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 25px;
+    color: #667a7d;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .container {
+    padding: 0 18px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    max-width: 1200px;
+  }
+
+  .container::before,
+  .container::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  [class*="col"] {
+    padding: 0;
+    width: auto;
+    float: none;
+    margin: 0;
+  }
+
+  .col-lg-10 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .logo {
+    max-height: 57px;
+    width: auto;
+    display: block;
+  }
+
+  nav#desktop {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #667a7d;
+  }
+
+  nav#desktop > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  nav#desktop li {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
+  }
+
+  nav#desktop li:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  nav#desktop li a,
+  nav#desktop li .dropdown-target {
+    display: inline-block;
+    padding: 12px 20px;
+    color: #667a7d;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
+  }
+
+  .dropdown-target svg {
+    display: inline-block;
+    vertical-align: sub;
+    fill: currentColor;
+  }
+
+  nav#desktop li:hover,
+  nav#desktop li:focus-within {
+    text-decoration: none;
+    background-color: #667a7d;
+    color: #fff;
+  }
+
+  nav#desktop li:hover > a,
+  nav#desktop li:hover > .dropdown-target,
+  nav#desktop li:focus-within > a,
+  nav#desktop li:focus-within > .dropdown-target {
+    color: #fff;
+  }
+
+  /* Dropdowns */
+  nav#desktop ul.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #667a7d;
+    text-align: left;
+    z-index: 1000;
+    min-width: 160px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav#desktop li:hover > ul.dropdown-content,
+  nav#desktop li:focus-within > ul.dropdown-content,
+  nav#desktop li .dropdown-target:focus + .dropdown-content {
+    display: block;
+  }
+
+  nav#desktop ul.dropdown-content li {
+    display: block;
+    margin: 0;
+  }
+
+  nav#desktop ul.dropdown-content li:not(:last-child) {
+    margin: 0;
+  }
+
+  nav#desktop ul.dropdown-content li a {
+    display: block;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
+  }
+
+  nav#desktop ul.dropdown-content li a:hover {
+    text-decoration: underline;
+  }
+
+  /* Hamburger button (mobile only) */
+  .hamburger {
+    display: none;
+    border: none;
+    background: none;
+    color: #999;
+    padding: 4px;
+    line-height: 1;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
+  .hamburger svg {
+    fill: currentColor;
+    display: block;
+    width: 28px;
+    height: 28px;
+  }
+
+  .hamburger:hover,
+  .hamburger:focus {
+    color: #444;
+    outline: none;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 767px) {
+    nav#desktop {
+      display: none !important;
+    }
+
+    .hamburger {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  /* Mobile nav dropdown */
+  nav#mobile {
+    display: none;
+    background-color: #667a7d;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    max-height: calc(100vh - 102px);
+    overflow-y: auto;
+  }
+
+  nav#mobile.active {
+    display: block !important;
+  }
+
+  nav#mobile :global(ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav#mobile :global(li) {
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0;
+    background-color: #667a7d;
+    color: #fff;
+  }
+
+  nav#mobile :global(li a) {
+    display: block;
+    padding: 14px 20px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  nav#mobile :global(li a:hover),
+  nav#mobile :global(li a:focus) {
+    text-decoration: underline;
+  }
+
+  nav#mobile :global(li .dropdown-target) {
+    display: block;
+    padding: 14px 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  nav#mobile :global(li .dropdown-target svg) {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 6px;
+    fill: currentColor;
+  }
+
+  nav#mobile :global(li ul.dropdown-content) {
+    display: block;
+    position: static;
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+
+  nav#mobile :global(li ul.dropdown-content a) {
+    padding: 10px 20px 10px 36px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+</style>

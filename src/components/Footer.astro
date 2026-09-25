@@ -1,0 +1,122 @@
+---
+/**
+ * Shared HTTP Archive Footer component.
+ * Used across the main website and Starlight documentation.
+ */
+---
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-logos">
+      <a href="/" class="logo-ha">
+        <img src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" loading="lazy"/>
+      </a>
+      <a href="https://archive.org/" class="logo-ia">
+        <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive" loading="lazy"/>
+      </a>
+    </div>
+    <nav id="footer-links" class="footer-nav" aria-label="Footer links">
+      <a href="/reports">Reports</a>
+      <a href="/docs/">Docs</a>
+      <a href="https://discuss.httparchive.org">Discuss</a>
+      <a href="https://almanac.httparchive.org/">Web Almanac</a>
+      <a href="/about">About</a>
+      <a href="/about#mission">Mission</a>
+      <a href="/about#contact">Contact</a>
+      <a href="/faq">FAQ</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: 20px 15px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 25px;
+    color: #667a7d;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .footer-logos {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .footer-logos img {
+    display: inline-block;
+    max-width: 95px;
+    height: auto;
+    vertical-align: middle;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-transform: uppercase;
+    gap: 8px 12px;
+  }
+
+  .footer-nav a {
+    color: #667a7d;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 25px;
+    padding: 6px 0;
+    margin: 0 !important;
+    transition: color 0.15s ease;
+  }
+
+  .footer-nav a:hover,
+  .footer-nav a:focus {
+    color: #333;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 991px) {
+    .footer-container {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .footer-logos {
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
+    .footer-nav {
+      justify-content: center;
+      width: 100%;
+      gap: 6px 10px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .footer-logos {
+      gap: 25px;
+    }
+
+    .footer-nav {
+      gap: 8px 12px;
+      font-size: 12px;
+    }
+  }
+</style>

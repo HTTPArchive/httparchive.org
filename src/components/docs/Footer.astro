@@ -1,0 +1,40 @@
+---
+/**
+ * Starlight Footer override.
+ * Renders Starlight's default footer (edit link, last updated, pagination),
+ * followed by the shared HTTP Archive site footer.
+ */
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/Footer.astro';
+import SiteFooter from '../Footer.astro';
+---
+
+<div class="ha-docs-footer-wrap">
+  <Default {...Astro.props}><slot /></Default>
+</div>
+<div class="ha-docs-site-footer">
+  <SiteFooter />
+</div>
+
+<style>
+  .ha-docs-footer-wrap {
+    margin-bottom: 1.5rem;
+  }
+  .ha-docs-site-footer {
+    margin-top: 2rem;
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    margin-left: -50vw;
+    box-sizing: border-box;
+  }
+
+  @media (min-width: 50rem) {
+    :global([data-has-sidebar]) .ha-docs-site-footer {
+      width: auto;
+      left: auto;
+      margin-left: calc(-1 * var(--sl-content-pad-x, 2rem));
+      margin-right: calc(-1 * var(--sl-content-pad-x, 2rem));
+    }
+  }
+</style>

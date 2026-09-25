@@ -1,0 +1,79 @@
+---
+title: HTTP Archive Documentation
+description: Guides, query recipes, table schemas, and custom metric references for the HTTP Archive  dataset.
+template: splash
+hero:
+  tagline: Guides, schema references, and query recipes for analyzing how the web is built.
+  image:
+    file: ../../../assets/hero.png
+  actions:
+    - text: Getting Started
+      link: /docs/guides/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: Table Reference
+      link: /docs/reference/tables/pages/
+      icon: document
+      variant: secondary
+    - text: Minimizing Costs
+      link: /docs/guides/minimizing-costs/
+      icon: laptop
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Guides & Tutorials
+
+<CardGrid stagger>
+  <Card title="Start Querying BigQuery" icon="magnifier">
+    New to HTTP Archive? Learn how to access the public `httparchive` dataset on Google BigQuery and run your first query in the [Getting Started guide](/docs/guides/getting-started/).
+  </Card>
+  <Card title="Minimizing Query Costs" icon="laptop">
+    HTTP Archive crawls petabytes of web data. Learn partitioning, clustering, and cost-control best practices in the [Minimizing Costs guide](/docs/guides/minimizing-costs/).
+  </Card>
+  <Card title="Guided Tour" icon="open-book">
+    Walk through real-world analysis examples, query patterns, and summary tables in our [Guided Tour](/docs/guides/guided-tour/).
+  </Card>
+  <Card title="Release Cycle & Methodology" icon="clock">
+    Learn how millions of URLs are crawled each month, how pipelines process data, and when new datasets are published in the [Release Cycle guide](/docs/guides/release-cycle/).
+  </Card>
+</CardGrid>
+
+## Dataset Reference
+
+<CardGrid>
+  <Card title="Pages & Requests Tables" icon="document">
+    Detailed column specifications, clustering keys, and JSON payload definitions for the core [`pages`](/docs/reference/tables/pages/) and [`requests`](/docs/reference/tables/requests/) tables.
+  </Card>
+  <Card title="Custom Metrics" icon="setting">
+    Explore custom metrics extracted during crawls, from [ad tracking](/docs/reference/custom-metrics/ads/) to [privacy](/docs/reference/custom-metrics/privacy/) and other runtime features.
+  </Card>
+  <Card title="Functions & Structs" icon="puzzle">
+    Inspect schema structs like [technologies](/docs/reference/structs/technology/) and [features](/docs/reference/structs/feature/), plus user-defined functions like [Capo](/docs/reference/functions/capo/) head analysis.
+  </Card>
+  <Card title="Raw Payloads & Blobs" icon="database">
+    Understand how [Lighthouse audits](/docs/reference/blobs/lighthouse/), page summaries, and request payloads are formatted and stored.
+  </Card>
+</CardGrid>
+
+## Explore HTTP Archive
+
+<CardGrid>
+  <Card title="Interactive Reports" icon="analytics">
+    Looking for high-level trends rather than writing SQL? Track web performance, page weight, and technology adoption on our interactive [Reports](/reports/) dashboard.
+  </Card>
+  <Card title="The Web Almanac" icon="open-book">
+    Read the annual state of the web report, combining HTTP Archive data with expert commentary across dozens of chapters at the [Web Almanac](https://almanac.httparchive.org/).
+  </Card>
+  <Card title="Frequently Asked Questions" icon="information">
+    Have questions about crawler infrastructure, test environments, or user agents? Read the [HTTP Archive FAQ](/faq/).
+  </Card>
+  <Card title="Discussion Forum" icon="comment-alt">
+    Need help writing BigQuery SQL, have questions about data anomalies, or want to share research? Join the [Discussion Forum](https://discuss.httparchive.org/).
+  </Card>
+</CardGrid>
+
+## Open Source
+
+The HTTP Archive and its documentation are open-source. Found a typo, have a query recipe to share, or want to improve custom metrics? Contribute on [GitHub](https://github.com/HTTPArchive/httparchive.org).

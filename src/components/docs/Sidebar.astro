@@ -1,0 +1,64 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/Sidebar.astro';
+---
+
+<div class="ha-mobile-site-nav md:sl-hidden">
+  <div class="ha-mobile-nav-title">HTTP Archive</div>
+  <ul class="ha-mobile-nav-list">
+    <li><a href="/reports">Reports</a></li>
+    <li><a href="/docs/">Docs</a></li>
+    <li><a href="https://discuss.httparchive.org">Discuss</a></li>
+    <li><a href="https://almanac.httparchive.org/">Web Almanac</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/faq">FAQ</a></li>
+  </ul>
+  <div class="ha-mobile-nav-divider"></div>
+  <div class="ha-mobile-nav-title">Documentation</div>
+</div>
+
+<Default {...Astro.props}><slot /></Default>
+
+<style>
+  .ha-mobile-site-nav {
+    padding-bottom: 0.5rem;
+  }
+
+  .ha-mobile-nav-title {
+    font-size: var(--sl-text-xs, 0.75rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sl-color-gray-3, #8b949e);
+    padding: 0.5rem 0.75rem 0.25rem;
+  }
+
+  .ha-mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ha-mobile-nav-list li a {
+    display: block;
+    padding: 0.35rem 0.75rem;
+    font-size: var(--sl-text-sm, 0.875rem);
+    line-height: 1.4;
+    color: var(--sl-color-gray-2, #c9d1d9);
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .ha-mobile-nav-list li a:hover,
+  .ha-mobile-nav-list li a:focus {
+    color: var(--sl-color-white, #fff);
+    background-color: var(--sl-color-gray-6, rgba(255, 255, 255, 0.08));
+  }
+
+  .ha-mobile-nav-divider {
+    height: 1px;
+    background-color: var(--sl-color-gray-6, rgba(255, 255, 255, 0.12));
+    margin: 0.75rem 0.75rem 0.5rem;
+  }
+</style>
