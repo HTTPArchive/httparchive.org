@@ -30,7 +30,7 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self' https:; script-src 'self' https: 'unsafe-inline'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https:;"
+            "value": "default-src 'self' https:; script-src 'self' https: 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:; connect-src 'self' https:; worker-src 'self' blob:;"
           }
         ]
       },
