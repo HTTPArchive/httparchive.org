@@ -30,7 +30,6 @@ export default defineConfig({
       components: {
         Header: './src/components/docs/Header.astro',
         Sidebar: './src/components/docs/Sidebar.astro',
-        Footer: './src/components/docs/Footer.astro',
         ThemeProvider: './src/components/docs/ThemeProvider.astro',
         ThemeSelect: './src/components/docs/EmptyComponent.astro',
       },

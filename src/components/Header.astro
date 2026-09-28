@@ -86,13 +86,17 @@ const reports = getReports();
 
   .container {
     padding: 0 18px;
-    margin-right: auto;
-    margin-left: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    max-width: 1200px;
+    width: 100%;
+    max-width: none;
+  }
+
+  :root {
+    --sl-content-width: 50rem;
+    --sl-text-5xl: 3.5rem;
   }
 
   .container::before,
