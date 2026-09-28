@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.3.3",
+    "astro": "^7.3.5",
     "ejs": "6.0.1",
     "firebase-tools": "^15.31.0",
     "fs-extra": "11.4.1",
