@@ -42,7 +42,7 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## Dataset Reference
 
-<CardGrid>
+<CardGrid stagger>
   <Card title="Pages & Requests Tables" icon="document">
     Detailed column specifications, clustering keys, and JSON payload definitions for the core [`pages`](/docs/reference/tables/pages/) and [`requests`](/docs/reference/tables/requests/) tables.
   </Card>
@@ -54,23 +54,6 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   </Card>
   <Card title="Raw Payloads & Blobs" icon="database">
     Understand how [Lighthouse audits](/docs/reference/blobs/lighthouse/), page summaries, and request payloads are formatted and stored.
-  </Card>
-</CardGrid>
-
-## Explore HTTP Archive
-
-<CardGrid>
-  <Card title="Interactive Reports" icon="analytics">
-    Looking for high-level trends rather than writing SQL? Track web performance, page weight, and technology adoption on our interactive [Reports](/reports/) dashboard.
-  </Card>
-  <Card title="The Web Almanac" icon="open-book">
-    Read the annual state of the web report, combining HTTP Archive data with expert commentary across dozens of chapters at the [Web Almanac](https://almanac.httparchive.org/).
-  </Card>
-  <Card title="Frequently Asked Questions" icon="information">
-    Have questions about crawler infrastructure, test environments, or user agents? Read the [HTTP Archive FAQ](/faq/).
-  </Card>
-  <Card title="Discussion Forum" icon="comment-alt">
-    Need help writing BigQuery SQL, have questions about data anomalies, or want to share research? Join the [Discussion Forum](https://discuss.httparchive.org/).
   </Card>
 </CardGrid>
 
