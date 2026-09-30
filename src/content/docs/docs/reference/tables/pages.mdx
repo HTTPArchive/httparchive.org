@@ -1,0 +1,214 @@
+---
+title: Pages table
+description: Reference docs for the httparchive.crawl.pages table
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+[`httparchive.crawl.pages`](https://console.cloud.google.com/bigquery?ws=!1m5!1m4!4m3!1shttparchive!2scrawl!3spages) is a partitioned and clustered table containing one row per page tested in the HTTP Archive. Pages are tested on a monthly basis and as of April 2022, both the root page and one secondary page are tested.
+
+## Schema
+
+<div style="width:140px">Field name</div> | <div style="width:115px">Type</div> | Description
+---|---|---
+[`date`](#date) | `DATE` | YYYY-MM-DD format of the HTTP Archive monthly crawl
+[`client`](#client) | `STRING` | Test environment: `'desktop'` or `'mobile'`
+[`page`](#page) | `STRING` | The URL of the page being tested
+[`is_root_page`](#is_root_page) | `BOOLEAN` | Whether the page is the root of the origin
+[`root_page`](#root_page) | `STRING` | The URL of the root page being tested, the origin followed by `/`
+[`rank`](#rank) | `INTEGER` | Site popularity rank, from CrUX
+[`wptid`](#wptid) | `STRING` | ID of the WebPageTest results
+[`payload`](#payload) | `JSON` | JSON-encoded WebPageTest results for the page
+[`summary`](#summary) | `JSON` | JSON-encoded summarization of the page-level data
+[`custom_metrics`](#custom_metrics) | `RECORD` | JSON-encoded test results of the custom metrics
+[`lighthouse`](#lighthouse) | `JSON` | JSON-encoded Lighthouse report
+[`features`](#features) | <code>ARRAY\<RECORD\></code> | Blink features detected at runtime
+[`technologies`](#technologies) | <code>ARRAY\<RECORD\></code> | Technologies detected at runtime
+[`metadata`](#metadata) | `JSON` | Additional metadata about the test
+
+### `date`
+
+**This field is required for all queries over the `pages` table.**
+
+YYYY-MM-DD format of the HTTP Archive monthly crawl.
+
+  Example: `date = '2023-06-01'`
+
+### `client`
+
+Test environment: `'desktop'` or `'mobile'`.
+
+### `page`
+
+The URL of the page being tested.
+
+Example: `page = 'https://httparchive.org/'`
+
+### `is_root_page`
+
+Whether the page is the root of the origin.
+
+### `root_page`
+
+The URL of the root page being tested, the origin followed by `/`.
+
+Example: `root_page = 'https://httparchive.org/'`
+
+### `rank`
+
+Site popularity rank, from CrUX
+
+### `wptid`
+
+ID of the WebPageTest results, for example `wptid = '230509_Dx20W_FMHK5'`.
+
+The ID encodes the date of the test at the start in YYMMDD format. The date is followed by an underscore and a `D` or `M` character indicating whether it was a desktop or mobile test. The rest of the ID is randomly generated. In the example above we can tell that the page was tested on May 9, 2023, and that it was a desktop test.
+
+You can view the WebPageTest results in the browser by visiting `https://webpagetest.httparchive.org/result/<wptid>/`, eg https://webpagetest.httparchive.org/result/230509_Dx20W_FMHK5/. This is HTTP Archive's own private instance of WebPageTest, which is required to view any of the results.
+
+### `payload`
+
+JSON-encoded WebPageTest results for the page.
+
+For a full example value, see [payload.json](/static/json/payload.json).
+
+See the [Page payload](/docs/reference/blobs/page-payload/) reference for more details.
+
+### `summary`
+
+JSON-encoded summarization of the page-level data
+
+See the [Page summary](/docs/reference/blobs/page-summary/) reference for more details.
+
+### `custom_metrics`
+
+JSON-encoded test results of the custom metrics.
+
+See the [Custom metrics](/docs/reference/structs/custom-metrics/) reference for more details.
+
+### `lighthouse`
+
+JSON-encoded Lighthouse report.
+
+See the [Lighthouse](/docs/reference/blobs/lighthouse/) reference for more details.
+
+### `features`
+
+Blink features detected at runtime (see https://chromestatus.com/features)
+
+See the [Feature](/docs/reference/structs/feature/) reference for more details.
+
+### `technologies`
+
+Technologies detected at runtime (see https://www.wappalyzer.com/)
+
+See the [Technology](/docs/reference/structs/technology/) reference for more details.
+
+### `metadata`
+
+Additional metadata about the test
+
+See the [Page metadata](/docs/reference/blobs/page-metadata/) reference for more details.
+
+## Example queries
+
+Here are some common operations you can perform with the `pages` table.
+
+### Count the pages crawled
+
+<Tabs>
+  <TabItem label="Query">
+```sql
+/* This query will process 1 GB when run. */
+SELECT
+  client,
+  is_root_page,
+  count(0) AS pages_total
+FROM `httparchive.crawl.pages`
+WHERE date = '2024-05-01'
+GROUP BY client, is_root_page
+```
+  </TabItem>
+  <TabItem label="Results">
+client | is_root_page | pages_total
+-- | -- | --
+mobile | false | 13998652
+mobile | true | 16193055
+desktop | true | 12900240
+desktop | false | 11585746
+  </TabItem>
+</Tabs>
+
+### Get the median page weight
+
+<Tabs>
+  <TabItem label="Query">
+```sql
+/* This query will process 1.12 GB when run. */
+WITH pages AS (
+  SELECT
+    client,
+    INT64(summary.bytesTotal) AS page_weight
+  FROM `httparchive.crawl.pages` TABLESAMPLE SYSTEM (1 PERCENT)
+  WHERE date = '2023-05-01'
+)
+
+SELECT
+  client,
+  APPROX_QUANTILES(page_weight, 1000)[OFFSET(500)] AS median_page_weight
+FROM pages
+GROUP BY client
+```
+  </TabItem>
+  <TabItem label="Results">
+client | median_page_weight
+-- | --
+mobile | 1776291
+desktop | 2029751
+  </TabItem>
+</Tabs>
+
+The median mobile page weighs 1.78 MB and the median desktop page weighs 2.03 MB.
+
+This query uses the [`APPROX_QUANTILES`](https://cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions#approx_quantiles) function to calculate the median page weight for each client type as of May 2023.
+
+The `bytesTotal` property of the `summary` object represents the total number of bytes loaded on the page. This value is stored as a JSON-encoded string, so we use [`INT64`](https://cloud.google.com/bigquery/docs/reference/standard-sql/json_functions#int64_for_json) to convert it to an integer.
+
+We're also using the [`WITH`](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#with_clause) clause here to create a temporary table called `pages`, which is then fed into the main query below. This makes the query a bit easier to read.
+
+Also note that for demonstration purposes, this query processes a 1% sample of the `httparchive.crawl.pages` table. This reduces the amount of data processed by the query, which can help reduce costs. But note that the results will be less accurate than if you ran the query on the full table.
+
+### The average number of requests per page
+
+<Tabs>
+  <TabItem label="Query">
+```sql
+/* This query will process 0.6 GB when run. */
+WITH pages_summary AS (
+  SELECT
+    INT64(summary.reqTotal) AS reqTotal,
+    INT64(summary.numDomains) AS numDomains
+  FROM `httparchive.crawl.pages` TABLESAMPLE SYSTEM (1 PERCENT)
+  WHERE
+    date = '2024-06-01' AND
+    client = 'mobile'
+)
+
+SELECT
+  COUNT(0) pages,
+  ROUND(AVG(reqTotal), 2) avg_requests,
+  APPROX_QUANTILES(reqTotal, 100)[SAFE_ORDINAL(25)] p25_requests,
+  APPROX_QUANTILES(reqTotal, 100)[SAFE_ORDINAL(50)] p50_requests,
+  APPROX_QUANTILES(reqTotal, 100)[SAFE_ORDINAL(75)] p75_requests,
+  APPROX_QUANTILES(reqTotal, 100)[SAFE_ORDINAL(95)] p95_requests
+FROM pages_summary
+```
+  </TabItem>
+  <TabItem label="Results">
+pages | avg_requests | p25_requests | p50_requests | p75_requests | p95_requests
+-- | -- | -- | -- | -- | --
+306151 | 92.53 | 37 | 65 | 107 | 212
+
+The median number of requests per page is 65. The average is in fact skewed by outliers. Also, since the 25th percentile is 37 requests and the 75th percentile is 107 requests, that tells us that 50% of the 300K pages tracked by the HTTP Archive have between 37 and 107 requests. This is also known as the [interquartile range](https://en.wikipedia.org/wiki/Interquartile_range).
+  </TabItem>
+</Tabs>

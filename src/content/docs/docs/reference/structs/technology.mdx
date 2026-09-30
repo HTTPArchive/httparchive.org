@@ -1,0 +1,100 @@
+---
+title: Technology struct
+description: Reference docs for the technology struct
+---
+
+_Appears in: [`pages`](/docs/reference/tables/pages/) table_\
+_As: [`technologies`](/docs/reference/tables/pages/#technologies)_
+
+Technologies are detected by [Wappalyzer](https://www.wappalyzer.com/). Refer to HTTP Archive's fork of the [Wappalyzer repository](https://github.com/HTTPArchive/wappalyzer) on GitHub to request a new technology detection or to browse the source code of existing detections.
+
+## Schema
+
+<div style="width:100px">Field name</div> | <div style="width:115px">Type</div> | Description
+---|---|---
+`technology` | `STRING` | Name of the detected technology
+`categories` | `ARRAY<STRING>` | List of categories to which this technology belongs
+`info` | `ARRAY<STRING>` | Additional metadata about the detected technology, ie version number
+
+### `technology`
+
+Type: `STRING`
+
+Name of the detected technology
+
+### `categories`
+
+Type: `ARRAY<STRING>`
+
+List of categories to which this technology belongs
+
+### `info`
+
+Type: `ARRAY<STRING>`
+
+Additional metadata about the detected technology, ie version number
+
+## Example queries
+
+### Pages using WordPress in the top 1k
+
+As the `technologies` field is a repeated struct, we need to use `UNNEST` to query it.
+
+```sql
+SELECT DISTINCT
+  root_page
+FROM
+  `httparchive.crawl.pages`,
+  UNNEST(technologies) AS t
+WHERE
+  date = '2023-09-01' AND
+  rank = 1000 AND
+  t.technology = 'WordPress'
+```
+
+### Top 10 CMSs
+
+Within the `technologies` field, the `categories` field is also repeated. We can use `UNNEST` to query it as well.
+
+It's straightforward to detect whether a page uses a technology. However, to generalize that to an entire website (or origin), we detect if either its `root_page` or secondary page use it. To handle this in the query, we count the distinct number of pages' `root_page` fields.
+
+```sql
+SELECT
+  t.technology AS cms,
+  COUNT(DISTINCT root_page) AS sites
+FROM
+  `httparchive.crawl.pages`,
+  UNNEST(technologies) AS t,
+  UNNEST(t.categories) AS category
+WHERE
+  date = '2023-09-01' AND
+  category = 'CMS'
+GROUP BY
+  cms
+ORDER BY
+  sites DESC
+LIMIT
+  10
+```
+
+### Top 10 WordPress versions
+
+There is usually only one technology version on a given page, but in some cases a site uses the same technology twice. For example, multiple widgets load different versions of jQuery.
+
+To account for these edge cases, the `info` field is also repeated, so we need to use `UNNEST` to query it as well.
+
+Also note that some pages omit version numbers, so you may see empty or null values in the results.
+
+Regular expressions can be used to parse major version numbers, for example `REGEXP_EXTRACT(version, r'^(\d+)')`. Beware of garbage values, as the version info is extracted from the source HTML. For example, you may encounter a subset of pages with a version number that hasn't even been released yet.
+
+```sql
+SELECT
+  APPROX_TOP_COUNT(version, 10)
+FROM
+  `httparchive.crawl.pages`,
+  UNNEST(technologies) AS t,
+  UNNEST(t.info) AS version
+WHERE
+  date = '2023-09-01' AND
+  t.technology = 'WordPress'
+```
