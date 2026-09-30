@@ -1,0 +1,1188 @@
+---
+title: Request payload blob
+description: Reference docs for the request payload blob
+---
+
+_Appears in: [`requests`](/docs/reference/tables/requests/) table_\
+_As: [`payload`](/docs/reference/tables/requests/#payload)_
+
+JSON-encoded WebPageTest result data for a request.
+
+**The actual schema is liable to change, depending on a request.**
+
+<details>
+<summary>An example of the decoded object</summary>
+```json
+{
+    "_all_end": 234,
+    "_all_ms": 233,
+    "_all_start": 1,
+    "_body_file": "001-44714C6F6C72B045136D19CA9894886A-body.txt",
+    "_body_hash": "ea8fac7c65fb589b0d53560f5251f74f9e9b243478dcb6b3ea79b5e36449c8d9",
+    "_bytesIn": 648,
+    "_bytesOut": 2143,
+    "_cacheControl": "max-age=604800",
+    "_cache_time": null,
+    "_cached": 0,
+    "_cdn_provider": "Edgecast",
+    "_certificates": [
+        "-----BEGIN CERTIFICATE-----\nMIIHbjCCBlagAwIBAgIQB1vO8waJyK3fE+Ua9K/hhzANBgkqhkiG9w0BAQsFADBZ\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMTMwMQYDVQQDEypE\naWdpQ2VydCBHbG9iYWwgRzIgVExTIFJTQSBTSEEyNTYgMjAyMCBDQTEwHhcNMjQw\nMTMwMDAwMDAwWhcNMjUwMzAxMjM1OTU5WjCBljELMAkGA1UEBhMCVVMxEzARBgNV\nBAgTCkNhbGlmb3JuaWExFDASBgNVBAcTC0xvcyBBbmdlbGVzMUIwQAYDVQQKDDlJ\nbnRlcm5ldMKgQ29ycG9yYXRpb27CoGZvcsKgQXNzaWduZWTCoE5hbWVzwqBhbmTC\noE51bWJlcnMxGDAWBgNVBAMTD3d3dy5leGFtcGxlLm9yZzCCASIwDQYJKoZIhvcN\nAQEBBQADggEPADCCAQoCggEBAIaFD7sO+cpf2fXgCjIsM9mqDgcpqC8IrXi9wga/\n9y0rpqcnPVOmTMNLsid3INbBVEm4CNr5cKlh9rJJnWlX2vttJDRyLkfwBD+dsVvi\nvGYxWTLmqX6/1LDUZPVrynv/cltemtg/1Aay88jcj2ZaRoRmqBgVeacIzgU8+zmJ\n7236TnFSe7fkoKSclsBhPaQKcE3Djs1uszJs8sdECQTdoFX9I6UgeLKFXtg7rRf/\nhcW5dI0zubhXbrW8aWXbCzySVZn0c7RkJMpnTCiZzNxnPXnHFpwr5quqqjVyN/aB\nKkjoP04Zmr+eRqoyk/+lslq0sS8eaYSSHbC5ja/yMWyVhvMCAwEAAaOCA/IwggPu\nMB8GA1UdIwQYMBaAFHSFgMBmx9833s+9KTeqAx2+7c0XMB0GA1UdDgQWBBRM/tAS\nTS4hz2v68vK4TEkCHTGRijCBgQYDVR0RBHoweIIPd3d3LmV4YW1wbGUub3Jnggtl\neGFtcGxlLm5ldIILZXhhbXBsZS5lZHWCC2V4YW1wbGUuY29tggtleGFtcGxlLm9y\nZ4IPd3d3LmV4YW1wbGUuY29tgg93d3cuZXhhbXBsZS5lZHWCD3d3dy5leGFtcGxl\nLm5ldDA+BgNVHSAENzA1MDMGBmeBDAECAjApMCcGCCsGAQUFBwIBFhtodHRwOi8v\nd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQG\nCCsGAQUFBwMBBggrBgEFBQcDAjCBnwYDVR0fBIGXMIGUMEigRqBEhkJodHRwOi8v\nY3JsMy5kaWdpY2VydC5jb20vRGlnaUNlcnRHbG9iYWxHMlRMU1JTQVNIQTI1NjIw\nMjBDQTEtMS5jcmwwSKBGoESGQmh0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9EaWdp\nQ2VydEdsb2JhbEcyVExTUlNBU0hBMjU2MjAyMENBMS0xLmNybDCBhwYIKwYBBQUH\nAQEEezB5MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wUQYI\nKwYBBQUHMAKGRWh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEds\nb2JhbEcyVExTUlNBU0hBMjU2MjAyMENBMS0xLmNydDAMBgNVHRMBAf8EAjAAMIIB\nfQYKKwYBBAHWeQIEAgSCAW0EggFpAWcAdABOdaMnXJoQwzhbbNTfP1LrHfDgjhuN\nacCx+mSxYpo53wAAAY1b0vxkAAAEAwBFMEMCH0BRCgxPbBBVxhcWZ26a8JCe83P1\nJZ6wmv56GsVcyMACIDgpMbEo5HJITTRPnoyT4mG8cLrWjEvhchUdEcWUuk1TAHYA\nfVkeEuF4KnscYWd8Xv340IdcFKBOlZ65Ay/ZDowuebgAAAGNW9L8MAAABAMARzBF\nAiBdv5Z3pZFbfgoM3tGpCTM3ZxBMQsxBRSdTS6d8d2NAcwIhALLoCT9mTMN9OyFz\nIBV5MkXVLyuTf2OAzAOa7d8x2H6XAHcA5tIxY0B3jMEQQQbXcbnOwdJA9paEhvu6\nhzId/R43jlAAAAGNW9L8XwAABAMASDBGAiEA4Koh/VizdQU1tjZ2E2VGgWSXXkwn\nQmiYhmAeKcVLHeACIQD7JIGFsdGol7kss2pe4lYrCgPVc+iGZkuqnj26hqhr0TAN\nBgkqhkiG9w0BAQsFAAOCAQEABOFuAj4N4yNG9OOWNQWTNSICC4Rd4nOG1HRP/Bsn\nrz7KrcPORtb6D+Jx+Q0amhO31QhIvVBYs14gY4Ypyj7MzHgm4VmPXcqLvEkxb2G9\nQv9hYuEiNSQmm1fr5QAN/0AzbEbCM3cImLJ69kP5bUjfv/76KB57is8tYf9sh5ik\nLGKauxCM/zRIcGa3bXLDafk5S2g5Vr2hs230d/NGW1wZrE+zdGuMxfGJzJP+DAFv\niBfcQnFg4+1zMEKcqS87oniOyG+60RMM0MdejBD7AS43m9us96Gsun/4kufLQUTI\nFfnzxLutUV++3seshgefQOy5C/ayi8y1VTNmujPCxPCi6Q==\n-----END CERTIFICATE-----\n",
+        "-----BEGIN CERTIFICATE-----\nMIIEyDCCA7CgAwIBAgIQDPW9BitWAvR6uFAsI8zwZjANBgkqhkiG9w0BAQsFADBh\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMSAwHgYDVQQDExdEaWdpQ2VydCBHbG9iYWwgUm9vdCBH\nMjAeFw0yMTAzMzAwMDAwMDBaFw0zMTAzMjkyMzU5NTlaMFkxCzAJBgNVBAYTAlVT\nMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxMzAxBgNVBAMTKkRpZ2lDZXJ0IEdsb2Jh\nbCBHMiBUTFMgUlNBIFNIQTI1NiAyMDIwIENBMTCCASIwDQYJKoZIhvcNAQEBBQAD\nggEPADCCAQoCggEBAMz3EGJPprtjb+2QUlbFbSd7ehJWivH0+dbn4Y+9lavyYEEV\ncNsSAPonCrVXOFt9slGTcZUOakGUWzUb+nv6u8W+JDD+Vu/E832X4xT1FE3LpxDy\nFuqrIvAxIhFhaZAmunjZlx/jfWardUSVc8is/+9dCopZQ+GssjoP80j812s3wWPc\n3kbW20X+fSP9kOhRBx5Ro1/tSUZUfyyIxfQTnJcVPAPooTncaQwywa8WV0yUR0J8\nosicfebUTVSvQpmowQTCd5zWSOTOEeAqgJnwQ3DPP3Zr0UxJqyRewg2C/Uaoq2yT\nzGJSQnWS+Jr6Xl6ysGHlHx+5fwmY6D36g39HaaECAwEAAaOCAYIwggF+MBIGA1Ud\nEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFHSFgMBmx9833s+9KTeqAx2+7c0XMB8G\nA1UdIwQYMBaAFE4iVCAYlebjbuYP+vq5Eu0GF485MA4GA1UdDwEB/wQEAwIBhjAd\nBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwdgYIKwYBBQUHAQEEajBoMCQG\nCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQAYIKwYBBQUHMAKG\nNGh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEdsb2JhbFJvb3RH\nMi5jcnQwQgYDVR0fBDswOTA3oDWgM4YxaHR0cDovL2NybDMuZGlnaWNlcnQuY29t\nL0RpZ2lDZXJ0R2xvYmFsUm9vdEcyLmNybDA9BgNVHSAENjA0MAsGCWCGSAGG/WwC\nATAHBgVngQwBATAIBgZngQwBAgEwCAYGZ4EMAQICMAgGBmeBDAECAzANBgkqhkiG\n9w0BAQsFAAOCAQEAkPFwyyiXaZd8dP3A+iZ7U6utzWX9upwGnIrXWkOH7U1MVl+t\nwcW1BSAuWdH/SvWgKtiwla3JLko716f2b4gp/DA/JIS7w7d7kwcsr4drdjPtAFVS\nslme5LnQ89/nD/7d+MS5EHKBCQRfz5eeLjJ1js+aWNJXMX43AYGyZm0pGrFmCW3R\nbpD0ufovARTFXFZkAdl9h6g4U5+LXUZtXMYnhIHUfoyMo5tS58aI7Dd8KvvwVVo4\nchDYABPPTHPbqjc1qCmBaZx2vN4Ye5DUys/vZwP9BFohFrH/6j/f3IL16/RZkiMN\nJCqVJUzKoZHm1Lesh3Sz8W2jmdv51b2EQJ8HmA==\n-----END CERTIFICATE-----\n"
+    ],
+    "_chunks": [
+        {
+            "bytes": 648,
+            "inflated": 1256,
+            "ts": 234
+        }
+    ],
+    "_connect_end": 93,
+    "_connect_ms": 33,
+    "_connect_start": 60,
+    "_contentEncoding": "gzip",
+    "_contentType": "text/html",
+    "_created": 8,
+    "_dns_end": 60,
+    "_dns_info": {
+        "results": {
+            "aliases": [
+                "www.example.com"
+            ],
+            "canonical_names": [
+                "www.example.com"
+            ],
+            "endpoint_metadatas": [],
+            "expiration": "13370780176732624",
+            "host_ports": [],
+            "hostname_results": [],
+            "ip_endpoints": [
+                {
+                    "endpoint_address": "93.184.215.14",
+                    "endpoint_port": 0
+                }
+            ],
+            "text_records": []
+        },
+        "secure": false,
+        "transactions_needed": [
+            {
+                "dns_query_type": "A"
+            },
+            {
+                "dns_query_type": "HTTPS"
+            }
+        ]
+    },
+    "_dns_ms": 59,
+    "_dns_start": 1,
+    "_documentURL": "https://www.example.com/",
+    "_download_end": 234,
+    "_download_ms": 2,
+    "_download_start": 232,
+    "_expires": "Sun, 22 Sep 2024 03:21:43 GMT",
+    "_final_base_page": true,
+    "_frame_id": "E021D0149DE3689992ECE4DF4B0ECA38",
+    "_full_url": "https://www.example.com/",
+    "_gzip_save": 0,
+    "_gzip_total": 648,
+    "_host": "www.example.com",
+    "_http2_server_settings": {
+        "SETTINGS_DEPRECATE_HTTP2_PRIORITIES": 0,
+        "SETTINGS_ENABLE_PUSH": 0,
+        "SETTINGS_HEADER_TABLE_SIZE": 4096,
+        "SETTINGS_INITIAL_WINDOW_SIZE": 1048576,
+        "SETTINGS_MAX_CONCURRENT_STREAMS": 100,
+        "SETTINGS_MAX_FRAME_SIZE": 16384,
+        "SETTINGS_MAX_HEADER_LIST_SIZE": 16384
+    },
+    "_http2_stream_dependency": 0,
+    "_http2_stream_exclusive": 1,
+    "_http2_stream_id": 1,
+    "_http2_stream_weight": 256,
+    "_id": "44714C6F6C72B045136D19CA9894886A",
+    "_image_save": null,
+    "_image_total": null,
+    "_index": 0,
+    "_initial_priority": "Highest",
+    "_initiator": "",
+    "_initiator_column": "",
+    "_initiator_line": "",
+    "_initiator_type": "script",
+    "_ip_addr": "93.184.215.14",
+    "_is_base_page": true,
+    "_is_secure": 1,
+    "_load_end": 234,
+    "_load_ms": 43,
+    "_load_start": 191,
+    "_load_start_float": 191.000079,
+    "_method": "GET",
+    "_minify_save": null,
+    "_minify_total": null,
+    "_netlog_id": 79,
+    "_number": 1,
+    "_objectSize": 648,
+    "_objectSizeUncompressed": 1256,
+    "_priority": "Highest",
+    "_protocol": "HTTP/2",
+    "_raw_id": "44714C6F6C72B045136D19CA9894886A",
+    "_request_id": "44714C6F6C72B045136D19CA9894886A",
+    "_request_type": "Document",
+    "_responseCode": 200,
+    "_run": 1,
+    "_score_cache": -1,
+    "_score_cdn": 100,
+    "_score_combine": -1,
+    "_score_compress": -1,
+    "_score_cookies": -1,
+    "_score_etags": -1,
+    "_score_gzip": 100,
+    "_score_keep-alive": 100,
+    "_score_minify": -1,
+    "_securityDetails": {
+        "certificateId": 0,
+        "certificateTransparencyCompliance": "compliant",
+        "cipher": "AES_256_GCM",
+        "encryptedClientHello": false,
+        "issuer": "DigiCert Global G2 TLS RSA SHA256 2020 CA1",
+        "keyExchange": "",
+        "keyExchangeGroup": "P-256",
+        "protocol": "TLS 1.3",
+        "sanList": [
+            "www.example.org",
+            "example.net",
+            "example.edu",
+            "example.com",
+            "example.org",
+            "www.example.com",
+            "www.example.edu",
+            "www.example.net"
+        ],
+        "serverSignatureAlgorithm": 2052,
+        "signedCertificateTimestampList": [
+            {
+                "hashAlgorithm": "SHA-256",
+                "logDescription": "Google 'Argon2025h1' log",
+                "logId": "4E75A3275C9A10C3385B6CD4DF3F52EB1DF0E08E1B8D69C0B1FA64B1629A39DF",
+                "origin": "Embedded in certificate",
+                "signatureAlgorithm": "ECDSA",
+                "signatureData": "3043021F40510A0C4F6C1055C61716676E9AF0909EF373F5259EB09AFE7A1AC55CC8C00220382931B128E472484D344F9E8C93E261BC70BAD68C4BE172151D11C594BA4D53",
+                "status": "Verified",
+                "timestamp": 1706642570340
+            },
+            {
+                "hashAlgorithm": "SHA-256",
+                "logDescription": "DigiCert Yeti2025 Log",
+                "logId": "7D591E12E1782A7B1C61677C5EFDF8D0875C14A04E959EB9032FD90E8C2E79B8",
+                "origin": "Embedded in certificate",
+                "signatureAlgorithm": "ECDSA",
+                "signatureData": "304502205DBF9677A5915B7E0A0CDED1A909333767104C42CC414527534BA77C77634073022100B2E8093F664CC37D3B21732015793245D52F2B937F6380CC039AEDDF31D87E97",
+                "status": "Verified",
+                "timestamp": 1706642570288
+            },
+            {
+                "hashAlgorithm": "SHA-256",
+                "logDescription": "DigiCert Nessie2025 Log",
+                "logId": "E6D2316340778CC1104106D771B9CEC1D240F6968486FBBA87321DFD1E378E50",
+                "origin": "Embedded in certificate",
+                "signatureAlgorithm": "ECDSA",
+                "signatureData": "3046022100E0AA21FD58B3750535B636761365468164975E4C2742689886601E29C54B1DE0022100FB248185B1D1A897B92CB36A5EE2562B0A03D573E886664BAA9E3DBA86A86BD1",
+                "status": "Verified",
+                "timestamp": 1706642570335
+            }
+        ],
+        "subjectName": "www.example.org",
+        "validFrom": 1706572800,
+        "validTo": 1740873599
+    },
+    "_server_count": null,
+    "_server_port": "443",
+    "_server_rtt": null,
+    "_socket": 86,
+    "_socket_group": "https://www.example.com <https://example.com same_site>",
+    "_ssl_end": 191,
+    "_ssl_ms": 98,
+    "_ssl_start": 93,
+    "_tls_cipher_suite": 4866,
+    "_tls_next_proto": "h2",
+    "_tls_resumed": "False",
+    "_tls_version": "TLS 1.3",
+    "_ttfb_end": 232,
+    "_ttfb_ms": 41,
+    "_ttfb_start": 191,
+    "_type": 3,
+    "_url": "/",
+    "cache": {},
+    "pageref": "page_1_0_1",
+    "request": {
+        "bodySize": -1,
+        "cookies": [],
+        "headersSize": 683,
+        "httpVersion": "HTTP/2",
+        "method": "GET",
+        "queryString": [],
+        "url": "https://www.example.com/"
+    },
+    "response": {
+        "bodySize": 648,
+        "content": {
+            "mimeType": "text/html",
+            "size": 648
+        },
+        "cookies": [],
+        "headersSize": 376,
+        "httpVersion": "HTTP/2",
+        "status": 200,
+        "statusText": ""
+    },
+    "startedDateTime": "2024-09-15T03:21:43.105962",
+    "time": 285,
+    "timings": {
+        "blocked": 52,
+        "connect": 131,
+        "dns": 59,
+        "receive": 2,
+        "send": 0,
+        "ssl": 98,
+        "wait": 41
+    }
+}
+```
+</details>
+
+## Schema
+
+### `_all_end`
+
+Type: `int`
+
+End time of all operations.
+
+### `_all_ms`
+
+Type: `int`
+
+Total time taken for all operations.
+
+### `_all_start`
+
+Type: `int`
+
+Start time of all operations.
+
+### `_body_file`
+
+Type: `string`
+
+File containing the body of the request.
+
+### `_bytesIn`
+
+Type: `int`
+
+Number of bytes received.
+
+### `_bytesOut`
+
+Type: `int`
+
+Number of bytes sent.
+
+### `_cacheControl`
+
+Type: `string`
+
+Cache control header value.
+
+### `_cache_time`
+
+Type: `int`
+
+Cache time.
+
+### `_cached`
+
+Type: `int`
+
+Indicates if the request was cached (0 or 1).
+
+### `_cdn_provider`
+
+Type: `string`
+
+CDN provider used.
+
+### `_certificates`
+
+Type: `array`
+
+Certificates used.
+
+### `_chunks`
+
+Type: `array`
+
+Array of chunks received.
+
+- #### `_chunks[].bytes`
+
+  Type: `int`
+
+  Size of the chunk.
+
+- #### `_chunks[].inflated`
+
+  Type: `int`
+
+  Size of the inflated chunk.
+
+- #### `_chunks[].ts`
+
+  Type: `int`
+
+  Timestamp of the chunk.
+
+### `_connect_end`
+
+Type: `int`
+
+Connection end time.
+
+### `_connect_ms`
+
+Type: `int`
+
+Connection time in milliseconds.
+
+### `_connect_start`
+
+Type: `int`
+
+Connection start time.
+
+### `_contentEncoding`
+
+Type: `string`
+
+Content encoding of the response.
+
+### `_contentType`
+
+Type: `string`
+
+Content type of the response.
+
+### `_created`
+
+Type: `int`
+
+Creation time of the request.
+
+### `_dns_end`
+
+Type: `int`
+
+DNS end time.
+
+### `_dns_info`
+
+Type: `object`
+
+DNS information.
+
+- #### `_dns_info.results`
+
+  Type: `object`
+
+  Results of the DNS query.
+
+- #### `_dns_info.results.aliases`
+
+  Type: `array`
+
+  Aliases for the domain.
+
+- #### `_dns_info.results.canonical_names`
+
+  Type: `array`
+
+  Canonical names for the domain.
+
+- #### `_dns_info.results.endpoint_metadatas`
+
+  Type: `array`
+
+  Endpoint metadata.
+
+- #### `_dns_info.results.expiration`
+
+  Type: `string`
+
+  Expiration date of the DNS query.
+
+- #### `_dns_info.results.host_ports`
+
+  Type: `array`
+
+  Host ports.
+
+- #### `_dns_info.results.hostname_results`
+
+  Type: `array`
+
+  Hostname results.
+
+- #### `_dns_info.results.ip_endpoints`
+
+  Type: `array`
+
+  IP endpoints.
+
+- #### `_dns_info.results.ip_endpoints[].endpoint_address`
+
+  Type: `string`
+
+  IP address of the endpoint.
+
+- #### `_dns_info.results.ip_endpoints[].endpoint_port`
+
+  Type: `int`
+
+  Port of the endpoint.
+
+- #### `_dns_info.results.text_records`
+
+  Type: `array`
+
+  Text records.
+
+- #### `_dns_info.secure`
+
+  Type: `int`
+
+  Indicates if the DNS query is secure.
+
+- #### `_dns_info.transactions_needed`
+
+  Type: `array`
+
+  Transactions needed for DNS query.
+
+- #### `_dns_info.transactions_needed[].dns_query_type`
+
+  Type: `string`
+
+  Type of DNS query.
+
+### `_dns_ms`
+
+Type: `int`
+
+DNS lookup time in milliseconds.
+
+### `_dns_start`
+
+Type: `int`
+
+DNS start time.
+
+### `_documentURL`
+
+Type: `string`
+
+Document URL of the request.
+
+### `_download_end`
+
+Type: `int`
+
+Download end time.
+
+### `_download_ms`
+
+Type: `int`
+
+Download time in milliseconds.
+
+### `_download_start`
+
+Type: `int`
+
+Download start time.
+
+### `_expires`
+
+Type: `string`
+
+Expiry date of the request.
+
+### `_final_base_page`
+
+Type: `int`
+
+Indicates if the request is the final base page.
+
+### `_frame_id`
+
+Type: `string`
+
+Frame ID where the request was made.
+
+### `_full_url`
+
+Type: `string`
+
+Full URL of the request.
+
+### `_gzip_save`
+
+Type: `int`
+
+Size saved due to gzip compression.
+
+### `_gzip_total`
+
+Type: `int`
+
+Total size of the gzip-compressed content.
+
+### `_host`
+
+Type: `string`
+
+Host of the request.
+
+### `_http2_server_settings`
+
+Type: `object`
+
+HTTP/2 server settings.
+
+### `_http2_stream_dependency`
+
+Type: `int`
+
+HTTP/2 stream dependency.
+
+### `_http2_stream_exclusive`
+
+Type: `int`
+
+HTTP/2 stream exclusivity.
+
+### `_http2_stream_id`
+
+Type: `int`
+
+HTTP/2 stream ID.
+
+### `_http2_stream_weight`
+
+Type: `int`
+
+HTTP/2 stream weight.
+
+### `_id`
+
+Type: `string`
+
+Unique identifier for the request.
+
+### `_image_save`
+
+Type: `int`
+
+Size saved due to image optimization.
+
+### `_image_total`
+
+Type: `int`
+
+Total size of images.
+
+### `_index`
+
+Type: `int`
+
+Index of the request.
+
+### `_initial_priority`
+
+Type: `string`
+
+Initial priority of the request.
+
+### `_initiator`
+
+Type: `string`
+
+Initiator of the request.
+
+### `_initiator_column`
+
+Type: `string`
+
+Column number of the initiator.
+
+### `_initiator_line`
+
+Type: `string`
+
+Line number of the initiator.
+
+### `_initiator_type`
+
+Type: `string`
+
+Type of initiator (e.g., script).
+
+### `_ip_addr`
+
+Type: `string`
+
+IP address of the requested server.
+
+### `_is_base_page`
+
+Type: `int`
+
+Indicates if the request is the base page.
+
+### `_is_secure`
+
+Type: `int`
+
+Indicates if the request is secure (0 or 1).
+
+### `_load_end`
+
+Type: `int`
+
+Load end time.
+
+### `_load_ms`
+
+Type: `int`
+
+Load time in milliseconds.
+
+### `_load_start`
+
+Type: `int`
+
+Start time of load in milliseconds.
+
+### `_load_start_float`
+
+Type: `float`
+
+Precise start time of load.
+
+### `_method`
+
+Type: `string`
+
+HTTP method used for the request.
+
+### `_minify_save`
+
+Type: `int`
+
+Size saved due to minification.
+
+### `_minify_total`
+
+Type: `int`
+
+Total size of minified content.
+
+### `_netlog_id`
+
+Type: `int`
+
+Netlog ID.
+
+### `_number`
+
+Type: `int`
+
+Number of the request.
+
+### `_objectSize`
+
+Type: `int`
+
+Size of the object received.
+
+### `_objectSizeUncompressed`
+
+Type: `int`
+
+Uncompressed size of the object received.
+
+### `_priority`
+
+Type: `string`
+
+Priority of the request.
+
+### `_protocol`
+
+Type: `string`
+
+Protocol used for the request.
+
+### `_raw_id`
+
+Type: `string`
+
+Raw ID for the request.
+
+### `_request_id`
+
+Type: `string`
+
+Identifier for the original request.
+
+### `_request_type`
+
+Type: `string`
+
+Type of the request (e.g., Document).
+
+### `_responseCode`
+
+Type: `int`
+
+HTTP response code.
+
+### `_run`
+
+Type: `int`
+
+The run number of the test.
+
+### `_score_cache`
+
+Type: `int`
+
+Cache score.
+
+### `_score_cdn`
+
+Type: `int`
+
+CDN score.
+
+### `_score_combine`
+
+Type: `int`
+
+Combine score.
+
+### `_score_compress`
+
+Type: `int`
+
+Compression score.
+
+### `_score_cookies`
+
+Type: `int`
+
+Cookies score.
+
+### `_score_etags`
+
+Type: `int`
+
+ETags score.
+
+### `_score_gzip`
+
+Type: `int`
+
+Gzip compression score.
+
+### `_score_keep-alive`
+
+Type: `int`
+
+Keep-alive score.
+
+### `_score_minify`
+
+Type: `int`
+
+Minification score.
+
+### `_securityDetails`
+
+Type: `object`
+
+Security details of the request.
+
+- #### `_securityDetails.certificateId`
+
+  Type: `int`
+
+  Certificate ID.
+
+- #### `_securityDetails.certificateTransparencyCompliance`
+
+  Type: `string`
+
+  Certificate transparency compliance.
+
+- #### `_securityDetails.cipher`
+
+  Type: `string`
+
+  Cipher used.
+
+- #### `_securityDetails.encryptedClientHello`
+
+  Type: `int`
+
+  Indicates if the client hello is encrypted.
+
+- #### `_securityDetails.issuer`
+
+  Type: `string`
+
+  Issuer of the certificate.
+
+- #### `_securityDetails.keyExchange`
+
+  Type: `string`
+
+  Key exchange used.
+
+- #### `_securityDetails.keyExchangeGroup`
+
+  Type: `string`
+
+  Key exchange group used.
+
+- #### `_securityDetails.protocol`
+
+  Type: `string`
+
+  Security protocol used.
+
+- #### `_securityDetails.sanList`
+
+  Type: `array`
+
+  Subject alternative names.
+
+- #### `_securityDetails.serverSignatureAlgorithm`
+
+  Type: `int`
+
+  Server signature algorithm.
+
+- #### `_securityDetails.signedCertificateTimestampList`
+
+  Type: `array`
+
+  List of signed certificate timestamps.
+
+- #### `_securityDetails.subjectName`
+
+  Type: `string`
+
+  Subject name of the certificate.
+
+- #### `_securityDetails.validFrom`
+
+  Type: `int`
+
+  Valid from date of the certificate.
+
+- #### `_securityDetails.validTo`
+
+  Type: `int`
+
+  Valid to date of the certificate.
+
+### `_server_count`
+
+Type: `int`
+
+Number of servers used.
+
+### `_server_port`
+
+Type: `string`
+
+Server port.
+
+### `_server_rtt`
+
+Type: `int`
+
+Server round-trip time.
+
+### `_socket`
+
+Type: `int`
+
+Socket used for the request.
+
+### `_socket_group`
+
+Type: `string`
+
+Socket group.
+
+### `_ssl_end`
+
+Type: `int`
+
+SSL handshake end time.
+
+### `_ssl_ms`
+
+Type: `int`
+
+SSL handshake time in milliseconds.
+
+### `_ssl_start`
+
+Type: `int`
+
+SSL handshake start time.
+
+### `_tls_cipher_suite`
+
+Type: `int`
+
+Cipher suite used.
+
+### `_tls_next_proto`
+
+Type: `string`
+
+Next protocol used.
+
+### `_tls_resumed`
+
+Type: `string`
+
+Indicates if the TLS session was resumed.
+
+### `_tls_version`
+
+Type: `string`
+
+TLS version used.
+
+### `_ttfb_end`
+
+Type: `int`
+
+Time to first byte end time.
+
+### `_ttfb_ms`
+
+Type: `int`
+
+Time to first byte in milliseconds.
+
+### `_ttfb_start`
+
+Type: `int`
+
+Time to first byte start time.
+
+### `_type`
+
+Type: `int`
+
+Type identifier for the request.
+
+### `_url`
+
+Type: `string`
+
+URL path of the request.
+
+### `cache`
+
+Type: `object`
+
+Cache details (empty in this example).
+
+### `pageref`
+
+Type: `string`
+
+Reference to the page containing this request.
+
+### `request`
+
+Type: `object`
+
+Details of the request.
+
+- #### `request.bodySize`
+
+  Type: `int`
+
+  Size of the request body.
+
+- #### `request.cookies`
+
+  Type: `array`
+
+  Cookies sent with the request.
+
+- #### `request.headersSize`
+
+  Type: `int`
+
+  Size of the request headers.
+
+- #### `request.httpVersion`
+
+  Type: `string`
+
+  HTTP version used for the request.
+
+- #### `request.method`
+
+  Type: `string`
+
+  HTTP method used for the request.
+
+- #### `request.queryString`
+
+  Type: `array`
+
+  Query string parameters.
+
+- #### `request.url`
+
+  Type: `string`
+
+  URL of the requested resource.
+
+### `response`
+
+Type: `object`
+
+Details of the response.
+
+- #### `response.bodySize`
+
+  Type: `int`
+
+  Size of the response body.
+
+- #### `response.content`
+
+  Type: `object`
+
+  Content details of the response.
+
+- #### `response.content.mimeType`
+
+  Type: `string`
+
+  MIME type of the content.
+
+- #### `response.content.size`
+
+  Type: `int`
+
+  Size of the content.
+
+- #### `response.cookies`
+
+  Type: `array`
+
+  Cookies received with the response.
+
+- #### `response.headersSize`
+
+  Type: `int`
+
+  Size of the response headers.
+
+- #### `response.httpVersion`
+
+  Type: `string`
+
+  HTTP version used for the response.
+
+- #### `response.status`
+
+  Type: `int`
+
+  HTTP response status code.
+
+- #### `response.statusText`
+
+  Type: `string`
+
+  Status text of the response.
+
+### `startedDateTime`
+
+Type: `string`
+
+Start time of the request.
+
+### `time`
+
+Type: `int`
+
+Total time taken for the request in milliseconds.
+
+### `timings`
+
+Type: `object`
+
+Timing details of various stages of the request.
+
+- #### `timings.blocked`
+
+  Type: `int`
+
+  Time spent in blocking.
+
+- #### `timings.connect`
+
+  Type: `int`
+
+  Time spent in establishing a connection.
+
+- #### `timings.dns`
+
+  Type: `int`
+
+  Time spent in DNS lookup.
+
+- #### `timings.receive`
+
+  Type: `int`
+
+  Time spent in receiving the response.
+
+- #### `timings.send`
+
+  Type: `int`
+
+  Time spent in sending the request.
+
+- #### `timings.ssl`
+
+  Type: `int`
+
+  Time spent in SSL handshake.
+
+- #### `timings.wait`
+
+  Type: `int`
+
+  Time spent in waiting for the response.

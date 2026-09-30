@@ -1,0 +1,127 @@
+---
+/**
+ * Starlight Header override.
+ * Reuses the main website's Header component with Starlight's search box
+ * and mobile navigation integration.
+ */
+import type { Props } from '@astrojs/starlight/props';
+import Search from '@astrojs/starlight/components/Search.astro';
+import SiteHeader from '../Header.astro';
+---
+
+<div class="ha-docs-header">
+  <SiteHeader>
+    <div slot="search" class="header-search">
+      <Search {...Astro.props} />
+    </div>
+  </SiteHeader>
+</div>
+
+<style is:global>
+  :root {
+    --sl-nav-height: 102px;
+  }
+  header.header {
+    padding: 0 !important;
+    border-bottom: none !important;
+  }
+  /* Visually hide Starlight's default circular menu button; header hamburger controls it */
+  starlight-menu-button {
+    position: absolute !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+</style>
+
+<style>
+  .ha-docs-header {
+    width: 100%;
+  }
+
+  .ha-docs-header .header-search {
+    display: flex;
+    align-items: center;
+  }
+
+  .ha-docs-header :global(site-search button[data-open-modal]) {
+    color: #667a7d;
+  }
+
+  .ha-docs-header :global(site-search button[data-open-modal]:hover) {
+    color: #444;
+  }
+</style>
+
+<script>
+  function setupDocsMobileMenu() {
+    const hamburger = document.querySelector('.ha-docs-header .hamburger');
+    const mobileNav = document.querySelector('.ha-docs-header nav#mobile');
+    const desktopNav = document.querySelector('.ha-docs-header nav#desktop');
+
+    // Populate mobile nav with desktop links if empty
+    if (mobileNav && desktopNav && !mobileNav.hasChildNodes()) {
+      const desktopUl = desktopNav.querySelector('ul');
+      if (desktopUl) {
+        mobileNav.appendChild(desktopUl.cloneNode(true));
+      }
+    }
+
+    if (hamburger && !hamburger.hasAttribute('data-initialized')) {
+      hamburger.setAttribute('data-initialized', 'true');
+      hamburger.addEventListener('click', () => {
+        const starlightBtn = document.querySelector('starlight-menu-button button') as HTMLButtonElement | null;
+        if (starlightBtn) {
+          // On pages with Starlight sidebar drawer, delegate toggle to Starlight
+          starlightBtn.click();
+          const expanded = starlightBtn.getAttribute('aria-expanded');
+          hamburger.setAttribute('aria-expanded', expanded || 'false');
+        } else if (mobileNav) {
+          // On splash pages without sidebar drawer, toggle nav#mobile
+          const isExpanded = mobileNav.classList.toggle('active');
+          hamburger.setAttribute('aria-expanded', String(isExpanded));
+        }
+      });
+    }
+  }
+
+  // Close mobile nav when clicking outside
+  document.addEventListener('click', (e) => {
+    const mobileNav = document.querySelector('.ha-docs-header nav#mobile');
+    const hamburger = document.querySelector('.ha-docs-header .hamburger');
+    if (!mobileNav || !mobileNav.classList.contains('active')) return;
+    const target = e.target as HTMLElement | null;
+    if (target && !mobileNav.contains(target) && !hamburger?.contains(target)) {
+      mobileNav.classList.remove('active');
+      hamburger?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close mobile nav on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const mobileNav = document.querySelector('.ha-docs-header nav#mobile');
+      const hamburger = document.querySelector('.ha-docs-header .hamburger');
+      if (mobileNav?.classList.contains('active')) {
+        mobileNav.classList.remove('active');
+        hamburger?.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // Keep hamburger aria-expanded synchronized if Starlight's menu changes
+  const observer = new MutationObserver(() => {
+    const isExpanded = document.body.hasAttribute('data-mobile-menu-expanded');
+    const hamburger = document.querySelector('.ha-docs-header .hamburger');
+    const starlightBtn = document.querySelector('starlight-menu-button button');
+    if (hamburger && starlightBtn) {
+      hamburger.setAttribute('aria-expanded', String(isExpanded));
+    }
+  });
+  observer.observe(document.body, { attributes: true, attributeFilter: ['data-mobile-menu-expanded'] });
+
+  setupDocsMobileMenu();
+  document.addEventListener('astro:page-load', setupDocsMobileMenu);
+</script>

@@ -1,0 +1,24 @@
+---
+/**
+ * Starlight ThemeProvider override to force light theme only.
+ * Disables dark mode across all docs pages.
+ */
+---
+
+{/* This is intentionally inlined in <head> to immediately force light theme before rendering */}
+<script is:inline>
+  window.StarlightThemeProvider = (() => {
+    document.documentElement.dataset.theme = 'light';
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('starlight-theme', 'light');
+      }
+    } catch (_) {}
+    return {
+      updatePickers() {},
+    };
+  })();
+  document.addEventListener('astro:after-swap', () => {
+    document.documentElement.dataset.theme = 'light';
+  });
+</script>

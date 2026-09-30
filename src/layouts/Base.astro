@@ -16,7 +16,6 @@ export interface Props {
   datePublished?: string;
   dateModified?: string;
   customNavigation?: boolean;
-  isProduction?: boolean;
 }
 
 const getPageDates = (pathname: string) => {
@@ -45,6 +44,7 @@ const getPageDates = (pathname: string) => {
 
 const pageDates = getPageDates(Astro.url.pathname);
 const defaultDate = new Date().toISOString();
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
   title = 'HTTP Archive',
@@ -57,12 +57,12 @@ const {
   datePublished = pageDates?.published || defaultDate,
   dateModified = pageDates?.modified || defaultDate,
   customNavigation = false,
-  isProduction = Astro.url.hostname === 'httparchive.org',
 } = Astro.props;
 
 const reports = getReports();
 
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 <!doctype html>
 <html lang="en">
@@ -72,7 +72,7 @@ import Header from '../components/Header.astro';
     <title>{title}</title>
 
     <meta name="description" content={description}>
-    {!isProduction && <meta name="robots" content="noindex">}
+    <link rel="canonical" href={canonicalURL} />
     <meta property="og:title" content={title}>
     <meta property="og:url" content={pageUrl}>
     <meta property="og:image" content={imageUrl}>
@@ -142,29 +142,7 @@ import Header from '../components/Header.astro';
       <slot />
     </main>
 
-    <footer>
-      <div class="container">
-        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
-          <a href="/">
-            <img class="logo" src="/static/img/ha.png" width="320" height="160" alt="HTTP Archive" loading="lazy"/>
-          </a>
-          <a href="https://archive.org/">
-            <img src="/static/img/ia.png" width="110" height="107" alt="Internet Archive" loading="lazy"/>
-          </a>
-        </div>
-        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 clearfix">
-          <nav id="footer-links" aria-label="Footer links">
-            <a href="/reports">Reports</a>
-            <a href="https://discuss.httparchive.org">Discuss</a>
-            <a href="https://almanac.httparchive.org/">Web Almanac</a>
-            <a href="/about">About</a>
-            <a href="/about#mission">Mission</a>
-            <a href="/about#contact">Contact</a>
-            <a href="/faq">FAQ</a>
-          </nav>
-        </div>
-      </div>
-    </footer>
+    <Footer />
 
     <!-- Core JS -->
     <script src="../js/main.js"></script>
