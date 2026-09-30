@@ -70,6 +70,7 @@ const test_status_codes = async () => {
   await test_status_code('/sitemap.xml', 200);
   await test_status_code('/robots.txt', 200);
   await test_status_code('/favicon.ico', 200);
+  await test_status_code('/.well-known/atproto-did', 200);
 
   //Test 404s
   await test_status_code('/zz/', 404);
