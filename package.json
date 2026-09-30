@@ -43,7 +43,7 @@
     "puppeteer": "^25.12.0",
     "run-script-os": "1.1.6",
     "starlight-links-validator": "^0.25.1",
-    "starlight-llms-txt": "^0.11.0",
+    "starlight-llms-txt": "^0.12.0",
     "web-vitals": "6.2.2",
     "xml-js": "1.6.11",
     "zod": "^4.6.5"
