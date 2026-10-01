@@ -1,0 +1,370 @@
+---
+title: Ads custom metric
+description: Reference docs for the ads custom metric
+---
+
+_Appears in: [`custom_metrics.other`](/docs/reference/custom-metrics/other/) struct_\
+_As: [`ads`](/docs/reference/custom-metrics/other/#ads)_
+
+## Schema
+
+### `ads`
+
+Type: `object`
+
+Contains information about the ads.txt file. See [IAB Ads.txt Specification](https://github.com/InteractiveAdvertisingBureau/Supply-Chain-Validation/blob/main/ads.txt%20v1.1.md).
+
+#### `ads.present`
+
+Type: `boolean`
+
+Indicates if the ads.txt or app-ads.txt file is present.
+
+#### `ads.status`
+
+Type: `integer`
+
+HTTP status code of the ads.txt file response.
+
+#### `ads.redirected`
+
+Type: `boolean`
+
+Indicates if the ads.txt file request was redirected.
+
+#### `ads.redirected_to`
+
+Type: `string`
+
+URL to which the ads.txt resource was redirected.
+
+#### `ads.account_count`
+
+Type: `integer`
+
+Number of advertising accounts listed in the ads.txt file.
+
+#### `ads.account_types`
+
+Type: `object`
+
+Types of accounts (direct or reseller) listed in the ads.txt file.
+
+##### `ads.account_types.direct`
+
+Type: `object`
+
+Information about direct advertising accounts.
+
+###### `ads.account_types.direct.domains`
+
+Type: `array<string>`
+
+List of domains with advertising accounts of this type.
+
+###### `ads.account_types.direct.account_count`
+
+Type: `integer`
+
+Number of advertising accounts of this type.
+
+###### `ads.account_types.direct.domain_count`
+
+Type: `integer`
+
+Number of unique domains with advertising accounts of this type.
+
+##### `ads.account_types.reseller`
+
+Type: `object`
+
+Information about reseller advertising accounts.
+
+###### `ads.account_types.reseller.domains`
+
+Type: `array<string>`
+
+List of domains with advertising accounts of this type.
+
+###### `ads.account_types.reseller.account_count`
+
+Type: `integer`
+
+Number of advertising accounts of this type.
+
+###### `ads.account_types.reseller.domain_count`
+
+Type: `integer`
+
+Number of unique domains with advertising accounts of this type.
+
+#### `ads.line_count`
+
+Type: `integer`
+
+Total number of lines in the ads.txt file.
+
+#### `ads.variables`
+
+Type: `array<string>`
+
+List of variables found in the ads.txt file.
+
+#### `ads.variable_count`
+
+Type: `integer`
+
+Number of variables found in the ads.txt file.
+
+#### `ads.error`
+
+Type: `string`
+
+Error message if fetch or parse failed.
+
+### `app_ads`
+
+Type: `object`
+
+Contains information about the app-ads.txt file. See [IAB App-Ads.txt Specification](https://github.com/InteractiveAdvertisingBureau/Supply-Chain-Validation/blob/main/app-ads.txt.md).
+
+#### `app_ads.present`
+
+Type: `boolean`
+
+Indicates if the ads.txt or app-ads.txt file is present.
+
+#### `app_ads.status`
+
+Type: `integer`
+
+HTTP status code of the ads.txt file response.
+
+#### `app_ads.redirected`
+
+Type: `boolean`
+
+Indicates if the ads.txt file request was redirected.
+
+#### `app_ads.redirected_to`
+
+Type: `string`
+
+URL to which the ads.txt resource was redirected.
+
+#### `app_ads.account_count`
+
+Type: `integer`
+
+Number of advertising accounts listed in the ads.txt file.
+
+#### `app_ads.account_types`
+
+Type: `object`
+
+Types of accounts (direct or reseller) listed in the ads.txt file.
+
+##### `app_ads.account_types.direct`
+
+Type: `object`
+
+Information about direct advertising accounts.
+
+###### `app_ads.account_types.direct.domains`
+
+Type: `array<string>`
+
+List of domains with advertising accounts of this type.
+
+###### `app_ads.account_types.direct.account_count`
+
+Type: `integer`
+
+Number of advertising accounts of this type.
+
+###### `app_ads.account_types.direct.domain_count`
+
+Type: `integer`
+
+Number of unique domains with advertising accounts of this type.
+
+##### `app_ads.account_types.reseller`
+
+Type: `object`
+
+Information about reseller advertising accounts.
+
+###### `app_ads.account_types.reseller.domains`
+
+Type: `array<string>`
+
+List of domains with advertising accounts of this type.
+
+###### `app_ads.account_types.reseller.account_count`
+
+Type: `integer`
+
+Number of advertising accounts of this type.
+
+###### `app_ads.account_types.reseller.domain_count`
+
+Type: `integer`
+
+Number of unique domains with advertising accounts of this type.
+
+#### `app_ads.line_count`
+
+Type: `integer`
+
+Total number of lines in the ads.txt file.
+
+#### `app_ads.variables`
+
+Type: `array<string>`
+
+List of variables found in the ads.txt file.
+
+#### `app_ads.variable_count`
+
+Type: `integer`
+
+Number of variables found in the ads.txt file.
+
+#### `app_ads.error`
+
+Type: `string`
+
+Error message if fetch or parse failed.
+
+### `sellers`
+
+Type: `object`
+
+Contains information about the sellers.json file. See [IAB Sellers.json Specification](https://github.com/InteractiveAdvertisingBureau/Supply-Chain-Validation/blob/main/sellers-json.md).
+
+#### `sellers.present`
+
+Type: `boolean`
+
+Indicates if the sellers.json file is present.
+
+#### `sellers.status`
+
+Type: `integer`
+
+HTTP status code of the sellers.json file response.
+
+#### `sellers.redirected`
+
+Type: `boolean`
+
+Indicates if the sellers.json file request was redirected.
+
+#### `sellers.redirected_to`
+
+Type: `string`
+
+URL to which the sellers.json resource was redirected.
+
+#### `sellers.seller_count`
+
+Type: `integer`
+
+Number of sellers listed in the sellers.json file.
+
+#### `sellers.seller_types`
+
+Type: `object`
+
+Types of sellers (publisher, intermediary, both) listed in the sellers.json file.
+
+##### `sellers.seller_types.publisher`
+
+Type: `object`
+
+Information about publisher sellers.
+
+###### `sellers.seller_types.publisher.domains`
+
+Type: `array<string>`
+
+List of domains associated with this seller type.
+
+###### `sellers.seller_types.publisher.seller_count`
+
+Type: `integer`
+
+Number of sellers of this type.
+
+###### `sellers.seller_types.publisher.domain_count`
+
+Type: `integer`
+
+Number of unique domains associated with this seller type.
+
+##### `sellers.seller_types.intermediary`
+
+Type: `object`
+
+Information about intermediary sellers.
+
+###### `sellers.seller_types.intermediary.domains`
+
+Type: `array<string>`
+
+List of domains associated with this seller type.
+
+###### `sellers.seller_types.intermediary.seller_count`
+
+Type: `integer`
+
+Number of sellers of this type.
+
+###### `sellers.seller_types.intermediary.domain_count`
+
+Type: `integer`
+
+Number of unique domains associated with this seller type.
+
+##### `sellers.seller_types.both`
+
+Type: `object`
+
+Information about sellers who are both publishers and intermediaries.
+
+###### `sellers.seller_types.both.domains`
+
+Type: `array<string>`
+
+List of domains associated with this seller type.
+
+###### `sellers.seller_types.both.seller_count`
+
+Type: `integer`
+
+Number of sellers of this type.
+
+###### `sellers.seller_types.both.domain_count`
+
+Type: `integer`
+
+Number of unique domains associated with this seller type.
+
+#### `sellers.passthrough_count`
+
+Type: `integer`
+
+Number of passthrough sellers listed in the sellers.json file.
+
+#### `sellers.confidential_count`
+
+Type: `integer`
+
+Number of confidential sellers listed in the sellers.json file.
+
+#### `sellers.error`
+
+Type: `string`
+
+Error message if fetch or parse failed.
+
