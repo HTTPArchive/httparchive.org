@@ -11,8 +11,8 @@
   },
   "docs/guides/guided-tour": {
     "date_published": "2026-09-14T00:00:00.000Z",
-    "date_modified": "2026-09-14T00:00:00.000Z",
-    "hash": "a52176e67f1d794e051c1aebd471f471"
+    "date_modified": "2026-10-02T00:00:00.000Z",
+    "hash": "2977422ee47ca361dfa2ccc813b8e77c"
   },
   "docs/guides/minimizing-costs": {
     "date_published": "2026-09-14T00:00:00.000Z",
@@ -26,8 +26,8 @@
   },
   "docs/index": {
     "date_published": "2026-09-14T00:00:00.000Z",
-    "date_modified": "2026-09-21T00:00:00.000Z",
-    "hash": "2488204cad0bb28a18b06dfdfbcfabd6"
+    "date_modified": "2026-10-02T00:00:00.000Z",
+    "hash": "9648a49c06ac95033dcd8f9234374f79"
   },
   "docs/reference/blobs/lighthouse": {
     "date_published": "2026-09-14T00:00:00.000Z",
@@ -59,20 +59,20 @@
     "date_modified": "2026-09-14T00:00:00.000Z",
     "hash": "72d4210cd35088c8706a1ea02f58c952"
   },
-  "docs/reference/custom-metrics/ads": {
-    "date_published": "2026-09-14T00:00:00.000Z",
-    "date_modified": "2026-09-14T00:00:00.000Z",
-    "hash": "6261101aa4c53499a24f49431a5a1027"
+  "docs/reference/custom-metrics/other/ads": {
+    "date_published": "2026-10-02T00:00:00.000Z",
+    "date_modified": "2026-10-02T00:00:00.000Z",
+    "hash": "be8228a1290f0a64565b221af7be8b7e"
   },
-  "docs/reference/custom-metrics/other": {
-    "date_published": "2026-09-14T00:00:00.000Z",
-    "date_modified": "2026-09-14T00:00:00.000Z",
-    "hash": "999e963a01ec07de9bd58e1cfb28aab3"
+  "docs/reference/custom-metrics/other/index": {
+    "date_published": "2026-10-02T00:00:00.000Z",
+    "date_modified": "2026-10-02T00:00:00.000Z",
+    "hash": "e2228a46a6dacc5f87aaf8d5b2641c57"
   },
   "docs/reference/custom-metrics/privacy": {
     "date_published": "2026-09-14T00:00:00.000Z",
-    "date_modified": "2026-09-14T00:00:00.000Z",
-    "hash": "a8c0e88f953021ffcfbf037bdadfea4b"
+    "date_modified": "2026-10-02T00:00:00.000Z",
+    "hash": "7426f6cca2957a88ef52b4fff9f2a319"
   },
   "docs/reference/functions/capo": {
     "date_published": "2026-09-14T00:00:00.000Z",
