@@ -34,7 +34,7 @@
     "@astrojs/starlight": "^0.42.4",
     "astro": "^7.3.5",
     "ejs": "6.0.1",
-    "firebase-tools": "^15.31.0",
+    "firebase-tools": "^15.32.0",
     "fs-extra": "11.4.1",
     "highcharts": "11.4.9",
     "htmlhint": "^1.9.2",
