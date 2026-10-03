@@ -1,38 +1,34 @@
 version: 2
+
+multi-ecosystem-groups:
+  dependencies:
+    schedule:
+      interval: "weekly"
+      day: "monday"
+
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "dependencies"
     cooldown:
       default-days: 7
-    groups:
-      npm-dependencies:
-        patterns:
-          - "*"
 
   - package-ecosystem: "pip"
     directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "dependencies"
     cooldown:
       default-days: 7
-    groups:
-      pip-dependencies:
-        patterns:
-          - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "dependencies"
     cooldown:
       default-days: 7
-    groups:
-      github-actions:
-        patterns:
-          - "*"
+
 
