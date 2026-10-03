@@ -3,8 +3,7 @@ version: 2
 multi-ecosystem-groups:
   dependencies:
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
 
 updates:
   - package-ecosystem: "npm"
