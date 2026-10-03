@@ -3,14 +3,10 @@ import { DataUtils } from "../techreport/utils/data";
 
 class Filters {
   constructor(filterData, filters) {
-    this.categories = Array.isArray(filterData?.categories) ? filterData.categories : [];
-    this.technologies = Array.isArray(filterData?.technologies) ? filterData.technologies : [];
-    this.geos = Array.isArray(filterData?.geos) && filterData.geos.length > 0
-      ? filterData.geos
-      : [{ geo: 'ALL' }];
-    this.ranks = Array.isArray(filterData?.ranks) && filterData.ranks.length > 0
-      ? filterData.ranks
-      : [{ rank: 'ALL' }];
+    this.categories = filterData?.categories;
+    this.technologies = filterData?.technologies;
+    this.geos = filterData?.geos;
+    this.ranks = filterData?.ranks;
 
     this.filters = filters;
 
@@ -21,13 +17,13 @@ class Filters {
   bindFilterListener() {
     /* Submit the form */
     const submit = document.getElementById('submit-form');
-    if(submit) {
+    if (submit) {
       submit.addEventListener('click', this.setFilter);
     }
 
     /* Add a new technology */
     const addButton = document.getElementById('add-tech');
-    if(addButton) {
+    if (addButton) {
       addButton.addEventListener('click', this.addTechnologySelector);
     }
 
@@ -76,7 +72,7 @@ class Filters {
     url.searchParams.delete('rank');
     url.searchParams.append('rank', rank);
 
-    if(categories) {
+    if (categories) {
       url.searchParams.delete('category');
       url.searchParams.append('category', categories);
     }
@@ -122,7 +118,7 @@ class Filters {
       techSelector.innerHTML = '';
 
       /* If the technology doesn't exist, throw a warning */
-      if(!this.technologies) {
+      if (!this.technologies) {
         const errorMsg = document.createElement('p');
         errorMsg.textContent = 'Technology not found, please select a different one';
         techSelector.before(errorMsg);
@@ -132,14 +128,14 @@ class Filters {
       const techs = this.technologies;
 
       /* Add one option per technology */
-      if(document.getElementById('filter-option')) {
+      if (document.getElementById('filter-option')) {
         techs.forEach((technology) => {
           const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
           const option = optionTmpl.querySelector('option');
           const formattedTech = DataUtils.formatAppName(technology);
           option.textContent = formattedTech;
           option.value = technology;
-          if(formattedTech === techSelector.getAttribute('data-selected')) {
+          if (formattedTech === techSelector.getAttribute('data-selected')) {
             option.selected = true;
           }
           techSelector.append(optionTmpl);
@@ -156,52 +152,44 @@ class Filters {
   /* Update the list with geographies */
   updateGeo() {
     const select = document.querySelector('select#geo');
-    if (!select) return;
     select.innerHTML = '';
     const normalizedFilter = decodeURIComponent(this.filters.geo || '').trim();
-    if (Array.isArray(this.geos)) {
-      this.geos.forEach((geo) => {
-        const optionTmpl = document.getElementById('filter-option')?.content?.cloneNode(true);
-        if (!optionTmpl) return;
-        const option = optionTmpl.querySelector('option');
-        const formattedTech = geo.geo;
-        option.textContent = geo.geo;
-        option.value = formattedTech;
-        if(formattedTech === this.filters.geo || formattedTech === normalizedFilter) {
-          option.selected = true;
-        }
-        select.append(optionTmpl);
-      });
-    }
+    this.geos.forEach((geo) => {
+      const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
+      const option = optionTmpl.querySelector('option');
+      const formattedTech = geo.geo;
+      option.textContent = geo.geo;
+      option.value = formattedTech;
+      if (formattedTech === this.filters.geo || formattedTech === normalizedFilter) {
+        option.selected = true;
+      }
+      select.append(optionTmpl);
+    });
   }
 
   /* Update the list with ranks */
   updateRank() {
     const select = document.querySelector('select#rank');
-    if (!select) return;
     select.innerHTML = '';
     const normalizedFilter = decodeURIComponent(this.filters.rank || '').trim();
-    if (Array.isArray(this.ranks)) {
-      this.ranks.forEach((rank) => {
-        const optionTmpl = document.getElementById('filter-option')?.content?.cloneNode(true);
-        if (!optionTmpl) return;
-        const option = optionTmpl.querySelector('option');
-        const formattedTech = rank.rank;
-        option.textContent = rank.rank;
-        option.value = formattedTech;
-        if(formattedTech === this.filters.rank || formattedTech === normalizedFilter) {
-          option.selected = true;
-        }
-        select.append(optionTmpl);
-      });
-    }
+    this.ranks.forEach((rank) => {
+      const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
+      const option = optionTmpl.querySelector('option');
+      const formattedTech = rank.rank;
+      option.textContent = rank.rank;
+      option.value = formattedTech;
+      if (formattedTech === this.filters.rank || formattedTech === normalizedFilter) {
+        option.selected = true;
+      }
+      select.append(optionTmpl);
+    });
   }
 
   /* Update the list with categories */
   updateCategories() {
     const selects = document.querySelectorAll('select[name="categories"]') || document.querySelectorAll('select[name="category"]');
 
-    if(this.categories) {
+    if (this.categories) {
       selects.forEach(select => {
         select.innerHTML = '';
 
@@ -213,7 +201,7 @@ class Filters {
         const sortedCategories = this.categories.sort((a, b) => a !== b ? a < b ? -1 : 1 : 0);
         sortedCategories.forEach((category) => {
           const option = document.createElement('option');
-          if(category === (this.filters.category || select.getAttribute('data-selected'))) {
+          if (category === (this.filters.category || select.getAttribute('data-selected'))) {
             option.selected = true;
           }
           option.value = category;
@@ -229,7 +217,7 @@ class Filters {
     // Get the techs associated with the selected category
     const selectedCategory = this.categories.find(category => category.category === event.target.value);
     let selectedTechs = selectedCategory?.technologies || [];
-    if(event.target.value === 'ALL') {
+    if (event.target.value === 'ALL') {
       selectedTechs = this.technologies.map(technology => technology.technology);
     }
 
@@ -242,7 +230,7 @@ class Filters {
       const option = document.createElement('option');
       option.textContent = technology;
       option.value = technology;
-      if(technology === techSelector.getAttribute('data-selected')) {
+      if (technology === techSelector.getAttribute('data-selected')) {
         option.selected = true;
       }
       techSelector.append(option);
@@ -270,7 +258,7 @@ class Filters {
     labelElement.setAttribute('for', techId);
     labelElement.textContent = techLabel;
 
-    if(removeButton) {
+    if (removeButton) {
       removeButton.dataset.tech = techId;
       removeButton.classList.remove('hidden');
 
@@ -292,7 +280,7 @@ class Filters {
     last.after(selectorTemplate);
 
     /* If this is there are 2 or more technologies, the first one can be removed too */
-    if(techs.length === 2) {
+    if (techs.length === 2) {
       techs[0].getElementsByClassName('remove-tech')[0].classList.remove('hidden');
     }
   }
@@ -312,7 +300,7 @@ class Filters {
   /* Hide possibility to remove tech when only one is selected */
   hideRemoveButton() {
     const techs = document.getElementsByClassName('tech-selector-group');
-    if(techs.length === 1) {
+    if (techs.length === 1) {
       techs[0].getElementsByClassName('remove-tech')[0].classList.add('hidden');
     }
   }
