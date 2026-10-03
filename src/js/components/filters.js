@@ -3,10 +3,14 @@ import { DataUtils } from "../techreport/utils/data";
 
 class Filters {
   constructor(filterData, filters) {
-    this.categories = filterData?.categories;
-    this.technologies = filterData?.technologies;
-    this.geos = filterData?.geos;
-    this.ranks = filterData?.ranks;
+    this.categories = Array.isArray(filterData?.categories) ? filterData.categories : [];
+    this.technologies = Array.isArray(filterData?.technologies) ? filterData.technologies : [];
+    this.geos = Array.isArray(filterData?.geos) && filterData.geos.length > 0
+      ? filterData.geos
+      : [{ geo: 'ALL' }];
+    this.ranks = Array.isArray(filterData?.ranks) && filterData.ranks.length > 0
+      ? filterData.ranks
+      : [{ rank: 'ALL' }];
 
     this.filters = filters;
 
@@ -152,37 +156,45 @@ class Filters {
   /* Update the list with geographies */
   updateGeo() {
     const select = document.querySelector('select#geo');
+    if (!select) return;
     select.innerHTML = '';
     const normalizedFilter = decodeURIComponent(this.filters.geo || '').trim();
-    this.geos.forEach((geo) => {
-      const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
-      const option = optionTmpl.querySelector('option');
-      const formattedTech = geo.geo;
-      option.textContent = geo.geo;
-      option.value = formattedTech;
-      if(formattedTech === this.filters.geo || formattedTech === normalizedFilter) {
-        option.selected = true;
-      }
-      select.append(optionTmpl);
-    });
+    if (Array.isArray(this.geos)) {
+      this.geos.forEach((geo) => {
+        const optionTmpl = document.getElementById('filter-option')?.content?.cloneNode(true);
+        if (!optionTmpl) return;
+        const option = optionTmpl.querySelector('option');
+        const formattedTech = geo.geo;
+        option.textContent = geo.geo;
+        option.value = formattedTech;
+        if(formattedTech === this.filters.geo || formattedTech === normalizedFilter) {
+          option.selected = true;
+        }
+        select.append(optionTmpl);
+      });
+    }
   }
 
   /* Update the list with ranks */
   updateRank() {
     const select = document.querySelector('select#rank');
+    if (!select) return;
     select.innerHTML = '';
     const normalizedFilter = decodeURIComponent(this.filters.rank || '').trim();
-    this.ranks.forEach((rank) => {
-      const optionTmpl = document.getElementById('filter-option').content.cloneNode(true);
-      const option = optionTmpl.querySelector('option');
-      const formattedTech = rank.rank;
-      option.textContent = rank.rank;
-      option.value = formattedTech;
-      if(formattedTech === this.filters.rank || formattedTech === normalizedFilter) {
-        option.selected = true;
-      }
-      select.append(optionTmpl);
-    });
+    if (Array.isArray(this.ranks)) {
+      this.ranks.forEach((rank) => {
+        const optionTmpl = document.getElementById('filter-option')?.content?.cloneNode(true);
+        if (!optionTmpl) return;
+        const option = optionTmpl.querySelector('option');
+        const formattedTech = rank.rank;
+        option.textContent = rank.rank;
+        option.value = formattedTech;
+        if(formattedTech === this.filters.rank || formattedTech === normalizedFilter) {
+          option.selected = true;
+        }
+        select.append(optionTmpl);
+      });
+    }
   }
 
   /* Update the list with categories */
