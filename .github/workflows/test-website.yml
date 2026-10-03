@@ -66,7 +66,10 @@ jobs:
         temporaryPublicStorage: true # upload lighthouse report to the temporary storage
 
     - name: Deploy to Firebase Hosting Preview Channel
-      if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+      if: |
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        github.actor != 'dependabot[bot]'
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
