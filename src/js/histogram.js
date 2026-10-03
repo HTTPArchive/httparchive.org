@@ -187,14 +187,7 @@ class HistogramTable {
   }
 }
 
-let redrawHistogramTable = null;
 function drawHistogramTable(data, tableId, type, [start, end] = [-Infinity, Infinity]) {
-  if (!redrawHistogramTable) {
-    redrawHistogramTable = debounce((tblId, typ, range) => {
-      return drawHistogramTable(data, tblId, typ, range);
-    }, 100);
-  }
-
   const bins = data
     .filter(d => d.bin >= start && d.bin <= end)
     .map(d => new Bin(d));
@@ -484,6 +477,13 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
 
   resetZoomBtn?.addEventListener('click', resetZoom);
 
+  // Debounced table sync during zoom/pan interactions
+  const debouncedTableSync = debounce(range => {
+    if (rawData) {
+      drawHistogramTable(rawData, `${options.metric}-table`, options.type, range);
+    }
+  }, 100);
+
   // Mouse drag selection zoom with visual background area
   let dragStartX = null;
   let selectionBox = null;
@@ -552,9 +552,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
               endValue: maxVal
             });
             resetZoomBtn?.classList.remove('hidden');
-            if (rawData) {
-              drawHistogramTable(rawData, `${options.metric}-table`, options.type, [minVal, maxVal]);
-            }
+            debouncedTableSync([minVal, maxVal]);
           }
         }
       }
@@ -595,7 +593,7 @@ function renderEChartsHistogram(container, desktop, mobile, options, rawData) {
           minVal = xMin + (span * dz.start) / 100;
           maxVal = xMin + (span * dz.end) / 100;
         }
-        drawHistogramTable(rawData, `${options.metric}-table`, options.type, [minVal, maxVal]);
+        debouncedTableSync([minVal, maxVal]);
       }
     }
   });

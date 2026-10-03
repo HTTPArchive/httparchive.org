@@ -767,8 +767,15 @@ function renderEChartsTimeseries(container, desktop, mobile, changelogData, opti
     zoomBtns.forEach(btn => btn.classList.remove('active'));
 
     const tolerance = 0.15;
+    const yr = new Date(maxT).getUTCFullYear();
+    const ytdStart = Math.max(earliest, Date.UTC(yr, 0, 1));
+    const dayMs = 86400000;
+    const isYTD = Math.abs(minT - ytdStart) < 7 * dayMs && Math.abs(maxT - latest) < 7 * dayMs;
+
     if (span >= totalSpan * (1 - tolerance)) {
       navBar.querySelector('[data-range="All"]')?.classList.add('active');
+    } else if (isYTD) {
+      navBar.querySelector('[data-range="YTD"]')?.classList.add('active');
     } else if (Math.abs(span - 3 * yearMs) / (3 * yearMs) < tolerance) {
       navBar.querySelector('[data-range="3y"]')?.classList.add('active');
     } else if (Math.abs(span - yearMs) / yearMs < tolerance) {
