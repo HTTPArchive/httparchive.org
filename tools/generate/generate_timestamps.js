@@ -65,6 +65,7 @@ const get_docs_dates = async () => {
   if (!fs.existsSync(docsDir)) return;
 
   try {
+    const existingDocKeys = new Set();
     const files = await fs.promises.readdir(docsDir, { recursive: true });
     for (const relativeFile of files) {
       if (!relativeFile.endsWith('.md') && !relativeFile.endsWith('.mdx')) continue;
@@ -72,6 +73,7 @@ const get_docs_dates = async () => {
       const fullPath = path.join(docsDir, relativeFile);
       const normalizedRel = relativeFile.replace(/\\/g, '/');
       const key = `docs/${normalizedRel.replace(/\.mdx?$/, '')}`;
+      existingDocKeys.add(key);
 
       try {
         const content = await fs.readFile(fullPath, 'utf-8');
@@ -80,6 +82,14 @@ const get_docs_dates = async () => {
       } catch (fileErr) {
         if (fileErr.code === 'EISDIR') continue;
         throw fileErr;
+      }
+    }
+
+    // Prune stale doc keys that no longer exist
+    for (const key of Object.keys(file_dates)) {
+      if (key.startsWith('docs/') && !existingDocKeys.has(key)) {
+        console.log(`Pruning deleted doc entry: ${key}`);
+        delete file_dates[key];
       }
     }
   } catch (err) {

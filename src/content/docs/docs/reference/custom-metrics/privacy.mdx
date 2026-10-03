@@ -6,288 +6,227 @@ description: Reference docs for the privacy custom metric
 _Appears in: [`custom_metrics`](/docs/reference/structs/custom-metrics/) struct_\
 _As: [`privacy`](/docs/reference/structs/custom-metrics/#privacy)_
 
-<details>
-<summary>An example of the decoded object from `https://www.google.com/` page crawl</summary>
-```json
-{
-    "privacy_wording_links": [
-        {
-            "text": "Privacy"
-        }
-    ],
-    "iab_tcf_v1": {
-        "present": false,
-        "data": null,
-        "compliant_setup": null
-    },
-    "iab_tcf_v2": {
-        "present": false,
-        "data": null,
-        "compliant_setup": null
-    },
-    "iab_usp": {
-        "present": false,
-        "privacy_string": null
-    },
-    "navigator_doNotTrack": false,
-    "navigator_globalPrivacyControl": false,
-    "document_permissionsPolicy": false,
-    "document_featurePolicy": false,
-    "referrerPolicy": {
-        "entire_document_policy": "origin",
-        "individual_requests": null,
-        "link_relations": null
-    },
-    "media_devices": {
-        "navigator_mediaDevices_enumerateDevices": false,
-        "navigator_mediaDevices_getUserMedia": true,
-        "navigator_mediaDevices_getDisplayMedia": false
-    },
-    "geolocation": {
-        "navigator_geolocation_getCurrentPosition": false,
-        "navigator_geolocation_watchPosition": false
-    },
-    "fingerprinting": {
-        "counts": {
-            "prefers-contrast": 4,
-            "forced-colors": 15,
-            "devicememory": 1,
-            "hardwareconcurrency": 2,
-            "localstorage": 5,
-            "screen.width": 7,
-            "screen.height": 5,
-            "sessionstorage": 1,
-            "gettimezoneoffset": 5,
-            "maxtouchpoints": 5,
-            "ontouchstart": 5,
-            "navigator.vendor": 1,
-            "getchanneldata": 4,
-            "navigator.platform": 1
-        },
-        "likelyFingerprintingScripts": [
-            "https://www.google.com/",
-            "https://www.gstatic.com/og/_/js/k=og.qtm.en_US.ftxzKLuybBw.2019.O/rt=j/m=qabr,q_d,qcwid,qapid,qald,q_dg/exm=qaaw,qadd,qaid,qein,qhaw,qhba,qhbr,qhch,qhga,qhid,qhin/d=1/ed=1/rs=AA2YrTsOEv0aSAP39vut5xzjLXfdU4aRbQ",
-            ...
-        ]
-    },
-    "request_hostnames_with_cname": {
-        "ogs.google.com": [
-            "www3.l.google.com"
-        ],
-        "apis.google.com": [
-            "plus.l.google.com"
-        ]
-    },
-    "ccpa_link": {
-        "hasCCPALink": false,
-        "CCPALinkPhrases": []
-    }
-}
-```
-</details>
-
 ## Schema
-
-### `privacy_wording_links`
-
-Type: `array<object>`
-
-Links related to privacy policy.
-
-#### `privacy_wording_links[i].text`
-
-Type: `string`
-
-Title of the link.
 
 ### `iab_tcf_v1`
 
 Type: `object`
 
-IAB TCF v1 settings.
+IAB Transparency and Consent Framework v1 settings and vendor consents. See [IAB TCF v1.1](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/CMP%20JS%20API%20v1.1%20Final.md).
 
 #### `iab_tcf_v1.present`
 
 Type: `boolean`
 
-Presence of IAB TCF v1.
+Whether the [`__cmp` API function](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/CMP%20JS%20API%20v1.1%20Final.md#what-api-will-need-to-be-provided-by-the-cmp-) is present on the window object.
 
 #### `iab_tcf_v1.data`
 
 Type: `object`
 
-TCF v1 vendor consents. [VendorConsents](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/CMP%20JS%20API%20v1.1%20Final.md#vendorconsents-)
+TCF v1 vendor consents data returned by `getVendorConsents`. See [VendorConsents](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/CMP%20JS%20API%20v1.1%20Final.md#vendorconsents-).
 
 #### `iab_tcf_v1.compliant_setup`
 
 Type: `boolean`
 
-Verifies compliance of TCF v1 vendor consents.
+Verifies whether the TCF v1 CMP setup is compliant with IAB standards.
 
 ### `iab_tcf_v2`
 
 Type: `object`
 
-IAB TCF v2 settings.
+IAB Transparency and Consent Framework v2 settings and vendor consents. See [IAB TCF v2](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md).
 
 #### `iab_tcf_v2.present`
 
 Type: `boolean`
 
-Presence of IAB TCF v2.
+Whether the [`__tcfapi` API function](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#how-does-the-cmp-provide-the-api) is present on the window object.
 
 #### `iab_tcf_v2.data`
 
 Type: `object`
 
-TCF v2 vendor consents. [TCData](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#tcdata)
+TCF v2 vendor consents data returned by `getTCData`. See [TCData](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#tcdata).
 
 #### `iab_tcf_v2.compliant_setup`
 
 Type: `boolean`
 
-Verifies compliance of TCF v2 vendor consents.
+Verifies whether the TCF v2 CMP setup is compliant with IAB standards.
+
+### `iab_gpp`
+
+Type: `object`
+
+Global Privacy Platform (GPP) ping response data. See [Global-Privacy-Platform](https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform).
+
+#### `iab_gpp.present`
+
+Type: `boolean`
+
+Whether the `__gpp` API function is present on the window object.
+
+#### `iab_gpp.data`
+
+Type: `object`
+
+Ping response data returned by the `__gpp` API.
 
 ### `iab_usp`
 
 Type: `object`
 
-Shows the presence of IAB U.S. Privacy String.
+IAB US Privacy User Signal Mechanism (USP API) data. See [USPrivacy](https://github.com/InteractiveAdvertisingBureau/USPrivacy).
 
 #### `iab_usp.present`
 
 Type: `boolean`
 
-Shows the presence of IAB U.S. Privacy String.
+Whether the `__uspapi` API function is present on the window object.
 
 #### `iab_usp.privacy_string`
 
 Type: `string`
 
-IAB U.S. Privacy String.
+US Privacy string returned by `getUSPData`.
 
 ### `navigator_doNotTrack`
 
 Type: `boolean`
 
-Indicates whether the browser's "Do Not Track" setting is enabled.
+Whether the browser's "Do Not Track" setting was accessed or detected in response bodies. See [EFF Do Not Track](https://www.eff.org/issues/do-not-track).
 
 ### `navigator_globalPrivacyControl`
 
 Type: `boolean`
 
-Indicates whether the browser's Global Privacy Control setting is enabled.
+Whether the Global Privacy Control (GPC) property was accessed or detected in response bodies. See [Global Privacy Control](https://globalprivacycontrol.org/).
 
 ### `document_permissionsPolicy`
 
 Type: `boolean`
 
-Indicates the presence of the Permissions Policy.
+Whether document Permissions Policy is referenced in response bodies. See [W3C Permissions Policy](https://www.w3.org/TR/permissions-policy-1/#introspection). Iframes properties in `almanac` and `security` custom metrics.
 
 ### `document_featurePolicy`
 
 Type: `boolean`
 
-Indicates the presence of the Feature Policy.
+Whether document Feature Policy (legacy Permissions Policy) is referenced in response bodies.
 
 ### `referrerPolicy`
 
 Type: `object`
 
-Specifies the referrer policy for the entire document and individual requests.
+Referrer policy declared for the entire document, subresource requests, or link relations. See [MDN Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy).
 
 #### `referrerPolicy.entire_document_policy`
 
 Type: `string`
 
-Referrer policy for the entire document.
+Referrer policy set for the entire document using meta tag.
 
 #### `referrerPolicy.individual_requests`
 
+Type: `array<object>`
+
+Referrer policies specified on individual elements via referrerpolicy attribute.
+
+##### `referrerPolicy.individual_requests[i].tagName`
+
 Type: `string`
 
-Referrer policy for individual requests.
+HTML tag name of the element (e.g., IMG, SCRIPT).
 
-#### `referrerPolicy.link_relations`
+##### `referrerPolicy.individual_requests[i].referrerpolicy`
 
 Type: `string`
 
-Referrer policy for link relations.
+Value of the referrerpolicy attribute.
 
-### `media_devices`
-
-Type: `object`
-
-Tracks the usage of media device APIs like `enumerateDevices` and `getUserMedia`.
-
-#### `media_devices["API_NAME"]`
-
-Type: `boolean`
-
-Indicates usage of a particular API.
-
-### `geolocation`
-
-Type: `object`
-
-Tracks the usage of geolocation APIs like `getCurrentPosition` and `watchPosition`.
-
-#### `geolocation["API_NAME"]`
-
-Type: `boolean`
-
-Indicates usage of a particular API.
-
-### `fingerprinting`
-
-Type: `object`
-
-Tracks potential fingerprinting attempts by counting API calls and listing likely fingerprinting scripts.
-
-#### `fingerprinting.counts`
-
-Type: `object`
-
-Counts of fingerprinting-related API calls.
-
-#### `fingerprinting.counts["API_NAME"]`
+##### `referrerPolicy.individual_requests[i].count`
 
 Type: `integer`
 
-Counts of fingerprinting-related API calls.
+Number of occurrences on the page.
 
-#### `fingerprinting.likelyFingerprintingScripts`
+#### `referrerPolicy.link_relations`
 
-Type: `array<string>`
+Type: `object`
 
-List of likely fingerprinting script URLs.
+Count of elements specifying rel="noreferrer" grouped by HTML tag name.
 
 ### `request_hostnames_with_cname`
 
 Type: `object`
 
-Lists hostnames with their corresponding CNAME records.
-
-#### `request_hostnames_with_cname.["HOSTNAME"]`
-
-Type: `array<string>`
-
-CNAME records for a given hostname.
+Mapping of request hostnames to their canonical CNAME chains.
 
 ### `ccpa_link`
 
 Type: `object`
 
-California Consumer Privacy Act (CCPA) compliance.
+California Consumer Privacy Act (CCPA) compliance links detection. See [CPPA FAQ](https://cppa.ca.gov/faq.html).
 
 #### `ccpa_link.hasCCPALink`
 
 Type: `boolean`
 
-Presence of a CCPA link.
+Whether links matching CCPA opt-out criteria were found on the page.
 
-#### `ccpa_link.CCPALinkPhrases`
+### `iab_ddr`
 
-Type: `array<string>`
+Type: `object`
 
-Related CCPA link phrases.
+IAB Data Deletion Request Framework response data. See [Data Deletion Request Framework](https://github.com/InteractiveAdvertisingBureau/Data-Subject-Rights/blob/main/Data%20Deletion%20Request%20Framework.md).
+
+#### `iab_ddr.present`
+
+Type: `boolean`
+
+Whether the `/dsrdelete.json` endpoint exists and returns valid JSON.
+
+#### `iab_ddr.status`
+
+Type: `integer`
+
+HTTP status code of the `/dsrdelete.json` request.
+
+#### `iab_ddr.redirected`
+
+Type: `boolean`
+
+Whether the request was redirected.
+
+#### `iab_ddr.identifiers`
+
+Type: `array<object>`
+
+Sanitized identifiers supported for data deletion requests.
+
+#### `iab_ddr.endpointOrigin`
+
+Type: `string`
+
+Target origin if redirected.
+
+#### `iab_ddr.vendorScriptPresent`
+
+Type: `boolean`
+
+Whether vendor script is declared.
+
+#### `iab_ddr.vendorScriptRequirement`
+
+Type: `boolean`
+
+Whether vendor script requirement is declared.
+
+#### `iab_ddr.error`
+
+Type: `string`
+
+Error message if request or parsing failed.
+
