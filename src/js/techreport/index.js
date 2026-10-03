@@ -389,9 +389,20 @@ class TechReport {
       const url = `${Constants.apiBase}/${api.endpoint}`;
 
       return fetch(url)
-        .then(result => result.json())
-        .then(result => filterData[api.name] = result)
-        .catch(error => console.log('Something went wrong', error));
+        .then(result => {
+          if (!result.ok) {
+            console.warn(`Failed to fetch ${api.name}: ${result.status}`);
+            return [];
+          }
+          return result.json();
+        })
+        .then(result => {
+          filterData[api.name] = Array.isArray(result) ? result : [];
+        })
+        .catch(error => {
+          console.warn('Something went wrong fetching filter data', error);
+          filterData[api.name] = [];
+        });
     })).then(() => {
       const FilterComponent = new Filters(filterData, this.filters);
 
