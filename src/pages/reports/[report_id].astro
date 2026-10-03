@@ -214,7 +214,6 @@ const imageHeight = report.image ? 460 : 160;
   <div id="report-data-container" data-report={JSON.stringify(enrichedReport)} data-url={reportUrl} style="display: none;"></div>
 
   <Fragment slot="scripts">
-    <script src="../../js/highcharts-init.js"></script>
     <script src="../../js/report.js"></script>
     <script src="../../js/timeseries.js"></script>
     <script src="../../js/histogram.js"></script>
@@ -337,7 +336,13 @@ const imageHeight = report.image ? 460 : 160;
 
         // Render charts for each enabled metric
         report.metrics.forEach(metric => {
-          if (!metric || !metric[viz]?.enabled) return;
+          if (!metric) return;
+          const sectionEl = document.getElementById(metric.id);
+          if (metric[viz]?.enabled === false) {
+            if (sectionEl) sectionEl.style.display = 'none';
+            return;
+          }
+          if (sectionEl) sectionEl.style.display = '';
 
           if (viz === 'timeseries') {
             timeseries(metric.id, metric, start, end);
