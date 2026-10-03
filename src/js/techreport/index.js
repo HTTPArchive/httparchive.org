@@ -65,7 +65,7 @@ class TechReport {
     });
 
     openButtonMobile?.addEventListener('click', () => {
-      if(mobileFilters.classList.contains('hidden')) {
+      if (mobileFilters.classList.contains('hidden')) {
         mobileFilters.replaceChildren(reportFilters);
         mobileFilters.classList.remove('hidden');
         document.getElementById('close-filters').classList.remove('hidden');
@@ -82,7 +82,7 @@ class TechReport {
   initializePage() {
     this.updateStyling();
 
-    switch(this.pageId) {
+    switch (this.pageId) {
       case 'landing':
         this.initializeLanding();
         this.getAllMetricData();
@@ -118,9 +118,9 @@ class TechReport {
     const theme = localStorage.getItem('haTheme');
     document.querySelector('html').dataset.theme = theme;
     const btn = document.querySelector('.theme-switcher');
-    if(theme === 'dark') {
+    if (theme === 'dark') {
       btn.innerHTML = '🌝 Switch to light theme';
-    } else if(theme === 'light') {
+    } else if (theme === 'light') {
       btn.innerHTML = '🌚 Switch to dark theme';
     }
   }
@@ -207,7 +207,7 @@ class TechReport {
   // Watch for changes in the accessibility/UI settings
   bindSettingsListeners() {
     const indicatorSetting = document.querySelector('input[name="indicators-check"]');
-    if(indicatorSetting) {
+    if (indicatorSetting) {
       indicatorSetting.onchange = (event) => {
         document.querySelector('main').dataset.showIndicators = event.target.checked;
         localStorage.setItem('showIndicators', event.target.checked);
@@ -220,11 +220,11 @@ class TechReport {
     }
 
     const themeSwitcher = document.querySelector('button.theme-switcher');
-    if(themeSwitcher) {
+    if (themeSwitcher) {
       themeSwitcher.addEventListener('click', (event) => {
         const currentTheme = document.querySelector('html').dataset.theme;
 
-        if(currentTheme !== 'dark') {
+        if (currentTheme !== 'dark') {
           document.querySelector('html').dataset.theme = 'dark';
           localStorage.setItem('haTheme', 'dark');
           event.target.innerHTML = '🌝 Switch to light theme';
@@ -326,7 +326,7 @@ class TechReport {
       });
   }
 
-  updateCategoryComponents (category) {
+  updateCategoryComponents(category) {
     this.updateComponents(category.data);
     DrilldownHeader.setDescription(category.description);
     const mainTitle = document.querySelector('h1 span.main-title');
@@ -337,7 +337,7 @@ class TechReport {
 
   // Update components and sections that are relevant to the current page
   updateComponents(data) {
-    switch(this.pageId) {
+    switch (this.pageId) {
       case 'landing':
         this.updateLandingComponents(data);
         break;
@@ -389,20 +389,9 @@ class TechReport {
       const url = `${Constants.apiBase}/${api.endpoint}`;
 
       return fetch(url)
-        .then(result => {
-          if (!result.ok) {
-            console.warn(`Failed to fetch ${api.name}: ${result.status}`);
-            return [];
-          }
-          return result.json();
-        })
-        .then(result => {
-          filterData[api.name] = Array.isArray(result) ? result : [];
-        })
-        .catch(error => {
-          console.warn('Something went wrong fetching filter data', error);
-          filterData[api.name] = [];
-        });
+        .then(result => result.json())
+        .then(result => filterData[api.name] = result)
+        .catch(error => console.log('Something went wrong', error));
     })).then(() => {
       const FilterComponent = new Filters(filterData, this.filters);
 
@@ -436,7 +425,7 @@ class TechReport {
       DrilldownHeader.setIcon(`${encodeURI(icon)}`);
     }
 
-    if(data && data[app]) {
+    if (data && data[app]) {
       UIUtils.updateReportComponents(this.sections, data, data[app], this.page, this.labels);
     } else {
       this.updateWithEmptyData();
@@ -445,7 +434,7 @@ class TechReport {
 
   // Update comparison components
   updateComparisonComponents(data) {
-    if(data && Object.keys(data).length > 0) {
+    if (data && Object.keys(data).length > 0) {
       UIUtils.updateReportComponents(this.sections, data);
     } else {
       this.updateWithEmptyData();
@@ -467,7 +456,7 @@ class TechReport {
   updateStyling() {
     const series = this.page.config.default.series;
     const body = document.querySelector('body');
-    if(series?.breakdown == 'client') {
+    if (series?.breakdown == 'client') {
       series?.breakdown_values?.forEach((breakdown) => {
         body.style.setProperty(`--breakdown-color-${breakdown.name}`, breakdown.color);
       });
