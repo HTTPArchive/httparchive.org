@@ -26,12 +26,16 @@ import SiteHeader from '../Header.astro';
     border-bottom: none !important;
   }
   /* Visually hide Starlight's default circular menu button; header hamburger controls it */
+  .sl-menu-button,
   starlight-menu-button {
     position: absolute !important;
     opacity: 0 !important;
     pointer-events: none !important;
     width: 0 !important;
     height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
     overflow: hidden !important;
   }
 </style>
@@ -60,6 +64,7 @@ import SiteHeader from '../Header.astro';
     const hamburger = document.querySelector('.ha-docs-header .hamburger');
     const mobileNav = document.querySelector('.ha-docs-header nav#mobile');
     const desktopNav = document.querySelector('.ha-docs-header nav#desktop');
+    const sidebar = document.getElementById('starlight__sidebar');
 
     // Populate mobile nav with desktop links if empty
     if (mobileNav && desktopNav && !mobileNav.hasChildNodes()) {
@@ -72,18 +77,33 @@ import SiteHeader from '../Header.astro';
     if (hamburger && !hamburger.hasAttribute('data-initialized')) {
       hamburger.setAttribute('data-initialized', 'true');
       hamburger.addEventListener('click', () => {
-        const starlightBtn = document.querySelector('starlight-menu-button button') as HTMLButtonElement | null;
+        const starlightBtn = document.querySelector<HTMLButtonElement>('.sl-menu-button, starlight-menu-button button');
         if (starlightBtn) {
           // On pages with Starlight sidebar drawer, delegate toggle to Starlight
           starlightBtn.click();
-          const expanded = starlightBtn.getAttribute('aria-expanded');
-          hamburger.setAttribute('aria-expanded', expanded || 'false');
+          const isExpanded = sidebar ? sidebar.matches(':popover-open') : (starlightBtn.getAttribute('aria-expanded') === 'true');
+          hamburger.setAttribute('aria-expanded', String(isExpanded));
+        } else if (sidebar && typeof (sidebar as any).togglePopover === 'function') {
+          (sidebar as any).togglePopover();
+          hamburger.setAttribute('aria-expanded', String(sidebar.matches(':popover-open')));
         } else if (mobileNav) {
           // On splash pages without sidebar drawer, toggle nav#mobile
           const isExpanded = mobileNav.classList.toggle('active');
           hamburger.setAttribute('aria-expanded', String(isExpanded));
         }
       });
+    }
+
+    // Keep hamburger aria-expanded synchronized with sidebar popover toggle events
+    if (sidebar && !sidebar.hasAttribute('data-toggle-listener')) {
+      sidebar.setAttribute('data-toggle-listener', 'true');
+      sidebar.addEventListener('toggle', ((e: Event) => {
+        const customEvent = e as CustomEvent & { newState?: string };
+        const isOpen = customEvent.newState ? customEvent.newState === 'open' : sidebar.matches(':popover-open');
+        if (hamburger) {
+          hamburger.setAttribute('aria-expanded', String(isOpen));
+        }
+      }) as EventListener);
     }
   }
 
@@ -113,10 +133,12 @@ import SiteHeader from '../Header.astro';
 
   // Keep hamburger aria-expanded synchronized if Starlight's menu changes
   const observer = new MutationObserver(() => {
-    const isExpanded = document.body.hasAttribute('data-mobile-menu-expanded');
+    const sidebar = document.getElementById('starlight__sidebar');
+    const isExpanded = document.body.hasAttribute('data-mobile-menu-expanded') ||
+      (sidebar ? sidebar.matches(':popover-open') : false);
     const hamburger = document.querySelector('.ha-docs-header .hamburger');
-    const starlightBtn = document.querySelector('starlight-menu-button button');
-    if (hamburger && starlightBtn) {
+    const starlightBtn = document.querySelector('.sl-menu-button, starlight-menu-button button');
+    if (hamburger && (starlightBtn || sidebar)) {
       hamburger.setAttribute('aria-expanded', String(isExpanded));
     }
   });
