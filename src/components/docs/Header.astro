@@ -25,18 +25,6 @@ import SiteHeader from '../Header.astro';
     padding: 0 !important;
     border-bottom: none !important;
   }
-  /* Visually hide Starlight's default circular menu button; header hamburger controls it */
-  .sl-menu-button {
-    position: absolute !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-    overflow: hidden !important;
-  }
 </style>
 
 <style>
@@ -76,13 +64,8 @@ import SiteHeader from '../Header.astro';
     if (hamburger && !hamburger.hasAttribute('data-initialized')) {
       hamburger.setAttribute('data-initialized', 'true');
       hamburger.addEventListener('click', () => {
-        const starlightBtn = document.querySelector<HTMLButtonElement>('.sl-menu-button');
-        if (starlightBtn) {
-          // On pages with Starlight sidebar drawer, delegate toggle to Starlight
-          starlightBtn.click();
-          const isExpanded = sidebar ? sidebar.matches(':popover-open') : (starlightBtn.getAttribute('aria-expanded') === 'true');
-          hamburger.setAttribute('aria-expanded', String(isExpanded));
-        } else if (sidebar && typeof (sidebar as any).togglePopover === 'function') {
+        if (sidebar && typeof (sidebar as any).togglePopover === 'function') {
+          // On pages with Starlight sidebar drawer, toggle the sidebar popover
           (sidebar as any).togglePopover();
           hamburger.setAttribute('aria-expanded', String(sidebar.matches(':popover-open')));
         } else if (mobileNav) {
