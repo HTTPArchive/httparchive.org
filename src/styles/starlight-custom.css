@@ -68,15 +68,3 @@
 starlight-theme-select {
   display: none !important;
 }
-
-/* Prevent body scrolling when Starlight sidebar popover is open on mobile */
-body:has(#starlight__sidebar:popover-open) {
-  overflow: hidden;
-}
-
-@media (min-width: 50rem) {
-  body:has(#starlight__sidebar:popover-open) {
-    overflow: auto;
-  }
-}
-

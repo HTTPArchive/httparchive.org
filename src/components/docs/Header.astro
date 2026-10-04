@@ -25,6 +25,15 @@ import SiteHeader from '../Header.astro';
     padding: 0 !important;
     border-bottom: none !important;
   }
+  /* Prevent body scrolling when Starlight sidebar popover is open on mobile */
+  body:has(.sidebar-pane:popover-open) {
+    overflow: hidden;
+  }
+  @media (min-width: 50rem) {
+    body:has(.sidebar-pane:popover-open) {
+      overflow: auto;
+    }
+  }
 </style>
 
 <style>
