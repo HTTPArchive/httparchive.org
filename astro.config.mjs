@@ -32,6 +32,7 @@ export default defineConfig({
         Sidebar: './src/components/docs/Sidebar.astro',
         ThemeProvider: './src/components/docs/ThemeProvider.astro',
         ThemeSelect: './src/components/docs/EmptyComponent.astro',
+        MobileMenuToggle: './src/components/docs/EmptyComponent.astro',
       },
       sidebar: [
         {
