@@ -70,8 +70,7 @@ starlight-theme-select {
 }
 
 /* Visually hide Starlight's default circular menu button; header hamburger controls it */
-.sl-menu-button,
-starlight-menu-button {
+.sl-menu-button {
   position: absolute !important;
   opacity: 0 !important;
   pointer-events: none !important;
