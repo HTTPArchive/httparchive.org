@@ -25,6 +25,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'HTTP Archive Docs',
+      favicon: '/favicon.ico',
       disable404Route: true,
       customCss: ['./src/styles/starlight-custom.css'],
       components: {
