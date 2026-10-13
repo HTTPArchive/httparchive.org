@@ -820,7 +820,7 @@ input {
     text-align: inherit;
   }
 
-  section [class*="btn"] {
+  section [class*="btn"]:not(.chart *) {
     display: block;
     margin: 15px auto !important;
     max-width: 85%;
