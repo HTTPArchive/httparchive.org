@@ -13,14 +13,21 @@
       "LCP",
       "FCP",
       "INP",
-      "TTFB"
+      "TTFB",
+      "overall_sn",
+      "LCP_sn",
+      "CLS_sn",
+      "INP_sn"
     ],
     "cwv_thresholds": {
       "LCP":  [{ "value": 2500, "label": "Good" }, { "value": 4000, "label": "Needs improvement" }],
+      "LCP_sn": [{ "value": 2500, "label": "Good" }, { "value": 4000, "label": "Needs improvement" }],
       "FCP":  [{ "value": 1800, "label": "Good" }, { "value": 3000, "label": "Needs improvement" }],
       "TTFB": [{ "value": 800,  "label": "Good" }, { "value": 1800, "label": "Needs improvement" }],
       "INP":  [{ "value": 200,  "label": "Good" }, { "value": 500,  "label": "Needs improvement" }],
-      "CLS":  [{ "value": 0.1,  "label": "Good" }, { "value": 0.25, "label": "Needs improvement" }]
+      "INP_sn": [{ "value": 200,  "label": "Good" }, { "value": 500,  "label": "Needs improvement" }],
+      "CLS":  [{ "value": 0.1,  "label": "Good" }, { "value": 0.25, "label": "Needs improvement" }],
+      "CLS_sn": [{ "value": 0.1,  "label": "Good" }, { "value": 0.25, "label": "Needs improvement" }]
     },
     "lighthouse_subcategories": [
       "accessibility",
@@ -324,6 +331,22 @@
               {
                 "label": "Good TTFB",
                 "value": "TTFB"
+              },
+              {
+                "label": "Good Core Web Vitals (with soft navs)",
+                "value": "overall_sn"
+              },
+              {
+                "label": "Good LCP (with soft navs)",
+                "value": "LCP_sn"
+              },
+              {
+                "label": "Good INP (with soft navs)",
+                "value": "INP_sn"
+              },
+              {
+                "label": "Good CLS (with soft navs)",
+                "value": "CLS_sn"
               }
             ]
           },
@@ -739,7 +762,11 @@
             "INP": "Good INP",
             "CLS": "Good CLS",
             "FCP": "Good FCP",
-            "TTFB": "Good TTFB"
+            "TTFB": "Good TTFB",
+            "overall_sn": "Good Core Web Vitals (with soft navs)",
+            "LCP_sn": "Good LCP (with soft navs)",
+            "INP_sn": "Good INP (with soft navs)",
+            "CLS_sn": "Good CLS (with soft navs)"
           }
         },
         "cwv_distribution": {
@@ -753,6 +780,15 @@
               "originsField": "lcp_origins",
               "unit": "ms",
               "axis_label": "LCP (ms)",
+              "step": 100
+            },
+            "LCP_sn": {
+              "label": "LCP_sn",
+              "display_name": "LCP (soft navs)",
+              "bucketField": "loading_bucket",
+              "originsField": "lcp_sn_origins",
+              "unit": "ms",
+              "axis_label": "LCP with soft navs (ms)",
               "step": 100
             },
             "FCP":  {
@@ -778,12 +814,30 @@
               "axis_label": "INP (ms)",
               "step": 25
             },
+            "INP_sn": {
+              "label": "INP_sn",
+              "display_name": "INP (soft navs)",
+              "bucketField": "inp_bucket",
+              "originsField": "inp_sn_origins",
+              "unit": "ms",
+              "axis_label": "INP with soft navs (ms)",
+              "step": 25
+            },
             "CLS":  {
               "label": "CLS",
               "bucketField": "cls_bucket",
               "originsField": "cls_origins",
               "unit": "",
               "axis_label": "CLS",
+              "step": 0.05
+            },
+            "CLS_sn": {
+              "label": "CLS_sn",
+              "display_name": "CLS (soft navs)",
+              "bucketField": "cls_bucket",
+              "originsField": "cls_sn_origins",
+              "unit": "",
+              "axis_label": "CLS with soft navs",
               "step": 0.05
             }
           },
@@ -938,6 +992,22 @@
               {
                 "label": "Good TTFB",
                 "value": "TTFB"
+              },
+              {
+                "label": "Good Core Web Vitals (with soft navs)",
+                "value": "overall_sn"
+              },
+              {
+                "label": "Good LCP (with soft navs)",
+                "value": "LCP_sn"
+              },
+              {
+                "label": "Good INP (with soft navs)",
+                "value": "INP_sn"
+              },
+              {
+                "label": "Good CLS (with soft navs)",
+                "value": "CLS_sn"
               }
             ]
           },
@@ -1440,6 +1510,26 @@
           "label": "Good TTFB",
           "title": "Good Time To First Byte",
           "description": "TTFB is a metric that measures the time between the request for a resource and when the first byte of a response begins to arrive. A good TTFB is less than or equal to 800ms."
+        },
+        "overall_sn": {
+          "label": "Good Core Web Vitals (with soft navs)",
+          "title": "Good Core Web Vitals (with soft navs)",
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience, accounting for soft navigations in single-page applications. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics."
+        },
+        "LCP_sn": {
+          "label": "Good LCP (with soft navs)",
+          "title": "Good Largest Contentful Paint (with soft navs)",
+          "description": "Largest Contentful Paint including soft navigations measures perceived load speed across both hard page loads and subsequent in-app soft navigations. Good experiences are less than or equal to 2.5 seconds."
+        },
+        "INP_sn": {
+          "label": "Good INP (with soft navs)",
+          "title": "Good Interaction to Next Paint (with soft navs)",
+          "description": "Interaction to Next Paint including soft navigations assesses responsiveness across user interactions within the lifespan of a visit, including interactions occurring during soft navigations. A good experience is less than or equal to 200ms."
+        },
+        "CLS_sn": {
+          "label": "Good CLS (with soft navs)",
+          "title": "Good Cumulative Layout Shift (with soft navs)",
+          "description": "Cumulative Layout Shift including soft navigations measures visual stability across both initial loads and subsequent soft navigation page changes. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits."
         }
       },
       "pageWeight": {
@@ -1480,6 +1570,10 @@
       "origins_eligible_for_fcp": "Eligible",
       "origins_eligible_for_inp": "Eligible",
       "origins_eligible_for_ttfb": "Eligible",
+      "origins_eligible_for_cwv_sn": "Eligible",
+      "origins_eligible_for_cls_sn": "Eligible",
+      "origins_eligible_for_lcp_sn": "Eligible",
+      "origins_eligible_for_inp_sn": "Eligible",
 
       "origins_with_good_cwv": "Having good Core Web Vitals",
       "origins_with_good_cls": "Having good CLS",
@@ -1487,6 +1581,10 @@
       "origins_with_good_fcp": "Having good FCP",
       "origins_with_good_inp": "Having good INP",
       "origins_with_good_ttfb": "Having good TTFB",
+      "origins_with_good_cwv_sn": "Having good Core Web Vitals (with soft navs)",
+      "origins_with_good_cls_sn": "Having good CLS (with soft navs)",
+      "origins_with_good_lcp_sn": "Having good LCP (with soft navs)",
+      "origins_with_good_inp_sn": "Having good INP (with soft navs)",
 
       "pct_good_cwv": "% Good Core Web Vitals",
       "pct_good_cls": "% Good CLS",
@@ -1494,6 +1592,10 @@
       "pct_good_fcp": "% Good FCP",
       "pct_good_inp": "% Good INP",
       "pct_good_ttfb": "% Good TTFB",
+      "pct_good_cwv_sn": "% Good Core Web Vitals (with soft navs)",
+      "pct_good_cls_sn": "% Good CLS (with soft navs)",
+      "pct_good_lcp_sn": "% Good LCP (with soft navs)",
+      "pct_good_inp_sn": "% Good INP (with soft navs)",
 
       "median_lighthouse_score_accessibility": "Median accessibility",
       "median_lighthouse_score_performance": "Median performance",

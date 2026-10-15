@@ -60,13 +60,17 @@ class CwvDistribution {
 
   // Map the shared metric value (which may be 'overall') to a metric this chart can show
   resolveMetric(value) {
-    if (value && this.pageConfig.cwv_distribution.metric_config[value]) return this.pageConfig.cwv_distribution.metric_config[value].label;
+    if (value && this.pageConfig?.cwv_distribution?.metric_config?.[value]) return value;
+    if (value === 'overall_sn') return 'LCP_sn';
     return 'LCP';
   }
 
   updateTitle() {
     const slot = this.root?.querySelector('[data-slot="cwv-distribution-title-metric"]');
-    if (slot) slot.textContent = this.selectedMetric;
+    if (slot) {
+      const cfg = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric];
+      slot.textContent = cfg?.display_name || cfg?.label || this.selectedMetric;
+    }
   }
 
   bindEventListeners() {
