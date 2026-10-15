@@ -149,7 +149,7 @@ class GeoBreakdown {
       : metric === 'overall'
         ? [{ key: 'lcp', label: 'LCP' }, { key: 'inp', label: 'INP' }, { key: 'cls', label: 'CLS' }]
         : metric === 'overall_sn'
-          ? [{ key: 'lcp_sn', label: 'LCP (SN)' }, { key: 'inp_sn', label: 'INP (SN)' }, { key: 'cls_sn', label: 'CLS (SN)' }]
+          ? [{ key: 'lcp_sn', label: 'LCP' }, { key: 'inp_sn', label: 'INP' }, { key: 'cls_sn', label: 'CLS' }]
           : []; // INP/CLS/individual softnav metrics: no extra columns
 
     // If current sort column is no longer visible, reset to total

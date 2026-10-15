@@ -16,11 +16,7 @@ class CwvDistribution {
     this.chart = null;
     this.root = document.querySelector(`[data-id="${this.id}"]`);
     this.date = this.pageFilters.end || this.root?.dataset?.latestDate || '';
-    this.selectedMetric = this.resolveMetric(
-      UrlUtils.get('good-cwv-over-time') ||
-      document.querySelector(`[data-id="good_cwv_timeseries"] .subcategory-selector, select[data-controls="good_cwv_timeseries"]`)?.value ||
-      ''
-    );
+    this.selectedMetric = this.resolveMetric(UrlUtils.get('good-cwv-over-time'));
 
     const updateDateFromTimeseries = (newDate) => {
       const dateChanged = this.date && this.date !== newDate;
@@ -30,7 +26,7 @@ class CwvDistribution {
       if (dateChanged) {
         this.distributionData = null;
       }
-      if (!this.distributionData && !this.isLoading && !this.root?.classList.contains('hidden') && this.selectedMetric) {
+      if (!this.distributionData && !this.isLoading && !this.root?.classList.contains('hidden')) {
         this.fetchData();
       }
     };
@@ -53,10 +49,11 @@ class CwvDistribution {
       if (tsSlot && this.date) tsSlot.textContent = UIUtils.printMonthYear(this.date);
     }
 
-    this.updateAvailability();
+    this.updateTitle();
+    this.updateButton();
     this.bindEventListeners();
 
-    // Auto-expand if URL hash targets this section and metric is available
+    // Auto-expand if URL hash targets this section
     if (this.selectedMetric && window.location.hash === `#section-${this.id}`) {
       this.toggle(true);
     }
@@ -68,22 +65,10 @@ class CwvDistribution {
     return null;
   }
 
-  updateAvailability() {
+  updateButton() {
     const btn = document.getElementById('cwv-distribution-btn');
-    if (!this.selectedMetric) {
-      if (btn) {
-        btn.disabled = true;
-        btn.setAttribute('aria-disabled', 'true');
-        btn.classList.remove('hidden');
-      }
-      this.toggle(false);
-    } else {
-      if (btn) {
-        btn.disabled = false;
-        btn.removeAttribute('aria-disabled');
-        btn.classList.remove('hidden');
-      }
-      this.updateTitle();
+    if (btn) {
+      btn.disabled = !this.selectedMetric;
     }
   }
 
@@ -100,13 +85,14 @@ class CwvDistribution {
 
     document.addEventListener('cwv-metric-change', (event) => {
       const resolved = this.resolveMetric(event.detail?.value);
-      const changed = resolved !== this.selectedMetric;
-      this.selectedMetric = resolved;
-      this.updateAvailability();
-
-      if (this.selectedMetric && changed && this.root && !this.root.classList.contains('hidden')) {
-        if (!this.distributionData && !this.isLoading && this.date) {
-          this.fetchData();
+      if (resolved !== this.selectedMetric) {
+        this.selectedMetric = resolved;
+        this.updateTitle();
+        this.updateButton();
+        if (!this.selectedMetric) {
+          if (!this.root.classList.contains('hidden')) {
+            this.toggle(false);
+          }
         } else if (this.distributionData) {
           this.renderChart();
         }
@@ -116,7 +102,6 @@ class CwvDistribution {
     const btn = document.getElementById('cwv-distribution-btn');
     if (btn) {
       btn.addEventListener('click', () => {
-        if (btn.disabled) return;
         const isVisible = !this.root.classList.contains('hidden');
         this.toggle(!isVisible);
       });
@@ -126,7 +111,7 @@ class CwvDistribution {
   toggle(show) {
     const btn = document.getElementById('cwv-distribution-btn');
     if (show) {
-      if (!this.selectedMetric || btn?.disabled) return;
+      if (!this.selectedMetric) return;
       this.root.classList.remove('hidden');
       if (btn) btn.textContent = 'Hide histogram';
       if (!this.date) {
@@ -155,14 +140,12 @@ class CwvDistribution {
       url.hash = `#section-${this.id}`;
       window.history.replaceState(null, null, url);
     } else {
-      if (this.root) this.root.classList.add('hidden');
+      this.root.classList.add('hidden');
       if (btn) btn.textContent = 'Show histogram';
       // Update the URL
-      if (window.location.hash === `#section-${this.id}`) {
-        const url = new URL(window.location.href);
-        url.hash = '';
-        window.history.replaceState(null, null, url);
-      }
+      const url = new URL(window.location.href);
+      url.hash = '';
+      window.history.replaceState(null, null, url);
     }
   }
 
@@ -171,7 +154,6 @@ class CwvDistribution {
   }
 
   getUrl() {
-    if (!this.selectedMetric) return '';
     const technology = this.pageFilters.app.map(encodeURIComponent).join(',');
     const rank = encodeURIComponent(this.pageFilters.rank || 'ALL');
     const geo = encodeURIComponent(this.pageFilters.geo || 'ALL');
@@ -184,10 +166,6 @@ class CwvDistribution {
 
   updateContent() {
     const isVisible = this.root && !this.root.classList.contains('hidden');
-    if (!this.selectedMetric) {
-      if (isVisible) this.toggle(false);
-      return;
-    }
     const currentUrl = this.getUrl();
     const urlChanged = this.fetchedUrl && this.fetchedUrl !== currentUrl;
 
