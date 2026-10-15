@@ -549,6 +549,10 @@ class Timeseries {
         data: sortedData,
         color: techColor || colors[index],
         showInLegend: sortedData.length > 0,
+        marker: {
+          enabled: sortedData.length === 1 ? true : null,
+          radius: 4,
+        },
       });
     });
 
@@ -607,6 +611,10 @@ class Timeseries {
         data: sortedData,
         color: seriesColor || colors?.[index],
         lineWidth: 2,
+        marker: {
+          enabled: sortedData.length === 1 ? true : null,
+          radius: 4,
+        },
       });
     });
 

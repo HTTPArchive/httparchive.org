@@ -783,8 +783,7 @@
               "step": 100
             },
             "LCP_sn": {
-              "label": "LCP_sn",
-              "display_name": "LCP (soft navs)",
+              "label": "LCP (soft navs)",
               "bucketField": "loading_bucket",
               "originsField": "lcp_sn_origins",
               "unit": "ms",
@@ -815,8 +814,7 @@
               "step": 25
             },
             "INP_sn": {
-              "label": "INP_sn",
-              "display_name": "INP (soft navs)",
+              "label": "INP (soft navs)",
               "bucketField": "inp_bucket",
               "originsField": "inp_sn_origins",
               "unit": "ms",
@@ -832,8 +830,7 @@
               "step": 0.05
             },
             "CLS_sn": {
-              "label": "CLS_sn",
-              "display_name": "CLS (soft navs)",
+              "label": "CLS (soft navs)",
               "bucketField": "cls_bucket",
               "originsField": "cls_sn_origins",
               "unit": "",

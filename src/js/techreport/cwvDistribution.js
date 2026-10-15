@@ -69,7 +69,7 @@ class CwvDistribution {
     const slot = this.root?.querySelector('[data-slot="cwv-distribution-title-metric"]');
     if (slot) {
       const cfg = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric];
-      slot.textContent = cfg?.display_name || cfg?.label || this.selectedMetric;
+      slot.textContent = cfg?.label || this.selectedMetric;
     }
   }
 

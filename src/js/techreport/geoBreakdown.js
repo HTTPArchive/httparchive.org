@@ -56,8 +56,13 @@ class GeoBreakdown {
   updateTitle() {
     const slot = document.querySelector('[data-slot="geo-title-metric"]');
     if (!slot) return;
-    const label = this.pageConfig?.geo_breakdown?.metric_labels?.[this.selectedMetric];
-    slot.textContent = label ? label.replace(/^Good\s+/, '') : (this.selectedMetric === 'overall' ? 'Core Web Vitals' : this.selectedMetric);
+    if (this.selectedMetric === 'overall') {
+      slot.textContent = 'Core Web Vitals';
+    } else if (this.selectedMetric === 'overall_sn') {
+      slot.textContent = 'Core Web Vitals (soft navs)';
+    } else {
+      slot.textContent = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric]?.label || this.selectedMetric;
+    }
   }
 
   bindEventListeners() {
@@ -138,7 +143,7 @@ class GeoBreakdown {
 
     // Determine bar label and which extra columns to show
     const metric = this.selectedMetric;
-    const barLabel = this.pageConfig?.geo_breakdown?.metric_labels?.[metric] || (metric === 'overall' ? 'Good Core Web Vitals' : `Good ${metric}`);
+    const barLabel = this.pageConfig?.geo_breakdown?.metric_labels?.[metric] || `Good ${metric}`;
     const extraCols = ['LCP', 'FCP', 'TTFB'].includes(metric)
       ? [{ key: 'ttfb', label: 'TTFB' }, { key: 'fcp', label: 'FCP' }, { key: 'lcp', label: 'LCP' }].filter(c => c.key !== metric.toLowerCase())
       : metric === 'overall'
