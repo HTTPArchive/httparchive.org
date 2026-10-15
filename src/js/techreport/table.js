@@ -58,8 +58,15 @@ function formatData(tableConfig, data) {
       }
     });
 
-    // Add row to the table
-    table.push(row);
+    // Only add row if at least one metric column has available data
+    const hasMetricData = row.some(cell => {
+      if (cell.key === 'date' || cell.key === 'client') return false;
+      return cell.value !== undefined && cell.value !== null && cell.value !== '';
+    });
+
+    if (hasMetricData) {
+      table.push(row);
+    }
   }
 
   const sorted = sortTableBy(table, 'date');
@@ -72,7 +79,7 @@ function sortTableBy(dataset, key) {
     const selectedA = a.find(obj => obj.key === key);
     const selectedB = b.find(obj => obj.key === key);
 
-    return selectedA.value > selectedB.value ? -1 : 1;
+    return (selectedA?.value || '') > (selectedB?.value || '') ? -1 : 1;
   });
 }
 
@@ -82,7 +89,12 @@ function getColumnCell(columnConfig, data, date) {
   const _data = data[app]?.find(entry => entry.date === date);
   const endpointData = _data?.[endpoint];
   const subcategoryData = endpointData?.find(row => row.name === subcategory);
-  const value = subcategoryData?.[client]?.[column.key];
+  let value = subcategoryData?.[client]?.[column.key];
+
+  if (column.key === 'date' && !value && subcategoryData) {
+    value = date;
+  }
+
   let styling;
 
   if(column.styleChange && column.keyNr) {
@@ -182,6 +194,21 @@ function updateTable(id, config, appConfig, apps, data) {
 
   // Format the data per row
   const rows = formatData(tableConfig, data);
+
+  if (!rows || rows.length === 0) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    let totalCols = 0;
+    config?.columns?.forEach(col => {
+      totalCols += col.breakdown === 'app' ? (apps?.length || 1) : 1;
+    });
+    td.colSpan = totalCols || 1;
+    td.className = 'no-data';
+    td.textContent = 'No data available for this selection.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
 
   // Add rows to the table
   rows?.forEach(row => {
