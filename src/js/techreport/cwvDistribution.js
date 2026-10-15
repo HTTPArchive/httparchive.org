@@ -179,6 +179,10 @@ class CwvDistribution {
   }
 
   showError() {
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
+    }
     if (!this.chartContainer) return;
     this.chartContainer.innerHTML = '<div class="cwv-distribution-error">Distribution data is not available for this selection.</div>';
   }
@@ -211,14 +215,14 @@ class CwvDistribution {
   }
 
   trimWithOverflow(rows, originsField, percentile) {
-    const total = rows.reduce((sum, row) => sum + row[originsField], 0);
-    if (total === 0) return { visible: rows, overflowCount: 0 };
+    const total = rows.reduce((sum, row) => sum + (row[originsField] || 0), 0);
+    if (!total || isNaN(total)) return { visible: rows, overflowCount: 0, total: 0 };
 
     const cutoff = total * percentile;
     let cumulative = 0;
     let cutIndex = rows.length;
     for (let i = 0; i < rows.length; i++) {
-      cumulative += rows[i][originsField];
+      cumulative += (rows[i][originsField] || 0);
       if (cumulative >= cutoff) {
         cutIndex = Math.min(i + 2, rows.length);
         break;
@@ -226,8 +230,8 @@ class CwvDistribution {
     }
 
     const visible = rows.slice(0, cutIndex);
-    const visibleSum = visible.reduce((sum, row) => sum + row[originsField], 0);
-    return { visible, overflowCount: total - visibleSum };
+    const visibleSum = visible.reduce((sum, row) => sum + (row[originsField] || 0), 0);
+    return { visible, overflowCount: total - visibleSum, total };
   }
 
   renderChart() {
@@ -235,16 +239,30 @@ class CwvDistribution {
     if (!this.root) return;
 
     const client = this.root.dataset.client || 'mobile';
-    const metricCfg = this.pageConfig.cwv_distribution.metric_config[this.selectedMetric];
-    const thresholds = this.config.cwv_thresholds[this.selectedMetric];
+    const metricCfg = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric];
+    if (!metricCfg) {
+      this.showError();
+      return;
+    }
+    const thresholds = this.config?.cwv_thresholds?.[this.selectedMetric] || [];
 
     const clientRows = this.distributionData
       .filter(row => row.client === client)
       .sort((a, b) => a[metricCfg.bucketField] - b[metricCfg.bucketField]);
 
-    const { visible, overflowCount } = this.trimWithOverflow(
+    if (clientRows.length === 0) {
+      this.showError();
+      return;
+    }
+
+    const { visible, overflowCount, total } = this.trimWithOverflow(
       clientRows, metricCfg.originsField, 0.995
     );
+
+    if (!total || total <= 0) {
+      this.showError();
+      return;
+    }
 
     const formatBucket = (val) => {
       if (metricCfg.unit === 'ms') {
