@@ -19,23 +19,72 @@ const test_cwv_toggle = async () => {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
     await new Promise((resolve) => setTimeout(resolve, 800));
 
-    // Verify button bar exists and table wrapper was positioned after button bar
+    // Verify button bar exists, table wrapper positioned after bar, and histogram btn disabled (not hidden) on overall
     const initialCheck = await page.evaluate(() => {
       const bar = document.querySelector('.cwv-button-bar');
       const tw = document.getElementById('good_cwv_timeseries-table-wrapper');
-      if (!bar || !tw) return null;
+      const histBtn = document.getElementById('cwv-distribution-btn');
+      if (!bar || !tw || !histBtn) return null;
       return {
         hasBar: !!bar,
         hasTw: !!tw,
         isTwAfterBar: !(bar.compareDocumentPosition(tw) & Node.DOCUMENT_POSITION_PRECEDING),
+        isHistBtnDisabledOnOverall: histBtn.disabled === true,
+        isHistBtnVisible: !histBtn.classList.contains('hidden'),
       };
     });
 
     if (!initialCheck || !initialCheck.isTwAfterBar) {
       console.error('❌ [FAIL] CWV button bar or table wrapper not properly positioned');
       failures++;
+    } else if (!initialCheck.isHistBtnDisabledOnOverall || !initialCheck.isHistBtnVisible) {
+      console.error('❌ [FAIL] Histogram button should be visible and disabled for overall metric', initialCheck);
+      failures++;
     } else {
-      console.log('✅ [PASS] Table wrapper positioned after .cwv-button-bar');
+      console.log('✅ [PASS] Table wrapper positioned after .cwv-button-bar and histogram button disabled for overall');
+      passes++;
+    }
+
+    // Switch metric to overall_sn to verify histogram button is also disabled
+    const snCheck = await page.evaluate(async () => {
+      const select = document.querySelector('select[data-controls="good_cwv_timeseries"]');
+      if (select) {
+        select.value = 'overall_sn';
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      await new Promise((r) => setTimeout(r, 300));
+      const histBtn = document.getElementById('cwv-distribution-btn');
+      return histBtn && histBtn.disabled === true && !histBtn.classList.contains('hidden');
+    });
+
+    if (!snCheck) {
+      console.error('❌ [FAIL] Histogram button should be visible and disabled for overall_sn metric');
+      failures++;
+    } else {
+      console.log('✅ [PASS] Histogram button disabled for overall_sn');
+      passes++;
+    }
+
+    // Switch metric to LCP so histogram button becomes enabled for toggle testing
+    await page.evaluate(() => {
+      const select = document.querySelector('select[data-controls="good_cwv_timeseries"]');
+      if (select) {
+        select.value = 'LCP';
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const lcpCheck = await page.evaluate(() => {
+      const histBtn = document.getElementById('cwv-distribution-btn');
+      return histBtn && histBtn.disabled === false;
+    });
+
+    if (!lcpCheck) {
+      console.error('❌ [FAIL] Histogram button should be enabled for LCP metric');
+      failures++;
+    } else {
+      console.log('✅ [PASS] Histogram button enabled for LCP');
       passes++;
     }
 

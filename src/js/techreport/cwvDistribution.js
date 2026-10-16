@@ -50,23 +50,34 @@ class CwvDistribution {
     }
 
     this.updateTitle();
+    this.updateButton();
     this.bindEventListeners();
 
     // Auto-expand if URL hash targets this section
-    if (window.location.hash === `#section-${this.id}`) {
+    if (this.selectedMetric && window.location.hash === `#section-${this.id}`) {
       this.toggle(true);
     }
   }
 
-  // Map the shared metric value (which may be 'overall') to a metric this chart can show
+  // Map the shared metric value to a metric this chart can show, or null if not available
   resolveMetric(value) {
-    if (value && this.pageConfig.cwv_distribution.metric_config[value]) return this.pageConfig.cwv_distribution.metric_config[value].label;
-    return 'LCP';
+    if (value && this.pageConfig?.cwv_distribution?.metric_config?.[value]) return value;
+    return null;
+  }
+
+  updateButton() {
+    const btn = document.getElementById('cwv-distribution-btn');
+    if (btn) {
+      btn.disabled = !this.selectedMetric;
+    }
   }
 
   updateTitle() {
     const slot = this.root?.querySelector('[data-slot="cwv-distribution-title-metric"]');
-    if (slot) slot.textContent = this.selectedMetric;
+    if (slot && this.selectedMetric) {
+      const cfg = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric];
+      slot.textContent = cfg?.label || this.selectedMetric;
+    }
   }
 
   bindEventListeners() {
@@ -77,7 +88,14 @@ class CwvDistribution {
       if (resolved !== this.selectedMetric) {
         this.selectedMetric = resolved;
         this.updateTitle();
-        if (this.distributionData) this.renderChart();
+        this.updateButton();
+        if (!this.selectedMetric) {
+          if (!this.root.classList.contains('hidden')) {
+            this.toggle(false);
+          }
+        } else if (this.distributionData) {
+          this.renderChart();
+        }
       }
     });
 
@@ -93,6 +111,7 @@ class CwvDistribution {
   toggle(show) {
     const btn = document.getElementById('cwv-distribution-btn');
     if (show) {
+      if (!this.selectedMetric) return;
       this.root.classList.remove('hidden');
       if (btn) btn.textContent = 'Hide histogram';
       if (!this.date) {
@@ -175,6 +194,10 @@ class CwvDistribution {
   }
 
   showError() {
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
+    }
     if (!this.chartContainer) return;
     this.chartContainer.innerHTML = '<div class="cwv-distribution-error">Distribution data is not available for this selection.</div>';
   }
@@ -207,14 +230,14 @@ class CwvDistribution {
   }
 
   trimWithOverflow(rows, originsField, percentile) {
-    const total = rows.reduce((sum, row) => sum + row[originsField], 0);
-    if (total === 0) return { visible: rows, overflowCount: 0 };
+    const total = rows.reduce((sum, row) => sum + (row[originsField] || 0), 0);
+    if (!total || isNaN(total)) return { visible: rows, overflowCount: 0, total: 0 };
 
     const cutoff = total * percentile;
     let cumulative = 0;
     let cutIndex = rows.length;
     for (let i = 0; i < rows.length; i++) {
-      cumulative += rows[i][originsField];
+      cumulative += (rows[i][originsField] || 0);
       if (cumulative >= cutoff) {
         cutIndex = Math.min(i + 2, rows.length);
         break;
@@ -222,8 +245,8 @@ class CwvDistribution {
     }
 
     const visible = rows.slice(0, cutIndex);
-    const visibleSum = visible.reduce((sum, row) => sum + row[originsField], 0);
-    return { visible, overflowCount: total - visibleSum };
+    const visibleSum = visible.reduce((sum, row) => sum + (row[originsField] || 0), 0);
+    return { visible, overflowCount: total - visibleSum, total };
   }
 
   renderChart() {
@@ -231,16 +254,30 @@ class CwvDistribution {
     if (!this.root) return;
 
     const client = this.root.dataset.client || 'mobile';
-    const metricCfg = this.pageConfig.cwv_distribution.metric_config[this.selectedMetric];
-    const thresholds = this.config.cwv_thresholds[this.selectedMetric];
+    const metricCfg = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric];
+    if (!metricCfg) {
+      this.showError();
+      return;
+    }
+    const thresholds = this.config?.cwv_thresholds?.[this.selectedMetric] || [];
 
     const clientRows = this.distributionData
       .filter(row => row.client === client)
       .sort((a, b) => a[metricCfg.bucketField] - b[metricCfg.bucketField]);
 
-    const { visible, overflowCount } = this.trimWithOverflow(
+    if (clientRows.length === 0) {
+      this.showError();
+      return;
+    }
+
+    const { visible, overflowCount, total } = this.trimWithOverflow(
       clientRows, metricCfg.originsField, 0.995
     );
+
+    if (!total || total <= 0) {
+      this.showError();
+      return;
+    }
 
     const formatBucket = (val) => {
       if (metricCfg.unit === 'ms') {

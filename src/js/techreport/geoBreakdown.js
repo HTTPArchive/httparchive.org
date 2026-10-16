@@ -56,7 +56,13 @@ class GeoBreakdown {
   updateTitle() {
     const slot = document.querySelector('[data-slot="geo-title-metric"]');
     if (!slot) return;
-    slot.textContent = this.selectedMetric === 'overall' ? 'Core Web Vitals' : this.selectedMetric;
+    if (this.selectedMetric === 'overall') {
+      slot.textContent = 'Core Web Vitals';
+    } else if (this.selectedMetric === 'overall_sn') {
+      slot.textContent = 'Core Web Vitals (soft navs)';
+    } else {
+      slot.textContent = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric]?.label || this.selectedMetric;
+    }
   }
 
   bindEventListeners() {
@@ -137,16 +143,18 @@ class GeoBreakdown {
 
     // Determine bar label and which extra columns to show
     const metric = this.selectedMetric;
-    const barLabel = metric === 'overall' ? 'Good Core Web Vitals' : `Good ${metric}`;
+    const barLabel = this.pageConfig?.geo_breakdown?.metric_labels?.[metric] || `Good ${metric}`;
     const extraCols = ['LCP', 'FCP', 'TTFB'].includes(metric)
       ? [{ key: 'ttfb', label: 'TTFB' }, { key: 'fcp', label: 'FCP' }, { key: 'lcp', label: 'LCP' }].filter(c => c.key !== metric.toLowerCase())
       : metric === 'overall'
         ? [{ key: 'lcp', label: 'LCP' }, { key: 'inp', label: 'INP' }, { key: 'cls', label: 'CLS' }]
-        : []; // INP/CLS: no extra columns
+        : metric === 'overall_sn'
+          ? [{ key: 'lcp_sn', label: 'LCP' }, { key: 'inp_sn', label: 'INP' }, { key: 'cls_sn', label: 'CLS' }]
+          : []; // INP/CLS/individual softnav metrics: no extra columns
 
     // If current sort column is no longer visible, reset to total
     const extraKeys = extraCols.map(c => c.key);
-    if (['lcp', 'inp', 'cls', 'fcp', 'ttfb'].includes(this.sortColumn) && !extraKeys.includes(this.sortColumn)) {
+    if (['lcp', 'inp', 'cls', 'fcp', 'ttfb', 'lcp_sn', 'inp_sn', 'cls_sn'].includes(this.sortColumn) && !extraKeys.includes(this.sortColumn)) {
       this.sortColumn = 'total';
       this.sortDir = 'desc';
     }
@@ -171,7 +179,19 @@ class GeoBreakdown {
         const v = row.vitals?.find(x => x.name === name)?.[client];
         return v?.tested > 0 ? Math.round(v.good_number / v.tested * 100) : null;
       };
-      return { geo, good: d.good_number, total: d.tested, lcp: pctFor('LCP'), inp: pctFor('INP'), cls: pctFor('CLS'), fcp: pctFor('FCP'), ttfb: pctFor('TTFB') };
+      return {
+        geo,
+        good: d.good_number,
+        total: d.tested,
+        lcp: pctFor('LCP'),
+        inp: pctFor('INP'),
+        cls: pctFor('CLS'),
+        fcp: pctFor('FCP'),
+        ttfb: pctFor('TTFB'),
+        lcp_sn: pctFor('LCP_sn'),
+        inp_sn: pctFor('INP_sn'),
+        cls_sn: pctFor('CLS_sn')
+      };
     }).filter(e => e.total > 0);
 
     // Sort by origins, limit to top 10 unless showAll
