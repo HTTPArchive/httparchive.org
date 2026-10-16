@@ -558,9 +558,10 @@ class Timeseries {
 
       const sortedData = this.extractPoints(app, endpoint, subcategory, client, metric);
       const seriesColor = techColor || colors[index];
+      const seriesName = hardSubcategory ? `${tech} (soft navs)` : tech;
 
       series.push({
-        name: tech,
+        name: seriesName,
         data: sortedData,
         color: seriesColor,
         showInLegend: sortedData.length > 0,
@@ -624,9 +625,11 @@ class Timeseries {
       const colorLight = value.color;
       const seriesColor = theme === "dark" ? colorDark : colorLight;
 
+      const seriesName = hardCategory ? `${value.name} (soft navs)` : value.name;
+
       // Push the configurations and formatted data to the series array
       series.push({
-        name: value.name,
+        name: seriesName,
         data: sortedData,
         color: seriesColor || colors?.[index],
         lineWidth: 2,
