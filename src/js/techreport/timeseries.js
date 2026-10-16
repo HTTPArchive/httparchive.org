@@ -5,6 +5,13 @@ import { DataUtils } from "./utils/data";
 import { UIUtils } from "./utils/ui";
 import { UrlUtils } from "./utils/url";
 
+const HARD_NAV_MAP = {
+  overall_sn: 'overall',
+  LCP_sn: 'LCP',
+  INP_sn: 'INP',
+  CLS_sn: 'CLS',
+};
+
 class Timeseries {
   // Create the component
   constructor(id, pageConfig, config, filters, data) {
@@ -499,6 +506,26 @@ class Timeseries {
     }
   }
 
+  // Extract and sort date/value pairs for a given subcategory and client
+  extractPoints(appData, endpoint, categoryName, clientName, metricField) {
+    const points = [];
+    appData?.forEach(row => {
+      const categoryData = row?.[endpoint]?.find(r => r.name === categoryName);
+      const clientData = categoryData?.[clientName];
+      const y = clientData?.[metricField];
+      if (y !== null && y !== undefined && y !== '') {
+        const num = Number(y);
+        if (!isNaN(num)) {
+          points.push({
+            x: new Date(row.date).getTime(),
+            y: num,
+          });
+        }
+      }
+    });
+    return points.sort((a, b) => a.x - b.x);
+  }
+
   // Format the data broken down by app
   formatDataByApp() {
     const series = [];
@@ -516,6 +543,9 @@ class Timeseries {
     const urlSubcategory = UrlUtils.get(config.param);
     const subcategory = urlSubcategory || config.default;
 
+    const isVitals = endpoint === 'vitals' || endpoint === 'cwv';
+    const hardSubcategory = isVitals ? HARD_NAV_MAP[subcategory] : null;
+
     // Get default colors
     const colors = this.defaults(config)?.chart?.colors;
 
@@ -526,34 +556,40 @@ class Timeseries {
       const tech = app[0]?.technology || techName;
       const techColor = UIUtils.getAppColor(tech, this.pageFilters.app, this.pageConfig.colors);
 
-      const validPoints = [];
-      app.forEach(row => {
-        const categoryData = row?.[endpoint]?.find(r => r.name === subcategory);
-        const clientData = categoryData?.[client];
-        const value = clientData?.[metric];
-        if (value !== null && value !== undefined && value !== '') {
-          const num = Number(value);
-          if (!isNaN(num)) {
-            validPoints.push({
-              x: new Date(row.date).getTime(),
-              y: num,
-            });
-          }
-        }
-      });
-
-      const sortedData = validPoints.sort((a, b) => a.x - b.x);
+      const sortedData = this.extractPoints(app, endpoint, subcategory, client, metric);
+      const seriesColor = techColor || colors[index];
 
       series.push({
         name: tech,
         data: sortedData,
-        color: techColor || colors[index],
+        color: seriesColor,
         showInLegend: sortedData.length > 0,
-        marker: {
-          enabled: sortedData.length === 1 ? true : null,
-          radius: 4,
-        },
+        ...(sortedData.length === 1 && {
+          marker: {
+            enabled: true,
+            radius: 4,
+          },
+        }),
       });
+
+      if (hardSubcategory) {
+        const sortedHardData = this.extractPoints(app, endpoint, hardSubcategory, client, metric);
+        if (sortedHardData.length > 0) {
+          series.push({
+            name: `${tech} (hard navs)`,
+            data: sortedHardData,
+            color: seriesColor,
+            dashStyle: 'Dash',
+            showInLegend: true,
+            ...(sortedHardData.length === 1 && {
+              marker: {
+                enabled: true,
+                radius: 4,
+              },
+            }),
+          });
+        }
+      }
     });
 
     return series;
@@ -571,33 +607,16 @@ class Timeseries {
     const metric = this.pageConfig[this.id]?.metric;
     const category = this.getCategory(config);
 
+    const isVitals = endpoint === 'vitals' || endpoint === 'cwv';
+    const hardCategory = isVitals ? HARD_NAV_MAP[category] : null;
+
     // Get color scheme
     const theme = document.querySelector('html').dataset.theme;
 
     // Breakdown data by categories defined in config
     config?.series?.values?.forEach((value, index) => {
-      // Filter by selected client & sort
       const appData = this.data?.[app];
-
-      // Add the values for the selected metric to a new array of objects
-      // Formatted as coordinates for Highcharts
-      const formattedData = [];
-      appData?.forEach(row => {
-        const categoryData = row?.[endpoint]?.find(r => r.name === category);
-        const clientData = categoryData?.[value.name];
-        const y = clientData?.[metric];
-        if (y !== null && y !== undefined && y !== '') {
-          const num = Number(y);
-          if (!isNaN(num)) {
-            formattedData.push({
-              x: new Date(row.date).getTime(),
-              y: num,
-            });
-          }
-        }
-      });
-
-      const sortedData = formattedData.sort((a, b) => a.x - b.x);
+      const sortedData = this.extractPoints(appData, endpoint, category, value.name, metric);
 
       // Pick color from settings depending on theme
       const colors = this.defaults(config)?.chart?.colors;
@@ -611,11 +630,32 @@ class Timeseries {
         data: sortedData,
         color: seriesColor || colors?.[index],
         lineWidth: 2,
-        marker: {
-          enabled: sortedData.length === 1 ? true : null,
-          radius: 4,
-        },
+        ...(sortedData.length === 1 && {
+          marker: {
+            enabled: true,
+            radius: 4,
+          },
+        }),
       });
+
+      if (hardCategory) {
+        const sortedHardData = this.extractPoints(appData, endpoint, hardCategory, value.name, metric);
+        if (sortedHardData.length > 0) {
+          series.push({
+            name: `${value.name} (hard navs)`,
+            data: sortedHardData,
+            color: seriesColor || colors?.[index],
+            lineWidth: 2,
+            dashStyle: 'Dash',
+            ...(sortedHardData.length === 1 && {
+              marker: {
+                enabled: true,
+                radius: 4,
+              },
+            }),
+          });
+        }
+      }
     });
 
     return series;
