@@ -45,7 +45,7 @@ http://127.0.0.1:8080/about
 http://127.0.0.1:8080/faq
 http://127.0.0.1:8080/docs
 http://127.0.0.1:8080/docs/guides/getting-started
-http://127.0.0.1:8080/docs/docs/reference/tables/pages
+http://127.0.0.1:8080/docs/reference/tables/pages
 
 END
 )
