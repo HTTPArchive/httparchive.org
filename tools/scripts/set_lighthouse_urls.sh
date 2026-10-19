@@ -39,7 +39,14 @@ http://127.0.0.1:8080/reports
 http://127.0.0.1:8080/reports/state-of-the-web
 http://127.0.0.1:8080/reports/techreport/landing
 http://127.0.0.1:8080/reports/techreport/tech
+http://127.0.0.1:8080/reports/techreport/tech?tech=ALL,WordPress,Wix,Next.js
 http://127.0.0.1:8080/reports/techreport/category
+http://127.0.0.1:8080/about
+http://127.0.0.1:8080/faq
+http://127.0.0.1:8080/docs
+http://127.0.0.1:8080/docs/guides/getting-started
+http://127.0.0.1:8080/docs/docs/reference/tables/pages
+
 END
 )
 
