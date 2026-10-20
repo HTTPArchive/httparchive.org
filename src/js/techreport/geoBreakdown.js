@@ -59,7 +59,7 @@ class GeoBreakdown {
     if (this.selectedMetric === 'overall') {
       slot.textContent = 'Core Web Vitals';
     } else if (this.selectedMetric === 'overall_sn') {
-      slot.textContent = 'Core Web Vitals (soft navs)';
+      slot.textContent = 'Core Web Vitals (inc. soft navs)';
     } else {
       slot.textContent = this.pageConfig?.cwv_distribution?.metric_config?.[this.selectedMetric]?.label || this.selectedMetric;
     }
