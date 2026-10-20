@@ -44,7 +44,7 @@ const getPageDates = (pathname: string) => {
 
 const pageDates = getPageDates(Astro.url.pathname);
 const defaultDate = new Date().toISOString();
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname.replace(/\/$/, ''), Astro.site);
 
 const {
   title = 'HTTP Archive',
