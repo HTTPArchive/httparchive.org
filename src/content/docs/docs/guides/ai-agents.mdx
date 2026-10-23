@@ -52,6 +52,13 @@ The plugin connects the Tech Report MCP server automatically. To use the server 
 
 ## What's included
 
+### Skills
+
+| Skill | Use |
+|---|---|
+| `httparchive-docs-and-metrics` | Looks up these docs and discovers which `custom_metrics` keys exist in `crawl.pages` |
+| `httparchive-query-optimizer` | Inspects schemas, previews rows with `bq head`, dry-runs queries, and applies the rules in [Minimizing query costs](/docs/guides/minimizing-costs/) |
+
 ### Tech Report tools
 
 | Tool | Returns |
@@ -63,18 +70,13 @@ The plugin connects the Tech Report MCP server automatically. To use the server 
 | `get_lighthouse_metrics`, `get_audits_metrics` | Lighthouse category scores and audit results |
 | `get_page_weight_metrics` | Page, JavaScript and CSS weight |
 
-### Skills
-
-| Skill | Use |
-|---|---|
-| `httparchive-docs-and-metrics` | Looks up these docs and discovers which `custom_metrics` keys exist in `crawl.pages` |
-| `httparchive-query-optimizer` | Inspects schemas, previews rows with `bq head`, dry-runs queries, and applies the rules in [Minimizing query costs](/docs/guides/minimizing-costs/) |
-
 ## Requirements
 
 The Tech Report tools work out of the box.
 
-The BigQuery skills run the `bq`, `curl` and `gh` command-line tools, so install the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) and authenticate against a project with BigQuery enabled, as described in [Getting started](/docs/guides/getting-started/). Queries are billed to that project.
+The BigQuery skills run the `bq` command-line tool, so install the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) and authenticate against a project with BigQuery enabled, as described in [Getting started](/docs/guides/getting-started/). Queries are billed to that project. The skills read these docs with the agent's built-in web fetch, so they need no other tools.
+
+Every docs page is also available as Markdown at its URL plus `.md`, for example [`/docs/guides/minimizing-costs.md`](/docs/guides/minimizing-costs.md), and the full docs are at [`/llms.txt`](/llms.txt). Point any agent at these to give it HTTP Archive context.
 
 :::caution
 An agent can write queries that scan terabytes. The skills tell it to dry-run before every query and to prototype on `rank <= 1000` first, but review the estimated bytes before letting it run anything large. Consider setting a [custom query quota](https://cloud.google.com/bigquery/docs/custom-quotas) on the project.

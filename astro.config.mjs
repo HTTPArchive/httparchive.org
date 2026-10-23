@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightMdTxt from 'starlight-md-txt';
 
 const sourceMaps = process.env.SOURCE_MAPS === 'true';
 
@@ -72,6 +73,7 @@ export default defineConfig({
       },
       plugins: [
         starlightLlmsTxt(),
+        starlightMdTxt(),
         starlightLinksValidator({
           exclude: ['/', '/about/**', '/faq/**', '/reports/**'], // Pages outside starlight
         }),
