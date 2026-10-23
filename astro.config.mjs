@@ -73,7 +73,7 @@ export default defineConfig({
       },
       plugins: [
         starlightLlmsTxt(),
-        starlightMdTxt(),
+        starlightMdTxt({ absoluteLinks: true }),
         starlightLinksValidator({
           exclude: ['/', '/about/**', '/faq/**', '/reports/**'], // Pages outside starlight
         }),
