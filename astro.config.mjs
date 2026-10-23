@@ -43,6 +43,7 @@ export default defineConfig({
             { label: 'Minimizing query costs', link: 'docs/guides/minimizing-costs' },
             { label: 'Guided tour', link: 'docs/guides/guided-tour' },
             { label: 'Release cycle', link: 'docs/guides/release-cycle' },
+            { label: 'AI agents', link: 'docs/guides/ai-agents' },
           ],
         },
         {
