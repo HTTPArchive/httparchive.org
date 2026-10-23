@@ -79,7 +79,7 @@ The BigQuery skills run the `bq` command-line tool, so install the [Google Cloud
 Every docs page is also available as Markdown at its URL plus `.md`, for example [`/docs/guides/minimizing-costs.md`](/docs/guides/minimizing-costs.md), and the full docs are at [`/llms.txt`](/llms.txt). Point any agent at these to give it HTTP Archive context.
 
 :::caution
-An agent can write queries that scan terabytes. The skills tell it to dry-run before every query and to prototype on `rank <= 1000` first, but review the estimated bytes before letting it run anything large. Consider setting a [custom query quota](https://cloud.google.com/bigquery/docs/custom-quotas) on the project.
+An agent can write queries that scan terabytes. The skills tell it to dry-run before every query and to prototype on `rank <= 1000` first, but review the estimated bytes before letting it run anything large. We **strongly** recommend setting a [custom query quota](https://cloud.google.com/bigquery/docs/custom-quotas) on the project.
 :::
 
 ## Example prompts
