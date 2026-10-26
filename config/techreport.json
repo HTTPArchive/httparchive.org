@@ -1511,22 +1511,22 @@
         "overall_sn": {
           "label": "Good Core Web Vitals (inc. soft navs)",
           "title": "Good Core Web Vitals (inc. soft navs)",
-          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience, accounting for soft navigations in single-page applications. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics."
+          "description": "The percentage of origins passing all three Core Web Vitals (LCP, INP, CLS) with a good experience, <a href=\"https://web.dev/blog/crux-experimental-soft-navs\"><b>accounting for soft navigations in single-page applications</b></a>. Note that if an origin is missing INP data, it's assessed based on the performance of the remaining metrics."
         },
         "LCP_sn": {
           "label": "Good LCP (inc. soft navs)",
           "title": "Good Largest Contentful Paint (inc. soft navs)",
-          "description": "Largest Contentful Paint including soft navigations measures perceived load speed across both hard page loads and subsequent in-app soft navigations. Good experiences are less than or equal to 2.5 seconds."
+          "description": "Largest Contentful Paint <a href=\"https://web.dev/blog/crux-experimental-soft-navs\"><b>accounting for soft navigations in single-page applications</b></a> measures perceived load speed across both hard page loads and subsequent in-app soft navigations. Good experiences are less than or equal to 2.5 seconds."
         },
         "INP_sn": {
           "label": "Good INP (inc. soft navs)",
           "title": "Good Interaction to Next Paint (inc. soft navs)",
-          "description": "Interaction to Next Paint including soft navigations assesses responsiveness across user interactions within the lifespan of a visit, including interactions occurring during soft navigations. A good experience is less than or equal to 200ms."
+          "description": "Interaction to Next Paint <a href=\"https://web.dev/blog/crux-experimental-soft-navs\"><b>accounting for soft navigations in single-page applications</b></a> assesses responsiveness across user interactions within the lifespan of a visit, including interactions occurring during soft navigations. A good experience is less than or equal to 200ms."
         },
         "CLS_sn": {
           "label": "Good CLS (inc. soft navs)",
           "title": "Good Cumulative Layout Shift (inc. soft navs)",
-          "description": "Cumulative Layout Shift including soft navigations measures visual stability across both initial loads and subsequent soft navigation page changes. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits."
+          "description": "Cumulative Layout Shift <a href=\"https://web.dev/blog/crux-experimental-soft-navs\"><b>accounting for soft navigations in single-page applications</b></a> measures visual stability across both initial loads and subsequent soft navigation page changes. Sites should strive to have a CLS of 0.1 or less for at least 75% of page visits."
         }
       },
       "pageWeight": {
