@@ -905,3 +905,38 @@ input {
 #answers h2:first-child {
   margin-top: 0;
 }
+
+.terminal {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 24px;
+  border-radius: 8px;
+  background: #2f3b3d;
+  color: #e8eef0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.terminal:hover,
+.terminal:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+.terminal-comment {
+  color: #9bb8bb;
+}
+
+.terminal-comment:not(:first-child) {
+  margin-top: 12px;
+}
+
+.terminal-prompt {
+  color: #9bb8bb;
+  margin-right: 8px;
+  user-select: none;
+}

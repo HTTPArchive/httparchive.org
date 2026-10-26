@@ -118,7 +118,11 @@ class Report {
       }
     }
 
-    url.searchParams.set('view', this.view);
+    if (this.view) {
+      url.searchParams.set('view', this.view);
+    } else {
+      url.searchParams.delete('view');
+    }
 
     this.permalink.value = url.toString();
   }
