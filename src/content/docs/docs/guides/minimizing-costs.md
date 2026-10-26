@@ -16,7 +16,11 @@ For example, the `httparchive.crawl.pages` table is [partitioned](https://cloud.
 
 :::caution
 [Cluster column ordering](https://docs.cloud.google.com/bigquery/docs/clustered-tables#cluster_column_ordering) is important. BigQuery can take full advantage of clustering if the query filters on the clustered columns in the order they are defined. For example, a query that filters on `client` and `is_root_page` will be able to take full advantage of clustering, but a query that filters on `page` will not be able to take full advantage (but will still be considerably quicker/cheaper than a query that does not use any clustered columns).
-BigQuery [doesn't guarantee](https://cloud.google.com/bigquery/docs/clustered-tables#clustered_table_pricing:~:text=BigQuery%20might%20not%20be%20able%20to%20accurately%20estimate%20the%20bytes%20to%20be%20processed) accuracy of estimations for 'Bytes processed' when querying clustered tables ([Issue Link](https://issuetracker.google.com/issues/176795805)). The actual data volume may be smaller than the amount provided in the estimate.
+BigQuery [doesn't guarantee](https://cloud.google.com/bigquery/docs/clustered-tables#clustered_table_pricing:~:text=BigQuery%20might%20not%20be%20able%20to%20accurately%20estimate%20the%20bytes%20to%20be%20processed) accuracy of estimations for 'Bytes processed' when querying clustered tables. In practice, estimates for the HTTP Archive tables now account for clustering, including filters on `rank`, and closely match the bytes actually processed.
+:::
+
+:::tip
+Check the estimate before running a query. The BigQuery console shows "This query will process … when run" above the editor, and `bq query --dry_run` prints the same figure from the command line. Both are free. Table sizes grow every month, so check the estimate rather than relying on the figures in this guide.
 :::
 
 :::tip
@@ -68,9 +72,9 @@ WHERE
   rank <= 1000
 ```
 
-This query will process 329 MB when run as it's looking at all the custom_metrics.
+This query reads every `custom_metrics` column.
 
-However, the same query looking at just the `a11y` custom metrics is much cheaper at 10 MB:
+The same query looking at just the `a11y` custom metrics reads only that one column, at a small fraction of the cost:
 
 ```sql
 SELECT
@@ -99,9 +103,9 @@ WHERE
   client = 'desktop'
 ```
 
-This query will process 6.56 TB when run.
+This query reads the column for every desktop page in the month, which is hundreds of gigabytes.
 
-However, the same query with `TABLESAMPLE` at 0.01% is much cheaper:
+The same query with `TABLESAMPLE` at 0.01% is much cheaper:
 
 ```sql
 SELECT
@@ -113,7 +117,7 @@ WHERE
   client = 'desktop'
 ```
 
-This query will only process 680.01 MB when run.
+This query reads only a small fraction of that.
 
 The 0.01% of rows that are sampled are chosen randomly, so the results of the query will be different each time it's run.
 
@@ -121,7 +125,7 @@ The 0.01% of rows that are sampled are chosen randomly, so the results of the qu
 ## Don't rely on LIMIT
 Don't rely on the `LIMIT` clause to reduce the amount of data scanned. `LIMIT` is applied after the query is run, so the entire table will still be scanned.
 
-For example, this query still processes 6.56 TB:
+For example, this query still processes the same bytes as the query without `LIMIT`:
 
 ```sql
 SELECT
@@ -152,9 +156,11 @@ WHERE
   rank <= 1000
 ```
 
-While this constency is an advantage over `TABLESAMPLE`, annoyingly due to the [previously mentioned bug](https://issuetracker.google.com/issues/176795805), using `rank` will not give an accurate estimate, while `TABLESAMPLE` will. So it can be a bit more of a leap of faith using `rank`.
+This consistency is an advantage over `TABLESAMPLE`, and the estimate reflects the `rank` filter, so you can see the cost before running. Raise the limit (for example to `rank <= 10000`) and check the estimate again before moving to a full run.
 
-To get around that you can use the `sample_data` dataset.
+:::note
+Older versions of this guide warned that estimates for `rank` filters were inaccurate because of a [BigQuery bug](https://issuetracker.google.com/issues/176795805). The estimates now reflect the `rank` filter.
+:::
 
 ## Use the `sample_data` dataset
 
@@ -162,7 +168,7 @@ The `sample_data` dataset contains 10k subsets of the full pages and requests ta
 
 Table names correspond to their full-size counterparts of the form `[table]_10k` for `crawl.pages` and `crawl.requests` tables. For example, to query the summary data for the subset of 10k pages, you would use the `httparchive.sample_data.pages_10k` table.
 
-In reality as `rank` is part of the clustering of the tables you don't need to use the `sample_data` dataset. However, due to inaccurate estimates mentioned above, the `sample_data` dataset is safer since it only contains 10,000 pages so even with inaccurate estimates it will be smaller than the full `crawl` dataset.
+As `rank` is part of the clustering of the tables, you don't need the `sample_data` dataset to keep costs down. It is still useful as a small, fixed set of pages for developing query logic. The tables are rebuilt with each crawl and hold only the latest month.
 
 ## Whether to use `TABLESAMPLE`, `rank`, or `sample_data`
 
@@ -171,12 +177,12 @@ This comes down largely to a matter of personal preference. Each has their advan
 Advantage|`TABLESAMPLE`|`rank`|`sample_data`
 ----|---|---|---
 Consistency of results returned|❌|✅|✅ (if run in same month)
-Accurate estimates|✅|❌|✅
+Accurate estimates|✅|✅|✅
 Ease of commenting out for full run|✅|✅|❌
 Allows querying of any months|✅|✅|❌ (previous month only)
 Allows variable sample size|✅|✅|❌
 
-If they ever fix the estimate bug then `rank` will be a clear winner. Until then use whatever works for you!
+With accurate estimates, `rank` is usually the best choice: consistent results, any month, and easy to remove for the full run. Use `TABLESAMPLE` when you need a random sample instead of the most popular sites.
 
 ## Use table previews
 

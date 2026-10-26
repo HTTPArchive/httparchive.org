@@ -1,0 +1,94 @@
+---
+title: AI agents
+description: Use HTTP Archive data from Claude Code, Codex, and other AI agents with the HTTP Archive agent plugin and MCP server
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+The [HTTP Archive agent plugin](https://github.com/HTTPArchive/httparchive-plugin) lets AI coding agents such as Claude Code and Codex answer questions about how the web is built. It gives an agent two ways to reach HTTP Archive data:
+
+- **Tech Report tools** for technology adoption, Core Web Vitals, Lighthouse and page weight trends. These come from the [Tech Report](/reports/techreport/landing) through a remote MCP server and need no Google Cloud account.
+- **BigQuery skills** for anything else. They teach the agent to inspect live table schemas, read these docs, preview rows for free, and write partition- and cluster-pruned SQL against the [public dataset](/docs/guides/getting-started/).
+
+## Install the plugin
+
+<Tabs>
+  <TabItem label="Claude Code">
+    ```bash
+    claude plugin marketplace add httparchive/httparchive-plugin
+    claude plugin install httparchive@httparchive
+    ```
+
+    Or, inside a session, run `/plugin marketplace add httparchive/httparchive-plugin`, then `/plugin install httparchive@httparchive`.
+  </TabItem>
+  <TabItem label="Codex">
+    ```bash
+    codex plugin marketplace add httparchive/httparchive-plugin
+    codex plugin add httparchive@httparchive
+    ```
+  </TabItem>
+  <TabItem label="Other agents">
+    Copy the folders under [`skills/`](https://github.com/HTTPArchive/httparchive-plugin/tree/main/skills) into your agent's skills directory, for example `~/.agents/skills/`, and add the MCP server below.
+  </TabItem>
+</Tabs>
+
+The plugin connects the Tech Report MCP server automatically. To use the server on its own, without the skills, add it to any MCP client that supports Streamable HTTP:
+
+<Tabs>
+  <TabItem label="Claude Code">
+    ```bash
+    claude mcp add --transport http httparchive https://cdn.httparchive.org/mcp
+    ```
+  </TabItem>
+  <TabItem label="Codex">
+    ```bash
+    codex mcp add httparchive --url https://cdn.httparchive.org/mcp
+    ```
+  </TabItem>
+  <TabItem label="Other clients">
+    Add a remote MCP server with the URL `https://cdn.httparchive.org/mcp`. It needs no authentication.
+  </TabItem>
+</Tabs>
+
+## What's included
+
+### Skills
+
+| Skill | Use |
+|---|---|
+| `httparchive-docs-and-metrics` | Looks up these docs and discovers which `custom_metrics` keys exist in `crawl.pages` |
+| `httparchive-query-optimizer` | Inspects schemas, previews rows with `bq head`, dry-runs queries, and applies the rules in [Minimizing query costs](/docs/guides/minimizing-costs/) |
+
+### Tech Report tools
+
+| Tool | Returns |
+|---|---|
+| `search_technologies`, `list_categories`, `list_versions` | Technologies, categories and versions tracked by the Tech Report |
+| `list_ranks`, `list_geos` | Rank segments and geographies available as filters |
+| `get_adoption_metrics` | Share of sites using a technology over time |
+| `get_cwv_metrics`, `get_cwv_distribution`, `get_geo_breakdown` | Core Web Vitals pass rates, histograms and per-country breakdowns |
+| `get_lighthouse_metrics`, `get_audits_metrics` | Lighthouse category scores and audit results |
+| `get_page_weight_metrics` | Page, JavaScript and CSS weight |
+
+## Requirements
+
+The Tech Report tools work out of the box.
+
+The BigQuery skills run the `bq` command-line tool, so install the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) and authenticate against a project with BigQuery enabled, as described in [Getting started](/docs/guides/getting-started/). Queries are billed to that project. The skills read these docs with the agent's built-in web fetch, so they need no other tools.
+
+Every docs page is also available as Markdown at its URL plus `.md`, for example [`/docs/guides/minimizing-costs.md`](/docs/guides/minimizing-costs.md), and the full docs are at [`/llms.txt`](/llms.txt). Point any agent at these to give it HTTP Archive context.
+
+:::danger
+An agent can write queries that scan terabytes. The skills tell it to dry-run before every query and to prototype on `rank <= 1000` first, but review the estimated bytes before letting it run anything large. We **strongly** recommend setting a [custom query quota](https://cloud.google.com/bigquery/docs/custom-quotas) on the project.
+:::
+
+## Example prompts
+
+- "How has React adoption changed over the last two years, and how do React sites compare on Core Web Vitals?"
+- "Which countries have the best LCP pass rate for WordPress sites?"
+- "Write a query that counts how many of the top 10,000 mobile pages load a third-party font, and check its cost first."
+- "Which `custom_metrics` keys describe structured data on a page?"
+
+## Contribute
+
+The plugin is open source on [GitHub](https://github.com/HTTPArchive/httparchive-plugin). Report issues or suggest new skills there.
