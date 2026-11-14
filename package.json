@@ -32,7 +32,7 @@
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@astrojs/starlight": "^0.42.7",
-    "astro": "^7.3.5",
+    "astro": "^7.4.12",
     "ejs": "6.0.1",
     "firebase-tools": "^15.36.0",
     "fs-extra": "11.4.1",
