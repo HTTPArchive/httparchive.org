@@ -19,29 +19,94 @@ const test_cwv_toggle = async () => {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
     await new Promise((resolve) => setTimeout(resolve, 800));
 
-    // Verify button bar exists, table wrapper positioned after bar, and histogram btn disabled (not hidden) on overall
+    // Verify button bar exists, table wrapper positioned after bar, and histogram btn aria-disabled + tooltip wired on overall
     const initialCheck = await page.evaluate(() => {
       const bar = document.querySelector('.cwv-button-bar');
       const tw = document.getElementById('good_cwv_timeseries-table-wrapper');
       const histBtn = document.getElementById('cwv-distribution-btn');
-      if (!bar || !tw || !histBtn) return null;
+      const tooltip = document.getElementById('cwv-distribution-tooltip');
+      if (!bar || !tw || !histBtn || !tooltip) return null;
       return {
         hasBar: !!bar,
         hasTw: !!tw,
         isTwAfterBar: !(bar.compareDocumentPosition(tw) & Node.DOCUMENT_POSITION_PRECEDING),
-        isHistBtnDisabledOnOverall: histBtn.disabled === true,
+        isHistBtnDisabledOnOverall: histBtn.getAttribute('aria-disabled') === 'true',
         isHistBtnVisible: !histBtn.classList.contains('hidden'),
+        hasDescribedBy: histBtn.getAttribute('aria-describedby') === 'cwv-distribution-tooltip',
+        hasInterestFor: histBtn.getAttribute('interestfor') === 'cwv-distribution-tooltip',
+        tooltipRole: tooltip.getAttribute('role'),
+        tooltipPopover: tooltip.getAttribute('popover'),
       };
     });
 
     if (!initialCheck || !initialCheck.isTwAfterBar) {
       console.error('❌ [FAIL] CWV button bar or table wrapper not properly positioned');
       failures++;
-    } else if (!initialCheck.isHistBtnDisabledOnOverall || !initialCheck.isHistBtnVisible) {
-      console.error('❌ [FAIL] Histogram button should be visible and disabled for overall metric', initialCheck);
+    } else if (
+      !initialCheck.isHistBtnDisabledOnOverall ||
+      !initialCheck.isHistBtnVisible ||
+      !initialCheck.hasDescribedBy ||
+      !initialCheck.hasInterestFor ||
+      initialCheck.tooltipRole !== 'tooltip' ||
+      initialCheck.tooltipPopover !== 'hint'
+    ) {
+      console.error('❌ [FAIL] Histogram button should be visible, aria-disabled, and wired to tooltip for overall metric', initialCheck);
       failures++;
     } else {
-      console.log('✅ [PASS] Table wrapper positioned after .cwv-button-bar and histogram button disabled for overall');
+      console.log('✅ [PASS] Table wrapper positioned after .cwv-button-bar and histogram button aria-disabled with tooltip for overall');
+      passes++;
+    }
+
+    // Verify focusing disabled histogram button opens tooltip and Escape dismisses it
+    await page.focus('#cwv-distribution-btn');
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    const tooltipOpenOnFocus = await page.evaluate(() => {
+      const tooltip = document.getElementById('cwv-distribution-tooltip');
+      return tooltip && tooltip.matches(':popover-open');
+    });
+    await page.keyboard.press('Escape');
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    const tooltipClosedOnEscape = await page.evaluate(() => {
+      const tooltip = document.getElementById('cwv-distribution-tooltip');
+      return tooltip && !tooltip.matches(':popover-open');
+    });
+
+    if (!tooltipOpenOnFocus || !tooltipClosedOnEscape) {
+      console.error('❌ [FAIL] Disabled histogram tooltip should open on focus and close on Escape', { tooltipOpenOnFocus, tooltipClosedOnEscape });
+      failures++;
+    } else {
+      console.log('✅ [PASS] Disabled histogram tooltip opens on focus and dismisses on Escape');
+      passes++;
+    }
+
+    // Verify clicking disabled histogram button does NOT close an open table panel or open histogram
+    const disabledClickGuard = await page.evaluate(() => {
+      const bar = document.querySelector('.cwv-button-bar');
+      const tableBtn = bar.querySelector('.cwv-show-table-btn');
+      const histBtn = document.getElementById('cwv-distribution-btn');
+      const tw = document.getElementById('good_cwv_timeseries-table-wrapper');
+      const hist = document.getElementById('section-cwv_distribution');
+
+      tableBtn.click();
+      const openedTable = !tw.classList.contains('hidden');
+      histBtn.click();
+      return {
+        openedTable,
+        twStillOpen: !tw.classList.contains('hidden'),
+        histStillHidden: hist.classList.contains('hidden'),
+      };
+    });
+    // Reset table closed before continuing
+    await page.evaluate(() => {
+      const bar = document.querySelector('.cwv-button-bar');
+      bar.querySelector('.cwv-show-table-btn').click();
+    });
+
+    if (!disabledClickGuard.openedTable || !disabledClickGuard.twStillOpen || !disabledClickGuard.histStillHidden) {
+      console.error('❌ [FAIL] Clicking aria-disabled histogram button closed open table or opened histogram', disabledClickGuard);
+      failures++;
+    } else {
+      console.log('✅ [PASS] Clicking aria-disabled histogram button does not close open panels or open histogram');
       passes++;
     }
 
@@ -54,18 +119,24 @@ const test_cwv_toggle = async () => {
       }
       await new Promise((r) => setTimeout(r, 300));
       const histBtn = document.getElementById('cwv-distribution-btn');
-      return histBtn && histBtn.disabled === true && !histBtn.classList.contains('hidden');
+      return (
+        histBtn &&
+        histBtn.getAttribute('aria-disabled') === 'true' &&
+        histBtn.getAttribute('aria-describedby') === 'cwv-distribution-tooltip' &&
+        histBtn.getAttribute('interestfor') === 'cwv-distribution-tooltip' &&
+        !histBtn.classList.contains('hidden')
+      );
     });
 
     if (!snCheck) {
-      console.error('❌ [FAIL] Histogram button should be visible and disabled for overall_sn metric');
+      console.error('❌ [FAIL] Histogram button should be visible and aria-disabled with tooltip for overall_sn metric');
       failures++;
     } else {
-      console.log('✅ [PASS] Histogram button disabled for overall_sn');
+      console.log('✅ [PASS] Histogram button aria-disabled for overall_sn');
       passes++;
     }
 
-    // Switch metric to LCP so histogram button becomes enabled for toggle testing
+    // Switch metric to LCP so histogram button becomes enabled and tooltip attributes are removed
     await page.evaluate(() => {
       const select = document.querySelector('select[data-controls="good_cwv_timeseries"]');
       if (select) {
@@ -77,14 +148,22 @@ const test_cwv_toggle = async () => {
 
     const lcpCheck = await page.evaluate(() => {
       const histBtn = document.getElementById('cwv-distribution-btn');
-      return histBtn && histBtn.disabled === false;
+      const tooltip = document.getElementById('cwv-distribution-tooltip');
+      return (
+        histBtn &&
+        histBtn.getAttribute('aria-disabled') === null &&
+        histBtn.getAttribute('aria-describedby') === null &&
+        histBtn.getAttribute('interestfor') === null &&
+        tooltip &&
+        !tooltip.matches(':popover-open')
+      );
     });
 
     if (!lcpCheck) {
-      console.error('❌ [FAIL] Histogram button should be enabled for LCP metric');
+      console.error('❌ [FAIL] Histogram button should be enabled without tooltip attributes for LCP metric');
       failures++;
     } else {
-      console.log('✅ [PASS] Histogram button enabled for LCP');
+      console.log('✅ [PASS] Histogram button enabled and tooltip attributes removed for LCP');
       passes++;
     }
 

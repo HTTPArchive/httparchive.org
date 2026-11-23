@@ -123,6 +123,7 @@ class Section {
 
     panels.forEach(panel => {
       panel.btn.addEventListener('click', () => {
+        if (panel.btn.getAttribute('aria-disabled') === 'true') return;
         panels.forEach(other => {
           if (other !== panel && !other.wrapper.classList.contains('hidden')) {
             other.wrapper.classList.add('hidden');
