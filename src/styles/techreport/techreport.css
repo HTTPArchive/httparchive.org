@@ -2368,8 +2368,9 @@ path.highcharts-tick {
 
 .cwv-distribution-toggle[interestfor] {
   --interest-delay-start: 0.2s;
-  interest-delay-start: var(--interest-delay-start);
   --interest-delay-end: 0.15s;
+
+  interest-delay-start: var(--interest-delay-start);
   interest-delay-end: var(--interest-delay-end);
 }
 
