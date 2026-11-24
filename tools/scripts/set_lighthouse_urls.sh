@@ -73,7 +73,7 @@ elif [ "${RUN_TYPE}" == "pull_request" ] && [ "${COMMIT_SHA}" != "" ]; then
     git checkout --progress --force "${COMMIT_SHA}"
 
     # Transform the files to http://127.0.0.1:8080 URLs
-    LIGHTHOUSE_URLS=$(echo "${CHANGED_FILES}" | sed 's/src\/pages/http:\/\/127.0.0.1:8080/g' | sed 's/techreport/reports\/techreport/g' | sed 's/index\.astro//g' | sed 's/\.astro//g' | sed 's/_/-/g' )
+    LIGHTHOUSE_URLS=$(echo "${CHANGED_FILES}" | sed 's/src\/pages/http:\/\/127.0.0.1:8080/g' | sed 's/index\.astro//g' | sed 's/\.astro//g' | sed 's/_/-/g' )
 
     # If report.json or any of the report templates were changed, then test all the reports
     # TODO - make this list dynamic
