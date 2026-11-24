@@ -91,7 +91,15 @@ const { config, pageConfig, id = 'report-content', isHidden = false } = Astro.pr
             <button class="btn show-table geo-breakdown-toggle" type="button" id="geo-breakdown-btn">Show geographic breakdown</button>
           )}
           {pageConfig.config.cwv_distribution && (
-            <button class="btn show-table cwv-distribution-toggle" type="button" id="cwv-distribution-btn">Show histogram</button>
+            <>
+              <button class="btn show-table cwv-distribution-toggle" type="button" id="cwv-distribution-btn">Show histogram</button>
+              <div
+                id="cwv-distribution-tooltip"
+                class="cwv-distribution-tooltip"
+                popover="hint"
+                role="tooltip"
+              >Select a single metric (LCP, INP, CLS, FCP, or TTFB) to view the histogram.</div>
+            </>
           )}
         </div>
 

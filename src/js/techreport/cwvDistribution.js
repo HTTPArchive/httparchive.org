@@ -14,6 +14,7 @@ class CwvDistribution {
     this.distributionData = null;
     this.isLoading = false;
     this.chart = null;
+    this.tooltipHideTimer = null;
     this.root = document.querySelector(`[data-id="${this.id}"]`);
     this.date = this.pageFilters.end || this.root?.dataset?.latestDate || '';
     this.selectedMetric = this.resolveMetric(UrlUtils.get('good-cwv-over-time'));
@@ -67,9 +68,99 @@ class CwvDistribution {
 
   updateButton() {
     const btn = document.getElementById('cwv-distribution-btn');
-    if (btn) {
-      btn.disabled = !this.selectedMetric;
+    if (!btn) return;
+
+    if (this.selectedMetric) {
+      btn.removeAttribute('aria-disabled');
+      btn.removeAttribute('interestfor');
+      btn.removeAttribute('aria-describedby');
+      this.hideTooltip();
+    } else {
+      btn.setAttribute('aria-disabled', 'true');
+      btn.setAttribute('interestfor', 'cwv-distribution-tooltip');
+      btn.setAttribute('aria-describedby', 'cwv-distribution-tooltip');
     }
+  }
+
+  isTooltipOpen(tooltip) {
+    if (Object.hasOwn(HTMLElement.prototype, 'popover')) {
+      return tooltip.matches(':popover-open');
+    }
+    return !tooltip.hidden;
+  }
+
+  positionTooltipFallback(btn, tooltip) {
+    if (typeof CSS !== 'undefined' && CSS.supports?.('position-area: block-start')) {
+      return;
+    }
+    const btnRect = btn.getBoundingClientRect();
+    const tipRect = tooltip.getBoundingClientRect();
+    const gap = 8;
+    let top = btnRect.top - tipRect.height - gap;
+    if (top < gap) {
+      top = btnRect.bottom + gap;
+    }
+    const centeredLeft = btnRect.left + (btnRect.width - tipRect.width) / 2;
+    const maxLeft = Math.max(gap, window.innerWidth - tipRect.width - gap);
+    const left = Math.min(Math.max(gap, centeredLeft), maxLeft);
+
+    tooltip.style.inset = 'auto';
+    tooltip.style.margin = '0';
+    tooltip.style.top = `${top}px`;
+    tooltip.style.left = `${left}px`;
+  }
+
+  showTooltip() {
+    const btn = document.getElementById('cwv-distribution-btn');
+    const tooltip = document.getElementById('cwv-distribution-tooltip');
+    if (!btn || !tooltip || btn.getAttribute('aria-disabled') !== 'true') return;
+
+    if (this.tooltipHideTimer) {
+      clearTimeout(this.tooltipHideTimer);
+      this.tooltipHideTimer = null;
+    }
+
+    if (Object.hasOwn(HTMLElement.prototype, 'popover')) {
+      if (!this.isTooltipOpen(tooltip)) {
+        try {
+          tooltip.showPopover();
+        } catch {
+          // Ignore invalid state if popover cannot be shown
+        }
+      }
+    } else {
+      tooltip.hidden = false;
+    }
+    this.positionTooltipFallback(btn, tooltip);
+  }
+
+  hideTooltip() {
+    if (this.tooltipHideTimer) {
+      clearTimeout(this.tooltipHideTimer);
+      this.tooltipHideTimer = null;
+    }
+    const tooltip = document.getElementById('cwv-distribution-tooltip');
+    if (!tooltip || !this.isTooltipOpen(tooltip)) return;
+
+    if (Object.hasOwn(HTMLElement.prototype, 'popover')) {
+      try {
+        tooltip.hidePopover();
+      } catch {
+        // Ignore invalid state if popover is already hidden
+      }
+    } else {
+      tooltip.hidden = true;
+    }
+  }
+
+  scheduleHideTooltip() {
+    if (this.tooltipHideTimer) {
+      clearTimeout(this.tooltipHideTimer);
+    }
+    this.tooltipHideTimer = setTimeout(() => {
+      this.tooltipHideTimer = null;
+      this.hideTooltip();
+    }, 150);
   }
 
   updateTitle() {
@@ -100,11 +191,55 @@ class CwvDistribution {
     });
 
     const btn = document.getElementById('cwv-distribution-btn');
+    const tooltip = document.getElementById('cwv-distribution-tooltip');
     if (btn) {
       btn.addEventListener('click', () => {
+        if (!this.selectedMetric || btn.getAttribute('aria-disabled') === 'true') {
+          this.showTooltip();
+          return;
+        }
         const isVisible = !this.root.classList.contains('hidden');
         this.toggle(!isVisible);
       });
+    }
+
+    if (btn && tooltip) {
+      if (!Object.hasOwn(HTMLElement.prototype, 'popover')) {
+        tooltip.hidden = true;
+      }
+
+      const supportsInterestFor = 'interestForElement' in HTMLButtonElement.prototype;
+      const probe = document.createElement('div');
+      probe.popover = 'hint';
+      const supportsPopoverHint = probe.popover === 'hint';
+
+      if (!supportsInterestFor) {
+        btn.addEventListener('mouseenter', () => this.showTooltip());
+        btn.addEventListener('mouseleave', () => this.scheduleHideTooltip());
+        btn.addEventListener('focus', () => this.showTooltip());
+        btn.addEventListener('blur', () => this.hideTooltip());
+
+        tooltip.addEventListener('mouseenter', () => {
+          if (this.tooltipHideTimer) {
+            clearTimeout(this.tooltipHideTimer);
+            this.tooltipHideTimer = null;
+          }
+        });
+        tooltip.addEventListener('mouseleave', () => this.scheduleHideTooltip());
+      }
+
+      if (!supportsPopoverHint || !supportsInterestFor) {
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            this.hideTooltip();
+          }
+        });
+        document.addEventListener('pointerdown', (event) => {
+          if (!btn.contains(event.target) && !tooltip.contains(event.target)) {
+            this.hideTooltip();
+          }
+        });
+      }
     }
   }
 
