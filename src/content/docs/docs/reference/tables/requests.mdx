@@ -24,7 +24,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 [`summary`](#summary) | `JSON` | JSON-encoded summarization of request data
 [`request_headers`](#request_headers) | <code>ARRAY\<RECORD\></code> | Request headers
 [`response_headers`](#response_headers) | <code>ARRAY\<RECORD\></code> | Response headers
-[`response_body`](#response_body) | `STRING` | Text-based response body
+[`response_body`](#response_body) | `STRING` | Text-based response body (retained for the last 18 months)
 
 ### `date`
 
@@ -96,7 +96,11 @@ See the [Header](/docs/reference/structs/header/) reference for more details.
 
 ### `response_body`
 
-Text-based response body
+Text-based response body.
+
+:::note
+To manage storage costs, `response_body` values are retained for the last **18 months** of crawls and set to `NULL` for older partitions. All other request metadata (`payload`, `summary`, headers, and URLs) remains available for historical crawls.
+:::
 
 ## Example queries
 
